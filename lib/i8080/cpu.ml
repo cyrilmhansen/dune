@@ -129,6 +129,35 @@ let condition_holds state = function
   | Instr.Positive -> not (Flags.sign (State.flags state))
   | Instr.Minus -> Flags.sign (State.flags state)
 
+let apply_status flags (status : Alu.status) =
+  let open Alu in
+  Flags.set_sign flags status.szp.sign;
+  Flags.set_zero flags status.szp.zero;
+  Flags.set_parity flags status.szp.parity;
+  Flags.set_auxiliary_carry flags status.auxiliary_carry
+
+let apply_result state (result : Alu.result8) =
+  let open Alu in
+  apply_status (State.flags state) result.status;
+  Flags.set_carry (State.flags state) result.carry
+
+let accumulator_operation state operation operand =
+  let a = State.a state in
+  let carry = Flags.carry (State.flags state) in
+  let result =
+    match operation with
+    | Instr.Add -> Alu.add ~carry:false a operand
+    | Instr.Add_with_carry -> Alu.add ~carry a operand
+    | Instr.Subtract | Instr.Compare -> Alu.subtract ~borrow:false a operand
+    | Instr.Subtract_with_borrow -> Alu.subtract ~borrow:carry a operand
+    | Instr.And -> Alu.logand a operand
+    | Instr.Xor -> Alu.logxor a operand
+    | Instr.Or -> Alu.logor a operand
+  in
+  apply_result state result;
+  (* CMP changes flags, never the accumulator. *)
+  if operation <> Instr.Compare then State.set_a state result.Alu.value
+
 let finish cpu pc_before decoded fetched_bytes memory_accesses control_flow =
   Step.create ~pc_before ~pc_after:(State.pc cpu.state) ~decoded ~fetched_bytes
     ~memory_accesses ~control_flow
@@ -145,6 +174,14 @@ let step cpu =
         let sequential () =
           State.set_pc state next_pc;
           Ok (finish cpu pc_before decoded fetched_bytes [] Step.Sequential)
+        in
+        let modify_byte operation destination =
+          let old, reads = read_register_or_memory cpu destination in
+          let value, status = operation old in
+          let writes = write_register_or_memory cpu destination value in
+          apply_status (State.flags state) status;
+          State.set_pc state next_pc;
+          Ok (finish cpu pc_before decoded fetched_bytes (reads @ writes) Step.Sequential)
         in
         (match decoded.Decode.instr with
         | Instr.Nop -> sequential ()
@@ -321,15 +358,51 @@ let step cpu =
             State.set_pc state next_pc;
             cpu.halted <- true;
             Ok (finish cpu pc_before decoded fetched_bytes [] Step.Halt)
-        | Instr.Inr _
-        | Instr.Dcr _
-        | Instr.Dad _
-        | Instr.Alu _
-        | Instr.Alu_immediate _
-        | Instr.Rotate _
-        | Instr.Daa
-        | Instr.Cma
-        | Instr.Stc
-        | Instr.Cmc
+        | Instr.Inr destination -> modify_byte Alu.increment destination
+        | Instr.Dcr destination -> modify_byte Alu.decrement destination
+        | Instr.Alu (operation, source) ->
+            let operand, accesses = read_register_or_memory cpu source in
+            accumulator_operation state operation operand;
+            State.set_pc state next_pc;
+            Ok (finish cpu pc_before decoded fetched_bytes accesses Step.Sequential)
+        | Instr.Alu_immediate (operation, operand) ->
+            accumulator_operation state operation operand;
+            sequential ()
+        | Instr.Dad pair ->
+            let value, carry = Alu.dad (State.hl state) (pair_value state pair) in
+            State.set_hl state value;
+            Flags.set_carry (State.flags state) carry;
+            sequential ()
+        | Instr.Rotate rotation ->
+            let a = State.a state in
+            let carry = Flags.carry (State.flags state) in
+            let value, carry =
+              match rotation with
+              | Instr.Rotate_left -> Alu.rlc a
+              | Instr.Rotate_right -> Alu.rrc a
+              | Instr.Rotate_left_through_carry -> Alu.ral ~carry a
+              | Instr.Rotate_right_through_carry -> Alu.rar ~carry a
+            in
+            State.set_a state value;
+            Flags.set_carry (State.flags state) carry;
+            sequential ()
+        | Instr.Daa ->
+            let flags = State.flags state in
+            let result =
+              Alu.daa ~auxiliary_carry:(Flags.auxiliary_carry flags)
+                ~carry:(Flags.carry flags) (State.a state)
+            in
+            State.set_a state result.Alu.value;
+            apply_result state result;
+            sequential ()
+        | Instr.Cma ->
+            State.set_a state (Alu.complement (State.a state));
+            sequential ()
+        | Instr.Stc ->
+            Flags.set_carry (State.flags state) true;
+            sequential ()
+        | Instr.Cmc ->
+            Flags.set_carry (State.flags state) (not (Flags.carry (State.flags state)));
+            sequential ()
         | Instr.Ei
         | Instr.Di -> Error (Unsupported_instruction decoded))

@@ -192,7 +192,7 @@ let test_runner_errors () =
   | Error (Runner.Invalid_step_limit _) -> failwith "wrong error for infinite NOP program"
   | Ok _ -> failwith "infinite NOP program unexpectedly terminated");
   assert (!steps = 3);
-  (match Runner.run_bytes ~output:(fun _ -> ()) (Bytes.of_string "\x09") with
+  (match Runner.run_bytes ~output:(fun _ -> ()) (Bytes.of_string "\xfb") with
   | Error (Runner.Cpu_error (I8080.Cpu.Unsupported_instruction _)) -> ()
   | Error (Runner.Load_error _) -> failwith "unexpected loader error"
   | Error (Runner.Cpu_error (I8080.Cpu.Decode_error _)) -> failwith "wrong CPU error"

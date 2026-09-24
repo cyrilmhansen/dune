@@ -577,19 +577,19 @@ let test_cpu_alias_and_fetch_wrap () =
 
 let test_cpu_unsupported_is_atomic () =
   let cpu, state, _memory, _bus =
-    make_cpu ~pc:0x5000 ~sp:0x7000 (Bytes.of_string "\x09\x00")
+    make_cpu ~pc:0x5000 ~sp:0x7000 (Bytes.of_string "\xfb\x00")
   in
   I8080.State.set_a state 0xa5;
   I8080.State.set_bc state 0x1234;
   let before_pc = I8080.State.pc state in
   (match I8080.Cpu.step cpu with
   | Error (I8080.Cpu.Unsupported_instruction decoded) ->
-      assert (decoded.opcode = 0x09);
-      assert (decoded.instr = I8080.Instr.Dad I8080.Instr.BC)
+      assert (decoded.opcode = 0xfb);
+      assert (decoded.instr = I8080.Instr.Ei)
   | Error (I8080.Cpu.Decode_error _) -> failwith "valid instruction bytes failed to decode"
   | Error (I8080.Cpu.Bus_io_error _) -> failwith "unexpected I/O error"
   | Error I8080.Cpu.Cpu_halted -> failwith "CPU unexpectedly halted"
-  | Ok _ -> failwith "unsupported DAD unexpectedly executed");
+  | Ok _ -> failwith "unsupported EI unexpectedly executed");
   assert (I8080.State.pc state = before_pc);
   assert (I8080.State.a state = 0xa5);
   assert (I8080.State.bc state = 0x1234);

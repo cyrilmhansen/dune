@@ -606,6 +606,8 @@ let test_halt () =
   assert (I8080.State.pc state = 0x0101)
 
 let is_deferred = function
+  | I8080.Instr.Ei
+  | I8080.Instr.Di -> true
   | I8080.Instr.Inr _
   | I8080.Instr.Dcr _
   | I8080.Instr.Dad _
@@ -616,8 +618,6 @@ let is_deferred = function
   | I8080.Instr.Cma
   | I8080.Instr.Stc
   | I8080.Instr.Cmc
-  | I8080.Instr.Ei
-  | I8080.Instr.Di -> true
   | I8080.Instr.Nop
   | I8080.Instr.Mov _
   | I8080.Instr.Mvi _
@@ -657,19 +657,21 @@ let test_all_opcodes_classified () =
       | Error _ -> failwith "complete opcode buffer failed to decode"
     in
     let expected_deferred = is_deferred decoded.instr in
+    assert (expected_deferred = (opcode = 0xf3 || opcode = 0xfb));
     if expected_deferred then incr deferred_count else incr implemented_count;
     let cpu, _, _ = machine program in
     match I8080.Cpu.step cpu with
     | Error (I8080.Cpu.Unsupported_instruction unsupported) ->
         assert expected_deferred;
         assert (unsupported.opcode = opcode)
-    | Error (I8080.Cpu.Bus_io_error _) -> assert (not expected_deferred)
+    | Error (I8080.Cpu.Bus_io_error _) -> assert (opcode = 0xdb || opcode = 0xd3)
     | Error (I8080.Cpu.Decode_error _) -> failwith "complete opcode unexpectedly truncated"
     | Error I8080.Cpu.Cpu_halted -> failwith "fresh CPU unexpectedly halted"
     | Ok _ -> assert (not expected_deferred)
   done;
-  assert (!deferred_count = 102);
-  assert (!implemented_count = 154)
+  assert (!deferred_count = 2);
+  assert (!implemented_count = 254);
+  print_endline "Opcode coverage: 254 supported, only DI/EI deferred"
 
 let () =
   test_mov_matrix ();
