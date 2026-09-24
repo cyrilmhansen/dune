@@ -4,6 +4,11 @@ type termination = Bdos_function of int
 
 type run_result = { termination : termination; steps : int }
 
+type event =
+  | Step of I8080.Step.t
+  | Bdos_call of { step_index : int; function_number : int; de : int }
+  | Termination of { step_index : int; reason : termination }
+
 type error =
   | Load_error of Cpm.Loader.error
   | Cpu_error of I8080.Cpu.error
@@ -20,6 +25,7 @@ val default_max_steps : int
 val run_bytes :
   ?max_steps:int ->
   ?on_step:(I8080.Step.t -> unit) ->
+  ?on_event:(event -> unit) ->
   output:(char -> unit) ->
   bytes ->
   (run_result, error) Stdlib.result
@@ -27,6 +33,7 @@ val run_bytes :
 val run_file :
   ?max_steps:int ->
   ?on_step:(I8080.Step.t -> unit) ->
+  ?on_event:(event -> unit) ->
   output:(char -> unit) ->
   path:string ->
   unit ->

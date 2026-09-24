@@ -4,4 +4,8 @@
 
 (test
  (name cpm_runner)
- (libraries i8080 cpm runner))
+ (libraries i8080 cpm runner trace))
+
+(test
+ (name trace_format)
+ (libraries i8080 runner trace))

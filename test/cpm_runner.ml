@@ -92,9 +92,18 @@ let test_hello_integration () =
   assert (Bytes.length hello_com = 19);
   let output = Buffer.create 8 in
   let observed = ref [] in
+  let trace_output = Buffer.create 512 in
+  let writer = Trace.Writer.create ~output:(Buffer.add_string trace_output) in
+  let trace_step_index = ref 0 in
   let result =
     Runner.run_bytes ~output:(Buffer.add_char output)
       ~on_step:(fun step -> observed := step :: !observed) hello_com
+      ~on_event:(fun event ->
+        Trace.Writer.write writer
+          (Trace.Event.of_runner_event ~step_index:!trace_step_index event);
+        (match event with
+        | Runner.Step _ -> incr trace_step_index
+        | Runner.Bdos_call _ | Runner.Termination _ -> ()))
   in
   let result = expect_result result in
   assert (Buffer.contents output = "HELLO");
@@ -150,7 +159,24 @@ let test_hello_integration () =
     = I8080.Step.Call { target = 0x0005; taken = true });
   assert
     (I8080.Step.control_flow (List.nth steps 3)
-    = I8080.Step.Return { target = Some 0x0108; taken = true })
+    = I8080.Step.Return { target = Some 0x0108; taken = true });
+  let expected_trace =
+    "AT8TRACE\t1\n"
+    ^ "STEP\t0\t0100\t0102\t0E\t0E09\tdocumented\tsequential\n"
+    ^ "STEP\t1\t0102\t0105\t11\t110D01\tdocumented\tsequential\n"
+    ^ "STEP\t2\t0105\t0005\tCD\tCD0500\tdocumented\tcall:1:0005\n"
+    ^ "MEMW\t2\tFFFD\t01\nMEMW\t2\tFFFC\t08\n"
+    ^ "BDOS\t3\t9\t010D\n"
+    ^ "STEP\t3\t0005\t0108\tC9\tC9\tdocumented\treturn:1:0108\n"
+    ^ "MEMR\t3\tFFFC\t08\nMEMR\t3\tFFFD\t01\n"
+    ^ "STEP\t4\t0108\t010A\t0E\t0E00\tdocumented\tsequential\n"
+    ^ "STEP\t5\t010A\t0005\tCD\tCD0500\tdocumented\tcall:1:0005\n"
+    ^ "MEMW\t5\tFFFD\t01\nMEMW\t5\tFFFC\t0D\n"
+    ^ "BDOS\t6\t0\t010D\nTERM\t6\tbdos:0\n"
+  in
+  let actual_trace = Buffer.contents trace_output in
+  if actual_trace <> expected_trace then
+    failwith (Printf.sprintf "unexpected HELLO trace:\n%s" actual_trace)
 
 let test_runner_errors () =
   let steps = ref 0 in

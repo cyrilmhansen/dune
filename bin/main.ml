@@ -1,4 +1,5 @@
-let usage = "Usage: pli80-run PROGRAM.COM\n       pli80-run --help"
+let usage =
+  "Usage: pli80-run [--trace FILE] PROGRAM.COM\n       pli80-run --help"
 
 let string_of_loader_error = function
   | Cpm.Loader.Program_too_large { size; maximum } ->
@@ -33,18 +34,46 @@ let string_of_runner_error = function
   | Runner.Invalid_step_limit limit ->
       Printf.sprintf "invalid instruction limit %d (must be positive)" limit
 
+let run ?trace_path path =
+  let output = Buffer.create 32 in
+  let execute on_event =
+    match Runner.run_file ~on_event ~output:(Buffer.add_char output) ~path () with
+    | Ok _ ->
+        output_string stdout (Buffer.contents output);
+        flush stdout
+    | Error error ->
+        prerr_endline ("pli80-run: " ^ string_of_runner_error error);
+        exit 1
+  in
+  match trace_path with
+  | None -> execute (fun _ -> ())
+  | Some trace_path ->
+      (try
+         let channel = open_out_bin trace_path in
+         Fun.protect
+           ~finally:(fun () -> close_out channel)
+           (fun () ->
+             let writer =
+               Trace.Writer.create ~output:(output_string channel)
+             in
+             let step_index = ref 0 in
+             execute (fun event ->
+                 let persistent =
+                   Trace.Event.of_runner_event ~step_index:!step_index event
+                 in
+                 Trace.Writer.write writer persistent;
+                 (match event with
+                 | Runner.Step _ -> incr step_index
+                 | Runner.Bdos_call _ | Runner.Termination _ -> ())))
+       with Sys_error message ->
+         prerr_endline ("pli80-run: cannot write trace: " ^ message);
+         exit 1)
+
 let () =
   match Array.to_list Sys.argv with
   | [ _; "--help" ] -> print_endline usage
-  | [ _; path ] ->
-      let output = Buffer.create 32 in
-      (match Runner.run_file ~output:(Buffer.add_char output) ~path () with
-      | Ok _ ->
-          output_string stdout (Buffer.contents output);
-          flush stdout
-      | Error error ->
-          prerr_endline ("pli80-run: " ^ string_of_runner_error error);
-          exit 1)
+  | [ _; path ] -> run path
+  | [ _; "--trace"; trace_path; path ] -> run ~trace_path path
   | _ ->
       prerr_endline usage;
       exit 2
