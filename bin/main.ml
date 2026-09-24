@@ -87,6 +87,8 @@ let string_of_runner_error = function
       Printf.sprintf "instruction limit exceeded after %d steps (limit %d)" steps max_steps
   | Runner.Invalid_step_limit limit ->
       Printf.sprintf "invalid instruction limit %d (must be positive)" limit
+  | Runner.Invalid_command_tail length ->
+      Printf.sprintf "invalid CP/M command tail length %d (maximum 127)" length
 
 let run ?trace_path ?max_steps path =
   let output = Buffer.create 32 in

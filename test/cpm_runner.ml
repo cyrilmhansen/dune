@@ -4,6 +4,11 @@ let expect_result = function
   | Ok value -> value
   | Error _ -> failwith "expected operation to succeed"
 
+let dispatch_bdos ~memory ~state ~output =
+  let filesystem = Cpm.Filesystem.create () in
+  let runtime = Cpm.Bdos.create ~filesystem in
+  Cpm.Bdos.dispatch ~runtime ~memory ~state ~output
+
 let test_loader () =
   let memory = I8080.Memory.create () in
   let program = Bytes.of_string "\x0e\x09\xcd\x05\x00" in
@@ -40,7 +45,7 @@ let test_bdos_print_string () =
   I8080.Flags.set_carry (I8080.State.flags state) true;
   let output = Buffer.create 16 in
   assert
-    (Cpm.Bdos.dispatch ~memory ~state ~output:(Buffer.add_char output)
+    (dispatch_bdos ~memory ~state ~output:(Buffer.add_char output)
     = Ok Cpm.Bdos.Continue);
   assert (Buffer.contents output = "HELLO");
   assert (I8080.State.a state = 0xa7);
@@ -49,7 +54,7 @@ let test_bdos_print_string () =
   I8080.Memory.write memory 0x2100 0x24;
   let empty_output = Buffer.create 1 in
   assert
-    (Cpm.Bdos.dispatch ~memory ~state:empty_state ~output:(Buffer.add_char empty_output)
+    (dispatch_bdos ~memory ~state:empty_state ~output:(Buffer.add_char empty_output)
     = Ok Cpm.Bdos.Continue);
   assert (Buffer.contents empty_output = "")
 
@@ -66,7 +71,7 @@ let test_bdos_console_output () =
       let emitted = ref [] in
       let calls = ref 0 in
       let output char = incr calls; emitted := char :: !emitted in
-      assert (Cpm.Bdos.dispatch ~memory ~state ~output = Ok Cpm.Bdos.Continue);
+      assert (dispatch_bdos ~memory ~state ~output = Ok Cpm.Bdos.Continue);
       assert (!calls = 1);
       assert (List.rev !emitted = [ Char.chr byte ]))
     [ Char.code 'A'; 13; 10; 0xff ];
@@ -82,14 +87,14 @@ let test_bdos_wrap_and_errors () =
   let state = state_with_bdos_args ~function_number:9 ~de:0xffff in
   let output = Buffer.create 2 in
   assert
-    (Cpm.Bdos.dispatch ~memory ~state ~output:(Buffer.add_char output)
+    (dispatch_bdos ~memory ~state ~output:(Buffer.add_char output)
     = Ok Cpm.Bdos.Continue);
   assert (Buffer.contents output = "OK");
   let empty_memory = I8080.Memory.create () in
   let unterminated = state_with_bdos_args ~function_number:9 ~de:0 in
   let output_count = ref 0 in
   (match
-     Cpm.Bdos.dispatch ~memory:empty_memory ~state:unterminated
+     dispatch_bdos ~memory:empty_memory ~state:unterminated
        ~output:(fun _ -> incr output_count)
    with
   | Error (Cpm.Bdos.Unterminated_string { start_address = 0; scanned = 65536 }) -> ()
@@ -98,13 +103,159 @@ let test_bdos_wrap_and_errors () =
   | Ok _ -> failwith "unterminated string unexpectedly succeeded");
   assert (!output_count = 65536);
   let unsupported = state_with_bdos_args ~function_number:7 ~de:0 in
-  (match Cpm.Bdos.dispatch ~memory ~state:unsupported ~output:(fun _ -> ()) with
+  (match dispatch_bdos ~memory ~state:unsupported ~output:(fun _ -> ()) with
   | Error (Cpm.Bdos.Unsupported_function 7) -> ()
   | Error (Cpm.Bdos.Unsupported_function _) -> failwith "wrong BDOS function reported"
   | Error (Cpm.Bdos.Unterminated_string _) -> failwith "wrong BDOS error"
   | Ok _ -> failwith "unsupported BDOS function unexpectedly succeeded");
   let terminate = state_with_bdos_args ~function_number:0 ~de:0 in
-  assert (Cpm.Bdos.dispatch ~memory ~state:terminate ~output:(fun _ -> ()) = Ok Cpm.Bdos.Terminate)
+  assert (dispatch_bdos ~memory ~state:terminate ~output:(fun _ -> ()) = Ok Cpm.Bdos.Terminate)
+
+let fcb_for_name memory ~address name =
+  for offset = 0 to 35 do I8080.Memory.write memory (address + offset) 0 done;
+  let base, extension =
+    match String.index_opt name '.' with
+    | None -> name, ""
+    | Some dot -> String.sub name 0 dot, String.sub name (dot + 1) (String.length name - dot - 1)
+  in
+  I8080.Memory.write memory address 0;
+  String.iteri (fun i c -> I8080.Memory.write memory (address + i + 1) (Char.code c)) base;
+  for i = String.length base to 7 do I8080.Memory.write memory (address + i + 1) 0x20 done;
+  String.iteri (fun i c -> I8080.Memory.write memory (address + i + 9) (Char.code c)) extension;
+  for i = String.length extension to 2 do I8080.Memory.write memory (address + i + 9) 0x20 done
+
+let call_bdos runtime memory ~function_number ~de =
+  let state = I8080.State.create () in
+  I8080.State.set_c state function_number;
+  I8080.State.set_de state de;
+  let result =
+    Cpm.Bdos.dispatch ~runtime ~memory ~state ~output:(fun _ -> ())
+  in
+  result, state
+
+let test_cpm22_scalar_bdos () =
+  let memory = I8080.Memory.create () in
+  let filesystem = Cpm.Filesystem.create () in
+  assert (Cpm.Filesystem.add_file filesystem ~drive:10 ~user:3 ~name:"case.bin" (Bytes.of_string "M") = Ok ());
+  assert (Cpm.Filesystem.list_files filesystem ~drive:10 ~user:3 () = [ "CASE.BIN" ]);
+  assert (Cpm.Filesystem.list_files filesystem ~drive:0 ~user:3 () = []);
+  let runtime = Cpm.Bdos.create ~filesystem in
+  let result, state = call_bdos runtime memory ~function_number:12 ~de:0 in
+  assert (result = Ok Cpm.Bdos.Continue);
+  assert (I8080.State.a state = 0x22);
+  assert (I8080.State.b state = 0);
+  assert (I8080.State.h state = 0);
+  assert (I8080.State.l state = 0x22);
+  let result, state = call_bdos runtime memory ~function_number:11 ~de:0 in
+  assert (result = Ok Cpm.Bdos.Continue && I8080.State.a state = 0);
+  let result, state = call_bdos runtime memory ~function_number:108 ~de:0 in
+  assert (result = Ok Cpm.Bdos.Continue);
+  assert (I8080.State.a state = 0 && I8080.State.b state = 0 && I8080.State.hl state = 0);
+  let result, _ = call_bdos runtime memory ~function_number:7 ~de:0 in
+  assert (result = Error (Cpm.Bdos.Unsupported_function 7));
+  let result, _ = call_bdos runtime memory ~function_number:26 ~de:0x4321 in
+  assert (result = Ok Cpm.Bdos.Continue);
+  assert (Cpm.Bdos.dma runtime = 0x4321);
+  assert (Cpm.Bdos.current_drive runtime = 0 && Cpm.Bdos.current_user runtime = 0)
+
+let test_cpm_sequential_files () =
+  let memory = I8080.Memory.create () in
+  let filesystem = Cpm.Filesystem.create () in
+  let runtime = Cpm.Bdos.create ~filesystem in
+  let key = Cpm.Filesystem.key_of_name ~drive:0 ~user:0 ~name:"source.dat" |> expect_result in
+  let source = Bytes.init (260 * 128) (fun index -> Char.chr ((index / 128 + index) land 0xff)) in
+  assert (Cpm.Filesystem.add_file filesystem ~name:"SoUrCe.DaT" source = Ok ());
+  assert (Cpm.Filesystem.list_files filesystem () = [ "SOURCE.DAT" ]);
+  fcb_for_name memory ~address:0x2000 "SOURCE.DAT";
+  let result, state = call_bdos runtime memory ~function_number:15 ~de:0x2000 in
+  assert (result = Ok Cpm.Bdos.Continue && I8080.State.a state = 0);
+  let fcb = Cpm.Fcb.at memory ~address:0x2000 in
+  assert (Cpm.Fcb.record_count fcb = 128);
+  assert (Cpm.Fcb.extent fcb = 0 && Cpm.Fcb.current_record fcb = 0);
+  let missing, missing_state = call_bdos runtime memory ~function_number:15 ~de:0x2100 in
+  assert (missing = Ok Cpm.Bdos.Continue && I8080.State.a missing_state = 0xff);
+  let result, state = call_bdos runtime memory ~function_number:26 ~de:0x3210 in
+  assert (result = Ok Cpm.Bdos.Continue && I8080.State.a state = 0);
+  assert (Cpm.Bdos.dma runtime = 0x3210);
+  for record_number = 0 to 259 do
+    let result, state = call_bdos runtime memory ~function_number:20 ~de:0x2000 in
+    assert (result = Ok Cpm.Bdos.Continue && I8080.State.a state = 0);
+    let actual = I8080.Memory.read_range memory ~address:0x3210 ~length:128 in
+    let expected = Bytes.sub source (record_number * 128) 128 in
+    assert (Bytes.equal actual expected);
+    if record_number = 127 then (
+      assert (Cpm.Fcb.extent fcb = 1);
+      assert (Cpm.Fcb.current_record fcb = 0);
+      assert (Cpm.Fcb.record_count fcb = 128));
+    if record_number = 255 then (
+      assert (Cpm.Fcb.extent fcb = 2);
+      assert (Cpm.Fcb.current_record fcb = 0);
+      assert (Cpm.Fcb.record_count fcb = 4))
+  done;
+  assert (Cpm.Fcb.extent fcb = 2 && Cpm.Fcb.current_record fcb = 4);
+  assert (Cpm.Fcb.record_count fcb = 4);
+  let eof, eof_state = call_bdos runtime memory ~function_number:20 ~de:0x2000 in
+  assert (eof = Ok Cpm.Bdos.Continue && I8080.State.a eof_state = 1);
+  assert (Cpm.Filesystem.record_count filesystem key = Some 260);
+  let result, state = call_bdos runtime memory ~function_number:19 ~de:0x2000 in
+  assert (result = Ok Cpm.Bdos.Continue && I8080.State.a state = 0);
+  let result, state = call_bdos runtime memory ~function_number:19 ~de:0x2000 in
+  assert (result = Ok Cpm.Bdos.Continue && I8080.State.a state = 0xff)
+
+let test_cpm_make_write_close () =
+  let memory = I8080.Memory.create () in
+  let filesystem = Cpm.Filesystem.create () in
+  let runtime = Cpm.Bdos.create ~filesystem in
+  fcb_for_name memory ~address:0x2200 "OUTPUT.REL";
+  let result, state = call_bdos runtime memory ~function_number:22 ~de:0x2200 in
+  assert (result = Ok Cpm.Bdos.Continue && I8080.State.a state = 0);
+  assert (Cpm.Filesystem.get_file filesystem ~name:"OUTPUT.REL" () = Ok (Some Bytes.empty));
+  let fcb = Cpm.Fcb.at memory ~address:0x2200 in
+  assert (Cpm.Fcb.record_count fcb = 0);
+  let expected = Bytes.create (130 * 128) in
+  for record = 0 to 129 do
+    let data = Bytes.init 128 (fun index -> Char.chr ((record * 17 + index) land 0xff)) in
+    Bytes.blit data 0 expected (record * 128) 128;
+    I8080.Memory.load memory ~address:0x4000 data;
+    let set_dma, dma_state = call_bdos runtime memory ~function_number:26 ~de:0x4000 in
+    assert (set_dma = Ok Cpm.Bdos.Continue && I8080.State.a dma_state = 0);
+    let write, write_state = call_bdos runtime memory ~function_number:21 ~de:0x2200 in
+    assert (write = Ok Cpm.Bdos.Continue && I8080.State.a write_state = 0);
+    if record = 127 then (
+      assert (Cpm.Fcb.extent fcb = 1 && Cpm.Fcb.current_record fcb = 0);
+      assert (Cpm.Fcb.record_count fcb = 0))
+  done;
+  let close, close_state = call_bdos runtime memory ~function_number:16 ~de:0x2200 in
+  assert (close = Ok Cpm.Bdos.Continue && I8080.State.a close_state = 0);
+  assert (Cpm.Filesystem.get_file filesystem ~name:"OUTPUT.REL" () = Ok (Some expected));
+  assert (Cpm.Fcb.extent fcb = 1 && Cpm.Fcb.current_record fcb = 2);
+  assert (Cpm.Fcb.record_count fcb = 2)
+
+let test_cpm_launch_state () =
+  let tail = Bytes.of_string " OPTIMIST" in
+  let checked = ref false in
+  let result =
+    Runner.run_bytes ~command_tail:tail ~output:(fun _ -> ())
+      ~on_start:(fun page_zero ->
+        checked := true;
+        let read address = Char.code (Bytes.get page_zero address) in
+        let range address length = Bytes.sub page_zero address length in
+        assert (read 0x0080 = 9);
+        assert (range 0x0081 9 = tail);
+        assert (read 0x008a = 0);
+        let fcb1 = range 0x005c 16 in
+        assert
+          (Bytes.to_string fcb1
+          = "\000OPTIMIST   \000\000\000\000");
+        let fcb2 = range 0x006c 16 in
+        let expected_fcb2 = Bytes.make 16 '\000' in
+        Bytes.fill expected_fcb2 1 11 ' ';
+        assert (Bytes.equal fcb2 expected_fcb2))
+      (Bytes.of_string "\xc3\x00\x00")
+    |> expect_result
+  in
+  assert !checked;
+  assert (result.Runner.termination = Runner.Warm_boot)
 
 let hello_com = Bytes.of_string
     "\x0e\x09\x11\x0d\x01\xcd\x05\x00\x0e\x00\xcd\x05\x00\x48\x45\x4c\x4c\x4f\x24"
@@ -255,6 +406,7 @@ let test_runner_errors () =
   | Error (Runner.Cpu_error _) -> failwith "wrong error for infinite NOP program"
   | Error (Runner.Bdos_error _) -> failwith "wrong error for infinite NOP program"
   | Error (Runner.Invalid_step_limit _) -> failwith "wrong error for infinite NOP program"
+  | Error (Runner.Invalid_command_tail _) -> failwith "wrong error for infinite NOP program"
   | Ok _ -> failwith "infinite NOP program unexpectedly terminated");
   assert (!steps = 3);
   (match Runner.run_bytes ~output:(fun _ -> ()) (Bytes.of_string "\xfb\x76") with
@@ -267,6 +419,7 @@ let test_runner_errors () =
   | Error (Runner.Bdos_error _) -> failwith "wrong runner error for halted CPU"
   | Error (Runner.Step_limit_exceeded _) -> failwith "wrong runner error for halted CPU"
   | Error (Runner.Invalid_step_limit _) -> failwith "wrong runner error for halted CPU"
+  | Error (Runner.Invalid_command_tail _) -> failwith "wrong runner error for halted CPU"
   | Ok _ -> failwith "halted CPU unexpectedly terminated");
   (match
      Runner.run_bytes ~output:(fun _ -> ()) (Bytes.of_string "\x0e\x07\xcd\x05\x00")
@@ -278,6 +431,7 @@ let test_runner_errors () =
   | Error (Runner.Bdos_error (Cpm.Bdos.Unterminated_string _)) -> failwith "wrong BDOS error"
   | Error (Runner.Step_limit_exceeded _) -> failwith "wrong runner error for unsupported BDOS function"
   | Error (Runner.Invalid_step_limit _) -> failwith "wrong runner error for unsupported BDOS function"
+  | Error (Runner.Invalid_command_tail _) -> failwith "wrong runner error for unsupported BDOS function"
   | Ok _ -> failwith "unsupported BDOS function unexpectedly ran");
   (match Runner.run_bytes ~max_steps:0 ~output:(fun _ -> ()) hello_com with
   | Error (Runner.Invalid_step_limit 0) -> ()
@@ -286,6 +440,7 @@ let test_runner_errors () =
   | Error (Runner.Bdos_error _) -> failwith "wrong invalid step limit error"
   | Error (Runner.Step_limit_exceeded _) -> failwith "wrong invalid step limit error"
   | Error (Runner.Invalid_step_limit _) -> failwith "wrong invalid step limit error"
+  | Error (Runner.Invalid_command_tail _) -> failwith "wrong invalid step limit error"
   | Ok _ -> failwith "zero instruction limit unexpectedly ran")
 
 let () =
@@ -293,6 +448,10 @@ let () =
   test_bdos_print_string ();
   test_bdos_console_output ();
   test_bdos_wrap_and_errors ();
+  test_cpm22_scalar_bdos ();
+  test_cpm_sequential_files ();
+  test_cpm_make_write_close ();
+  test_cpm_launch_state ();
   test_hello_integration ();
   test_warm_boot_and_page_zero ();
   test_runner_errors ()
