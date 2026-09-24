@@ -1,3 +1,7 @@
 (test
  (name primitives)
  (libraries i8080))
+
+(test
+ (name cpm_runner)
+ (libraries i8080 cpm runner))
