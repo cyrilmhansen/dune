@@ -68,6 +68,30 @@ let test_live_step_conversion () =
       | Trace.Event.Bdos_call _ | Trace.Event.Termination _ ->
           failwith "live CPU step converted to non-step trace event")
 
+let test_interrupt_step_rejected_by_v1 () =
+  let memory = I8080.Memory.create () in
+  I8080.Memory.load memory ~address:0x0100 (Bytes.of_string "\xfb\x00");
+  let state = I8080.State.create () in
+  I8080.State.set_pc state 0x0100;
+  let cpu = I8080.Cpu.create ~state ~bus:(I8080.Bus.create memory) in
+  (match I8080.Cpu.step cpu with
+  | Ok _ -> ()
+  | Error _ -> failwith "expected EI to execute");
+  (match I8080.Cpu.step cpu with
+  | Ok _ -> ()
+  | Error _ -> failwith "expected EI's protected instruction to execute");
+  match I8080.Cpu.step ~interrupt:(Bytes.of_string "\x00") cpu with
+  | Error _ -> failwith "expected interrupt acknowledge instruction"
+  | Ok live ->
+      assert (I8080.Step.source live = I8080.Step.Interrupt_acknowledge);
+      (match Trace.Event.cpu_step_of_live ~step_index:2 live with
+      | exception Invalid_argument message ->
+          assert
+            (String.equal message
+               "AT8TRACE v1 cannot represent interrupt-acknowledge instruction origin")
+      | _ -> failwith "AT8TRACE v1 accepted an interrupt-origin step")
+
 let () =
   test_writer_format_and_determinism ();
-  test_live_step_conversion ()
+  test_live_step_conversion ();
+  test_interrupt_step_rejected_by_v1 ()

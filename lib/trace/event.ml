@@ -48,6 +48,11 @@ let memory_access_of_live = function
   | I8080.Step.Write { address; value } -> Write { address; value }
 
 let cpu_step_of_live ~step_index live =
+  (match I8080.Step.source live with
+  | I8080.Step.Memory -> ()
+  | I8080.Step.Interrupt_acknowledge ->
+      invalid_arg
+        "AT8TRACE v1 cannot represent interrupt-acknowledge instruction origin");
   let decoded = I8080.Step.decoded live in
   Cpu_step
     {

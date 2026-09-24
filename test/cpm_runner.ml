@@ -192,16 +192,17 @@ let test_runner_errors () =
   | Error (Runner.Invalid_step_limit _) -> failwith "wrong error for infinite NOP program"
   | Ok _ -> failwith "infinite NOP program unexpectedly terminated");
   assert (!steps = 3);
-  (match Runner.run_bytes ~output:(fun _ -> ()) (Bytes.of_string "\xfb") with
-  | Error (Runner.Cpu_error (I8080.Cpu.Unsupported_instruction _)) -> ()
+  (match Runner.run_bytes ~output:(fun _ -> ()) (Bytes.of_string "\xfb\x76") with
+  | Error (Runner.Cpu_error I8080.Cpu.Cpu_halted) -> ()
   | Error (Runner.Load_error _) -> failwith "unexpected loader error"
   | Error (Runner.Cpu_error (I8080.Cpu.Decode_error _)) -> failwith "wrong CPU error"
   | Error (Runner.Cpu_error (I8080.Cpu.Bus_io_error _)) -> failwith "wrong CPU error"
-  | Error (Runner.Cpu_error I8080.Cpu.Cpu_halted) -> failwith "wrong CPU error"
-  | Error (Runner.Bdos_error _) -> failwith "wrong runner error for unsupported CPU instruction"
-  | Error (Runner.Step_limit_exceeded _) -> failwith "wrong runner error for unsupported CPU instruction"
-  | Error (Runner.Invalid_step_limit _) -> failwith "wrong runner error for unsupported CPU instruction"
-  | Ok _ -> failwith "unsupported CPU instruction unexpectedly ran");
+  | Error (Runner.Cpu_error (I8080.Cpu.Interrupt_acknowledge_length _)) -> failwith "wrong CPU error"
+  | Error (Runner.Cpu_error (I8080.Cpu.Unsupported_instruction _)) -> failwith "wrong CPU error"
+  | Error (Runner.Bdos_error _) -> failwith "wrong runner error for halted CPU"
+  | Error (Runner.Step_limit_exceeded _) -> failwith "wrong runner error for halted CPU"
+  | Error (Runner.Invalid_step_limit _) -> failwith "wrong runner error for halted CPU"
+  | Ok _ -> failwith "halted CPU unexpectedly terminated");
   (match
      Runner.run_bytes ~output:(fun _ -> ()) (Bytes.of_string "\x0e\x07\xcd\x05\x00")
   with

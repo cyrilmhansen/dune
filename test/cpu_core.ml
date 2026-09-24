@@ -565,6 +565,7 @@ let test_io_atomicity () =
     -> failwith "wrong error for unconfigured IN port"
   | Error (I8080.Cpu.Decode_error _) -> failwith "unexpected decode error for IN"
   | Error (I8080.Cpu.Unsupported_instruction _) -> failwith "IN is unsupported"
+  | Error (I8080.Cpu.Interrupt_acknowledge_length _) -> failwith "unexpected interrupt error"
   | Error I8080.Cpu.Cpu_halted -> failwith "fresh CPU unexpectedly halted"
   | Ok _ -> failwith "unconfigured IN unexpectedly succeeded");
   assert (I8080.State.pc input_state = 0x0100);
@@ -581,6 +582,7 @@ let test_io_atomicity () =
     -> failwith "wrong error for unconfigured OUT port"
   | Error (I8080.Cpu.Decode_error _) -> failwith "unexpected decode error for OUT"
   | Error (I8080.Cpu.Unsupported_instruction _) -> failwith "OUT is unsupported"
+  | Error (I8080.Cpu.Interrupt_acknowledge_length _) -> failwith "unexpected interrupt error"
   | Error I8080.Cpu.Cpu_halted -> failwith "fresh CPU unexpectedly halted"
   | Ok _ -> failwith "unconfigured OUT unexpectedly succeeded");
   assert (I8080.State.pc output_state = 0x0100);
@@ -602,12 +604,13 @@ let test_halt () =
   | Error (I8080.Cpu.Decode_error _) -> failwith "second HLT step decoded again"
   | Error (I8080.Cpu.Unsupported_instruction _) -> failwith "second HLT step decoded again"
   | Error (I8080.Cpu.Bus_io_error _) -> failwith "second HLT step performed I/O"
+  | Error (I8080.Cpu.Interrupt_acknowledge_length _) -> failwith "second HLT step decoded acknowledge"
   | Ok _ -> failwith "halted CPU fetched another instruction");
   assert (I8080.State.pc state = 0x0101)
 
 let is_deferred = function
   | I8080.Instr.Ei
-  | I8080.Instr.Di -> true
+  | I8080.Instr.Di -> false
   | I8080.Instr.Inr _
   | I8080.Instr.Dcr _
   | I8080.Instr.Dad _
@@ -657,21 +660,21 @@ let test_all_opcodes_classified () =
       | Error _ -> failwith "complete opcode buffer failed to decode"
     in
     let expected_deferred = is_deferred decoded.instr in
-    assert (expected_deferred = (opcode = 0xf3 || opcode = 0xfb));
+    assert (not expected_deferred);
     if expected_deferred then incr deferred_count else incr implemented_count;
     let cpu, _, _ = machine program in
     match I8080.Cpu.step cpu with
     | Error (I8080.Cpu.Unsupported_instruction unsupported) ->
-        assert expected_deferred;
-        assert (unsupported.opcode = opcode)
+        failwith (Printf.sprintf "opcode 0x%02X remains unsupported" unsupported.opcode)
     | Error (I8080.Cpu.Bus_io_error _) -> assert (opcode = 0xdb || opcode = 0xd3)
     | Error (I8080.Cpu.Decode_error _) -> failwith "complete opcode unexpectedly truncated"
+    | Error (I8080.Cpu.Interrupt_acknowledge_length _) -> failwith "unexpected acknowledge error"
     | Error I8080.Cpu.Cpu_halted -> failwith "fresh CPU unexpectedly halted"
     | Ok _ -> assert (not expected_deferred)
   done;
-  assert (!deferred_count = 2);
-  assert (!implemented_count = 254);
-  print_endline "Opcode coverage: 254 supported, only DI/EI deferred"
+  assert (!deferred_count = 0);
+  assert (!implemented_count = 256);
+  print_endline "Opcode coverage: 256 supported, none intentionally unsupported"
 
 let () =
   test_mov_matrix ();

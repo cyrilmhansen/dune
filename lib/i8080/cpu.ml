@@ -1,12 +1,26 @@
-type t = { state : State.t; bus : Bus.t; mutable halted : bool }
+type t = {
+  state : State.t;
+  bus : Bus.t;
+  mutable halted : bool;
+  mutable interrupt_enabled : bool;
+  (* Recognition inhibit for EI's following instruction; not a claim about the
+     physical timing of the INTE flip-flop. *)
+  mutable ei_delay : bool;
+}
 
 type error =
   | Decode_error of Decode.error
   | Unsupported_instruction of Decode.decoded
   | Bus_io_error of Bus.io_error
+  | Interrupt_acknowledge_length of {
+      opcode : int option;
+      required : int option;
+      provided : int;
+    }
   | Cpu_halted
 
-let create ~state ~bus = { state; bus; halted = false }
+let create ~state ~bus =
+  { state; bus; halted = false; interrupt_enabled = false; ei_delay = false }
 let is_halted cpu = cpu.halted
 
 let wrap_address address = address land 0xffff
@@ -158,22 +172,17 @@ let accumulator_operation state operation operand =
   (* CMP changes flags, never the accumulator. *)
   if operation <> Instr.Compare then State.set_a state result.Alu.value
 
-let finish cpu pc_before decoded fetched_bytes memory_accesses control_flow =
-  Step.create ~pc_before ~pc_after:(State.pc cpu.state) ~decoded ~fetched_bytes
-    ~memory_accesses ~control_flow
+let finish cpu ~origin pc_before decoded fetched_bytes memory_accesses control_flow =
+  Step.create ~source:origin ~pc_before ~pc_after:(State.pc cpu.state) ~decoded
+    ~fetched_bytes ~memory_accesses ~control_flow
 
-let step cpu =
-  if cpu.halted then Error Cpu_halted
-  else
-    let state = cpu.state in
-    let pc_before = State.pc state in
-    match fetch_instruction cpu pc_before with
-    | Error error -> Error error
-    | Ok (decoded, fetched_bytes) ->
-        let next_pc = wrap_address (pc_before + decoded.Decode.length) in
+let execute_decoded cpu ~origin ~pc_before ~next_pc decoded fetched_bytes =
+  let state = cpu.state in
+  let had_ei_delay = cpu.ei_delay in
+  let result =
         let sequential () =
           State.set_pc state next_pc;
-          Ok (finish cpu pc_before decoded fetched_bytes [] Step.Sequential)
+          Ok (finish cpu ~origin pc_before decoded fetched_bytes [] Step.Sequential)
         in
         let modify_byte operation destination =
           let old, reads = read_register_or_memory cpu destination in
@@ -181,28 +190,28 @@ let step cpu =
           let writes = write_register_or_memory cpu destination value in
           apply_status (State.flags state) status;
           State.set_pc state next_pc;
-          Ok (finish cpu pc_before decoded fetched_bytes (reads @ writes) Step.Sequential)
+          Ok (finish cpu ~origin pc_before decoded fetched_bytes (reads @ writes) Step.Sequential)
         in
         (match decoded.Decode.instr with
         | Instr.Nop -> sequential ()
         | Instr.Mvi (Instr.Register register, value) ->
             set_register state register value;
             State.set_pc state next_pc;
-            Ok (finish cpu pc_before decoded fetched_bytes [] Step.Sequential)
+            Ok (finish cpu ~origin pc_before decoded fetched_bytes [] Step.Sequential)
         | Instr.Mvi (Instr.Memory_at_HL, value) ->
             let accesses = write_register_or_memory cpu Instr.Memory_at_HL value in
             State.set_pc state next_pc;
-            Ok (finish cpu pc_before decoded fetched_bytes accesses Step.Sequential)
+            Ok (finish cpu ~origin pc_before decoded fetched_bytes accesses Step.Sequential)
         | Instr.Lxi (pair, value) ->
             set_pair state pair value;
             State.set_pc state next_pc;
-            Ok (finish cpu pc_before decoded fetched_bytes [] Step.Sequential)
+            Ok (finish cpu ~origin pc_before decoded fetched_bytes [] Step.Sequential)
         | Instr.Mov (destination, source) ->
             let value, reads = read_register_or_memory cpu source in
             let writes = write_register_or_memory cpu destination value in
             State.set_pc state next_pc;
             Ok
-              (finish cpu pc_before decoded fetched_bytes (reads @ writes)
+              (finish cpu ~origin pc_before decoded fetched_bytes (reads @ writes)
                  Step.Sequential)
         | Instr.Ldax pair ->
             let address =
@@ -213,7 +222,7 @@ let step cpu =
             let value, access = read_memory cpu address in
             State.set_a state value;
             State.set_pc state next_pc;
-            Ok (finish cpu pc_before decoded fetched_bytes [ access ] Step.Sequential)
+            Ok (finish cpu ~origin pc_before decoded fetched_bytes [ access ] Step.Sequential)
         | Instr.Stax pair ->
             let address =
               match pair with
@@ -222,16 +231,16 @@ let step cpu =
             in
             let access = write_memory cpu address (State.a state) in
             State.set_pc state next_pc;
-            Ok (finish cpu pc_before decoded fetched_bytes [ access ] Step.Sequential)
+            Ok (finish cpu ~origin pc_before decoded fetched_bytes [ access ] Step.Sequential)
         | Instr.Lda address ->
             let value, access = read_memory cpu address in
             State.set_a state value;
             State.set_pc state next_pc;
-            Ok (finish cpu pc_before decoded fetched_bytes [ access ] Step.Sequential)
+            Ok (finish cpu ~origin pc_before decoded fetched_bytes [ access ] Step.Sequential)
         | Instr.Sta address ->
             let access = write_memory cpu address (State.a state) in
             State.set_pc state next_pc;
-            Ok (finish cpu pc_before decoded fetched_bytes [ access ] Step.Sequential)
+            Ok (finish cpu ~origin pc_before decoded fetched_bytes [ access ] Step.Sequential)
         | Instr.Lhld address ->
             let low, low_read = read_memory cpu address in
             let high, high_read = read_memory cpu (address + 1) in
@@ -239,32 +248,32 @@ let step cpu =
             State.set_h state high;
             State.set_pc state next_pc;
             Ok
-              (finish cpu pc_before decoded fetched_bytes [ low_read; high_read ]
+              (finish cpu ~origin pc_before decoded fetched_bytes [ low_read; high_read ]
                  Step.Sequential)
         | Instr.Shld address ->
             let low_write = write_memory cpu address (State.l state) in
             let high_write = write_memory cpu (address + 1) (State.h state) in
             State.set_pc state next_pc;
             Ok
-              (finish cpu pc_before decoded fetched_bytes [ low_write; high_write ]
+              (finish cpu ~origin pc_before decoded fetched_bytes [ low_write; high_write ]
                  Step.Sequential)
         | Instr.Inx pair ->
             set_pair state pair (wrap_address (pair_value state pair + 1));
             State.set_pc state next_pc;
-            Ok (finish cpu pc_before decoded fetched_bytes [] Step.Sequential)
+            Ok (finish cpu ~origin pc_before decoded fetched_bytes [] Step.Sequential)
         | Instr.Dcx pair ->
             set_pair state pair (wrap_address (pair_value state pair - 1));
             State.set_pc state next_pc;
-            Ok (finish cpu pc_before decoded fetched_bytes [] Step.Sequential)
+            Ok (finish cpu ~origin pc_before decoded fetched_bytes [] Step.Sequential)
         | Instr.Push pair ->
             let accesses = push16 cpu (stack_pair_value state pair) in
             State.set_pc state next_pc;
-            Ok (finish cpu pc_before decoded fetched_bytes accesses Step.Sequential)
+            Ok (finish cpu ~origin pc_before decoded fetched_bytes accesses Step.Sequential)
         | Instr.Pop pair ->
             let value, accesses = pop16 cpu in
             set_stack_pair state pair value;
             State.set_pc state next_pc;
-            Ok (finish cpu pc_before decoded fetched_bytes accesses Step.Sequential)
+            Ok (finish cpu ~origin pc_before decoded fetched_bytes accesses Step.Sequential)
         | Instr.Call (condition, target) ->
             let taken =
               match condition with None -> true | Some condition -> condition_holds state condition
@@ -272,13 +281,13 @@ let step cpu =
             if not taken then (
               State.set_pc state next_pc;
               Ok
-                (finish cpu pc_before decoded fetched_bytes []
+                (finish cpu ~origin pc_before decoded fetched_bytes []
                    (Step.Call { target; taken = false })))
             else
               let accesses = push16 cpu next_pc in
               State.set_pc state target;
               Ok
-                (finish cpu pc_before decoded fetched_bytes accesses
+                (finish cpu ~origin pc_before decoded fetched_bytes accesses
                    (Step.Call { target; taken = true }))
         | Instr.Return condition ->
             let taken =
@@ -287,13 +296,13 @@ let step cpu =
             if not taken then (
               State.set_pc state next_pc;
               Ok
-                (finish cpu pc_before decoded fetched_bytes []
+                (finish cpu ~origin pc_before decoded fetched_bytes []
                    (Step.Return { target = None; taken = false })))
             else
               let target, accesses = pop16 cpu in
               State.set_pc state target;
               Ok
-                (finish cpu pc_before decoded fetched_bytes accesses
+                (finish cpu ~origin pc_before decoded fetched_bytes accesses
                    (Step.Return { target = Some target; taken = true }))
         | Instr.Jump (condition, target) ->
             let taken =
@@ -302,21 +311,21 @@ let step cpu =
             let pc_after = if taken then target else next_pc in
             State.set_pc state pc_after;
             Ok
-              (finish cpu pc_before decoded fetched_bytes []
+              (finish cpu ~origin pc_before decoded fetched_bytes []
                  (Step.Jump { target; taken }))
         | Instr.Rst number ->
             let target = number * 8 in
             let accesses = push16 cpu next_pc in
             State.set_pc state target;
             Ok
-              (finish cpu pc_before decoded fetched_bytes accesses (Step.Restart { target }))
+              (finish cpu ~origin pc_before decoded fetched_bytes accesses (Step.Restart { target }))
         | Instr.Xchg ->
             let de = State.de state in
             let hl = State.hl state in
             State.set_de state hl;
             State.set_hl state de;
             State.set_pc state next_pc;
-            Ok (finish cpu pc_before decoded fetched_bytes [] Step.Sequential)
+            Ok (finish cpu ~origin pc_before decoded fetched_bytes [] Step.Sequential)
         | Instr.Xthl ->
             let old_sp = State.sp state in
             let high_address = wrap_address (old_sp + 1) in
@@ -329,42 +338,42 @@ let step cpu =
             State.set_h state high;
             State.set_pc state next_pc;
             Ok
-              (finish cpu pc_before decoded fetched_bytes
+              (finish cpu ~origin pc_before decoded fetched_bytes
                  [ low_read; high_read; low_write; high_write ] Step.Sequential)
         | Instr.Pchl ->
             let target = State.hl state in
             State.set_pc state target;
             Ok
-              (finish cpu pc_before decoded fetched_bytes []
+              (finish cpu ~origin pc_before decoded fetched_bytes []
                  (Step.Jump { target; taken = true }))
         | Instr.Sphl ->
             State.set_sp state (State.hl state);
             State.set_pc state next_pc;
-            Ok (finish cpu pc_before decoded fetched_bytes [] Step.Sequential)
+            Ok (finish cpu ~origin pc_before decoded fetched_bytes [] Step.Sequential)
         | Instr.Input port ->
             (match Bus.input cpu.bus ~port with
             | Error error -> Error (Bus_io_error error)
             | Ok value ->
                 State.set_a state value;
                 State.set_pc state next_pc;
-                Ok (finish cpu pc_before decoded fetched_bytes [] Step.Sequential))
+                Ok (finish cpu ~origin pc_before decoded fetched_bytes [] Step.Sequential))
         | Instr.Output port ->
             (match Bus.output cpu.bus ~port ~value:(State.a state) with
             | Error error -> Error (Bus_io_error error)
             | Ok () ->
                 State.set_pc state next_pc;
-                Ok (finish cpu pc_before decoded fetched_bytes [] Step.Sequential))
+                Ok (finish cpu ~origin pc_before decoded fetched_bytes [] Step.Sequential))
         | Instr.Hlt ->
             State.set_pc state next_pc;
             cpu.halted <- true;
-            Ok (finish cpu pc_before decoded fetched_bytes [] Step.Halt)
+            Ok (finish cpu ~origin pc_before decoded fetched_bytes [] Step.Halt)
         | Instr.Inr destination -> modify_byte Alu.increment destination
         | Instr.Dcr destination -> modify_byte Alu.decrement destination
         | Instr.Alu (operation, source) ->
             let operand, accesses = read_register_or_memory cpu source in
             accumulator_operation state operation operand;
             State.set_pc state next_pc;
-            Ok (finish cpu pc_before decoded fetched_bytes accesses Step.Sequential)
+            Ok (finish cpu ~origin pc_before decoded fetched_bytes accesses Step.Sequential)
         | Instr.Alu_immediate (operation, operand) ->
             accumulator_operation state operation operand;
             sequential ()
@@ -404,5 +413,64 @@ let step cpu =
         | Instr.Cmc ->
             Flags.set_carry (State.flags state) (not (Flags.carry (State.flags state)));
             sequential ()
-        | Instr.Ei
-        | Instr.Di -> Error (Unsupported_instruction decoded))
+        | Instr.Ei ->
+            cpu.interrupt_enabled <- true;
+            cpu.ei_delay <- true;
+            sequential ()
+        | Instr.Di ->
+            cpu.interrupt_enabled <- false;
+            cpu.ei_delay <- false;
+            sequential ())
+  in
+  (match result with
+  | Ok step ->
+      if
+        had_ei_delay
+        && decoded.Decode.instr <> Instr.Ei
+        && decoded.Decode.instr <> Instr.Di
+      then cpu.ei_delay <- false;
+      Ok step
+  | Error _ -> result)
+
+let decode_interrupt_payload bytes =
+  let provided = Bytes.length bytes in
+  if provided = 0 then
+    Error
+      (Interrupt_acknowledge_length
+         { opcode = None; required = None; provided })
+  else
+    let opcode = Char.code (Bytes.get bytes 0) in
+    let required = (Decode.opcode_info opcode).Decode.instruction_length in
+    if provided <> required then
+      Error
+        (Interrupt_acknowledge_length
+           { opcode = Some opcode; required = Some required; provided })
+    else
+      match Decode.decode bytes ~offset:0 with
+      | Ok decoded -> Ok (decoded, Bytes.copy bytes)
+      | Error error -> Error (Decode_error error)
+
+let step ?interrupt cpu =
+  let can_accept = cpu.interrupt_enabled && not cpu.ei_delay in
+  match (interrupt, can_accept, cpu.halted) with
+  | Some bytes, true, _ ->
+      (* Validate the complete acknowledge stream before changing architectural
+         or interrupt state. *)
+      (match decode_interrupt_payload bytes with
+      | Error error -> Error error
+      | Ok (decoded, supplied_bytes) ->
+          let pc_before = State.pc cpu.state in
+          cpu.interrupt_enabled <- false;
+          cpu.ei_delay <- false;
+          cpu.halted <- false;
+          execute_decoded cpu ~origin:Step.Interrupt_acknowledge ~pc_before
+            ~next_pc:pc_before decoded supplied_bytes)
+  | _, _, true -> Error Cpu_halted
+  | _, _, false ->
+      let pc_before = State.pc cpu.state in
+      (match fetch_instruction cpu pc_before with
+      | Error error -> Error error
+      | Ok (decoded, fetched_bytes) ->
+          let next_pc = wrap_address (pc_before + decoded.Decode.length) in
+          execute_decoded cpu ~origin:Step.Memory ~pc_before ~next_pc decoded
+            fetched_bytes)

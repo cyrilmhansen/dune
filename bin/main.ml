@@ -21,6 +21,12 @@ let string_of_cpu_error = function
       Printf.sprintf "input port 0x%02X is not configured" port
   | I8080.Cpu.Bus_io_error (I8080.Bus.Output_port_not_configured port) ->
       Printf.sprintf "output port 0x%02X is not configured" port
+  | I8080.Cpu.Interrupt_acknowledge_length { opcode; required; provided } ->
+      let opcode =
+        match opcode with None -> "empty payload" | Some byte -> Printf.sprintf "opcode 0x%02X" byte
+      in
+      let required = match required with None -> "an opcode" | Some n -> Printf.sprintf "%d bytes" n in
+      Printf.sprintf "interrupt acknowledge %s requires %s, got %d bytes" opcode required provided
   | I8080.Cpu.Cpu_halted -> "CPU is halted"
 
 let string_of_bdos_error = function

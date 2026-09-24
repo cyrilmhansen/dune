@@ -575,25 +575,28 @@ let test_cpu_alias_and_fetch_wrap () =
   assert (I8080.State.a wrap_state = 0x7b);
   assert_preserved_flags wrap_state
 
-let test_cpu_unsupported_is_atomic () =
+let test_cpu_ei_executes () =
   let cpu, state, _memory, _bus =
     make_cpu ~pc:0x5000 ~sp:0x7000 (Bytes.of_string "\xfb\x00")
   in
   I8080.State.set_a state 0xa5;
   I8080.State.set_bc state 0x1234;
   let before_pc = I8080.State.pc state in
+  let before_flags = I8080.Flags.to_psw_byte (I8080.State.flags state) in
   (match I8080.Cpu.step cpu with
-  | Error (I8080.Cpu.Unsupported_instruction decoded) ->
-      assert (decoded.opcode = 0xfb);
-      assert (decoded.instr = I8080.Instr.Ei)
+  | Ok step ->
+      assert ((I8080.Step.decoded step).opcode = 0xfb);
+      assert ((I8080.Step.decoded step).instr = I8080.Instr.Ei);
+      assert (I8080.Step.pc_after step = before_pc + 1)
   | Error (I8080.Cpu.Decode_error _) -> failwith "valid instruction bytes failed to decode"
   | Error (I8080.Cpu.Bus_io_error _) -> failwith "unexpected I/O error"
+  | Error (I8080.Cpu.Interrupt_acknowledge_length _) -> failwith "unexpected interrupt error"
   | Error I8080.Cpu.Cpu_halted -> failwith "CPU unexpectedly halted"
-  | Ok _ -> failwith "unsupported EI unexpectedly executed");
-  assert (I8080.State.pc state = before_pc);
+  | Error (I8080.Cpu.Unsupported_instruction _) -> failwith "EI should execute");
+  assert (I8080.State.pc state = before_pc + 1);
   assert (I8080.State.a state = 0xa5);
   assert (I8080.State.bc state = 0x1234);
-  assert_preserved_flags state
+  assert (I8080.Flags.to_psw_byte (I8080.State.flags state) = before_flags)
 
 let () =
   test_flags ();
@@ -610,4 +613,4 @@ let () =
   test_cpu_call_ret ();
   test_cpu_stack_wrap ();
   test_cpu_alias_and_fetch_wrap ();
-  test_cpu_unsupported_is_atomic ()
+  test_cpu_ei_executes ()
