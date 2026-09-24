@@ -1,6 +1,6 @@
 (** One deterministic userspace CP/M experiment. *)
 
-type termination = Bdos_function of int
+type termination = Bdos_function of int | Warm_boot
 
 type run_result = { termination : termination; steps : int }
 

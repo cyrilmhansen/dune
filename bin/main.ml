@@ -1,5 +1,48 @@
 let usage =
-  "Usage: pli80-run [--trace FILE] PROGRAM.COM\n       pli80-run --help"
+  "Usage: pli80-run [--trace FILE] [--max-steps N] PROGRAM.COM\n       pli80-run --help\n\nN must be a positive decimal instruction count. Options may appear in either order."
+
+type cli_options = { trace_path : string option; max_steps : int option; program : string }
+
+let positive_decimal text =
+  let decimal =
+    String.length text > 0
+    && String.for_all (fun char -> char >= '0' && char <= '9') text
+  in
+  if not decimal then None
+  else
+    match int_of_string_opt text with
+    | Some number when number > 0 -> Some number
+    | Some _ | None -> None
+
+let parse_arguments arguments =
+  let rec parse trace_path max_steps program = function
+    | [] ->
+        (match program with
+        | None -> Error "missing PROGRAM.COM"
+        | Some program -> Ok { trace_path; max_steps; program })
+    | "--trace" :: [] -> Error "missing value after --trace"
+    | "--trace" :: value :: _rest when String.starts_with ~prefix:"--" value ->
+        Error "missing value after --trace"
+    | "--trace" :: value :: rest ->
+        (match trace_path with
+        | Some _ -> Error "--trace specified more than once"
+        | None -> parse (Some value) max_steps program rest)
+    | "--max-steps" :: [] -> Error "missing value after --max-steps"
+    | "--max-steps" :: value :: _rest when String.starts_with ~prefix:"--" value ->
+        Error "missing value after --max-steps"
+    | "--max-steps" :: value :: rest ->
+        (match (max_steps, positive_decimal value) with
+        | Some _, _ -> Error "--max-steps specified more than once"
+        | None, None -> Error "--max-steps requires a positive decimal integer"
+        | None, Some value -> parse trace_path (Some value) program rest)
+    | option :: _ when String.starts_with ~prefix:"--" option ->
+        Error (Printf.sprintf "unknown option %s" option)
+    | path :: rest ->
+        (match program with
+        | Some _ -> Error "more than one PROGRAM.COM was provided"
+        | None -> parse trace_path max_steps (Some path) rest)
+  in
+  parse None None None arguments
 
 let string_of_loader_error = function
   | Cpm.Loader.Program_too_large { size; maximum } ->
@@ -45,10 +88,12 @@ let string_of_runner_error = function
   | Runner.Invalid_step_limit limit ->
       Printf.sprintf "invalid instruction limit %d (must be positive)" limit
 
-let run ?trace_path path =
+let run ?trace_path ?max_steps path =
   let output = Buffer.create 32 in
   let execute on_event =
-    match Runner.run_file ~on_event ~output:(Buffer.add_char output) ~path () with
+    match
+      Runner.run_file ?max_steps ~on_event ~output:(Buffer.add_char output) ~path ()
+    with
     | Ok _ ->
         output_string stdout (Buffer.contents output);
         flush stdout
@@ -76,15 +121,22 @@ let run ?trace_path path =
                  (match event with
                  | Runner.Step _ -> incr step_index
                  | Runner.Bdos_call _ | Runner.Termination _ -> ())))
-       with Sys_error message ->
-         prerr_endline ("pli80-run: cannot write trace: " ^ message);
-         exit 1)
+      with Sys_error message ->
+        prerr_endline ("pli80-run: cannot write trace: " ^ message);
+        exit 1
+      | Invalid_argument message ->
+          prerr_endline ("pli80-run: trace error: " ^ message);
+          exit 1)
 
 let () =
   match Array.to_list Sys.argv with
   | [ _; "--help" ] -> print_endline usage
-  | [ _; path ] -> run path
-  | [ _; "--trace"; trace_path; path ] -> run ~trace_path path
-  | _ ->
-      prerr_endline usage;
-      exit 2
+  | _ :: arguments ->
+      (match parse_arguments arguments with
+      | Error message ->
+          prerr_endline ("pli80-run: " ^ message);
+          prerr_endline usage;
+          exit 2
+      | Ok { trace_path; max_steps; program } ->
+          run ?trace_path ?max_steps program)
+  | [] -> assert false

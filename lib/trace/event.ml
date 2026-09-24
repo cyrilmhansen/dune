@@ -78,3 +78,5 @@ let of_runner_event ~step_index = function
       bdos_call ~step_index ~function_number ~de
   | Runner.Termination { step_index; reason = Runner.Bdos_function number } ->
       termination ~step_index (Bdos_function number)
+  | Runner.Termination { reason = Runner.Warm_boot; _ } ->
+      invalid_arg "AT8TRACE v1 cannot represent warm-boot termination"

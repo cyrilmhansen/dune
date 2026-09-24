@@ -1,4 +1,4 @@
-type termination = Bdos_function of int
+type termination = Bdos_function of int | Warm_boot
 
 type run_result = { termination : termination; steps : int }
 
@@ -16,19 +16,35 @@ type error =
 
 let default_max_steps = 100_000
 
+let warm_boot_address = 0x0000
+let bdos_entry_address = 0x0005
+let transient_stack_word_address = 0x0006
+let initial_stack_pointer = 0xfffe
+
+let install_page_zero memory =
+  I8080.Memory.write memory bdos_entry_address 0xc9;
+  I8080.Memory.write memory transient_stack_word_address
+    (initial_stack_pointer land 0xff);
+  I8080.Memory.write memory (transient_stack_word_address + 1)
+    ((initial_stack_pointer lsr 8) land 0xff)
+
 let run_loaded ~max_steps ~on_step ~on_event ~output memory loaded =
-  (* The synthetic RET at BDOS entry is a userspace trap convention. It does
-     not model the actual low-memory contents of a historical CP/M system. *)
-  I8080.Memory.write memory 0x0005 0xc9;
+  (* 0005h remains a synthetic RET userspace trap, not the historical BDOS
+     jump instruction. The 0006h word is a deterministic compatibility value
+     for exercisers that use LHLD 6 / SPHL, not historical CP/M low memory. *)
+  install_page_zero memory;
   let state = I8080.State.create () in
   I8080.State.set_pc state loaded.Cpm.Loader.entry_point;
   (* Choose a stable initial stack location without asserting a universal
      historical CP/M value. *)
-  I8080.State.set_sp state 0xfffe;
+  I8080.State.set_sp state initial_stack_pointer;
   let bus = I8080.Bus.create memory in
   let cpu = I8080.Cpu.create ~state ~bus in
   let rec run steps =
-    if I8080.State.pc state = 0x0005 then
+    if I8080.State.pc state = warm_boot_address then (
+      on_event (Termination { step_index = steps; reason = Warm_boot });
+      Ok { termination = Warm_boot; steps })
+    else if I8080.State.pc state = bdos_entry_address then
       let function_number = I8080.State.c state in
       on_event
         (Bdos_call

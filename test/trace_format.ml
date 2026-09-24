@@ -91,7 +91,17 @@ let test_interrupt_step_rejected_by_v1 () =
                "AT8TRACE v1 cannot represent interrupt-acknowledge instruction origin")
       | _ -> failwith "AT8TRACE v1 accepted an interrupt-origin step")
 
+let test_warm_boot_rejected_by_v1 () =
+  match
+    Trace.Event.of_runner_event ~step_index:0
+      (Runner.Termination { step_index = 0; reason = Runner.Warm_boot })
+  with
+  | exception Invalid_argument message ->
+      assert (String.equal message "AT8TRACE v1 cannot represent warm-boot termination")
+  | _ -> failwith "AT8TRACE v1 accepted a warm-boot termination"
+
 let () =
   test_writer_format_and_determinism ();
   test_live_step_conversion ();
-  test_interrupt_step_rejected_by_v1 ()
+  test_interrupt_step_rejected_by_v1 ();
+  test_warm_boot_rejected_by_v1 ()

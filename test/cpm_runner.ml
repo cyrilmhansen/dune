@@ -53,6 +53,27 @@ let test_bdos_print_string () =
     = Ok Cpm.Bdos.Continue);
   assert (Buffer.contents empty_output = "")
 
+let test_bdos_console_output () =
+  let memory = I8080.Memory.create () in
+  I8080.Memory.write memory 0x2345 0xa6;
+  let memory_before =
+    I8080.Memory.read_range memory ~address:0 ~length:I8080.Memory.size
+  in
+  List.iter
+    (fun byte ->
+      let state = state_with_bdos_args ~function_number:2 ~de:0 in
+      I8080.State.set_e state byte;
+      let emitted = ref [] in
+      let calls = ref 0 in
+      let output char = incr calls; emitted := char :: !emitted in
+      assert (Cpm.Bdos.dispatch ~memory ~state ~output = Ok Cpm.Bdos.Continue);
+      assert (!calls = 1);
+      assert (List.rev !emitted = [ Char.chr byte ]))
+    [ Char.code 'A'; 13; 10; 0xff ];
+  assert
+    (I8080.Memory.read_range memory ~address:0 ~length:I8080.Memory.size
+    = memory_before)
+
 let test_bdos_wrap_and_errors () =
   let memory = I8080.Memory.create () in
   I8080.Memory.write memory 0xffff (Char.code 'O');
@@ -178,6 +199,50 @@ let test_hello_integration () =
   if actual_trace <> expected_trace then
     failwith (Printf.sprintf "unexpected HELLO trace:\n%s" actual_trace)
 
+let test_warm_boot_and_page_zero () =
+  let events = ref [] in
+  let steps = ref [] in
+  let warm =
+    Runner.run_bytes ~output:(fun _ -> ()) ~on_step:(fun step -> steps := step :: !steps)
+      ~on_event:(fun event -> events := event :: !events)
+      (Bytes.of_string "\xc3\x00\x00")
+    |> expect_result
+  in
+  assert (warm.Runner.termination = Runner.Warm_boot);
+  assert (warm.Runner.steps = 1);
+  assert (List.length !steps = 1);
+  assert (I8080.Step.pc_after (List.hd !steps) = 0);
+  (match List.rev !events with
+  | [ Runner.Step _; Runner.Termination { step_index = 1; reason = Runner.Warm_boot } ] -> ()
+  | _ -> failwith "JMP 0 did not terminate at the warm-boot trap");
+  let via_restart =
+    Runner.run_bytes ~output:(fun _ -> ()) (Bytes.of_string "\xc7") |> expect_result
+  in
+  assert (via_restart.Runner.termination = Runner.Warm_boot);
+  assert (via_restart.Runner.steps = 1);
+  let observed = ref [] in
+  let page_zero_program =
+    (* LHLD 0006 / SPHL / PUSH B / JMP 0000. The PUSH write addresses prove
+       that the guest loaded the page-zero word as SP=FFFEh. *)
+    Bytes.of_string "\x2a\x06\x00\xf9\xc5\xc3\x00\x00"
+  in
+  let result =
+    Runner.run_bytes ~output:(fun _ -> ())
+      ~on_step:(fun step -> observed := step :: !observed) page_zero_program
+    |> expect_result
+  in
+  assert (result.Runner.termination = Runner.Warm_boot);
+  assert (result.Runner.steps = 4);
+  let observed = List.rev !observed in
+  assert (List.length observed = 4);
+  assert
+    (I8080.Step.memory_accesses (List.nth observed 2)
+    =
+    [
+      I8080.Step.Write { address = 0xfffd; value = 0x00 };
+      I8080.Step.Write { address = 0xfffc; value = 0x00 };
+    ])
+
 let test_runner_errors () =
   let steps = ref 0 in
   (match
@@ -226,6 +291,8 @@ let test_runner_errors () =
 let () =
   test_loader ();
   test_bdos_print_string ();
+  test_bdos_console_output ();
   test_bdos_wrap_and_errors ();
   test_hello_integration ();
+  test_warm_boot_and_page_zero ();
   test_runner_errors ()

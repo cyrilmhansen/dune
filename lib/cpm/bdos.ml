@@ -22,5 +22,8 @@ let print_string memory ~start_address output =
 let dispatch ~memory ~state ~output =
   match I8080.State.c state with
   | 0 -> Ok Terminate
+  | 2 ->
+      output (Char.chr (I8080.State.e state));
+      Ok Continue
   | 9 -> print_string memory ~start_address:(I8080.State.de state) output
   | function_number -> Error (Unsupported_function function_number)

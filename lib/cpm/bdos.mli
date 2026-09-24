@@ -1,4 +1,4 @@
-(** Minimal host-side CP/M BDOS services used by the first runner milestone. *)
+(** Minimal host-side CP/M BDOS services used by transient programs. *)
 
 type action = Continue | Terminate
 
@@ -13,4 +13,6 @@ val dispatch :
   (action, error) result
 (** Dispatch the function number in C. Function 9 prints the '$'-terminated
     string at DE, wrapping through the 16-bit address space and examining at
-    most 65536 bytes. *)
+    most 65536 bytes. Function 2 emits E once through [output]. Its userspace
+    model covers the output effect needed by transient programs, not every
+    CP/M-version-specific register return convention. *)
