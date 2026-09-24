@@ -17,6 +17,11 @@ let string_of_cpu_error = function
       Printf.sprintf
         "truncated opcode 0x%02X (need %d bytes, have %d)"
         opcode required available
+  | I8080.Cpu.Bus_io_error (I8080.Bus.Input_port_not_configured port) ->
+      Printf.sprintf "input port 0x%02X is not configured" port
+  | I8080.Cpu.Bus_io_error (I8080.Bus.Output_port_not_configured port) ->
+      Printf.sprintf "output port 0x%02X is not configured" port
+  | I8080.Cpu.Cpu_halted -> "CPU is halted"
 
 let string_of_bdos_error = function
   | Cpm.Bdos.Unsupported_function number ->
