@@ -2,7 +2,9 @@
 type t
 
 val create : unit -> t
-(** [create ()] initializes all registers and flags to zero/cleared. *)
+(** [create ()] initializes all registers and flags to zero/cleared. This is
+    the runner's deterministic initial state; it does not claim to reproduce
+    the unspecified power-on state of physical 8080 hardware. *)
 
 val a : t -> int
 val b : t -> int

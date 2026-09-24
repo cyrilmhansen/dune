@@ -40,3 +40,19 @@ let equal left right =
   && left.auxiliary_carry = right.auxiliary_carry
   && left.parity = right.parity
   && left.carry = right.carry
+
+let to_psw_byte flags =
+  (if flags.sign then 0x80 else 0)
+  lor (if flags.zero then 0x40 else 0)
+  lor (if flags.auxiliary_carry then 0x10 else 0)
+  lor (if flags.parity then 0x04 else 0)
+  lor 0x02
+  lor (if flags.carry then 0x01 else 0)
+
+let restore_from_psw_byte flags value =
+  if value < 0 || value > 0xff then invalid_arg "Flags.restore_from_psw_byte";
+  flags.sign <- value land 0x80 <> 0;
+  flags.zero <- value land 0x40 <> 0;
+  flags.auxiliary_carry <- value land 0x10 <> 0;
+  flags.parity <- value land 0x04 <> 0;
+  flags.carry <- value land 0x01 <> 0

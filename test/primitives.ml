@@ -319,6 +319,283 @@ let test_undocumented_aliases () =
   assert (documented_jump.status = I8080.Decode.Documented);
   assert (alias_jump.status = I8080.Decode.Undocumented_alias)
 
+let flags_from_pattern flags pattern =
+  I8080.Flags.set_sign flags (pattern land 0x01 <> 0);
+  I8080.Flags.set_zero flags (pattern land 0x02 <> 0);
+  I8080.Flags.set_auxiliary_carry flags (pattern land 0x04 <> 0);
+  I8080.Flags.set_parity flags (pattern land 0x08 <> 0);
+  I8080.Flags.set_carry flags (pattern land 0x10 <> 0)
+
+let psw_from_pattern pattern =
+  (if pattern land 0x01 <> 0 then 0x80 else 0)
+  lor (if pattern land 0x02 <> 0 then 0x40 else 0)
+  lor (if pattern land 0x04 <> 0 then 0x10 else 0)
+  lor (if pattern land 0x08 <> 0 then 0x04 else 0)
+  lor (if pattern land 0x10 <> 0 then 0x01 else 0)
+  lor 0x02
+
+let test_psw_flags () =
+  let reserved_mask = 0x2a in
+  for pattern = 0 to 31 do
+    let flags = I8080.Flags.create () in
+    flags_from_pattern flags pattern;
+    let packed = I8080.Flags.to_psw_byte flags in
+    assert (packed = psw_from_pattern pattern);
+    assert (packed land reserved_mask = 0x02);
+    let restored = I8080.Flags.create () in
+    I8080.Flags.restore_from_psw_byte restored packed;
+    assert (I8080.Flags.equal restored flags);
+    for fill = 0 to 7 do
+      let reserved_value =
+        ((fill land 1) lsl 1)
+        lor (((fill lsr 1) land 1) lsl 3)
+        lor (((fill lsr 2) land 1) lsl 5)
+      in
+      let arbitrary_byte = (packed land lnot reserved_mask) lor reserved_value in
+      I8080.Flags.restore_from_psw_byte restored arbitrary_byte;
+      assert (I8080.Flags.equal restored flags)
+    done
+  done;
+  expect_invalid_argument (fun () -> I8080.Flags.restore_from_psw_byte (I8080.Flags.create ()) (-1));
+  expect_invalid_argument (fun () -> I8080.Flags.restore_from_psw_byte (I8080.Flags.create ()) 0x100)
+
+let test_bus () =
+  let memory = I8080.Memory.create () in
+  let bus = I8080.Bus.create memory in
+  (match I8080.Bus.input bus ~port:0x42 with
+  | Error (I8080.Bus.Input_port_not_configured 0x42) -> ()
+  | Error (I8080.Bus.Input_port_not_configured _) -> failwith "wrong input port reported"
+  | Error (I8080.Bus.Output_port_not_configured _) -> failwith "wrong I/O error reported"
+  | Ok _ -> failwith "unconfigured input port must fail explicitly");
+  (match I8080.Bus.output bus ~port:0x24 ~value:0x81 with
+  | Error (I8080.Bus.Output_port_not_configured 0x24) -> ()
+  | Error (I8080.Bus.Output_port_not_configured _) -> failwith "wrong output port reported"
+  | Error (I8080.Bus.Input_port_not_configured _) -> failwith "wrong I/O error reported"
+  | Ok () -> failwith "unconfigured output port must fail explicitly");
+  let emitted = ref None in
+  let configured =
+    I8080.Bus.create ~input:(fun ~port -> port lxor 0xff)
+      ~output:(fun ~port ~value -> emitted := Some (port, value)) memory
+  in
+  assert (I8080.Bus.input configured ~port:0x12 = Ok 0xed);
+  assert (I8080.Bus.output configured ~port:0x34 ~value:0x56 = Ok ());
+  assert (!emitted = Some (0x34, 0x56));
+  expect_invalid_argument (fun () -> ignore (I8080.Bus.input bus ~port:(-1)));
+  expect_invalid_argument (fun () -> ignore (I8080.Bus.output bus ~port:0x100 ~value:0));
+  expect_invalid_argument (fun () -> ignore (I8080.Bus.output bus ~port:0 ~value:0x100))
+
+let set_all_flags flags = I8080.Flags.restore_from_psw_byte flags 0xd7
+
+let make_cpu ~pc ~sp program =
+  let memory = I8080.Memory.create () in
+  I8080.Memory.load memory ~address:pc program;
+  let state = I8080.State.create () in
+  I8080.State.set_pc state pc;
+  I8080.State.set_sp state sp;
+  set_all_flags (I8080.State.flags state);
+  let bus = I8080.Bus.create memory in
+  let cpu = I8080.Cpu.create ~state ~bus in
+  (cpu, state, memory, bus)
+
+let step_ok cpu =
+  match I8080.Cpu.step cpu with
+  | Ok step -> step
+  | Error _ -> failwith "expected Cpu.step to succeed"
+
+let assert_preserved_flags state =
+  let expected = I8080.Flags.create () in
+  set_all_flags expected;
+  assert (I8080.Flags.equal (I8080.State.flags state) expected)
+
+let test_cpu_nop_and_mvi () =
+  let cpu, state, memory, _bus =
+    make_cpu ~pc:0x1000 ~sp:0x9000 (Bytes.of_string "\x00\x3e\xa5\x36\x5a")
+  in
+  let nop = step_ok cpu in
+  assert (I8080.Step.pc_before nop = 0x1000);
+  assert (I8080.Step.pc_after nop = 0x1001);
+  assert ((I8080.Step.decoded nop).opcode = 0x00);
+  assert (Bytes.equal (I8080.Step.fetched_bytes nop) (Bytes.of_string "\x00"));
+  assert (I8080.Step.memory_accesses nop = []);
+  assert (I8080.Step.control_flow nop = I8080.Step.Sequential);
+  assert_preserved_flags state;
+  let mvi_register = step_ok cpu in
+  assert (Bytes.equal (I8080.Step.fetched_bytes mvi_register) (Bytes.of_string "\x3e\xa5"));
+  assert (I8080.Step.pc_before mvi_register = 0x1001);
+  assert (I8080.Step.pc_after mvi_register = 0x1003);
+  assert (I8080.State.a state = 0xa5);
+  assert (I8080.Step.memory_accesses mvi_register = []);
+  assert_preserved_flags state;
+  I8080.State.set_hl state 0x4567;
+  (* Set HL before MVI M below; this also proves the destination is resolved
+     from the register pair rather than from a fixed or opcode-derived address. *)
+  let mvi_memory = step_ok cpu in
+  let access = I8080.Step.Write { address = 0x4567; value = 0x5a } in
+  assert (I8080.Step.pc_after mvi_memory = 0x1005);
+  assert (I8080.Step.memory_accesses mvi_memory = [ access ]);
+  assert (I8080.Memory.read memory 0x4567 = 0x5a);
+  assert_preserved_flags state
+
+let test_cpu_lxi () =
+  let cases =
+    [
+      (0x01, fun state -> I8080.State.bc state);
+      (0x11, fun state -> I8080.State.de state);
+      (0x21, fun state -> I8080.State.hl state);
+      (0x31, fun state -> I8080.State.sp state);
+    ]
+  in
+  List.iter
+    (fun (opcode, read_pair) ->
+      let program = Bytes.of_string (String.make 1 (Char.chr opcode) ^ "\x34\x12") in
+      let cpu, state, _memory, _bus = make_cpu ~pc:0x2000 ~sp:0x9000 program in
+      let step = step_ok cpu in
+      assert (read_pair state = 0x1234);
+      assert (I8080.Step.pc_after step = 0x2003);
+      assert (Bytes.equal (I8080.Step.fetched_bytes step) program);
+      assert (I8080.Step.memory_accesses step = []);
+      assert_preserved_flags state)
+    cases
+
+let test_cpu_call_ret () =
+  let cpu, state, memory, _bus =
+    make_cpu ~pc:0x2000 ~sp:0x3000 (Bytes.of_string "\xcd\x34\x12")
+  in
+  let call = step_ok cpu in
+  assert (I8080.Step.pc_before call = 0x2000);
+  assert (I8080.Step.pc_after call = 0x1234);
+  assert (I8080.State.sp state = 0x2ffe);
+  assert (I8080.Memory.read memory 0x2fff = 0x20);
+  assert (I8080.Memory.read memory 0x2ffe = 0x03);
+  assert
+    (I8080.Step.memory_accesses call
+    =
+    [
+      I8080.Step.Write { address = 0x2fff; value = 0x20 };
+      I8080.Step.Write { address = 0x2ffe; value = 0x03 };
+    ]);
+  assert (I8080.Step.control_flow call = I8080.Step.Call { target = 0x1234; taken = true });
+  assert_preserved_flags state;
+  I8080.Memory.write memory 0x1234 0xc9;
+  let ret = step_ok cpu in
+  assert (I8080.Step.pc_before ret = 0x1234);
+  assert (I8080.Step.pc_after ret = 0x2003);
+  assert (I8080.State.sp state = 0x3000);
+  assert
+    (I8080.Step.memory_accesses ret
+    =
+    [
+      I8080.Step.Read { address = 0x2ffe; value = 0x03 };
+      I8080.Step.Read { address = 0x2fff; value = 0x20 };
+    ]);
+  assert (I8080.Step.control_flow ret = I8080.Step.Return { target = Some 0x2003; taken = true });
+  assert_preserved_flags state
+
+let test_cpu_stack_wrap () =
+  let cpu, state, memory, _bus =
+    make_cpu ~pc:0x0200 ~sp:0x0001 (Bytes.of_string "\xcd\x34\x12")
+  in
+  let call = step_ok cpu in
+  assert (I8080.State.sp state = 0xffff);
+  assert
+    (I8080.Step.memory_accesses call
+    =
+    [
+      I8080.Step.Write { address = 0x0000; value = 0x02 };
+      I8080.Step.Write { address = 0xffff; value = 0x03 };
+    ]);
+  assert (I8080.Memory.read memory 0 = 0x02);
+  assert (I8080.Memory.read memory 0xffff = 0x03);
+  let ret_pc = 0x0400 in
+  I8080.Memory.write memory ret_pc 0xc9;
+  I8080.Memory.write memory 0xffff 0xcd;
+  I8080.Memory.write memory 0 0xab;
+  I8080.State.set_pc state ret_pc;
+  I8080.State.set_sp state 0xffff;
+  let ret = step_ok cpu in
+  assert (I8080.State.pc state = 0xabcd);
+  assert (I8080.State.sp state = 0x0001);
+  assert
+    (I8080.Step.memory_accesses ret
+    =
+    [
+      I8080.Step.Read { address = 0xffff; value = 0xcd };
+      I8080.Step.Read { address = 0x0000; value = 0xab };
+    ]);
+  assert_preserved_flags state
+
+let test_cpu_alias_and_fetch_wrap () =
+  List.iter
+    (fun opcode ->
+      let cpu, state, _memory, _bus =
+        make_cpu ~pc:0x0180 ~sp:0x8000 (Bytes.make 1 (Char.chr opcode))
+      in
+      let step = step_ok cpu in
+      assert ((I8080.Step.decoded step).opcode = opcode);
+      assert ((I8080.Step.decoded step).status = I8080.Decode.Undocumented_alias);
+      assert ((I8080.Step.decoded step).instr = I8080.Instr.Nop);
+      assert (I8080.Step.pc_after step = 0x0181);
+      assert_preserved_flags state)
+    [ 0x08; 0x10; 0x18; 0x20; 0x28; 0x30; 0x38 ];
+  let program = Bytes.of_string "\xdd\x04\x01\x00\xd9" in
+  let cpu, state, _memory, _bus = make_cpu ~pc:0x0100 ~sp:0x8000 program in
+  let call = step_ok cpu in
+  let decoded = I8080.Step.decoded call in
+  assert (decoded.opcode = 0xdd);
+  assert (decoded.status = I8080.Decode.Undocumented_alias);
+  assert (decoded.instr = I8080.Instr.Call (None, 0x0104));
+  assert (I8080.Step.pc_after call = 0x0104);
+  assert_preserved_flags state;
+  let ret = step_ok cpu in
+  assert ((I8080.Step.decoded ret).opcode = 0xd9);
+  assert ((I8080.Step.decoded ret).status = I8080.Decode.Undocumented_alias);
+  assert (I8080.Step.pc_after ret = 0x0103);
+  assert (I8080.State.sp state = 0x8000);
+  assert_preserved_flags state;
+  List.iter
+    (fun opcode ->
+      let program = Bytes.of_string (String.make 1 (Char.chr opcode) ^ "\x34\x12") in
+      let cpu, _state, _memory, _bus = make_cpu ~pc:0x0300 ~sp:0x9000 program in
+      let step = step_ok cpu in
+      assert ((I8080.Step.decoded step).opcode = opcode);
+      assert ((I8080.Step.decoded step).instr = I8080.Instr.Call (None, 0x1234));
+      assert (I8080.Step.pc_after step = 0x1234))
+    [ 0xdd; 0xed; 0xfd ];
+  let memory = I8080.Memory.create () in
+  I8080.Memory.write memory 0xffff 0x3e;
+  I8080.Memory.write memory 0x0000 0x7b;
+  let wrap_state = I8080.State.create () in
+  I8080.State.set_pc wrap_state 0xffff;
+  set_all_flags (I8080.State.flags wrap_state);
+  let wrap_cpu = I8080.Cpu.create ~state:wrap_state ~bus:(I8080.Bus.create memory) in
+  let mvi = step_ok wrap_cpu in
+  assert (Bytes.equal (I8080.Step.fetched_bytes mvi) (Bytes.of_string "\x3e\x7b"));
+  assert (I8080.Step.pc_before mvi = 0xffff);
+  assert (I8080.Step.pc_after mvi = 0x0001);
+  assert (I8080.State.a wrap_state = 0x7b);
+  assert_preserved_flags wrap_state
+
+let test_cpu_unsupported_is_atomic () =
+  let cpu, state, _memory, _bus =
+    make_cpu ~pc:0x5000 ~sp:0x7000 (Bytes.of_string "\x40\x00")
+  in
+  I8080.State.set_a state 0xa5;
+  I8080.State.set_bc state 0x1234;
+  let before_pc = I8080.State.pc state in
+  (match I8080.Cpu.step cpu with
+  | Error (I8080.Cpu.Unsupported_instruction decoded) ->
+      assert (decoded.opcode = 0x40);
+      assert
+        (decoded.instr
+        = I8080.Instr.Mov
+            (I8080.Instr.Register I8080.Instr.B, I8080.Instr.Register I8080.Instr.B))
+  | Error (I8080.Cpu.Decode_error _) -> failwith "valid instruction bytes failed to decode"
+  | Ok _ -> failwith "unsupported MOV unexpectedly executed");
+  assert (I8080.State.pc state = before_pc);
+  assert (I8080.State.a state = 0xa5);
+  assert (I8080.State.bc state = 0x1234);
+  assert_preserved_flags state
+
 let () =
   test_flags ();
   test_state ();
@@ -326,4 +603,12 @@ let () =
   test_decoder_coverage ();
   test_instruction_lengths_and_truncation ();
   test_instruction_families ();
-  test_undocumented_aliases ()
+  test_undocumented_aliases ();
+  test_psw_flags ();
+  test_bus ();
+  test_cpu_nop_and_mvi ();
+  test_cpu_lxi ();
+  test_cpu_call_ret ();
+  test_cpu_stack_wrap ();
+  test_cpu_alias_and_fetch_wrap ();
+  test_cpu_unsupported_is_atomic ()
