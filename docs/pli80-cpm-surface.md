@@ -1,5 +1,12 @@
 # PL/I-80 v1.4 : surface CP/M observée et à confirmer
 
+> **Contrat d'architecture Runes : CP/M 2.2 userspace minimal.** CP/M Plus sur
+> QX-10/MAME est seulement un environnement d'observation/différentiel; sa
+> disponibilité ne définit pas le runtime cible. Les comportements propres à
+> CP/M Plus sont des extensions futures possibles, jamais des prérequis par
+> défaut. Un run forcé de la seule réponse BDOS 12 ne constitue pas un vrai
+> run CP/M 2.2.
+
 ## Portée et qualité des éléments
 
 Cette note prépare le prochain jalon « compiler un vrai programme PL/I-80 » sans implémenter CP/M. Le paquet local est celui fourni dans `~/pli/cpm/pli80/DISK1` et `DISK2`, daté du 8 août 2013. La bannière de `PLI.COM` annonce explicitement « PL/I-80 Compiler Version 1.4 », Copyright 1980–1982 Digital Research. La copie de référence locale utilisée dans les travaux précédents a les mêmes tailles et empreintes pour les binaires répertoriés ci-dessous. Cela établit l’identité des copies locales, pas leur chaîne de distribution d’origine.
@@ -11,7 +18,7 @@ Niveaux de preuve employés :
 * **Statique** : désassemblage `PLI-resident.lst` du `PLI.COM` de 8064 octets. Les adresses et valeurs ci-dessous sont reproductibles depuis le binaire, mais une valeur de registre ne prouve pas à elle seule qu'un chemin a été pris lors de la compilation choisie.
 * **Documentation CP/M/PL/I** : références imprimées en fin de note. Le guide PL/I accessible est l'Applications Guide de décembre 1980, antérieur à la révision locale v1.4 ; ses conventions ne remplacent donc pas une observation v1.4.
 
-Le census complet établit les fonctions BDOS effectivement appelées lors de `PLI OPTIMIST` sur cette image CP/M Plus. Il ne généralise pas à toutes les options, CCP, versions CP/M ou programmes PL/I.
+Le census complet établit les fonctions BDOS appelées lors de `PLI OPTIMIST` sur cette image CP/M Plus. Il ne généralise pas à toutes les options, CCP ou programmes PL/I. Une nouvelle capture contrôlée sur une copie de l'image de référence, sans REL préalable, est rapportée plus bas et corrige plusieurs identifications antérieures.
 
 ## Artéfacts examinés
 
@@ -41,9 +48,9 @@ Le zip miroir local `pli80-v14-reference.zip` est mentionné dans le manifeste d
 
 Le Digital Research *PL/I-80 Applications Guide*, §1 (pages imprimées 6–7), donne la commande `PLI OPTIMIST`, annonce trois passes, puis `OPTIMIST.REL`; il indique qu'un listing peut être demandé avec `PLI OPTIMIST $L`, et que LINK produit ensuite `OPTIMIST.COM`. Ce scénario documenté et de bout en bout a été choisi comme référence; `A.PLI` est plus petit mais est une procédure externe, non un programme autonome équivalent. Une exécution observée sous MAME 0.289 / QX-10 / CP/M Plus avec la commande CCP exacte `PLI OPTIMIST` s'est terminée par warm boot `0000h`, statut de commande `ok`, après 37,411 secondes émulateur. Une exécution antérieure `PLI OPTIMIST $P$V$K` a aussi terminé, avec capture cohérente de l'INT de passe 1 vers passe 2 (499 octets identiques), mais n'est pas le run utilisé pour le census complet. Une tentative avec ces options dans un autre harness a bloqué sur le service d'impression : ce n'est pas un résultat de compilation négatif.
 
-État disque postérieur conservé dans `out-full/OPTIMIST/directory.txt` : `OPTIMIST.PLI` (2 KiB CP/M, 11 records) et `OPTIMIST.REL` (2 KiB, 11 records), ainsi que les outils et sources d'exemples déjà présents. La copie extraite de `OPTIMIST.REL` fait 1408 octets, SHA-256 `5fca1ffe38d11c30d20cfb99a23fe2baf002c569790bda83e09151cf36032b15`. La commande historique utilisée produisait aussi des captures hôtes de VIR/EIR/SIR/MIR/NIR/AIR/CIR/TIR/IIR/LIR via l'outil XPORT d'instrumentation ; ces extensions ne sont pas attribuées à BDOS/PL/I et ne sont pas des sorties d'une session CP/M standard.
+État disque postérieur d'une nouvelle expérience contrôlée (copie de l'image de référence, source et outils présents, `OPTIMIST.REL`/`.INT` absents avant lancement) : `OPTIMIST.REL` apparaît comme 1408 octets (`11 × 128`), SHA-256 `5fca1ffe38d11c30d20cfb99a23fe2baf002c569790bda83e09151cf36032b15`; `OPTIMIST.INT` est absent à la fin. `OPTIMIST.PLI` faisait 1408 octets (`11 × 128`) avant et après. Les overlays sont eux aussi des multiples exacts de 128 (141, 272, 264 records respectivement). La compilation forcée vers la réponse de version `0022h` produit le même REL octet par octet. La commande historique antérieure produisait aussi des captures hôtes via XPORT; celles-ci ne sont pas des sorties BDOS standard.
 
-On n'a pas conservé un listing initial et final byte-exact d'un disque vierge : l'image de travail contenait déjà `OPTIMIST.REL`. Le guide affirme que le REL est produit, l'image post-run le contient, et le census observe ses writes; il a donc été écrit/réécrit, mais on ne peut pas prouver qu'il a été créé plutôt que tronqué/remplacé ni fournir ici son hash produit par ce run. Les entrées montrent aussi des accès à `OPTIMIST.INT`; ce temporaire n'est pas présent dans le répertoire final. Le census donne l'ordre global par service, mais pas un journal exhaustif de chaque FCB avant/après chaque appel.
+Contrairement à l'étude précédente, cette copie propre établit que le REL était absent puis apparaît après MAKE/écritures/CLOSE; l'INT temporaire n'est plus présent à la fin. Le nouveau journal ordonne les opérations mais n'est pas un dump octet par octet après chaque appel BDOS.
 
 Un `PLI.OVL` unique n'existe pas dans ce paquet : la distribution utilise `PLI0.OVL`, `PLI1.OVL`, `PLI2.OVL`. Le code résident possède des fonctions BDOS `OPEN`/`READ SEQUENTIAL` et les traces dynamiques montrent des fermetures d'overlays. Le contrat raisonnable est donc une lecture de fichiers CP/M vers de la RAM par BDOS, pas une image complète chargée magiquement par le runner. Les adresses de destination précises et la correspondance entre passes et overlays restent à confirmer par capture DMA/FCB et comparaison mémoire.
 
@@ -52,9 +59,9 @@ Un `PLI.OVL` unique n'existe pas dans ce paquet : la distribution utilise `PLI0.
 Constats applicables :
 
 * CP/M classique appelle le BDOS par le vecteur à `0005h`; le mot à `0006h` pointe sur la base BDOS et peut servir à calculer la mémoire disponible. Le guide système CP/M 2 décrit aussi le COM chargé à `0100h`, les FCB par défaut à `005Ch` et `006Ch`, et le buffer DMA initial à `0080h`.
-* Le listing résident v1.4 lit `0006h` puis `SPHL` (`0391h`–`0394h`) pour initialiser/réinitialiser son stack depuis le haut de mémoire disponible. Il lit également des octets de `005Ch`, `006Ch` et initialise ou utilise `0080h` comme buffer de 128 octets (`03FEh` appelle la routine `03EEh`, qui demande BDOS Set DMA).
-* Plusieurs références statiques à `005Ch` et `006Ch` établissent une dépendance aux zones default FCB. On ne sait pas encore quels champs extent/RC/CR/allocation sont lus après chaque service sans trace de données ciblée.
-* Le run dynamique employé a reçu `PLI OPTIMIST` (sans options). La commande nécessite un nom dans le FCB par défaut; l'appel dynamique ouvre `OPTIMIST.PLI` à FCB `005Ch`. Le binaire référence aussi `0080h` et un setter DMA y dirige un buffer. La longueur/tail CCP conforme (longueur à `0080h`, texte à `0081h`, CR final usuel) est documentée, mais les octets exacts de cette mémoire n'ont pas été capturés : casse, remplissage et terminaison observés restent à confirmer.
+* Le listing résident v1.4 lit `0006h` puis `SPHL` (`0391h`–`0394h`) pour initialiser/réinitialiser son stack depuis le haut de mémoire disponible. Il lit également `005Ch`, `006Ch`; `03FEh` choisit `0080h` comme DMA en appelant `03EEh`/BDOS 26.
+* Les nouvelles traces confirment la dépendance aux FCB par défaut et aux champs extent/RC/CR visibles pendant les reads; elles ne montrent pas le retour mémoire immédiat de chaque service.
+* Pour `PLI OPTIMIST`, snapshot CP/M Plus au premier PC `0100h`, avant la première instruction PLI: `0000..000F = C3 03 F7 FF 01 C3 06 F1 FF FF FF FF FF FF FF FF`; donc le vecteur `0005h` est `JMP F106h` et le mot `0006h` vaut `F106h`. `0050..005F = 02 00 00 00 00 00 00 FF FF FF FF FF 00 4F 50 54`; `0060..006F = 49 4D 49 53 54 20 20 20 00 00 00 00 00 20 20 20`; `0070..007F = 20 20 20 20 20 20 20 00 00 00 00 00 00 FF FF`; `0080..008F = 09 20 4F 50 54 49 4D 49 53 54 00 AA 28 00 00 00`. Ainsi la longueur vaut 9, le texte est exactement ` OPTIMIST` (espace initial, uppercase, sans extension), et l'octet suivant est NUL, pas CR, dans CE CCP Plus. La FCB1 visible à `005Ch` commence par `00 'OPTIMIST' 'PLI'`; FCB2 à `006Ch` chevauche physiquement la zone allocation de FCB1 et commence par des espaces. Ce sont des octets observés CP/M Plus, pas des règles à imposer au CCP CP/M 2.2. Le format documenté CP/M 2.2 reste le contrat cible à initialiser explicitement.
 * Le runner Runes a déjà une convention synthétique à `0005h`; la compatibilité de stack exige un mot raisonnable à `0006h/0007h`. Elle ne doit pas prétendre émuler l'opcode réel de jump BDOS ou la base variable d'un CP/M particulier.
 
 ## Census BDOS du scénario observé
@@ -64,20 +71,20 @@ La routine commune de service vérifie un marqueur, préserve BC/DE puis saute v
 | Fonction (hex / déc.) | Nom conventionnel | Appels | Paramètres observés / Landmark d'appel (site; entrée fiable si connue) | Résultat consommé / rôle prudent | Preuve / priorité |
 |---|---|---:|---|---|---|
 | `02h / 2` | Console Output | 425 | `C=02`; retour PC `048F`, site `048Ch`, routine `0480h`; `DE` contient le caractère | effet console; callbacks incluent messages/caractères du compilateur | dynamique + statique; haute |
-| `0Bh / 11` | Console Status | 18 | `C=0B`, `DE=0000`; retour `0449`, site `0446`, routine `0441h` | statut console interrogé; interprétation du retour dépend du chemin | dynamique + statique; haute |
+| `0Bh / 11` | Console Status | 18 | `C=0B`, `DE=0000`; retour `0449`, site `0446`, routine `0441h` | `A=00` à chaque appel de cette exécution sans touche pending; les callers traitent ce chemin comme absence d'entrée | dynamique + statique; haute pour cas idle |
 | `0Ch / 12` | Get Version | 1 | `C=0C`, `DE=0000`; retour `05C7`, site `05C4`, code autour de `05B2h` | version CP/M détectée | dynamique + statique; haute, version sensible |
-| `0Fh / 15` | Open File | 7 | retour `073C`, site `0739`, routine `072Ah`; `DE` notamment `005C` | ouvre `OPTIMIST.PLI` et `CPM3.SYS` via FCB par défaut; autres FCB variables | dynamique + statique; haute |
-| `10h / 16` | Close File | 5 | retour `075C`, site `0759`, routine `074Ch`; `DE` FCB | ferme notamment PLI0/1/2.OVL; quelques instantanés FCB illisibles | dynamique + statique; haute |
+| `0Fh / 15` | Open File | 7 appels dans le processus PLI; 8 ouverts capturés au total en incluant le chargement CCP de `PLI.COM` | retour `073C`, site `0739`, routine `072Ah`; `DE` notamment `005C` | source et overlays/intermédiaire; **aucun CPM3.SYS dans le run contrôlé** | dynamique + statique; haute |
+| `10h / 16` | Close File | 5 | retour `075C`, site `0759`, routine `074Ch`; `DE` FCB | ferme overlays, INT et REL; identités établies dans la capture propre | dynamique + statique; haute |
 | `13h / 19` | Delete File | 3 | retour `0417`, site `0414`, routine `0405h`; DE pointe vers FCB/mot indirect `02061h` | opération delete exercée; les noms instantanés ne sont pas fiables | dynamique + statique; haute |
-| `14h / 20` | Read Sequential | 712 | retour `0427`, site `0424`, routine `0418h`; DE FCB, données dans DMA | lit source, CPM3.SYS, overlays et intermédiaires | dynamique + statique; haute |
+| `14h / 20` | Read Sequential | 712 dans le census compilateur antérieur | retour `0427`, site `0424`, routine `0418h`; DE FCB, données dans DMA | run propre: source, trois overlays et INT; aucun CPM3.SYS | dynamique + statique; haute |
 | `15h / 21` | Write Sequential | 15 | retour `0437`, site `0434`, routine `0428h`; DE FCB, données depuis DMA | écrit OPTIMIST.INT et OPTIMIST.REL, entre autres appels à FCB non décodables | dynamique + statique; haute |
 | `16h / 22` | Make File | 2 | retour `0782`, site `077F`, routine `0770h`; DE FCB | création de deux fichiers; FCB à cet instant non décodés sûrement | dynamique + statique; haute |
 | `1Ah / 26` | Set DMA | 747 | retour `03FD`, site `03FA`, helper `03EEh`; `DE` reçoit l'adresse DMA | `0080h` au démarrage et divers buffers internes (p.ex. `2200h`, `2280h`, `1D0Ah`, `ED06h`) | dynamique + statique; haute |
-| `6Ch / 108` | Get/Set Program Return Code (CP/M 3) | 1 | retour `05ED`, site `05EAh`, code autour de `05B2h`; `DE=0000` | code retour positionné à 0 avant warm boot selon la convention CP/M 3 | dynamique + guide CP/M Plus; haute, CP/M-3-only |
+| `6Ch / 108` | Get/Set Program Return Code (CP/M 3) | 1 | retour `05ED`, site `05EAh`, `DE=0000` dans le succès observé | appel avec valeur zéro avant warm boot; extension non CP/M 2.2. Une expérience forçant seulement BDOS 12 à retourner `0022h` l'appelle toujours; voir ci-dessous. | dynamique + statique; appel établi, compatibilité CP/M 2.2 non établie |
 
 Les services `05h/5` List Output (site `0456h`, DE construit depuis C), `19h/25` Current Disk (site statique `043Dh`), `01h/1` Console Input (`046Ch`, `06AEh`), `09h/9` Print String (`047Ch`), et une autre forme statique de fn108 sont identifiés dans le listing, mais hors des appels compilateur comptabilisés ici. Une capture sélective antérieure montre une sortie List avec `DE=000Ch`, retour `0459h`; on ne l'ajoute pas au comptage de ce run. Aucun appel pré-warmboot aux fonctions `17/18` Search, `23` Rename, `33/34` Read/Write Random, `35` Compute File Size ou `36` Set Random Record n'a été capturé. Les fonctions 0/1/5/9/25 n'en deviennent pas inutiles pour d'autres modes : elles sont seulement hors du sous-ensemble observé ici.
 
-Après le témoin warm boot, le firmware/CCP et l'automatisation MAME exécutent huit appels supplémentaires (`0Ah` une fois, `02h` quatre fois, `31h` deux fois, `62h` une fois). Ils sont exclus du census compilateur. `0Ah` est Read Console Buffer, `31h` Access SCB et `62h` Get Free Space (CP/M Plus); leur présence post-run ne prouve pas un besoin de PLI.COM. Les fonctions CP/M Plus 49/98 n'ont pas d'équivalent standard CP/M 2.2.
+Après le témoin warm boot, le firmware/CCP et l'automatisation MAME exécutent des appels supplémentaires (`0Ah`, `02h`, `31h`, `62h`), exclus du census transient. `31h` Access SCB et `62h` Get Free Space sont CP/M Plus; leur présence post-run ne prouve pas un besoin de PLI.COM. Les fonctions CP/M Plus n'ont pas d'équivalent standard CP/M 2.2.
 
 ### Repères de désassemblage réutilisables
 
@@ -87,7 +94,7 @@ Adresses dans le désassemblage du COM chargé à `0100h`; « entrée » est une
 |---|---|---|---|---|
 | `01AD4h` (JMP `0005h`) | `01ABBh` | passerelle commune BDOS | garde un marqueur à `02155h`, sauve/restaure BC/DE ; les callers alimentent C et DE | élevée pour passerelle, noms manquants |
 | `03FAh` | `03EEh` | setter DMA interne (`set_dma`) | BC copié puis transmis en DE à fn 1Ah ; `03FEh` appelle avec `0080h` | élevée |
-| `0414h` | `0405h` | `delete_fcb` (provisoire) | DE depuis `02061h`; prépare DMA via `03FEh`; dynamique : 3 appels, ret `0417h` | élevée pour fonction/site; FCB name inconnu |
+| `0414h` | `0405h` | `delete_fcb` (provisoire) | DE depuis `02061h`, FCB RAM réutilisé; 3 appels, ret `0417h`: initial REL absent, INT absent, puis INT existant | élevée pour site/opération; FCB name par instantané |
 | `0424h` | `0418h` | `read_sequential` (provisoire) | DE depuis `02063h`; DMA; dynamique : 712 appels, ret `0427h` | élevée |
 | `0434h` | `0428h` | `write_sequential` (provisoire) | DE depuis `02065h`; DMA; dynamique : 15 appels, ret `0437h` | élevée |
 | `043Dh` | `0438h` | site fn 19h / current disk | DE nul | moyenne |
@@ -104,33 +111,54 @@ Adresses dans le désassemblage du COM chargé à `0100h`; « entrée » est une
 
 Landmarks où une fonction existe mais l'identité d'appelant reste à préciser : `03FAh` (fn26, helper `03EEh`, 747 appels; adresses DMA montrent de nombreux buffers), `043Dh` (fn25, statique seulement), `046Ch` et `06AEh` (fn1, statiques seulement). Les appels `048Ch`, `0739h` et `0759h` sont chacun répétés depuis plusieurs contextes runtime ou FCB; ils doivent être suivis comme sites partagés, pas interprétés comme un seul fichier/routine logique. Les retours BDOS capturés permettent d'identifier le CALL local; pour les fonctions exécutées via le setter DMA, le caller réel varie.
 
-À ne pas surinterpréter : les chaînes d'erreur en `0243h`, `024Ch`, `0257h` sont accessibles en imprimable dans le binaire mais leur association précise au type d'échec demande validation. Les noms FCB indiqués ci-dessous viennent d'un aperçu mémoire pris à l'entrée BDOS; certains FCB transitoires sont en cours de construction/réutilisation et s'affichent comme `!E` ou indécodables `?`. Les CALL sites ont été recoupés par le PC de retour (`site=ret-3`) et le listing. Une adresse de retour dans une zone overlay peut toutefois désigner du code écrasé/chargé dynamiquement : la routine logique n'est pas attribuée sans comparaison avec les octets en RAM.
+À ne pas surinterpréter : les chaînes d'erreur en `0243h`, `024Ch`, `0257h` restent à associer précisément au type d'échec. Les anciennes mentions `!E`/`?` sur les FCB transitoires sont supersédées par la capture propre. Les CALL sites sont recoupés via PC de retour (`site=ret-3`) et le listing. Une adresse dans une zone overlay ne désigne pas nécessairement le même code après écrasement/rechargement.
 
-## FCB, DMA et modes d'accès
+## Capture contrôlée FCB, DMA et modes d'accès (CP/M Plus)
 
-Les pointeurs FCB transmis dynamiquement sont `DE`. Aperçu des noms reconnus à l'entrée (compteur d'appels du census ci-dessus) :
+La nouvelle capture utilise une copie de `PLI80-QXPLUS.base.imd`; le disque de référence n'a pas été modifié. Le snapshot initial confirme l'absence de `OPTIMIST.REL` et `.INT`; la sortie est un REL de 1408 octets et l'INT temporaire a disparu à warm boot. Cette observation prouve création du REL (un DELETE préalable échoue avec `A=FF`, puis MAKE réussit avec `A=00`), écriture puis fermeture; elle ne permet pas de distinguer si CP/M crée/tronque le fichier à MAKE de la même façon pour tous les cas.
+
+Le lancement observé est CP/M Plus/QX-10, et ne doit pas être copié aveuglément en CP/M 2.2. La page zéro au premier `PC=0100h` est donnée ci-dessus. La zone FCB initiale comporte les octets `005C..006B = 00 4F 50 54 49 4D 49 53 54 50 4C 49 00 00 00 00`: FCB1 est `OPTIMIST.PLI`; les octets `006C..008B` sont partagés avec l'allocation de FCB1 et la zone FCB2. Une représentation FCB1/FCB2 ne doit donc pas les copier comme deux tableaux non chevauchants sans respecter le layout CP/M.
+
+Dans les traces d'entrée BDOS, l'ordre des champs FCB CP/M standard (`EX,S1,S2,RC`, allocation, `CR`, `R0..R2`) reste lisible, mais S1/S2 portent ici des valeurs non nulles `02/80` sur les fichiers ouverts; ne les normalisez pas comme des champs ignorés sans tests. Par exemple, source `OPTIMIST.PLI` a `RC=0B` et CR évolue de `00` à `0A`; PLI0 a `RC=8D`, PLI1 `RC=10` après 272 records, PLI2 `RC=08` après 264 records. Le journal a été complété par des snapshots des 36 octets FCB immédiatement après le retour de DELETE, OPEN, CLOSE et MAKE. Ceux-ci confirment notamment l'état de directory/extent retourné par OPEN et le CR/RC final visible après CLOSE. Les snapshots de READ et WRITE immédiatement après service ne sont pas capturés: leurs mutations ne peuvent être attribuées avec certitude au BDOS plutôt qu'au code client à partir du seul FCB observé au prochain appel.
+
+Résultats observés en CP/M Plus: `OPEN` réussi retourne `A=00`; échec (notamment l'absence initiale de REL avant DELETE) `A=FF`; `MAKE` réussi `A=00`; `CLOSE` `A=00`; `WRITE SEQ` `A=00`; `READ SEQ` retourne `A=00` pour record disponible et `A=01` pour EOF. `DELETE` absent retourne `A=FF`, la suppression réussie `A=00`. Les wrappers PLI testent des résultats (lecture par comparaison avec zéro, ouverture/création par comparaison à FFh); ne pas généraliser les détails de CP/M Plus aux codes CP/M 2.2 sans contrôle. Les 18 appels Console Status du run retournent zéro (aucune touche disponible); ce run n'établit pas le chemin d'une touche en attente.
+
+FCB identité par durée de vie (les adresses sont réutilisées, elles ne nomment pas un fichier de façon permanente):
+
+| FCB RAM | Durée/rôle observé | Opérations et état utile | Confiance |
+|---|---|---|---|
+| `005Ch` | default FCB issu du tail; source | `OPEN OPTIMIST.PLI`; lectures séquentielles de ses 11 records lors de plusieurs passes; `RC=0B`, `CR` vu de `00` à `0A`; ouvert à nouveau entre passes | haute pour identité; mutations pré/appel observées |
+| `01C5Dh` | FCB de fichiers overlay, réécrit pour chaque nom | ouvre/lit/ferme successivement `PLI0.OVL`, `PLI1.OVL`, `PLI2.OVL`; compte par overlay 141/272/264 records disponibles puis un READ EOF; adresse réutilisée | haute |
+| `01CA2h` | FCB d'INT | `DELETE OPTIMIST.INT` absent (`FF`), `MAKE` (`00`), 4 writes, CLOSE, OPEN/read (4 records), DELETE réussi (`00`) en fin | haute |
+| `01CE4h` | FCB de sortie REL | `DELETE OPTIMIST.REL` absent (`FF`), MAKE (`00`), 11 `WRITE SEQ`, `RC=0B`, `CR=0A` au CLOSE; CLOSE réussi | haute |
+
+La table de census historique qui appelait des FCB `01C5Dh` « `!E` » et `01CA2h` « `?` » est supersédée par les instantanés propres ci-dessus. Les octets de FCB capturés à l'entrée révèlent le nom ASCII; les lignes d'événements permettent de distinguer ses réutilisations.
+
+Les DMA de lecture overlays repartent tous à `2200h`, avancent de `80h` par record et sont contigus: `PLI0.OVL` 141 records, dernière destination de données `6800h` (le 142e appel à `6880h` signale EOF); `PLI1.OVL` 272 records, dernière `A980h` (EOF `AA00h`); `PLI2.OVL` 264 records, dernière `A580h` (EOF `A600h`). Ces plages se recouvrent exactement dès `2200h`, preuve forte que les fichiers sont lus vers une même fenêtre RAM successive et donc que les overlays se remplacent. Première adresse d'exécution de chaque image non capturée dans ce run: le début DMA n'est pas à lui seul une preuve d'entry point.
+
+`OPTIMIST.INT` reçoit quatre records via DMA `1D8Ch` (`1D8Ch`, `1E0Ch`, `1E8Ch`, `1F0Ch`), est fermé puis réouvert/lu à partir de `1D8Ch`, et est supprimé en fin. `OPTIMIST.REL` reçoit onze records depuis le DMA `1D0Ah`, à `CR=00..0A`, puis est fermé. REL final 1408 octets; INT temporaire absent après exécution. Tous les contenus cités sont divisibles exactement par 128, donc cette compilation ne discrimine pas les règles de padding d'un dernier record partiel; aucune conclusion sur `1Ah` (Ctrl-Z) ou sur un EOF partiel n'est justifiée.
+
+Le census antérieur attribuait des opérations à `CPM3.SYS`; cette attribution est infirmée pour le scénario contrôlé: aucune ouverture/lecture de ce nom n'apparaît dans le journal propre. Sur l'image CP/M Plus la compilation complète réussit sans cet accès. Le motif de l'ancienne observation n'est pas récupérable à partir des données résumées et demeure non expliqué; n'en faites pas une exigence de runtime.
+
+Les pointeurs FCB transmis dynamiquement sont `DE`. Les comptes plus fins suivants proviennent du journal contrôlé, borné au lancement transient et au premier warm boot:
 
 | Service / FCB `DE` | Nom 8.3 lisible dans l'instantané | Nombre | Interprétation prudente |
 |---|---|---:|---|
-| OPEN `005Ch` | `OPTIMIST.PLI` | 1 | FCB par défaut du nom source |
-| OPEN `005Ch` | `CPM3.SYS` | 2 | fichier de système/compatibilité effectivement ouvert |
-| OPEN `01C5Dh` | `!E` | 3 | nom non fiable, buffer probablement transitoire |
-| OPEN `01CA2h` | `?` | 1 | non décodé |
-| READ `005Ch` | `OPTIMIST.PLI` (16); `CPM3.SYS` (12) | 28 | lectures séquentielles observées |
-| READ `01C5Dh` | `PLI0.OVL` (40); `PLI1.OVL` (58); `PLI2.OVL` (77); `!E` (505) | 680 | les 175 lectures d'overlay correspondent à leurs records dans l'ordre rencontré; autres noms pas sûrs |
-| READ `01CA2h` | `OPTIMIST.INT` (3); `?` (1) | 4 | temporaire intermédiaire observé |
-| WRITE `01CE4h` | `OPTIMIST.REL` (7); `?` (4) | 11 | REL écrit; autres noms incertains |
-| WRITE `01CA2h` | `OPTIMIST.INT` (2); `?` (2) | 4 | intermédiaire écrit |
-| MAKE `01CE4h`, `01CA2h` | `?` | 1 chacun | les octets FCB de ces événements ne donnaient pas un nom stable |
-| DELETE `01CA2h`, `01CE4h` | `?` | 2 et 1 | temporaires probables, association non démontrée |
-| CLOSE `01C5Dh` | `PLI0.OVL` (1), `!E` (2) | 3 | fermeture overlay démontrée pour PLI0 |
-| CLOSE `01CA2h`, `01CE4h` | `?` | 1 chacun | non décodé |
+| OPEN `005Ch` | `OPTIMIST.PLI` | 3 | source, réouverture pour passes |
+| OPEN `01C5Dh` | `PLI0.OVL`, `PLI1.OVL`, `PLI2.OVL` | 1 chacun | overlays successifs |
+| OPEN `01CA2h` | `OPTIMIST.INT` | 1 | intermédiaire relu |
+| READ `005Ch` | `OPTIMIST.PLI` | 28 | nombre inclut passages/EOF |
+| READ `01C5Dh` | PLI0 (142), PLI1 (273), PLI2 (265) | 680 | 141/272/264 records + EOF respectivement |
+| READ `01CA2h` | `OPTIMIST.INT` | 4 | records séquentiels de l'intermédiaire (le fichier avait 4 writes) |
+| WRITE `01CE4h` | `OPTIMIST.REL` | 11 | 11 records |
+| WRITE `01CA2h` | `OPTIMIST.INT` | 4 | quatre records temporaires |
+| MAKE/DELETE/CLOSE | `01CA2h`, `01CE4h`, `01C5Dh` | voir cycle ci-dessus | identity variable à `01CA2h`; ne pas raisonner adresse→nom permanent |
 
-Les champs réellement identifiés comme fiables dans ces observations sont le pointeur FCB, le drive/name/type au moment où la chaîne est décodable, et le fait que l'appelant utilise les opérations séquentielles. Il n'y a pas eu de diff octet par octet des champs avant/après chaque BDOS : extent, S1/S2, RC, allocation et CR consommé ne sont donc pas encore établis champ par champ. Il faut conserver le FCB visible en RAM et instrumenter ses mutations plutôt que d'affirmer que les octets d'allocation sont invisibles.
+Les snapshots de retour précités donnent la mutation immédiate pour DELETE/OPEN/CLOSE/MAKE dans ce run CP/M Plus; ils ne couvrent pas READ/WRITE. Dans les cas observés, DELETE ne modifie pas le FCB transmis. MAKE laisse le nom fourni, initialise les champs de directory/record observés, et renvoie `A=00`; OPEN remplit l'état de fichier et l'allocation visible; CLOSE laisse notamment `RC=0B`, `CR=0B` pour le REL de 11 records. Les valeurs Plus de `S1/S2` et d'allocation ne sont pas un contrat CP/M 2.2. Le premier FS doit garder les 36 octets FCB en RAM visibles au programme; synthétiser l'allocation disque réelle est plausible, mais la sûreté des champs réservés sur CP/M 2.2 reste à vérifier contre le manuel/tests. Les valeurs de retour OPEN/CLOSE/MAKE/DELETE concordent avec le manuel CP/M 2.2 pour les cas observés, mais seule une exécution sur un BDOS 2.2 authentique validera les détails de mutation.
 
-Le DMA est une adresse mémoire mutable. L'entrée fn 1Ah a DE=`0080h` pour le buffer page zéro et aussi divers buffers internes; exemples de valeurs observées : `2200h`, `2280h`, `1D0Ah`, `1D8Ch`, `ED06h` (ces adresses ne sont pas nécessairement toutes des destinations de record complet; le DMA peut être réutilisé pour structures auxiliaires). Le code fait 747 appels Set DMA. Les appels READ/WRITE suivants utilisent l'adresse DMA courante. Le premier backend doit raisonner en records CP/M de 128 octets, dont le padding et Ctrl-Z éventuel doivent être reproduits/validés, pas assimiler directement à une lecture fichier hôte.
+Le DMA est une adresse mémoire mutable; les READ/WRITE observés utilisent la valeur courante. `0080h` sert au départ de buffer et aux FCB/default tail, les overlays utilisent `2200h` puis la fenêtre contiguë, l'INT `1D8Ch`, REL `1D0Ah`. Les autres adresses `ED06h` etc. appartiennent à des buffers non liés aux records source ou ont été vues lors de lectures source. Le backend doit transférer des records CP/M de 128 octets vers/depuis cette RAM, pas assimiler la lecture séquentielle à une lecture hôte directe.
 
-Pour cette compilation, aucune opération random (33–36), recherche directory (17/18) ou rename n'a eu lieu avant warm boot. Les 712 READ SEQUENTIAL couvrent notamment 175 appels attribués par contenu aux trois overlays (PLI0 40, PLI1 58, PLI2 77); ils sont lus record par record. PLI0/1/2 ont donc un contrat d'entrées BDOS ordinaires et non une injection magique par Runner. Aucun WRITE vers ces overlays n'a été observé. Le nombre de reads source observé n'est pas nécessairement le nombre de records distincts consommés : FCB et DMA évoluent; il faut éviter d'en déduire un format interne sans trace ciblée.
+Pour cette compilation, aucune opération random (33–36), recherche directory (17/18) ou rename n'a eu lieu avant warm boot. Les 712 READ SEQUENTIAL se ventilent en 680 appels overlays (141/272/264 records plus un EOF chacun), 28 source et 4 INT. PLI0/1/2 ont donc un contrat d'entrées BDOS ordinaires et non une injection magique par Runner. Aucun WRITE vers ces overlays n'a été observé.
 
 ## LINK / OPTIMIST / XREF, disques et versions
 
@@ -144,9 +172,17 @@ Le guide §1 décrit explicitement le flux `PLI OPTIMIST` → `OPTIMIST.REL` →
 | XREF.COM | prend probablement source/object et produit listing/références | inconnu, enquête statique/dynamique nécessaire |
 | RMAC.COM / LIB.COM | assembler et manipuler bibliothèques pour certains workflows | livrés; hors scénario observé |
 
-Le harness MAME basculait le disque de travail vers B:; les outils, source et sortie du scénario étaient sur le disque courant, sans preuve d'accès simultané à plusieurs drives ou à des user numbers. Les octets de préfixe drive vus dans tous les FCB utiles ne sont pas documentés ici comme un usage explicite multi-drive. Le FCB drive byte et les sites statiques Current Disk / fn108 invitent néanmoins à ne pas figer l'API filesystem sur un chemin hôte global.
+Le harness MAME basculait le disque de travail vers B:; les outils, source et sortie du scénario étaient sur ce disque courant, sans preuve d'accès simultané à plusieurs drives ou à des user numbers. Le premier Runes peut utiliser A: virtuel par défaut et user 0; garder les sélections drive/user séparées du chemin hôte pour une extension ultérieure.
 
-Les captures proviennent de CP/M Plus sur QX-10. Le BDOS 108 (6Ch, Get/Set Program Return Code) est CP/M 3, pas un service CP/M 2.2 standard. Le site existe dans le code ; on ignore encore si la compilation requiert le comportement, ou si c'est un chemin conditionnel. Get Version (0Ch) est également appelé et vraisemblablement sert à différencier l'environnement. Le cœur minimal doit répondre de manière compatible au résultat de version attendu par le chemin voulu ou tracer ces appels et prendre une décision explicite ; ne pas coder les valeurs CP/M Plus en dur sans observation du contrôle de flot.
+### Choix explicite de personnalité : CP/M 2.2
+
+Runes cible CP/M 2.2.0 de façon déterministe, une seule version/personnalité dans le premier backend. Le QX-10/CP/M Plus est une source de comportement observé et un différentiel, pas une raison d'adopter ses extensions.
+
+* Sur QX-10/CP/M Plus, le retour BDOS 12 observé à `PLI.COM` est `A=31h`, `HL=0031h` (appel site `05C4h`, retour `05C7h`). Le chemin suivant compare `HL` à `0130h` (calcul `0130h-HL`, helper `01B2Ch`, `ORA L`, `JZ 05EDh`). Comme `0031h != 0130h`, il suit `05D1h`, puis appelle BDOS `6Ch` à `05DFh` ou `05EAh` selon le byte interne `02011h`. Succès observé: `02011h=0`, `DE=0000h`, donc site `05EAh`: CP/M Plus fn108 **set** le program return code à zéro, puis warm boot. L'autre branche `DE=FF00h` setterait un code d'échec. Le résultat de SET n'est pas consommé par le code appelant; le retour A/HL capturé zéro n'est pas un état lu par PLI.
+* La valeur conventionnelle CP/M 2.2 pour BDOS 12 est `HL=0022h` (`H=00`, `L=22h`; compatibilité de retour `A=L=22h`, `B=H=00h`). Elle ne correspond pas à `0130h`, donc le contrôle statique conduit également à `05D1h`. Une expérience sur MAME Plus a remplacé `HL` par `0022h` au breakpoint `05C7h`: compilation et REL restent identiques, `CPM3.SYS` reste absent, mais l'appel BDOS 108 est tout de même exécuté. C'est une injection contrôlée de la réponse uniquement, pas un CP/M 2.2 complet.
+* Ainsi on ne peut pas soutenir que `PLI.COM` n'appelle jamais 108 sous une réponse 2.2. Le service 108 est néanmoins une extension CP/M Plus et Runes ne doit pas l'implémenter par défaut. Le manuel CP/M 2 documente zéro comme retour pour une fonction hors plage; l'émulation du dispatcher 2.2 générique devrait donc absorber ce numéro comme inconnu/zero-return, sans changer de program-return-code. Cela rend le chemin plausible, mais la fin du run reste à confirmer sur BDOS 2.2 authentique.
+* `CPM3.SYS` n'est ouvert dans aucun des deux nouveaux runs propres (réponse native 0031 et réponse forcée 0022); la première trace antérieure qui l'attribuait à ce run est infirmée. Les fichiers source, overlays, INT et REL suivent autrement le même workflow dans l'observation forcée. On ne sait pas encore quel état/harness a causé les anciennes lignes `CPM3.SYS`; aucune opération ne montre un accès conditionnel après la comparaison de version.
+* CP/M Plus peut être ajouté ensuite comme delta explicitement versionné: BDOS 108 (si souhaité), différences de tail/FCB/EOF constatées sous son CCP, et autres services Plus uniquement sur preuve. Pas de `CPM3.SYS` synthétique ni de code retour 108 dans le runtime CP/M 2.2 initial.
 
 ## Frontière filesystem recommandée
 
@@ -156,32 +192,54 @@ Une première surface suffisamment petite, sans secteurs physiques :
 2. Résoudre `A:`–`P:` en disques virtuels, avec disque courant et user séparés du backend; premier run peut n'avoir qu'un drive mais garder cette frontière.
 3. Maintenir FCB en mémoire comme état visible, handles ouverts indexés par FCB/identité de fichier; prendre en charge séquentiel record 128 octets et le DMA bus.
 4. Faire les répertoires de recherche déterministes (tri CP/M normalisé), prévoir snapshot/diff et source des octets, mais différer cela après le premier compile.
-5. Implémenter d'abord les fonctions effectivement atteintes dans le census : console output/status, get version, OPEN/CLOSE/DELETE/READ SEQ/WRITE SEQ/MAKE, SET DMA et CP/M Plus return-code. Traiter fn108 comme compatibilité versionnée (le run l'appelle réellement) et établir une politique explicite CP/M 2.2 avant d'émuler le compileur sur cette version; ne pas ajouter Search/Random par anticipation.
+5. Pour la personnalité CP/M 2.2, répondre à GET VERSION avec `HL=0022h`, fournir CONSOLE STATUS déterministe « aucun caractère » (`A=00`), ne fournir aucun `CPM3.SYS`, et ne pas implémenter la sémantique BDOS 108; si le dispatcher respecte CP/M 2 hors-plage, le fallback documenté renvoie zéro. Ce call reste à confirmer sur BDOS 2.2 réel. Ne pas ajouter Search/Random par anticipation.
 
 Disque A hôte pour la distribution et un disque RAM scratch seraient pratiques pour isoler entrées/sorties, mais rien dans l'exécution conservée ne nécessite la lettre M: ou un second disque. Commencer avec un drive virtuel backend configurable, et éventuellement mapper une image de distribution read-only plus un scratch memory-backed sur lettres configurées. Ne pas coder M: comme convention historique.
 
 ## Étapes d'implémentation proposées
 
-1. **Re-run contrôlé sur disque vierge** : conserver par événement le FCB 36 octets avant/après, DMA, résultat A et octets du tail/page zéro; snapshot avant/après pour prouver create/truncate/delete, padding et hash de REL/INT.
-2. **Process environment + filesystem séquentiel** : tail CCP, default FCB 1/2, drive courant, DMA, services dynamiquement observés, records CP/M déterministes, version et retour CP/M 3 explicitement configurés.
-3. **Compiler Runes** : charger v1.4 + trois overlays + OPTIMIST.PLI, obtenir REL; comparer contenu, taille/padding et diagnostics à MAME.
-4. **LINK puis utilitaires** : confirmer REL/IRL/COM avec LINK; ensuite mesurer les delta-fonctions de XREF/OPTIMIST et n'ajouter search/random/rename que sur preuve.
+1. **CP/M 2.2 process environment + fichiers séquentiels** : initialiser page zéro/tail et FCB chevauchants selon le contrat CP/M 2.2 (ne pas copier le CCP Plus observé), drive 0/user 0, DMA `0080h`; conserver FCB RAM visible. Implémenter OPEN/CLOSE/DELETE/READ SEQ/WRITE SEQ/MAKE/SET DMA, records 128 octets, codes succès/EOF/erreur et console output/status sur références CP/M 2.2. GET VERSION répond `0022h`; aucun `CPM3.SYS` ni état BDOS 108 CP/M Plus. Pour l'appel hors-plage 108, suivre le fallback CP/M 2.2 zéro, à vérifier sous BDOS réel.
+2. **Compile différentiel** : charger v1.4 + overlays + source dans drive virtuel; compiler `PLI OPTIMIST`; comparer diagnostics, REL exact et durée de vie INT au run MAME. Un vrai 2.2 est requis pour résoudre l'appel 108, ou à défaut diagnostiquer et préserver l'écart sans fausse compatibilité.
+3. **Filesystem complet plus tard** : snapshot/diff, host-backed et memory-backed drives; ajouter random/search/rename uniquement après LINK/XREF ou autres tests.
+4. **LINK puis utilitaires** : confirmer REL/IRL/COM avec LINK; ensuite mesurer le delta CP/M de XREF/OPTIMIST et n'ajouter search/random/rename que sur preuve.
+
+## Contrat initial CP/M 2.2 à implémenter
+
+Cette checklist privilégie le manuel CP/M 2.2; les octets observés sur le CCP Plus sont informatifs mais pas normatifs pour Runes.
+
+* Persona/version: BDOS function 12 retourne `HL=0022h`, `H=00`, `L=22h` (CP/M 2.2, machine 8080). La doc CP/M 2 indique le retour `HL`, et que le type CP/M est `H=00`, version 2.2 `L=22h`.
+* Processus: drive courant `A:` (`0`), user `0`; DMA initial `0080h`; chargement COM à `0100h`; adresse `0005h` reste l'entrée BDOS abstraite Runes; `0006h` fournit un mot haut mémoire cohérent avec le layout runner, pas l'adresse MAME `F106h`.
+* Tail: à `0080h`, premier octet longueur; `0081h...` est le tail après nom COM, avec espaces et lettres normalisées uppercase par CCP. N'imposer aucun CR/NUL terminal: CP/M 2 documente le count + caractères et dit la mémoire après la fin non initialisée. Pour déterminisme, Runes peut mettre à zéro le suffixe inutilisé, mais PL/I ne doit pas dépendre de ce remplissage.
+* FCB: construire FCB1 à `005Ch` et FCB2 à `006Ch`; le second chevauche l'aire allocation du premier, il faut déplacer ses champs initiaux avant un OPEN de FCB1. Pour la commande `PLI OPTIMIST`, le CCP 2.2 construit le premier nom `OPTIMIST` (extension non spécifiée donc blancs), et FCB2 vide; le compilateur peut ensuite compléter/parsing `.PLI` à partir du tail. Champs décrits par CP/M 2: drive/name/type des deux FCB; les autres champs jusqu'à `CR` sont zéro, sauf que les 16 bytes FCB2 occupent `006Ch..007Bh` dans le stockage de FCB1. Ne pas recopier `.PLI` à partir du snapshot CCP Plus.
+* SET DMA (26): `DE` remplace le pointeur DMA courant; DMA désigne 128 octets exacts utilisés par READ/WRITE. Le caller sélectionne les adresses; le BDOS n'impose pas d'alignement d'adresses.
+* OPEN (15): FCB nom/drive; success `A=0..3` (directory code), missing `A=FF`; succès laisse les informations directory/allocation dans FCB. La compilation ouvre fichiers nommés sans wildcard.
+* READ SEQ (20): copie 128 octets à DMA, avance `CR`, bascule l'extent au débordement; `A=0` succès, tout nonzero signifie pas de données au prochain record (EOF observé CP/M Plus `A=1`). Ne pas injecter Ctrl-Z: ce run compile des fichiers en records pleins et ne tranche pas un dernier record partiel.
+* MAKE (22): crée un fichier vide et active le FCB; success `A=0..3`, échec espace directory `FF`; le compilateur fait un DELETE préalable pour éviter les doublons.
+* WRITE SEQ (21): écrit le record DMA (128 octets), avance CR/extent; `A=0` succès, nonzero échec (disque plein). WRITE vers REL/INT observés.
+* CLOSE (16): nécessaire après WRITE pour rendre la taille/état répertoire permanent; success `A=0..3`, fail `FF`. CLOSE read-only optionnel selon manuel.
+* DELETE (19): success `A=0..3`, absent `FF`; PLI tolère le cas absent avant MAKE.
+* Console: BDOS 2 émet l'octet `E` exactement; BDOS 11 retourne `A=0` si aucune touche, `A=FF` si disponible. Aucun caractère pending testé; l'option abort exige éventuellement console input et reste hors du premier test batch.
+* BDOS 108 / 6Ch: ne pas implémenter l'état sémantique « Get/Set Program Return Code » CP/M Plus. Dans CP/M 2.2, 108 est au-delà des fonctions définies; le manuel indique qu'une fonction hors plage retourne zéro. Le fallback CP/M2 générique « fonction inconnue => zéro » suffit probablement à ce call, sans état de program-return-code. À valider dans un CP/M 2.2 authentique si possible.
+* Fin: `PC=0000h` termine l'expérience Runes en `Warm_boot`; ne lance pas de CCP/BIOS. C'est le retour transitoire CP/M conventionnel modélisé à la frontière userspace.
+
+L'API filesystem peut rester « drive virtuel + nom CP/M normalisé + FCB RAM visible + records 128 octets + DMA », avec stockage d'allocation/extent synthétique tant que les champs observables ci-dessus concordent. Un seul drive A et user 0 suffisent à `PLI OPTIMIST`; conserver une frontière drive/user distincte pour LINK et l'étape multi-disques ultérieure.
 
 ## Sources
 
-* Digital Research, *CP/M Operating System Manual*, CP/M 2, §5.1, pages imprimées 5-2 (page zéro, `0005h`, `0006h`, COM à `0100h`, warm boot) et §5.2, pages 5-8 et suivantes (FCB `005Ch`, DMA `0080h`, records de 128 octets). Copie HTML/OCR consultable : [CP/M Operating System Manual](https://studylib.net/doc/18146759/digital-research-tm-cp-m-operating-system-manual-cp-m).
+* Digital Research, *CP/M Operating System Manual*, CP/M 2, §5.1, pages imprimées 5-2 (page zéro, `0005h`, `0006h`, COM à `0100h`, warm boot) et §5.2 (page zéro, tail/FCB, BDOS return values, fichiers séquentiels, DMA et records 128 octets). Copie HTML/OCR : [CP/M System Interface, section 5](https://ftpmirror.infania.net/sites/www.gaby.de/cpm/manuals/archive/cpm22htm/ch5.htm). Sections Web 5.2: version §5.2/Function 12; page zero/default FCB/tail §5.2; fonctions 15–22 et 26.
 * Digital Research, *PL/I-80 Applications Guide*, décembre 1980, §1, pages imprimées 6–7 (fichiers OVL, commande compile, passes, REL puis LINK), §2, page 8 (options), §4 pages 18–20 (sequential/direct), §5 (exemples). [PDF conservé par Bitsavers](https://www.bitsavers.org/pdf/digitalResearch/pl1/PL1-80_Applications_Guide_Dec80.pdf). C'est un guide de l'environnement PL/I-80 et non une preuve de toutes les spécificités du binaire v1.4.
-* Digital Research, *CP/M Plus Programmer's Guide*, BDOS fn 108 / 6Ch, Get/Set Program Return Code; [copie Bitsavers](https://bitsavers.org/pdf/digitalResearch/cpm_plus/CPM_Plus_Programmers_Guide_Jan83.pdf). Sert seulement à interpréter la fonction CP/M 3 chargée statiquement.
+* Digital Research, *CP/M Plus Programmer's Guide*, p. 3-89, BDOS fn 108 / 6Ch, Get/Set Program Return Code (`DE=FFFFh` get; toute autre valeur set); [copie Bitsavers](https://bitsavers.org/pdf/digitalResearch/cpm_plus/CPM_Plus_Programmers_Guide_Jan83.pdf). Sert seulement à interpréter la fonction CP/M 3 chargée statiquement.
 * Preuve binaire locale : `DISK1/PLI.COM` SHA-256 ci-dessus; désassemblage Intel 8085 produit avec `dasm85`, fichier local de travail `PLI-resident.lst`. Les sections et sites de ce document sont des adresses de ce listing.
 * Preuve dynamique : run temporaire MAME 0.289 / QX-10 / CP/M Plus, commande CCP `PLI OPTIMIST`, breakpoint à toute entrée BDOS, census borné au premier témoin PC=`0000h`; durée indiquée ci-dessus. Les anciens journaux `out-full/OPTIMIST/mame.log`, `out-full/OPTIMIST/directory.txt`, captures `OPTIMIST-*.INT.*` et `out/ADDC/mame.log` sont des corroborations antérieures, certaines filtrées. Les logs complets temporaires ne sont pas archivés dans le dépôt; les comptes, sites et FCB décodables sont résumés dans les tables.
+* Capture de cette mise à jour : MAME 0.289 QX-10 / CP/M Plus, copie disposable de `PLI80-QXPLUS.base.imd` (hash image source `1a3172c2990f0a6804fd30fdde7ce5800faaf8690b5b872691d5874126753dd1`), `PLI OPTIMIST`, 34.839 s émulateur; snapshot page zéro à premier `PC=0100h`, événements FCB/BDOS jusqu'au warm boot. Seconde exécution même copie-baseline avec action de breakpoint `HL=0022h` juste après le retour BDOS12: même fichier REL/hash, aucun `CPM3.SYS`, BDOS108 toujours appelé. Cela n'émule pas les réponses/effets complets d'un CP/M2 réel.
 
 ### Questions ouvertes
 
 * Quel est le census avec options de compilation/listing/impression, et quels retours BDOS sont consommés pour chaque erreur/succès ?
 * Quels champs FCB sont lus/écrits à chaque étape, et les fichiers intermédiaires exacts sont-ils supprimés/recréés ?
-* Comment sont formés précisément le tail et les FCB1/FCB2 par le CCP QX-10/CP/M Plus; les essais historiques avec lettre de drive/options diffèrent-ils du CCP CP/M 2.2 ?
-* Où et comment chaque overlay est-il chargé (adresse cible, record order, durée de vie) ? Les adresses d'exécution overlay doivent être établies par snapshot mémoire, pas déduites d'un nom FCB seul.
-* Le service 108 est appelé dans le run compilateur CP/M Plus et fixe le code retour à zéro; quelle réponse doit fournir une personnalité CP/M 2.2 sans fn108 ?
+* Les détails réels de la FCB CCP CP/M 2.2 et le comportement BDOS 108 hors plage doivent être confirmés par un run CP/M 2.2; la réponse de version forcée sur le Plus n'est qu'un test de chemin du compilateur.
+* Où chaque overlay commence à s'exécuter après le chargement contigu? DMA établit le buffer `2200h`, pas l'entry point.
+* Les bytes de DMA pré/post-service, EOF exact à l'octet, tailles logiques des INT supprimés, et dernier record partiel restent non capturés / non discriminés.
 * Qu'ajoutent réellement LINK, XREF et OPTIMIST exécutables à la surface du compilateur ?
 * Quelle variation de résultat vient des conventions CP/M 2.2 vs CP/M Plus (notamment version, code retour, EOF et retours A) ?
 
