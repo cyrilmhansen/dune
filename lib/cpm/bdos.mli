@@ -8,6 +8,20 @@ type error =
   (* Runes model-limit diagnostic, not a CP/M BDOS return code. *)
   | Filesystem_model_limit of Filesystem.error
 
+type event =
+  | Read_record of {
+      file : Filesystem.key;
+      logical_record : int;
+      dma : int;
+      data : bytes;
+    }
+  | Write_record of {
+      file : Filesystem.key;
+      logical_record : int;
+      dma : int;
+      data : bytes;
+    }
+
 type t
 
 val create : filesystem:Filesystem.t -> t
@@ -22,6 +36,17 @@ val dispatch :
   state:I8080.State.t ->
   output:(char -> unit) ->
   (action, error) result
+
+val dispatch_instrumented :
+  on_event:(event -> unit) ->
+  runtime:t ->
+  memory:I8080.Memory.t ->
+  state:I8080.State.t ->
+  output:(char -> unit) ->
+  (action, error) result
+
+(** Successful record transfers only. The event contains a copy of the 128
+    bytes transferred, so observers may retain or mutate it safely. *)
 
 (** Function 9 wraps in the 16-bit address space and examines at most 65536
     bytes. Function 2 emits E once. Functions 11 and 12 provide deterministic

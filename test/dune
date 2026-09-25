@@ -19,5 +19,10 @@
  (libraries i8080 runner trace))
 
 (test
+ (name execution_map)
+ (libraries i8080 cpm runner analysis))
+
+
+(test
  (name alu_flags)
  (libraries i8080))

@@ -5,6 +5,20 @@ type error =
   | Unterminated_string of { start_address : int; scanned : int }
   | Filesystem_model_limit of Filesystem.error
 
+type event =
+  | Read_record of {
+      file : Filesystem.key;
+      logical_record : int;
+      dma : int;
+      data : bytes;
+    }
+  | Write_record of {
+      file : Filesystem.key;
+      logical_record : int;
+      dma : int;
+      data : bytes;
+    }
+
 type t = {
   filesystem : Filesystem.t;
   mutable dma : int;
@@ -89,7 +103,7 @@ let transfer_record_from_memory memory ~dma =
 
 let bdos_function_limit = 40
 
-let dispatch_inner ~runtime ~memory ~state ~output =
+let dispatch_inner ~runtime ~memory ~state ~output ~on_event =
   let function_number = I8080.State.c state in
   match function_number with
   | 0 -> Ok Terminate
@@ -155,6 +169,10 @@ let dispatch_inner ~runtime ~memory ~state ~output =
                   transfer_record_to_memory memory ~dma:runtime.dma record;
                   set_fcb_read_position memory ~fcb_address ~record_count:records
                     ~extent ~current_record;
+                  on_event
+                    (Read_record
+                       { file = key; logical_record = record_number; dma = runtime.dma;
+                         data = Bytes.copy record });
                   set_result state 0)))
   | 21 ->
       (match resolve_fcb runtime memory (I8080.State.de state) with
@@ -179,6 +197,10 @@ let dispatch_inner ~runtime ~memory ~state ~output =
                        sequential extent boundary CP/M opens/makes the next
                        extent before returning, which sets FWF on that FCB. *)
                     Fcb.set_file_write_flag fcb (record_number mod 128 = 127);
+                    on_event
+                      (Write_record
+                         { file = key; logical_record = record_number; dma = runtime.dma;
+                           data = Bytes.copy record });
                     set_result state 0)))
   | 22 ->
       (match resolve_fcb runtime memory (I8080.State.de state) with
@@ -204,8 +226,8 @@ let dispatch_inner ~runtime ~memory ~state ~output =
       Ok Continue
   | number -> Error (Unsupported_function number)
 
-let dispatch ~runtime ~memory ~state ~output =
-  match dispatch_inner ~runtime ~memory ~state ~output with
+let dispatch_instrumented ~on_event ~runtime ~memory ~state ~output =
+  match dispatch_inner ~runtime ~memory ~state ~output ~on_event with
   | Ok Continue ->
       (* CP/M's compatibility convention aliases the byte return in A to L
          and the high byte in B to H, including calls without a modeled
@@ -215,3 +237,6 @@ let dispatch ~runtime ~memory ~state ~output =
       Ok Continue
   | Ok Terminate -> Ok Terminate
   | Error error -> Error error
+
+let dispatch ~runtime ~memory ~state ~output =
+  dispatch_instrumented ~on_event:(fun _ -> ()) ~runtime ~memory ~state ~output

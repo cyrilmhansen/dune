@@ -33,6 +33,7 @@ val run_bytes :
   ?max_steps:int ->
   ?on_step:(I8080.Step.t -> unit) ->
   ?on_event:(event -> unit) ->
+  ?on_bdos_event:(step_index:int -> Cpm.Bdos.event -> unit) ->
   ?on_start:(bytes -> unit) ->
   ?filesystem:Cpm.Filesystem.t ->
   ?command_tail:bytes ->
@@ -44,6 +45,7 @@ val run_file :
   ?max_steps:int ->
   ?on_step:(I8080.Step.t -> unit) ->
   ?on_event:(event -> unit) ->
+  ?on_bdos_event:(step_index:int -> Cpm.Bdos.event -> unit) ->
   ?on_start:(bytes -> unit) ->
   ?filesystem:Cpm.Filesystem.t ->
   ?command_tail:bytes ->

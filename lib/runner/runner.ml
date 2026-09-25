@@ -75,7 +75,7 @@ let install_page_zero memory command_tail =
     (fun index byte -> I8080.Memory.write memory (0x0081 + index) (Char.code byte))
     command_tail
 
-let run_loaded ~max_steps ~on_step ~on_event ~on_start ~output ~filesystem ~command_tail memory loaded =
+let run_loaded ~max_steps ~on_step ~on_event ~on_bdos_event ~on_start ~output ~filesystem ~command_tail memory loaded =
   (* 0005h remains a synthetic RET userspace trap, not the historical BDOS
      jump instruction. The 0006h word is a deterministic compatibility value
      for exercisers that use LHLD 6 / SPHL, not historical CP/M low memory. *)
@@ -98,7 +98,9 @@ let run_loaded ~max_steps ~on_step ~on_event ~on_start ~output ~filesystem ~comm
       on_event
         (Bdos_call
            { step_index = steps; function_number; de = I8080.State.de state });
-      (match Cpm.Bdos.dispatch ~runtime:bdos ~memory ~state ~output with
+      (match Cpm.Bdos.dispatch_instrumented
+               ~on_event:(fun event -> on_bdos_event ~step_index:steps event)
+               ~runtime:bdos ~memory ~state ~output with
       | Error error -> Error (Bdos_error error)
       | Ok Cpm.Bdos.Terminate ->
           let reason = Bdos_function function_number in
@@ -118,7 +120,7 @@ let run_loaded ~max_steps ~on_step ~on_event ~on_start ~output ~filesystem ~comm
   in
   run 0
 
-let run_with_loader ~max_steps ~on_step ~on_event ~on_start ~output ~filesystem ~command_tail load =
+let run_with_loader ~max_steps ~on_step ~on_event ~on_bdos_event ~on_start ~output ~filesystem ~command_tail load =
   if max_steps <= 0 then Error (Invalid_step_limit max_steps)
   else if Bytes.length command_tail > 127 then Error (Invalid_command_tail (Bytes.length command_tail))
   else
@@ -127,16 +129,18 @@ let run_with_loader ~max_steps ~on_step ~on_event ~on_start ~output ~filesystem 
     match load memory with
     | Error error -> Error (Load_error error)
     | Ok loaded ->
-        run_loaded ~max_steps ~on_step ~on_event ~on_start ~output ~filesystem ~command_tail memory loaded
+        run_loaded ~max_steps ~on_step ~on_event ~on_bdos_event ~on_start ~output ~filesystem ~command_tail memory loaded
 
 let run_bytes ?(max_steps = default_max_steps) ?(on_step = fun _ -> ())
-    ?(on_event = fun _ -> ()) ?(on_start = fun _ -> ()) ?filesystem
+    ?(on_event = fun _ -> ()) ?(on_bdos_event = fun ~step_index:_ _ -> ())
+    ?(on_start = fun _ -> ()) ?filesystem
     ?(command_tail = Bytes.empty) ~output bytes =
-  run_with_loader ~max_steps ~on_step ~on_event ~on_start ~output ~filesystem ~command_tail (fun memory ->
+  run_with_loader ~max_steps ~on_step ~on_event ~on_bdos_event ~on_start ~output ~filesystem ~command_tail (fun memory ->
       Cpm.Loader.load_bytes memory bytes)
 
 let run_file ?(max_steps = default_max_steps) ?(on_step = fun _ -> ())
-    ?(on_event = fun _ -> ()) ?(on_start = fun _ -> ()) ?filesystem
+    ?(on_event = fun _ -> ()) ?(on_bdos_event = fun ~step_index:_ _ -> ())
+    ?(on_start = fun _ -> ()) ?filesystem
     ?(command_tail = Bytes.empty) ~output ~path () =
-  run_with_loader ~max_steps ~on_step ~on_event ~on_start ~output ~filesystem ~command_tail (fun memory ->
+  run_with_loader ~max_steps ~on_step ~on_event ~on_bdos_event ~on_start ~output ~filesystem ~command_tail (fun memory ->
       Cpm.Loader.load_file memory ~path)
