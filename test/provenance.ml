@@ -27,7 +27,9 @@ let run_program ?(initial_sp=0xfffe) bytes count =
   let cpu=I8080.Cpu.create ~state ~bus:(I8080.Bus.create memory) in
   for i=0 to count-1 do
     match I8080.Cpu.step cpu with
-    | Error _ -> failwith "CPU test step failed"
+    | Error e -> failwith(Printf.sprintf "CPU test step %d failed: %s" i (match e with
+        |I8080.Cpu.Cpu_halted->"halted"|Decode_error _->"decode"|Unsupported_instruction _->"unsupported"
+        |Bus_io_error _->"I/O"|Interrupt_acknowledge_length _->"interrupt payload"))
     | Ok step ->
         P.observe_step ~origin_at:(fun ~pc ~fetched -> match Analysis.Execution_map.origin_at map pc with
           | Analysis.Execution_map.Image_byte {image;offset} when
@@ -189,6 +191,76 @@ let test_branch_observation_keeps_flag_root () =
         | {P.kind=P.Source(P.Initial_register {register="Z";_});_}->true|_->false)
   | _ -> failwith "conditional branch observation missing"
 
+let control_edges n=List.filter_map(function P.Control,id->Some id|_->None)n.P.inputs
+
+let test_shared_path_control_contexts () =
+  let program=Bytes.of_string "\x3e\x01\xb7\xc2\x06\x01\x0e\x22\x16\x33\x76" in
+  let p,_,_,_=run_program program 6 in
+  let branches=P.branch_observations p in
+  (match branches with
+   |[b]->
+       assert(b.taken && b.condition=I8080.Instr.Not_zero && b.step_index=2);
+       assert(b.origin=Some{P.image=file "TEST.COM";offset=3;runtime_pc=0x103});
+       assert(b.flag_inputs=[P.flag_root p ~flag:`Zero]);
+       let decision=P.node p b.decision_node and context=P.node p b.context_node in
+       assert(decision.kind=P.Operation "Control.Decision" && decision.value=1 && decision.width=1);
+       assert(decision.origin=b.origin && decision.step_index=Some b.step_index);
+       assert(List.mem(P.Flag,(match List.hd b.flag_inputs with Node n->n|_->assert false))decision.inputs);
+       assert(control_edges decision=[]);
+       assert(context.kind=P.Operation "Control.Context" && control_edges context=[b.decision_node]);
+       assert(P.control_decisions_of_context p (Node b.context_node)=[b]);
+       let before=P.node p (match P.register_root p ~register:I8080.Instr.A with Node n->n|_->assert false) in
+       assert(control_edges before=[]);
+       let after=P.node p (match P.register_root p ~register:I8080.Instr.D with Node n->n|_->assert false) in
+       assert(control_edges after=[b.context_node]);
+       assert(P.controlled_operation_count p>0);
+       let data=P.slice ~roles:P.data_edge_roles p [P.register_root p ~register:I8080.Instr.D] in
+       assert(List.for_all(fun (n:P.node)->n.id>=0)data.nodes);
+       let combined=P.slice p [P.register_root p ~register:I8080.Instr.D] in
+       assert(List.exists(fun (n:P.node)->n.id=b.decision_node)combined.nodes);
+       assert(List.exists(fun (n:P.node)->n.kind=P.Operation "ALU.ORA.Z")combined.nodes);
+       assert(List.length(P.control_decisions_of_context p (P.current_control_context p))=1);
+       P.seed_memory p ~class_:P.Runner ~address:0x5000 (Bytes.make 128 'X');
+       let sink_file=match Cpm.Filesystem.key_of_name ~drive:0 ~user:0 ~name:"PATH.OUT" with Ok k->k|_->assert false in
+       P.observe_bdos_event p ~step_index:99 (Cpm.Bdos.Write_record {file=sink_file;logical_record=0;dma=0x5000;data=Bytes.make 128 'X'});
+       let observation=Option.get(P.final_output_byte p ~file:sink_file ~offset:0) in
+       assert(observation.root<>Untracked);
+       assert(P.output_control_context p observation=P.current_control_context p);
+       (match observation.root with Node n->assert(control_edges(P.node p n)=[])|_->assert false)
+   |_->failwith "one branch should establish one shared path context");
+  let source_root=P.memory_root p ~address:0x5000 in
+  (match source_root with Node n->let source=P.node p n in
+     assert(match source.kind with P.Source _->source.inputs=[]|_->false)
+   |Untracked->failwith "post-branch source was not seeded");
+
+  let two=Bytes.of_string "\xc2\x03\x01\xc2\x06\x01\x06\x2a\x76" in
+  let p2,_,_,_=run_program two 4 in
+  let bs=P.branch_observations p2 in
+  assert(List.length bs=2 && List.for_all(fun (b:P.branch_observation)->b.taken)bs);
+  let latest=List.hd(List.rev bs) in
+  assert(List.length(P.control_decisions_of_context p2 (Node latest.context_node))=2);
+  let result=P.node p2 (match P.register_root p2 ~register:I8080.Instr.B with Node n->n|_->assert false) in
+  assert(control_edges result=[latest.context_node]);
+  assert(P.logical_control_node_count p2=4);
+
+  let call_not_taken=Bytes.of_string "\xcc\x06\x01\x06\x2a\x76\x76" in
+  let p3,_,_,_=run_program call_not_taken 3 in
+  (match P.branch_observations p3 with [b]->assert(not b.taken)|_->assert false);
+  let call_taken_ret_taken=Bytes.of_string "\xaf\xcc\x07\x01\x76\x00\x00\xc8\x76" in
+  let p4,_,_,_=run_program call_taken_ret_taken 4 in
+  (match P.branch_observations p4 with
+   |[call;ret]->assert(call.taken && ret.taken && call.condition=I8080.Instr.Zero && ret.condition=I8080.Instr.Zero)
+   |_->failwith(Printf.sprintf "conditional CALL/RET decisions missing: %s"
+      (String.concat "," (List.map(fun (b:P.branch_observation)->Printf.sprintf "%04X/%b" b.pc b.taken)(P.branch_observations p4)))));
+  let ret_not_taken=Bytes.of_string "\x3e\x01\xc8\x76" in
+  let p5,_,_,_=run_program ret_not_taken 3 in
+  (match P.branch_observations p5 with [b]->assert(not b.taken)|_->assert false);
+  let unconditional=Bytes.of_string "\xc3\x04\x01\xcd\x0a\x01\x76\x00\x00\xc9" in
+  let pu,_,_,_=run_program unconditional 4 in
+  assert(P.branch_observations pu=[]);
+  let rst=Bytes.of_string "\xc7" in let pr,_,_,_=run_program rst 1 in
+  assert(P.branch_observations pr=[])
+
 let test_opcode_shadow_coverage () =
   for opcode=0 to 255 do
     let program=Bytes.make 4 '\000' in Bytes.set program 0 (Char.chr opcode);
@@ -324,6 +396,28 @@ let historical_run () =
         (Analysis.Execution_map.summary map).attributed_instruction_executions
         (Analysis.Execution_map.summary map).unknown_executions
         (Analysis.Execution_map.summary map).mixed_or_unresolved_executions;
+      let branches=P.branch_observations prov in
+      let branch_pcs=Hashtbl.create 128 and by_image=Hashtbl.create 8 in
+      List.iter(fun (b:P.branch_observation)->
+        let image,location=match b.origin with
+          |Some o->o.image.name,Some(o.offset,o.runtime_pc)
+          |None->"unknown/system",None in
+        Option.iter(fun loc->Hashtbl.replace branch_pcs (image,loc) ())location;
+        let total,taken,not_taken,pcs=Option.value(Hashtbl.find_opt by_image image)
+            ~default:(0,0,0,Hashtbl.create 32) in
+        Hashtbl.replace by_image image (total+1,taken+(if b.taken then 1 else 0),
+          not_taken+(if b.taken then 0 else 1),pcs);
+        Option.iter(fun loc->Hashtbl.replace pcs loc ())location)branches;
+      Printf.printf "BRANCH total=%d taken=%d not_taken=%d distinct_locations=%d distinct_runtime_pcs=%d\n%!"
+        (List.length branches)
+        (List.fold_left(fun n (b:P.branch_observation)->n+(if b.taken then 1 else 0))0 branches)
+        (List.fold_left(fun n (b:P.branch_observation)->n+(if b.taken then 0 else 1))0 branches)
+        (Hashtbl.length branch_pcs)
+        (let h=Hashtbl.create 128 in List.iter(fun (b:P.branch_observation)->Hashtbl.replace h b.pc ())branches;Hashtbl.length h);
+      Hashtbl.fold(fun image (total,taken,not_taken,pcs) acc->(image,total,taken,not_taken,Hashtbl.length pcs)::acc)by_image[]
+      |> List.sort compare |> List.iter(fun(image,total,taken,not_taken,locations)->
+        Printf.printf "BRANCH_IMAGE %s total=%d taken=%d not_taken=%d locations=%d\n%!"
+          image total taken not_taken locations);
       let out_dir=Option.value(Sys.getenv_opt "RUNES_PROVENANCE_OUT")~default:"." in
       let rel_out=open_out_bin(Filename.concat out_dir "OPTIMIST.REL") in output_bytes rel_out rel;close_out rel_out;
       let report_path=Filename.concat out_dir "provenance-report.json" in
@@ -332,9 +426,32 @@ let historical_run () =
       Analysis.Provenance_report.write_json ~output:(output_string report_out) explorer;close_out report_out;
       let report_input=open_in_bin report_path in let report_size=in_channel_length report_input in close_in report_input;
       Printf.printf "EXPLORER_JSON bytes=%d write_time=%.3f\n%!" report_size (Sys.time()-.report_write_started);
+      let control_started=Sys.time() in
+      let control_report=match Analysis.Provenance_report.path_control_report_of_provenance
+        ~provenance:prov ~selected with
+        |Ok report->report|Error _->failwith "historical path-control projection failed" in
+      Printf.printf "CONTROL_REPORT projection_time=%.3f decisions=%d contexts=%d logical_control_nodes=%d controlled_operations=%d control_relations=%d sharing=%.2f\n%!"
+        (Sys.time()-.control_started)(P.control_decision_count prov)(P.control_context_count prov)
+        (P.logical_control_node_count prov)(P.controlled_operation_count prov)(P.control_relation_count prov)
+        (float(P.controlled_operation_count prov)/.float(max 1(P.control_context_count prov)));
+      List.iter(fun (path:Analysis.Provenance_report.path_control_projection)->
+        Printf.printf "PATH_SINK off=%04X depth=%d locations=%d steps=%s..%s context_nodes=%d decisions=%d flag_ancestors=%d combined=%d control_relations=%d\n%!"
+          path.sink.offset path.context_depth path.distinct_branch_locations
+          (Option.fold ~none:"-" ~some:string_of_int path.earliest_decision_step)
+          (Option.fold ~none:"-" ~some:string_of_int path.latest_decision_step)
+          path.additional_context_nodes path.additional_decision_nodes path.additional_flag_ancestors
+          path.combined_reachable_nodes path.control_relations)
+        control_report.paths;
+      let control_path=Filename.concat out_dir "provenance-control-report.json" in
+      let control_out=open_out_bin control_path in
+      let control_json_started=Sys.time() in
+      Analysis.Provenance_report.write_control_report_json ~output:(output_string control_out) control_report;
+      close_out control_out;
+      let control_in=open_in_bin control_path in let control_size=in_channel_length control_in in close_in control_in;
+      Printf.printf "CONTROL_JSON bytes=%d write_time=%.3f\n%!" control_size (Sys.time()-.control_json_started);
       List.iter(fun offset->match P.final_output_byte prov ~file:rel_key ~offset with
         |None->failwith "missing sampled output byte"
-        |Some obs->let slice=P.slice prov [obs.root] in
+        |Some obs->let slice=P.slice ~roles:P.data_edge_roles prov [obs.root] in
           Printf.printf "SINK off=%d value=%02X step=%d root=%s nodes=%d producers=%d leaves=%d\n%!"
             offset obs.value obs.write_step_index (match obs.root with Node n->string_of_int n|Untracked->"untracked")
             (List.length slice.nodes)(List.length(P.producer_nodes slice))(List.length(P.source_leaves slice));
@@ -344,7 +461,7 @@ let historical_run () =
           let ch=open_out_bin path in P.write_slice_json ch prov ~roots:[obs.root];close_out ch)
         [0;704;1407];
       let sample_roots=List.filter_map(fun offset->Option.map(fun o->o.P.root)(P.final_output_byte prov ~file:rel_key ~offset))[0;704;1407] in
-      let sampled=P.slice prov sample_roots in
+      let sampled=P.slice ~roles:P.data_edge_roles prov sample_roots in
       Printf.printf "SAMPLE_UNION nodes=%d sources=%d\n%!" (List.length sampled.nodes) (List.length(P.source_leaves sampled));
       List.iter(fun s->Printf.printf "UNION_SOURCE %s distinct=%d\n%!"
         (match s.P.group with File_input f->f.name|Command_tail_input->"command-tail"|Initial_memory_input _->"initial-memory"|Initial_register_input x->"register:"^x|External_input(a,b)->a^":"^b) s.distinct_bytes)
@@ -366,6 +483,7 @@ let () =
   test_sink_history_and_slice ();
   test_execution_origin_invalidation_is_independent ();
   test_branch_observation_keeps_flag_root ();
+  test_shared_path_control_contexts ();
   test_opcode_shadow_coverage ();
   test_compact_chunk_boundary ();
   historical_run ()

@@ -25,8 +25,10 @@ type output_observation = {
   write_step_index : int; root : root;
 }
 type branch_observation = {
-  step_index : int; pc : int; condition : I8080.Instr.condition;
+  step_index : int; pc : int; origin : producer_origin option;
+  condition : I8080.Instr.condition;
   taken : bool; target : int option; flag_inputs : root list;
+  decision_node : node_id; context_node : node_id; parent_context : root; depth : int;
 }
 type slice = { roots : root list; nodes : node list }
 type source_group =
@@ -64,6 +66,7 @@ type node_chunk = {
   payloads : (int32, int32_elt, c_layout) Array1.t;
   edge_starts : (int32, int32_elt, c_layout) Array1.t;
   edge_lengths : (int32, int32_elt, c_layout) Array1.t;
+  control_contexts : (int32, int32_elt, c_layout) Array1.t;
 }
 
 type edge_chunk = {
@@ -97,6 +100,11 @@ type t = {
   flags : cell array;
   outputs : ((Cpm.Filesystem.key * int), output_observation list) Hashtbl.t;
   mutable branches_rev : branch_observation list;
+  branches_by_decision : (node_id, branch_observation) Hashtbl.t;
+  output_contexts : ((Cpm.Filesystem.key * int * int), root) Hashtbl.t;
+  mutable current_control_context : root;
+  mutable controlled_operations : int;
+  mutable next_decision : int;
 }
 
 let create () =
@@ -108,7 +116,9 @@ let create () =
     memory = Array.init 65536 (fun _ -> { value = 0; root = Untracked });
     regs = Array.init 8 (fun _ -> { value = 0; root = Untracked });
     flags = Array.init 5 (fun _ -> { value = 0; root = Untracked });
-    outputs = Hashtbl.create 4093; branches_rev = [] }
+    outputs = Hashtbl.create 4093; branches_rev = [];
+    branches_by_decision=Hashtbl.create 4096;output_contexts=Hashtbl.create 4093;
+    current_control_context=Untracked;controlled_operations=0;next_decision=0 }
 
 let intern_operation p name =
   match Hashtbl.find_opt p.operation_ids name with
@@ -135,6 +145,7 @@ let create_node_chunk () = {
   payloads=Array1.create int32 c_layout node_chunk_size;
   edge_starts=Array1.create int32 c_layout node_chunk_size;
   edge_lengths=Array1.create int32 c_layout node_chunk_size;
+  control_contexts=Array1.create int32 c_layout node_chunk_size;
 }
 
 let create_edge_chunk () = {
@@ -187,7 +198,7 @@ let pack_source p = function
   |Initial_register {register;_}->3,intern_source_identity p (Source_initial_register register),0
   |External_result {subsystem;operation;_}->4,intern_source_identity p (Source_external(subsystem,operation)),0
 
-let add_node p ~kind ~value ~width ?step_index ?origin inputs =
+let add_node p ~kind ~value ~width ?step_index ?origin ?control_context inputs =
   let id = p.used in
   if id>=Int32.to_int Int32.max_int then invalid_arg "Provenance: node id exceeds compact arena range";
   let step=Option.fold ~none:Int64.minus_one ~some:Int64.of_int step_index in
@@ -204,6 +215,12 @@ let add_node p ~kind ~value ~width ?step_index ?origin inputs =
   Array1.set chunk.widths slot width;Array1.set chunk.steps slot step;
   Array1.set chunk.origin_images slot origin_image;Array1.set chunk.origin_offsets slot origin_offset;
   Array1.set chunk.runtime_pcs slot runtime_pc;Array1.set chunk.payloads slot (Int32.of_int payload);
+  let control_context=Option.value control_context ~default:Untracked in
+  let control_id=match control_context with
+    |Untracked->Int32.minus_one
+    |Node context->Int32.of_int context in
+  Array1.set chunk.control_contexts slot control_id;
+  if control_context<>Untracked then p.controlled_operations<-p.controlled_operations+1;
   let edge_start=p.edges in
   p.used <- p.used + 1;
   let edge_length=List.length inputs in
@@ -222,7 +239,8 @@ let source p source value width = add_node p ~kind:(Source source) ~value ~width
 let root_node = function Untracked -> [] | Node id -> [ id ]
 let edges role roots = List.concat_map (fun root -> List.map (fun id -> role, id) (root_node root)) roots
 let op p ~name ~value ~width ~step_index ~origin inputs =
-  add_node p ~kind:(Operation name) ~value ~width ~step_index ?origin inputs
+  add_node p ~kind:(Operation name) ~value ~width ~step_index ?origin
+    ~control_context:p.current_control_context inputs
 
 let seed_file p ~image ~runtime_base data =
   if runtime_base < 0 || runtime_base >= 65536 || Bytes.length data > 65536 then
@@ -287,6 +305,27 @@ let producer_origin step origin_at fetched =
   match I8080.Step.source step, origin_at with
   | I8080.Step.Memory, Some resolve -> resolve ~pc:(I8080.Step.pc_before step) ~fetched
   | _ -> None
+
+let record_control_decision p ~step_index ~pc ~origin ~condition ~taken ~target flag_inputs =
+  let sequence=p.next_decision in
+  if sequence>(max_int-2)/2 then invalid_arg "Provenance: control decision id overflow";
+  let decision_node= -((sequence*2)+1) and context_node= -((sequence*2)+2) in
+  let parent_context=p.current_control_context in
+  let observation={step_index;pc;origin;condition;taken;target;flag_inputs;
+    decision_node;context_node;parent_context;depth=sequence+1} in
+  p.branches_rev<-observation::p.branches_rev;
+  Hashtbl.add p.branches_by_decision decision_node observation;
+  p.next_decision<-sequence+1;
+  p.current_control_context<-Node context_node
+
+let control_decision_node b =
+  let inputs=edges Control [b.parent_context] @ edges Flag b.flag_inputs in
+  {id=b.decision_node;kind=Operation "Control.Decision";value=(if b.taken then 1 else 0);
+   width=1;step_index=Some b.step_index;origin=b.origin;inputs}
+
+let control_context_node b =
+  {id=b.context_node;kind=Operation "Control.Context";value=b.depth;
+   width=32;step_index=None;origin=None;inputs=[Control,b.decision_node]}
 
 let materialize_initial p ~step_index ~instruction ~address ~value =
   let address = address land 0xffff in
@@ -370,13 +409,14 @@ let observe_step ?origin_at p ~step_index (after : Runner.state_snapshot) step =
        let index=match condition with
          | Not_zero | Zero -> 1 | Not_carry | Carry -> 4
          | Parity_odd | Parity_even -> 3 | Positive | Minus -> 0 in
-       p.branches_rev <- {step_index;pc;condition;taken;target=Some target;
-         flag_inputs=[p.flags.(index).root]} :: p.branches_rev
+       record_control_decision p ~step_index ~pc ~origin ~condition ~taken
+         ~target:(Some target) [p.flags.(index).root]
    | Some condition, I8080.Step.Return {target;taken} ->
        let index=match condition with
          | Not_zero | Zero -> 1 | Not_carry | Carry -> 4
          | Parity_odd | Parity_even -> 3 | Positive | Minus -> 0 in
-       p.branches_rev <- {step_index;pc;condition;taken;target;flag_inputs=[p.flags.(index).root]} :: p.branches_rev
+       record_control_decision p ~step_index ~pc ~origin ~condition ~taken
+         ~target [p.flags.(index).root]
    | _ -> ());
   let immediates =
     if I8080.Step.source step = I8080.Step.Interrupt_acknowledge then
@@ -697,7 +737,8 @@ let observe_bdos_event p ~step_index = function
         cell.value<-value; cell.root<-root;
         let observation={file;offset;value;write_step_index=step_index;root} in
         let key=file,offset in
-        Hashtbl.replace p.outputs key (observation :: Option.value (Hashtbl.find_opt p.outputs key) ~default:[])
+        Hashtbl.replace p.outputs key (observation :: Option.value (Hashtbl.find_opt p.outputs key) ~default:[]);
+        Hashtbl.replace p.output_contexts (file,offset,step_index) p.current_control_context
       done
 
 let observe_bdos_effect p = function
@@ -713,6 +754,30 @@ let output_byte_history p ~file ~offset =
   Option.value (Hashtbl.find_opt p.outputs (file,offset)) ~default:[] |> List.rev
 let final_output_byte p ~file ~offset = match output_byte_history p ~file ~offset with []->None|xs->Some(List.hd(List.rev xs))
 let branch_observations p = List.rev p.branches_rev
+let current_control_context p = p.current_control_context
+let control_decision_count p = p.next_decision
+let control_context_count p = p.next_decision
+let controlled_operation_count p = p.controlled_operations
+let logical_control_node_count p = 2*p.next_decision
+let control_relation_count p =
+  p.controlled_operations + p.next_decision +
+  List.fold_left(fun n b->n+(match b.parent_context with Node _->1|Untracked->0))0 p.branches_rev
+let output_control_context p observation =
+  Option.value (Hashtbl.find_opt p.output_contexts
+    (observation.file,observation.offset,observation.write_step_index)) ~default:Untracked
+
+let control_decisions_of_context p context =
+  let context=ref context and result=ref [] and continue=ref true in
+  while !continue do
+    match !context with
+    |Node id when id<0 && id land 1=0 ->
+        (match Hashtbl.find_opt p.branches_by_decision (id+1) with
+         |Some branch -> result:=branch::!result;context:=branch.parent_context
+         |None -> failwith "Provenance: missing shared control context")
+    |Untracked -> continue:=false
+    |Node _ -> failwith "Provenance: invalid control-context reference"
+  done;
+  !result
 
 let edge_at p id =
   let chunk=edge_chunk p id and slot=id mod edge_chunk_size in
@@ -721,7 +786,20 @@ let edge_at p id =
   role,Int32.to_int(Array1.get chunk.targets slot)
 
 let node p id =
-  if id<0 || id>=p.used then invalid_arg "Provenance.node: invalid node id";
+  if id<0 then (
+    let sequence=(-id-1)/2 in
+    if sequence<0 || sequence>=p.next_decision then invalid_arg "Provenance.node: invalid control node id";
+    let branch=match Hashtbl.find_opt p.branches_by_decision (-((sequence*2)+1)) with
+      |Some branch->branch|None->failwith "Provenance: missing control decision" in
+    if id=branch.decision_node then (
+      let inputs=edges Control [branch.parent_context] @ edges Flag branch.flag_inputs in
+      {id;kind=Operation "Control.Decision";value=(if branch.taken then 1 else 0);width=1;
+       step_index=Some branch.step_index;origin=branch.origin;inputs})
+    else if id=branch.context_node then
+      {id;kind=Operation "Control.Context";value=branch.depth;width=32;step_index=None;
+       origin=None;inputs=[Control,branch.decision_node]}
+    else invalid_arg "Provenance.node: invalid control node id")
+  else if id>=p.used then invalid_arg "Provenance.node: invalid node id" else
   let chunk=node_chunk p id and slot=id mod node_chunk_size in
   let tag=Array1.get chunk.tags slot and payload=Int32.to_int(Array1.get chunk.payloads slot) in
   let value=Array1.get chunk.values slot and width=Array1.get chunk.widths slot in
@@ -743,26 +821,28 @@ let node p id =
     runtime_pc=Array1.get chunk.runtime_pcs slot } in
   let edge_start=Int32.to_int(Array1.get chunk.edge_starts slot) in
   let edge_length=Int32.to_int(Array1.get chunk.edge_lengths slot) in
-  {id;kind;value;width;step_index;origin;
-   inputs=List.init edge_length(fun i->edge_at p (edge_start+i))}
+  let inputs=List.init edge_length(fun i->edge_at p (edge_start+i)) in
+  let context=Array1.get chunk.control_contexts slot in
+  let inputs=if context=Int32.minus_one then inputs else inputs@[Control,Int32.to_int context] in
+  {id;kind;value;width;step_index;origin;inputs}
 
-let slice p roots =
+let data_edge_roles=[Value;Address;Flag]
+let all_edge_roles=[Value;Address;Flag;Control]
+let has_role roles role=List.mem role roles
+
+let slice ?(roles=all_edge_roles) p roots =
   let seen=Hashtbl.create 1024 and pending=Stack.create() in
   List.iter (function Untracked->()|Node id->Stack.push id pending) roots;
   while not(Stack.is_empty pending) do
     let id=Stack.pop pending in if not(Hashtbl.mem seen id) then (
       Hashtbl.add seen id ();
-      let chunk=node_chunk p id and slot=id mod node_chunk_size in
-      let edge_start=Int32.to_int(Array1.get chunk.edge_starts slot) in
-      let edge_length=Int32.to_int(Array1.get chunk.edge_lengths slot) in
-      for index=0 to edge_length-1 do
-        let _,target=edge_at p (edge_start+index) in Stack.push target pending
-      done)
+      let current=node p id in
+      List.iter(fun(role,target)->if has_role roles role then Stack.push target pending)current.inputs)
   done;
   let nodes=Hashtbl.fold(fun id () acc->node p id::acc)seen[] |> List.sort(fun (a:node) (b:node)->compare a.id b.id) in
   {roots;nodes}
 
-let fold_reachable p ~roots ~init ~f =
+let fold_reachable ?(roles=all_edge_roles) p ~roots ~init ~f =
   let seen=Hashtbl.create 1024 in
   let pending=ref(List.filter_map(function Untracked->None|Node id->Some id)roots) in
   let accumulator=ref init in
@@ -777,7 +857,7 @@ let fold_reachable p ~roots ~init ~f =
           accumulator:=f !accumulator current;
           (* Prepending input targets preserves the stored edge order during
              this depth-first walk. No Hashtbl iteration order is observable. *)
-          let children=List.map snd current.inputs in
+          let children=List.filter_map(fun(role,target)->if has_role roles role then Some target else None)current.inputs in
           pending:=children @ !pending)
   done;
   !accumulator
@@ -812,7 +892,7 @@ let output_bytes_untracked p ~file=output_byte_count p ~file-output_bytes_with_r
 let output_bytes_rewritten p ~file=Hashtbl.fold(fun (f,_) (xs : output_observation list) n->if f=file && List.length xs>1 then n+1 else n)p.outputs 0
 
 let slice_json p ~roots =
-  let s=slice p roots in
+  let s=slice ~roles:data_edge_roles p roots in
   let q=Printf.sprintf "%S" in
   let buffer=Buffer.create 4096 in
   let add=Buffer.add_string buffer in
@@ -842,7 +922,8 @@ let slice_json p ~roots =
     add ",\"origin\":";
     (match n.origin with None->add "null"|Some o->printf "{\"drive\":%d,\"user\":%d,\"image\":%s,\"offset\":%d,\"runtime_pc\":%d}" o.image.drive o.image.user (q o.image.name)o.offset o.runtime_pc);
     add ",\"inputs\":[";
-    List.iteri(fun j(role,id)->if j>0 then comma();printf "{\"role\":%s,\"node\":%d}" (q(match role with Value->"value"|Address->"address"|Flag->"flag"|Control->"control"))id)n.inputs;
+    n.inputs |> List.filter(fun(role,_)->has_role data_edge_roles role)
+    |> List.iteri(fun j(role,id)->if j>0 then comma();printf "{\"role\":%s,\"node\":%d}" (q(match role with Value->"value"|Address->"address"|Flag->"flag"|Control->"control"))id);
     add "]}")s.nodes;
   add "]}\n";
   Buffer.contents buffer

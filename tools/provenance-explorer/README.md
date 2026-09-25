@@ -8,7 +8,7 @@ heatmaps.
 ```sh
 npm ci
 npm run build
-npm run bundle -- /path/to/provenance-report.json /path/to/output-bundle
+npm run bundle -- /path/to/provenance-report.json /path/to/provenance-control-report.json /path/to/output-bundle
 ```
 
 The output directory must be empty (use a fresh directory for each build).

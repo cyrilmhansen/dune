@@ -126,6 +126,77 @@ its optional stable instruction-origin resolver.
 The persistent AT8TRACE v1 format is unchanged. Provenance is live state and
 selected-slice export; no attempt is made to reconstruct it later from AT8TRACE.
 
+## Path-control provenance v0
+
+Path-control provenance records the conditional branch decisions observed on
+this concrete execution path. It is deliberately **not** minimal, static, or
+postdominator-based control dependence: an earlier branch remains in the
+cumulative context after a possible join. The context means “conditional
+decisions encountered before this event”, not “branches proven locally
+necessary for this value”. A different earlier outcome could produce another
+path; this analysis makes no counterfactual claim.
+
+Each conditional `Jcc`, `Ccc`, or `Rcc` creates a `Control.Decision` carrying
+the condition, outcome, step, runtime PC, optional Execution Map origin, and
+the pre-branch flag provenance roots. Its `Control.Context` successor refers
+to that decision and the previous context. The decision itself refers to the
+previous context and consumed flag roots. The new context becomes current
+after the branch outcome is observed. Unconditional flow creates no decision.
+Source leaves stay path-independent; semantic operation nodes created while a
+context is active each carry only one immediate Control relation to that
+shared context. Output-write observations retain the current context separately
+from their byte-value root, so “why this value” and “why this write happened”
+remain distinct queries.
+
+The physical compact arena keeps data-node IDs and packed Value/Address/Flag
+edges unchanged. It stores one 4-byte context reference column per physical
+node; that reference is reconstructed publicly as an ordinary logical
+`Control` input. Shared decisions and contexts use stable negative logical node
+IDs backed by compact branch metadata, rather than being inserted into the
+physical data arena. Conditional observations therefore add two logical nodes
+per decision, while millions of operations reuse a much smaller set of
+contexts. This storage encoding has no semantic meaning to callers.
+
+Traversal can select edge roles. `data_edge_roles` is Value + Address + Flag;
+`all_edge_roles` additionally follows Control. General `slice` and
+`fold_reachable` include all roles by default. Existing
+`RUNES_PROVENANCE_SLICE 1` and data-oriented `RUNES_PROVENANCE_REPORT 1`
+exports explicitly follow only data roles, preserving their prior meaning and
+bytes. The separate `RUNES_PROVENANCE_CONTROL_REPORT 1` projection summarizes
+decision locations/outcomes and bounded context neighborhoods; it does not
+materialize the entire cumulative path in the explorer. Perspective presents
+the grouped decision table, the linear heatmap shows selected path-decision
+density, and G6 receives only a bounded graph preview.
+
+This is a path-condition observation layer suitable for later single-path
+concolic work: it retains condition kind, concrete outcome, consumed flag
+roots, instruction origin, and step index. It does not yet construct symbolic
+predicates, invert branches, solve constraints, propagate Control into values,
+or prove causal necessity.
+
+On the historical `PLI OPTIMIST` run, the pre-context branch stream contained
+211,254 conditional decisions (128,628 taken and 82,626 not taken), at 1,223
+image/runtime branch locations. Counts by image were: PLI.COM 132,075
+(80,316/51,759 taken/not-taken), PLI0.OVL 16,572 (10,137/6,435), PLI1.OVL
+29,944 (17,875/12,069), and PLI2.OVL 32,663 (20,300/12,363). This run created
+211,254 shared decisions and contexts, with 6,522,927 controlled operation
+nodes (about 30.9 operations per context on average). It retained the exact
+data arena counts of 6,632,716 nodes / 12,200,515 packed data edges; logical
+Control relations total 6,945,434, including per-operation references and
+context/decision links.
+
+For the selected output bytes, data-only metrics remained unchanged. REL+0000
+has 12,020 nodes, 37 source leaves, 308 producer locations, and role counts
+Value/Address/Flag = 394/11,843/1. REL+02C0 has 241,984 nodes, 861 leaves,
+3,482 locations, and 68,423/230,947/188 roles. REL+057F has 295,853 nodes,
+1,600 leaves, 4,346 locations, and 89,335/282,239/227 roles. Their cumulative
+path contexts have depths 83,667 / 172,946 / 211,080, respectively. The
+historical compiler still produced the byte-identical 1,408-byte REL
+(`5fca1ffe38d11c30d20cfb99a23fe2baf002c569790bda83e09151cf36032b15`) in
+2,535,509 CPU steps. Provenance construction took about 3.27 s; the complete
+instrumented report run peaked at about 875 MiB RSS on this host. These are
+single-host measurements, not performance guarantees.
+
 ## Compact in-memory arena
 
 Before compaction, each node occupied an option-array slot plus a separately

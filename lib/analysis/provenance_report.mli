@@ -50,6 +50,36 @@ type projection = {
 type t
 type error = Missing_output_byte of sink
 
+type control_decision_row = {
+  image : Cpm.Filesystem.key option;
+  image_offset : int option;
+  runtime_pc : int;
+  condition : string;
+  taken : bool;
+  decision_count : int;
+  first_step : int;
+  last_step : int;
+  distinct_flag_roots : int;
+}
+type path_control_projection = {
+  sink : sink;
+  context_depth : int;
+  distinct_branch_locations : int;
+  earliest_decision_step : int option;
+  latest_decision_step : int option;
+  additional_context_nodes : int;
+  additional_decision_nodes : int;
+  additional_flag_ancestors : int;
+  combined_reachable_nodes : int;
+  control_relations : int;
+  locations : control_decision_row list;
+  preview : preview;
+}
+type control_report = {
+  decisions : control_decision_row list;
+  paths : path_control_projection list;
+}
+
 val report_of_provenance :
   ?preview_depth:int -> ?preview_nodes:int ->
   provenance:Provenance.t -> execution:Execution_report.t ->
@@ -62,3 +92,6 @@ val execution : t -> Execution_report.t
 val ranges_of_offsets : int list -> offset_range list
 val to_json_string : t -> string
 val write_json : output:(string -> unit) -> t -> unit
+val path_control_report_of_provenance : provenance:Provenance.t -> selected:sink list -> (control_report, error) result
+val control_report_to_json_string : control_report -> string
+val write_control_report_json : output:(string -> unit) -> control_report -> unit

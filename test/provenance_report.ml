@@ -75,7 +75,7 @@ let test_projection () =
   assert(input_group.leaf_occurrences=2 && input_group.distinct_offsets=[0]);
   assert(projection.roles.value>0 && projection.roles.address>0 && projection.roles.flag>0);
   assert(List.exists(fun p->List.mem "ALU.ADC" p.R.operation_kinds)projection.producers);
-  assert(List.exists(fun p->p.R.image_offset=7 && p.image.name="UNLISTED.BIN" && p.virtual_offset=None && p.producer_steps=2)projection.producers);
+  assert(List.exists(fun (p:R.producer)->p.R.image_offset=7 && p.image.name="UNLISTED.BIN" && p.virtual_offset=None && p.producer_steps=2)projection.producers);
   let truncated=match R.report_of_provenance ~preview_nodes:3 ~provenance:prov ~execution
     ~classify:(fun _->R.Program_input) ~output_file ~output_bytes
     ~selected:[{R.file=output_file;offset=0;generation=None}] () with Ok r->List.hd(R.projections r)|_->assert false in
@@ -88,6 +88,16 @@ let test_projection () =
   assert(List.length(R.output_bytes report)=128);
   assert((List.nth(R.output_bytes report)0).rewrite_count=1);
   assert(List.exists(fun s->s.R.classification=Some(R.Other "<img src=x onerror=alert(1)>"))projection.sources);
+  let path_report=match R.path_control_report_of_provenance ~provenance:prov
+    ~selected:[{R.file=output_file;offset=0;generation=None}] with
+    |Ok x->x|Error _->failwith "path-control report failed" in
+  let path=List.hd path_report.paths in
+  assert(path.context_depth>0 && path.distinct_branch_locations>0);
+  assert(path.additional_context_nodes=path.additional_decision_nodes);
+  assert(List.length path.preview.nodes<=120 && path.preview.omitted_frontier_count>=0);
+  let control_json=R.control_report_to_json_string path_report in
+  assert(control_json=R.control_report_to_json_string path_report);
+  assert(String.starts_with ~prefix:"RUNES_PROVENANCE_CONTROL_REPORT 1\n{" control_json);
   Option.iter(fun path->let ch=open_out_bin path in output_string ch json;close_out ch)(Sys.getenv_opt "RUNES_REPORT_TEST_OUT")
 
 let () = test_ranges(); test_projection()
