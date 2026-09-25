@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="data:," />
+    <title>Runes Provenance Explorer</title>
+  </head>
+  <body>
+    <main>
+      <header><h1>Runes Provenance Explorer</h1><p>Concrete-execution data slice · not a counterfactual causal proof</p></header>
+      <section class="toolbar"><label>Output byte <select id="sink"></select></label><label>Heatmap mode <select id="mode"><option value="execution">Execution heat</option><option value="participation">Slice participation</option><option value="producer">Producer density</option><option value="value">Value-edge density</option><option value="address">Address-edge density</option><option value="flag">Flag-edge density</option><option value="source">Source influence</option></select></label><span id="sink-meta"></span></section>
+      <section><h2>Output bytes</h2><p>Full output metadata is shown. Detailed projections are embedded only for selected bytes.</p><div id="output-bytes" class="byte-strip"></div><perspective-viewer id="output-table" plugin="Datagrid"></perspective-viewer></section>
+      <section><h2>Linear image space</h2><p>Linear offsets are analysis coordinates, not a reconstructed runtime layout. Unobserved bytes are not necessarily dead code.</p><div id="image-overview"></div><div id="heatmaps"></div><div id="producer-highlight"></div><h3>Source-file offsets outside execution images</h3><div id="source-data"></div></section>
+      <div class="columns"><section><h2>Source influence</h2><div id="source-summary"></div><perspective-viewer id="sources" plugin="Datagrid"></perspective-viewer></section><section><h2>Producer locations</h2><perspective-viewer id="producers" plugin="Datagrid"></perspective-viewer></section></div>
+      <div class="columns"><section><h2>Operation summary</h2><perspective-viewer id="operations" plugin="Datagrid"></perspective-viewer></section><section><h2>Source ranges</h2><perspective-viewer id="source-ranges" plugin="Datagrid"></perspective-viewer><h2>Typed role totals</h2><div id="roles"></div></section></div>
+      <section><h2>Grouped provenance graph</h2><p>G6 shows a bounded exact DAG neighborhood, grouped by source identity, operation kind, and producer location. It never receives the full slice.</p><div id="graph"></div><p id="graph-meta"></p></section>
+      <section><h2>Exact DAG preview</h2><p id="preview-meta"></p><div id="preview"></div></section>
+      <footer>Perspective handles scalable tabular exploration · G6 handles graph relationships · the byte heatmap retains image coordinates.</footer>
+    </main>
+    <script type="module" src="./src/main.js"></script>
+  </body>
+</html>

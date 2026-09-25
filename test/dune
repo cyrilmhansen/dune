@@ -30,6 +30,10 @@
  (name provenance)
  (libraries i8080 cpm runner analysis))
 
+(test
+ (name provenance_report)
+ (libraries i8080 cpm runner analysis))
+
 
 (test
  (name alu_flags)

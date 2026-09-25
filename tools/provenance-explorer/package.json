@@ -1,0 +1,23 @@
+{
+  "name": "runes-provenance-explorer",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite",
+    "preview": "vite preview",
+    "bundle": "node bundle.mjs",
+    "smoke": "node smoke.mjs"
+  },
+  "dependencies": {
+    "@antv/g6": "5.1.1",
+    "@perspective-dev/client": "5.5.1",
+    "@perspective-dev/server": "5.5.1",
+    "@perspective-dev/viewer": "5.5.1",
+    "@perspective-dev/viewer-datagrid": "5.5.1"
+  },
+  "devDependencies": {
+    "playwright": "1.63.0",
+    "vite": "7.3.6"
+  }
+}

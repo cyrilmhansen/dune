@@ -264,6 +264,38 @@ let historical_run () =
       assert(Bytes.length rel=1408);
       assert(Cpm.Filesystem.get_file fs ~name:"OPTIMIST.INT" ()=Ok None);
       assert(P.output_bytes_with_roots prov ~file:rel_key=1408);
+      let execution_images=List.map file ["PLI.COM";"PLI0.OVL";"PLI1.OVL";"PLI2.OVL"] in
+      let execution=match Analysis.Execution_report.report_of_map map ~images:execution_images with
+        |Ok report->report|Error _->failwith "execution report for provenance explorer failed" in
+      let classify key=match key.Cpm.Filesystem.name with
+        |"OPTIMIST.PLI"->Analysis.Provenance_report.Program_input
+        |"OPTIMIST.INT"->Intermediate
+        |"PLI.COM"|"PLI0.OVL"|"PLI1.OVL"|"PLI2.OVL"->Program_image
+        |"OPTIMIST.REL"->Output|_->Other "other" in
+      let selected=List.map(fun offset->{Analysis.Provenance_report.file=rel_key;offset;generation=None})[0;0x2c0;0x57f] in
+      let projection_started=Sys.time() in
+      let explorer=match Analysis.Provenance_report.report_of_provenance ~provenance:prov ~execution ~classify
+        ~output_file:rel_key ~output_bytes:rel ~selected () with
+        |Ok report->report|Error _->failwith "historical provenance projection failed" in
+      Printf.printf "EXPLORER projection_time=%.3f output_bytes=%d selected=%d\n%!"
+        (Sys.time()-.projection_started)(List.length(Analysis.Provenance_report.output_bytes explorer))
+        (List.length(Analysis.Provenance_report.projections explorer));
+      List.iter(fun (projection:Analysis.Provenance_report.projection)->
+        Printf.printf "EXPLORER_SINK off=%04X value=%02X step=%s root=%s nodes=%d leaves=%d locations=%d producer_steps=%d roles=%d/%d/%d/%d\n%!"
+          projection.sink.offset (Option.value projection.sink_value ~default:0)
+          (Option.fold ~none:"-" ~some:string_of_int projection.write_step)
+          (match projection.root with Node n->string_of_int n|Untracked->"untracked")
+          projection.full_node_count projection.source_leaf_count projection.producer_location_count
+          projection.distinct_producer_steps projection.roles.value projection.roles.address projection.roles.flag projection.roles.control;
+        let top_sources=projection.sources |> List.sort(fun (a:Analysis.Provenance_report.source_group) (b:Analysis.Provenance_report.source_group)->compare b.leaf_occurrences a.leaf_occurrences) in
+        List.iter(fun (s:Analysis.Provenance_report.source_group)->Printf.printf "  EXPLORER_SOURCE %s class=%s distinct=%d occurrences=%d ranges=%d\n%!"
+          s.identity (Option.fold ~none:s.kind ~some:(function Analysis.Provenance_report.Program_input->"program input"|Intermediate->"intermediate"|Program_image->"program image"|Output->"output"|Other x->x) s.classification)
+          (List.length s.distinct_offsets) s.leaf_occurrences (List.length s.ranges))top_sources;
+        let locations=projection.producer_location_count in
+        Printf.printf "  COMPRESSION nodes=%d -> locations=%d leaves=%d -> distinct_file_offsets=%d\n%!"
+          projection.full_node_count locations projection.source_leaf_count
+          (List.fold_left(fun n (s:Analysis.Provenance_report.source_group)->n+List.length s.distinct_offsets)0 projection.sources))
+        (Analysis.Provenance_report.projections explorer);
       Printf.printf "HIST steps=%d time=%.3f output=%S nodes=%d edges=%d rel=%d\n%!"
         result.steps elapsed console (P.node_count prov) (P.edge_count prov) (Bytes.length rel);
       Printf.printf "MAP total=%d attributed=%d unknown=%d mixed=%d\n%!"
@@ -273,6 +305,12 @@ let historical_run () =
         (Analysis.Execution_map.summary map).mixed_or_unresolved_executions;
       let out_dir=Option.value(Sys.getenv_opt "RUNES_PROVENANCE_OUT")~default:"." in
       let rel_out=open_out_bin(Filename.concat out_dir "OPTIMIST.REL") in output_bytes rel_out rel;close_out rel_out;
+      let report_path=Filename.concat out_dir "provenance-report.json" in
+      let report_write_started=Sys.time() in
+      let report_out=open_out_bin report_path in
+      Analysis.Provenance_report.write_json ~output:(output_string report_out) explorer;close_out report_out;
+      let report_input=open_in_bin report_path in let report_size=in_channel_length report_input in close_in report_input;
+      Printf.printf "EXPLORER_JSON bytes=%d write_time=%.3f\n%!" report_size (Sys.time()-.report_write_started);
       List.iter(fun offset->match P.final_output_byte prov ~file:rel_key ~offset with
         |None->failwith "missing sampled output byte"
         |Some obs->let slice=P.slice prov [obs.root] in

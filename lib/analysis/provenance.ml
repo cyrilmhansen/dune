@@ -639,6 +639,26 @@ let slice p roots =
   let nodes=Hashtbl.fold(fun id () acc->node p id::acc)seen[] |> List.sort(fun (a:node) (b:node)->compare a.id b.id) in
   {roots;nodes}
 
+let fold_reachable p ~roots ~init ~f =
+  let seen=Hashtbl.create 1024 in
+  let pending=ref(List.filter_map(function Untracked->None|Node id->Some id)roots) in
+  let accumulator=ref init in
+  while !pending<>[] do
+    match !pending with
+    | [] -> ()
+    | id::rest ->
+        pending:=rest;
+        if not(Hashtbl.mem seen id) then (
+          Hashtbl.add seen id ();
+          let current=node p id in
+          accumulator:=f !accumulator current;
+          (* Prepending input targets preserves the stored edge order during
+             this depth-first walk. No Hashtbl iteration order is observable. *)
+          let children=List.map snd current.inputs in
+          pending:=children @ !pending)
+  done;
+  !accumulator
+
 let source_leaves (s : slice) = List.filter_map(fun (n : node)->match n.kind with Source x->Some x|_->None)s.nodes
 let producer_nodes (s : slice) = List.filter(fun (n : node)->match n.kind with Operation _->true|_->false)s.nodes
 let source_summary s =

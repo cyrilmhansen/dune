@@ -64,6 +64,9 @@ val register_root : t -> register:I8080.Instr.register -> root
 val flag_root : t -> flag:[ `Sign | `Zero | `Auxiliary_carry | `Parity | `Carry ] -> root
 val memory_value : t -> address:int -> int
 val slice : t -> root list -> slice
+(** Deterministic depth-first fold over each node reachable from [roots]. Unlike
+    [slice], this does not materialize a second full [node list]. *)
+val fold_reachable : t -> roots:root list -> init:'a -> f:('a -> node -> 'a) -> 'a
 val source_leaves : slice -> source list
 val producer_nodes : slice -> node list
 val source_summary : slice -> source_summary list
