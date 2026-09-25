@@ -50,6 +50,9 @@ let test_copy_alu_and_memory () =
   assert(P.register_root copy ~register:I8080.Instr.B=P.register_root copy ~register:I8080.Instr.A);
   (* MOV B,A aliases the immediate-producing node instead of adding a fake copy node. *)
   let bnode=P.node copy (match P.register_root copy ~register:I8080.Instr.B with Node n->n|_->failwith "B untracked") in
+  let copy_slice=P.slice_json copy ~roots:[P.register_root copy ~register:I8080.Instr.B] in
+  assert(copy_slice=
+    "RUNES_PROVENANCE_SLICE 1\n{\"roots\":[17],\"sinks\":[],\"nodes\":[{\"id\":1,\"value\":66,\"width\":8,\"step\":null,\"kind\":{\"drive\":0,\"user\":0,\"file\":\"TEST.COM\",\"offset\":1,\"value\":66},\"origin\":null,\"inputs\":[]},{\"id\":17,\"value\":66,\"width\":8,\"step\":0,\"kind\":{\"operation\":\"MVI\"},\"origin\":{\"drive\":0,\"user\":0,\"image\":\"TEST.COM\",\"offset\":0,\"runtime_pc\":256},\"inputs\":[{\"role\":\"value\",\"node\":1}]}]}\n");
   assert(bnode.kind=P.Operation "MVI");
   assert(List.exists(function P.File_byte {offset=1;_}->true|_->false)(P.source_leaves(P.slice copy [P.register_root copy ~register:I8080.Instr.B])));
   let root=P.memory_root p ~address:0x4000 in
@@ -65,6 +68,9 @@ let test_flags_stack_and_special_memory () =
   let p,_,_,_=run_program program 17 in
   assert(P.node_count p>20);
   let ac_root=P.flag_root p ~flag:`Carry in
+  (match ac_root with
+   |Node id->assert((P.node p id).width=1)
+   |Untracked->failwith "flag width root missing");
   let ac_slice=P.slice p [ac_root;P.register_root p ~register:I8080.Instr.A;
     P.register_root p ~register:I8080.Instr.H;P.register_root p ~register:I8080.Instr.L;
     P.memory_root p ~address:0x3000] in
@@ -74,6 +80,9 @@ let test_flags_stack_and_special_memory () =
   let daa_node=List.find(fun n->n.P.kind=P.Operation "DAA.A")ac_slice.nodes in
   assert(has_edge P.Flag daa_node);
   assert(List.exists(fun n->n.P.kind=P.Operation "ROTATE")ac_slice.nodes);
+  assert(List.exists(fun id->match (P.node p id).P.kind with
+    |P.Operation "PUSH.SP"->(P.node p id).width=16
+    |_ ->false)(List.init(P.node_count p)Fun.id));
   let rotate_node=List.find(fun n->n.P.kind=P.Operation "ROTATE")ac_slice.nodes in
   assert(has_edge P.Flag rotate_node);
   let psw=Bytes.of_string "\x3e\x80\x37\xf5\x3e\x00\xf1\x76" in
@@ -204,6 +213,18 @@ let test_opcode_shadow_coverage () =
          | P.Provenance_error (P.Concrete_mismatch e) ->
              failwith(Printf.sprintf "opcode %02X mismatch %s predicted=%X concrete=%X" opcode e.location e.predicted e.concrete))
   done
+
+let test_compact_chunk_boundary () =
+  let p=P.create() in
+  let bytes=Bytes.init 32_770(fun i->Char.chr(i land 255)) in
+  P.seed_memory p ~class_:P.Runner ~address:0 bytes;
+  assert(P.node_count p=32_770);
+  assert(P.memory_root p ~address:32_767=Node 32_767);
+  assert(P.memory_root p ~address:32_768=Node 32_768);
+  assert(P.memory_root p ~address:32_769=Node 32_769);
+  (match P.node p 32_768 with
+   |{kind=Source(P.Initial_memory_byte{address=32_768;value=0;class_=P.Runner});width=8;step_index=None;origin=None;inputs=[];_}->()
+   |_->failwith "compact arena chunk boundary changed public node semantics")
 
 let read_file path =
   let channel=open_in_bin path in
@@ -346,4 +367,5 @@ let () =
   test_execution_origin_invalidation_is_independent ();
   test_branch_observation_keeps_flag_root ();
   test_opcode_shadow_coverage ();
+  test_compact_chunk_boundary ();
   historical_run ()

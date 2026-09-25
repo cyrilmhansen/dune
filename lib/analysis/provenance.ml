@@ -43,22 +43,55 @@ type error = Concrete_mismatch of {
 exception Provenance_error of error
 
 type cell = { mutable value : int; mutable root : root }
-type packed_kind = Packed_source of source | Packed_operation of int
 type access = { address : int; value : int }
-type packed_node = {
-  id : node_id; kind : packed_kind; value : int; width : int;
-  step_index : int option; origin : producer_origin option;
-  edge_start : int; edge_length : int;
+
+(* The public DAG is unchanged, but its physical representation is columnar.
+   Fixed-size Bigarray chunks avoid a boxed OCaml record/option/variant per
+   node and avoid copying multi-million-element arrays when growing. *)
+open Bigarray
+
+let node_chunk_size = 32_768
+let edge_chunk_size = 262_144
+
+type node_chunk = {
+  tags : (int, int8_unsigned_elt, c_layout) Array1.t;
+  values : (int, int16_unsigned_elt, c_layout) Array1.t;
+  widths : (int, int8_unsigned_elt, c_layout) Array1.t;
+  steps : (int64, int64_elt, c_layout) Array1.t;
+  origin_images : (int32, int32_elt, c_layout) Array1.t;
+  origin_offsets : (int32, int32_elt, c_layout) Array1.t;
+  runtime_pcs : (int, int16_unsigned_elt, c_layout) Array1.t;
+  payloads : (int32, int32_elt, c_layout) Array1.t;
+  edge_starts : (int32, int32_elt, c_layout) Array1.t;
+  edge_lengths : (int32, int32_elt, c_layout) Array1.t;
 }
+
+type edge_chunk = {
+  roles : (int, int8_unsigned_elt, c_layout) Array1.t;
+  targets : (int32, int32_elt, c_layout) Array1.t;
+}
+
+type source_identity =
+  | Source_file of int
+  | Source_command_tail
+  | Source_initial_memory of initial_class
+  | Source_initial_register of string
+  | Source_external of string * string
+
 type t = {
-  mutable arena : packed_node option array;
+  mutable node_chunks : node_chunk option array;
   mutable used : int;
   mutable edges : int;
-  mutable edge_roles : int array;
-  mutable edge_targets : int array;
+  mutable edge_chunks : edge_chunk option array;
   operation_ids : (string, int) Hashtbl.t;
   mutable operation_names : string array;
   mutable operation_count : int;
+  mutable image_keys : Cpm.Filesystem.key option array;
+  mutable image_count : int;
+  image_ids : (Cpm.Filesystem.key, int) Hashtbl.t;
+  mutable source_identities : source_identity option array;
+  mutable source_count : int;
+  source_ids : (source_identity, int) Hashtbl.t;
   memory : cell array;
   regs : cell array;
   flags : cell array;
@@ -67,10 +100,11 @@ type t = {
 }
 
 let create () =
-  { arena = Array.make 4096 None; used = 0; edges = 0;
-    edge_roles = Array.make 8192 0; edge_targets = Array.make 8192 0;
+  { node_chunks = [||]; used = 0; edges = 0; edge_chunks = [||];
     operation_ids = Hashtbl.create 32; operation_names = Array.make 32 "";
     operation_count = 0;
+    image_keys = [||]; image_count = 0; image_ids = Hashtbl.create 16;
+    source_identities = [||]; source_count = 0; source_ids = Hashtbl.create 32;
     memory = Array.init 65536 (fun _ -> { value = 0; root = Untracked });
     regs = Array.init 8 (fun _ -> { value = 0; root = Untracked });
     flags = Array.init 5 (fun _ -> { value = 0; root = Untracked });
@@ -90,30 +124,98 @@ let intern_operation p name =
       Hashtbl.add p.operation_ids name id;
       id
 
-let pack_kind p = function
-  | Source source -> Packed_source source
-  | Operation name -> Packed_operation (intern_operation p name)
+let create_node_chunk () = {
+  tags=Array1.create int8_unsigned c_layout node_chunk_size;
+  values=Array1.create int16_unsigned c_layout node_chunk_size;
+  widths=Array1.create int8_unsigned c_layout node_chunk_size;
+  steps=Array1.create int64 c_layout node_chunk_size;
+  origin_images=Array1.create int32 c_layout node_chunk_size;
+  origin_offsets=Array1.create int32 c_layout node_chunk_size;
+  runtime_pcs=Array1.create int16_unsigned c_layout node_chunk_size;
+  payloads=Array1.create int32 c_layout node_chunk_size;
+  edge_starts=Array1.create int32 c_layout node_chunk_size;
+  edge_lengths=Array1.create int32 c_layout node_chunk_size;
+}
+
+let create_edge_chunk () = {
+  roles=Array1.create int8_unsigned c_layout edge_chunk_size;
+  targets=Array1.create int32 c_layout edge_chunk_size;
+}
+
+let grow_option_array xs =
+  let next=Array.make (max 1 (2*Array.length xs)) None in
+  Array.blit xs 0 next 0 (Array.length xs);next
+
+let node_chunk p id =
+  let i=id/node_chunk_size in
+  if i>=Array.length p.node_chunks then p.node_chunks<-grow_option_array p.node_chunks;
+  match p.node_chunks.(i) with
+  |Some chunk->chunk
+  |None->let chunk=create_node_chunk() in p.node_chunks.(i)<-Some chunk;chunk
+
+let edge_chunk p id =
+  let i=id/edge_chunk_size in
+  if i>=Array.length p.edge_chunks then p.edge_chunks<-grow_option_array p.edge_chunks;
+  match p.edge_chunks.(i) with
+  |Some chunk->chunk
+  |None->let chunk=create_edge_chunk() in p.edge_chunks.(i)<-Some chunk;chunk
+
+let intern_image p image =
+  match Hashtbl.find_opt p.image_ids image with
+  |Some id->id
+  |None->
+      if p.image_count=Array.length p.image_keys then (
+        let next=Array.make (max 4 (2*Array.length p.image_keys)) None in
+        Array.blit p.image_keys 0 next 0 p.image_count;p.image_keys<-next);
+      let id=p.image_count in p.image_count<-id+1;
+      p.image_keys.(id)<-Some image;Hashtbl.add p.image_ids image id;id
+
+let intern_source_identity p identity =
+  match Hashtbl.find_opt p.source_ids identity with
+  |Some id->id
+  |None->
+      if p.source_count=Array.length p.source_identities then (
+        let next=Array.make (max 4 (2*Array.length p.source_identities)) None in
+        Array.blit p.source_identities 0 next 0 p.source_count;p.source_identities<-next);
+      let id=p.source_count in p.source_count<-id+1;
+      p.source_identities.(id)<-Some identity;Hashtbl.add p.source_ids identity id;id
+
+let pack_source p = function
+  |File_byte {file;offset;_}->0,intern_source_identity p (Source_file(intern_image p file)),offset
+  |Command_tail_byte {offset;_}->1,intern_source_identity p Source_command_tail,offset
+  |Initial_memory_byte {address;class_;_}->2,intern_source_identity p (Source_initial_memory class_),address
+  |Initial_register {register;_}->3,intern_source_identity p (Source_initial_register register),0
+  |External_result {subsystem;operation;_}->4,intern_source_identity p (Source_external(subsystem,operation)),0
 
 let add_node p ~kind ~value ~width ?step_index ?origin inputs =
-  if p.used = Array.length p.arena then (
-    let grown = Array.make (2 * p.used) None in
-    Array.blit p.arena 0 grown 0 p.used;
-    p.arena <- grown);
   let id = p.used in
+  if id>=Int32.to_int Int32.max_int then invalid_arg "Provenance: node id exceeds compact arena range";
+  let step=Option.fold ~none:Int64.minus_one ~some:Int64.of_int step_index in
+  let tag,payload,stored_offset=match kind with
+    |Operation name->5,intern_operation p name,0
+    |Source source->let tag,id,offset=pack_source p source in tag,id,offset in
+  let origin_image,origin_offset,runtime_pc=match origin with
+    |None->Int32.minus_one,Int32.of_int stored_offset,0
+    |Some (o:producer_origin)->
+        if o.offset<0 || Int64.of_int o.offset>Int64.of_int32 Int32.max_int then invalid_arg "Provenance: origin offset exceeds compact arena range";
+        Int32.of_int(intern_image p o.image),Int32.of_int o.offset,o.runtime_pc land 0xffff in
+  let chunk=node_chunk p id and slot=id mod node_chunk_size in
+  Array1.set chunk.tags slot tag;Array1.set chunk.values slot (value land 0xffff);
+  Array1.set chunk.widths slot width;Array1.set chunk.steps slot step;
+  Array1.set chunk.origin_images slot origin_image;Array1.set chunk.origin_offsets slot origin_offset;
+  Array1.set chunk.runtime_pcs slot runtime_pc;Array1.set chunk.payloads slot (Int32.of_int payload);
+  let edge_start=p.edges in
   p.used <- p.used + 1;
   let edge_length=List.length inputs in
-  let required=p.edges+edge_length in
-  if required>Array.length p.edge_roles then (
-    let capacity=ref(Array.length p.edge_roles) in
-    while !capacity<required do capacity:=2 * !capacity done;
-    let roles=Array.make !capacity 0 and targets=Array.make !capacity 0 in
-    Array.blit p.edge_roles 0 roles 0 p.edges; Array.blit p.edge_targets 0 targets 0 p.edges;
-    p.edge_roles<-roles;p.edge_targets<-targets);
-  let edge_start=p.edges in
+  if p.edges>Int32.to_int Int32.max_int-edge_length then
+    invalid_arg "Provenance: edge index exceeds compact arena range";
   List.iter(fun(role,target)->
+    if target<0 || target>=p.used then invalid_arg "Provenance: edge target is not an existing node";
+    let chunk=edge_chunk p p.edges and slot=p.edges mod edge_chunk_size in
     let role=match role with Value->0|Address->1|Flag->2|Control->3 in
-    p.edge_roles.(p.edges)<-role;p.edge_targets.(p.edges)<-target;p.edges<-p.edges+1)inputs;
-  p.arena.(id) <- Some { id; kind = pack_kind p kind; value; width; step_index; origin; edge_start; edge_length };
+    Array1.set chunk.roles slot role;Array1.set chunk.targets slot (Int32.of_int target);p.edges<-p.edges+1)inputs;
+  Array1.set chunk.edge_starts slot (Int32.of_int edge_start);
+  Array1.set chunk.edge_lengths slot (Int32.of_int edge_length);
   Node id
 
 let source p source value width = add_node p ~kind:(Source source) ~value ~width []
@@ -611,19 +713,38 @@ let output_byte_history p ~file ~offset =
   Option.value (Hashtbl.find_opt p.outputs (file,offset)) ~default:[] |> List.rev
 let final_output_byte p ~file ~offset = match output_byte_history p ~file ~offset with []->None|xs->Some(List.hd(List.rev xs))
 let branch_observations p = List.rev p.branches_rev
-let inputs_of_packed p packed =
-  List.init packed.edge_length (fun index ->
-    let edge=packed.edge_start+index in
-    let role=match p.edge_roles.(edge) with 0->Value|1->Address|2->Flag|_->Control in
-    role,p.edge_targets.(edge))
+
+let edge_at p id =
+  let chunk=edge_chunk p id and slot=id mod edge_chunk_size in
+  let role=match Array1.get chunk.roles slot with 0->Value|1->Address|2->Flag|3->Control
+    |_->failwith "Provenance: corrupt compact edge role" in
+  role,Int32.to_int(Array1.get chunk.targets slot)
 
 let node p id =
-  let packed=Option.get p.arena.(id) in
-  let kind=match packed.kind with
-    | Packed_source source -> Source source
-    | Packed_operation operation -> Operation p.operation_names.(operation) in
-  { id=packed.id;kind;value=packed.value;width=packed.width;
-    step_index=packed.step_index;origin=packed.origin;inputs=inputs_of_packed p packed }
+  if id<0 || id>=p.used then invalid_arg "Provenance.node: invalid node id";
+  let chunk=node_chunk p id and slot=id mod node_chunk_size in
+  let tag=Array1.get chunk.tags slot and payload=Int32.to_int(Array1.get chunk.payloads slot) in
+  let value=Array1.get chunk.values slot and width=Array1.get chunk.widths slot in
+  let offset=Int32.to_int(Array1.get chunk.origin_offsets slot) in
+  let kind=if tag=5 then Operation p.operation_names.(payload) else
+    let identity=Option.get p.source_identities.(payload) in
+    Source(match tag,identity with
+      |0,Source_file image->File_byte {file=Option.get p.image_keys.(image);offset;value}
+      |1,Source_command_tail->Command_tail_byte {offset;value}
+      |2,Source_initial_memory class_->Initial_memory_byte {address=offset;value;class_}
+      |3,Source_initial_register register->Initial_register {register;value}
+      |4,Source_external(subsystem,operation)->External_result {subsystem;operation;value}
+      |_->failwith "Provenance.node: corrupt compact source tag") in
+  let raw_step=Array1.get chunk.steps slot in
+  let step_index=if raw_step=Int64.minus_one then None else Some(Int64.to_int raw_step) in
+  let raw_image=Array1.get chunk.origin_images slot in
+  let origin=if raw_image=Int32.minus_one then None else Some {
+    image=Option.get p.image_keys.(Int32.to_int raw_image);offset;
+    runtime_pc=Array1.get chunk.runtime_pcs slot } in
+  let edge_start=Int32.to_int(Array1.get chunk.edge_starts slot) in
+  let edge_length=Int32.to_int(Array1.get chunk.edge_lengths slot) in
+  {id;kind;value;width;step_index;origin;
+   inputs=List.init edge_length(fun i->edge_at p (edge_start+i))}
 
 let slice p roots =
   let seen=Hashtbl.create 1024 and pending=Stack.create() in
@@ -631,9 +752,11 @@ let slice p roots =
   while not(Stack.is_empty pending) do
     let id=Stack.pop pending in if not(Hashtbl.mem seen id) then (
       Hashtbl.add seen id ();
-      let packed=Option.get p.arena.(id) in
-      for index=0 to packed.edge_length-1 do
-        Stack.push p.edge_targets.(packed.edge_start+index) pending
+      let chunk=node_chunk p id and slot=id mod node_chunk_size in
+      let edge_start=Int32.to_int(Array1.get chunk.edge_starts slot) in
+      let edge_length=Int32.to_int(Array1.get chunk.edge_lengths slot) in
+      for index=0 to edge_length-1 do
+        let _,target=edge_at p (edge_start+index) in Stack.push target pending
       done)
   done;
   let nodes=Hashtbl.fold(fun id () acc->node p id::acc)seen[] |> List.sort(fun (a:node) (b:node)->compare a.id b.id) in

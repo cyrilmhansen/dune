@@ -93,9 +93,9 @@ the other 1,936 were the synthetic RET at the runner's BDOS entry. Provenance
 created **6,632,716 nodes / 12,200,515 typed edges** in this run. `/usr/bin/time`
 reported 9.32 seconds wall, 8.50 seconds user CPU and 2,332,468 KiB peak RSS
 for the Dune invocation on this host, including backward-slice construction
-and selected JSON exports. This is a substantial v0 memory cost and should be
-re-measured/optimized before scaling far beyond this workload. The engine
-stores aggregate shadow state and DAG nodes, not the 2.5 million `Step` objects.
+and selected JSON exports. This was measured before the compact-arena change
+documented below. The engine stores aggregate shadow state and DAG nodes, not
+the 2.5 million `Step` objects.
 
 The generated `OPTIMIST.REL` was 1,408 bytes, SHA-256
 `5fca1ffe38d11c30d20cfb99a23fe2baf002c569790bda83e09151cf36032b15`,
@@ -125,6 +125,48 @@ its optional stable instruction-origin resolver.
 
 The persistent AT8TRACE v1 format is unchanged. Provenance is live state and
 selected-slice export; no attempt is made to reconstruct it later from AT8TRACE.
+
+## Compact in-memory arena
+
+Before compaction, each node occupied an option-array slot plus a separately
+boxed record and kind variant; operation records also retained option/origin
+records and repeated image-key references. On this 64-bit runtime the two
+boxed `int` edge arrays alone required about 186 MiB for 12.2 million target
+IDs and roles, before capacity slack. The arena's geometric growth could also
+temporarily keep old and new large arrays alive during copying. This explains
+why logical payload size understated measured process RSS.
+
+The public logical DAG is unchanged. Internally, provenance stores nodes in
+fixed-size parallel Bigarray chunks rather than a boxed `packed_node option`
+array. A node slot uses 34 bytes of column data: tag, 16-bit value, width,
+64-bit step (`-1` means absent), interned image ID, 32-bit image/file offset,
+16-bit runtime PC, interned operation/source payload ID, edge start, and edge
+length. Edges use a 32-bit target node ID and an 8-bit role, five bytes per
+edge. Node chunks hold 32,768 slots and edge chunks 262,144 entries, avoiding
+copies of the accumulated arena during growth.
+
+Operation names, image/file identities, and source identities are interned in
+side tables. File source nodes store their offset/value in node columns and
+refer to one shared file identity instead of retaining a full
+`Cpm.Filesystem.key` and source variant record apiece. `node` reconstructs the
+public variants, options and edge lists lazily. This is only a physical layout
+choice: node IDs, roots, edge order/roles, source identities, values, widths,
+producer coordinates, histories and deterministic exports retain their
+logical meaning. The `RUNES_PROVENANCE_SLICE 1` and
+`RUNES_PROVENANCE_REPORT 1` schemas are unchanged.
+
+For the historical graph, allocated node/edge Bigarray capacity is about
+274.4 MiB (34 bytes × 6,651,904 node slots and 5 bytes × 12,320,768 edge
+slots). On the same `PLI OPTIMIST` harness, the graph remained exactly
+6,632,716 nodes and 12,200,515 edges, with identical sampled root IDs and
+selected-slice summaries. Peak RSS fell from **2,390,108 KiB** to
+**785,396 KiB**, a reduction of **1,604,712 KiB (67.14%)**. Internal
+run/provenance construction time fell from about **3.7 s** to **3.1 s**;
+process wall time fell from **7.85 s** to **7.21 s**, and user CPU from
+**7.32 s** to **6.95 s**. Selected explorer projection was about **0.98 s**.
+Remaining RSS includes the OCaml runtime/heap, shadow state,
+retained output-write history, and report/test working data; their individual
+shares have not been profiled.
 
 ## Provenance Explorer v0
 
@@ -232,8 +274,7 @@ counts. No external requests were made.
 Projection of all three slices took about 0.95 s of process CPU; JSON writing
 took about 0.05 s and produced 9,173,753 bytes. The HTML is 2,893 bytes and
 the generated static JS/CSS/WASM plus JSON bundle was about 15 MB (bundle size
-varies slightly with pinned Vite output hashes). The historical test process
-reported about 3.7 s for run/provenance construction; peak RSS was 2,390,108
-KiB (~2.28 GiB), about 2.5% above the earlier 2,332,468 KiB provenance-only
-measurement. This remains a material memory cost. The UI keeps only compact
-selected projections, not multiple full slice copies.
+varies slightly with pinned Vite output hashes). The explorer's original
+pre-compaction run reported about 3.7 s for run/provenance construction and
+2,390,108 KiB peak RSS; the compact-arena rerun is recorded above. The UI
+keeps only compact selected projections, not multiple full slice copies.
