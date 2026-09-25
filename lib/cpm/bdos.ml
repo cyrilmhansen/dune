@@ -19,6 +19,12 @@ type event =
       data : bytes;
     }
 
+type register = A | B | C | D | E | H | L | SP
+type memory_write_cause = Fcb_update
+type external_effect =
+  | Register_write of { register : register; value : int }
+  | Memory_write of { address : int; value : int; cause : memory_write_cause }
+
 type t = {
   filesystem : Filesystem.t;
   mutable dma : int;
@@ -237,6 +243,60 @@ let dispatch_instrumented ~on_event ~runtime ~memory ~state ~output =
       Ok Continue
   | Ok Terminate -> Ok Terminate
   | Error error -> Error error
+
+let dispatch_with_effects ~on_event ~on_effect ~runtime ~memory ~state ~output =
+  let before =
+    [ (A, I8080.State.a state); (B, I8080.State.b state);
+      (C, I8080.State.c state); (D, I8080.State.d state);
+      (E, I8080.State.e state); (H, I8080.State.h state);
+      (L, I8080.State.l state); (SP, I8080.State.sp state) ]
+  in
+  let function_number = I8080.State.c state in
+  let fcb_address = I8080.State.de state in
+  let track_fcb = List.mem function_number [ 15; 16; 19; 20; 21; 22 ] in
+  let fcb_before =
+    if track_fcb then Some (I8080.Memory.read_range memory ~address:fcb_address ~length:36)
+    else None
+  in
+  let successful_record = ref None in
+  match dispatch_instrumented
+          ~on_event:(fun event ->
+            (match event with Read_record _ -> successful_record := Some 20
+             | Write_record _ -> successful_record := Some 21);
+            on_event event)
+          ~runtime ~memory ~state ~output with
+  | Error error -> Error error
+  | Ok action ->
+      List.iter
+        (fun (register, old_value) ->
+          let new_value =
+            match register with
+            | A -> I8080.State.a state | B -> I8080.State.b state
+            | C -> I8080.State.c state | D -> I8080.State.d state
+            | E -> I8080.State.e state | H -> I8080.State.h state
+            | L -> I8080.State.l state | SP -> I8080.State.sp state
+          in
+          if old_value <> new_value || (action = Continue && List.mem register [A;B;H;L]) then
+            on_effect (Register_write { register; value = new_value }))
+        before;
+      (match fcb_before with
+      | None -> ()
+      | Some old_bytes ->
+          let forced_offsets =
+            match function_number, I8080.State.a state with
+            | 15, result when result <> 0xff -> List.init 19 (fun i -> i + 13)
+            | 20, _ when !successful_record = Some 20 -> [12;14;15;32]
+            | 21, _ when !successful_record = Some 21 -> [12;14;15;32]
+            | 22, result when result <> 0xff -> List.init 21 (fun i -> i + 12)
+            | _ -> []
+          in
+          for offset = 0 to Bytes.length old_bytes - 1 do
+            let address = (fcb_address + offset) land 0xffff in
+            let value = I8080.Memory.read memory address in
+            if value <> Char.code (Bytes.get old_bytes offset) || List.mem offset forced_offsets then
+              on_effect (Memory_write { address; value; cause = Fcb_update })
+          done);
+      Ok action
 
 let dispatch ~runtime ~memory ~state ~output =
   dispatch_instrumented ~on_event:(fun _ -> ()) ~runtime ~memory ~state ~output

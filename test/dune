@@ -26,6 +26,10 @@
  (name execution_report)
  (libraries i8080 cpm runner analysis))
 
+(test
+ (name provenance)
+ (libraries i8080 cpm runner analysis))
+
 
 (test
  (name alu_flags)

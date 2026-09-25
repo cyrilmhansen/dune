@@ -22,6 +22,12 @@ type event =
       data : bytes;
     }
 
+type register = A | B | C | D | E | H | L | SP
+type memory_write_cause = Fcb_update
+type external_effect =
+  | Register_write of { register : register; value : int }
+  | Memory_write of { address : int; value : int; cause : memory_write_cause }
+
 type t
 
 val create : filesystem:Filesystem.t -> t
@@ -44,6 +50,16 @@ val dispatch_instrumented :
   state:I8080.State.t ->
   output:(char -> unit) ->
   (action, error) result
+
+val dispatch_with_effects :
+  on_event:(event -> unit) ->
+  on_effect:(external_effect -> unit) ->
+  runtime:t -> memory:I8080.Memory.t -> state:I8080.State.t ->
+  output:(char -> unit) -> (action, error) result
+
+(** Like [dispatch_instrumented], with factual post-dispatch register writes
+    and guest-visible FCB byte writes. These effects contain no analysis or
+    provenance types. Successful record transfers remain [event] values. *)
 
 (** Successful record transfers only. The event contains a copy of the 128
     bytes transferred, so observers may retain or mutate it safely. *)

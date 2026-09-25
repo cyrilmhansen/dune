@@ -2,6 +2,21 @@ type termination = Bdos_function of int | Warm_boot
 
 type run_result = { termination : termination; steps : int }
 
+type state_snapshot = {
+  a : int; b : int; c : int; d : int; e : int; h : int; l : int;
+  sp : int; pc : int; sign : bool; zero : bool; auxiliary_carry : bool;
+  parity : bool; carry : bool;
+}
+
+let snapshot state =
+  let flags = I8080.State.flags state in
+  { a = I8080.State.a state; b = I8080.State.b state; c = I8080.State.c state;
+    d = I8080.State.d state; e = I8080.State.e state; h = I8080.State.h state;
+    l = I8080.State.l state; sp = I8080.State.sp state; pc = I8080.State.pc state;
+    sign = I8080.Flags.sign flags; zero = I8080.Flags.zero flags;
+    auxiliary_carry = I8080.Flags.auxiliary_carry flags;
+    parity = I8080.Flags.parity flags; carry = I8080.Flags.carry flags }
+
 type event =
   | Step of I8080.Step.t
   | Bdos_call of { step_index : int; function_number : int; de : int }
@@ -75,7 +90,7 @@ let install_page_zero memory command_tail =
     (fun index byte -> I8080.Memory.write memory (0x0081 + index) (Char.code byte))
     command_tail
 
-let run_loaded ~max_steps ~on_step ~on_event ~on_bdos_event ~on_start ~output ~filesystem ~command_tail memory loaded =
+let run_loaded ~max_steps ~on_step ~on_step_state ~on_event ~on_bdos_event ~on_bdos_effect ~on_start ~on_start_state ~output ~filesystem ~command_tail memory loaded =
   (* 0005h remains a synthetic RET userspace trap, not the historical BDOS
      jump instruction. The 0006h word is a deterministic compatibility value
      for exercisers that use LHLD 6 / SPHL, not historical CP/M low memory. *)
@@ -87,6 +102,7 @@ let run_loaded ~max_steps ~on_step ~on_event ~on_bdos_event ~on_start ~output ~f
      historical CP/M value. *)
   I8080.State.set_sp state initial_stack_pointer;
   on_start (I8080.Memory.read_range memory ~address:0 ~length:0x100);
+  on_start_state (snapshot state);
   let bus = I8080.Bus.create memory in
   let cpu = I8080.Cpu.create ~state ~bus in
   let rec run steps =
@@ -98,8 +114,9 @@ let run_loaded ~max_steps ~on_step ~on_event ~on_bdos_event ~on_start ~output ~f
       on_event
         (Bdos_call
            { step_index = steps; function_number; de = I8080.State.de state });
-      (match Cpm.Bdos.dispatch_instrumented
+      (match Cpm.Bdos.dispatch_with_effects
                ~on_event:(fun event -> on_bdos_event ~step_index:steps event)
+               ~on_effect:on_bdos_effect
                ~runtime:bdos ~memory ~state ~output with
       | Error error -> Error (Bdos_error error)
       | Ok Cpm.Bdos.Terminate ->
@@ -115,12 +132,13 @@ let run_loaded ~max_steps ~on_step ~on_event ~on_bdos_event ~on_start ~output ~f
       | Error error -> Error (Cpu_error error)
       | Ok step ->
           on_step step;
+          on_step_state ~step_index:steps (snapshot state) step;
           on_event (Step step);
           run (steps + 1)
   in
   run 0
 
-let run_with_loader ~max_steps ~on_step ~on_event ~on_bdos_event ~on_start ~output ~filesystem ~command_tail load =
+let run_with_loader ~max_steps ~on_step ~on_step_state ~on_event ~on_bdos_event ~on_bdos_effect ~on_start ~on_start_state ~output ~filesystem ~command_tail load =
   if max_steps <= 0 then Error (Invalid_step_limit max_steps)
   else if Bytes.length command_tail > 127 then Error (Invalid_command_tail (Bytes.length command_tail))
   else
@@ -129,18 +147,24 @@ let run_with_loader ~max_steps ~on_step ~on_event ~on_bdos_event ~on_start ~outp
     match load memory with
     | Error error -> Error (Load_error error)
     | Ok loaded ->
-        run_loaded ~max_steps ~on_step ~on_event ~on_bdos_event ~on_start ~output ~filesystem ~command_tail memory loaded
+        run_loaded ~max_steps ~on_step ~on_step_state ~on_event ~on_bdos_event ~on_bdos_effect ~on_start ~on_start_state ~output ~filesystem ~command_tail memory loaded
 
 let run_bytes ?(max_steps = default_max_steps) ?(on_step = fun _ -> ())
+    ?(on_step_state = fun ~step_index:_ _ _ -> ())
     ?(on_event = fun _ -> ()) ?(on_bdos_event = fun ~step_index:_ _ -> ())
+    ?(on_bdos_effect = fun _ -> ())
     ?(on_start = fun _ -> ()) ?filesystem
+    ?(on_start_state = fun _ -> ())
     ?(command_tail = Bytes.empty) ~output bytes =
-  run_with_loader ~max_steps ~on_step ~on_event ~on_bdos_event ~on_start ~output ~filesystem ~command_tail (fun memory ->
+  run_with_loader ~max_steps ~on_step ~on_step_state ~on_event ~on_bdos_event ~on_bdos_effect ~on_start ~on_start_state ~output ~filesystem ~command_tail (fun memory ->
       Cpm.Loader.load_bytes memory bytes)
 
 let run_file ?(max_steps = default_max_steps) ?(on_step = fun _ -> ())
+    ?(on_step_state = fun ~step_index:_ _ _ -> ())
     ?(on_event = fun _ -> ()) ?(on_bdos_event = fun ~step_index:_ _ -> ())
+    ?(on_bdos_effect = fun _ -> ())
     ?(on_start = fun _ -> ()) ?filesystem
+    ?(on_start_state = fun _ -> ())
     ?(command_tail = Bytes.empty) ~output ~path () =
-  run_with_loader ~max_steps ~on_step ~on_event ~on_bdos_event ~on_start ~output ~filesystem ~command_tail (fun memory ->
+  run_with_loader ~max_steps ~on_step ~on_step_state ~on_event ~on_bdos_event ~on_bdos_effect ~on_start ~on_start_state ~output ~filesystem ~command_tail (fun memory ->
       Cpm.Loader.load_file memory ~path)
