@@ -37,12 +37,16 @@ type image_summary = {
   known_size : int option;
   known_byte_count : int;
   observed_records : int list;
+  unique_fetched_byte_count : int;
+  (** Dynamic total of instruction-byte fetches, counting repeated fetches. *)
   fetched_byte_count : int;
   unique_instruction_starts : int;
   total_instruction_executions : int;
   (** First (runtime PC, image offset, step index). *)
   first_execution : (int * int * int) option;
   last_execution_step : int option;
+  first_record_read_step : int option;
+  last_record_read_step : int option;
 }
 
 type bdos_site = {
@@ -66,8 +70,10 @@ exception Analysis_error of error
 val create : unit -> t
 val image_id : drive:int -> user:int -> filename:string -> (image_id, Cpm.Filesystem.error) result
 val seed_image : t -> image:image_id -> runtime_base:int -> bytes -> (unit, string) result
+(* Supplying [step_index] records first/last successful record reads for the
+   report timeline. Omit it to retain callback behavior without timing data. *)
+val observe_bdos_event : ?step_index:int -> t -> Cpm.Bdos.event -> unit
 val observe_step : t -> step_index:int -> I8080.Step.t -> (unit, error) result
-val observe_bdos_event : t -> Cpm.Bdos.event -> unit
 val observe_runner_event : t -> Runner.event -> unit
 
 val origin_at : t -> int -> origin

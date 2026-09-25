@@ -54,11 +54,15 @@ type image_summary = {
   known_size : int option;
   known_byte_count : int;
   observed_records : int list;
+  unique_fetched_byte_count : int;
+  (** Dynamic sum over byte fetches, counting repeated fetches. *)
   fetched_byte_count : int;
   unique_instruction_starts : int;
   total_instruction_executions : int;
   first_execution : (int * int * int) option;
   last_execution_step : int option;
+  first_record_read_step : int option;
+  last_record_read_step : int option;
 }
 
 type image_acc = {
@@ -70,6 +74,8 @@ type image_acc = {
   mutable total_instruction_executions : int;
   mutable first_execution : (int * int * int) option;
   mutable last_execution_step : int option;
+  mutable first_record_read_step : int option;
+  mutable last_record_read_step : int option;
 }
 
 type edge_key = {
@@ -153,6 +159,8 @@ let image_acc map image =
           total_instruction_executions = 0;
           first_execution = None;
           last_execution_step = None;
+          first_record_read_step = None;
+          last_record_read_step = None;
         }
       in
       Hashtbl.add map.images image acc;
@@ -349,10 +357,15 @@ let observe_step map ~step_index step =
   map.last_step <- Some (step_index, step, instruction_origin);
   Ok ()
 
-let observe_bdos_event map = function
+let observe_bdos_event ?step_index map = function
   | Cpm.Bdos.Read_record { file; logical_record; dma; data } ->
       let acc = image_acc map file in
       Hashtbl.replace acc.observed_records logical_record ();
+      Option.iter
+        (fun step ->
+          if acc.first_record_read_step = None then acc.first_record_read_step <- Some step;
+          acc.last_record_read_step <- Some step)
+        step_index;
       for index = 0 to Bytes.length data - 1 do
         let offset = logical_record * 128 + index in
         Hashtbl.replace acc.known_bytes offset (Char.code (Bytes.get data index));
@@ -412,11 +425,16 @@ let summary_for_image map (acc : image_acc) : image_summary =
     known_size = acc.known_size;
     known_byte_count = Hashtbl.length acc.known_bytes;
     observed_records = Hashtbl.fold (fun record () records -> record :: records) acc.observed_records [] |> List.sort compare;
+    unique_fetched_byte_count =
+      Hashtbl.fold (fun _ count total -> if count > 0 then total + 1 else total)
+        acc.fetched_counts 0;
     fetched_byte_count = counts_total acc.fetched_counts;
     unique_instruction_starts = List.length entries;
     total_instruction_executions = acc.total_instruction_executions;
     first_execution = acc.first_execution;
     last_execution_step = acc.last_execution_step;
+    first_record_read_step = acc.first_record_read_step;
+    last_record_read_step = acc.last_record_read_step;
   }
 
 let image_summary map ~image =

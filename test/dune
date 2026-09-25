@@ -22,6 +22,10 @@
  (name execution_map)
  (libraries i8080 cpm runner analysis))
 
+(test
+ (name execution_report)
+ (libraries i8080 cpm runner analysis))
+
 
 (test
  (name alu_flags)
