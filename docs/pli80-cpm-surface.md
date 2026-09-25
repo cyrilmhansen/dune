@@ -244,6 +244,33 @@ L'API filesystem peut rester « drive virtuel + nom CP/M normalisé + FCB RAM vi
 * Preuve dynamique : run temporaire MAME 0.289 / QX-10 / CP/M Plus, commande CCP `PLI OPTIMIST`, breakpoint à toute entrée BDOS, census borné au premier témoin PC=`0000h`; durée indiquée ci-dessus. Les anciens journaux `out-full/OPTIMIST/mame.log`, `out-full/OPTIMIST/directory.txt`, captures `OPTIMIST-*.INT.*` et `out/ADDC/mame.log` sont des corroborations antérieures, certaines filtrées. Les logs complets temporaires ne sont pas archivés dans le dépôt; les comptes, sites et FCB décodables sont résumés dans les tables.
 * Capture de cette mise à jour : MAME 0.289 QX-10 / CP/M Plus, copie disposable de `PLI80-QXPLUS.base.imd` (hash image source `1a3172c2990f0a6804fd30fdde7ce5800faaf8690b5b872691d5874126753dd1`), `PLI OPTIMIST`, 34.839 s émulateur; snapshot page zéro à premier `PC=0100h`, événements FCB/BDOS jusqu'au warm boot. Seconde exécution même copie-baseline avec action de breakpoint `HL=0022h` juste après le retour BDOS12: même fichier REL/hash, aucun `CPM3.SYS`, BDOS108 toujours appelé. Cela n'émule pas les réponses/effets complets d'un CP/M2 réel.
 
+## Observations authentiques CP/M 2.2 : READ et transitions d'extent
+
+Sonde COM temporaire sur z80pack cpmsim **1.39**, bannière `64K CP/M Vers. 2.2 (Z80 CBIOS V1.2 for Z80SIM)`. Le programme a ouvert `B:PLI1.OVL` par BDOS 15 puis a effectué un seul flux continu de BDOS 20, en gardant le FCB en RAM et en affichant les snapshots après les appels. `PLI1.OVL` extrait de `disks/driveb.dsk` faisait **34 816 octets / 272 records**, SHA-256 `1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564`. Le disque source n'a pas été modifié; son image de travail était une copie jetable. Le probe imprime le code A sauvegardé juste après le service, avant les appels BDOS 2/9 servant à l'affichage.
+
+Valeurs affichées dans l'ordre `A / EX / S1 / S2 / RC / CR`, toutes en hexadécimal :
+
+| Point après service | CP/M 2.2 authentique | Runes à `b56d7f29baf4122c3a552e126fd5e2b9220ef334` |
+|---|---|---|
+| OPEN | `03 / 00 / 00 / 80 / 80 / 00` | `00 / 00 / 00 / 00 / 80 / 00` |
+| 126e READ réussi | `00 / 00 / 00 / 80 / 80 / 7E` | `00 / 00 / 00 / 00 / 80 / 7E` |
+| 127e READ réussi | `00 / 00 / 00 / 80 / 80 / 7F` | `00 / 00 / 00 / 00 / 80 / 7F` |
+| 128e READ réussi | `00 / 00 / 00 / 80 / 80 / 80` | `00 / 01 / 00 / 00 / 80 / 00` |
+| 129e READ réussi | `00 / 01 / 00 / 80 / 80 / 01` | `00 / 01 / 00 / 00 / 80 / 01` |
+| 254e READ réussi | `00 / 01 / 00 / 80 / 80 / 7E` | `00 / 01 / 00 / 00 / 80 / 7E` |
+| 255e READ réussi | `00 / 01 / 00 / 80 / 80 / 7F` | `00 / 01 / 00 / 00 / 80 / 7F` |
+| 256e READ réussi | `00 / 01 / 00 / 80 / 80 / 80` | `00 / 02 / 00 / 00 / 10 / 00` |
+| 257e READ réussi | `00 / 02 / 00 / 80 / 10 / 01` | `00 / 02 / 00 / 00 / 10 / 01` |
+| 271e READ réussi | `00 / 02 / 00 / 80 / 10 / 0F` | `00 / 02 / 00 / 00 / 10 / 0F` |
+| 272e READ réussi | `00 / 02 / 00 / 80 / 10 / 10` | `00 / 02 / 00 / 00 / 10 / 10` |
+| premier EOF après 272 records | `01 / 02 / 00 / 80 / 10 / 10` | `01 / 02 / 00 / 00 / 10 / 10` |
+
+Le code OPEN authentique `03` est un code de répertoire réussi; Runes choisit `00` de façon déterministe, également dans la plage de succès documentée. Ce n'est pas un échec d'ouverture. Les états FCB ne sont en revanche pas identiques: ce BDOS CP/M 2.2 expose `S2=80h` dans tous ces snapshots, tandis que le modèle Runes laisse `S2=00h`.
+
+La transition de `CR` est décisive: après les 128e et 256e records, le BDOS authentique laisse respectivement `EX=00, CR=80h` et `EX=01, CR=80h`. L'appel READ réussi suivant sélectionne le nouvel extent et laisse `CR=01h` (`EX=01` puis `EX=02`). Runes avance immédiatement après le 128e/256e READ vers `EX+1, CR=00h`. Les états après le READ suivant retrouvent le même `EX/CR`, mais le `S2` observé diffère encore. `RC` reste `80h` dans les extents pleins, puis `10h` dans l'extent final.
+
+Verdict de comparaison pour cette lecture : **MISMATCH** aux frontières 127→128 et 255→256 (la mutation FCB est visible et diffère); les snapshots après le READ suivant sont aussi différents en `S2`. L'EOF donne `A=01h` des deux côtés et conserve le dernier état affiché. Ces résultats ne distinguent pas la sémantique des bits réservés de `S2`; ils rapportent uniquement les octets observés. Ce test ne couvre ni WRITE ni le plafond de 8 MiB. Le point antérieur disant que les mutations immédiates de READ n'étaient pas capturées est supersédé pour cette sonde/fichier précis.
+
 ### Questions ouvertes
 
 * Quel est le census avec options de compilation/listing/impression, et quels retours BDOS sont consommés pour chaque erreur/succès ?
