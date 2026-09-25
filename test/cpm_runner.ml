@@ -168,6 +168,33 @@ let test_cpm22_scalar_bdos () =
   assert (Cpm.Bdos.dma runtime = 0x4321);
   assert (Cpm.Bdos.current_drive runtime = 0 && Cpm.Bdos.current_user runtime = 0)
 
+let test_fcb_extent_encoding () =
+  let memory = I8080.Memory.create () in
+  let fcb = Cpm.Fcb.at memory ~address:0x1f00 in
+  List.iter
+    (fun (extent, expected_ex, expected_s2) ->
+      Cpm.Fcb.set_s2 fcb 0xb0;
+      Cpm.Fcb.set_extent fcb extent;
+      assert (Cpm.Fcb.extent fcb = extent);
+      assert (Cpm.Fcb.get fcb ~offset:12 = expected_ex);
+      assert (Cpm.Fcb.s2 fcb = expected_s2);
+      assert (Cpm.Fcb.file_write_flag fcb))
+    [ 0, 0x00, 0xb0; 31, 0x1f, 0xb0; 32, 0x00, 0xb1; 511, 0x1f, 0xbf ];
+  Cpm.Fcb.set_s2 fcb 0xd5;
+  Cpm.Fcb.set_module_number fcb 3;
+  assert (Cpm.Fcb.s2 fcb = 0xd3);
+  Cpm.Fcb.set_file_write_flag fcb false;
+  assert (Cpm.Fcb.s2 fcb = 0x53);
+  Cpm.Fcb.set_file_write_flag fcb true;
+  assert (Cpm.Fcb.s2 fcb = 0xd3);
+  Cpm.Fcb.set_s2 fcb 0xb0;
+  Cpm.Fcb.set_extent fcb 511;
+  let raw_before = Cpm.Fcb.get fcb ~offset:12, Cpm.Fcb.s2 fcb in
+  (match Cpm.Fcb.set_extent fcb 512 with
+  | () -> failwith "extent 512 unexpectedly accepted"
+  | exception Invalid_argument _ -> ());
+  assert ((Cpm.Fcb.get fcb ~offset:12, Cpm.Fcb.s2 fcb) = raw_before)
+
 let test_cpm_sequential_files () =
   let memory = I8080.Memory.create () in
   let filesystem = Cpm.Filesystem.create () in
@@ -184,6 +211,7 @@ let test_cpm_sequential_files () =
   assert (Cpm.Fcb.current_record fcb = 1);
   assert (Cpm.Fcb.record_count fcb = 128);
   assert (Cpm.Fcb.extent fcb = 0);
+  assert (Cpm.Fcb.s2 fcb = 0x80 && Cpm.Fcb.file_write_flag fcb);
   let result, state = call_bdos runtime memory ~function_number:20 ~de:0x2000 in
   assert (result = Ok Cpm.Bdos.Continue && I8080.State.a state = 0);
   assert
@@ -196,7 +224,7 @@ let test_cpm_sequential_files () =
   let result, state = call_bdos runtime memory ~function_number:15 ~de:0x2100 in
   assert (result = Ok Cpm.Bdos.Continue && I8080.State.a state = 0);
   assert (Cpm.Fcb.extent second_extent_fcb = 1);
-  assert (Cpm.Fcb.s2 second_extent_fcb = 0);
+  assert (Cpm.Fcb.s2 second_extent_fcb = 0x80);
   assert (Cpm.Fcb.record_count second_extent_fcb = 128);
   let result, state = call_bdos runtime memory ~function_number:20 ~de:0x2100 in
   assert (result = Ok Cpm.Bdos.Continue && I8080.State.a state = 0);
@@ -217,23 +245,87 @@ let test_cpm_sequential_files () =
     let expected = Bytes.sub source (record_number * 128) 128 in
     assert (Bytes.equal actual expected);
     if record_number = 127 then (
-      assert (Cpm.Fcb.extent fcb = 1);
-      assert (Cpm.Fcb.current_record fcb = 0);
+      assert (Cpm.Fcb.extent fcb = 0);
+      assert (Cpm.Fcb.current_record fcb = 128);
       assert (Cpm.Fcb.record_count fcb = 128));
     if record_number = 255 then (
-      assert (Cpm.Fcb.extent fcb = 2);
-      assert (Cpm.Fcb.current_record fcb = 0);
-      assert (Cpm.Fcb.record_count fcb = 4))
+      assert (Cpm.Fcb.extent fcb = 1);
+      assert (Cpm.Fcb.current_record fcb = 128);
+      assert (Cpm.Fcb.record_count fcb = 128))
   done;
   assert (Cpm.Fcb.extent fcb = 2 && Cpm.Fcb.current_record fcb = 4);
   assert (Cpm.Fcb.record_count fcb = 4);
+  let before_eof =
+    List.init 16 (fun offset -> I8080.Memory.read memory (0x2000 + 12 + offset))
+  in
   let eof, eof_state = call_bdos runtime memory ~function_number:20 ~de:0x2000 in
   assert (eof = Ok Cpm.Bdos.Continue && I8080.State.a eof_state = 1);
+  assert
+    (List.init 16 (fun offset -> I8080.Memory.read memory (0x2000 + 12 + offset))
+    = before_eof);
   assert (Cpm.Filesystem.record_count filesystem key = Some 260);
   let result, state = call_bdos runtime memory ~function_number:19 ~de:0x2000 in
   assert (result = Ok Cpm.Bdos.Continue && I8080.State.a state = 0);
   let result, state = call_bdos runtime memory ~function_number:19 ~de:0x2000 in
   assert (result = Ok Cpm.Bdos.Continue && I8080.State.a state = 0xff)
+
+let test_cpm_pli1_extent_snapshots () =
+  let memory = I8080.Memory.create () in
+  let filesystem = Cpm.Filesystem.create () in
+  let runtime = Cpm.Bdos.create ~filesystem in
+  let data =
+    Bytes.init (272 * 128) (fun index -> Char.chr (((index / 128) * 17 + index) land 0xff))
+  in
+  assert (Cpm.Filesystem.add_file filesystem ~name:"PLI1.OVL" data = Ok ());
+  fcb_for_name memory ~address:0x2800 "PLI1.OVL";
+  let assert_state ~status ~ex ~s1 ~s2 ~rc ~cr state =
+    assert (I8080.State.a state = status);
+    assert (I8080.Memory.read memory 0x280c = ex);
+    assert (I8080.Memory.read memory 0x280d = s1);
+    let actual_s2 = I8080.Memory.read memory 0x280e in
+    if actual_s2 <> s2 then
+      failwith (Printf.sprintf "snapshot S2 expected %02X got %02X" s2 actual_s2);
+    assert (I8080.Memory.read memory 0x280f = rc);
+    assert (I8080.Memory.read memory 0x2820 = cr)
+  in
+  let result, state = call_bdos runtime memory ~function_number:15 ~de:0x2800 in
+  assert (result = Ok Cpm.Bdos.Continue);
+  (* Synthetic files expose deterministic A=00 rather than physical directory
+     slot A=03. Both are successful CP/M OPEN results in 00..03. *)
+  assert_state ~status:0 ~ex:0 ~s1:0 ~s2:0x80 ~rc:0x80 ~cr:0 state;
+  let expected =
+    [
+      127, (0, 0, 0x80, 0x80, 0x7f);
+      128, (0, 0, 0x80, 0x80, 0x80);
+      129, (1, 0, 0x80, 0x80, 0x01);
+      255, (1, 0, 0x80, 0x80, 0x7f);
+      256, (1, 0, 0x80, 0x80, 0x80);
+      257, (2, 0, 0x80, 0x10, 0x01);
+      271, (2, 0, 0x80, 0x10, 0x0f);
+      272, (2, 0, 0x80, 0x10, 0x10);
+    ]
+  in
+  let expected = ref expected in
+  for count = 1 to 272 do
+    let result, state = call_bdos runtime memory ~function_number:20 ~de:0x2800 in
+    assert (result = Ok Cpm.Bdos.Continue);
+    assert (I8080.State.a state = 0);
+    match !expected with
+    | (at, (ex, s1, s2, rc, cr)) :: rest when at = count ->
+        expected := rest;
+        assert_state ~status:0 ~ex ~s1 ~s2 ~rc ~cr state
+    | _ -> ()
+  done;
+  assert (!expected = []);
+  let before_eof =
+    List.init 21 (fun offset -> I8080.Memory.read memory (0x280c + offset))
+  in
+  let result, state = call_bdos runtime memory ~function_number:20 ~de:0x2800 in
+  assert (result = Ok Cpm.Bdos.Continue);
+  assert_state ~status:1 ~ex:2 ~s1:0 ~s2:0x80 ~rc:0x10 ~cr:0x10 state;
+  assert
+    (List.init 21 (fun offset -> I8080.Memory.read memory (0x280c + offset))
+    = before_eof)
 
 let test_cpm_make_write_close () =
   let memory = I8080.Memory.create () in
@@ -245,6 +337,7 @@ let test_cpm_make_write_close () =
   assert (Cpm.Filesystem.get_file filesystem ~name:"OUTPUT.REL" () = Ok (Some Bytes.empty));
   let fcb = Cpm.Fcb.at memory ~address:0x2200 in
   assert (Cpm.Fcb.record_count fcb = 0);
+  assert (Cpm.Fcb.s2 fcb = 0x80 && Cpm.Fcb.file_write_flag fcb);
   let expected = Bytes.create (130 * 128) in
   for record = 0 to 129 do
     let data = Bytes.init 128 (fun index -> Char.chr ((record * 17 + index) land 0xff)) in
@@ -254,15 +347,18 @@ let test_cpm_make_write_close () =
     assert (set_dma = Ok Cpm.Bdos.Continue && I8080.State.a dma_state = 0);
     let write, write_state = call_bdos runtime memory ~function_number:21 ~de:0x2200 in
     assert (write = Ok Cpm.Bdos.Continue && I8080.State.a write_state = 0);
+    assert (Cpm.Fcb.file_write_flag fcb = (record mod 128 = 127));
     if record = 127 then (
       assert (Cpm.Fcb.extent fcb = 1 && Cpm.Fcb.current_record fcb = 0);
-      assert (Cpm.Fcb.record_count fcb = 0))
+      assert (Cpm.Fcb.record_count fcb = 0);
+      assert (Cpm.Fcb.s2 fcb = 0x80))
   done;
   let close, close_state = call_bdos runtime memory ~function_number:16 ~de:0x2200 in
   assert (close = Ok Cpm.Bdos.Continue && I8080.State.a close_state = 0);
   assert (Cpm.Filesystem.get_file filesystem ~name:"OUTPUT.REL" () = Ok (Some expected));
   assert (Cpm.Fcb.extent fcb = 1 && Cpm.Fcb.current_record fcb = 2);
-  assert (Cpm.Fcb.record_count fcb = 2)
+  assert (Cpm.Fcb.record_count fcb = 2);
+  assert (not (Cpm.Fcb.file_write_flag fcb))
 
 let test_fcb_attribute_bits_in_names () =
   List.iter
@@ -349,14 +445,11 @@ let test_bdos_terminal_write_limit () =
   assert
     (Cpm.Filesystem.get_file filesystem ~name:"BOUNDARY.DAT" ()
     = Ok (Some before));
-  let terminal_read, _ =
+  let terminal_read, terminal_read_state =
     call_bdos runtime memory ~function_number:20 ~de:0x2500
   in
-  assert
-    (terminal_read
-    = Error
-        (Cpm.Bdos.Filesystem_model_limit
-           (Cpm.Filesystem.Record_out_of_range 65_536)))
+  assert (terminal_read = Ok Cpm.Bdos.Continue);
+  assert (I8080.State.a terminal_read_state = 1)
 
 let test_cpm_launch_state () =
   let tail = Bytes.of_string " OPTIMIST" in
@@ -577,7 +670,9 @@ let () =
   test_bdos_console_output ();
   test_bdos_wrap_and_errors ();
   test_cpm22_scalar_bdos ();
+  test_fcb_extent_encoding ();
   test_cpm_sequential_files ();
+  test_cpm_pli1_extent_snapshots ();
   test_cpm_make_write_close ();
   test_fcb_attribute_bits_in_names ();
   test_cpm22_file_size_limit ();

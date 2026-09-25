@@ -250,26 +250,26 @@ Sonde COM temporaire sur z80pack cpmsim **1.39**, bannière `64K CP/M Vers. 2.2 
 
 Valeurs affichées dans l'ordre `A / EX / S1 / S2 / RC / CR`, toutes en hexadécimal :
 
-| Point après service | CP/M 2.2 authentique | Runes à `b56d7f29baf4122c3a552e126fd5e2b9220ef334` |
+| Point après service | CP/M 2.2 authentique | Runes après correction |
 |---|---|---|
-| OPEN | `03 / 00 / 00 / 80 / 80 / 00` | `00 / 00 / 00 / 00 / 80 / 00` |
-| 126e READ réussi | `00 / 00 / 00 / 80 / 80 / 7E` | `00 / 00 / 00 / 00 / 80 / 7E` |
-| 127e READ réussi | `00 / 00 / 00 / 80 / 80 / 7F` | `00 / 00 / 00 / 00 / 80 / 7F` |
-| 128e READ réussi | `00 / 00 / 00 / 80 / 80 / 80` | `00 / 01 / 00 / 00 / 80 / 00` |
-| 129e READ réussi | `00 / 01 / 00 / 80 / 80 / 01` | `00 / 01 / 00 / 00 / 80 / 01` |
-| 254e READ réussi | `00 / 01 / 00 / 80 / 80 / 7E` | `00 / 01 / 00 / 00 / 80 / 7E` |
-| 255e READ réussi | `00 / 01 / 00 / 80 / 80 / 7F` | `00 / 01 / 00 / 00 / 80 / 7F` |
-| 256e READ réussi | `00 / 01 / 00 / 80 / 80 / 80` | `00 / 02 / 00 / 00 / 10 / 00` |
-| 257e READ réussi | `00 / 02 / 00 / 80 / 10 / 01` | `00 / 02 / 00 / 00 / 10 / 01` |
-| 271e READ réussi | `00 / 02 / 00 / 80 / 10 / 0F` | `00 / 02 / 00 / 00 / 10 / 0F` |
-| 272e READ réussi | `00 / 02 / 00 / 80 / 10 / 10` | `00 / 02 / 00 / 00 / 10 / 10` |
-| premier EOF après 272 records | `01 / 02 / 00 / 80 / 10 / 10` | `01 / 02 / 00 / 00 / 10 / 10` |
+| OPEN | `03 / 00 / 00 / 80 / 80 / 00` | `00 / 00 / 00 / 80 / 80 / 00` |
+| 126e READ réussi | `00 / 00 / 00 / 80 / 80 / 7E` | `00 / 00 / 00 / 80 / 80 / 7E` |
+| 127e READ réussi | `00 / 00 / 00 / 80 / 80 / 7F` | `00 / 00 / 00 / 80 / 80 / 7F` |
+| 128e READ réussi | `00 / 00 / 00 / 80 / 80 / 80` | `00 / 00 / 00 / 80 / 80 / 80` |
+| 129e READ réussi | `00 / 01 / 00 / 80 / 80 / 01` | `00 / 01 / 00 / 80 / 80 / 01` |
+| 254e READ réussi | `00 / 01 / 00 / 80 / 80 / 7E` | `00 / 01 / 00 / 80 / 80 / 7E` |
+| 255e READ réussi | `00 / 01 / 00 / 80 / 80 / 7F` | `00 / 01 / 00 / 80 / 80 / 7F` |
+| 256e READ réussi | `00 / 01 / 00 / 80 / 80 / 80` | `00 / 01 / 00 / 80 / 80 / 80` |
+| 257e READ réussi | `00 / 02 / 00 / 80 / 10 / 01` | `00 / 02 / 00 / 80 / 10 / 01` |
+| 271e READ réussi | `00 / 02 / 00 / 80 / 10 / 0F` | `00 / 02 / 00 / 80 / 10 / 0F` |
+| 272e READ réussi | `00 / 02 / 00 / 80 / 10 / 10` | `00 / 02 / 00 / 80 / 10 / 10` |
+| premier EOF après 272 records | `01 / 02 / 00 / 80 / 10 / 10` | `01 / 02 / 00 / 80 / 10 / 10` |
 
-Le code OPEN authentique `03` est un code de répertoire réussi; Runes choisit `00` de façon déterministe, également dans la plage de succès documentée. Ce n'est pas un échec d'ouverture. Les états FCB ne sont en revanche pas identiques: ce BDOS CP/M 2.2 expose `S2=80h` dans tous ces snapshots, tandis que le modèle Runes laisse `S2=00h`.
+Le code OPEN authentique `03` est un code de répertoire réussi; Runes choisit `00` de façon déterministe. Les deux sont dans la plage contractuelle `00h..03h`, donc ce n'est pas un mismatch CP/M-visible de succès/échec, mais Runes ne reproduit pas le code de slot physique. Les nouveaux snapshots FCB READ concordent exactement avec les valeurs CP/M 2.2.
 
-La transition de `CR` est décisive: après les 128e et 256e records, le BDOS authentique laisse respectivement `EX=00, CR=80h` et `EX=01, CR=80h`. L'appel READ réussi suivant sélectionne le nouvel extent et laisse `CR=01h` (`EX=01` puis `EX=02`). Runes avance immédiatement après le 128e/256e READ vers `EX+1, CR=00h`. Les états après le READ suivant retrouvent le même `EX/CR`, mais le `S2` observé diffère encore. `RC` reste `80h` dans les extents pleins, puis `10h` dans l'extent final.
+L'implémentation FCB distingue maintenant le module logique (S2 bits 0..3) du write-flag (bit 7); EX fournit les cinq bits bas de l'extent. Les bits S2 4..6 ne participent pas à l'adresse d'extent. Ainsi les 512 extents représentent exactement 65 536 records. OPEN et MAKE mettent le write-flag visible. Le source BDOS CP/M 2.2 montre qu'un WRITE ordinaire le retire quand le FCB est modifié; au dernier record, le chemin séquentiel ouvre/prépare aussi l'extent suivant et son OPEN/MAKE remet le flag. Le modèle suit cette distinction. CLOSE consomme l'état dirty côté répertoire mais ne réarme pas le flag du FCB utilisateur.
 
-Verdict de comparaison pour cette lecture : **MISMATCH** aux frontières 127→128 et 255→256 (la mutation FCB est visible et diffère); les snapshots après le READ suivant sont aussi différents en `S2`. L'EOF donne `A=01h` des deux côtés et conserve le dernier état affiché. Ces résultats ne distinguent pas la sémantique des bits réservés de `S2`; ils rapportent uniquement les octets observés. Ce test ne couvre ni WRITE ni le plafond de 8 MiB. Le point antérieur disant que les mutations immédiates de READ n'étaient pas capturées est supersédé pour cette sonde/fichier précis.
+Après le 128e et le 256e READ réussi, Runes garde désormais l'ancien `EX`, `RC=80h` et expose `CR=80h`. Le READ suivant utilise cette position pour lire le premier record de l'extent suivant, puis retourne `EX` incrémenté, son `RC` et `CR=01h`. EOF ne modifie pas le FCB. **EXTENT MATCH** pour les snapshots READ testés, y compris OPEN au niveau du contrat succès/échec; le code de répertoire OPEN n'est pas comparé bit-à-bit. Le source CP/M 2.2 utilise un calendrier distinct pour WRITE: après le dernier record d'un extent, WRITE prépare l'extent suivant avant le retour, tandis que READ ne le sélectionne qu'au prochain appel. Runes conserve ce calendrier de WRITE; il efface le write-flag sur une mutation ordinaire et le réarme quand le prochain extent est préparé. Les snapshots authentiques WRITE restent à sonder. Cette observation ne couvre pas non plus le WRITE terminal à 8 MiB.
 
 ### Questions ouvertes
 

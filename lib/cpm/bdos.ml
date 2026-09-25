@@ -44,12 +44,29 @@ let set_result state value =
 
 let set_fcb_position memory ~fcb_address ~record_count record =
   let fcb = Fcb.at memory ~address:fcb_address in
-  let extent = record / 128 in
-  let current = record mod 128 in
+  let extent, current =
+    if record >= Filesystem.maximum_records then
+      (Filesystem.maximum_records / 128) - 1, 128
+    else record / 128, record mod 128
+  in
   Fcb.set_extent fcb extent;
   Fcb.set_current_record fcb current;
   let extent_start = extent * 128 in
   Fcb.set_record_count fcb (max 0 (min 128 (record_count - extent_start)))
+
+let set_fcb_read_position memory ~fcb_address ~record_count ~extent ~current_record =
+  let fcb = Fcb.at memory ~address:fcb_address in
+  let next_extent, next_record =
+    match current_record with
+    | 127 -> extent, 128
+    | 128 -> extent + 1, 1
+    | record -> extent, record + 1
+  in
+  Fcb.set_extent fcb next_extent;
+  Fcb.set_current_record fcb next_record;
+  let extent_start = next_extent * 128 in
+  Fcb.set_record_count fcb
+    (max 0 (min 128 (record_count - extent_start)))
 
 let position_of_fcb memory ~fcb_address =
   let fcb = Fcb.at memory ~address:fcb_address in
@@ -95,10 +112,13 @@ let dispatch_inner ~runtime ~memory ~state ~output =
           | Some records ->
               let fcb = Fcb.at memory ~address:(I8080.State.de state) in
               Fcb.set_s1 fcb 0;
+              (* CP/M 2 clears the caller's module field for OPEN, then marks
+                 a successful opened FCB with the file-write flag. *)
               Fcb.set_s2 fcb 0;
               Fcb.set_allocation fcb (Bytes.make 16 '\000');
               let extent_start = Fcb.extent fcb * 128 in
               Fcb.set_record_count fcb (max 0 (min 128 (records - extent_start)));
+              Fcb.set_file_write_flag fcb true;
               set_result state 0))
   | 16 ->
       (match resolve_fcb runtime memory (I8080.State.de state) with
@@ -117,16 +137,25 @@ let dispatch_inner ~runtime ~memory ~state ~output =
       (match resolve_fcb runtime memory (I8080.State.de state) with
       | Error _ -> set_result state 1
       | Ok key ->
-          let record_number = position_of_fcb memory ~fcb_address:(I8080.State.de state) in
-          (match Filesystem.read_record runtime.filesystem key ~record:record_number with
-          | Error error -> Error (Filesystem_model_limit error)
-          | Ok None -> set_result state 1
-          | Ok (Some record) ->
-              transfer_record_to_memory memory ~dma:runtime.dma record;
-              set_fcb_position memory ~fcb_address:(I8080.State.de state)
-                ~record_count:(Option.value (Filesystem.record_count runtime.filesystem key) ~default:0)
-                (record_number + 1);
-              set_result state 0))
+          let fcb_address = I8080.State.de state in
+          let fcb = Fcb.at memory ~address:fcb_address in
+          let extent = Fcb.extent fcb in
+          let current_record = Fcb.current_record fcb in
+          let record_number = position_of_fcb memory ~fcb_address in
+          (match Filesystem.record_count runtime.filesystem key with
+          | None -> set_result state 1
+          | Some records when current_record > 128 || record_number >= records ->
+              (* EOF leaves the caller-visible cursor and extent untouched. *)
+              set_result state 1
+          | Some records ->
+              (match Filesystem.read_record runtime.filesystem key ~record:record_number with
+              | Error error -> Error (Filesystem_model_limit error)
+              | Ok None -> set_result state 1
+              | Ok (Some record) ->
+                  transfer_record_to_memory memory ~dma:runtime.dma record;
+                  set_fcb_read_position memory ~fcb_address ~record_count:records
+                    ~extent ~current_record;
+                  set_result state 0)))
   | 21 ->
       (match resolve_fcb runtime memory (I8080.State.de state) with
       | Error _ -> set_result state 1
@@ -145,6 +174,11 @@ let dispatch_inner ~runtime ~memory ~state ~output =
                     let records = Option.value (Filesystem.record_count runtime.filesystem key) ~default:0 in
                     set_fcb_position memory ~fcb_address:(I8080.State.de state) ~record_count:records
                       (record_number + 1);
+                    let fcb = Fcb.at memory ~address:(I8080.State.de state) in
+                    (* A write dirties the active FCB (clearing FWF).  At a
+                       sequential extent boundary CP/M opens/makes the next
+                       extent before returning, which sets FWF on that FCB. *)
+                    Fcb.set_file_write_flag fcb (record_number mod 128 = 127);
                     set_result state 0)))
   | 22 ->
       (match resolve_fcb runtime memory (I8080.State.de state) with
@@ -153,10 +187,12 @@ let dispatch_inner ~runtime ~memory ~state ~output =
           Filesystem.make runtime.filesystem key;
           let fcb = Fcb.at memory ~address:(I8080.State.de state) in
           Fcb.set_s1 fcb 0;
+          Fcb.set_s2 fcb 0;
           Fcb.set_extent fcb 0;
           Fcb.set_current_record fcb 0;
           Fcb.set_record_count fcb 0;
           Fcb.set_allocation fcb (Bytes.make 16 '\000');
+          Fcb.set_file_write_flag fcb true;
           set_result state 0)
   | 26 ->
       runtime.dma <- I8080.State.de state;

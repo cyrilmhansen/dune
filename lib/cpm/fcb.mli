@@ -10,8 +10,15 @@ val drive : t -> int
 val set_drive : t -> int -> unit
 val filename : t -> string
 val extension : t -> string
+(* Logical extent: EX's low five bits plus S2's low four module-number bits. *)
 val extent : t -> int
 val set_extent : t -> int -> unit
+(* S2 module number occupies bits 0..3; bits 4..7 are preserved. *)
+val module_number : t -> int
+val set_module_number : t -> int -> unit
+(* S2 bit 7, the CP/M 2 file-write flag. *)
+val file_write_flag : t -> bool
+val set_file_write_flag : t -> bool -> unit
 val s1 : t -> int
 val set_s1 : t -> int -> unit
 val s2 : t -> int
