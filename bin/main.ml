@@ -78,6 +78,16 @@ let string_of_bdos_error = function
   | Cpm.Bdos.Unterminated_string { start_address; scanned } ->
       Printf.sprintf "BDOS function 9 found no '$' after %d bytes from 0x%04X" scanned
         start_address
+  | Cpm.Bdos.Filesystem_model_limit (Cpm.Filesystem.Record_out_of_range record) ->
+      Printf.sprintf "CP/M filesystem model cannot represent record %d" record
+  | Cpm.Bdos.Filesystem_model_limit (Cpm.Filesystem.File_too_large { size; maximum }) ->
+      Printf.sprintf "CP/M file size %d exceeds modeled maximum %d" size maximum
+  | Cpm.Bdos.Filesystem_model_limit (Cpm.Filesystem.Invalid_name _) ->
+      "CP/M filesystem model rejected a file name"
+  | Cpm.Bdos.Filesystem_model_limit (Cpm.Filesystem.Invalid_drive _) ->
+      "CP/M filesystem model rejected a drive"
+  | Cpm.Bdos.Filesystem_model_limit (Cpm.Filesystem.Invalid_user _) ->
+      "CP/M filesystem model rejected a user number"
 
 let string_of_runner_error = function
   | Runner.Load_error error -> string_of_loader_error error

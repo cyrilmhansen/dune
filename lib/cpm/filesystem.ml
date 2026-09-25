@@ -1,10 +1,17 @@
 type key = { drive : int; user : int; name : string }
-type error = Invalid_name of string | Invalid_drive of int | Invalid_user of int
+type error =
+  | Invalid_name of string
+  | Invalid_drive of int
+  | Invalid_user of int
+  | File_too_large of { size : int; maximum : int }
+  | Record_out_of_range of int
 
 type file = { mutable data : bytes; mutable logical_size : int }
 type t = (string, file) Hashtbl.t
 
 let record_size = 128
+let maximum_records = 65_536
+let maximum_file_size = maximum_records * record_size
 let create () = Hashtbl.create 31
 
 let check_drive drive = if drive < 0 || drive > 15 then Error (Invalid_drive drive) else Ok ()
@@ -39,8 +46,11 @@ let key_of_fcb ~memory ~fcb_address ~current_drive ~current_user =
   let fcb = Fcb.at memory ~address:fcb_address in
   let drive_byte = Fcb.drive fcb in
   let drive = if drive_byte = 0 then current_drive else drive_byte - 1 in
-  let base = Fcb.filename fcb in
-  let extension = String.map (fun c -> Char.chr (Char.code c land 0x7f)) (Fcb.extension fcb) in
+  let unmark text =
+    String.map (fun c -> Char.chr (Char.code c land 0x7f)) text
+  in
+  let base = unmark (Fcb.filename fcb) in
+  let extension = unmark (Fcb.extension fcb) in
   let trim_right_spaces text = String.trim (String.map (fun c -> if c = '\000' then ' ' else c) text) in
   let base = trim_right_spaces base and extension = trim_right_spaces extension in
   let name = if extension = "" then base else base ^ "." ^ extension in
@@ -51,11 +61,14 @@ let add_file filesystem ?(drive = 0) ?(user = 0) ~name bytes =
   | Error error -> Error error
   | Ok key ->
       let size = Bytes.length bytes in
-      let records = (size + record_size - 1) / record_size in
-      let data = Bytes.make (records * record_size) '\000' in
-      Bytes.blit bytes 0 data 0 size;
-      Hashtbl.replace filesystem (key_string key) { data; logical_size = size };
-      Ok ()
+      if size > maximum_file_size then
+        Error (File_too_large { size; maximum = maximum_file_size })
+      else (
+        let records = (size + record_size - 1) / record_size in
+        let data = Bytes.make (records * record_size) '\000' in
+        Bytes.blit bytes 0 data 0 size;
+        Hashtbl.replace filesystem (key_string key) { data; logical_size = size };
+        Ok ())
 
 let lookup filesystem ~drive ~user ~name =
   match key_of_name ~drive ~user ~name with
@@ -93,28 +106,31 @@ let record_count filesystem key =
     (Hashtbl.find_opt filesystem (key_string key))
 
 let read_record filesystem key ~record =
-  if record < 0 then None
+  if record < 0 || record >= maximum_records then Error (Record_out_of_range record)
   else
     match Hashtbl.find_opt filesystem (key_string key) with
-    | None -> None
-    | Some file when record * record_size >= file.logical_size -> None
-    | Some file -> Some (Bytes.sub file.data (record * record_size) record_size)
+    | None -> Ok None
+    | Some file when record * record_size >= file.logical_size -> Ok None
+    | Some file -> Ok (Some (Bytes.sub file.data (record * record_size) record_size))
 
 let write_record filesystem key ~record bytes =
-  if record < 0 then invalid_arg "Filesystem.write_record: negative record";
   if Bytes.length bytes <> record_size then
     invalid_arg "Filesystem.write_record: record must be 128 bytes";
-  let file =
-    match Hashtbl.find_opt filesystem (key_string key) with
-    | Some file -> file
-    | None -> let file = { data = Bytes.empty; logical_size = 0 } in
-              Hashtbl.add filesystem (key_string key) file;
-              file
-  in
-  let end_offset = (record + 1) * record_size in
-  if Bytes.length file.data < end_offset then (
-    let expanded = Bytes.make end_offset '\000' in
-    Bytes.blit file.data 0 expanded 0 (Bytes.length file.data);
-    file.data <- expanded);
-  Bytes.blit bytes 0 file.data (record * record_size) record_size;
-  file.logical_size <- max file.logical_size end_offset
+  if record < 0 || record >= maximum_records then Error (Record_out_of_range record)
+  else (
+    let file =
+      match Hashtbl.find_opt filesystem (key_string key) with
+      | Some file -> file
+      | None ->
+          let file = { data = Bytes.empty; logical_size = 0 } in
+          Hashtbl.add filesystem (key_string key) file;
+          file
+    in
+    let end_offset = (record + 1) * record_size in
+    if Bytes.length file.data < end_offset then (
+      let expanded = Bytes.make end_offset '\000' in
+      Bytes.blit file.data 0 expanded 0 (Bytes.length file.data);
+      file.data <- expanded);
+    Bytes.blit bytes 0 file.data (record * record_size) record_size;
+    file.logical_size <- max file.logical_size end_offset;
+    Ok ())

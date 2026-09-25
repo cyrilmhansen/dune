@@ -3,6 +3,7 @@ type action = Continue | Terminate
 type error =
   | Unsupported_function of int
   | Unterminated_string of { start_address : int; scanned : int }
+  | Filesystem_model_limit of Filesystem.error
 
 type t = {
   filesystem : Filesystem.t;
@@ -38,6 +39,7 @@ let set_a state value = I8080.State.set_a state value
 
 let set_result state value =
   set_a state value;
+  I8080.State.set_b state 0;
   Ok Continue
 
 let set_fcb_position memory ~fcb_address ~record_count record =
@@ -70,7 +72,7 @@ let transfer_record_from_memory memory ~dma =
 
 let bdos_function_limit = 40
 
-let dispatch ~runtime ~memory ~state ~output =
+let dispatch_inner ~runtime ~memory ~state ~output =
   let function_number = I8080.State.c state in
   match function_number with
   | 0 -> Ok Terminate
@@ -93,10 +95,10 @@ let dispatch ~runtime ~memory ~state ~output =
           | Some records ->
               let fcb = Fcb.at memory ~address:(I8080.State.de state) in
               Fcb.set_s1 fcb 0;
-              Fcb.set_extent fcb 0;
-              Fcb.set_current_record fcb 0;
+              Fcb.set_s2 fcb 0;
               Fcb.set_allocation fcb (Bytes.make 16 '\000');
-              Fcb.set_record_count fcb (min 128 records);
+              let extent_start = Fcb.extent fcb * 128 in
+              Fcb.set_record_count fcb (max 0 (min 128 (records - extent_start)));
               set_result state 0))
   | 16 ->
       (match resolve_fcb runtime memory (I8080.State.de state) with
@@ -117,8 +119,9 @@ let dispatch ~runtime ~memory ~state ~output =
       | Ok key ->
           let record_number = position_of_fcb memory ~fcb_address:(I8080.State.de state) in
           (match Filesystem.read_record runtime.filesystem key ~record:record_number with
-          | None -> set_result state 1
-          | Some record ->
+          | Error error -> Error (Filesystem_model_limit error)
+          | Ok None -> set_result state 1
+          | Ok (Some record) ->
               transfer_record_to_memory memory ~dma:runtime.dma record;
               set_fcb_position memory ~fcb_address:(I8080.State.de state)
                 ~record_count:(Option.value (Filesystem.record_count runtime.filesystem key) ~default:0)
@@ -132,12 +135,17 @@ let dispatch ~runtime ~memory ~state ~output =
           | None -> set_result state 1
           | Some _ ->
               let record_number = position_of_fcb memory ~fcb_address:(I8080.State.de state) in
-              let record = transfer_record_from_memory memory ~dma:runtime.dma in
-              Filesystem.write_record runtime.filesystem key ~record:record_number record;
-              let records = Option.value (Filesystem.record_count runtime.filesystem key) ~default:0 in
-              set_fcb_position memory ~fcb_address:(I8080.State.de state) ~record_count:records
-                (record_number + 1);
-              set_result state 0))
+              if record_number >= Filesystem.maximum_records then
+                Error (Filesystem_model_limit (Filesystem.Record_out_of_range record_number))
+              else
+                let record = transfer_record_from_memory memory ~dma:runtime.dma in
+                (match Filesystem.write_record runtime.filesystem key ~record:record_number record with
+                | Error error -> Error (Filesystem_model_limit error)
+                | Ok () ->
+                    let records = Option.value (Filesystem.record_count runtime.filesystem key) ~default:0 in
+                    set_fcb_position memory ~fcb_address:(I8080.State.de state) ~record_count:records
+                      (record_number + 1);
+                    set_result state 0)))
   | 22 ->
       (match resolve_fcb runtime memory (I8080.State.de state) with
       | Error _ -> set_result state 0xff
@@ -159,3 +167,15 @@ let dispatch ~runtime ~memory ~state ~output =
       I8080.State.set_hl state 0;
       Ok Continue
   | number -> Error (Unsupported_function number)
+
+let dispatch ~runtime ~memory ~state ~output =
+  match dispatch_inner ~runtime ~memory ~state ~output with
+  | Ok Continue ->
+      (* CP/M's compatibility convention aliases the byte return in A to L
+         and the high byte in B to H, including calls without a modeled
+         service-specific return value. *)
+      I8080.State.set_l state (I8080.State.a state);
+      I8080.State.set_h state (I8080.State.b state);
+      Ok Continue
+  | Ok Terminate -> Ok Terminate
+  | Error error -> Error error

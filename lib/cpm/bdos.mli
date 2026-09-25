@@ -5,6 +5,8 @@ type action = Continue | Terminate
 type error =
   | Unsupported_function of int
   | Unterminated_string of { start_address : int; scanned : int }
+  (* Runes model-limit diagnostic, not a CP/M BDOS return code. *)
+  | Filesystem_model_limit of Filesystem.error
 
 type t
 

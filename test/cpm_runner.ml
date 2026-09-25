@@ -100,6 +100,7 @@ let test_bdos_wrap_and_errors () =
   | Error (Cpm.Bdos.Unterminated_string { start_address = 0; scanned = 65536 }) -> ()
   | Error (Cpm.Bdos.Unterminated_string _) -> failwith "wrong unterminated string bounds"
   | Error (Cpm.Bdos.Unsupported_function _) -> failwith "wrong BDOS error"
+  | Error (Cpm.Bdos.Filesystem_model_limit _) -> failwith "wrong BDOS error"
   | Ok _ -> failwith "unterminated string unexpectedly succeeded");
   assert (!output_count = 65536);
   let unsupported = state_with_bdos_args ~function_number:7 ~de:0 in
@@ -107,6 +108,7 @@ let test_bdos_wrap_and_errors () =
   | Error (Cpm.Bdos.Unsupported_function 7) -> ()
   | Error (Cpm.Bdos.Unsupported_function _) -> failwith "wrong BDOS function reported"
   | Error (Cpm.Bdos.Unterminated_string _) -> failwith "wrong BDOS error"
+  | Error (Cpm.Bdos.Filesystem_model_limit _) -> failwith "wrong BDOS error"
   | Ok _ -> failwith "unsupported BDOS function unexpectedly succeeded");
   let terminate = state_with_bdos_args ~function_number:0 ~de:0 in
   assert (dispatch_bdos ~memory ~state:terminate ~output:(fun _ -> ()) = Ok Cpm.Bdos.Terminate)
@@ -128,9 +130,17 @@ let call_bdos runtime memory ~function_number ~de =
   let state = I8080.State.create () in
   I8080.State.set_c state function_number;
   I8080.State.set_de state de;
+  I8080.State.set_a state 0x5a;
+  I8080.State.set_b state 0xc3;
+  I8080.State.set_hl state 0x1234;
   let result =
     Cpm.Bdos.dispatch ~runtime ~memory ~state ~output:(fun _ -> ())
   in
+  (match result with
+  | Ok Cpm.Bdos.Continue ->
+      assert (I8080.State.a state = I8080.State.l state);
+      assert (I8080.State.b state = I8080.State.h state)
+  | Ok Cpm.Bdos.Terminate | Error _ -> ());
   result, state
 
 let test_cpm22_scalar_bdos () =
@@ -167,12 +177,35 @@ let test_cpm_sequential_files () =
   assert (Cpm.Filesystem.add_file filesystem ~name:"SoUrCe.DaT" source = Ok ());
   assert (Cpm.Filesystem.list_files filesystem () = [ "SOURCE.DAT" ]);
   fcb_for_name memory ~address:0x2000 "SOURCE.DAT";
+  let fcb = Cpm.Fcb.at memory ~address:0x2000 in
+  Cpm.Fcb.set_current_record fcb 1;
   let result, state = call_bdos runtime memory ~function_number:15 ~de:0x2000 in
   assert (result = Ok Cpm.Bdos.Continue && I8080.State.a state = 0);
-  let fcb = Cpm.Fcb.at memory ~address:0x2000 in
+  assert (Cpm.Fcb.current_record fcb = 1);
   assert (Cpm.Fcb.record_count fcb = 128);
-  assert (Cpm.Fcb.extent fcb = 0 && Cpm.Fcb.current_record fcb = 0);
-  let missing, missing_state = call_bdos runtime memory ~function_number:15 ~de:0x2100 in
+  assert (Cpm.Fcb.extent fcb = 0);
+  let result, state = call_bdos runtime memory ~function_number:20 ~de:0x2000 in
+  assert (result = Ok Cpm.Bdos.Continue && I8080.State.a state = 0);
+  assert
+    (I8080.Memory.read_range memory ~address:0x0080 ~length:128
+    = Bytes.sub source 128 128);
+  Cpm.Fcb.set_current_record fcb 0;
+  fcb_for_name memory ~address:0x2100 "SOURCE.DAT";
+  let second_extent_fcb = Cpm.Fcb.at memory ~address:0x2100 in
+  Cpm.Fcb.set_extent second_extent_fcb 1;
+  let result, state = call_bdos runtime memory ~function_number:15 ~de:0x2100 in
+  assert (result = Ok Cpm.Bdos.Continue && I8080.State.a state = 0);
+  assert (Cpm.Fcb.extent second_extent_fcb = 1);
+  assert (Cpm.Fcb.s2 second_extent_fcb = 0);
+  assert (Cpm.Fcb.record_count second_extent_fcb = 128);
+  let result, state = call_bdos runtime memory ~function_number:20 ~de:0x2100 in
+  assert (result = Ok Cpm.Bdos.Continue && I8080.State.a state = 0);
+  assert
+    (I8080.Memory.read_range memory ~address:0x0080 ~length:128
+    = Bytes.sub source (128 * 128) 128);
+  Cpm.Fcb.set_extent fcb 0;
+  Cpm.Fcb.set_current_record fcb 0;
+  let missing, missing_state = call_bdos runtime memory ~function_number:15 ~de:0x2400 in
   assert (missing = Ok Cpm.Bdos.Continue && I8080.State.a missing_state = 0xff);
   let result, state = call_bdos runtime memory ~function_number:26 ~de:0x3210 in
   assert (result = Ok Cpm.Bdos.Continue && I8080.State.a state = 0);
@@ -230,6 +263,100 @@ let test_cpm_make_write_close () =
   assert (Cpm.Filesystem.get_file filesystem ~name:"OUTPUT.REL" () = Ok (Some expected));
   assert (Cpm.Fcb.extent fcb = 1 && Cpm.Fcb.current_record fcb = 2);
   assert (Cpm.Fcb.record_count fcb = 2)
+
+let test_fcb_attribute_bits_in_names () =
+  List.iter
+    (fun offset ->
+      let memory = I8080.Memory.create () in
+      let filesystem = Cpm.Filesystem.create () in
+      let runtime = Cpm.Bdos.create ~filesystem in
+      assert
+        (Cpm.Filesystem.add_file filesystem ~name:"TEST.DAT"
+           (Bytes.make 128 '\x41')
+        = Ok ());
+      fcb_for_name memory ~address:0x2300 "TEST.DAT";
+      let marked = I8080.Memory.read memory (0x2300 + offset) lor 0x80 in
+      I8080.Memory.write memory (0x2300 + offset) marked;
+      let result, state = call_bdos runtime memory ~function_number:15 ~de:0x2300 in
+      assert (result = Ok Cpm.Bdos.Continue && I8080.State.a state = 0);
+      assert (I8080.Memory.read memory (0x2300 + offset) = marked);
+      let result, state = call_bdos runtime memory ~function_number:16 ~de:0x2300 in
+      assert (result = Ok Cpm.Bdos.Continue && I8080.State.a state = 0);
+      assert (I8080.Memory.read memory (0x2300 + offset) = marked);
+      let result, state = call_bdos runtime memory ~function_number:19 ~de:0x2300 in
+      assert (result = Ok Cpm.Bdos.Continue && I8080.State.a state = 0);
+      assert (I8080.Memory.read memory (0x2300 + offset) = marked))
+    [ 1; 4; 9; 11 ]
+
+let test_cpm22_file_size_limit () =
+  let filesystem = Cpm.Filesystem.create () in
+  let key =
+    Cpm.Filesystem.key_of_name ~drive:0 ~user:0 ~name:"LIMIT.DAT"
+    |> expect_result
+  in
+  let last_record = Bytes.make 128 '\x5a' in
+  assert (Cpm.Filesystem.write_record filesystem key ~record:65_535 last_record = Ok ());
+  assert (Cpm.Filesystem.record_count filesystem key = Some 65_536);
+  assert
+    (Cpm.Filesystem.write_record filesystem key ~record:65_536 last_record
+    = Error (Cpm.Filesystem.Record_out_of_range 65_536));
+  assert
+    (Cpm.Filesystem.write_record filesystem key ~record:(-1) last_record
+    = Error (Cpm.Filesystem.Record_out_of_range (-1)));
+  assert
+    (Cpm.Filesystem.read_record filesystem key ~record:65_536
+    = Error (Cpm.Filesystem.Record_out_of_range 65_536));
+  let oversized = Bytes.make (Cpm.Filesystem.maximum_file_size + 1) '\x00' in
+  assert
+    (Cpm.Filesystem.add_file filesystem ~name:"TOOBIG.DAT" oversized
+    = Error
+        (Cpm.Filesystem.File_too_large
+           { size = Cpm.Filesystem.maximum_file_size + 1;
+             maximum = Cpm.Filesystem.maximum_file_size }))
+
+let test_bdos_terminal_write_limit () =
+  let memory = I8080.Memory.create () in
+  let filesystem = Cpm.Filesystem.create () in
+  let runtime = Cpm.Bdos.create ~filesystem in
+  fcb_for_name memory ~address:0x2500 "BOUNDARY.DAT";
+  let make_result, make_state = call_bdos runtime memory ~function_number:22 ~de:0x2500 in
+  assert (make_result = Ok Cpm.Bdos.Continue && I8080.State.a make_state = 0);
+  let fcb = Cpm.Fcb.at memory ~address:0x2500 in
+  Cpm.Fcb.set_extent fcb 511;
+  Cpm.Fcb.set_current_record fcb 127;
+  let last_record = Bytes.make 128 '\x6b' in
+  I8080.Memory.load memory ~address:0x4000 last_record;
+  let _, _ = call_bdos runtime memory ~function_number:26 ~de:0x4000 in
+  let write_result, write_state =
+    call_bdos runtime memory ~function_number:21 ~de:0x2500
+  in
+  assert (write_result = Ok Cpm.Bdos.Continue && I8080.State.a write_state = 0);
+  assert (Cpm.Filesystem.record_count filesystem
+            (Cpm.Filesystem.key_of_name ~drive:0 ~user:0 ~name:"BOUNDARY.DAT" |> expect_result)
+         = Some 65_536);
+  let before =
+    Cpm.Filesystem.get_file filesystem ~name:"BOUNDARY.DAT" () |> expect_result
+    |> Option.get
+  in
+  let terminal_write, _ =
+    call_bdos runtime memory ~function_number:21 ~de:0x2500
+  in
+  assert
+    (terminal_write
+    = Error
+        (Cpm.Bdos.Filesystem_model_limit
+           (Cpm.Filesystem.Record_out_of_range 65_536)));
+  assert
+    (Cpm.Filesystem.get_file filesystem ~name:"BOUNDARY.DAT" ()
+    = Ok (Some before));
+  let terminal_read, _ =
+    call_bdos runtime memory ~function_number:20 ~de:0x2500
+  in
+  assert
+    (terminal_read
+    = Error
+        (Cpm.Bdos.Filesystem_model_limit
+           (Cpm.Filesystem.Record_out_of_range 65_536)))
 
 let test_cpm_launch_state () =
   let tail = Bytes.of_string " OPTIMIST" in
@@ -429,6 +556,7 @@ let test_runner_errors () =
   | Error (Runner.Cpu_error _) -> failwith "wrong runner error for unsupported BDOS function"
   | Error (Runner.Bdos_error (Cpm.Bdos.Unsupported_function _)) -> failwith "wrong BDOS function"
   | Error (Runner.Bdos_error (Cpm.Bdos.Unterminated_string _)) -> failwith "wrong BDOS error"
+  | Error (Runner.Bdos_error (Cpm.Bdos.Filesystem_model_limit _)) -> failwith "wrong BDOS error"
   | Error (Runner.Step_limit_exceeded _) -> failwith "wrong runner error for unsupported BDOS function"
   | Error (Runner.Invalid_step_limit _) -> failwith "wrong runner error for unsupported BDOS function"
   | Error (Runner.Invalid_command_tail _) -> failwith "wrong runner error for unsupported BDOS function"
@@ -451,6 +579,9 @@ let () =
   test_cpm22_scalar_bdos ();
   test_cpm_sequential_files ();
   test_cpm_make_write_close ();
+  test_fcb_attribute_bits_in_names ();
+  test_cpm22_file_size_limit ();
+  test_bdos_terminal_write_limit ();
   test_cpm_launch_state ();
   test_hello_integration ();
   test_warm_boot_and_page_zero ();
