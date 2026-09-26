@@ -1,0 +1,8 @@
+arraytest: procedure options(main);
+    dcl values(1:4) fixed;
+    dcl i fixed;
+    do i = 1 to 4;
+        values(i) = i * i;
+    end;
+    put skip list(values(3));
+end arraytest;

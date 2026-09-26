@@ -8,6 +8,8 @@ heatmaps.
 ```sh
 npm ci
 npm run build
+npm run bundle -- /path/to/provenance-report.json /path/to/output-bundle
+# or, for path-control reports:
 npm run bundle -- /path/to/provenance-report.json /path/to/provenance-control-report.json /path/to/output-bundle
 ```
 

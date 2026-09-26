@@ -1,0 +1,10 @@
+arith: procedure options(main);
+    dcl a fixed;
+    dcl b fixed;
+    dcl c fixed;
+    a = 17;
+    b = 25;
+    c = a * 2 + b;
+    if c > 50 then c = c - 1;
+    put skip list(c);
+end arith;

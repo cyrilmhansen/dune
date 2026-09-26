@@ -1,0 +1,13 @@
+fizzbuz: procedure options(main);
+    dcl i fixed;
+    do i = 1 to 15;
+        if mod(i,15) = 0 then
+            put skip list('FIZZBUZZ');
+        else if mod(i,3) = 0 then
+            put skip list('FIZZ');
+        else if mod(i,5) = 0 then
+            put skip list('BUZZ');
+        else
+            put skip list(i);
+    end;
+end fizzbuz;

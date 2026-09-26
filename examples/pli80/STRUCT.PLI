@@ -1,0 +1,8 @@
+structtest: procedure options(main);
+    dcl 1 pair,
+        2 left fixed,
+        2 right fixed;
+    pair.left = 11;
+    pair.right = pair.left + 4;
+    put skip list(pair.right);
+end structtest;

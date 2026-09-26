@@ -12,6 +12,11 @@ const report = await fetch(reportUrl).then(async r => { if (!r.ok) throw new Err
 const controlText = await fetch(new URL("./provenance-control-report.json", window.location.href)).then(async r => { if (!r.ok) throw new Error(`Control report fetch failed: ${r.status}`); return r.text(); });
 if (!controlText.startsWith("RUNES_PROVENANCE_CONTROL_REPORT 1\n")) throw new Error("Unsupported path-control report version");
 const controlReport = JSON.parse(controlText.slice(controlText.indexOf("\n")+1));
+const hasPathControl = controlReport.selections.length > 0;
+if (!hasPathControl) {
+  document.querySelector('#analysis-mode option[value="path"]').hidden = true;
+  document.querySelector("#path-section").hidden = true;
+}
 const selection = new Map(report.selections.map(p => [`${p.sink.file.identity}:${p.sink.offset}`, p]));
 const controlSelection = new Map(controlReport.selections.map(p => [`${p.file.identity}:${p.offset}`, p]));
 const embedded = new Set([...selection.values()].map(p => `${p.sink.file.identity}:${p.sink.offset}`));

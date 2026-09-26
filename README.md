@@ -165,6 +165,33 @@ The goal is eventually to execute the real PL/I-80 toolchain without emulating a
 
 MAME remains the reference tool when full historical hardware behavior is required.
 
+### Reproducible PL/I-80 experiments
+
+`pli80-analyze` compiles an individual `.PLI` source through a caller-supplied
+PL/I-80 v1.4 toolchain without writing to that toolchain directory:
+
+```sh
+mkdir -p /path/to/new-output
+dune exec pli80-analyze -- \
+  --toolchain ~/pli/cpm/pli80/DISK1 \
+  --source examples/pli80/FIZZBUZ.PLI \
+  --output-dir /path/to/new-output/FIZZBUZ \
+  --analysis run --report summary
+```
+
+The default source mode converts LF to CRLF and ensures exactly one trailing
+CP/M Ctrl-Z marker. Choose `--analysis execution`, `data`, or `path` to add
+Execution Map or provenance observation; select `--report explorer` separately
+to pay for selected-sink report projections. Exact raw slices are only written
+when `--raw-slice OFFSET` is requested. This pipeline validates source-to-REL
+compilation only; it does not LINK or execute the generated program.
+
+Compile the committed syntax corpus with:
+
+```sh
+scripts/test-pli80-corpus.sh ~/pli/cpm/pli80/DISK1
+```
+
 ---
 
 ## Deterministic traces

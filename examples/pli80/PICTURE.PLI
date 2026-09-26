@@ -1,0 +1,6 @@
+picturetest: procedure options(main);
+    dcl amount fixed;
+    dcl shown picture '999';
+    amount = 7;
+    put edit(amount) (f(3));
+end picturetest;

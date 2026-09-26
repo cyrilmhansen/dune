@@ -105,9 +105,10 @@ type t = {
   mutable current_control_context : root;
   mutable controlled_operations : int;
   mutable next_decision : int;
+  path_control : bool;
 }
 
-let create () =
+let create ?(path_control=true) () =
   { node_chunks = [||]; used = 0; edges = 0; edge_chunks = [||];
     operation_ids = Hashtbl.create 32; operation_names = Array.make 32 "";
     operation_count = 0;
@@ -118,7 +119,7 @@ let create () =
     flags = Array.init 5 (fun _ -> { value = 0; root = Untracked });
     outputs = Hashtbl.create 4093; branches_rev = [];
     branches_by_decision=Hashtbl.create 4096;output_contexts=Hashtbl.create 4093;
-    current_control_context=Untracked;controlled_operations=0;next_decision=0 }
+    current_control_context=Untracked;controlled_operations=0;next_decision=0;path_control }
 
 let intern_operation p name =
   match Hashtbl.find_opt p.operation_ids name with
@@ -404,14 +405,14 @@ let observe_step ?origin_at p ~step_index (after : Runner.state_snapshot) step =
   let conditional = match decoded with
     | I8080.Instr.Jump (Some condition, _) | I8080.Instr.Call (Some condition, _) | I8080.Instr.Return (Some condition) -> Some condition
     | _ -> None in
-  (match conditional, I8080.Step.control_flow step with
-   | Some condition, (I8080.Step.Jump {target;taken} | I8080.Step.Call {target;taken}) ->
+  (match p.path_control,conditional, I8080.Step.control_flow step with
+   | true,Some condition, (I8080.Step.Jump {target;taken} | I8080.Step.Call {target;taken}) ->
        let index=match condition with
          | Not_zero | Zero -> 1 | Not_carry | Carry -> 4
          | Parity_odd | Parity_even -> 3 | Positive | Minus -> 0 in
        record_control_decision p ~step_index ~pc ~origin ~condition ~taken
          ~target:(Some target) [p.flags.(index).root]
-   | Some condition, I8080.Step.Return {target;taken} ->
+   | true,Some condition, I8080.Step.Return {target;taken} ->
        let index=match condition with
          | Not_zero | Zero -> 1 | Not_carry | Carry -> 4
          | Parity_odd | Parity_even -> 3 | Positive | Minus -> 0 in

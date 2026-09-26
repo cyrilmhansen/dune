@@ -1,0 +1,5 @@
+chartest: procedure options(main);
+    dcl text character(8);
+    text = 'RUNES';
+    put skip list(text);
+end chartest;

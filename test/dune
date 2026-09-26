@@ -28,7 +28,7 @@
 
 (test
  (name provenance)
- (libraries i8080 cpm runner analysis))
+ (libraries i8080 cpm runner analysis pli80))
 
 (test
  (name provenance_report)
@@ -38,3 +38,7 @@
 (test
  (name alu_flags)
  (libraries i8080))
+
+(test
+ (name pli80_experiment)
+ (libraries pli80))

@@ -2,3 +2,8 @@
  (name main)
  (public_name pli80-run)
  (libraries runner cpm i8080 trace))
+
+(executable
+ (name analyze)
+ (public_name pli80-analyze)
+ (libraries pli80 analysis cpm runner unix))

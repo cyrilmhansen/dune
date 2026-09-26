@@ -50,7 +50,7 @@ type error = Concrete_mismatch of {
 }
 exception Provenance_error of error
 
-val create : unit -> t
+val create : ?path_control:bool -> unit -> t
 val seed_image : t -> image:Cpm.Filesystem.key -> runtime_base:int -> bytes -> unit
 val seed_command_tail : t -> address:int -> bytes -> unit
 val seed_command_tail_mapping : t -> address:int -> tail_offset:int -> bytes -> unit

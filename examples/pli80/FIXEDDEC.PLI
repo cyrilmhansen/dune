@@ -1,0 +1,9 @@
+fixeddec: procedure options(main);
+    dcl x fixed decimal(7,2);
+    dcl y fixed decimal(7,2);
+    dcl z fixed decimal(7,2);
+    x = 12.50;
+    y = 2.25;
+    z = x * y;
+    put skip list(z);
+end fixeddec;

@@ -313,39 +313,18 @@ let historical_run () =
   | Some directory ->
       let find name=read_file(Filename.concat directory name) in
       let com=find "PLI.COM" in
-      let fs=Cpm.Filesystem.create() in
-      List.iter(fun name->assert(Cpm.Filesystem.add_file fs ~name (find name)=Ok()))
-        ["PLI0.OVL";"PLI1.OVL";"PLI2.OVL";"OPTIMIST.PLI"];
-      let map=Analysis.Execution_map.create() and prov=P.create() in
-      let image name=match Analysis.Execution_map.image_id ~drive:0 ~user:0 ~filename:name with
-        |Ok x->x|Error _->failwith("bad image "^name) in
-      let pli=image "PLI.COM" in
-      assert(Analysis.Execution_map.seed_image map ~image:pli ~runtime_base:0x100 com=Ok());
-      P.seed_image prov ~image:pli ~runtime_base:0x100 com;
-      let output=Buffer.create 128 in
       let started=Sys.time() in
-      let result=Runner.run_bytes ~max_steps:3_000_000 ~filesystem:fs
-          ~command_tail:(Bytes.of_string " OPTIMIST") ~output:(Buffer.add_char output)
-          ~on_start:(fun page->P.seed_memory prov ~class_:P.System ~address:0 page;
-            P.seed_command_tail prov ~address:0x81 (Bytes.of_string " OPTIMIST");
-            P.seed_command_tail_mapping prov ~address:0x5d ~tail_offset:1 (Bytes.of_string "OPTIMIST"))
-          ~on_start_state:(P.seed_initial_registers prov)
-          ~on_step_state:(fun ~step_index state step->
-            let resolve ~pc ~fetched=match Analysis.Execution_map.origin_at map pc with
-              |Analysis.Execution_map.Image_byte {image;offset}->
-                  let good=ref true in Bytes.iteri(fun i _->if Analysis.Execution_map.origin_at map ((pc+i)land 0xffff)<>Analysis.Execution_map.Image_byte {image;offset=offset+i} then good:=false) fetched;
-                  if !good then Some {P.image;offset;runtime_pc=pc} else None
-              |_->None in
-            P.observe_step ~origin_at:resolve prov ~step_index state step)
-          ~on_event:(Analysis.Execution_map.observe_runner_event map)
-          ~on_bdos_event:(fun ~step_index event->
-            P.observe_bdos_event prov ~step_index event;
-            Analysis.Execution_map.observe_bdos_event ~step_index map event)
-          ~on_bdos_effect:(P.observe_bdos_effect prov) com in
-      let result=match result with Ok x->x|Error _->failwith "historical PL/I run failed" in
+      let experiment=Pli80.Experiment.run ~analysis:Pli80.Experiment.Path {
+        pli_com=com; pli0_ovl=find "PLI0.OVL"; pli1_ovl=find "PLI1.OVL";
+        pli2_ovl=find "PLI2.OVL"; source_name="OPTIMIST.PLI";
+        source_bytes=find "OPTIMIST.PLI"; module_name="OPTIMIST";
+        command_tail=Bytes.of_string " OPTIMIST"; max_steps=3_000_000 } in
+      let experiment=match experiment with Ok x->x|Error _->failwith "historical PL/I run failed" in
+      let result=experiment.run and fs=experiment.filesystem in
+      let map=Option.get experiment.execution_map and prov=Option.get experiment.provenance in
       assert(result.termination=Runner.Warm_boot);
       assert(result.steps=2_535_509);
-      let console=Buffer.contents output in
+      let console=experiment.console in
       assert(contains console "NO ERROR(S) IN PASS 1");
       assert(contains console "NO ERROR(S) IN PASS 2");
       assert(contains console "END  COMPILATION");
@@ -355,6 +334,8 @@ let historical_run () =
       let rel=match Cpm.Filesystem.get_file fs ~name:"OPTIMIST.REL" () with
         |Ok(Some x)->x|_->failwith "historical REL missing" in
       assert(Bytes.length rel=1408);
+      assert(Pli80.Experiment.sha256_hex rel=
+        "5fca1ffe38d11c30d20cfb99a23fe2baf002c569790bda83e09151cf36032b15");
       assert(Cpm.Filesystem.get_file fs ~name:"OPTIMIST.INT" ()=Ok None);
       assert(P.output_bytes_with_roots prov ~file:rel_key=1408);
       let execution_images=List.map file ["PLI.COM";"PLI0.OVL";"PLI1.OVL";"PLI2.OVL"] in
@@ -370,6 +351,16 @@ let historical_run () =
       let explorer=match Analysis.Provenance_report.report_of_provenance ~provenance:prov ~execution ~classify
         ~output_file:rel_key ~output_bytes:rel ~selected () with
         |Ok report->report|Error _->failwith "historical provenance projection failed" in
+      let data_goldens=[
+        (0,12_020,37,308,394,11_843,1,0);
+        (0x2c0,241_984,861,3_482,68_423,230_947,188,0);
+        (0x57f,295_853,1_600,4_346,89_335,282_239,227,0)] in
+      List.iter(fun(offset,nodes,leaves,locations,value,address,flag,control)->
+        let p=List.find(fun (p:Analysis.Provenance_report.projection)->p.sink.offset=offset)
+          (Analysis.Provenance_report.projections explorer) in
+        assert(p.full_node_count=nodes && p.source_leaf_count=leaves && p.producer_location_count=locations);
+        assert(p.roles.value=value && p.roles.address=address && p.roles.flag=flag && p.roles.control=control))
+        data_goldens;
       Printf.printf "EXPLORER projection_time=%.3f output_bytes=%d selected=%d\n%!"
         (Sys.time()-.projection_started)(List.length(Analysis.Provenance_report.output_bytes explorer))
         (List.length(Analysis.Provenance_report.projections explorer));
@@ -419,17 +410,33 @@ let historical_run () =
         Printf.printf "BRANCH_IMAGE %s total=%d taken=%d not_taken=%d locations=%d\n%!"
           image total taken not_taken locations);
       let out_dir=Option.value(Sys.getenv_opt "RUNES_PROVENANCE_OUT")~default:"." in
-      let rel_out=open_out_bin(Filename.concat out_dir "OPTIMIST.REL") in output_bytes rel_out rel;close_out rel_out;
+      (match Sys.getenv_opt "RUNES_PROVENANCE_OUT" with
+       |Some _->let rel_out=open_out_bin(Filename.concat out_dir "OPTIMIST.REL") in output_bytes rel_out rel;close_out rel_out
+       |None->());
       let report_path=Filename.concat out_dir "provenance-report.json" in
-      let report_write_started=Sys.time() in
-      let report_out=open_out_bin report_path in
-      Analysis.Provenance_report.write_json ~output:(output_string report_out) explorer;close_out report_out;
-      let report_input=open_in_bin report_path in let report_size=in_channel_length report_input in close_in report_input;
-      Printf.printf "EXPLORER_JSON bytes=%d write_time=%.3f\n%!" report_size (Sys.time()-.report_write_started);
+      (match Sys.getenv_opt "RUNES_PROVENANCE_OUT" with
+       |None->()
+       |Some _->let report_write_started=Sys.time() in
+         let report_out=open_out_bin report_path in
+         Analysis.Provenance_report.write_json ~output:(output_string report_out) explorer;close_out report_out;
+         let report_input=open_in_bin report_path in let report_size=in_channel_length report_input in close_in report_input;
+         Printf.printf "EXPLORER_JSON bytes=%d write_time=%.3f\n%!" report_size (Sys.time()-.report_write_started));
       let control_started=Sys.time() in
       let control_report=match Analysis.Provenance_report.path_control_report_of_provenance
         ~provenance:prov ~selected with
         |Ok report->report|Error _->failwith "historical path-control projection failed" in
+      let control_goldens=[
+        (0,83_667,571,24,840_535,83_667,83_667,1_058_601,1_237_955,1_230_116);
+        (0x2c0,172_946,1_141,24,1_987_513,172_946,172_946,2_146_327,2_734_203,2_718_947);
+        (0x57f,211_080,1_217,24,2_533_974,211_080,211_080,2_700_846,3_418_859,3_402_410)] in
+      List.iter(fun(offset,depth,locations,first,last,contexts,decisions,flags,combined,relations)->
+        let p=List.find(fun (p:Analysis.Provenance_report.path_control_projection)->p.sink.offset=offset)
+          control_report.paths in
+        assert(p.context_depth=depth && p.distinct_branch_locations=locations);
+        assert(p.earliest_decision_step=Some first && p.latest_decision_step=Some last);
+        assert(p.additional_context_nodes=contexts && p.additional_decision_nodes=decisions);
+        assert(p.additional_flag_ancestors=flags && p.combined_reachable_nodes=combined && p.control_relations=relations))
+        control_goldens;
       Printf.printf "CONTROL_REPORT projection_time=%.3f decisions=%d contexts=%d logical_control_nodes=%d controlled_operations=%d control_relations=%d sharing=%.2f\n%!"
         (Sys.time()-.control_started)(P.control_decision_count prov)(P.control_context_count prov)
         (P.logical_control_node_count prov)(P.controlled_operation_count prov)(P.control_relation_count prov)
@@ -443,12 +450,14 @@ let historical_run () =
           path.combined_reachable_nodes path.control_relations)
         control_report.paths;
       let control_path=Filename.concat out_dir "provenance-control-report.json" in
-      let control_out=open_out_bin control_path in
-      let control_json_started=Sys.time() in
-      Analysis.Provenance_report.write_control_report_json ~output:(output_string control_out) control_report;
-      close_out control_out;
-      let control_in=open_in_bin control_path in let control_size=in_channel_length control_in in close_in control_in;
-      Printf.printf "CONTROL_JSON bytes=%d write_time=%.3f\n%!" control_size (Sys.time()-.control_json_started);
+      (match Sys.getenv_opt "RUNES_PROVENANCE_OUT" with
+       |None->()
+       |Some _->let control_out=open_out_bin control_path in
+         let control_json_started=Sys.time() in
+         Analysis.Provenance_report.write_control_report_json ~output:(output_string control_out) control_report;
+         close_out control_out;
+         let control_in=open_in_bin control_path in let control_size=in_channel_length control_in in close_in control_in;
+         Printf.printf "CONTROL_JSON bytes=%d write_time=%.3f\n%!" control_size (Sys.time()-.control_json_started));
       List.iter(fun offset->match P.final_output_byte prov ~file:rel_key ~offset with
         |None->failwith "missing sampled output byte"
         |Some obs->let slice=P.slice ~roles:P.data_edge_roles prov [obs.root] in
@@ -457,8 +466,10 @@ let historical_run () =
             (List.length slice.nodes)(List.length(P.producer_nodes slice))(List.length(P.source_leaves slice));
           List.iter(fun s->Printf.printf "  SOURCE %s count=%d\n%!"
             (match s.P.group with File_input f->f.name|Command_tail_input->"command-tail"|Initial_memory_input _->"initial-memory"|Initial_register_input x->"register:"^x|External_input(a,b)->a^":"^b) s.distinct_bytes)(P.source_summary slice);
-          let path=Filename.concat out_dir (Printf.sprintf "slice-%04X.json" offset) in
-          let ch=open_out_bin path in P.write_slice_json ch prov ~roots:[obs.root];close_out ch)
+          (match Sys.getenv_opt "RUNES_RAW_SLICES" with
+           |None->()
+           |Some _->let path=Filename.concat out_dir (Printf.sprintf "slice-%04X.json" offset) in
+             let ch=open_out_bin path in P.write_slice_json ch prov ~roots:[obs.root];close_out ch))
         [0;704;1407];
       let sample_roots=List.filter_map(fun offset->Option.map(fun o->o.P.root)(P.final_output_byte prov ~file:rel_key ~offset))[0;704;1407] in
       let sampled=P.slice ~roles:P.data_edge_roles prov sample_roots in
