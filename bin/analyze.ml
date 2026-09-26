@@ -33,7 +33,7 @@ let absolute_path path = if Filename.is_relative path then Filename.concat(Sys.g
 let check_outputs dir names =
   List.iter(fun name->let path=Filename.concat dir name in if Sys.file_exists path then failwith("refusing to overwrite existing output: "^path))names
 
-let json_summary ~module_name ~source ~host_source_bytes ~normalized_source_bytes ~analysis ~run ~rel_name ~rel_bytes ~int_name ~int_bytes ~execution_map ~provenance ~dynamic_structure ~dynamic_blocks ~ownership_audit ~source_seconds ~experiment ~report_timings ~serialization_seconds ~host_writes ~summary_bytes =
+let json_summary ~module_name ~source ~host_source_bytes ~normalized_source_bytes ~analysis ~run ~rel_name ~rel_bytes ~int_name ~int_bytes ~execution_map ~provenance ~dynamic_structure ~dynamic_blocks ~ownership_audit ~canonical_block_audit ~source_seconds ~experiment ~report_timings ~serialization_seconds ~host_writes ~summary_bytes =
   let b=Buffer.create 2048 and add=Buffer.add_string in
   add b "RUNES_PLI80_EXPERIMENT 1\n{\"module\":";add b(json_quote module_name);
   add b ",\"source\":";add b(json_quote source);
@@ -56,6 +56,11 @@ let json_summary ~module_name ~source ~host_source_bytes ~normalized_source_byte
     Printf.bprintf b ",\"ownership_audit\":{\"known_entry_jmp_sites\":%d,\"known_entry_jmp_observations\":%d,\"source_target_candidate_pairs\":%d,\"multi_owner_coordinates\":%d,\"ownership_conflict_observations\":%d,\"return_mismatches\":%d}"
       x.known_entry_jmp_sites x.known_entry_jmp_observations x.source_target_candidate_pairs
       x.multi_owner_coordinate_count x.ownership_conflict_observations x.return_mismatch_observations);
+  (match canonical_block_audit with None->add b ",\"canonical_block_audit\":null"|Some audit->let x=Analysis.Canonical_block_audit.summary audit in
+    Printf.bprintf b ",\"canonical_block_audit\":{\"canonical_instruction_coordinates\":%d,\"duplicate_instruction_records\":%d,\"multi_owner_coordinates\":%d,\"boundary_conflicts\":%d,\"current_owner_blocks\":%d,\"candidate_canonical_blocks\":%d,\"estimated_deduplication\":%d}"
+      x.canonical_instruction_coordinates x.duplicated_owner_qualified_instruction_records
+      x.multi_owner_instruction_coordinates x.boundary_conflict_count x.current_owner_qualified_blocks
+      x.candidate_canonical_blocks x.estimated_block_deduplication);
   let sec name value=Printf.bprintf b ",\"%s_seconds\":%.6f" name value in
   sec "input_load_normalization" source_seconds;sec "setup" experiment.Pli80.Experiment.timings.setup_seconds;
   sec "execution_and_live_analysis" experiment.timings.execution_seconds;
@@ -95,7 +100,7 @@ let run (options : options) =
     let source_seconds=Unix.gettimeofday()-.source_started in
     let targets=[module_name^".REL";module_name^".INT"] @
       (if options.report=Summary then["run-summary.json"]else[]) @
-      (if options.structure then["dynamic-structure.json";"dynamic-blocks.json";"dynamic-ownership-audit.json"]else[]) @
+      (if options.structure then["dynamic-structure.json";"dynamic-blocks.json";"dynamic-ownership-audit.json";"canonical-block-audit.json"]else[]) @
       (if options.report=Explorer then["provenance-report.json"]@(if options.analysis=Path then["provenance-control-report.json"]else[])else[]) @
       List.map(fun n->Printf.sprintf"slice-%04X.json"n)options.raw_slices in
     if options.report=Explorer && not(List.mem options.analysis [Data;Path]) then failwith"--report explorer requires --analysis data or path";
@@ -106,6 +111,7 @@ let run (options : options) =
     let input={Pli80.Experiment.pli_com;pli0_ovl=pli0;pli1_ovl=pli1;pli2_ovl=pli2;
       source_name=module_name^".PLI";source_bytes=source_compiler;module_name;command_tail;max_steps=options.max_steps} in
     let experiment=match Pli80.Experiment.run ~structure:options.structure ~analysis:options.analysis input with Ok x->x|Error e->failwith(error_text e) in
+    let canonical_block_audit=Option.map Analysis.Canonical_block_audit.analyze experiment.dynamic_blocks in
     print_string experiment.console;
     flush stdout;
     if experiment.run.termination<>Runner.Warm_boot
@@ -179,6 +185,13 @@ let run (options : options) =
        let json=Analysis.Dynamic_blocks.to_json_string report in
        save "dynamic-blocks.json" (Bytes.of_string json);
        report_timings:=("dynamic_blocks_serialization",Unix.gettimeofday()-.started)::!report_timings);
+    (match canonical_block_audit with
+     |None->()
+     |Some audit->
+       let started=Unix.gettimeofday() in
+       let json=Analysis.Canonical_block_audit.to_json_string audit in
+       save "canonical-block-audit.json" (Bytes.of_string json);
+       report_timings:=("canonical_block_audit",Unix.gettimeofday()-.started)::!report_timings);
     let summary_file=options.report=Summary in
     if summary_file then (
       let size=ref 0 and json=ref"" in
@@ -189,7 +202,7 @@ let run (options : options) =
           ~rel_name:experiment.rel_name ~rel_bytes:experiment.rel_bytes ~int_name:experiment.int_name ~int_bytes:experiment.int_bytes
           ~execution_map:experiment.execution_map ~provenance:experiment.provenance
           ~dynamic_structure:experiment.dynamic_structure ~dynamic_blocks:experiment.dynamic_blocks
-          ~ownership_audit:experiment.ownership_audit ~source_seconds ~experiment
+          ~ownership_audit:experiment.ownership_audit ~canonical_block_audit ~source_seconds ~experiment
           ~report_timings:(List.rev !report_timings) ~serialization_seconds:(Unix.gettimeofday()-.serialization_started)
           ~host_writes ~summary_bytes:!size;
         let next=String.length !json in if next= !size then () else size:=next
@@ -233,6 +246,11 @@ let run (options : options) =
         (String.concat ", "(List.map(fun(name,count)->Printf.sprintf "%s=%d" name count)counts))
         (Filename.concat output_dir "dynamic-blocks.json")
         (match List.assoc_opt "dynamic-blocks.json" !host_writes with Some n->n|None->0)) experiment.dynamic_blocks;
+    Option.iter(fun audit->
+      print_string(Analysis.Canonical_block_audit.to_text ~routine_ids:[403;422;458] audit);
+      Printf.printf "canonical block audit: %s (%d bytes)\n"
+        (Filename.concat output_dir "canonical-block-audit.json")
+        (Option.value(List.assoc_opt "canonical-block-audit.json" !host_writes)~default:0))canonical_block_audit;
     (match experiment.ownership_audit with
      |None->()
      |Some audit->
