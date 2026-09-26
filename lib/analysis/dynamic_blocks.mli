@@ -6,8 +6,10 @@ type origin =
   | Mixed_origin
   | Interrupt_origin
 
+type instruction_representation = Image_source | Observed_bytes
+
 type instruction_tag = Unresolved_origin | Mixed_bytes | Interrupt_supplied
-  | Byte_variant | Origin_variant
+  | Byte_variant | Origin_variant | Image_bytes_disagree
 
 type instruction = {
   id : int;
@@ -17,6 +19,7 @@ type instruction = {
   bytes : bytes;
   decoded : I8080.Instr.t;
   text : string;
+  representation : instruction_representation;
   variant : int;
   tags : instruction_tag list;
   first_step : int;
@@ -39,7 +42,7 @@ type instruction_transition = {
 type block_tag = Routine_entry | Branch_target | Branch_fallthrough_tag
   | Call_continuation | Return_continuation | Control_continuation
   | Multi_predecessor | Backward_edge_target | Unresolved_block_origin
-  | Mixed_block_origin | Interrupt_block_origin | Variant_boundary
+  | Mixed_block_origin | Interrupt_block_origin | Variant_boundary | Observed_bytes_block
 
 type block = {
   routine_id : Dynamic_structure.routine_id;
@@ -51,6 +54,7 @@ type block = {
   runtime_start : int;
   origin : origin;
   tags : block_tag list;
+  representation : instruction_representation;
   first_execution_step : int;
   last_execution_step : int;
   entry_count : int;
@@ -82,7 +86,7 @@ type narrative_entry = {
 }
 
 type anomaly_kind = Instruction_bytes_changed | Instruction_origin_changed
-  | Decoded_length_mismatch
+  | Decoded_length_mismatch | Instruction_image_bytes_disagree
 
 type anomaly = {
   kind : anomaly_kind;

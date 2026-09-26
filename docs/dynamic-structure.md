@@ -167,6 +167,19 @@ non-contiguous offsets, mixed-origin instructions, or byte variants force a
 boundary or are represented explicitly as unresolved/variant observations;
 they are never silently reported as one image span.
 
+For canonical image-backed code, the report retains each block's image,
+starting file offset, and byte length, with per-instruction relative offset,
+length, and dynamic counters. Fetched bytes are checked against Execution Map's
+current image bytes before being stored this way. Instruction decoding and
+formatting are reconstructed on query or serialization from a compact snapshot
+of those referenced image bytes. Unknown, mixed, interrupt-supplied, changed,
+and origin-variant instructions retain observed bytes instead; the typed block
+API marks these as observed-byte representations and they have no canonical
+image span. The `RUNES_DYNAMIC_BLOCKS 1` JSON fields remain compatible:
+ordinary image records retain the existing bytes/text fields, while exceptional
+blocks have null image coordinates and retain their origin/tags rather than
+claiming an image span.
+
 Block IDs (`R017.B003`) are run-local and ordered by the first observed
 execution of each eventual block entry. Blocks retain an ordered instruction
 sequence with fetched bytes, deterministic Intel 8080 text, per-instruction

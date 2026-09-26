@@ -156,8 +156,10 @@ let test_overlays_remain_distinct ()=
   let relevant name=List.filter(fun (b:B.block)->match b.image with Some i->i.Cpm.Filesystem.name=name|None->false)(B.blocks report) in
   List.iter(fun name->
     let found=relevant name in assert(found<>[]);
-    assert(List.exists(fun (b:B.block)->b.runtime_start=0x2200 && b.start_offset=Some 0 && b.image<>None)found);
-    assert(List.exists(fun (i:B.instruction)->i.runtime_pc=0x2200 && match i.origin with B.Image_byte {image;offset=0}->image.Cpm.Filesystem.name=name|_->false)(B.instructions report)))
+    assert(List.exists(fun (b:B.block)->b.runtime_start=0x2200 && b.start_offset=Some 0 &&
+      b.image<>None && b.representation=B.Image_source)found);
+    assert(List.exists(fun (i:B.instruction)->i.runtime_pc=0x2200 && i.representation=B.Image_source &&
+      match i.origin with B.Image_byte {image;offset=0}->image.Cpm.Filesystem.name=name|_->false)(B.instructions report)))
     ["PLI0.OVL";"PLI1.OVL";"PLI2.OVL"];
   assert(List.length(List.concat_map relevant ["PLI0.OVL";"PLI1.OVL";"PLI2.OVL"])>=3)
 
@@ -173,11 +175,12 @@ let test_origin_disagreement_and_mixed_instruction ()=
   observe structure blocks map 2(nop 0x103);
   let mixed=B.materialize blocks(S.routines structure)in
   let instruction=List.find(fun(i:B.instruction)->i.runtime_pc=0x101)(B.instructions mixed)in
-  assert(instruction.text="MVI A,42H" && instruction.origin=B.Mixed_origin);
+  assert(instruction.text="MVI A,42H" && instruction.origin=B.Mixed_origin && instruction.representation=B.Observed_bytes);
   assert(List.mem B.Mixed_bytes instruction.tags);
   assert(List.length(B.blocks mixed)=3);
   assert(List.exists(fun(b:B.block)->b.runtime_start=0x101 && b.origin=B.Mixed_origin &&
-    List.mem B.Mixed_block_origin b.tags)(B.blocks mixed))
+    b.image=None && b.start_offset=None && b.representation=B.Observed_bytes &&
+    List.mem B.Observed_bytes_block b.tags && List.mem B.Mixed_block_origin b.tags)(B.blocks mixed))
 
 let test_changed_instruction_bytes_are_explicit ()=
   let map=M.create()in ignore(seed map "VARIANT.COM" 0x100(Bytes.of_string "\x3E\x42\x3E\x43"));
@@ -188,8 +191,13 @@ let test_changed_instruction_bytes_are_explicit ()=
   let variants=List.filter(fun (i:B.instruction)->i.runtime_pc=0x100)(B.instructions report)in
   assert(List.length variants=2);
   assert(List.for_all(fun (i:B.instruction)->List.mem B.Byte_variant i.tags)(variants));
+  assert(List.exists(fun(i:B.instruction)->i.representation=B.Observed_bytes &&
+      List.mem B.Image_bytes_disagree i.tags)variants);
   assert(List.exists(fun (a:B.anomaly)->a.kind=B.Instruction_bytes_changed)(B.anomalies report));
   assert(List.for_all(fun (b:B.block)->List.mem B.Variant_boundary b.tags)
+    (List.filter(fun (b:B.block)->b.runtime_start=0x100)(B.blocks report)));
+  assert(List.for_all(fun (b:B.block)->b.image=None && b.start_offset=None &&
+      b.representation=B.Observed_bytes && List.mem B.Observed_bytes_block b.tags)
     (List.filter(fun (b:B.block)->b.runtime_start=0x100)(B.blocks report)))
 
 let test_unknown_origin_is_explicit ()=
@@ -198,8 +206,10 @@ let test_unknown_origin_is_explicit ()=
   observe structure blocks map 0(nop 0x100);
   let report=finish structure blocks in
   let instruction=List.hd(B.instructions report)and block=List.hd(B.blocks report)in
-  assert(instruction.origin=B.Unknown_origin && List.mem B.Unresolved_origin instruction.tags);
-  assert(block.image=None && block.start_offset=None && List.mem B.Unresolved_block_origin block.tags)
+  assert(instruction.origin=B.Unknown_origin && instruction.representation=B.Observed_bytes &&
+    List.mem B.Unresolved_origin instruction.tags);
+  assert(block.image=None && block.start_offset=None && block.representation=B.Observed_bytes &&
+    List.mem B.Unresolved_block_origin block.tags)
 
 let test_report_schema_and_identity ()=
   let map=M.create()in ignore(seed map "REPORT.COM" 0x100(Bytes.of_string "\x3E\x09\xC9"));
@@ -210,9 +220,16 @@ let test_report_schema_and_identity ()=
   let json=B.to_json_string report in
   assert(String.starts_with ~prefix:"RUNES_DYNAMIC_BLOCKS 1\n" json);
   assert(json=B.to_json_string report);
-  assert(List.exists(fun (i:B.instruction)->i.text="MVI A,09H")(B.instructions report));
+  let instructions=B.instructions report in
+  assert(List.map(fun (i:B.instruction)->i.text)instructions=["MVI A,09H";"RET"]);
+  assert(List.for_all(fun (i:B.instruction)->i.representation=B.Image_source)instructions);
+  assert(List.exists(fun (i:B.instruction)->i.text="MVI A,09H" &&
+      Bytes.equal i.bytes (Bytes.of_string "\x3E\x09"))(instructions));
+  let block=List.find(fun (b:B.block)->b.runtime_start=0x100)(B.blocks report)in
+  assert(block.representation=B.Image_source && block.image=Some(image "REPORT.COM") &&
+      block.start_offset=Some 0 && block.byte_length=3);
   assert(List.for_all(fun (b:B.block)->match b.image,b.start_offset with
-    |Some expected_image,Some start_offset->List.for_all(fun id->let i=List.find(fun(i:B.instruction)->i.id=id)(B.instructions report)in
+    |Some expected_image,Some start_offset->List.for_all(fun id->let i=List.find(fun(i:B.instruction)->i.id=id)instructions in
         match i.origin with B.Image_byte{image;offset}->image=expected_image && offset>=start_offset|_->false)b.instruction_ids
     |_->true)(B.blocks report))
 
