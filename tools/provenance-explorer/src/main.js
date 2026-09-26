@@ -175,7 +175,17 @@ function classifyNarrativeCycles(){
   });
 }
 const routineNarrative=classifyNarrativeCycles();
-const routineNodes=(structureReport?.routines??[]).map(r=>({id:routineNodeId(r.id),data:{routine_id:r.id,label:r.display,recursive:r.recursive,self_calls:r.self_calls}}));
+const cycleRoutineIds=new Set(routineNarrative.filter(e=>e.cycle).flatMap(e=>[e.from,e.to]));
+const routineDisplayLabels=new Map((structureReport?.routines??[]).map(r=>{
+  const tags=new Set(r.tags??[]),descriptors=[];
+  if(tags.has("entry"))descriptors.push("program entry");
+  else if(tags.has("image-entry"))descriptors.push(`${r.image?.name?.replace(/\.OVL$/i,"")??"image"} entry`);
+  if(r.recursive||tags.has("recursive"))descriptors.push("recursive");
+  if(cycleRoutineIds.has(r.id))descriptors.push("cycle participant");
+  return [r.id,[r.display,...descriptors].join(" · ")];
+}));
+const routineLabel=id=>routineDisplayLabels.get(id)??routineById.get(id)?.display??`R${String(id).padStart(3,"0")}`;
+const routineNodes=(structureReport?.routines??[]).map(r=>({id:routineNodeId(r.id),data:{routine_id:r.id,label:routineLabel(r.id),recursive:r.recursive,self_calls:r.self_calls}}));
 const routineEdges=routineNarrative.map(edge=>({id:narrativeEdgeId(edge.ordinal),source:routineNodeId(edge.from),target:routineNodeId(edge.to),data:{ordinal:edge.ordinal,kind:edge.kind,kinds:aggregateRoutineEdges.get(`${edge.from}:${edge.to}`)?.kinds??[edge.kind],first_step:edge.first_step,from:edge.from,to:edge.to,cycle:edge.cycle,cycle_size:edge.cycle_size}}));
 const routineEdgeById=new Map(routineEdges.map(e=>[e.id,e]));
 const routineKindColors={CALL:"#2878b5",RETURN:"#c47c08",RST:"#7851a9",IMAGE_ENTRY:"#27835e",OTHER:"#687785"};
@@ -232,7 +242,7 @@ function highlightNarrative(ordinal){
   activeNarrativeOrdinal=ordinal;selectRoutine(edge.to,true);
   const classified=routineNarrative.find(e=>e.ordinal===ordinal);
   const from=routineById.get(edge.from),to=routineById.get(edge.to);
-  document.querySelector("#routine-edge-detail").textContent=`#${String(ordinal).padStart(3,"0")} ${from?.display??`R${edge.from}`} → ${to?.display??`R${edge.to}`} · ${edge.kind} · first step ${edge.first_step}${classified?.cycle?` · ${classified.cycle} (${classified.cycle_size} candidates)`:" · not marked as a multi-routine cycle"}`;
+  document.querySelector("#routine-edge-detail").textContent=`#${String(ordinal).padStart(3,"0")} ${routineLabel(edge.from)} → ${routineLabel(edge.to)} · ${edge.kind} · first step ${edge.first_step}${classified?.cycle?` · ${classified.cycle} (${classified.cycle_size} candidates)`:" · not marked as a multi-routine cycle"}`;
   window.__routineFocus={ordinal,from:edge.from,to:edge.to,cycle:classified?.cycle??null};
   if(routineGraphMode==="neighborhood"&&routineGraph&&(!routineGraphData.nodes.some(n=>n.data.routine_id===edge.from)||!routineGraphData.nodes.some(n=>n.data.routine_id===edge.to)))void renderRoutineGraph();
   updateRoutineGraphState(ordinal);
@@ -249,7 +259,7 @@ function selectRoutine(id, preserveNarrative=false) {
   window.__selectedRoutine = id;
   detail.replaceChildren();
   const heading = document.createElement("div"); heading.className = "routine-head";
-  const title = document.createElement("h2"); title.textContent = routine.display; heading.append(title);
+  const title = document.createElement("h2"); title.textContent = routineLabel(routine.id); heading.append(title);
   for (const tag of routine.tags) { const badge=document.createElement("span"); badge.className=`routine-badge ${tag === "recursive" ? "recursive" : ""}`; badge.textContent=tag; heading.append(badge); }
   detail.append(heading);
   const metrics=document.createElement("div");metrics.className="routine-metrics";
@@ -282,16 +292,16 @@ function selectRoutine(id, preserveNarrative=false) {
   detail.append(edgeList);detail.scrollIntoView({behavior:"smooth",block:"start"});
   window.__selectedRoutineBlocks=blocks.length;window.__selectedRoutineNarrative=localNarrative.length;
   const cycleEdges=routineNarrative.filter(e=>(e.from===id||e.to===id)&&e.cycle).length;
-  document.querySelector("#routine-edge-detail").textContent=`Selected ${routine.display}: ${routineNarrative.filter(e=>e.from===id||e.to===id).length} incoming/outgoing first-observation edges highlighted · ${cycleEdges} participate in a multi-routine or mutual cycle.`;
+  document.querySelector("#routine-edge-detail").textContent=`Selected ${routineLabel(id)}: ${routineNarrative.filter(e=>e.from===id||e.to===id).length} incoming/outgoing first-observation edges highlighted · ${cycleEdges} participate in a multi-routine or mutual cycle.`;
   if(routineGraphMode==="neighborhood"&&routineGraph)void renderRoutineGraph();else updateRoutineGraphState();
 }
 async function initializeStructureView(){
   if(!hasStructure){window.__structureReady=true;return;}
-  const routineRows=structureReport.routines.map(r=>({id:r.id,display:r.display,image:r.image?.name??"unknown",offset:r.offset,
+  const routineRows=structureReport.routines.map(r=>({id:r.id,display:routineLabel(r.id),canonical:r.display,image:r.image?.name??"unknown",offset:r.offset,
     tags:r.tags.join(", "),recursive:r.recursive,first_step:r.first_step,last_step:r.last_step,executions:r.executions,
     distinct_starts:r.distinct_starts,incoming:r.incoming,outgoing:r.outgoing,calls:r.calls,returns:r.returns,self_calls:r.self_calls}));
   const narrativeRows=structureReport.narrative.map(e=>{const edge=aggregateRoutineEdges.get(`${e.from}:${e.to}`);return {ordinal:e.ordinal,from_id:e.from,
-    from:routineById.get(e.from)?.display??`R${e.from}`,to_id:e.to,to:routineById.get(e.to)?.display??`R${e.to}`,
+    from:routineLabel(e.from),to_id:e.to,to:routineLabel(e.to),
     first_kind:e.kind,first_step:e.first_step,count:edge?.count??1,kinds:edge?.kinds?.join(", ")??e.kind};});
   window.__structureRoutineRows=routineRows;window.__structureNarrativeRows=narrativeRows;
   for(const [selector,data,group_by,sort] of [["#structure-routines",routineRows,[],[["id","asc"]]],

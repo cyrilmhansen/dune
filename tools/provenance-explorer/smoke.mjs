@@ -28,7 +28,9 @@ try {
     if(!structure.routines[0].display.includes("PLI.COM"))throw new Error(`R000 is not the resident PLI.COM entry: ${structure.routines[0].display}`);
     const pairs=new Set(structure.narrative.map(x=>`${x.from_id}:${x.to_id}`));if(pairs.size!==structure.narrative.length)throw new Error("routine narrative duplicated a directed pair");
     const topology=await page.evaluate(()=>({counts:window.__routineGraphCounts,labels:window.__routineGraphLabels,pairs:window.__routineGraphPairs}));
-    if(topology.counts.nodes!==structure.rows.routines||topology.counts.edges!==structure.rows.narrative||topology.labels.length!==structure.rows.routines||new Set(topology.labels).size!==structure.rows.routines)throw new Error(`routine graph cardinality/identity mismatch: ${JSON.stringify(topology.counts)}`);
+    if(topology.counts.nodes!==structure.rows.routines||topology.counts.edges!==structure.rows.narrative||topology.labels.length!==structure.rows.routines||new Set(topology.labels).size!==structure.rows.routines||topology.labels.some((label,i)=>label!==structure.routines[i].display))throw new Error(`routine graph cardinality/identity mismatch: ${JSON.stringify(topology.counts)}`);
+    if(structure.routines.some(r=>!r.display.startsWith(r.canonical)))throw new Error("generated routine labels lost their canonical image/offset identity");
+    if(!structure.routines.some(r=>r.display.includes(" · program entry"))||!structure.routines.some(r=>r.display.includes(" · recursive"))||!structure.routines.some(r=>r.display.includes(" · cycle participant")))throw new Error("expected factual routine descriptors are absent");
     if(!topology.counts.cycleEdges)throw new Error("no cycle-participating narrative edges were visually classified");
     const simpleReturns=topology.pairs.filter(e=>e.kinds.includes("RETURN")&&!e.kinds.includes("CALL")&&topology.pairs.some(r=>r.from===e.to&&r.to===e.from&&r.kinds.includes("CALL")));
     if(!simpleReturns.length||simpleReturns.some(e=>e.cycle))throw new Error("ordinary CALL/RETURN pairs were not kept distinct from cycle edges");
@@ -37,11 +39,13 @@ try {
     const first=structure.routines[0];await page.evaluate(row=>document.querySelector("#structure-routines").dispatchEvent(new CustomEvent("perspective-click",{detail:{row}})),first);
     await page.waitForFunction(()=>window.__selectedRoutine===0&&window.__selectedRoutineBlocks>0);
     await page.evaluate(()=>window.__selectRoutineFromGraph(0));await page.waitForFunction(()=>window.__selectedRoutine===0);
+    if(await page.locator("#routine-detail h2").textContent()!==first.display)throw new Error("routine detail header label differs from table/graph identity");
     const block=page.locator("#routine-blocks > details").first();await block.locator(":scope > summary").click();
     const code=page.locator("#routine-blocks > details details").first();await code.locator(":scope > summary").click();
     await page.waitForFunction(()=>document.querySelectorAll("#routine-blocks .instruction-list li").length>0);
     const narrativeRow=structure.narrative[0];await page.evaluate(row=>document.querySelector("#structure-narrative").dispatchEvent(new CustomEvent("perspective-click",{detail:{row}})),narrativeRow);
     await page.waitForFunction(id=>window.__selectedRoutine===id,narrativeRow.to_id);
+    if(!narrativeRow.from.startsWith(structure.routines[narrativeRow.from_id].canonical)||!narrativeRow.to.startsWith(structure.routines[narrativeRow.to_id].canonical))throw new Error("narrative rows do not use canonical-preserving generated routine labels");
     const focus=await page.evaluate(()=>window.__routineFocus);if(focus.ordinal!==narrativeRow.ordinal||focus.from!==narrativeRow.from_id||focus.to!==narrativeRow.to_id)throw new Error(`narrative row did not highlight the corresponding edge/nodes: ${JSON.stringify(focus)}`);
     await page.evaluate(ordinal=>window.__focusNarrativeFromGraph(ordinal),narrativeRow.ordinal);await page.waitForFunction(ordinal=>window.__routineFocus?.ordinal===ordinal,narrativeRow.ordinal);
     if(expectedInput&&(narrativeRow.from_id!==0||narrativeRow.to_id!==1))throw new Error(`first narrative transition did not navigate R000 -> R001: ${JSON.stringify(narrativeRow)}`);
