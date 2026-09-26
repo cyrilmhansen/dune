@@ -63,7 +63,7 @@ async function loadViewer(id, rows, group_by, sort) {
       if(found)highlightProducer(found.id);
     }else if(id==="#control-decisions")highlightControl(row);
     else if(id==="#structure-routines")selectRoutine(Number(row.id));
-    else if(id==="#structure-narrative")selectRoutine(Number(row.to_id));
+    else if(id==="#structure-narrative")highlightNarrative(Number(row.ordinal));
   });
   return {viewer,table,rows:rows.length};
 }
@@ -81,7 +81,8 @@ const viewerTables = {};
 for (const [i,id] of ["#producers","#sources","#operations","#source-ranges","#output-table","#control-decisions","#structure-routines","#structure-narrative"].entries()) viewerTables[id]=initRows[i];
 
 const roleColor={value:"#2878b5",address:"#d18a16",flag:"#bc3b82",control:"#555"};
-let graph=null, current=null, currentPath=null, currentProducer=null, analysisMode="data";
+let graph=null, routineGraph=null, routineGraphMode="global", activeNarrativeOrdinal=null;
+let current=null, currentPath=null, currentProducer=null, analysisMode="data";
 function safeText(el,text){el.textContent=text;}
 function roleSummary(p){const roles=p.roles;document.querySelector("#roles").innerHTML="";for(const role of ["value","address","flag","control"]){const d=document.createElement("span");d.className=`role-${role}`;d.textContent=`${role}: ${roles[role]}  `;document.querySelector("#roles").append(d);}}
 function groupedRows(p){
@@ -146,13 +147,104 @@ const hexOffset = value => value == null ? "unknown" : `${Number(value).toString
 const routineById = new Map((structureReport?.routines ?? []).map(r => [r.id, r]));
 const aggregateRoutineEdges = new Map((structureReport?.transitions ?? []).map(e => [`${e.from}:${e.to}`, e]));
 const instructionById = new Map((blocksReport?.instructions ?? []).map(i => [i.id, i]));
+const narrativeByOrdinal = new Map((structureReport?.narrative ?? []).map(e => [e.ordinal, e]));
+const routineNodeId = id => `routine:${id}`;
+const narrativeEdgeId = ordinal => `narrative:${ordinal}`;
+function classifyNarrativeCycles(){
+  const narrative=structureReport?.narrative??[];
+  // RETURN edges paired with the corresponding first CALL edge are the
+  // ordinary dynamic call/return relationship, not evidence of a structural
+  // cycle. Exclude that return half for cycle discovery so genuinely cyclic
+  // routine topology (including mutual calls and larger cycles) stays visible.
+  const ordinaryReturns=new Set(narrative.filter(edge=>{
+    const kinds=aggregateRoutineEdges.get(`${edge.from}:${edge.to}`)?.kinds??[edge.kind];
+    const reverseKinds=aggregateRoutineEdges.get(`${edge.to}:${edge.from}`)?.kinds??[];
+    return kinds.includes("RETURN")&&!kinds.includes("CALL")&&reverseKinds.includes("CALL");
+  }).map(edge=>edge.ordinal));
+  const adjacency=new Map((structureReport?.routines??[]).map(r=>[r.id,[]]));
+  for(const edge of narrative)if(!ordinaryReturns.has(edge.ordinal))adjacency.get(edge.from)?.push(edge.to);
+  let next=0;const index=new Map(),low=new Map(),stack=[],onStack=new Set(),component=new Map(),componentSize=new Map(),components=[];
+  function visit(v){index.set(v,next);low.set(v,next++);stack.push(v);onStack.add(v);
+    for(const w of adjacency.get(v)??[]){if(!index.has(w)){visit(w);low.set(v,Math.min(low.get(v),low.get(w)))}else if(onStack.has(w))low.set(v,Math.min(low.get(v),index.get(w)))}
+    if(low.get(v)===index.get(v)){const members=[];let w;do{w=stack.pop();onStack.delete(w);members.push(w)}while(w!==v);const cid=components.length;components.push(members);for(const id of members)component.set(id,cid);componentSize.set(cid,members.length)}}
+  for(const id of adjacency.keys())if(!index.has(id))visit(id);
+  return narrative.map(edge=>{
+    const cid=component.get(edge.from),size=componentSize.get(cid)??1,inCycle=component.get(edge.to)===cid&&size>1;
+    const cycle=ordinaryReturns.has(edge.ordinal)||!inCycle?null:size>2?"multi-routine cycle":"mutual cycle";
+    return {...edge,cycle,cycle_size:cycle?size:0};
+  });
+}
+const routineNarrative=classifyNarrativeCycles();
+const routineNodes=(structureReport?.routines??[]).map(r=>({id:routineNodeId(r.id),data:{routine_id:r.id,label:r.display,recursive:r.recursive,self_calls:r.self_calls}}));
+const routineEdges=routineNarrative.map(edge=>({id:narrativeEdgeId(edge.ordinal),source:routineNodeId(edge.from),target:routineNodeId(edge.to),data:{ordinal:edge.ordinal,kind:edge.kind,kinds:aggregateRoutineEdges.get(`${edge.from}:${edge.to}`)?.kinds??[edge.kind],first_step:edge.first_step,from:edge.from,to:edge.to,cycle:edge.cycle,cycle_size:edge.cycle_size}}));
+const routineEdgeById=new Map(routineEdges.map(e=>[e.id,e]));
+const routineKindColors={CALL:"#2878b5",RETURN:"#c47c08",RST:"#7851a9",IMAGE_ENTRY:"#27835e",OTHER:"#687785"};
+function routineNeighborhood(id){const ids=new Set([id]);for(const edge of routineNarrative)if(edge.from===id||edge.to===id){ids.add(edge.from);ids.add(edge.to)}
+  return {ids,edges:routineEdges.filter(e=>ids.has(e.data.from)&&ids.has(e.data.to))};}
+function updateRoutineGraphState(focusOrdinal=activeNarrativeOrdinal){
+  if(!routineGraph)return;
+  const states={};for(const node of routineGraphData.nodes)states[node.id]=[];
+  for(const edge of routineGraphData.edges)states[edge.id]=[];
+  const incident=new Set();
+  for(const edge of routineGraphData.edges)if(edge.data.from===window.__selectedRoutine||edge.data.to===window.__selectedRoutine){states[edge.id]=["incident"];incident.add(edge.data.from);incident.add(edge.data.to)}
+  for(const id of incident)states[routineNodeId(id)]=["neighbor"];
+  if(window.__selectedRoutine!=null)states[routineNodeId(window.__selectedRoutine)]=["selected"];
+  if(focusOrdinal!=null){const edge=routineEdgeById.get(narrativeEdgeId(focusOrdinal));if(edge&&routineGraphData.edges.some(e=>e.id===edge.id)){states[edge.id]=["focus"];states[edge.source]=["endpoint"];states[edge.target]=["endpoint"]}}
+  routineGraph.setElementState(states,false);
+}
+async function renderRoutineGraph(){
+  if(!hasStructure)return;
+  const allNodes=routineNodes,allEdges=routineEdges;
+  const neighborhood=routineGraphMode==="neighborhood"?routineNeighborhood(window.__selectedRoutine??0):null;
+  const nodes=neighborhood?allNodes.filter(n=>neighborhood.ids.has(n.data.routine_id)):allNodes;
+  const edges=neighborhood?neighborhood.edges:allEdges;
+  routineGraphData={nodes,edges};
+  if(routineGraph){routineGraph.destroy();routineGraph=null;}
+  const local=routineGraphMode==="neighborhood";
+  routineGraph=new Graph({container:"routine-graph",width:document.querySelector("#routine-graph").clientWidth,height:650,
+    data:routineGraphData,layout:{type:"circular",radius:local?230:280,ordering:null,startAngle:-Math.PI/2},
+    behaviors:["drag-canvas","zoom-canvas","click-select"],
+    node:{type:"circle",style:{size:local?18:8,fill:d=>d.id===routineNodeId(window.__selectedRoutine)?"#f2b84b":"#91b6d2",
+      stroke:d=>d.id===routineNodeId(window.__selectedRoutine)?"#694d00":"#45667e",lineWidth:1,
+      labelText:d=>local?d.data.label:"",labelFontSize:11,labelPlacement:"right",labelBackground:true,labelBackgroundFill:"#ffffff",labelBackgroundOpacity:0.9},
+      state:{selected:{fill:"#f2b84b",stroke:"#694d00",lineWidth:2,labelText:d=>d.data.label,labelFontSize:12},neighbor:{fill:"#c5e3f5",stroke:"#37708f",lineWidth:2},endpoint:{fill:"#f8d56b",stroke:"#7c5510",lineWidth:2}}},
+    edge:{type:"quadratic",style:{stroke:d=>d.data.cycle?"#b42365":(routineKindColors[d.data.kind]??"#687785"),
+      strokeOpacity:local?0.72:0.16,lineWidth:d=>d.data.cycle?2.2:1,endArrow:true,endArrowSize:6,
+      curveOffset:d=>{const reverse=routineNarrative.some(x=>x.from===d.data.to&&x.to===d.data.from);return reverse?(d.data.from<d.data.to?16:-16):5},
+      lineDash:d=>d.data.cycle?[5,3]:undefined,labelText:d=>local?`${d.data.ordinal} ${d.data.kind}`:"",labelFontSize:9},
+      state:{incident:{stroke:"#253746",strokeOpacity:0.88,lineWidth:2},focus:{stroke:"#111820",strokeOpacity:1,lineWidth:4},selected:{stroke:"#111820",strokeOpacity:1,lineWidth:4}}}});
+  await routineGraph.render();await routineGraph.fitView();
+  const onRoutineNodeClick=event=>{const id=event.target?.id??event.data?.id;const routineId=Number(String(id).replace(/^routine:/,""));if(routineById.has(routineId))selectRoutine(routineId)};
+  const onRoutineEdgeClick=event=>{const id=event.target?.id??event.data?.id;const edge=routineEdgeById.get(id);if(edge)highlightNarrative(edge.data.ordinal)};
+  routineGraph.on("node:click",onRoutineNodeClick);
+  routineGraph.on("edge:click",onRoutineEdgeClick);
+  updateRoutineGraphState();
+  const cycleEdges=edges.filter(e=>e.data.cycle).length;
+  document.querySelector("#routine-graph-meta").textContent=`${local?"Selected-routine 1-hop neighborhood":"Global narrative topology"} · ${nodes.length} routine nodes / ${edges.length} unique directed pairs · ${cycleEdges} dashed cycle-participating edges · circular layout preserves cycles; no frequency sizing.`;
+  window.__routineGraphCounts={nodes:nodes.length,edges:edges.length,cycleEdges,mode:routineGraphMode};
+  window.__routineGraphLabels=nodes.map(n=>n.data.label);window.__routineGraphPairs=edges.map(e=>({ordinal:e.data.ordinal,from:e.data.from,to:e.data.to,kind:e.data.kind,kinds:e.data.kinds,cycle:e.data.cycle}));
+  window.__selectRoutineFromGraph=id=>onRoutineNodeClick({target:{id:routineNodeId(id)}});
+  window.__focusNarrativeFromGraph=ordinal=>onRoutineEdgeClick({target:{id:narrativeEdgeId(ordinal)}});
+}
+let routineGraphData={nodes:[],edges:[]};
+function highlightNarrative(ordinal){
+  const edge=narrativeByOrdinal.get(ordinal);if(!edge)return;
+  activeNarrativeOrdinal=ordinal;selectRoutine(edge.to,true);
+  const classified=routineNarrative.find(e=>e.ordinal===ordinal);
+  const from=routineById.get(edge.from),to=routineById.get(edge.to);
+  document.querySelector("#routine-edge-detail").textContent=`#${String(ordinal).padStart(3,"0")} ${from?.display??`R${edge.from}`} → ${to?.display??`R${edge.to}`} · ${edge.kind} · first step ${edge.first_step}${classified?.cycle?` · ${classified.cycle} (${classified.cycle_size} candidates)`:" · not marked as a multi-routine cycle"}`;
+  window.__routineFocus={ordinal,from:edge.from,to:edge.to,cycle:classified?.cycle??null};
+  if(routineGraphMode==="neighborhood"&&routineGraph&&(!routineGraphData.nodes.some(n=>n.data.routine_id===edge.from)||!routineGraphData.nodes.some(n=>n.data.routine_id===edge.to)))void renderRoutineGraph();
+  updateRoutineGraphState(ordinal);
+}
 function selectBlock(routineId, blockId) {
   if (routineId !== window.__selectedRoutine) { selectRoutine(routineId); setTimeout(() => selectBlock(routineId, blockId), 0); return; }
   const el = document.querySelector(`#block-${routineId}-${blockId}`);
   if (el) { el.open = true; el.scrollIntoView({behavior:"smooth",block:"center"}); }
 }
-function selectRoutine(id) {
+function selectRoutine(id, preserveNarrative=false) {
   if (!hasStructure || !routineById.has(id)) return;
+  if(!preserveNarrative)activeNarrativeOrdinal=null;
   const routine = routineById.get(id), detail = document.querySelector("#routine-detail");
   window.__selectedRoutine = id;
   detail.replaceChildren();
@@ -189,6 +281,9 @@ function selectRoutine(id) {
   for(const edge of localNarrative){const item=document.createElement("li");const from=document.createElement("button");from.className="routine-link";from.textContent=`R${String(edge.from[0]).padStart(3,"0")}.B${String(edge.from[1]).padStart(3,"0")}`;from.addEventListener("click",()=>selectBlock(edge.from[0],edge.from[1]));const arrow=document.createTextNode(" → ");const to=document.createElement("button");to.className="routine-link";to.textContent=`R${String(edge.to[0]).padStart(3,"0")}.B${String(edge.to[1]).padStart(3,"0")}`;to.addEventListener("click",()=>selectBlock(edge.to[0],edge.to[1]));const kind=document.createTextNode(` · ${edge.kind} · first step ${edge.first_step}`);item.append(from,arrow,to,kind);edgeList.append(item)}
   detail.append(edgeList);detail.scrollIntoView({behavior:"smooth",block:"start"});
   window.__selectedRoutineBlocks=blocks.length;window.__selectedRoutineNarrative=localNarrative.length;
+  const cycleEdges=routineNarrative.filter(e=>(e.from===id||e.to===id)&&e.cycle).length;
+  document.querySelector("#routine-edge-detail").textContent=`Selected ${routine.display}: ${routineNarrative.filter(e=>e.from===id||e.to===id).length} incoming/outgoing first-observation edges highlighted · ${cycleEdges} participate in a multi-routine or mutual cycle.`;
+  if(routineGraphMode==="neighborhood"&&routineGraph)void renderRoutineGraph();else updateRoutineGraphState();
 }
 async function initializeStructureView(){
   if(!hasStructure){window.__structureReady=true;return;}
@@ -224,7 +319,9 @@ async function clearProjection(){current=null;currentPath=null;currentProducer=n
 async function selectOffset(offset){const p=selection.get(`${outputIdentity}:${offset}`);document.querySelector("#sink").value=String(offset);for(const button of outputGrid.children)button.classList.toggle("selected",Number(button.dataset.offset)===offset);if(!p){const b=report.output_bytes.find(x=>x.offset===offset);safeText(document.querySelector("#sink-meta"),`Metadata only · ${report.output_file.name} +${offset.toString(16).toUpperCase().padStart(4,"0")}h · value ${b?.value.toString(16).toUpperCase().padStart(2,"0")}h · write step ${b?.write_step??"?"} · rewrites ${b?.rewrite_count??0} · detailed projection not embedded.`);await clearProjection();window.__selectedSink=offset;window.__explorerReady=true;return;}await renderProjection(p);}
 for(const p of report.selections){const opt=document.createElement("option");opt.value=p.sink.offset;opt.textContent=`${p.sink.file.name} +${p.sink.offset.toString(16).toUpperCase().padStart(4,"0")}`;document.querySelector("#sink").append(opt)}
 document.querySelector("#sink").addEventListener("change",e=>void selectOffset(Number(e.target.value)));document.querySelector("#mode").addEventListener("change",()=>current&&renderHeatmaps(current,currentPath));document.querySelector("#analysis-mode").addEventListener("change",e=>{analysisMode=e.target.value;if(current)void renderProjection(current)});
-document.querySelector("#tab-structure").addEventListener("click",()=>showView("structure"));document.querySelector("#tab-low-level").addEventListener("click",()=>showView("low-level"));
+document.querySelector("#tab-structure").addEventListener("click",()=>{showView("structure");if(hasStructure&&!routineGraph)void renderRoutineGraph()});document.querySelector("#tab-low-level").addEventListener("click",()=>showView("low-level"));
+document.querySelector("#routine-map-global").addEventListener("click",()=>{routineGraphMode="global";activeNarrativeOrdinal=null;document.querySelector("#routine-map-global").classList.add("active");document.querySelector("#routine-map-local").classList.remove("active");void renderRoutineGraph()});
+document.querySelector("#routine-map-local").addEventListener("click",()=>{routineGraphMode="neighborhood";activeNarrativeOrdinal=null;document.querySelector("#routine-map-local").classList.add("active");document.querySelector("#routine-map-global").classList.remove("active");void renderRoutineGraph()});
 document.querySelector("#image-overview").replaceChildren(...report.execution.images.map(im=>{const d=document.createElement("div");d.className="image-card";d.textContent=`${im.display_name} · virtual ${im.virtual_base.toString(16)}–${(im.virtual_base+im.span-1).toString(16)} · ${im.unique_fetched_byte_count}/${im.known_byte_count} unique bytes fetched · ${im.total_instruction_executions} executions`;return d}));
 window.__reportLoaded={images:report.execution.images.length,outputBytes:report.output_bytes.length,selectedProjections:report.selections.length,controlRows:controlReport.decisions.length};
-await initializeStructureView();showView("low-level");await selectOffset(report.selections[0]?.sink.offset??-1);showView(hasStructure?"structure":"low-level");
+await initializeStructureView();showView("low-level");await selectOffset(report.selections[0]?.sink.offset??-1);showView(hasStructure?"structure":"low-level");if(hasStructure)await renderRoutineGraph();

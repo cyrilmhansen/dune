@@ -16,6 +16,10 @@
           <div><h3>Routine candidates · discovery order</h3><perspective-viewer id="structure-routines" plugin="Datagrid"></perspective-viewer></div>
           <div><h3>Unique routine transitions · first observation</h3><perspective-viewer id="structure-narrative" plugin="Datagrid"></perspective-viewer></div>
         </div></section>
+        <section><h2>Narrative routine map</h2><p>One node per routine candidate; arrows are unique first-observed directed pairs. Circular placement preserves cycles. Counts do not size or rank nodes. Blue CALL, amber RETURN; dashed magenta marks a multi-routine cycle or mutual-call cycle, while an ordinary call/return pair remains solid and direction-colored.</p>
+          <div class="routine-map-toolbar"><button id="routine-map-global" type="button" class="active">Global topology</button><button id="routine-map-local" type="button">Selected routine neighborhood</button><span id="routine-graph-meta"></span></div>
+          <div id="routine-graph"></div><p id="routine-edge-detail">Select a routine node, transition row, or graph edge to inspect the observed relationship.</p>
+        </section>
         <section id="routine-detail"><h2>Select a routine candidate</h2><p>Start at R000, then follow its observed outgoing transitions.</p></section>
       </div>
       <div id="low-level-view" hidden>

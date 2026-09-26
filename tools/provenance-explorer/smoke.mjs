@@ -22,19 +22,33 @@ try {
   if(before.sink!==0||before.images<1||before.g6.nodes>250||before.g6.combos<2||before.rows["#output-table"]!==outputBytes)throw new Error(`unexpected initial view ${JSON.stringify(before)}`);
   const structureReady=await page.evaluate(()=>window.__structureReady&&window.__activeView==="structure");
   if(structureReady){
+    try{await page.waitForFunction(()=>window.__routineGraphCounts?.mode==="global",{timeout:20000})}catch(e){throw new Error(`routine graph init timeout; errors=${errors.join(" | ")}; ${e.message}`)}
     const structure=await page.evaluate(()=>({summary:window.__structureSummary,rows:window.__structureRows,routines:window.__structureRoutineRows,narrative:window.__structureNarrativeRows,firstBlocks:window.__selectedRoutineBlocks}));
     if(!structure.rows.routines||!structure.rows.narrative||!structure.routines.some(r=>r.id===0)||!structure.routines.some(r=>r.recursive))throw new Error(`structural report not populated: ${JSON.stringify(structure.summary)}`);
     if(!structure.routines[0].display.includes("PLI.COM"))throw new Error(`R000 is not the resident PLI.COM entry: ${structure.routines[0].display}`);
     const pairs=new Set(structure.narrative.map(x=>`${x.from_id}:${x.to_id}`));if(pairs.size!==structure.narrative.length)throw new Error("routine narrative duplicated a directed pair");
+    const topology=await page.evaluate(()=>({counts:window.__routineGraphCounts,labels:window.__routineGraphLabels,pairs:window.__routineGraphPairs}));
+    if(topology.counts.nodes!==structure.rows.routines||topology.counts.edges!==structure.rows.narrative||topology.labels.length!==structure.rows.routines||new Set(topology.labels).size!==structure.rows.routines)throw new Error(`routine graph cardinality/identity mismatch: ${JSON.stringify(topology.counts)}`);
+    if(!topology.counts.cycleEdges)throw new Error("no cycle-participating narrative edges were visually classified");
+    const simpleReturns=topology.pairs.filter(e=>e.kinds.includes("RETURN")&&!e.kinds.includes("CALL")&&topology.pairs.some(r=>r.from===e.to&&r.to===e.from&&r.kinds.includes("CALL")));
+    if(!simpleReturns.length||simpleReturns.some(e=>e.cycle))throw new Error("ordinary CALL/RETURN pairs were not kept distinct from cycle edges");
+    if(expectedInput==="OPTIMIST"&&(structure.rows.routines!==599||structure.rows.narrative!==2940))throw new Error(`unexpected OPTIMIST structure metrics ${JSON.stringify(structure.rows)}`);
+    if(expectedInput==="FIZZBUZ"&&(structure.rows.routines!==530||structure.rows.narrative!==2362))throw new Error(`unexpected FIZZBUZ structure metrics ${JSON.stringify(structure.rows)}`);
     const first=structure.routines[0];await page.evaluate(row=>document.querySelector("#structure-routines").dispatchEvent(new CustomEvent("perspective-click",{detail:{row}})),first);
     await page.waitForFunction(()=>window.__selectedRoutine===0&&window.__selectedRoutineBlocks>0);
+    await page.evaluate(()=>window.__selectRoutineFromGraph(0));await page.waitForFunction(()=>window.__selectedRoutine===0);
     const block=page.locator("#routine-blocks > details").first();await block.locator(":scope > summary").click();
     const code=page.locator("#routine-blocks > details details").first();await code.locator(":scope > summary").click();
     await page.waitForFunction(()=>document.querySelectorAll("#routine-blocks .instruction-list li").length>0);
     const narrativeRow=structure.narrative[0];await page.evaluate(row=>document.querySelector("#structure-narrative").dispatchEvent(new CustomEvent("perspective-click",{detail:{row}})),narrativeRow);
     await page.waitForFunction(id=>window.__selectedRoutine===id,narrativeRow.to_id);
+    const focus=await page.evaluate(()=>window.__routineFocus);if(focus.ordinal!==narrativeRow.ordinal||focus.from!==narrativeRow.from_id||focus.to!==narrativeRow.to_id)throw new Error(`narrative row did not highlight the corresponding edge/nodes: ${JSON.stringify(focus)}`);
+    await page.evaluate(ordinal=>window.__focusNarrativeFromGraph(ordinal),narrativeRow.ordinal);await page.waitForFunction(ordinal=>window.__routineFocus?.ordinal===ordinal,narrativeRow.ordinal);
+    if(expectedInput&&(narrativeRow.from_id!==0||narrativeRow.to_id!==1))throw new Error(`first narrative transition did not navigate R000 -> R001: ${JSON.stringify(narrativeRow)}`);
+    await page.click("#routine-map-local");await page.waitForFunction(()=>window.__routineGraphCounts?.mode==="neighborhood");const local=await page.evaluate(()=>window.__routineGraphCounts);if(local.nodes>40||local.nodes<1)throw new Error(`selected-routine neighborhood is not compact: ${JSON.stringify(local)}`);
+    await page.click("#routine-map-global");await page.waitForFunction(()=>window.__routineGraphCounts?.mode==="global"&&window.__routineGraphCounts.nodes===window.__structureRows.routines);
     await page.click("#tab-low-level");await page.waitForFunction(()=>window.__activeView==="low-level");
-    interactions.push(`structure ${expectedInput||"report"}: ${structure.rows.routines} unique candidates, ${structure.rows.narrative} first-observation edges; selected R000, expanded ${structure.firstBlocks} blocks/instructions, navigated narrative to R${String(narrativeRow.to_id).padStart(3,"0")}; recursion badge present`);
+    interactions.push(`structure ${expectedInput||"report"}: ${structure.rows.routines} nodes/${structure.rows.narrative} unique narrative edges, ${topology.counts.cycleEdges} visibly cycled; selected R000, expanded instructions, navigated R000 → R${String(narrativeRow.to_id).padStart(3,"0")}, local neighborhood ${local.nodes} nodes; recursion badge present`);
   } else if(expectedInput) throw new Error("structural reports are required for this browser smoke test");
   if(!before.rows["#producers"]||!before.rows["#sources"]||!before.rows["#source-ranges"]||!before.rows["#operations"]||!before.rows["#control-decisions"])throw new Error("Perspective views were not populated");
   const second=await page.evaluate(()=>window.__producerRows?.[0]);if(second){await page.evaluate(row=>document.querySelector("#producers").dispatchEvent(new CustomEvent("perspective-click",{detail:{row}})),second);await page.waitForFunction(()=>document.querySelector("#producer-highlight").textContent.length>0);await page.evaluate(id=>window.__emitG6Producer(id),second.producer_id);}
