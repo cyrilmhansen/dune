@@ -13,6 +13,27 @@ const controlText = await fetch(new URL("./provenance-control-report.json", wind
 if (!controlText.startsWith("RUNES_PROVENANCE_CONTROL_REPORT 1\n")) throw new Error("Unsupported path-control report version");
 const controlReport = JSON.parse(controlText.slice(controlText.indexOf("\n")+1));
 const hasPathControl = controlReport.selections.length > 0;
+const manifest = await fetch(new URL("./explorer-manifest.json", window.location.href)).then(async r => {
+  if (!r.ok) throw new Error(`Explorer manifest fetch failed: ${r.status}`);
+  return r.json();
+});
+let structureReport = null, blocksReport = null;
+if (manifest.structure) {
+  const [structureText, blocksText] = await Promise.all([
+    fetch(new URL("./dynamic-structure.json", window.location.href)).then(async r => { if (!r.ok) throw new Error(`Structure report fetch failed: ${r.status}`); return r.text(); }),
+    fetch(new URL("./dynamic-blocks.json", window.location.href)).then(async r => { if (!r.ok) throw new Error(`Block report fetch failed: ${r.status}`); return r.text(); })
+  ]);
+  if (!structureText.startsWith("RUNES_DYNAMIC_STRUCTURE 1\n")) throw new Error("Unsupported dynamic structure report version");
+  if (!blocksText.startsWith("RUNES_DYNAMIC_BLOCKS 1\n")) throw new Error("Unsupported dynamic blocks report version");
+  structureReport = JSON.parse(structureText.slice(structureText.indexOf("\n") + 1));
+  blocksReport = JSON.parse(blocksText.slice(blocksText.indexOf("\n") + 1));
+}
+const hasStructure = Boolean(structureReport && blocksReport);
+document.querySelector("#structure-view").hidden = !hasStructure;
+document.querySelector("#structure-missing").hidden = true;
+document.querySelector("#tab-structure").hidden = !hasStructure;
+if (!hasStructure) document.querySelector("#tab-low-level").classList.add("active");
+else document.querySelector("#tab-structure").classList.add("active");
 if (!hasPathControl) {
   document.querySelector('#analysis-mode option[value="path"]').hidden = true;
   document.querySelector("#path-section").hidden = true;
@@ -41,6 +62,8 @@ async function loadViewer(id, rows, group_by, sort) {
       const found=current?.producers.find(p=>p.image.identity===row.image&&p.image_offset===row.image_offset&&p.runtime_pc===row.runtime_pc);
       if(found)highlightProducer(found.id);
     }else if(id==="#control-decisions")highlightControl(row);
+    else if(id==="#structure-routines")selectRoutine(Number(row.id));
+    else if(id==="#structure-narrative")selectRoutine(Number(row.to_id));
   });
   return {viewer,table,rows:rows.length};
 }
@@ -50,10 +73,12 @@ const initRows = await Promise.all([
   loadViewer("#operations", [], ["kind"], [["node_count","desc"]]),
   loadViewer("#source-ranges", [], ["classification","identity"], [["first","asc"]]),
   loadViewer("#output-table", report.output_bytes.map(x=>({...x})), [], [["offset","asc"]]),
-  loadViewer("#control-decisions", [], ["image","condition","taken"], [["decision_count","desc"]])
+  loadViewer("#control-decisions", [], ["image","condition","taken"], [["decision_count","desc"]]),
+  loadViewer("#structure-routines", [], [], [["id","asc"]]),
+  loadViewer("#structure-narrative", [], [], [["ordinal","asc"]])
 ]);
 const viewerTables = {};
-for (const [i,id] of ["#producers","#sources","#operations","#source-ranges","#output-table","#control-decisions"].entries()) viewerTables[id]=initRows[i];
+for (const [i,id] of ["#producers","#sources","#operations","#source-ranges","#output-table","#control-decisions","#structure-routines","#structure-narrative"].entries()) viewerTables[id]=initRows[i];
 
 const roleColor={value:"#2878b5",address:"#d18a16",flag:"#bc3b82",control:"#555"};
 let graph=null, current=null, currentPath=null, currentProducer=null, analysisMode="data";
@@ -116,6 +141,77 @@ async function setTableData(p,path){const rows=groupedRows(p);const controlRows=
   window.__perspectiveRows=Object.fromEntries(Object.entries(viewerTables).map(([k,v])=>[k,v.rows]));window.__producerRows=rows.producers;window.__producerIds=rows.producers.map(x=>x.producer_id);window.__controlRows=controlRows;}
 async function renderGraph(p,path){const pathMode=analysisMode==="path",preview=pathMode?path.preview:p.preview,root=pathMode?(preview.nodes[0]?.id??null):p.root,data=graphData(p,preview,root,pathMode?"selected path context":"selected sink");if(graph){graph.destroy();graph=null;}graph=new Graph({container:"graph",width:document.querySelector("#graph").clientWidth,height:540,data,layout:{type:"dagre",rankdir:"LR",nodesep:18,ranksep:40},behaviors:["drag-canvas","zoom-canvas",{type:"collapse-expand",trigger:"click",animation:false}],node:{style:{labelText:d=>d.data?.label??d.id,size:18}},edge:{style:{stroke:d=>roleColor[d.data?.role]??"#a8b2bc",endArrow:true,labelText:d=>d.data?.role??""}},combo:{type:"rect",style:{labelText:d=>d.data?.label??d.id,collapsed:false}}});await graph.render();graph.on("node:click",event=>{const id=event.target?.id??event.data?.id;const d=data.nodes.find(n=>n.id===id)?.data;if(d?.producer_id)highlightProducer(d.producer_id)});graph.on("combo:click",event=>{const id=event.target?.id??event.data?.id;const d=data.combos.find(c=>c.id===id)?.data;if(d?.producer_id)highlightProducer(d.producer_id)});window.__emitG6Producer=id=>{const n=data.nodes.find(x=>x.data?.producer_id===id);if(n)graph.emit("node:click",{target:{id:n.id}});else{const c=data.combos.find(x=>x.data?.producer_id===id);if(c)graph.emit("combo:click",{target:{id:c.id}})}};document.querySelector("#graph-meta").textContent=`G6 bounded ${pathMode?"path-context":"data-DAG"} graph: ${data.nodes.length} nodes, ${data.edges.length} edges, ${data.combos.length} combos (preview max ${preview.max_nodes} nodes, depth ${preview.max_depth}, omitted frontier ${preview.omitted_frontier_count}).`;
   window.__g6Counts={nodes:data.nodes.length,edges:data.edges.length,combos:data.combos.length};}
+
+const hexOffset = value => value == null ? "unknown" : `${Number(value).toString(16).toUpperCase().padStart(4,"0")}h`;
+const routineById = new Map((structureReport?.routines ?? []).map(r => [r.id, r]));
+const aggregateRoutineEdges = new Map((structureReport?.transitions ?? []).map(e => [`${e.from}:${e.to}`, e]));
+const instructionById = new Map((blocksReport?.instructions ?? []).map(i => [i.id, i]));
+function selectBlock(routineId, blockId) {
+  if (routineId !== window.__selectedRoutine) { selectRoutine(routineId); setTimeout(() => selectBlock(routineId, blockId), 0); return; }
+  const el = document.querySelector(`#block-${routineId}-${blockId}`);
+  if (el) { el.open = true; el.scrollIntoView({behavior:"smooth",block:"center"}); }
+}
+function selectRoutine(id) {
+  if (!hasStructure || !routineById.has(id)) return;
+  const routine = routineById.get(id), detail = document.querySelector("#routine-detail");
+  window.__selectedRoutine = id;
+  detail.replaceChildren();
+  const heading = document.createElement("div"); heading.className = "routine-head";
+  const title = document.createElement("h2"); title.textContent = routine.display; heading.append(title);
+  for (const tag of routine.tags) { const badge=document.createElement("span"); badge.className=`routine-badge ${tag === "recursive" ? "recursive" : ""}`; badge.textContent=tag; heading.append(badge); }
+  detail.append(heading);
+  const metrics=document.createElement("div");metrics.className="routine-metrics";
+  const image=routine.image ? `${String.fromCharCode(65+routine.image.drive)}:${routine.image.user}:${routine.image.name}` : "unresolved image origin";
+  const values=[`entry ${image}+${hexOffset(routine.offset)} @${hexOffset(routine.runtime_entry_pc)}`,
+    `steps ${routine.first_step ?? "?"}–${routine.last_step ?? "?"}`,`${routine.executions} instruction executions`,
+    `${routine.distinct_starts} distinct starts`,`incoming ${routine.incoming} · outgoing ${routine.outgoing}`,
+    `calls ${routine.calls} · returns ${routine.returns}`,`self calls ${routine.self_calls}`];
+  for(const value of values){const span=document.createElement("span");span.textContent=value;metrics.append(span)}detail.append(metrics);
+  const blocks=(blocksReport.blocks??[]).filter(b=>b.routine===id).sort((a,b)=>a.id-b.id);
+  const blockTitle=document.createElement("h3");blockTitle.textContent=`Observed basic blocks · ${blocks.length}`;detail.append(blockTitle);
+  const blockRoot=document.createElement("div");blockRoot.id="routine-blocks";
+  for(const block of blocks){
+    const card=document.createElement("details");card.className="block-card";card.id=`block-${id}-${block.id}`;
+    const summary=document.createElement("summary");summary.textContent=block.display;card.append(summary);
+    const meta=document.createElement("div");meta.className="block-meta";
+    const blockImage=block.image?.name ?? block.origin?.kind ?? "unresolved";
+    const blockOffset=block.start_offset == null ? `runtime ${hexOffset(block.runtime_start)}` : `${blockImage}+${hexOffset(block.start_offset)}`;
+    meta.textContent=`${blockOffset} · ${block.byte_length} bytes · ${block.instruction_count} instructions · entries ${block.entries} · steps ${block.first_step}–${block.last_step} · tags ${block.tags.join(", ") || "none"}`;card.append(meta);
+    const codeDetails=document.createElement("details");const codeSummary=document.createElement("summary");codeSummary.textContent=`Formatted 8080 instructions (${block.instruction_count})`;codeDetails.append(codeSummary);
+    let rendered=false;codeDetails.addEventListener("toggle",()=>{if(!codeDetails.open||rendered)return;rendered=true;const list=document.createElement("ol");list.className="instruction-list";
+      for(const instructionId of block.instructions){const ins=instructionById.get(instructionId);if(!ins)continue;const line=document.createElement("li");line.textContent=`${hexOffset(ins.runtime_pc)}  ${ins.text}  · ${ins.executions} executions · steps ${ins.first_step}–${ins.last_step}`;list.append(line)}codeDetails.append(list);});
+    card.append(codeDetails);blockRoot.append(card);
+  }
+  detail.append(blockRoot);
+  const localNarrative=(blocksReport.narrative??[]).filter(e=>e.from[0]===id);
+  const edgeTitle=document.createElement("h3");edgeTitle.textContent=`Block-level narrative transitions · ${localNarrative.length}`;detail.append(edgeTitle);
+  const edgeList=document.createElement("ol");edgeList.className="block-transitions";
+  for(const edge of localNarrative){const item=document.createElement("li");const from=document.createElement("button");from.className="routine-link";from.textContent=`R${String(edge.from[0]).padStart(3,"0")}.B${String(edge.from[1]).padStart(3,"0")}`;from.addEventListener("click",()=>selectBlock(edge.from[0],edge.from[1]));const arrow=document.createTextNode(" → ");const to=document.createElement("button");to.className="routine-link";to.textContent=`R${String(edge.to[0]).padStart(3,"0")}.B${String(edge.to[1]).padStart(3,"0")}`;to.addEventListener("click",()=>selectBlock(edge.to[0],edge.to[1]));const kind=document.createTextNode(` · ${edge.kind} · first step ${edge.first_step}`);item.append(from,arrow,to,kind);edgeList.append(item)}
+  detail.append(edgeList);detail.scrollIntoView({behavior:"smooth",block:"start"});
+  window.__selectedRoutineBlocks=blocks.length;window.__selectedRoutineNarrative=localNarrative.length;
+}
+async function initializeStructureView(){
+  if(!hasStructure){window.__structureReady=true;return;}
+  const routineRows=structureReport.routines.map(r=>({id:r.id,display:r.display,image:r.image?.name??"unknown",offset:r.offset,
+    tags:r.tags.join(", "),recursive:r.recursive,first_step:r.first_step,last_step:r.last_step,executions:r.executions,
+    distinct_starts:r.distinct_starts,incoming:r.incoming,outgoing:r.outgoing,calls:r.calls,returns:r.returns,self_calls:r.self_calls}));
+  const narrativeRows=structureReport.narrative.map(e=>{const edge=aggregateRoutineEdges.get(`${e.from}:${e.to}`);return {ordinal:e.ordinal,from_id:e.from,
+    from:routineById.get(e.from)?.display??`R${e.from}`,to_id:e.to,to:routineById.get(e.to)?.display??`R${e.to}`,
+    first_kind:e.kind,first_step:e.first_step,count:edge?.count??1,kinds:edge?.kinds?.join(", ")??e.kind};});
+  window.__structureRoutineRows=routineRows;window.__structureNarrativeRows=narrativeRows;
+  for(const [selector,data,group_by,sort] of [["#structure-routines",routineRows,[],[["id","asc"]]],
+      ["#structure-narrative",narrativeRows,[],[["ordinal","asc"]]]]){
+    const old=viewerTables[selector],table=await worker.table(data.length?data:[{empty:"no rows"}]);await old.viewer.load(table);
+    await old.viewer.restore({plugin:"Datagrid",group_by,sort});old.table.delete?.();viewerTables[selector]={...old,table,rows:data.length};
+  }
+  const s=structureReport.summary??{};document.querySelector("#structure-summary").textContent=
+    `${s.routine_candidates??routineRows.length} routine candidates · ${s.narrative_transitions??narrativeRows.length} unique first-observation transitions · ${s.aggregate_pairs??structureReport.transitions.length} aggregate directed pairs · ${(structureReport.routines??[]).filter(r=>r.recursive).length} recursive candidates. Narrative rows refer back to one routine candidate each; counts are metadata, not ordering.`;
+  window.__structureRows={routines:routineRows.length,narrative:narrativeRows.length};window.__structureSummary={...s};
+  window.__tableGroups??={};window.__tableGroups["#structure-routines"]=[];window.__tableGroups["#structure-narrative"]=[];
+  if(routineRows.length)selectRoutine(routineRows[0].id);
+  window.__structureReady=true;
+}
+function showView(view){const structure=view==="structure"&&hasStructure;document.querySelector("#structure-view").hidden=!structure;document.querySelector("#low-level-view").hidden=structure;document.querySelector("#tab-structure").classList.toggle("active",structure);document.querySelector("#tab-low-level").classList.toggle("active",!structure);window.__activeView=structure?"structure":"low-level";}
 async function renderProjection(p){current=p;currentPath=controlSelection.get(`${outputIdentity}:${p.sink.offset}`)??null;window.__explorerReady=false;safeText(document.querySelector("#sink-meta"),`${p.sink.file.name} +${p.sink.offset.toString(16).toUpperCase().padStart(4,"0")}h = ${p.value?.toString(16).toUpperCase().padStart(2,"0")}h · write step ${p.write_step} · root ${p.root} · ${p.full_node_count} exact data-slice nodes · ${p.source_leaf_count} source leaves`);
   const pathSummary=document.querySelector("#path-summary");if(currentPath)pathSummary.textContent=`Cumulative concrete path context: ${currentPath.context_depth} decisions at ${currentPath.distinct_branch_locations} static branch locations; steps ${currentPath.earliest_decision_step}–${currentPath.latest_decision_step}. Combined reachable nodes ${currentPath.combined_reachable_nodes} (${currentPath.additional_decision_nodes} decisions, ${currentPath.additional_context_nodes} contexts, ${currentPath.additional_flag_ancestors} additional flag/value ancestors; ${currentPath.control_relations} Control relations). This is not minimal control dependence.`;else pathSummary.textContent="No path-control projection embedded for this output byte.";
   const source=document.querySelector("#source-summary");source.replaceChildren();for(const s of p.sources){const div=document.createElement("div");div.textContent=`${s.classification??s.kind} · ${s.identity}: ${s.distinct_source_bytes} distinct offsets / ${s.leaf_occurrences} leaf occurrences · ${s.ranges.map(r=>r.first===r.last?r.first.toString(16):`${r.first.toString(16)}–${r.last.toString(16)}`).join(", ")}`;source.append(div);}
@@ -128,6 +224,7 @@ async function clearProjection(){current=null;currentPath=null;currentProducer=n
 async function selectOffset(offset){const p=selection.get(`${outputIdentity}:${offset}`);document.querySelector("#sink").value=String(offset);for(const button of outputGrid.children)button.classList.toggle("selected",Number(button.dataset.offset)===offset);if(!p){const b=report.output_bytes.find(x=>x.offset===offset);safeText(document.querySelector("#sink-meta"),`Metadata only · ${report.output_file.name} +${offset.toString(16).toUpperCase().padStart(4,"0")}h · value ${b?.value.toString(16).toUpperCase().padStart(2,"0")}h · write step ${b?.write_step??"?"} · rewrites ${b?.rewrite_count??0} · detailed projection not embedded.`);await clearProjection();window.__selectedSink=offset;window.__explorerReady=true;return;}await renderProjection(p);}
 for(const p of report.selections){const opt=document.createElement("option");opt.value=p.sink.offset;opt.textContent=`${p.sink.file.name} +${p.sink.offset.toString(16).toUpperCase().padStart(4,"0")}`;document.querySelector("#sink").append(opt)}
 document.querySelector("#sink").addEventListener("change",e=>void selectOffset(Number(e.target.value)));document.querySelector("#mode").addEventListener("change",()=>current&&renderHeatmaps(current,currentPath));document.querySelector("#analysis-mode").addEventListener("change",e=>{analysisMode=e.target.value;if(current)void renderProjection(current)});
+document.querySelector("#tab-structure").addEventListener("click",()=>showView("structure"));document.querySelector("#tab-low-level").addEventListener("click",()=>showView("low-level"));
 document.querySelector("#image-overview").replaceChildren(...report.execution.images.map(im=>{const d=document.createElement("div");d.className="image-card";d.textContent=`${im.display_name} · virtual ${im.virtual_base.toString(16)}–${(im.virtual_base+im.span-1).toString(16)} · ${im.unique_fetched_byte_count}/${im.known_byte_count} unique bytes fetched · ${im.total_instruction_executions} executions`;return d}));
 window.__reportLoaded={images:report.execution.images.length,outputBytes:report.output_bytes.length,selectedProjections:report.selections.length,controlRows:controlReport.decisions.length};
-await selectOffset(report.selections[0]?.sink.offset??-1);
+await initializeStructureView();showView("low-level");await selectOffset(report.selections[0]?.sink.offset??-1);showView(hasStructure?"structure":"low-level");

@@ -8,7 +8,17 @@
   </head>
   <body>
     <main>
-      <header><h1>Runes Provenance Explorer</h1><p>Concrete-execution data slice · not a counterfactual causal proof</p></header>
+      <header><h1>Runes Analysis Explorer</h1><p>Observed structure and concrete-execution provenance · neither is a counterfactual proof</p></header>
+      <nav class="view-tabs" aria-label="Analysis views"><button id="tab-structure" type="button">Structure</button><button id="tab-low-level" type="button">Provenance &amp; heatmap</button></nav>
+      <section id="structure-missing" hidden><h2>Structural reports unavailable</h2><p>Bundle RUNES_DYNAMIC_STRUCTURE 1 and RUNES_DYNAMIC_BLOCKS 1 reports to enable this view.</p></section>
+      <div id="structure-view" hidden>
+        <section><h2>Routine candidates</h2><p>Ordered by first discovery, not execution frequency. Repeated references point to the same candidate; recursion is shown as a factual tag, not expanded invocations.</p><div id="structure-summary"></div><div class="structure-columns">
+          <div><h3>Routine candidates · discovery order</h3><perspective-viewer id="structure-routines" plugin="Datagrid"></perspective-viewer></div>
+          <div><h3>Unique routine transitions · first observation</h3><perspective-viewer id="structure-narrative" plugin="Datagrid"></perspective-viewer></div>
+        </div></section>
+        <section id="routine-detail"><h2>Select a routine candidate</h2><p>Start at R000, then follow its observed outgoing transitions.</p></section>
+      </div>
+      <div id="low-level-view" hidden>
       <section class="toolbar"><label>Output byte <select id="sink"></select></label><label>Analysis view <select id="analysis-mode"><option value="data">Data provenance</option><option value="path">Path-control provenance</option><option value="combined">Combined</option></select></label><label>Heatmap mode <select id="mode"><option value="execution">Execution heat</option><option value="participation">Slice participation</option><option value="producer">Producer density</option><option value="value">Value-edge density</option><option value="address">Address-edge density</option><option value="flag">Flag-edge density</option><option value="control">Path-control density</option><option value="source">Source influence</option></select></label><span id="sink-meta"></span></section>
       <section><h2>Output bytes</h2><p>Full output metadata is shown. Detailed projections are embedded only for selected bytes.</p><div id="output-bytes" class="byte-strip"></div><perspective-viewer id="output-table" plugin="Datagrid"></perspective-viewer></section>
       <section><h2>Linear image space</h2><p>Linear offsets are analysis coordinates, not a reconstructed runtime layout. Unobserved bytes are not necessarily dead code.</p><div id="image-overview"></div><div id="heatmaps"></div><div id="producer-highlight"></div><h3>Source-file offsets outside execution images</h3><div id="source-data"></div></section>
@@ -17,6 +27,7 @@
       <section id="path-section"><h2>Concrete path-control context</h2><p>This is the cumulative observed path condition, not minimal postdominator-based control dependence and not a counterfactual proof.</p><div id="path-summary"></div><perspective-viewer id="control-decisions" plugin="Datagrid"></perspective-viewer></section>
       <section><h2>Grouped provenance graph</h2><p>G6 shows only a bounded exact data-DAG or branch-context neighborhood, grouped by source identity, operation kind, image, and producer location. It never receives the full cumulative path.</p><div id="graph"></div><p id="graph-meta"></p></section>
       <section><h2>Exact DAG preview</h2><p id="preview-meta"></p><div id="preview"></div></section>
+      </div>
       <footer>Perspective handles scalable tabular exploration · G6 handles graph relationships · the byte heatmap retains image coordinates.</footer>
     </main>
     <script type="module" src="./src/main.js"></script>
