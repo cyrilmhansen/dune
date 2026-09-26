@@ -13,7 +13,7 @@ let usage = {|Usage: pli80-analyze --toolchain DIR --source FILE --output-dir DI
   --report none|summary|explorer   Select output reports (default summary)
   --select-rel OFFSET       Select explorer sink; repeatable (decimal or 0xHEX)
   --raw-slice OFFSET        Write exact slice JSON; repeatable, data/path only
-  --structure               Collect dynamic routine candidates/transitions (requires execution analysis)
+  --structure               Collect routine transitions and observed blocks (requires execution analysis)
   --max-steps N             Positive instruction budget (default 10000000)
   --help                    Show this help
 

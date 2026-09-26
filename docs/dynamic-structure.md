@@ -133,12 +133,102 @@ at the same `2200h` runtime address and for `PLI0.OVL`, `PLI1.OVL`, and
 `PLI2.OVL` retaining separate identities. No compiler routine names are
 inferred from these measurements.
 
+## Observed basic blocks v0
+
+When `--structure` is enabled, the experiment also emits
+`dynamic-blocks.json`, headed `RUNES_DYNAMIC_BLOCKS 1`. The routine report
+above remains `RUNES_DYNAMIC_STRUCTURE 1`; its meaning and JSON schema are
+unchanged. Basic-block collection consumes the routine ID attributed to each
+executed Step by `Dynamic_structure`, so it does not maintain a second routine
+stack.
+
+The collector retains one node per distinct observed instruction identity and
+variant, plus aggregated instruction-to-instruction transitions. It does not
+retain Step history. Instruction identity includes routine candidate, current
+image/file identity and offset when resolved, and runtime PC. Unknown and
+mixed-origin instructions remain explicitly identified as such. A repeated
+identity with different fetched bytes produces an anomaly and separate
+variant nodes instead of silently merging the observations.
+
+Blocks are materialized after execution from the complete observed graph.
+Routine entries, reached branch targets/fallthroughs, call/return
+continuations, and multi-predecessor instructions establish boundaries.
+Observed control-transfer instructions end their block whether conditional
+flow was taken or not. Straight-line instructions are joined only when the
+observed successor is unambiguous, has one predecessor, remains in the same
+routine, has no entry evidence, and has compatible contiguous runtime and
+image coordinates. A late-discovered target can therefore split an earlier
+apparent straight-line chain.
+
+Every image-backed block is checked during materialization: all of its
+instructions must have the same image identity, file offsets must be
+contiguous, and runtime PCs must be contiguous modulo 16 bits. Origin changes,
+non-contiguous offsets, mixed-origin instructions, or byte variants force a
+boundary or are represented explicitly as unresolved/variant observations;
+they are never silently reported as one image span.
+
+Block IDs (`R017.B003`) are run-local and ordered by the first observed
+execution of each eventual block entry. Blocks retain an ordered instruction
+sequence with fetched bytes, deterministic Intel 8080 text, per-instruction
+counts and first/last steps. The report aggregates block transitions and, per
+routine, a first-observation narrative of unique directed block pairs.
+Transition counts are metadata and do not reorder that narrative. A recursive
+CALL remains a factual block-level call edge while the routine-level view
+continues to collapse self-recursion.
+
+The block map is dynamic only. Unobserved instructions are not classified;
+this is not static disassembly, complete CFG recovery, or source-level
+function recovery. The exact report contains observed instruction records,
+aggregated edges, blocks, local narratives and structural anomalies, but no
+provenance DAG or raw Step sequence.
+
+### Initial compiler block measurements
+
+These runs used `--analysis execution --report none --structure`; the source
+examples are compiled, not executed as generated programs. Runtime is the
+CLI's online execution plus live-analysis timer. The block report size is the
+uncompressed `dynamic-blocks.json` size.
+
+| Input | Routine candidates | Blocks | Distinct instructions | Block transitions | Backward-edge targets | PLI.COM / PLI0 / PLI1 / PLI2 blocks | Online time | Block report |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| `MINIMAL.PLI` | 395 | 2,443 | 11,115 | 3,251 | 119 | 426 / 465 / 787 / 764 | 0.515 s | 5,197,719 B |
+| `FIZZBUZ.PLI` | 530 | 3,641 | 16,221 | 5,011 | 140 | 459 / 629 / 1,370 / 1,182 | 1.070 s | 7,712,487 B |
+| `FACTOR.PLI` | 551 | 3,851 | 16,989 | 5,373 | 155 | 437 / 748 / 1,411 / 1,254 | 0.828 s | 8,097,870 B |
+| `OPTIMIST.PLI` | 599 | 4,651 | 19,774 | 6,660 | 189 | 509 / 815 / 1,750 / 1,576 | 2.363 s | 9,679,321 B |
+
+Each row also has one unresolved synthetic-system block. OPTIMIST retained its
+accepted `2,535,509` compiler steps and successful output. On the same host,
+the previous structure-only online measurement was 1.692 s; the current
+structure-plus-block online measurement is 2.363 s, an approximate 0.671 s
+increment for observed instruction/edge aggregation. Post-run materialization
+and serialization added roughly 0.13 s to total CLI wall time (2.497 s). These
+are simple wall-clock comparisons, not a dedicated benchmark harness.
+
+Representative OPTIMIST blocks from the generated report:
+
+```text
+R000.B000 · PLI.COM+0000
+    0100  JMP 02EDH
+
+R001.B000 · PLI.COM+1A40
+    1B40  MOV L,A
+    ...
+    1B4A  RET
+
+R014.B000 · PLI0.OVL+0000
+    2200  JMP 23B0H
+```
+
+The `PLI0.OVL` sample and the per-image counts demonstrate that the same
+runtime address space remains separated by current image origin. Block IDs
+are report-local; image/file coordinates are the durable coordinates.
+
 ## Deferred
 
-This v0 is not static disassembly, full routine-boundary recovery, a CFG, or a
-basic-block map. It does not infer tail calls, split candidates on jumps,
-condense cycles, reconstruct memory objects, or attach semantic routine names.
-The dynamic active-routine model can misattribute instructions after unusual
-non-structured flow; anomalies expose observed mismatches rather than hiding
-them. The narrative is a projection of the aggregate graph, not a replacement
-for it.
+This remains short of static disassembly, full routine-boundary recovery,
+complete CFG recovery, or cycle condensation. It does not infer tail calls,
+split routine candidates on jumps, reconstruct memory objects, or attach
+semantic routine names. The dynamic active-routine model can misattribute
+instructions after unusual non-structured flow; anomalies expose observed
+mismatches rather than hiding them. Routine and block narratives are
+projections of their aggregate graphs, not replacements for them.

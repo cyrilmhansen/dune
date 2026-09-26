@@ -14,6 +14,7 @@ type result = {
   execution_map:Analysis.Execution_map.t option;
   provenance:Analysis.Provenance.t option;
   dynamic_structure:Analysis.Dynamic_structure.t option;
+  dynamic_blocks:Analysis.Dynamic_blocks.report option;
   timings:timings;
 }
 type error = Invalid_module_name of string | Filesystem_error of Cpm.Filesystem.error
@@ -153,6 +154,7 @@ let run ?(structure=false) ~analysis input =
     |Ok()->
       let execution_map=match analysis with Run->None|Execution|Data|Path->Some(Analysis.Execution_map.create()) in
       let dynamic_structure=if structure then Some(Analysis.Dynamic_structure.create()) else None in
+      let dynamic_blocks_builder=if structure then Some(Analysis.Dynamic_blocks.create()) else None in
       let provenance=match analysis with
         |Run|Execution->None
         |Data->Some(Analysis.Provenance.create ~path_control:false ())
@@ -171,10 +173,15 @@ let run ?(structure=false) ~analysis input =
           Analysis.Provenance.seed_command_tail_mapping p ~address:0x5d ~tail_offset:1
             (Bytes.sub input.command_tail 1 (Bytes.length input.command_tail-1)))provenance in
       let on_start_state=Option.map Analysis.Provenance.seed_initial_registers provenance in
-      let on_step_state=match provenance,dynamic_structure with
-        |None,None->None
-        |provenance,dynamic_structure->Some(fun ~step_index state step->
-          Option.iter(fun structure->Analysis.Dynamic_structure.observe_step structure (Option.get execution_map) ~step_index step)dynamic_structure;
+      let on_step_state=match provenance,dynamic_structure,dynamic_blocks_builder with
+        |None,None,None->None
+        |provenance,dynamic_structure,dynamic_blocks_builder->Some(fun ~step_index state step->
+          let attribution=Option.map(fun structure->
+            Analysis.Dynamic_structure.observe_step_detailed structure (Option.get execution_map) ~step_index step)dynamic_structure in
+          (match dynamic_blocks_builder,attribution with
+           |Some blocks,Some attribution->Analysis.Dynamic_blocks.observe_step blocks (Option.get execution_map)
+               ~routine_id:attribution.routine_id ~routine_entry:attribution.routine_entry ~step_index step
+           |_->());
           Option.iter(fun p->
           let resolve ~pc ~fetched=match execution_map with
             |None->None
@@ -202,6 +209,9 @@ let run ?(structure=false) ~analysis input =
       (match run_result with Error e->Error(Run_error e)|Ok run->
         let rel_name,int_name=match output_names module_name with Ok names->names|Error _->assert false in
         let read name=match Cpm.Filesystem.get_file filesystem ~name () with Ok b->b|Error _->None in
+        let dynamic_blocks=match dynamic_structure,dynamic_blocks_builder with
+          |Some structure,Some blocks->Some(Analysis.Dynamic_blocks.materialize blocks (Analysis.Dynamic_structure.routines structure))
+          |_->None in
         Ok{run;console=Buffer.contents console;filesystem;rel_name;rel_bytes=read rel_name;
-          int_name;int_bytes=read int_name;execution_map;provenance;dynamic_structure;
+          int_name;int_bytes=read int_name;execution_map;provenance;dynamic_structure;dynamic_blocks;
           timings={setup_seconds;execution_seconds}})

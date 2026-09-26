@@ -197,7 +197,8 @@ dune exec pli80-analyze -- \
   --analysis execution --report none --structure
 ```
 
-This writes `dynamic-structure.json` and prints a bounded narrative preview.
+This writes `dynamic-structure.json` and `dynamic-blocks.json`, with bounded
+narrative and block/instruction previews.
 Routine candidates are conservative runtime observations, not recovered PL/I
 procedures; report semantics and limits are documented in
 [`docs/dynamic-structure.md`](docs/dynamic-structure.md).

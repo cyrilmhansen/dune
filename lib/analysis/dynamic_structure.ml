@@ -19,6 +19,7 @@ type narrative_entry = { ordinal:int; source:int; target:int; first_step:int; fi
 type anomaly_kind = Return_without_call | Return_target_mismatch | Jump_into_known_entry
   | Image_entry_without_transfer | Image_change_without_new_entry | Unknown_instruction_origin
 type anomaly = { step:int; last_step:int; occurrence_count:int; kind:anomaly_kind; runtime_pc:int; detail:string }
+type step_attribution = { routine_id:int; routine_entry:bool }
 type summary = { routine_count:int; narrative_transition_count:int; aggregate_pair_count:int;
   recursive_candidate_count:int; anomaly_count:int; anomaly_observation_count:int }
 
@@ -94,7 +95,7 @@ let add_transition t ~step ~source ~target ~kind =
 
 let set_current t r = t.current<-Some r.id
 
-let observe_step t map ~step_index step =
+let observe_step_detailed t map ~step_index step =
   let pc=I8080.Step.pc_before step in
   let here=identity_at map pc in
   let active=Option.bind t.current(fun id->Hashtbl.find_opt t.by_id id) in
@@ -129,7 +130,7 @@ let observe_step t map ~step_index step =
   let next_pc=I8080.Step.pc_after step in
   let instruction_bytes=I8080.Step.fetched_bytes step in
   let return_pc=(pc+Bytes.length instruction_bytes)land 0xffff in
-  match control with
+  (match control with
   |I8080.Step.Call{target;taken=true}->
       let callee=get_routine t (identity_at map target) in add_tag callee Called;callee.calls<-callee.calls+1;
       if callee.identity.image=None then add_tag callee Unresolved_origin;
@@ -170,7 +171,11 @@ let observe_step t map ~step_index step =
        |_->());
       t.pending<-Some{source=r.id;target_pc=target;real_transfer=true}
   |I8080.Step.Jump{target;taken=false}->t.pending<-Some{source=r.id;target_pc=next_pc;real_transfer=false}
-  |_->()
+  |_->());
+  {routine_id=r.id;routine_entry=(r.identity=here)}
+
+let observe_step t map ~step_index step =
+  ignore (observe_step_detailed t map ~step_index step)
 
 let routine_snapshots t =
   let incoming=Hashtbl.create 31 and outgoing=Hashtbl.create 31 in

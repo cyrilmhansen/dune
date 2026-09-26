@@ -25,6 +25,7 @@ type result = {
   execution_map : Analysis.Execution_map.t option;
   provenance : Analysis.Provenance.t option;
   dynamic_structure : Analysis.Dynamic_structure.t option;
+  dynamic_blocks : Analysis.Dynamic_blocks.report option;
   timings : timings;
 }
 

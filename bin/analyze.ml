@@ -33,7 +33,7 @@ let absolute_path path = if Filename.is_relative path then Filename.concat(Sys.g
 let check_outputs dir names =
   List.iter(fun name->let path=Filename.concat dir name in if Sys.file_exists path then failwith("refusing to overwrite existing output: "^path))names
 
-let json_summary ~module_name ~source ~host_source_bytes ~normalized_source_bytes ~analysis ~run ~rel_name ~rel_bytes ~int_name ~int_bytes ~execution_map ~provenance ~dynamic_structure ~source_seconds ~experiment ~report_timings ~serialization_seconds ~host_writes ~summary_bytes =
+let json_summary ~module_name ~source ~host_source_bytes ~normalized_source_bytes ~analysis ~run ~rel_name ~rel_bytes ~int_name ~int_bytes ~execution_map ~provenance ~dynamic_structure ~dynamic_blocks ~source_seconds ~experiment ~report_timings ~serialization_seconds ~host_writes ~summary_bytes =
   let b=Buffer.create 2048 and add=Buffer.add_string in
   add b "RUNES_PLI80_EXPERIMENT 1\n{\"module\":";add b(json_quote module_name);
   add b ",\"source\":";add b(json_quote source);
@@ -49,6 +49,9 @@ let json_summary ~module_name ~source ~host_source_bytes ~normalized_source_byte
   (match dynamic_structure with None->add b ",\"dynamic_structure\":null"|Some s->let x=Analysis.Dynamic_structure.summary s in
     Printf.bprintf b ",\"dynamic_structure\":{\"routine_candidates\":%d,\"narrative_transitions\":%d,\"aggregate_pairs\":%d,\"recursive_candidates\":%d,\"anomaly_groups\":%d,\"anomaly_observations\":%d}"
       x.routine_count x.narrative_transition_count x.aggregate_pair_count x.recursive_candidate_count x.anomaly_count x.anomaly_observation_count);
+  (match dynamic_blocks with None->add b ",\"dynamic_blocks\":null"|Some report->let x=Analysis.Dynamic_blocks.summary report in
+    Printf.bprintf b ",\"dynamic_blocks\":{\"blocks\":%d,\"instructions\":%d,\"transitions\":%d,\"backward_edge_targets\":%d,\"anomalies\":%d}"
+      x.block_count x.instruction_count x.transition_count x.backward_edge_target_count x.anomaly_count);
   let sec name value=Printf.bprintf b ",\"%s_seconds\":%.6f" name value in
   sec "input_load_normalization" source_seconds;sec "setup" experiment.Pli80.Experiment.timings.setup_seconds;
   sec "execution_and_live_analysis" experiment.timings.execution_seconds;
@@ -88,7 +91,7 @@ let run (options : options) =
     let source_seconds=Unix.gettimeofday()-.source_started in
     let targets=[module_name^".REL";module_name^".INT"] @
       (if options.report=Summary then["run-summary.json"]else[]) @
-      (if options.structure then["dynamic-structure.json"]else[]) @
+      (if options.structure then["dynamic-structure.json";"dynamic-blocks.json"]else[]) @
       (if options.report=Explorer then["provenance-report.json"]@(if options.analysis=Path then["provenance-control-report.json"]else[])else[]) @
       List.map(fun n->Printf.sprintf"slice-%04X.json"n)options.raw_slices in
     if options.report=Explorer && not(List.mem options.analysis [Data;Path]) then failwith"--report explorer requires --analysis data or path";
@@ -165,6 +168,13 @@ let run (options : options) =
        let json=Analysis.Dynamic_structure.to_json_string structure in
        save "dynamic-structure.json" (Bytes.of_string json);
        report_timings:=("dynamic_structure_serialization",Unix.gettimeofday()-.started)::!report_timings);
+    (match experiment.dynamic_blocks with
+     |None->()
+     |Some report->
+       let started=Unix.gettimeofday() in
+       let json=Analysis.Dynamic_blocks.to_json_string report in
+       save "dynamic-blocks.json" (Bytes.of_string json);
+       report_timings:=("dynamic_blocks_serialization",Unix.gettimeofday()-.started)::!report_timings);
     let summary_file=options.report=Summary in
     if summary_file then (
       let size=ref 0 and json=ref"" in
@@ -174,7 +184,7 @@ let run (options : options) =
           ~normalized_source_bytes:(Bytes.length source_compiler) ~analysis:options.analysis ~run:experiment.run
           ~rel_name:experiment.rel_name ~rel_bytes:experiment.rel_bytes ~int_name:experiment.int_name ~int_bytes:experiment.int_bytes
           ~execution_map:experiment.execution_map ~provenance:experiment.provenance
-          ~dynamic_structure:experiment.dynamic_structure ~source_seconds ~experiment
+          ~dynamic_structure:experiment.dynamic_structure ~dynamic_blocks:experiment.dynamic_blocks ~source_seconds ~experiment
           ~report_timings:(List.rev !report_timings) ~serialization_seconds:(Unix.gettimeofday()-.serialization_started)
           ~host_writes ~summary_bytes:!size;
         let next=String.length !json in if next= !size then () else size:=next
@@ -206,6 +216,18 @@ let run (options : options) =
         (Filename.concat output_dir "dynamic-structure.json")
         (match List.assoc_opt "dynamic-structure.json" !host_writes with Some n->n|None->0)
         (Option.value(List.assoc_opt "dynamic_structure_serialization" !report_timings)~default:0.)) experiment.dynamic_structure;
+    Option.iter(fun report->
+      print_string (Analysis.Dynamic_blocks.to_text report);
+      let by_image=Hashtbl.create 8 in
+      List.iter(fun (block:Analysis.Dynamic_blocks.block)->
+        let key=match block.image with Some image->image.Cpm.Filesystem.name|None->"<unresolved>" in
+        Hashtbl.replace by_image key (1+Option.value(Hashtbl.find_opt by_image key)~default:0))
+        (Analysis.Dynamic_blocks.blocks report);
+      let counts=Hashtbl.fold(fun name count acc->(name,count)::acc)by_image []|>List.sort compare in
+      Printf.printf "blocks by image: %s\nblock report: %s (%d bytes)\n"
+        (String.concat ", "(List.map(fun(name,count)->Printf.sprintf "%s=%d" name count)counts))
+        (Filename.concat output_dir "dynamic-blocks.json")
+        (match List.assoc_opt "dynamic-blocks.json" !host_writes with Some n->n|None->0)) experiment.dynamic_blocks;
     if options.report=Explorer then (
       let report_path=Filename.concat output_dir"provenance-report.json" in
       let bundle=Filename.concat output_dir"explorer-bundle" in

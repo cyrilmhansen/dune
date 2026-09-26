@@ -54,6 +54,8 @@ type anomaly_kind =
 type anomaly = { step : int; last_step : int; occurrence_count : int;
   kind : anomaly_kind; runtime_pc : int; detail : string }
 
+type step_attribution = { routine_id : routine_id; routine_entry : bool }
+
 type t
 
 type summary = {
@@ -66,6 +68,7 @@ type summary = {
 }
 
 val create : unit -> t
+val observe_step_detailed : t -> Execution_map.t -> step_index:int -> I8080.Step.t -> step_attribution
 val observe_step : t -> Execution_map.t -> step_index:int -> I8080.Step.t -> unit
 val routines : t -> routine list
 val transitions : t -> transition list
