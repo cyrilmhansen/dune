@@ -12,9 +12,12 @@ type result = {
   run:Runner.run_result;console:string;filesystem:Cpm.Filesystem.t;
   rel_name:string;rel_bytes:bytes option;int_name:string;int_bytes:bytes option;
   execution_map:Analysis.Execution_map.t option;
-  provenance:Analysis.Provenance.t option;timings:timings;
+  provenance:Analysis.Provenance.t option;
+  dynamic_structure:Analysis.Dynamic_structure.t option;
+  timings:timings;
 }
-type error = Invalid_module_name of string | Filesystem_error of Cpm.Filesystem.error | Run_error of Runner.error
+type error = Invalid_module_name of string | Filesystem_error of Cpm.Filesystem.error
+  | Run_error of Runner.error | Structure_requires_execution_map
 
 let analysis_name = function Run->"run"|Execution->"execution"|Data->"data"|Path->"path"
 let parse_analysis = function
@@ -134,9 +137,10 @@ let sha256_hex input =
   done;
   Array.to_list h |> List.map(Printf.sprintf "%08lx") |> String.concat ""
 
-let run ~analysis input =
+let run ?(structure=false) ~analysis input =
   match validate_module_name input.module_name with
   |Error _ as error->error
+  |Ok _ when structure && analysis=Run->Error Structure_requires_execution_map
   |Ok module_name->
     let setup_started=Unix.gettimeofday() in
     let filesystem=Cpm.Filesystem.create() in
@@ -148,6 +152,7 @@ let run ~analysis input =
     |Error _ as error->error
     |Ok()->
       let execution_map=match analysis with Run->None|Execution|Data|Path->Some(Analysis.Execution_map.create()) in
+      let dynamic_structure=if structure then Some(Analysis.Dynamic_structure.create()) else None in
       let provenance=match analysis with
         |Run|Execution->None
         |Data->Some(Analysis.Provenance.create ~path_control:false ())
@@ -166,9 +171,11 @@ let run ~analysis input =
           Analysis.Provenance.seed_command_tail_mapping p ~address:0x5d ~tail_offset:1
             (Bytes.sub input.command_tail 1 (Bytes.length input.command_tail-1)))provenance in
       let on_start_state=Option.map Analysis.Provenance.seed_initial_registers provenance in
-      let on_step_state=match provenance with
-        |None->None
-        |Some p->Some(fun ~step_index state step->
+      let on_step_state=match provenance,dynamic_structure with
+        |None,None->None
+        |provenance,dynamic_structure->Some(fun ~step_index state step->
+          Option.iter(fun structure->Analysis.Dynamic_structure.observe_step structure (Option.get execution_map) ~step_index step)dynamic_structure;
+          Option.iter(fun p->
           let resolve ~pc ~fetched=match execution_map with
             |None->None
             |Some map->(match Analysis.Execution_map.origin_at map pc with
@@ -178,7 +185,7 @@ let run ~analysis input =
                     <>Analysis.Execution_map.Image_byte {image;offset=offset+i} then consistent:=false)fetched;
                   if !consistent then Some{Analysis.Provenance.image;offset;runtime_pc=pc}else None
               |Analysis.Execution_map.Unknown->None) in
-          Analysis.Provenance.observe_step ~origin_at:resolve p ~step_index state step) in
+          Analysis.Provenance.observe_step ~origin_at:resolve p ~step_index state step)provenance) in
       let on_event=Option.map Analysis.Execution_map.observe_runner_event execution_map in
       let on_bdos_event=match execution_map,provenance with
         |None,None->None
@@ -196,5 +203,5 @@ let run ~analysis input =
         let rel_name,int_name=match output_names module_name with Ok names->names|Error _->assert false in
         let read name=match Cpm.Filesystem.get_file filesystem ~name () with Ok b->b|Error _->None in
         Ok{run;console=Buffer.contents console;filesystem;rel_name;rel_bytes=read rel_name;
-          int_name;int_bytes=read int_name;execution_map;provenance;
+          int_name;int_bytes=read int_name;execution_map;provenance;dynamic_structure;
           timings={setup_seconds;execution_seconds}})

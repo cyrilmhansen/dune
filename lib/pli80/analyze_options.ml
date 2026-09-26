@@ -3,7 +3,7 @@ type t = {
   toolchain:string option; source:string option; output_dir:string option;
   module_name:string option; max_steps:int; analysis:Experiment.analysis;
   report:Experiment.report; source_text:source_text; selected_rel:int list;
-  raw_slices:int list;
+  raw_slices:int list; structure:bool;
 }
 
 let usage = {|Usage: pli80-analyze --toolchain DIR --source FILE --output-dir DIR [options]
@@ -13,6 +13,7 @@ let usage = {|Usage: pli80-analyze --toolchain DIR --source FILE --output-dir DI
   --report none|summary|explorer   Select output reports (default summary)
   --select-rel OFFSET       Select explorer sink; repeatable (decimal or 0xHEX)
   --raw-slice OFFSET        Write exact slice JSON; repeatable, data/path only
+  --structure               Collect dynamic routine candidates/transitions (requires execution analysis)
   --max-steps N             Positive instruction budget (default 10000000)
   --help                    Show this help
 
@@ -37,9 +38,10 @@ let parse args =
     |"--source-text"::"cpm"::rest->go{options with source_text=Cpm}rest
     |"--source-text"::"raw"::rest->go{options with source_text=Raw}rest
     |"--source-text"::_::_->Error"--source-text must be cpm or raw"
+    |"--structure"::rest->if options.structure then Error "--structure repeated" else go{options with structure=true}rest
     |"--select-rel"::value::rest->(match Experiment.parse_offset value with Error e->Error e|Ok n->go{options with selected_rel=options.selected_rel@[n]}rest)
     |"--raw-slice"::value::rest->(match Experiment.parse_offset value with Error e->Error e|Ok n->go{options with raw_slices=(if List.mem n options.raw_slices then options.raw_slices else options.raw_slices@[n])}rest)
     |option::_->Error("unknown option "^option)
   in
   go {toolchain=None;source=None;output_dir=None;module_name=None;max_steps=10_000_000;
-    analysis=Experiment.Run;report=Experiment.Summary;source_text=Cpm;selected_rel=[];raw_slices=[]} args
+    analysis=Experiment.Run;report=Experiment.Summary;source_text=Cpm;structure=false;selected_rel=[];raw_slices=[]} args

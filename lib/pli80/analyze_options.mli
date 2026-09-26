@@ -10,6 +10,7 @@ type t = {
   source_text : source_text;
   selected_rel : int list;
   raw_slices : int list;
+  structure : bool;
 }
 
 val usage : string

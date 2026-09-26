@@ -186,6 +186,22 @@ to pay for selected-sink report projections. Exact raw slices are only written
 when `--raw-slice OFFSET` is requested. This pipeline validates source-to-REL
 compilation only; it does not LINK or execute the generated program.
 
+For a lightweight dynamic routine-structure report, add `--structure` and use
+at least `--analysis execution`:
+
+```sh
+dune exec pli80-analyze -- \
+  --toolchain ~/pli/cpm/pli80/DISK1 \
+  --source examples/pli80/FACTOR.PLI \
+  --output-dir /var/tmp/factor-structure \
+  --analysis execution --report none --structure
+```
+
+This writes `dynamic-structure.json` and prints a bounded narrative preview.
+Routine candidates are conservative runtime observations, not recovered PL/I
+procedures; report semantics and limits are documented in
+[`docs/dynamic-structure.md`](docs/dynamic-structure.md).
+
 Compile the committed syntax corpus with:
 
 ```sh

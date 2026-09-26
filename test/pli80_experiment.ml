@@ -42,13 +42,21 @@ let test_cli_options () =
     assert(options.report=Pli80.Experiment.Summary && options.source_text=O.Cpm)
    |Error _->assert false);
   (match O.parse["--analysis";"path";"--report";"explorer";"--source-text";"raw";
-      "--select-rel";"0x20";"--select-rel";"44";"--raw-slice";"0x2c0";"--raw-slice";"704";"--max-steps";"42"] with
+      "--structure";"--select-rel";"0x20";"--select-rel";"44";"--raw-slice";"0x2c0";"--raw-slice";"704";"--max-steps";"42"] with
    |Ok options->assert(options.analysis=Pli80.Experiment.Path && options.report=Pli80.Experiment.Explorer);
-     assert(options.source_text=O.Raw && options.selected_rel=[0x20;44] && options.raw_slices=[0x2c0] && options.max_steps=42)
+     assert(options.source_text=O.Raw && options.structure && options.selected_rel=[0x20;44] && options.raw_slices=[0x2c0] && options.max_steps=42)
    |Error _->assert false);
   List.iter(fun args->assert(match O.parse args with Error _->true|_->false))
     [["--max-steps";"0"];["--max-steps";"-1"];["--max-steps";"abc"];
      ["--source"];["--report";"wat"];["--analysis";"symbolic"]];
   assert(match O.parse["--source";"x";"--source";"y"] with Error _->true|_->false)
 
-let () = test_module_names(); test_source_normalization(); test_sha256(); test_offsets_and_selection(); test_cli_options()
+let test_structure_requires_map () =
+  let input={Pli80.Experiment.pli_com=Bytes.empty;pli0_ovl=Bytes.empty;pli1_ovl=Bytes.empty;
+    pli2_ovl=Bytes.empty;source_name="X.PLI";source_bytes=Bytes.empty;module_name="X";
+    command_tail=Bytes.of_string" X";max_steps=1}in
+  assert(Pli80.Experiment.run ~structure:true ~analysis:Pli80.Experiment.Run input=
+    Error Pli80.Experiment.Structure_requires_execution_map)
+
+let () = test_module_names(); test_source_normalization(); test_sha256(); test_offsets_and_selection();
+  test_cli_options();test_structure_requires_map()

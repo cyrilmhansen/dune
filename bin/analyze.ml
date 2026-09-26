@@ -33,7 +33,7 @@ let absolute_path path = if Filename.is_relative path then Filename.concat(Sys.g
 let check_outputs dir names =
   List.iter(fun name->let path=Filename.concat dir name in if Sys.file_exists path then failwith("refusing to overwrite existing output: "^path))names
 
-let json_summary ~module_name ~source ~host_source_bytes ~normalized_source_bytes ~analysis ~run ~rel_name ~rel_bytes ~int_name ~int_bytes ~execution_map ~provenance ~source_seconds ~experiment ~report_timings ~serialization_seconds ~host_writes ~summary_bytes =
+let json_summary ~module_name ~source ~host_source_bytes ~normalized_source_bytes ~analysis ~run ~rel_name ~rel_bytes ~int_name ~int_bytes ~execution_map ~provenance ~dynamic_structure ~source_seconds ~experiment ~report_timings ~serialization_seconds ~host_writes ~summary_bytes =
   let b=Buffer.create 2048 and add=Buffer.add_string in
   add b "RUNES_PLI80_EXPERIMENT 1\n{\"module\":";add b(json_quote module_name);
   add b ",\"source\":";add b(json_quote source);
@@ -46,6 +46,9 @@ let json_summary ~module_name ~source ~host_source_bytes ~normalized_source_byte
   file "rel" rel_bytes;file "int" int_bytes;
   (match execution_map with None->add b ",\"execution_map\":null"|Some map->let s=Analysis.Execution_map.summary map in Printf.bprintf b ",\"execution_map\":{\"steps\":%d,\"attributed\":%d,\"unknown\":%d,\"mixed\":%d}" s.total_instruction_executions s.attributed_instruction_executions s.unknown_executions s.mixed_or_unresolved_executions);
   (match provenance with None->add b ",\"provenance\":null"|Some p->Printf.bprintf b ",\"provenance\":{\"nodes\":%d,\"edges\":%d,\"path_decisions\":%d,\"control_relations\":%d}" (Analysis.Provenance.node_count p)(Analysis.Provenance.edge_count p)(Analysis.Provenance.control_decision_count p)(Analysis.Provenance.control_relation_count p));
+  (match dynamic_structure with None->add b ",\"dynamic_structure\":null"|Some s->let x=Analysis.Dynamic_structure.summary s in
+    Printf.bprintf b ",\"dynamic_structure\":{\"routine_candidates\":%d,\"narrative_transitions\":%d,\"aggregate_pairs\":%d,\"recursive_candidates\":%d,\"anomaly_groups\":%d,\"anomaly_observations\":%d}"
+      x.routine_count x.narrative_transition_count x.aggregate_pair_count x.recursive_candidate_count x.anomaly_count x.anomaly_observation_count);
   let sec name value=Printf.bprintf b ",\"%s_seconds\":%.6f" name value in
   sec "input_load_normalization" source_seconds;sec "setup" experiment.Pli80.Experiment.timings.setup_seconds;
   sec "execution_and_live_analysis" experiment.timings.execution_seconds;
@@ -63,6 +66,7 @@ let error_text = function
     |Runner.Load_error _->"COM load failed"|Cpu_error _->"CPU error"|Bdos_error _->"BDOS error"
     |Step_limit_exceeded{max_steps;steps}->Printf.sprintf"instruction budget exhausted at %d/%d"steps max_steps
     |Invalid_step_limit _->"invalid step limit"|Invalid_command_tail _->"invalid command tail")
+  |Structure_requires_execution_map->"--structure requires --analysis execution, data, or path"
 
 let run (options : options) =
   let total_started=Unix.gettimeofday() in
@@ -84,15 +88,17 @@ let run (options : options) =
     let source_seconds=Unix.gettimeofday()-.source_started in
     let targets=[module_name^".REL";module_name^".INT"] @
       (if options.report=Summary then["run-summary.json"]else[]) @
+      (if options.structure then["dynamic-structure.json"]else[]) @
       (if options.report=Explorer then["provenance-report.json"]@(if options.analysis=Path then["provenance-control-report.json"]else[])else[]) @
       List.map(fun n->Printf.sprintf"slice-%04X.json"n)options.raw_slices in
     if options.report=Explorer && not(List.mem options.analysis [Data;Path]) then failwith"--report explorer requires --analysis data or path";
+    if options.structure && options.analysis=Run then failwith"--structure requires --analysis execution, data, or path";
     if options.raw_slices<>[] && not(List.mem options.analysis [Data;Path]) then failwith"--raw-slice requires --analysis data or path";
     mkdir output_dir;check_outputs output_dir targets;
     let command_tail=Bytes.of_string(" "^module_name) in
     let input={Pli80.Experiment.pli_com;pli0_ovl=pli0;pli1_ovl=pli1;pli2_ovl=pli2;
       source_name=module_name^".PLI";source_bytes=source_compiler;module_name;command_tail;max_steps=options.max_steps} in
-    let experiment=match Pli80.Experiment.run ~analysis:options.analysis input with Ok x->x|Error e->failwith(error_text e) in
+    let experiment=match Pli80.Experiment.run ~structure:options.structure ~analysis:options.analysis input with Ok x->x|Error e->failwith(error_text e) in
     print_string experiment.console;
     flush stdout;
     if experiment.run.termination<>Runner.Warm_boot
@@ -152,6 +158,13 @@ let run (options : options) =
       let channel=open_out_bin path in ch:=Some channel;
       Fun.protect ~finally:(fun()->close_out(Option.get !ch))(fun()->Analysis.Provenance.write_slice_json channel p ~roots:[observation.root]);
       let bytes=(Unix.stat path).Unix.st_size in host_writes:=(name,bytes)::!host_writes) options.raw_slices;
+    (match experiment.dynamic_structure with
+     |None->()
+     |Some structure->
+       let started=Unix.gettimeofday() in
+       let json=Analysis.Dynamic_structure.to_json_string structure in
+       save "dynamic-structure.json" (Bytes.of_string json);
+       report_timings:=("dynamic_structure_serialization",Unix.gettimeofday()-.started)::!report_timings);
     let summary_file=options.report=Summary in
     if summary_file then (
       let size=ref 0 and json=ref"" in
@@ -160,7 +173,8 @@ let run (options : options) =
         json:=json_summary ~module_name ~source:source_path ~host_source_bytes:(Bytes.length source_host)
           ~normalized_source_bytes:(Bytes.length source_compiler) ~analysis:options.analysis ~run:experiment.run
           ~rel_name:experiment.rel_name ~rel_bytes:experiment.rel_bytes ~int_name:experiment.int_name ~int_bytes:experiment.int_bytes
-          ~execution_map:experiment.execution_map ~provenance:experiment.provenance ~source_seconds ~experiment
+          ~execution_map:experiment.execution_map ~provenance:experiment.provenance
+          ~dynamic_structure:experiment.dynamic_structure ~source_seconds ~experiment
           ~report_timings:(List.rev !report_timings) ~serialization_seconds:(Unix.gettimeofday()-.serialization_started)
           ~host_writes ~summary_bytes:!size;
         let next=String.length !json in if next= !size then () else size:=next
@@ -186,6 +200,12 @@ let run (options : options) =
       (List.fold_left(fun n (name,v)->if name="execution_report_projection"||name="data_report_projection"||name="path_control_projection" then n+.v else n)0. !report_timings) serialization_seconds total_seconds;
     Printf.printf"host bytes written: %d (guest CP/M writes were memory-backed and are excluded)\n"
       (List.fold_left(fun n (_,size)->n+size)0 !host_writes);
+    Option.iter(fun structure->
+      print_string (Analysis.Dynamic_structure.to_text ~limit:20 structure);
+      Printf.printf "structure report: %s (%d bytes)\nstructure serialization: %.3f s (live observation is included in execution+analysis)\n"
+        (Filename.concat output_dir "dynamic-structure.json")
+        (match List.assoc_opt "dynamic-structure.json" !host_writes with Some n->n|None->0)
+        (Option.value(List.assoc_opt "dynamic_structure_serialization" !report_timings)~default:0.)) experiment.dynamic_structure;
     if options.report=Explorer then (
       let report_path=Filename.concat output_dir"provenance-report.json" in
       let bundle=Filename.concat output_dir"explorer-bundle" in
