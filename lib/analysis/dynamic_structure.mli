@@ -54,7 +54,22 @@ type anomaly_kind =
 type anomaly = { step : int; last_step : int; occurrence_count : int;
   kind : anomaly_kind; runtime_pc : int; detail : string }
 
-type step_attribution = { routine_id : routine_id; routine_entry : bool }
+type identity = { image : Execution_map.image_id option; offset : int option; pc : int }
+type transfer_kind = Jump_transfer | Call_transfer | Return_transfer | Restart_transfer
+type transfer_site = { owner : routine_id; source : identity; target_pc : int; transfer : transfer_kind }
+type audit_event =
+  | Known_entry_jump of { step : int; owner : routine_id; source : identity;
+      target_candidate : routine_id; target : identity; sp_before : int option; sp_after : int option }
+  | Known_entry_under_other_owner of { step : int; owner : routine_id; target_candidate : routine_id;
+      target : identity; transfer : transfer_site option }
+  | Known_image_under_other_owner of { step : int; owner : routine_id; target_candidate : routine_id option;
+      target : identity; transfer : transfer_site option }
+  | Return_target_mismatch_detail of { step : int; active_routine : routine_id; expected_caller : routine_id;
+      expected_return_pc : int; observed_return_target : int option; active_image : Execution_map.image_id option;
+      caller_image : Execution_map.image_id option; expected_image : Execution_map.image_id option;
+      observed_image : Execution_map.image_id option }
+
+type step_attribution = { routine_id : routine_id; routine_entry : bool; audit_events : audit_event list }
 
 type t
 
@@ -68,7 +83,8 @@ type summary = {
 }
 
 val create : unit -> t
-val observe_step_detailed : t -> Execution_map.t -> step_index:int -> I8080.Step.t -> step_attribution
+val observe_step_detailed : ?sp_before:int -> ?sp_after:int -> t -> Execution_map.t ->
+  step_index:int -> I8080.Step.t -> step_attribution
 val observe_step : t -> Execution_map.t -> step_index:int -> I8080.Step.t -> unit
 val routines : t -> routine list
 val transitions : t -> transition list

@@ -26,6 +26,7 @@ type result = {
   provenance : Analysis.Provenance.t option;
   dynamic_structure : Analysis.Dynamic_structure.t option;
   dynamic_blocks : Analysis.Dynamic_blocks.report option;
+  ownership_audit : Analysis.Ownership_audit.t option;
   timings : timings;
 }
 

@@ -33,7 +33,7 @@ let absolute_path path = if Filename.is_relative path then Filename.concat(Sys.g
 let check_outputs dir names =
   List.iter(fun name->let path=Filename.concat dir name in if Sys.file_exists path then failwith("refusing to overwrite existing output: "^path))names
 
-let json_summary ~module_name ~source ~host_source_bytes ~normalized_source_bytes ~analysis ~run ~rel_name ~rel_bytes ~int_name ~int_bytes ~execution_map ~provenance ~dynamic_structure ~dynamic_blocks ~source_seconds ~experiment ~report_timings ~serialization_seconds ~host_writes ~summary_bytes =
+let json_summary ~module_name ~source ~host_source_bytes ~normalized_source_bytes ~analysis ~run ~rel_name ~rel_bytes ~int_name ~int_bytes ~execution_map ~provenance ~dynamic_structure ~dynamic_blocks ~ownership_audit ~source_seconds ~experiment ~report_timings ~serialization_seconds ~host_writes ~summary_bytes =
   let b=Buffer.create 2048 and add=Buffer.add_string in
   add b "RUNES_PLI80_EXPERIMENT 1\n{\"module\":";add b(json_quote module_name);
   add b ",\"source\":";add b(json_quote source);
@@ -52,6 +52,10 @@ let json_summary ~module_name ~source ~host_source_bytes ~normalized_source_byte
   (match dynamic_blocks with None->add b ",\"dynamic_blocks\":null"|Some report->let x=Analysis.Dynamic_blocks.summary report in
     Printf.bprintf b ",\"dynamic_blocks\":{\"blocks\":%d,\"instructions\":%d,\"transitions\":%d,\"backward_edge_targets\":%d,\"anomalies\":%d}"
       x.block_count x.instruction_count x.transition_count x.backward_edge_target_count x.anomaly_count);
+  (match ownership_audit with None->add b ",\"ownership_audit\":null"|Some audit->let x=Analysis.Ownership_audit.summary audit in
+    Printf.bprintf b ",\"ownership_audit\":{\"known_entry_jmp_sites\":%d,\"known_entry_jmp_observations\":%d,\"source_target_candidate_pairs\":%d,\"multi_owner_coordinates\":%d,\"ownership_conflict_observations\":%d,\"return_mismatches\":%d}"
+      x.known_entry_jmp_sites x.known_entry_jmp_observations x.source_target_candidate_pairs
+      x.multi_owner_coordinate_count x.ownership_conflict_observations x.return_mismatch_observations);
   let sec name value=Printf.bprintf b ",\"%s_seconds\":%.6f" name value in
   sec "input_load_normalization" source_seconds;sec "setup" experiment.Pli80.Experiment.timings.setup_seconds;
   sec "execution_and_live_analysis" experiment.timings.execution_seconds;
@@ -91,7 +95,7 @@ let run (options : options) =
     let source_seconds=Unix.gettimeofday()-.source_started in
     let targets=[module_name^".REL";module_name^".INT"] @
       (if options.report=Summary then["run-summary.json"]else[]) @
-      (if options.structure then["dynamic-structure.json";"dynamic-blocks.json"]else[]) @
+      (if options.structure then["dynamic-structure.json";"dynamic-blocks.json";"dynamic-ownership-audit.json"]else[]) @
       (if options.report=Explorer then["provenance-report.json"]@(if options.analysis=Path then["provenance-control-report.json"]else[])else[]) @
       List.map(fun n->Printf.sprintf"slice-%04X.json"n)options.raw_slices in
     if options.report=Explorer && not(List.mem options.analysis [Data;Path]) then failwith"--report explorer requires --analysis data or path";
@@ -184,7 +188,8 @@ let run (options : options) =
           ~normalized_source_bytes:(Bytes.length source_compiler) ~analysis:options.analysis ~run:experiment.run
           ~rel_name:experiment.rel_name ~rel_bytes:experiment.rel_bytes ~int_name:experiment.int_name ~int_bytes:experiment.int_bytes
           ~execution_map:experiment.execution_map ~provenance:experiment.provenance
-          ~dynamic_structure:experiment.dynamic_structure ~dynamic_blocks:experiment.dynamic_blocks ~source_seconds ~experiment
+          ~dynamic_structure:experiment.dynamic_structure ~dynamic_blocks:experiment.dynamic_blocks
+          ~ownership_audit:experiment.ownership_audit ~source_seconds ~experiment
           ~report_timings:(List.rev !report_timings) ~serialization_seconds:(Unix.gettimeofday()-.serialization_started)
           ~host_writes ~summary_bytes:!size;
         let next=String.length !json in if next= !size then () else size:=next
@@ -228,6 +233,44 @@ let run (options : options) =
         (String.concat ", "(List.map(fun(name,count)->Printf.sprintf "%s=%d" name count)counts))
         (Filename.concat output_dir "dynamic-blocks.json")
         (match List.assoc_opt "dynamic-blocks.json" !host_writes with Some n->n|None->0)) experiment.dynamic_blocks;
+    (match experiment.ownership_audit with
+     |None->()
+     |Some audit->
+       let started=Unix.gettimeofday() in
+       let json=Analysis.Ownership_audit.to_json_string ?blocks:experiment.dynamic_blocks audit in
+       save "dynamic-ownership-audit.json" (Bytes.of_string json);
+       report_timings:=("ownership_audit_serialization",Unix.gettimeofday()-.started)::!report_timings;
+       let s=Analysis.Ownership_audit.summary audit in
+       Printf.printf "ownership audit: known-entry JMP sites=%d observations=%d source/target pairs=%d\n"
+         s.known_entry_jmp_sites s.known_entry_jmp_observations s.source_target_candidate_pairs;
+       Printf.printf "  multi-owner image coordinates=%d; owner-conflict observations=%d; return mismatches=%d\n"
+         s.multi_owner_coordinate_count s.ownership_conflict_observations s.return_mismatch_observations;
+       List.iter(fun (impact:Analysis.Ownership_audit.routine_impact)->
+         if impact.routine_id=403 || impact.routine_id=458 then
+           Printf.printf "  R%03d implicated: %d instructions / %s blocks\n" impact.routine_id
+             impact.multi_owner_instructions (match impact.multi_owner_blocks with None->"unknown"|Some n->string_of_int n))
+         (Analysis.Ownership_audit.routine_impacts audit experiment.dynamic_blocks);
+       let identity (id:Analysis.Dynamic_structure.identity)=
+         let image=Option.fold ~none:"?" ~some:(fun k->k.Cpm.Filesystem.name) id.image in
+         let offset=Option.fold ~none:"????" ~some:(Printf.sprintf "%04X") id.offset in
+         Printf.sprintf "%s+%s@%04Xh" image offset id.pc in
+       let examples=Analysis.Ownership_audit.example_events audit in
+       print_endline "  bounded transfer examples:";
+       examples |> List.filteri(fun i _->i<8) |> List.iter(function
+         |Analysis.Dynamic_structure.Known_entry_jump e->Printf.printf "    %d R%03d JMP %s -> R%03d %s SP=%s/%s\n"
+             e.step e.owner (identity e.source) e.target_candidate (identity e.target)
+             (Option.fold ~none:"?" ~some:(Printf.sprintf "%04X") e.sp_before)
+             (Option.fold ~none:"?" ~some:(Printf.sprintf "%04X") e.sp_after)
+         |Known_entry_under_other_owner e->Printf.printf "    step %d: R%03d owns known R%03d at %s\n"
+             e.step e.owner e.target_candidate (identity e.target)
+         |Known_image_under_other_owner e->Printf.printf "    step %d: R%03d remains owner at %s (candidate %s)\n"
+             e.step e.owner (identity e.target) (Option.fold ~none:"?" ~some:(Printf.sprintf "R%03d") e.target_candidate)
+         |Return_target_mismatch_detail e->Printf.printf "    step %d: active R%03d expected R%03d/%04X observed %s\n"
+             e.step e.active_routine e.expected_caller e.expected_return_pc
+             (Option.fold ~none:"?" ~some:(Printf.sprintf "%04X") e.observed_return_target));
+       let report_size=Option.value(List.assoc_opt "dynamic-ownership-audit.json" !host_writes)~default:0 in
+       Printf.printf "ownership audit report: %s (%d bytes)\n"
+         (Filename.concat output_dir "dynamic-ownership-audit.json") report_size);
     if options.report=Explorer then (
       let report_path=Filename.concat output_dir"provenance-report.json" in
       let bundle=Filename.concat output_dir"explorer-bundle" in

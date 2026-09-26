@@ -19,11 +19,24 @@ type narrative_entry = { ordinal:int; source:int; target:int; first_step:int; fi
 type anomaly_kind = Return_without_call | Return_target_mismatch | Jump_into_known_entry
   | Image_entry_without_transfer | Image_change_without_new_entry | Unknown_instruction_origin
 type anomaly = { step:int; last_step:int; occurrence_count:int; kind:anomaly_kind; runtime_pc:int; detail:string }
-type step_attribution = { routine_id:int; routine_entry:bool }
+type identity = { image:Execution_map.image_id option; offset:int option; pc:int }
+type transfer_kind = Jump_transfer | Call_transfer | Return_transfer | Restart_transfer
+type transfer_site = { owner:int; source:identity; target_pc:int; transfer:transfer_kind }
+type audit_event =
+  | Known_entry_jump of { step:int; owner:int; source:identity; target_candidate:int;
+      target:identity; sp_before:int option; sp_after:int option }
+  | Known_entry_under_other_owner of { step:int; owner:int; target_candidate:int;
+      target:identity; transfer:transfer_site option }
+  | Known_image_under_other_owner of { step:int; owner:int; target_candidate:int option; target:identity;
+      transfer:transfer_site option }
+  | Return_target_mismatch_detail of { step:int; active_routine:int; expected_caller:int;
+      expected_return_pc:int; observed_return_target:int option; active_image:Execution_map.image_id option;
+      caller_image:Execution_map.image_id option; expected_image:Execution_map.image_id option;
+      observed_image:Execution_map.image_id option }
+type step_attribution = { routine_id:int; routine_entry:bool; audit_events:audit_event list }
 type summary = { routine_count:int; narrative_transition_count:int; aggregate_pair_count:int;
   recursive_candidate_count:int; anomaly_count:int; anomaly_observation_count:int }
 
-type identity = { image:Execution_map.image_id option; offset:int option; pc:int }
 type routine_acc = {
   id:int; identity:identity; mutable tags:tag list; mutable first_step:int option;
   mutable last_step:int option; mutable executions:int; starts:(identity,unit)Hashtbl.t;
@@ -33,7 +46,8 @@ type pair_acc = { source:int; target:int; mutable count:int; first:int; mutable 
   mutable kinds:transition_kind list }
 type anomaly_acc = { first:int; mutable last:int; mutable count:int; kind:anomaly_kind; pc:int; detail:string }
 type frame = { caller:int; return_pc:int }
-type pending = { source:int; target_pc:int; real_transfer:bool }
+type pending = { source:int; source_identity:identity; target_pc:int; real_transfer:bool;
+  transfer_kind:transfer_kind option }
 type t = {
   by_identity:(identity,int)Hashtbl.t; by_id:(int,routine_acc)Hashtbl.t;
   mutable routines_rev:routine_acc list; pairs:((int*int),pair_acc)Hashtbl.t;
@@ -95,16 +109,30 @@ let add_transition t ~step ~source ~target ~kind =
 
 let set_current t r = t.current<-Some r.id
 
-let observe_step_detailed t map ~step_index step =
+let observe_step_detailed ?sp_before ?sp_after t map ~step_index step =
   let pc=I8080.Step.pc_before step in
   let here=identity_at map pc in
   let active=Option.bind t.current(fun id->Hashtbl.find_opt t.by_id id) in
+  let incoming_transfer=t.pending in
+  let audit_events=ref [] in
+  let emit event=audit_events:=event::!audit_events in
+  let transfer_site pending = if pending.real_transfer && pending.target_pc=pc then
+    Some{owner=pending.source;source=pending.source_identity;target_pc=pending.target_pc;
+      transfer=Option.value pending.transfer_kind ~default:Jump_transfer}
+    else None in
+  let known_here=Hashtbl.find_opt t.by_identity here in
+  (match active,known_here with
+   |Some owner,Some candidate when owner.id<>candidate && owner.identity.image=here.image->
+       emit(Known_entry_under_other_owner{step=step_index;owner=owner.id;target_candidate=candidate;
+         target=here;transfer=Option.bind incoming_transfer transfer_site})
+   |_->());
   (match active,here.image with
    |Some current,Some image when not(Hashtbl.mem t.seen_images image) && current.identity.image=Some image ->
        add_tag current Image_entry_tag
    |Some current,Some image when current.identity.image<>Some image && not(Hashtbl.mem t.seen_images image)->
        let entered=get_routine t here in add_tag entered Image_entry_tag;
-       let transfer=Option.value t.pending ~default:{source=current.id;target_pc=(-1);real_transfer=false} in
+       let transfer=Option.value t.pending ~default:{source=current.id;source_identity=current.identity;
+         target_pc=(-1);real_transfer=false;transfer_kind=None} in
        if transfer.real_transfer && transfer.target_pc=pc then
          add_transition t ~step:step_index ~source:transfer.source ~target:entered.id ~kind:Image_entry
        else add_anomaly t ~step:step_index ~kind:Image_entry_without_transfer ~runtime_pc:pc
@@ -112,8 +140,10 @@ let observe_step_detailed t map ~step_index step =
        set_current t entered
    |Some current,Some image when current.identity.image<>Some image ->
        if here.image<>current.identity.image then
-         add_anomaly t ~step:step_index ~kind:Image_change_without_new_entry ~runtime_pc:pc
-           "execution entered an already observed image outside a known candidate entry"
+         (add_anomaly t ~step:step_index ~kind:Image_change_without_new_entry ~runtime_pc:pc
+            "execution entered an already observed image outside a known candidate entry";
+          emit(Known_image_under_other_owner{step=step_index;owner=current.id;target_candidate=known_here;
+            target=here;transfer=Option.bind incoming_transfer transfer_site}))
    |_->());
   let r=match t.current with
     |Some id->Hashtbl.find t.by_id id
@@ -130,6 +160,8 @@ let observe_step_detailed t map ~step_index step =
   let next_pc=I8080.Step.pc_after step in
   let instruction_bytes=I8080.Step.fetched_bytes step in
   let return_pc=(pc+Bytes.length instruction_bytes)land 0xffff in
+  let make_pending ?(real_transfer=true) ?transfer_kind target_pc =
+    {source=r.id;source_identity=here;target_pc;real_transfer;transfer_kind} in
   (match control with
   |I8080.Step.Call{target;taken=true}->
       let callee=get_routine t (identity_at map target) in add_tag callee Called;callee.calls<-callee.calls+1;
@@ -137,23 +169,31 @@ let observe_step_detailed t map ~step_index step =
       if callee.id=r.id then (callee.self_calls<-callee.self_calls+1;add_tag callee Recursive)
       else add_transition t ~step:step_index ~source:r.id ~target:callee.id ~kind:Call;
       t.stack<-{caller=r.id;return_pc}::t.stack;set_current t callee;
-      t.pending<-Some{source=r.id;target_pc=target;real_transfer=true}
+      t.pending<-Some(make_pending ~transfer_kind:Call_transfer target)
   |I8080.Step.Call{target;taken=false}->
-      t.pending<-Some{source=r.id;target_pc=next_pc;real_transfer=false}
+      t.pending<-Some(make_pending ~real_transfer:false ~transfer_kind:Call_transfer next_pc)
   |I8080.Step.Restart{target}->
       let callee=get_routine t (identity_at map target) in add_tag callee Called;callee.calls<-callee.calls+1;
       if callee.identity.image=None then add_tag callee Unresolved_origin;
       if callee.id=r.id then (callee.self_calls<-callee.self_calls+1;add_tag callee Recursive)
       else add_transition t ~step:step_index ~source:r.id ~target:callee.id ~kind:Restart;
       t.stack<-{caller=r.id;return_pc}::t.stack;set_current t callee;
-      t.pending<-Some{source=r.id;target_pc=target;real_transfer=true}
+      t.pending<-Some(make_pending ~transfer_kind:Restart_transfer target)
   |I8080.Step.Return{target;taken=true}->
       r.returns<-r.returns+1;add_tag r Returns;
       (match t.stack with
        |frame::rest->
            t.stack<-rest;
-           if target<>Some frame.return_pc then add_anomaly t ~step:step_index ~kind:Return_target_mismatch ~runtime_pc:pc
-             (Printf.sprintf "return target %s, expected %04Xh; restoring observed caller" (match target with None->"unknown"|Some x->Printf.sprintf "%04Xh" x) frame.return_pc);
+           if target<>Some frame.return_pc then (
+             add_anomaly t ~step:step_index ~kind:Return_target_mismatch ~runtime_pc:pc
+               (Printf.sprintf "return target %s, expected %04Xh; restoring observed caller" (match target with None->"unknown"|Some x->Printf.sprintf "%04Xh" x) frame.return_pc);
+             let caller=Hashtbl.find t.by_id frame.caller in
+             let expected=identity_at map frame.return_pc in
+             let observed=Option.map(identity_at map)target in
+             emit(Return_target_mismatch_detail{step=step_index;active_routine=r.id;expected_caller=frame.caller;
+               expected_return_pc=frame.return_pc;observed_return_target=target;active_image=r.identity.image;
+               caller_image=caller.identity.image;expected_image=expected.image;
+               observed_image=Option.bind observed(fun x->x.image)}));
            add_transition t ~step:step_index ~source:r.id ~target:frame.caller ~kind:Return;
            t.current<-Some frame.caller
        |[]->
@@ -162,17 +202,21 @@ let observe_step_detailed t map ~step_index step =
              let dest=identity_at map target_pc in
              (match Hashtbl.find_opt t.by_identity dest with Some id->add_transition t ~step:step_index ~source:r.id ~target:id ~kind:Return;t.current<-Some id|None->())
             |None->()));
-      t.pending<-Some{source=r.id;target_pc=Option.value target ~default:next_pc;real_transfer=true}
+      t.pending<-Some(make_pending ~transfer_kind:Return_transfer(Option.value target ~default:next_pc))
   |I8080.Step.Jump{target;taken=true}->
       (match Hashtbl.find_opt t.by_identity(identity_at map target)with
-       |Some dest when dest<>r.id->add_transition t ~step:step_index ~source:r.id ~target:dest ~kind:Other_observed;
-         add_anomaly t ~step:step_index ~kind:Jump_into_known_entry ~runtime_pc:pc
-           (Printf.sprintf "taken jump targets known routine R%03d; active routine stack is unchanged" dest)
+       |Some dest->
+         let target_identity=identity_at map target in
+         emit(Known_entry_jump{step=step_index;owner=r.id;source=here;target_candidate=dest;
+           target=target_identity;sp_before;sp_after});
+         if dest<>r.id then (add_transition t ~step:step_index ~source:r.id ~target:dest ~kind:Other_observed;
+           add_anomaly t ~step:step_index ~kind:Jump_into_known_entry ~runtime_pc:pc
+             (Printf.sprintf "taken jump targets known routine R%03d; active routine stack is unchanged" dest))
        |_->());
-      t.pending<-Some{source=r.id;target_pc=target;real_transfer=true}
-  |I8080.Step.Jump{target;taken=false}->t.pending<-Some{source=r.id;target_pc=next_pc;real_transfer=false}
+      t.pending<-Some(make_pending ~transfer_kind:Jump_transfer target)
+  |I8080.Step.Jump{target;taken=false}->t.pending<-Some(make_pending ~real_transfer:false ~transfer_kind:Jump_transfer next_pc)
   |_->());
-  {routine_id=r.id;routine_entry=(r.identity=here)}
+  {routine_id=r.id;routine_entry=(r.identity=here);audit_events=List.rev !audit_events}
 
 let observe_step t map ~step_index step =
   ignore (observe_step_detailed t map ~step_index step)

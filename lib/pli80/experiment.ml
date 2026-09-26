@@ -15,6 +15,7 @@ type result = {
   provenance:Analysis.Provenance.t option;
   dynamic_structure:Analysis.Dynamic_structure.t option;
   dynamic_blocks:Analysis.Dynamic_blocks.report option;
+  ownership_audit:Analysis.Ownership_audit.t option;
   timings:timings;
 }
 type error = Invalid_module_name of string | Filesystem_error of Cpm.Filesystem.error
@@ -155,6 +156,7 @@ let run ?(structure=false) ~analysis input =
       let execution_map=match analysis with Run->None|Execution|Data|Path->Some(Analysis.Execution_map.create()) in
       let dynamic_structure=if structure then Some(Analysis.Dynamic_structure.create()) else None in
       let dynamic_blocks_builder=if structure then Some(Analysis.Dynamic_blocks.create()) else None in
+      let ownership_audit=if structure then Some(Analysis.Ownership_audit.create()) else None in
       let provenance=match analysis with
         |Run|Execution->None
         |Data->Some(Analysis.Provenance.create ~path_control:false ())
@@ -172,12 +174,20 @@ let run ?(structure=false) ~analysis input =
         if Bytes.length input.command_tail>1 then
           Analysis.Provenance.seed_command_tail_mapping p ~address:0x5d ~tail_offset:1
             (Bytes.sub input.command_tail 1 (Bytes.length input.command_tail-1)))provenance in
-      let on_start_state=Option.map Analysis.Provenance.seed_initial_registers provenance in
+      let last_sp=ref None in
+      let on_start_state=if provenance=None && dynamic_structure=None then None else Some(fun state->
+        Option.iter(fun p->Analysis.Provenance.seed_initial_registers p state) provenance;
+        if dynamic_structure<>None then last_sp:=Some state.Runner.sp) in
       let on_step_state=match provenance,dynamic_structure,dynamic_blocks_builder with
         |None,None,None->None
         |provenance,dynamic_structure,dynamic_blocks_builder->Some(fun ~step_index state step->
           let attribution=Option.map(fun structure->
-            Analysis.Dynamic_structure.observe_step_detailed structure (Option.get execution_map) ~step_index step)dynamic_structure in
+            Analysis.Dynamic_structure.observe_step_detailed ?sp_before:!last_sp ~sp_after:state.Runner.sp
+              structure (Option.get execution_map) ~step_index step)dynamic_structure in
+          (match ownership_audit,attribution with
+           |Some audit,Some attribution->Analysis.Ownership_audit.observe_step audit (Option.get execution_map)
+               ~routine_id:attribution.routine_id ~step_index step attribution.audit_events
+           |_->());
           (match dynamic_blocks_builder,attribution with
            |Some blocks,Some attribution->Analysis.Dynamic_blocks.observe_step blocks (Option.get execution_map)
                ~routine_id:attribution.routine_id ~routine_entry:attribution.routine_entry ~step_index step
@@ -192,7 +202,8 @@ let run ?(structure=false) ~analysis input =
                     <>Analysis.Execution_map.Image_byte {image;offset=offset+i} then consistent:=false)fetched;
                   if !consistent then Some{Analysis.Provenance.image;offset;runtime_pc=pc}else None
               |Analysis.Execution_map.Unknown->None) in
-          Analysis.Provenance.observe_step ~origin_at:resolve p ~step_index state step)provenance) in
+          Analysis.Provenance.observe_step ~origin_at:resolve p ~step_index state step)provenance;
+          if dynamic_structure<>None then last_sp:=Some state.Runner.sp) in
       let on_event=Option.map Analysis.Execution_map.observe_runner_event execution_map in
       let on_bdos_event=match execution_map,provenance with
         |None,None->None
@@ -213,5 +224,5 @@ let run ?(structure=false) ~analysis input =
           |Some structure,Some blocks->Some(Analysis.Dynamic_blocks.materialize blocks (Analysis.Dynamic_structure.routines structure))
           |_->None in
         Ok{run;console=Buffer.contents console;filesystem;rel_name;rel_bytes=read rel_name;
-          int_name;int_bytes=read int_name;execution_map;provenance;dynamic_structure;dynamic_blocks;
+          int_name;int_bytes=read int_name;execution_map;provenance;dynamic_structure;dynamic_blocks;ownership_audit;
           timings={setup_seconds;execution_seconds}})
