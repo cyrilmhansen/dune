@@ -1,0 +1,82 @@
+{
+  "schema": "RUNES_PLM80_ORACLE_EXPERIMENT 1",
+  "experiment_id": "v4-three-byte-parameters",
+  "question": "How does ISIS-II PL/M-80 V4.0 pass three BYTE parameters when two register argument positions are available?",
+  "toolchain": {
+    "simulator": "z80pack Intel Intellec MDS-800 Simulator Release 1.39",
+    "operating_system": "ISIS-II V4.3",
+    "compiler_reported": "ISIS-II PL/M-80 Compiler V4.0",
+    "compiler_console_banner": "ISIS-II PL/M-80 COMPILER V4.0",
+    "linker": "ISIS-II Object Linker V3.0",
+    "locator": "ISIS-II Object Locater V3.0",
+    "toolchain_disk_recipe_note": "The local isis-ii-43.dsk recipe labels PLM80 and OV0-OV4 V4.0 and OV5-OV6 V3.1. This experiment did not trace individual overlay opens; actual overlay provenance/use remains unresolved."
+  },
+  "input_hashes": {
+    "THREEB.PLM": {
+      "bytes": 107,
+      "sha256": "9116ecb6b1548a2e8ee8f0f8b31407af8529d954af8135bde15c301becf39480",
+      "line_endings": "CRLF"
+    },
+    "source_disk_images": {
+      "disks/library/isis-ii-43.dsk": "a335f169dd44de5d860911b1c3ae5b1f2804a686d78074139b1838840def27db",
+      "disks/library/hd-isis-sys.dsk": "c3ee6937b302ccfc9fa9a66a928d9365dab0cf66fc4178b71dc482acf876492a",
+      "disks/library/hd-isis-usr.dsk": "da1d122e65cd1a6701668b51dd8941bca762eb33a8828c82b408157242dcaa88"
+    }
+  },
+  "commands": [
+    "COPY :CI: TO :F0:THREEB.PLM",
+    "PLM80 :F0:THREEB.PLM DEBUG XREF",
+    "LINK :F0:THREEB.OBJ TO :F0:THREEB.SAT MAP PRINT(:F0:THREEB.LMP)",
+    "LOCATE :F0:THREEB.SAT TO :F0:THREEB.LOC MAP PRINT(:F0:THREEB.MAP)",
+    "OBJHEX :F0:THREEB.LOC TO :F0:THREEB.HEX",
+    "DIR FOR THREEB.*"
+  ],
+  "artifacts": {
+    "THREEB.LST": {"bytes": 1322, "sha256": "65306c3452b046c5eb5bd1d42787a90c81a38c9437ece99d445551ca2537801f"},
+    "THREEB.OBJ": {"bytes": 183, "sha256": "a43bde98290ffa4f7062ef7b2fa2a27a4d9c327f755588ca7b73ed7fa5cd2260"},
+    "THREEB.SAT": {"bytes": 191, "sha256": "a56e8c2280eaeaaa2ca719f89469fab9e4f623bb60625bf07240479ae2398c4f"},
+    "THREEB.LOC": {"bytes": 148, "sha256": "d32aa2f339f11163a90b683611d27a3857ebbce91e601da39d6736664e40a1fb"},
+    "THREEB.HEX": {"bytes": 93, "sha256": "46a7f4c7d8c303d12d64948510fc2413b73cff2cc33d9af23d38bac25d5ead09"},
+    "THREEB.LMP": {"bytes": 399, "sha256": "9c9d4056fcccf1ded8b4e11cf35d8ada06dc940af33eafef45fc6b27d913641a"},
+    "THREEB.MAP": {"bytes": 400, "sha256": "74d38470428c98ecec2e2ffd126f84f0e9149496dd75277b993a8529e0766554"},
+    "console.typescript": {"bytes": 1202, "sha256": "8d381b843e08947477f67e9079f6984b3763ead5e640e56f4220362857d8f8d2"},
+    "README.md": {"bytes": 3928, "sha256": "c69cc7fda091888a8452d4bdea1714ddceba74dc646bdecd871f79b973cb6d3d"},
+    "DISASSEMBLY.md": {"bytes": 5027, "sha256": "9dd591ecfdb33d21e95246c4e388d0a3503f872847e75e409a2ed9951ffca0ba"}
+  },
+  "observed_code_range": {
+    "start": "0x3680",
+    "end_inclusive": "0x369A",
+    "bytes": 27,
+    "hex": "31 AB 36 0E 11 C5 1E 55 0E 2A CD 8F 36 FB 76 21 AD 36 73 2B 71 2B D1 C1 71 D5 C9",
+    "main_entry": "0x3680",
+    "main_bytes": 15,
+    "call_site": "0x368A",
+    "procedure_entry": "0x368F",
+    "procedure_bytes": 12,
+    "data_range": "0x36AB-0x36AD",
+    "formal_allocations": {"X": "0x36AB", "Y": "0x36AC", "Z": "0x36AD"},
+    "stack_range": "0x369B-0x36AA"
+  },
+  "sizes": {
+    "code": 27,
+    "variable": 3,
+    "maximum_stack": 4,
+    "compiler_errors": 0,
+    "linker_input_modules": ["THREEB.OBJ(MAIN)"],
+    "plm80_library_needed": false
+  },
+  "observations": [
+    "Caller starts with SP=36ABH. MVI C,11H; PUSH B passes X's 11H in the low byte of a two-byte pair. B is not initialized by the observed argument setup, so the companion byte is unspecified.",
+    "Then MVI E,55H and MVI C,2AH set Z and Y respectively. Immediately before CALL 368FH, SP=36A9H, C=2AH, E=55H; B and D are not established by argument setup.",
+    "CALL pushes return address 368DH; P begins with SP=36A7H, followed at SP+2 by X=11H and at SP+3 by the unestablished companion B byte.",
+    "P materializes Z from E at 36ADH, Y from C at 36ACH, then POP D saves/removes the return address, POP B retrieves the argument pair, and MOV M,C stores X at 36ABH. PUSH D restores the return address and RET returns with SP=36ABH. No caller-side cleanup instruction is emitted.",
+    "Listing reports CODE=27, VARIABLE=3, maximum STACK=4. The observed maximum is two bytes above the two-BYTE fixture's 2-byte maximum, consistent with one pushed two-byte argument pair in addition to the CALL return address.",
+    "Intel documented expectation for more than two parameters: final two use register argument positions and earlier arguments use stack. This sample observes X on stack, Y in C, Z in E; this is sample-specific evidence, not a complete ABI rule.",
+    "LINK includes only THREEB.OBJ(MAIN); PLM80.LIB was not needed."
+  ],
+  "unresolved_questions": [
+    "The mixed-recipe disk's actual PLM80 overlay provenance and whether OV5/OV6 were opened remain unverified.",
+    "This sample does not establish ordering of multiple stack-passed arguments, stack representation of ADDRESS, mixed-width stack layout, four or more parameters, WORD behavior, argument-expression side effects, or all cleanup cases.",
+    "The companion high byte pushed with the stack-passed BYTE is not initialized by this emitted caller sequence; its value is not characterized as part of the argument."
+  ]
+}

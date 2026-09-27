@@ -1,0 +1,51 @@
+PL/M-80 COMPILER                                                                                                PAGE   1
+
+
+ISIS-II PL/M-80 V4.0 COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN :F0:THREEB.OBJ
+COMPILER INVOKED BY:  PLM80 :F0:THREEB.PLM DEBUG XREF
+
+
+
+   1          MAIN: DO;
+        
+   2   1      P: PROCEDURE(X,Y,Z);
+   3   2      DECLARE (X,Y,Z) BYTE;
+   4   2      RETURN;
+   5   2      END P;
+        
+   6   1      CALL P(17,42,85);
+   7   1      END MAIN;
+PL/M-80 COMPILER                                                                                                PAGE   2
+
+
+CROSS-REFERENCE LISTING
+-----------------------
+
+
+   DEFN  ADDR  SIZE  NAME, ATTRIBUTES, AND REFERENCES
+  ----- ----- -----  --------------------------------
+
+
+      1 0000H    15  MAIN. . . PROCEDURE STACK=0004H
+        0000H        MEMORY. . BYTE ARRAY(0)
+
+      2 000FH    12  P . . . . PROCEDURE STACK=0002H:  6
+
+      2 0000H     1  X . . . . BYTE PARAMETER:  3
+
+      2 0001H     1  Y . . . . BYTE PARAMETER:  3
+
+      2 0002H     1  Z . . . . BYTE PARAMETER:  3
+
+
+
+MODULE INFORMATION:
+
+     CODE AREA SIZE     = 001BH     27D
+     VARIABLE AREA SIZE = 0003H      3D
+     MAXIMUM STACK SIZE = 0004H      4D
+     9 LINES READ
+     0 PROGRAM ERRORS
+
+END OF PL/M-80 COMPILATION
