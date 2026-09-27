@@ -1,0 +1,82 @@
+ #####    ###     #####    ###            #####    ###   #     #
+#     #  #   #   #     #  #   #          #     #    #    ##   ##
+#     # #     #  #     # #     #         #          #    # # # #
+ #####  #     #   #####  #     #  #####   #####     #    #  #  #
+#     # #     #  #     # #     #               #    #    #     #
+#     #  #   #   #     #  #   #          #     #    #    #     #
+ #####    ###     #####    ###            #####    ###   #     #
+
+Release 1.39, Copyright (C) 1987-2025 by Udo Munk and others
+Intel Intellec MDS-800 Simulation Release 1.0
+Copyright (C) 2008-2025 by Udo Munk & 2024-2025 by Thomas Eberhardt
+CPU speed is 20 MHz, CPU executes undocumented instructions
+Loader statistics for file /home/john/pli/cpm/z80pack/intelmdssim/roms/boot20.hex:
+START : 0000H
+END   : 00FFH
+PC    : 0000H
+LOADED: 0100H (256)
+
+Loader statistics for file /home/john/pli/cpm/z80pack/intelmdssim/roms/mon20.hex:
+START : F800H
+END   : FFFFH
+PC    : F800H
+LOADED: 0800H (2048)
+
+telnet console listening on port 4010
+ISIS-II, V4.3
+-COPY :CI: TO :F0:ADBYTE.PLM
+MAIN: DO;
+DECLARE OBJ BYTE;
+
+P: PROCEDURE(X,Y);
+DECLARE X ADDRESS;
+DECLARE Y BYTE;
+RETURN;
+END P;
+
+CALL P(.OBJ,42);
+END MAIN;
+<Ctrl-Z>
+COPIED :CI: TO :F0:ADBYTE.PLM
+-PLM80 :F0:ADBYTE.PLM DEBUG XREF
+ISIS-II PL/M-80 COMPILER V4.0
+PL/M-80 COMPILATION COMPLETE.      0 PROGRAM ERRORS
+-LINK :F0:ADBYTE.OBJ TO :F0:ADBYTE.SAT MAP PRINT(:F0:ADBYTE.LMP)
+ISIS-II OBJECT LINKER V3.0
+-LOCATE :F0:ADBYTE.SAT TO :F0:ADBYTE.LOC MAP PRINT(:F0:ADBYTE.MAP)
+ISIS-II OBJECT LOCATER V3.0
+-OBJHEX :F0:ADBYTE.LOC TO :F0:ADBYTE.HEX
+-DIR FOR ADBYTE.*
+DIRECTORY OF :F0:SYSTEM.DSK
+NAME  .EXT  BLKS   LENGTH ATTR      NAME  .EXT  BLKS   LENGTH ATTR
+ADBYTE.PLM     3      137           ADBYTE.OBJ     3      193
+ADBYTE.LST    12     1374           ADBYTE.LMP     5      399
+ADBYTE.SAT     3      201           ADBYTE.LOC     3      150
+ADBYTE.MAP     5      400           ADBYTE.HEX     2       83
+                                 36
+6192/28800 BLOCKS USED
+-COPY :F0:ADBYTE.PLM TO :HP:
+COPIED :F0:ADBYTE.PLM TO :HP:
+-COPY :F0:ADBYTE.LST TO :HP:
+COPIED :F0:ADBYTE.LST TO :HP:
+-COPY :F0:ADBYTE.OBJ TO :HP:
+COPIED :F0:ADBYTE.OBJ TO :HP:
+-COPY :F0:ADBYTE.SAT TO :HP:
+COPIED :F0:ADBYTE.SAT TO :HP:
+-COPY :F0:ADBYTE.LOC TO :HP:
+COPIED :F0:ADBYTE.LOC TO :HP:
+-COPY :F0:ADBYTE.HEX TO :HP:
+COPIED :F0:ADBYTE.HEX TO :HP:
+-COPY :F0:ADBYTE.LMP TO :HP:
+COPIED :F0:ADBYTE.LMP TO :HP:
+-COPY :F0:ADBYTE.MAP TO :HP:
+COPIED :F0:ADBYTE.MAP TO :HP:
+
+<Ctrl-Z> denotes the single 1AH end-of-console-input character; it is not
+part of ADBYTE.PLM. The extracted source round-trips byte-for-byte.
+
+During post-build paper-tape capture, two command-entry attempts lost their
+leading characters and ISIS rejected them as `AT, NO SUCH FILE` and
+`OPY, NO SUCH FILE`. The intended SAT, OBJ and MAP transfers were retried
+successfully. These collection-only errors occurred after compilation and
+did not alter the preserved guest artifacts.
