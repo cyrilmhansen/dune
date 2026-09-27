@@ -1,0 +1,74 @@
+{
+  "schema": "RUNES_PLM80_ORACLE_EXPERIMENT 1",
+  "experiment_id": "v4-two-byte-parameters",
+  "question": "How does the local ISIS-II PL/M-80 V4.0 compiler pass and materialize two BYTE parameters?",
+  "toolchain": {
+    "simulator": "z80pack Intel Intellec MDS-800 Simulator Release 1.39",
+    "operating_system": "ISIS-II V4.3",
+    "compiler_reported": "ISIS-II PL/M-80 Compiler V4.0",
+    "compiler_console_banner": "ISIS-II PL/M-80 COMPILER V4.0",
+    "linker": "ISIS-II Object Linker V3.0",
+    "locator": "ISIS-II Object Locater V3.0",
+    "toolchain_disk_recipe_note": "The local isis-ii-43.dsk recipe labels PLM80 and OV0-OV4 V4.0 and OV5-OV6 V3.1. This run did not trace individual overlay opens; actual overlay provenance/use remains unresolved."
+  },
+  "input_hashes": {
+    "TBYTE.PLM": {
+      "bytes": 96,
+      "sha256": "ac95b82fa051dcd78e861e9966a56788975623a1c33df1ebccdbe03044c09be4",
+      "line_endings": "CRLF"
+    },
+    "disks/library/isis-ii-43.dsk": "a335f169dd44de5d860911b1c3ae5b1f2804a686d78074139b1838840def27db",
+    "disks/library/hd-isis-sys.dsk": "c3ee6937b302ccfc9fa9a66a928d9365dab0cf66fc4178b71dc482acf876492a",
+    "disks/library/hd-isis-usr.dsk": "da1d122e65cd1a6701668b51dd8941bca762eb33a8828c82b408157242dcaa88"
+  },
+  "commands": [
+    "COPY :CI: TO :F0:TBYTE.PLM",
+    "PLM80 :F0:TBYTE.PLM DEBUG XREF",
+    "LINK :F0:TBYTE.OBJ TO :F0:TBYTE.SAT MAP PRINT(:F0:TBYTE.LMP)",
+    "LOCATE :F0:TBYTE.SAT TO :F0:TBYTE.LOC MAP PRINT(:F0:TBYTE.MAP)",
+    "OBJHEX :F0:TBYTE.LOC TO :F0:TBYTE.HEX",
+    "DIR FOR TBYTE.*"
+  ],
+  "output_hashes": {
+    "TBYTE.LST": {"bytes": 1240, "sha256": "efeb2ee2970b8e72a7de20644d1dc17559ea2ba9260c2373e25d4a31160790a1"},
+    "TBYTE.OBJ": {"bytes": 170, "sha256": "b22b3e7f9f6a93aeb98c4385e4e85529eb41fcf2e5cf4867444348bbaaecdb58"},
+    "TBYTE.SAT": {"bytes": 177, "sha256": "fde9cb6e8708201611bac28971560ea4b6c8d4e5f82b81bf64a15d4ea3c3ac1b"},
+    "TBYTE.LOC": {"bytes": 134, "sha256": "3be0341114f519ba7d76e5890e1836894274e9be0f4284dd3bfa9aaf9e8301c9"},
+    "TBYTE.HEX": {"bytes": 77, "sha256": "2e8227656d16a556f761bab939df7be18c6a822077e4e26813b22a775e605a73"},
+    "TBYTE.LMP": {"bytes": 393, "sha256": "da454ef4da45d18deec4b61e5e0cd27b9cfe528ecece24134891a9927adab666"},
+    "TBYTE.MAP": {"bytes": 394, "sha256": "9d423f7fe3fed7d4e7a4de6f27ae8953842c494ad4bbb0f5724fc87ac383babf"},
+    "console.typescript": {"bytes": 2916, "sha256": "a24c98e3677495d36bc9a2d2831f4af666ce3300bcfb3668851b49b7c39a1b95"}
+  },
+  "observed_code_range": {
+    "start": "0x3680",
+    "end_inclusive": "0x3692",
+    "bytes": 19,
+    "hex": "31 A1 36 1E 55 0E 2A CD 8C 36 FB 76 21 A2 36 73 2B 71 C9",
+    "main_entry": "0x3680",
+    "main_bytes": 12,
+    "call_site": "0x3687",
+    "procedure_entry": "0x368C",
+    "procedure_bytes": 7,
+    "data_range": "0x36A1-0x36A2",
+    "stack_range": "0x3693-0x36A0"
+  },
+  "sizes": {
+    "code": 19,
+    "variable": 2,
+    "maximum_stack": 2,
+    "compiler_errors": 0
+  },
+  "observations": [
+    "Immediately before CALL 368CH, emitted instructions have set C=2AH for first actual 42 and E=55H for second actual 85.",
+    "At P entry, LXI H,36A2H; MOV M,E stores the second BYTE to Y at 36A2H; DCX H; MOV M,C stores the first BYTE to X at 36A1H; RET.",
+    "Listing reports MAIN relative code 0000H size 12 and P relative code 000CH size 7; formal X is data offset 0000H and Y offset 0001H.",
+    "LOCATE assigns CODE 3680H-3692H, STACK 3693H-36A0H, and DATA 36A1H-36A2H.",
+    "Compared with v4-byte-parameter: CODE +4, VARIABLE +1, maximum STACK unchanged at 2. Compared with v4-address-parameter: CODE -5, VARIABLE -3, maximum STACK unchanged at 2. Compared with v4-micro: CODE +10, VARIABLE +2, maximum STACK unchanged at 2.",
+    "LINK includes only TBYTE.OBJ(MAIN); PLM80.LIB was not needed for this program."
+  ],
+  "unresolved_questions": [
+    "The mixed-recipe disk's per-overlay provenance and whether OV5/OV6 were opened remain unverified.",
+    "This sample does not establish a general parameter ABI for other types, arities, actual expressions, nesting, or reentrancy.",
+    "This experiment does not test parameter values or storage under recursive/reentrant invocation."
+  ]
+}

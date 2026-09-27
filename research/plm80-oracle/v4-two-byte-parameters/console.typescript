@@ -1,0 +1,89 @@
+ #####    ###     #####    ###            #####    ###   #     #
+#     #  #   #   #     #  #   #          #     #    #    ##   ##
+#     # #     #  #     # #     #         #          #    # # # #
+ #####  #     #   #####  #     #  #####   #####     #    #  #  #
+#     # #     #  #     # #     #               #    #    #     #
+#     #  #   #   #     #  #   #          #     #    #    #     #
+ #####    ###     #####    ###            #####    ###   #     #
+
+Release 1.39, Copyright (C) 1987-2025 by Udo Munk and others
+Intel Intellec MDS-800 Simulation Release 1.0
+Copyright (C) 2008-2025 by Udo Munk & 2024-2025 by Thomas Eberhardt
+CPU speed is 20 MHz, CPU executes undocumented instructions
+Loader statistics for file /home/john/pli/cpm/z80pack/intelmdssim/roms/boot20.hex:
+START : 0000H
+END   : 00FFH
+PC    : 0000H
+LOADED: 0100H (256)
+
+Loader statistics for file /home/john/pli/cpm/z80pack/intelmdssim/roms/mon20.hex:
+START : F800H
+END   : FFFFH
+PC    : F800H
+LOADED: 0800H (2048)
+
+telnet console listening on port 4010
+ISIS-II, V4.3
+
+COPY :CI: TO :F0:TBYTE.PLM
+:F0:TBYTE.PLM FILE ALREADY EXISTS
+DELETE? Y
+MAIN: DO;
+P: PROCEDURE(X,Y);
+DECLARE (X,Y) BYTE;
+RETURN;
+END P;
+CALL P(42,85);
+END MAIN;
+<Ctrl-Z>
+COPIED :CI: TO :F0:TBYTE.PLM
+
+PLM80 :F0:TBYTE.PLM DEBUG XREF
+ISIS-II PL/M-80 COMPILER V4.0
+PL/M-80 COMPILATION COMPLETE.      0 PROGRAM ERRORS
+
+LINK :F0:TBYTE.OBJ TO :F0:TBYTE.SAT MAP PRINT(:F0:TBYTE.LMP)
+ISIS-II OBJECT LINKER V3.0
+LOCATE :F0:TBYTE.SAT TO :F0:TBYTE.LOC MAP PRINT(:F0:TBYTE.MAP)
+ISIS-II OBJECT LOCATER V3.0
+OBJHEX :F0:TBYTE.LOC TO :F0:TBYTE.HEX
+
+PLM80 :F0:TBYTE.PLM DEBUG XREF
+ISIS-II PL/M-80 COMPILER V4.0
+PL/M-80 COMPILATION COMPLETE.      0 PROGRAM ERRORS
+
+LINK :F0:TBYTE.OBJ TO :F0:TBYTE.SAT MAP PRINT(:F0:TBYTE.LMP)
+ISIS-II OBJECT LINKER V3.0
+LOCATE :F0:TBYTE.SAT TO :F0:TBYTE.LOC MAP PRINT(:F0:TBYTE.MAP)
+ISIS-II OBJECT LOCATER V3.0
+OBJHEX :F0:TBYTE.LOC TO :F0:TBYTE.HEX
+
+DIR FOR TBYTE.*
+DIRECTORY OF :F0:SYSTEM.DSK
+NAME  .EXT  BLKS   LENGTH ATTR      NAME  .EXT  BLKS   LENGTH ATTR
+TBYTE .PLM     2       96           TBYTE .OBJ     3      170
+TBYTE .LST    11     1240           TBYTE .LMP     5      393
+TBYTE .SAT     3      177           TBYTE .LOC     3      134
+TBYTE .MAP     5      394           TBYTE .HEX     2       77
+                                 34
+6190/28800 BLOCKS USED
+
+COPY :F0:TBYTE.PLM TO :HP:
+COPIED :F0:TBYTE.PLM TO :HP:
+COPY :F0:TBYTE.LST TO :HP:
+COPIED :F0:TBYTE.LST TO :HP:
+COPY :F0:TBYTE.OBJ TO :HP:
+COPIED :F0:TBYTE.OBJ TO :HP:
+COPY :F0:TBYTE.SAT TO :HP:
+COPIED :F0:TBYTE.SAT TO :HP:
+COPY :F0:TBYTE.LOC TO :HP:
+COPIED :F0:TBYTE.LOC TO :HP:
+COPY :F0:TBYTE.HEX TO :HP:
+COPIED :F0:TBYTE.HEX TO :HP:
+COPY :F0:TBYTE.LMP TO :HP:
+COPIED :F0:TBYTE.LMP TO :HP:
+COPY :F0:TBYTE.MAP TO :HP:
+COPIED :F0:TBYTE.MAP TO :HP:
+
+<Ctrl-Z> is transcript notation for the single 1AH end-of-console-input
+keystroke; it is not part of TBYTE.PLM. The preserved .PLM has CRLF endings.
