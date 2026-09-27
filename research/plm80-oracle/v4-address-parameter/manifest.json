@@ -1,0 +1,60 @@
+{
+  "schema": "RUNES_PLM80_ORACLE_EXPERIMENT 1",
+  "experiment_id": "v4-address-parameter",
+  "question": "How does this PL/M-80 V4.0 sample pass and use one ADDRESS procedure argument?",
+  "toolchain": {
+    "simulator": "z80pack Intel Intellec MDS-800 Simulator Release 1.39",
+    "operating_system": "ISIS-II V4.3",
+    "compiler_reported": "ISIS-II PL/M-80 Compiler V4.0",
+    "linker": "ISIS-II Object Linker V3.0",
+    "locator": "ISIS-II Object Locater V3.0",
+    "toolchain_disk_recipe_note": "Local isis-ii-43.dsk recipe labels PLM80 and OV0-OV4 V4.0 and OV5-OV6 V3.1; actual overlay provenance/use is unresolved."
+  },
+  "input_hashes": {
+    "ADDR.PLM": {
+      "bytes": 147,
+      "sha256": "a9f9c45dd2057c4d0947c8b2ce4c52db75faf9cbcedfc7cd09c05c91575efe2a"
+    },
+    "disks/library/isis-ii-43.dsk": "a335f169dd44de5d860911b1c3ae5b1f2804a686d78074139b1838840def27db",
+    "disks/library/hd-isis-sys.dsk": "c3ee6937b302ccfc9fa9a66a928d9365dab0cf66fc4178b71dc482acf876492a",
+    "disks/library/hd-isis-usr.dsk": "da1d122e65cd1a6701668b51dd8941bca762eb33a8828c82b408157242dcaa88"
+  },
+  "commands": [
+    "COPY :CI: TO :F0:ADDR.PLM",
+    "PLM80 :F0:ADDR.PLM DEBUG XREF",
+    "LINK :F0:ADDR.OBJ TO :F0:ADDR.SAT MAP PRINT(:F0:ADDR.LMP)",
+    "LOCATE :F0:ADDR.SAT TO :F0:ADDR.LOC MAP PRINT(:F0:ADDR.MAP)",
+    "OBJHEX :F0:ADDR.LOC TO :F0:ADDR.HEX"
+  ],
+  "output_hashes": {
+    "ADDR.LST": {"bytes": 1373, "sha256": "1df00b8a1d6efb293a6c7b0f071ec6e919b3f76551243adc150fbedefb30efa2"},
+    "ADDR.OBJ": {"bytes": 207, "sha256": "969d3b9217decd5442be4ea75c1f3e46910646b40735772266ffb90391e2ca66"},
+    "ADDR.SAT": {"bytes": 213, "sha256": "60610fe4701fac742d753ca136f8fa9800833e4a4be6b19088666d728a9974f0"},
+    "ADDR.LOC": {"bytes": 158, "sha256": "5049dcff8a3a15badd2a0b990ff4d25e100362b5fb044721beaceb1ec25df9e9"},
+    "ADDR.HEX": {"bytes": 87, "sha256": "2c54688396964c2d722f1c1309cee794303ee8e16a1d84e5a71ffcfb86ed96af"},
+    "ADDR.LMP": {"bytes": 387, "sha256": "9f62d17f0a22a76f5092768b8bdd8fc57e4f74d130ef03dbd598f3a25dffc2d9"},
+    "ADDR.MAP": {"bytes": 388, "sha256": "6e3efc7745b4699872e7b74be43972353a1b36f8be70d1e1b8a0250ea0d00856"},
+    "console.typescript": {"bytes": 1398, "sha256": "c31ee6e5573426e39bf4710b980359d4c11a3248c57b0b964d92cb0cc52f9238"}
+  },
+  "observed_code_range": {
+    "start": "0x3680",
+    "end_inclusive": "0x3697",
+    "bytes": 24,
+    "hex": "31 A6 36 01 A6 36 CD 8B 36 FB 76 21 AA 36 70 2B 71 2A A9 36 22 A7 36 C9",
+    "main_entry": "0x3680",
+    "procedure_entry": "0x368B",
+    "call_site": "0x3686",
+    "data_range": "0x36A6-0x36AA"
+  },
+  "observations": [
+    "Compiler reported zero errors; CODE=24, VARIABLE=5, MAXIMUM STACK=2.",
+    "Caller loads OBJ address 0x36A6 into BC before CALL.",
+    "Callee stores B/C at 0x36AA/0x36A9, reloads the X pair with LHLD 0x36A9, and stores it to SAVED at 0x36A7 with SHLD.",
+    "Compared with v4-byte-parameter: code +9 bytes, variable area +4 bytes, maximum stack delta 0.",
+    "LINK includes ADDR.OBJ(MAIN) only; no library module is listed."
+  ],
+  "unresolved_questions": [
+    "The mixed-recipe toolchain disk attributes OV5/OV6 to V3.1; this run did not trace whether they were opened.",
+    "This single sample does not establish a general ADDRESS calling convention or behavior for other expressions/layouts."
+  ]
+}
