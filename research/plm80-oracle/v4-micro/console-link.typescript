@@ -1,0 +1,122 @@
+Script started on 2026-09-27 12:32:57+02:00 [COMMAND="/home/john/pli/cpm/z80pack/intelmdssim/intelmdssim -f20 -F -d /var/tmp/plm80-oracle-20260927-115215/disks -c /home/john/pli/cpm/z80pack/intelmdssim/conf/system.conf -r /home/john/pli/cpm/z80pack/intelmdssim/roms" TERM="dumb" TTY="/dev/pts/15" COLUMNS="80" LINES="24"]
+
+ #####    ###     #####    ###            #####    ###   #     #
+#     #  #   #   #     #  #   #          #     #    #    ##   ##
+#     # #     #  #     # #     #         #          #    # # # #
+ #####  #     #   #####  #     #  #####   #####     #    #  #  #
+#     # #     #  #     # #     #               #    #    #     #
+#     #  #   #   #     #  #   #          #     #    #    #     #
+ #####    ###     #####    ###            #####    ###   #     #
+
+Release 1.39, Copyright (C) 1987-2025 by Udo Munk and others
+Intel Intellec MDS-800 Simulation Release 1.0
+Copyright (C) 2008-2025 by Udo Munk & 2024-2025 by Thomas Eberhardt
+
+CPU speed is 20 MHz, CPU executes undocumented instructions
+Loader statistics for file /home/john/pli/cpm/z80pack/intelmdssim/roms/boot20.hex:
+START : 0000H
+END   : 00FFH
+PC    : 0000H
+LOADED: 0100H (256)
+
+Loader statistics for file /home/john/pli/cpm/z80pack/intelmdssim/roms/mon20.hex:
+START : F800H
+END   : FFFFH
+PC    : F800H
+LOADED: 0800H (2048)
+
+telnet console listening on port 4010
+
+ISIS-II, V4.3
+-LINK :F0:MICRO.OBJ TO :F0:MICRO.SAT
+ISIS-II OBJECT LINKER V3.0
+-LOCATE :F0:MICRO.SAT TO :F0:MICRO.LOC
+ISIS-II OBJECT LOCATER V3.0
+-DIR FOR MICRO.*
+DIRECTORY OF :F0:SYSTEM.DSK
+NAME  .EXT  BLKS   LENGTH ATTR      NAME  .EXT  BLKS   LENGTH ATTR
+MICRO .PLM     2       61           MICRO .OBJ     3      137
+MICRO .LST    10     1087           MICRO .SAT     3      140
+MICRO .LOC     2      109           
+                                 20
+6176/28800 BLOCKS USED
+-OBJHEX :F0:MICRO.LOC TO :F0:MICRO.HEX
+-DIR FOR MICRO.*
+DIRECTORY OF :F0:SYSTEM.DSK
+NAME  .EXT  BLKS   LENGTH ATTR      NAME  .EXT  BLKS   LENGTH ATTR
+MICRO .PLM     2       61           MICRO .OBJ     3      137
+MICRO .LST    10     1087           MICRO .SAT     3      140
+MICRO .LOC     2      109           MICRO .HEX     2       44
+                                 22
+6178/28800 BLOCKS USED
+-COPY :F0:MICRO.HEX TO :CO:
+:09368000319736CD8836FB76C97E
+:0036800149
+COPIED :F0:MICRO.HEX TO :CO:
+-LINK :F0:MICRO.OBJ TO :F0:MICRO.SAT MAP PRINT(:F0:MICRO.LMP)
+ISIS-II OBJECT LINKER V3.0
+-LOCATE :F0:MICRO.SAT TO :F0:MICRO.LOC MAP PRINT(:F0:MICRO.MAP)
+ISIS-II OBJECT LOCATER V3.0
+-COPY :F0:MICRO.MAP TO :CO:
+ISIS-II OBJECT LOCATER V3.0 INVOKED BY:
+-LOCATE :F0:MICRO.SAT TO :F0:MICRO.LOC MAP PRINT(:F0:MICRO.MAP)
+
+MEMORY MAP OF MODULE MICRO
+READ FROM FILE :F0:MICRO.SAT
+WRITTEN TO FILE :F0:MICRO.LOC
+MODULE START ADDRESS 3680H
+
+START   STOP LENGTH REL NAME
+
+3680H  3688H     9H  B  CODE    
+3689H  3696H     EH  B  STACK   
+3697H  F6BFH  C029H  B  MEMORY  
+COPIED :F0:MICRO.MAP TO :CO:
+-COPY :F0:MICRO.LMP TO :CO:
+ISIS-II OBJECT LINKER V3.0 INVOKED BY:
+-LINK :F0:MICRO.OBJ TO :F0:MICRO.SAT MAP PRINT(:F0:MICRO.LMP)
+
+LINK MAP OF MODULE MICRO
+WRITTEN TO FILE :F0:MICRO.SAT
+MODULE IS A MAIN MODULE
+
+SEGMENT INFORMATION:
+START   STOP LENGTH REL NAME
+
+                 9H  B  CODE    
+                 2H  B  STACK   
+
+INPUT MODULES INCLUDED:
+ :F0:MICRO.OBJ(MAIN)
+COPIED :F0:MICRO.LMP TO :CO:
+-DIR FOR MICRO.*
+DIRECTORY OF :F0:SYSTEM.DSK
+NAME  .EXT  BLKS   LENGTH ATTR      NAME  .EXT  BLKS   LENGTH ATTR
+MICRO .PLM     2       61           MICRO .OBJ     3      137
+MICRO .LST    10     1087           MICRO .SAT     3      140
+MICRO .LOC     2      109           MICRO .HEX     2       44
+MICRO .LMP     4      359           MICRO .MAP     4      360
+                                 30
+6186/28800 BLOCKS USED
+-COPY :F0:MICRO.HEX TO :HP:
+COPIED :F0:MICRO.HEX TO :HP:
+-COPY :F0:MICRO.SAT TO :HP:
+COPIED :F0:MICRO.SAT TO :HP:
+-COPY :F0:MICRO.LOC TO :HP:
+COPIED :F0:MICRO.LOC TO :HP:
+-COPY :F0:MICRO.LMP TO :HP:
+COPIED :F0:MICRO.LMP TO :HP:
+-OPY :F0:MICRO.MAP TO :HP:
+OPY, NO SUCH FILE
+-COPY :F0:MICRO.MAP TO :HP:
+COPIED :F0:MICRO.MAP TO :HP:
+-F0:MICRO.MAP TO :HP:
+F0:MICRO.MAP, BAD FILENAME
+-
+
+User Interrupt at 0xfc9e
+I/O ran for 13190 ms, waited for 0 ms
+CPU executed 12440625006 t-states in 612616 ms
+Clock frequency 20.30 MHz
+
+Script done on 2026-09-27 12:43:24+02:00 [COMMAND_EXIT_CODE="0"]

@@ -1,0 +1,58 @@
+{
+  "schema": "RUNES_PLM80_ORACLE_EXPERIMENT 1",
+  "experiment_id": "v4-byte-parameter",
+  "question": "How does this PL/M-80 V4.0 sample pass and access one constant BYTE procedure argument?",
+  "toolchain": {
+    "simulator": "z80pack Intel Intellec MDS-800 Simulator Release 1.39",
+    "operating_system": "ISIS-II V4.3",
+    "compiler_reported": "ISIS-II PL/M-80 Compiler V4.0",
+    "linker": "ISIS-II Object Linker V3.0",
+    "locator": "ISIS-II Object Locater V3.0",
+    "toolchain_disk_recipe_note": "Local isis-ii-43.dsk recipe labels PLM80 and OV0-OV4 V4.0 and OV5-OV6 V3.1; actual overlay provenance/use is unresolved."
+  },
+  "input_hashes": {
+    "BYTE.PLM": {
+      "bytes": 87,
+      "sha256": "ad29be9580d27d72b52868d11094c414eeb926660c97b559e61b20745d044c24"
+    },
+    "disks/library/isis-ii-43.dsk": "a335f169dd44de5d860911b1c3ae5b1f2804a686d78074139b1838840def27db",
+    "disks/library/hd-isis-sys.dsk": "c3ee6937b302ccfc9fa9a66a928d9365dab0cf66fc4178b71dc482acf876492a",
+    "disks/library/hd-isis-usr.dsk": "da1d122e65cd1a6701668b51dd8941bca762eb33a8828c82b408157242dcaa88"
+  },
+  "commands": [
+    "COPY :CI: TO :F0:BYTE.PLM",
+    "PLM80 :F0:BYTE.PLM DEBUG XREF",
+    "LINK :F0:BYTE.OBJ TO :F0:BYTE.SAT MAP PRINT(:F0:BYTE.LMP)",
+    "LOCATE :F0:BYTE.SAT TO :F0:BYTE.LOC MAP PRINT(:F0:BYTE.MAP)",
+    "OBJHEX :F0:BYTE.LOC TO :F0:BYTE.HEX"
+  ],
+  "output_hashes": {
+    "BYTE.LST": {"bytes": 1176, "sha256": "6190c2ceac5e1ee869359572bd0f3e3b32127260495354b9ce9f202d439ffb02"},
+    "BYTE.OBJ": {"bytes": 161, "sha256": "5779ff64f4b863edf6af347d8e5fce757ea31da5c2c7b57aea9ce689c20ae501"},
+    "BYTE.SAT": {"bytes": 167, "sha256": "c3a531098aa8ea318bc634f02a9da2ae2e41262e41b42cd9adce8d8046cc7c8e"},
+    "BYTE.LOC": {"bytes": 124, "sha256": "02e2e1e1e985755d6be46f0a0b1d4deb040910d4e3d9527c6c033e5aa294d19f"},
+    "BYTE.HEX": {"bytes": 56, "sha256": "7fa8e878ae658728e05607bc64b144546f02edc1598b90591ad980eb44d2ca93"},
+    "BYTE.LMP": {"bytes": 387, "sha256": "24344e410b5ab9893bdf4719cbb733b8e7cf8c7fae36ed4d82e41827cad98fe9"},
+    "BYTE.MAP": {"bytes": 388, "sha256": "0d62257415717c6dad0c47b8bc042c2d9627115a4c63bb136a76cbc2767939ba"},
+    "console.typescript": {"bytes": 2664, "sha256": "49a8ff1d55bcab2cdc6bc4b87e3d4a0e5a8dc002dd549594d01b0d21400faa64"}
+  },
+  "observed_code_range": {
+    "start": "0x3680",
+    "end_inclusive": "0x368E",
+    "bytes": 15,
+    "hex": "31 9D 36 0E 2A CD 8A 36 FB 76 21 9D 36 71 C9",
+    "main_entry": "0x3680",
+    "procedure_entry": "0x368A",
+    "call_site": "0x3685"
+  },
+  "observations": [
+    "Compiler reported zero program errors; listing reports CODE=15, VARIABLE=1, MAXIMUM STACK=2.",
+    "Caller loads constant 0x2A into C immediately before CALL; callee stores C through HL to the one-byte DATA allocation, then RETs.",
+    "LINK map includes BYTE.OBJ(MAIN) only; PLM80.LIB was not needed for this program.",
+    "Relative to v4-micro: code grows from 9 to 15 bytes (+6); maximum stack remains 2; variable area grows from 0 to 1 byte."
+  ],
+  "unresolved_questions": [
+    "The mixed-recipe toolchain disk attributes OV5/OV6 to V3.1; this run did not trace whether they were opened.",
+    "The observed C-register argument sequence is specific to this one fixture and does not establish a general PL/M ABI."
+  ]
+}

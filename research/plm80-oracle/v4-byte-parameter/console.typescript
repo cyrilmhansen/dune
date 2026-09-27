@@ -1,0 +1,81 @@
+
+ #####    ###     #####    ###            #####    ###   #     #
+#     #  #   #   #     #  #   #          #     #    #    ##   ##
+#     # #     #  #     # #     #         #          #    # # # #
+ #####  #     #   #####  #     #  #####   #####     #    #  #  #
+#     # #     #  #     # #     #               #    #    #     #
+#     #  #   #   #     #  #   #          #     #    #    #     #
+ #####    ###     #####    ###            #####    ###   #     #
+
+Release 1.39, Copyright (C) 1987-2025 by Udo Munk and others
+Intel Intellec MDS-800 Simulation Release 1.0
+Copyright (C) 2008-2025 by Udo Munk & 2024-2025 by Thomas Eberhardt
+
+CPU speed is 20 MHz, CPU executes undocumented instructions
+Loader statistics for file /home/john/pli/cpm/z80pack/intelmdssim/roms/boot20.hex:
+START : 0000H
+END   : 00FFH
+PC    : 0000H
+LOADED: 0100H (256)
+
+Loader statistics for file /home/john/pli/cpm/z80pack/intelmdssim/roms/mon20.hex:
+START : F800H
+END   : FFFFH
+PC    : F800H
+LOADED: 0800H (2048)
+
+telnet console listening on port 4010
+ 
+ISIS-II, V4.3
+-COPY :CI: TO :F0:BYTE.PLM
+MAIN: DO;
+P: PROCEDURE(X);
+DECLARE X BYTE;
+RETURN;
+END P;
+CALL P(42);
+END MAIN;
+
+COPIED :CI: TO :F0:BYTE.PLM
+-DIR FOR BYTE.PLM
+DIRECTORY OF :F0:SYSTEM.DSK
+NAME  .EXT  BLKS   LENGTH ATTR      NAME  .EXT  BLKS   LENGTH ATTR
+BYTE  .PLM     2       87           
+                                  2
+6158/28800 BLOCKS USED
+-PLM80 :F0:BYTE.PLM DEBUG XREF
+
+ISIS-II PL/M-80 COMPILER V4.0
+PL/M-80 COMPILATION COMPLETE.      0 PROGRAM ERRORS
+
+-LINK :F0:BYTE.OBJ TO :F0:BYTE.SAT MAP PRINT(:F0:BYTE.LMP)
+ISIS-II OBJECT LINKER V3.0
+-LOCATE :F0:BYTE.SAT TO :F0:BYTE.LOC MAP PRINT(:F0:BYTE.MAP)
+ISIS-II OBJECT LOCATER V3.0
+-OBJHEX :F0:BYTE.LOC TO :F0:BYTE.HEX
+-DIR FOR BYTE.*
+DIRECTORY OF :F0:SYSTEM.DSK
+NAME  .EXT  BLKS   LENGTH ATTR      NAME  .EXT  BLKS   LENGTH ATTR
+BYTE  .PLM     2       87           BYTE  .OBJ     3      161
+BYTE  .LST    11     1176           BYTE  .LMP     5      387
+BYTE  .SAT     3      167           BYTE  .LOC     2      124
+BYTE  .MAP     5      388           BYTE  .HEX     2       56
+                                 33
+6189/28800 BLOCKS USED
+-COPY :F0:BYTE.PLM TO :HP:
+COPIED :F0:BYTE.PLM TO :HP:
+-COPY :F0:BYTE.LST TO :HP:
+COPIED :F0:BYTE.LST TO :HP:
+-COPY :F0:BYTE.OBJ TO :HP:
+COPIED :F0:BYTE.OBJ TO :HP:
+-COPY :F0:BYTE.SAT TO :HP:
+COPIED :F0:BYTE.SAT TO :HP:
+-COPY :F0:BYTE.LOC TO :HP:
+COPIED :F0:BYTE.LOC TO :HP:
+-COPY :F0:BYTE.HEX TO :HP:
+COPIED :F0:BYTE.HEX TO :HP:
+-COPY :F0:BYTE.LMP TO :HP:
+COPIED :F0:BYTE.LMP TO :HP:
+-COPY :F0:BYTE.MAP TO :HP:
+COPIED :F0:BYTE.MAP TO :HP:
+-
