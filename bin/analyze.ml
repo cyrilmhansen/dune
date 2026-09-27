@@ -37,9 +37,9 @@ let json_summary ~module_name ~source ~host_source_bytes ~normalized_source_byte
   let b=Buffer.create 2048 and add=Buffer.add_string in
   add b "RUNES_PLI80_EXPERIMENT 1\n{\"module\":";add b(json_quote module_name);
   add b ",\"source\":";add b(json_quote source);
-  Printf.bprintf b ",\"source_host_bytes\":%d,\"source_compiler_bytes\":%d,\"analysis\":%s,\"termination\":%s,\"steps\":%d,\"pass1_success\":%b,\"pass2_success\":%b,\"end_compilation\":%b"
+  Printf.bprintf b ",\"source_host_bytes\":%d,\"source_compiler_bytes\":%d,\"analysis\":%s,\"termination\":%s,\"steps\":%d,\"guest_cpu_t_states\":%d,\"pass1_success\":%b,\"pass2_success\":%b,\"end_compilation\":%b"
     host_source_bytes normalized_source_bytes (json_quote(Pli80.Experiment.analysis_name analysis))
-    (json_quote(termination_name run.Runner.termination))run.steps
+    (json_quote(termination_name run.Runner.termination))run.steps run.t_states
     (pass_ok experiment.Pli80.Experiment.console "NO ERROR(S) IN PASS 1")
     (pass_ok experiment.console "NO ERROR(S) IN PASS 2") (pass_ok experiment.console "END  COMPILATION");
   let file name bytes=match bytes with None->Printf.bprintf b ",\"%s\":null" name|Some bytes->Printf.bprintf b ",\"%s\":{\"name\":%s,\"size\":%d,\"sha256\":%s}" name(json_quote(if name="rel" then rel_name else int_name))(Bytes.length bytes)(json_quote(Pli80.Experiment.sha256_hex bytes)) in
@@ -222,10 +222,10 @@ let run (options : options) =
       save "run-summary.json" (Bytes.of_string !json));
     let serialization_seconds=Unix.gettimeofday()-.serialization_started in
     let total_seconds=Unix.gettimeofday()-.total_started in
-    Printf.printf "module: %s\nsource: %s\nnormalized source: %d -> %d bytes\nanalysis: %s\nreport: %s\n\ncompiler:\n  termination: %s\n  steps: %d\n  pass1: %s\n  pass2: %s\n  END COMPILATION: %s\n\n"
+    Printf.printf "module: %s\nsource: %s\nnormalized source: %d -> %d bytes\nanalysis: %s\nreport: %s\n\ncompiler:\n  termination: %s\n  steps: %d\n  guest CPU T-states: %d\n  pass1: %s\n  pass2: %s\n  END COMPILATION: %s\n\n"
       module_name source_path (Bytes.length source_host)(Bytes.length source_compiler)
       (Pli80.Experiment.analysis_name options.analysis)(Pli80.Experiment.report_name options.report)
-      (termination_name experiment.run.termination)experiment.run.steps
+      (termination_name experiment.run.termination)experiment.run.steps experiment.run.t_states
       (if pass_ok experiment.console"NO ERROR(S) IN PASS 1"then"success"else"not confirmed")
       (if pass_ok experiment.console"NO ERROR(S) IN PASS 2"then"success"else"not confirmed")
       (if pass_ok experiment.console"END  COMPILATION"then"yes"else"no");

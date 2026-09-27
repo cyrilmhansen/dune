@@ -11,6 +11,10 @@
  (libraries i8080))
 
 (test
+ (name timing)
+ (libraries i8080 runner cpm))
+
+(test
  (name cpm_runner)
  (libraries i8080 cpm runner trace))
 

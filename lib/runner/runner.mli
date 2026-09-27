@@ -2,7 +2,7 @@
 
 type termination = Bdos_function of int | Warm_boot
 
-type run_result = { termination : termination; steps : int }
+type run_result = { termination : termination; steps : int; t_states : int }
 
 type state_snapshot = {
   a : int; b : int; c : int; d : int; e : int; h : int; l : int;
