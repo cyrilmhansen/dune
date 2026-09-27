@@ -1,0 +1,96 @@
+{
+  "schema": "RUNES_PLM80_ORACLE_EXPERIMENT 1",
+  "experiment_id": "v4-byte-address-parameters",
+  "guest_basename": "BYADDR",
+  "question": "How does the local ISIS-II PL/M-80 V4.0 compiler pass a BYTE followed by an ADDRESS parameter?",
+  "toolchain": {
+    "simulator": "z80pack Intel Intellec MDS-800 Simulator Release 1.39",
+    "operating_system": "ISIS-II V4.3",
+    "compiler_reported": "ISIS-II PL/M-80 Compiler V4.0",
+    "compiler_console_banner": "ISIS-II PL/M-80 COMPILER V4.0",
+    "linker": "ISIS-II Object Linker V3.0",
+    "locator": "ISIS-II Object Locater V3.0",
+    "toolchain_disk_recipe_note": "The local isis-ii-43.dsk recipe labels PLM80 and OV0-OV4 V4.0 and OV5-OV6 V3.1. This run did not trace per-overlay opens; actual overlay provenance/use remains unresolved."
+  },
+  "input_hashes": {
+    "BYADDR.PLM": {
+      "bytes": 137,
+      "sha256": "0d1a319d95d27858e88d366a7ad1b47211c2dd959b66611fc4782cfb4b4a7784",
+      "line_endings": "CRLF"
+    },
+    "disks/library/isis-ii-43.dsk": "a335f169dd44de5d860911b1c3ae5b1f2804a686d78074139b1838840def27db",
+    "disks/library/hd-isis-sys.dsk": "c3ee6937b302ccfc9fa9a66a928d9365dab0cf66fc4178b71dc482acf876492a",
+    "disks/library/hd-isis-usr.dsk": "da1d122e65cd1a6701668b51dd8941bca762eb33a8828c82b408157242dcaa88"
+  },
+  "commands": [
+    "COPY :CI: TO :F0:BYADDR.PLM",
+    "PLM80 :F0:BYADDR.PLM DEBUG XREF",
+    "LINK :F0:BYADDR.OBJ TO :F0:BYADDR.SAT MAP PRINT(:F0:BYADDR.LMP)",
+    "LOCATE :F0:BYADDR.SAT TO :F0:BYADDR.LOC MAP PRINT(:F0:BYADDR.MAP)",
+    "OBJHEX :F0:BYADDR.LOC TO :F0:BYADDR.HEX",
+    "DIR FOR BYADDR.*"
+  ],
+  "output_hashes": {
+    "BYADDR.LST": {"bytes": 1374, "sha256": "b8b0ad813402dec6fbb4cf6034ef21be97e5906fc74813f577eb0c9aa679a8ed"},
+    "BYADDR.OBJ": {"bytes": 193, "sha256": "ff8bb31f076cefaa0db6970e9d4ca6671ed94f6915f2baa1638a2cff4c7e8413"},
+    "BYADDR.SAT": {"bytes": 201, "sha256": "346847e774b038f71e836e8233c80fbfb359ca4de3481b403e8477138fdb2450"},
+    "BYADDR.LOC": {"bytes": 150, "sha256": "5f94a53eb82a1293d601001cc6b25ed8c618b8c175814d79fdcbf0cd10966ae7"},
+    "BYADDR.HEX": {"bytes": 83, "sha256": "7017c031971a36215f758164ac2d814f21ccf00f80415ff537ec51b97f896faa"},
+    "BYADDR.LMP": {"bytes": 399, "sha256": "9d56059891aec3206ce8ac52cf0b703a213b648758d8edf98434e26d80b73009"},
+    "BYADDR.MAP": {"bytes": 400, "sha256": "381b726952bcfe632cef498be2e8ab8bbe2adc2f60932b1746cecbe563962337"},
+    "console.typescript": {"bytes": 2607, "sha256": "fe772f95c793884a8eaffda19acd347e513dfdb2a949193953349b29a9ab913a"},
+    "README.md": {"bytes": 3282, "sha256": "ff827613e5fed916d0c63222921397fb78ae0ad9a9d35c28034c17e9cad5d289"},
+    "DISASSEMBLY.md": {"bytes": 3130, "sha256": "64717f4250195c9f9bf982dbfbf802cf2e2a90c0084cb5fc16bda10c93f8abd7"}
+  },
+  "documented_expectation": {
+    "source": "Intel PL/M linkage convention description (see README.md and DISASSEMBLY.md)",
+    "expected_for_this_signature": "first BYTE X in C; second ADDRESS Y in DE, with D high and E low"
+  },
+  "observed_code_range": {
+    "start": "0x3680",
+    "end_inclusive": "0x3695",
+    "bytes": 22,
+    "hex": "31 A4 36 11 A4 36 0E 2A CD 8D 36 FB 76 21 A7 36 72 2B 73 2B 71 C9",
+    "main_entry": "0x3680",
+    "main_bytes": 13,
+    "call_site": "0x3688",
+    "procedure_entry": "0x368D",
+    "procedure_bytes": 9,
+    "obj_address": "0x36A4",
+    "x_formal": "0x36A5",
+    "y_formal": "0x36A6-0x36A7",
+    "stack_range": "0x3696-0x36A3",
+    "data_range": "0x36A4-0x36A7"
+  },
+  "sizes": {
+    "code": 22,
+    "variable": 4,
+    "maximum_stack": 2,
+    "compiler_errors": 0
+  },
+  "observed_v4_machine_code": [
+    "LXI D,36A4H directly forms the OBJ address in DE; D=36H and E=A4H.",
+    "MVI C,2AH sets the first BYTE actual X.",
+    "Immediately before CALL 368DH, argument registers are C=2AH and DE=36A4H (D high, E low).",
+    "At procedure entry, LXI H,36A7H; MOV M,D stores the ADDRESS high byte; DCX H; MOV M,E stores the low byte; DCX H; MOV M,C stores X; RET.",
+    "Listing gives MAIN relative code 0000H size 13, P relative code 000DH size 9, OBJ data offset 0, X offset 1, Y offset 2 size 2.",
+    "LOCATE places CODE at 3680H-3695H, STACK at 3696H-36A3H, DATA at 36A4H-36A7H.",
+    "LINK includes only BYADDR.OBJ(MAIN); no PLM80.LIB module was needed."
+  ],
+  "sample_specific_conclusions": [
+    "The documented C+DE mapping is observed for this BYTE+ADDRESS signature and these actual arguments.",
+    "The ADDRESS actual is formed directly in DE, not first constructed in another pair and moved.",
+    "The callee materializes Y before X; within Y it stores the high byte at the higher address, then low byte at the lower address."
+  ],
+  "comparisons": {
+    "v4-two-byte-parameters": {"code_delta": 3, "variable_delta": 2, "maximum_stack_delta": 0},
+    "v4-address-parameter": {"code_delta": -2, "variable_delta": -1, "maximum_stack_delta": 0},
+    "v4-byte-parameter": {"code_delta": 7, "variable_delta": 3, "maximum_stack_delta": 0},
+    "v4-micro": {"code_delta": 13, "variable_delta": 4, "maximum_stack_delta": 0}
+  },
+  "unresolved_questions": [
+    "The inverse ADDRESS+BYTE ordering is still required before inferring a stronger positional/type-width allocation rule.",
+    "Other type combinations, arities, expression forms, nested calls, recursion/reentrancy, and preserved-register behavior are not established by this sample.",
+    "The mixed-recipe disk's per-overlay provenance and whether OV5/OV6 were opened remain unverified."
+  ]
+}
