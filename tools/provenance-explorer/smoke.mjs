@@ -47,6 +47,29 @@ try {
     await page.waitForFunction(id=>window.__selectedRoutine===id,narrativeRow.to_id);
     if(!narrativeRow.from.startsWith(structure.routines[narrativeRow.from_id].canonical)||!narrativeRow.to.startsWith(structure.routines[narrativeRow.to_id].canonical))throw new Error("narrative rows do not use canonical-preserving generated routine labels");
     const focus=await page.evaluate(()=>window.__routineFocus);if(focus.ordinal!==narrativeRow.ordinal||focus.from!==narrativeRow.from_id||focus.to!==narrativeRow.to_id)throw new Error(`narrative row did not highlight the corresponding edge/nodes: ${JSON.stringify(focus)}`);
+    if(expectedInput==="OPTIMIST"){
+      const checks=await page.evaluate(()=>({summary:window.__canonicalCodeSummary,blocks:window.__canonicalBlocksForImage("PLI2.OVL")}));
+      if(checks.summary.canonical_instructions!==18137||checks.summary.canonical_blocks!==4281)throw new Error(`unexpected canonical code totals ${JSON.stringify(checks.summary)}`);
+      const shared=checks.blocks.filter(x=>x.start_offset<=0x11e6&&x.end_offset>0x11e6).map(x=>({id:x.id,start:x.start_offset,end:x.end_offset,owners:[]}));
+      for(const block of shared)block.owners=await page.evaluate(id=>window.__canonicalBlockOwners(id),block.id);
+      if(shared.length!==1||shared[0].start!==0x11e6||shared[0].end!==0x11ed||JSON.stringify(shared[0].owners)!==JSON.stringify([403,420,422,455,456,458]))throw new Error(`PLI2+11E6 is not one canonical block with six contexts: ${JSON.stringify(shared)}`);
+      const split=checks.blocks.filter(x=>x.start_offset<0x143a&&x.end_offset>0x1432).map(x=>[x.start_offset,x.end_offset]);
+      if(JSON.stringify(split)!==JSON.stringify([[0x1432,0x1437],[0x1437,0x143a]]))throw new Error(`PLI2 union split mismatch: ${JSON.stringify(split)}`);
+      await page.evaluate(()=>window.__selectRoutineFromGraph(403));await page.waitForFunction(()=>window.__selectedRoutine===403);
+      let selected=await page.evaluate(()=>({summary:window.__selectedCodeContextSummary,contexts:window.__selectedCodeContexts}));
+      if(selected.summary.shared_blocks<1||!selected.contexts.some(x=>x.start===0x11e6&&x.end===0x11ed&&x.owners.length===6))throw new Error(`R403 shared code context missing: ${JSON.stringify(selected.summary)}`);
+      const sharedContext=selected.contexts.find(x=>x.start===0x11e6&&x.end===0x11ed);
+      const card=page.locator(`#canonical-block-${sharedContext.id}`);await card.locator(":scope > summary").click();
+      await card.locator(".context-link").first().click();await page.waitForFunction(()=>window.__selectedRoutine!==403);
+      await page.evaluate(()=>window.__selectRoutineFromGraph(458));await page.waitForFunction(()=>window.__selectedRoutine===458);
+      selected=await page.evaluate(()=>window.__selectedCodeContextSummary);
+      if(selected.shared_blocks<1)throw new Error(`R458 does not expose shared-context counts: ${JSON.stringify(selected)}`);
+      await page.evaluate(()=>window.__selectRoutineFromGraph(456));await page.waitForFunction(()=>window.__selectedRoutine===456);
+      selected=await page.evaluate(()=>({summary:window.__selectedCodeContextSummary,contexts:window.__selectedCodeContexts}));
+      if(selected.summary.split_relations<2||!selected.contexts.some(x=>x.start===0x1432&&x.end===0x1437)||!selected.contexts.some(x=>x.start===0x1437&&x.end===0x143a))throw new Error(`R456 union-split contexts are not discoverable: ${JSON.stringify(selected.summary)}`);
+      const splitCards=await page.locator("#routine-blocks .union-split").count();if(splitCards<2)throw new Error(`union split badges missing: ${splitCards}`);
+      interactions.push("canonical code: PLI2+11E6 one block/six routine contexts; +1432/+1437 union split; R403/R458 shared counts and cross-context navigation");
+    }
     await page.evaluate(ordinal=>window.__focusNarrativeFromGraph(ordinal),narrativeRow.ordinal);await page.waitForFunction(ordinal=>window.__routineFocus?.ordinal===ordinal,narrativeRow.ordinal);
     if(expectedInput&&(narrativeRow.from_id!==0||narrativeRow.to_id!==1))throw new Error(`first narrative transition did not navigate R000 -> R001: ${JSON.stringify(narrativeRow)}`);
     await page.click("#routine-map-local");await page.waitForFunction(()=>window.__routineGraphCounts?.mode==="neighborhood");const local=await page.evaluate(()=>window.__routineGraphCounts);if(local.nodes>40||local.nodes<1)throw new Error(`selected-routine neighborhood is not compact: ${JSON.stringify(local)}`);

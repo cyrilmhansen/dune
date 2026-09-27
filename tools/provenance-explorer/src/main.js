@@ -17,18 +17,21 @@ const manifest = await fetch(new URL("./explorer-manifest.json", window.location
   if (!r.ok) throw new Error(`Explorer manifest fetch failed: ${r.status}`);
   return r.json();
 });
-let structureReport = null, blocksReport = null;
+let structureReport = null, blocksReport = null, canonicalCodeReport = null;
 if (manifest.structure) {
-  const [structureText, blocksText] = await Promise.all([
+  const [structureText, blocksText, canonicalCodeText] = await Promise.all([
     fetch(new URL("./dynamic-structure.json", window.location.href)).then(async r => { if (!r.ok) throw new Error(`Structure report fetch failed: ${r.status}`); return r.text(); }),
-    fetch(new URL("./dynamic-blocks.json", window.location.href)).then(async r => { if (!r.ok) throw new Error(`Block report fetch failed: ${r.status}`); return r.text(); })
+    fetch(new URL("./dynamic-blocks.json", window.location.href)).then(async r => { if (!r.ok) throw new Error(`Block report fetch failed: ${r.status}`); return r.text(); }),
+    fetch(new URL("./canonical-code-blocks.json", window.location.href)).then(async r => { if (!r.ok) throw new Error(`Canonical code report fetch failed: ${r.status}`); return r.text(); })
   ]);
   if (!structureText.startsWith("RUNES_DYNAMIC_STRUCTURE 1\n")) throw new Error("Unsupported dynamic structure report version");
   if (!blocksText.startsWith("RUNES_DYNAMIC_BLOCKS 1\n")) throw new Error("Unsupported dynamic blocks report version");
+  if (!canonicalCodeText.startsWith("RUNES_CANONICAL_CODE_BLOCKS 1\n")) throw new Error("Unsupported canonical code report version");
   structureReport = JSON.parse(structureText.slice(structureText.indexOf("\n") + 1));
   blocksReport = JSON.parse(blocksText.slice(blocksText.indexOf("\n") + 1));
+  canonicalCodeReport = JSON.parse(canonicalCodeText.slice(canonicalCodeText.indexOf("\n") + 1));
 }
-const hasStructure = Boolean(structureReport && blocksReport);
+const hasStructure = Boolean(structureReport && blocksReport && canonicalCodeReport);
 document.querySelector("#structure-view").hidden = !hasStructure;
 document.querySelector("#structure-missing").hidden = true;
 document.querySelector("#tab-structure").hidden = !hasStructure;
@@ -55,7 +58,7 @@ const worker = await perspective.worker();
 const viewers = {};
 async function loadViewer(id, rows, group_by, sort) {
   const viewer=document.querySelector(id), table=await worker.table(rows.length ? rows : [{empty:"no rows"}]);
-  await viewer.load(table); await viewer.restore({plugin:"Datagrid"}); viewers[id]=viewer;
+  await viewer.load(table); await viewer.restore({plugin:"Datagrid",group_by:rows.length?group_by:[],sort:rows.length?sort:[]}); viewers[id]=viewer;
   viewer.addEventListener("perspective-click", event => {
     const row=event.detail?.row ?? {};
     if(id==="#producers"){
@@ -138,7 +141,7 @@ function renderHeatmaps(p,path=currentPath){
 }
 function highlightProducer(id){let found=current?.producers.find(p=>p.id===id)??null;if(!found){const branch=currentPath?.locations.find(x=>x.image&&`producer:${x.image.identity}:${x.image_offset}:${x.runtime_pc}`===id),image=branch&&report.execution.images.find(im=>`${String.fromCharCode(65+im.id.drive)}:${im.id.user}:${im.id.name}`===branch.image.identity);if(branch&&image)found={id,virtual_offset:image.virtual_base+branch.image_offset};}currentProducer=found;document.querySelector("#producer-highlight").textContent=`Selected producer location: ${id}`;if(graph){const preview=analysisMode==="path"?currentPath?.preview:current?.preview,nodeId=preview?.nodes.find(n=>n.origin&&producerLocationId(n.origin)===id);if(nodeId)graph.setElementState(`node:${nodeId.id}`,"selected");}if(current)renderHeatmaps(current,currentPath);}
 function highlightControl(row){const im=report.execution.images.find(im=>`${String.fromCharCode(65+im.id.drive)}:${im.id.user}:${im.id.name}`===row.image);if(!im)return;currentProducer={id:`control:${row.image}:${row.image_offset}:${row.runtime_pc}`,virtual_offset:im.virtual_base+row.image_offset};document.querySelector("#producer-highlight").textContent=`Selected path decision: ${row.image} +${Number(row.image_offset).toString(16)} @${Number(row.runtime_pc).toString(16)} · ${row.condition} ${row.taken?"taken":"not taken"}`;if(graph){const n=currentPath?.preview.nodes.find(n=>n.origin&&n.origin.image.identity===row.image&&n.origin.offset===row.image_offset&&n.origin.runtime_pc===row.runtime_pc);if(n)graph.setElementState(`node:${n.id}`,"selected");}if(current)renderHeatmaps(current,currentPath);}
-async function setTableData(p,path){const rows=groupedRows(p);const controlRows=(path?.locations??[]).map(x=>({image:x.image?.identity??"unknown",image_offset:x.image_offset,runtime_pc:x.runtime_pc,condition:x.condition,taken:x.taken,decision_count:x.decision_count,first_step:x.first_step,last_step:x.last_step,distinct_flag_roots:x.distinct_flag_roots}));for(const [id,data] of [["#producers",rows.producers],["#sources",rows.sources],["#operations",rows.operations],["#source-ranges",rows.sourceRanges],["#output-table",report.output_bytes],["#control-decisions",controlRows]]){const old=viewerTables[id];const table=await worker.table(data.length?data:[{empty:"no rows"}]);await old.viewer.load(table);const group_by=id==="#producers"?["image","operation_kind"]:id==="#sources"?["classification","identity"]:id==="#source-ranges"?["classification","identity"]:id==="#operations"?["kind"]:id==="#control-decisions"?["image","condition","taken"]:[];const sort=id==="#producers"?[["producer_steps","desc"]]:id==="#operations"?[["node_count","desc"]]:id==="#source-ranges"?[["first","asc"]]:id==="#control-decisions"?[["decision_count","desc"]]:[["offset","asc"]];await old.viewer.restore({plugin:"Datagrid",group_by,sort});old.table.delete?.();viewerTables[id]={...old,table,rows:data.length};window.__tableGroups??={};window.__tableGroups[id]=group_by;}
+async function setTableData(p,path){const rows=groupedRows(p);const controlRows=(path?.locations??[]).map(x=>({image:x.image?.identity??"unknown",image_offset:x.image_offset,runtime_pc:x.runtime_pc,condition:x.condition,taken:x.taken,decision_count:x.decision_count,first_step:x.first_step,last_step:x.last_step,distinct_flag_roots:x.distinct_flag_roots}));for(const [id,data] of [["#producers",rows.producers],["#sources",rows.sources],["#operations",rows.operations],["#source-ranges",rows.sourceRanges],["#output-table",report.output_bytes],["#control-decisions",controlRows]]){const old=viewerTables[id];const table=await worker.table(data.length?data:[{empty:"no rows"}]);await old.viewer.load(table);const requestedGroup=id==="#producers"?["image","operation_kind"]:id==="#sources"?["classification","identity"]:id==="#source-ranges"?["classification","identity"]:id==="#operations"?["kind"]:id==="#control-decisions"?["image","condition","taken"]:[];const requestedSort=id==="#producers"?[["producer_steps","desc"]]:id==="#operations"?[["node_count","desc"]]:id==="#source-ranges"?[["first","asc"]]:id==="#control-decisions"?[["decision_count","desc"]]:[["offset","asc"]];const group_by=data.length?requestedGroup:[],sort=data.length?requestedSort:[];await old.viewer.restore({plugin:"Datagrid",group_by,sort});old.table.delete?.();viewerTables[id]={...old,table,rows:data.length};window.__tableGroups??={};window.__tableGroups[id]=group_by;}
   window.__perspectiveRows=Object.fromEntries(Object.entries(viewerTables).map(([k,v])=>[k,v.rows]));window.__producerRows=rows.producers;window.__producerIds=rows.producers.map(x=>x.producer_id);window.__controlRows=controlRows;}
 async function renderGraph(p,path){const pathMode=analysisMode==="path",preview=pathMode?path.preview:p.preview,root=pathMode?(preview.nodes[0]?.id??null):p.root,data=graphData(p,preview,root,pathMode?"selected path context":"selected sink");if(graph){graph.destroy();graph=null;}graph=new Graph({container:"graph",width:document.querySelector("#graph").clientWidth,height:540,data,layout:{type:"dagre",rankdir:"LR",nodesep:18,ranksep:40},behaviors:["drag-canvas","zoom-canvas",{type:"collapse-expand",trigger:"click",animation:false}],node:{style:{labelText:d=>d.data?.label??d.id,size:18}},edge:{style:{stroke:d=>roleColor[d.data?.role]??"#a8b2bc",endArrow:true,labelText:d=>d.data?.role??""}},combo:{type:"rect",style:{labelText:d=>d.data?.label??d.id,collapsed:false}}});await graph.render();graph.on("node:click",event=>{const id=event.target?.id??event.data?.id;const d=data.nodes.find(n=>n.id===id)?.data;if(d?.producer_id)highlightProducer(d.producer_id)});graph.on("combo:click",event=>{const id=event.target?.id??event.data?.id;const d=data.combos.find(c=>c.id===id)?.data;if(d?.producer_id)highlightProducer(d.producer_id)});window.__emitG6Producer=id=>{const n=data.nodes.find(x=>x.data?.producer_id===id);if(n)graph.emit("node:click",{target:{id:n.id}});else{const c=data.combos.find(x=>x.data?.producer_id===id);if(c)graph.emit("combo:click",{target:{id:c.id}})}};document.querySelector("#graph-meta").textContent=`G6 bounded ${pathMode?"path-context":"data-DAG"} graph: ${data.nodes.length} nodes, ${data.edges.length} edges, ${data.combos.length} combos (preview max ${preview.max_nodes} nodes, depth ${preview.max_depth}, omitted frontier ${preview.omitted_frontier_count}).`;
   window.__g6Counts={nodes:data.nodes.length,edges:data.edges.length,combos:data.combos.length};}
@@ -146,7 +149,13 @@ async function renderGraph(p,path){const pathMode=analysisMode==="path",preview=
 const hexOffset = value => value == null ? "unknown" : `${Number(value).toString(16).toUpperCase().padStart(4,"0")}h`;
 const routineById = new Map((structureReport?.routines ?? []).map(r => [r.id, r]));
 const aggregateRoutineEdges = new Map((structureReport?.transitions ?? []).map(e => [`${e.from}:${e.to}`, e]));
-const instructionById = new Map((blocksReport?.instructions ?? []).map(i => [i.id, i]));
+const canonicalInstructions = canonicalCodeReport?.instructions ?? [];
+const canonicalBlocks = canonicalCodeReport?.blocks ?? [];
+const canonicalContexts = canonicalCodeReport?.routine_block_relations ?? [];
+const canonicalBlockById = new Map(canonicalBlocks.map(b => [b.id, b]));
+const canonicalInstructionByCoordinate = new Map(canonicalInstructions.map(i => [`${i.image.drive}:${i.image.user}:${i.image.name}:${i.offset}`, i]));
+const imageCoordinateKey = image => `${image.drive}:${image.user}:${image.name}`;
+const instructionContext = (instruction, routineId) => instruction.contexts.find(c => c.routine_id === routineId);
 const narrativeByOrdinal = new Map((structureReport?.narrative ?? []).map(e => [e.ordinal, e]));
 const routineNodeId = id => `routine:${id}`;
 const narrativeEdgeId = ordinal => `narrative:${ordinal}`;
@@ -249,7 +258,9 @@ function highlightNarrative(ordinal){
 }
 function selectBlock(routineId, blockId) {
   if (routineId !== window.__selectedRoutine) { selectRoutine(routineId); setTimeout(() => selectBlock(routineId, blockId), 0); return; }
-  const el = document.querySelector(`#block-${routineId}-${blockId}`);
+  const relation=canonicalContexts.find(c=>c.routine_id===routineId&&c.owner_block_id===blockId);
+  const canonicalId=relation?.canonical_block_id??blockId;
+  const el = document.querySelector(`#canonical-block-${canonicalId}`);
   if (el) { el.open = true; el.scrollIntoView({behavior:"smooth",block:"center"}); }
 }
 function selectRoutine(id, preserveNarrative=false) {
@@ -269,19 +280,36 @@ function selectRoutine(id, preserveNarrative=false) {
     `${routine.distinct_starts} distinct starts`,`incoming ${routine.incoming} · outgoing ${routine.outgoing}`,
     `calls ${routine.calls} · returns ${routine.returns}`,`self calls ${routine.self_calls}`];
   for(const value of values){const span=document.createElement("span");span.textContent=value;metrics.append(span)}detail.append(metrics);
-  const blocks=(blocksReport.blocks??[]).filter(b=>b.routine===id).sort((a,b)=>a.id-b.id);
-  const blockTitle=document.createElement("h3");blockTitle.textContent=`Observed basic blocks · ${blocks.length}`;detail.append(blockTitle);
+  const relations=canonicalContexts.filter(c=>c.routine_id===id);
+  const byCanonicalBlock=new Map();
+  for(const relation of relations){const entries=byCanonicalBlock.get(relation.canonical_block_id)??[];entries.push(relation);byCanonicalBlock.set(relation.canonical_block_id,entries)}
+  const contexts=[...byCanonicalBlock.entries()].map(([blockId,entries])=>({block:canonicalBlockById.get(blockId),entries}))
+    .filter(x=>x.block).sort((a,b)=>a.block.id-b.block.id);
+  const allRelationsByBlock=new Map();for(const relation of canonicalContexts){const entries=allRelationsByBlock.get(relation.canonical_block_id)??[];entries.push(relation);allRelationsByBlock.set(relation.canonical_block_id,entries)}
+  const sharedCount=contexts.filter(({block})=>new Set((allRelationsByBlock.get(block.id)??[]).map(x=>x.routine_id)).size>1).length;
+  const splitCount=relations.filter(x=>x.split_from_owner_block).length;
+  const blockTitle=document.createElement("h3");blockTitle.textContent=`Observed code contexts · ${contexts.length} canonical blocks · shared with other candidates ${sharedCount}${splitCount?` · ${splitCount} union-split relations`:""}`;detail.append(blockTitle);
   const blockRoot=document.createElement("div");blockRoot.id="routine-blocks";
-  for(const block of blocks){
-    const card=document.createElement("details");card.className="block-card";card.id=`block-${id}-${block.id}`;
-    const summary=document.createElement("summary");summary.textContent=block.display;card.append(summary);
+  for(const {block,entries} of contexts){
+    const otherRoutines=[...new Set((allRelationsByBlock.get(block.id)??[]).map(x=>x.routine_id).filter(x=>x!==id))].sort((a,b)=>a-b);
+    const tags=[...new Set(entries.flatMap(x=>x.tags))];
+    const executionCount=entries.reduce((n,x)=>n+x.execution_count,0),entryCount=entries.reduce((n,x)=>n+x.entry_count,0);
+    const firstStep=Math.min(...entries.map(x=>x.first_step)),lastStep=Math.max(...entries.map(x=>x.last_step));
+    const instructionCount=block.instruction_offsets.length;
+    const image=block.image, imageKey=imageCoordinateKey(image);
+    const startHex=Number(block.start_offset).toString(16).toUpperCase().padStart(4,"0"),endHex=Number(block.end_offset).toString(16).toUpperCase().padStart(4,"0");
+    const card=document.createElement("details");card.className="block-card canonical-context-card";card.id=`canonical-block-${block.id}`;
+    const summary=document.createElement("summary");summary.textContent=`${image.name}+${startHex} [${startHex},${endHex}) · ${block.end_offset-block.start_offset} bytes`;card.append(summary);
+    if(otherRoutines.length){const shared=document.createElement("span");shared.className="block-tag shared-context";shared.textContent=`shared · ${otherRoutines.length} other candidates`;card.append(shared)}
+    if(entries.some(x=>x.split_from_owner_block)){const split=document.createElement("span");split.className="block-tag union-split";split.textContent="union split";card.append(split)}
     const meta=document.createElement("div");meta.className="block-meta";
-    const blockImage=block.image?.name ?? block.origin?.kind ?? "unresolved";
-    const blockOffset=block.start_offset == null ? `runtime ${hexOffset(block.runtime_start)}` : `${blockImage}+${hexOffset(block.start_offset)}`;
-    meta.textContent=`${blockOffset} · ${block.byte_length} bytes · ${block.instruction_count} instructions · entries ${block.entries} · steps ${block.first_step}–${block.last_step} · tags ${block.tags.join(", ") || "none"}`;card.append(meta);
-    const codeDetails=document.createElement("details");const codeSummary=document.createElement("summary");codeSummary.textContent=`Formatted 8080 instructions (${block.instruction_count})`;codeDetails.append(codeSummary);
+    meta.textContent=`${instructionCount} canonical instructions · this routine: ${executionCount} executions · entries ${entryCount} · steps ${Number.isFinite(firstStep)?firstStep:"?"}–${Number.isFinite(lastStep)?lastStep:"?"} · contextual tags ${tags.join(", ")||"none"}`;card.append(meta);
+    const contextsLine=document.createElement("div");contextsLine.className="block-meta";contextsLine.append(document.createTextNode(`Observed routine contexts: ${routineLabel(id)}${otherRoutines.length?" · shared with ":""}`));
+    for(const otherId of otherRoutines){const button=document.createElement("button");button.type="button";button.className="routine-link context-link";button.textContent=routineLabel(otherId);button.title=`Navigate to ${routineLabel(otherId)}`;button.addEventListener("click",event=>{event.preventDefault();event.stopPropagation();selectRoutine(otherId)});contextsLine.append(button)}
+    card.append(contextsLine);
+    const codeDetails=document.createElement("details");const codeSummary=document.createElement("summary");codeSummary.textContent=`Canonical 8080 instructions (${block.instruction_offsets.length})`;codeDetails.append(codeSummary);
     let rendered=false;codeDetails.addEventListener("toggle",()=>{if(!codeDetails.open||rendered)return;rendered=true;const list=document.createElement("ol");list.className="instruction-list";
-      for(const instructionId of block.instructions){const ins=instructionById.get(instructionId);if(!ins)continue;const line=document.createElement("li");line.textContent=`${hexOffset(ins.runtime_pc)}  ${ins.text}  · ${ins.executions} executions · steps ${ins.first_step}–${ins.last_step}`;list.append(line)}codeDetails.append(list);});
+      for(const offset of block.instruction_offsets){const ins=canonicalInstructionByCoordinate.get(`${imageKey}:${offset}`);if(!ins)continue;const ctx=instructionContext(ins,id);const line=document.createElement("li");const pcs=ctx?.runtime_pcs?.map(pc=>hexOffset(pc)).join(", ")??"runtime PC unresolved";line.textContent=`${hexOffset(offset)}  ${ins.text}  · ${ctx?.execution_count??0} executions · ${pcs} · steps ${ctx?.first_step??"?"}–${ctx?.last_step??"?"}`;list.append(line)}codeDetails.append(list);});
     card.append(codeDetails);blockRoot.append(card);
   }
   detail.append(blockRoot);
@@ -290,13 +318,18 @@ function selectRoutine(id, preserveNarrative=false) {
   const edgeList=document.createElement("ol");edgeList.className="block-transitions";
   for(const edge of localNarrative){const item=document.createElement("li");const from=document.createElement("button");from.className="routine-link";from.textContent=`R${String(edge.from[0]).padStart(3,"0")}.B${String(edge.from[1]).padStart(3,"0")}`;from.addEventListener("click",()=>selectBlock(edge.from[0],edge.from[1]));const arrow=document.createTextNode(" → ");const to=document.createElement("button");to.className="routine-link";to.textContent=`R${String(edge.to[0]).padStart(3,"0")}.B${String(edge.to[1]).padStart(3,"0")}`;to.addEventListener("click",()=>selectBlock(edge.to[0],edge.to[1]));const kind=document.createTextNode(` · ${edge.kind} · first step ${edge.first_step}`);item.append(from,arrow,to,kind);edgeList.append(item)}
   detail.append(edgeList);detail.scrollIntoView({behavior:"smooth",block:"start"});
-  window.__selectedRoutineBlocks=blocks.length;window.__selectedRoutineNarrative=localNarrative.length;
+  window.__selectedRoutineBlocks=contexts.length;window.__selectedRoutineNarrative=localNarrative.length;
+  window.__selectedCodeContextSummary={routine_id:id,canonical_blocks:contexts.length,shared_blocks:sharedCount,split_relations:splitCount};
+  window.__selectedCodeContexts=contexts.map(({block})=>({id:block.id,image:block.image.name,start:block.start_offset,end:block.end_offset,owners:[...new Set((allRelationsByBlock.get(block.id)??[]).map(x=>x.routine_id))].sort((a,b)=>a-b)}));
   const cycleEdges=routineNarrative.filter(e=>(e.from===id||e.to===id)&&e.cycle).length;
   document.querySelector("#routine-edge-detail").textContent=`Selected ${routineLabel(id)}: ${routineNarrative.filter(e=>e.from===id||e.to===id).length} incoming/outgoing first-observation edges highlighted · ${cycleEdges} participate in a multi-routine or mutual cycle.`;
   if(routineGraphMode==="neighborhood"&&routineGraph)void renderRoutineGraph();else updateRoutineGraphState();
 }
 async function initializeStructureView(){
   if(!hasStructure){window.__structureReady=true;return;}
+  window.__canonicalCodeSummary={...canonicalCodeReport.summary};
+  window.__canonicalBlocksForImage=imageName=>canonicalBlocks.filter(b=>b.image.name===imageName);
+  window.__canonicalBlockOwners=blockId=>[...new Set(canonicalContexts.filter(c=>c.canonical_block_id===blockId).map(c=>c.routine_id))].sort((a,b)=>a-b);
   const routineRows=structureReport.routines.map(r=>({id:r.id,display:routineLabel(r.id),canonical:r.display,image:r.image?.name??"unknown",offset:r.offset,
     tags:r.tags.join(", "),recursive:r.recursive,first_step:r.first_step,last_step:r.last_step,executions:r.executions,
     distinct_starts:r.distinct_starts,incoming:r.incoming,outgoing:r.outgoing,calls:r.calls,returns:r.returns,self_calls:r.self_calls}));
