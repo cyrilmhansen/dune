@@ -614,6 +614,42 @@ let test_warm_boot_and_page_zero () =
       I8080.Step.Write { address = 0xfffc; value = 0x00 };
     ])
 
+let test_personality_boundary () =
+  (* Exercise Get Version and the CP/M 2.2 out-of-range 108 fallback through
+     Runner's system boundary, then ensure choosing the explicit current
+     personality is observationally identical to the default. *)
+  let program =
+    Bytes.of_string
+      "\x0e\x0c\xcd\x05\x00\x0e\x6c\xcd\x05\x00\x0e\x00\xcd\x05\x00"
+  in
+  let run ?personality () =
+    let page_zero = ref None in
+    let returned = ref [] in
+    let result =
+      Runner.run_bytes ?personality ~command_tail:(Bytes.of_string " TEST")
+        ~output:(fun _ -> ())
+        ~on_start:(fun bytes -> page_zero := Some bytes)
+        ~on_step_state:(fun ~step_index:_ snapshot step ->
+          match I8080.Step.control_flow step with
+          | I8080.Step.Return { taken = true; _ } -> returned := snapshot :: !returned
+          | _ -> ())
+        program
+      |> expect_result
+    in
+    result, Option.get !page_zero, List.rev !returned
+  in
+  let default = run () in
+  let explicit = run ~personality:Cpm.Personality.cpm22 () in
+  assert (let result, _, _ = default in result = let result, _, _ = explicit in result);
+  assert (let _, page, _ = default in page = let _, page, _ = explicit in page);
+  (match let _, _, returns = explicit in returns with
+  | [ version; out_of_range ] ->
+      assert (version.Runner.a = 0x22 && version.Runner.b = 0);
+      assert (version.Runner.h = 0 && version.Runner.l = 0x22);
+      assert (out_of_range.Runner.a = 0 && out_of_range.Runner.b = 0);
+      assert (out_of_range.Runner.h = 0 && out_of_range.Runner.l = 0)
+  | _ -> failwith "personality BDOS returns were not observed")
+
 let test_runner_errors () =
   let steps = ref 0 in
   (match
@@ -680,4 +716,5 @@ let () =
   test_cpm_launch_state ();
   test_hello_integration ();
   test_warm_boot_and_page_zero ();
+  test_personality_boundary ();
   test_runner_errors ()

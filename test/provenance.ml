@@ -324,6 +324,7 @@ let historical_run () =
       let map=Option.get experiment.execution_map and prov=Option.get experiment.provenance in
       assert(result.termination=Runner.Warm_boot);
       assert(result.steps=2_535_509);
+      assert(result.t_states=23_204_946);
       let console=experiment.console in
       assert(contains console "NO ERROR(S) IN PASS 1");
       assert(contains console "NO ERROR(S) IN PASS 2");

@@ -23,6 +23,11 @@ type error =
   | Invalid_step_limit of int
   | Invalid_command_tail of int
 
+(** The currently implemented process personality. Runes currently provides
+    only [Cpm.Personality.cpm22]; CP/M Plus is retained as historical
+    differential evidence, not as an implemented runtime profile. *)
+val default_personality : Cpm.Personality.t
+
 (* Default instruction budget for a run. *)
 val default_max_steps : int
 
@@ -39,6 +44,7 @@ val default_max_steps : int
     The initial SP is a deterministic runner convention, not a claim about
     every historical CP/M launch environment. *)
 val run_bytes :
+  ?personality:Cpm.Personality.t ->
   ?max_steps:int ->
   ?on_step:(I8080.Step.t -> unit) ->
   ?on_step_state:(step_index:int -> state_snapshot -> I8080.Step.t -> unit) ->
@@ -54,6 +60,7 @@ val run_bytes :
   (run_result, error) Stdlib.result
 
 val run_file :
+  ?personality:Cpm.Personality.t ->
   ?max_steps:int ->
   ?on_step:(I8080.Step.t -> unit) ->
   ?on_step_state:(step_index:int -> state_snapshot -> I8080.Step.t -> unit) ->
