@@ -195,6 +195,34 @@ function recovery. The exact report contains observed instruction records,
 aggregated edges, blocks, local narratives and structural anomalies, but no
 provenance DAG or raw Step sequence.
 
+## Canonical image-backed code view
+
+Alongside the owner-qualified `RUNES_DYNAMIC_BLOCKS 1` report, structure runs
+now emit `canonical-code-blocks.json`, headed
+`RUNES_CANONICAL_CODE_BLOCKS 1`. The former remains unchanged. In the new view,
+ordinary image-backed instruction identity is `(drive, user, image, file
+offset)`, not routine owner or runtime PC. The materializer requires all
+observations at that coordinate to agree on fetched bytes and decoded
+instruction before interning them. Overlay images therefore remain distinct
+even when loaded at the same runtime addresses.
+
+Canonical image blocks use the union of start/end boundary evidence across
+owner-qualified blocks. A canonical block contains one image and a contiguous
+file-offset interval. Routine ownership, owner block IDs, factual tags,
+runtime starts and per-owner execution metrics are emitted separately as
+routine-to-canonical-block context relations; tags such as `routine-entry` or
+`call-continuation` are not canonical block identity. Unknown, mixed,
+interrupt-supplied, byte-variant, or otherwise disagreeing instructions and
+blocks remain in explicit exceptional owner-qualified arrays. If an interval
+cannot be exactly covered by agreeing canonical instructions, it is reported
+as a partition anomaly rather than silently compacted.
+
+The canonical view does not change routine ownership, current block
+partitioning, or the compatibility meaning of `RUNES_DYNAMIC_BLOCKS 1`.
+OPTIMIST currently yields 18,137 canonical image instruction coordinates and
+4,281 union-boundary image blocks; its sole exceptional instruction/block is
+the unresolved synthetic system trap.
+
 ### Initial compiler block measurements
 
 These runs used `--analysis execution --report none --structure`; the source
