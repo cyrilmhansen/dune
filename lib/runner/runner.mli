@@ -2,7 +2,18 @@
 
 type termination = Bdos_function of int | Warm_boot
 
-type run_result = { termination : termination; steps : int; t_states : int }
+type run_result = {
+  termination : termination;
+  steps : int;
+  t_states : int;
+  (** Byte-sized CPU data reads recorded by executed Steps. Instruction fetch
+      bytes and port operations are excluded. *)
+  data_bytes_read : int;
+  (** Byte-sized CPU data writes recorded by executed Steps. *)
+  data_bytes_written : int;
+  (** [data_bytes_read + data_bytes_written]. *)
+  data_bytes_total : int;
+}
 
 type state_snapshot = {
   a : int; b : int; c : int; d : int; e : int; h : int; l : int;

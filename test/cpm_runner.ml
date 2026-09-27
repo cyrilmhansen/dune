@@ -650,6 +650,30 @@ let test_personality_boundary () =
       assert (out_of_range.Runner.h = 0 && out_of_range.Runner.l = 0)
   | _ -> failwith "personality BDOS returns were not observed")
 
+let test_data_memory_traffic () =
+  let run program =
+    Runner.run_bytes ~output:(fun _ -> ()) program |> expect_result
+  in
+  (* LXI H,2000; MVI M,42; MOV A,M; JMP 0000. Only the store and load
+     appear in Step.memory_accesses; opcode/immediate fetches do not. *)
+  let load_store = run (Bytes.of_string "\x21\x00\x20\x36\x42\x7e\xc3\x00\x00") in
+  assert (load_store.Runner.termination = Runner.Warm_boot);
+  assert (load_store.Runner.data_bytes_read = 1);
+  assert (load_store.Runner.data_bytes_written = 1);
+  assert (load_store.Runner.data_bytes_total = 2);
+  (* CALL writes a two-byte return address and RET reads those two bytes. *)
+  let stack = run (Bytes.of_string "\xcd\x06\x01\xc3\x00\x00\xc9") in
+  assert (stack.Runner.termination = Runner.Warm_boot);
+  assert (stack.Runner.data_bytes_read = 2);
+  assert (stack.Runner.data_bytes_written = 2);
+  assert (stack.Runner.data_bytes_total = 4);
+  (* Register-only operations have fetched opcode/immediate bytes but no data
+     memory accesses. *)
+  let registers = run (Bytes.of_string "\x3e\x55\x06\x2a\x11\x34\x12\xc3\x00\x00") in
+  assert (registers.Runner.data_bytes_read = 0);
+  assert (registers.Runner.data_bytes_written = 0);
+  assert (registers.Runner.data_bytes_total = 0)
+
 let test_runner_errors () =
   let steps = ref 0 in
   (match
@@ -717,4 +741,5 @@ let () =
   test_hello_integration ();
   test_warm_boot_and_page_zero ();
   test_personality_boundary ();
+  test_data_memory_traffic ();
   test_runner_errors ()

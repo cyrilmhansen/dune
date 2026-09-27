@@ -1,6 +1,13 @@
 type termination = Bdos_function of int | Warm_boot
 
-type run_result = { termination : termination; steps : int; t_states : int }
+type run_result = {
+  termination : termination;
+  steps : int;
+  t_states : int;
+  data_bytes_read : int;
+  data_bytes_written : int;
+  data_bytes_total : int;
+}
 
 type state_snapshot = {
   a : int; b : int; c : int; d : int; e : int; h : int; l : int;
@@ -34,6 +41,17 @@ let default_max_steps = 100_000
 
 let default_personality = Cpm.Personality.cpm22
 
+let data_access_counts step =
+  List.fold_left
+    (fun (reads, writes) -> function
+      | I8080.Step.Read _ -> reads + 1, writes
+      | I8080.Step.Write _ -> reads, writes + 1)
+    (0, 0) (I8080.Step.memory_accesses step)
+
+let completed_run ~termination ~steps ~t_states ~data_bytes_read ~data_bytes_written =
+  { termination; steps; t_states; data_bytes_read; data_bytes_written;
+    data_bytes_total = data_bytes_read + data_bytes_written }
+
 let run_loaded ~personality ~max_steps ~on_step ~on_step_state ~on_event ~on_bdos_event ~on_bdos_effect ~on_start ~on_start_state ~output ~filesystem ~command_tail memory loaded =
   let process = Cpm.Personality.launch personality ~filesystem ~command_tail memory in
   let state = I8080.State.create () in
@@ -43,10 +61,11 @@ let run_loaded ~personality ~max_steps ~on_step ~on_step_state ~on_event ~on_bdo
   on_start_state (snapshot state);
   let bus = I8080.Bus.create memory in
   let cpu = I8080.Cpu.create ~state ~bus in
-  let rec run steps t_states =
+  let rec run steps t_states data_bytes_read data_bytes_written =
     if I8080.State.pc state = Cpm.Personality.warm_boot_address personality then (
       on_event (Termination { step_index = steps; reason = Warm_boot });
-      Ok { termination = Warm_boot; steps; t_states })
+      Ok (completed_run ~termination:Warm_boot ~steps ~t_states
+            ~data_bytes_read ~data_bytes_written))
     else if I8080.State.pc state = Cpm.Personality.bdos_entry_address personality then
       let function_number = I8080.State.c state in
       on_event
@@ -60,21 +79,24 @@ let run_loaded ~personality ~max_steps ~on_step ~on_step_state ~on_event ~on_bdo
       | Ok Cpm.Bdos.Terminate ->
           let reason = Bdos_function function_number in
           on_event (Termination { step_index = steps; reason });
-          Ok { termination = reason; steps; t_states }
-      | Ok Cpm.Bdos.Continue -> execute_step steps t_states)
-    else execute_step steps t_states
-  and execute_step steps t_states =
+          Ok (completed_run ~termination:reason ~steps ~t_states
+                ~data_bytes_read ~data_bytes_written)
+      | Ok Cpm.Bdos.Continue -> execute_step steps t_states data_bytes_read data_bytes_written)
+    else execute_step steps t_states data_bytes_read data_bytes_written
+  and execute_step steps t_states data_bytes_read data_bytes_written =
     if steps >= max_steps then Error (Step_limit_exceeded { max_steps; steps })
     else
       match I8080.Cpu.step cpu with
       | Error error -> Error (Cpu_error error)
       | Ok step ->
+          let step_reads, step_writes = data_access_counts step in
           on_step step;
           on_step_state ~step_index:steps (snapshot state) step;
           on_event (Step step);
           run (steps + 1) (t_states + I8080.Timing.cost step)
+            (data_bytes_read + step_reads) (data_bytes_written + step_writes)
   in
-  run 0 0
+  run 0 0 0 0
 
 let run_with_loader ~personality ~max_steps ~on_step ~on_step_state ~on_event ~on_bdos_event ~on_bdos_effect ~on_start ~on_start_state ~output ~filesystem ~command_tail load =
   if max_steps <= 0 then Error (Invalid_step_limit max_steps)

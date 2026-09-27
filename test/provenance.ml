@@ -325,6 +325,9 @@ let historical_run () =
       assert(result.termination=Runner.Warm_boot);
       assert(result.steps=2_535_509);
       assert(result.t_states=23_204_946);
+      assert(result.data_bytes_read=976_244);
+      assert(result.data_bytes_written=548_626);
+      assert(result.data_bytes_total=1_524_870);
       let console=experiment.console in
       assert(contains console "NO ERROR(S) IN PASS 1");
       assert(contains console "NO ERROR(S) IN PASS 2");
