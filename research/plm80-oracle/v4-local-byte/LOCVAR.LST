@@ -1,0 +1,46 @@
+PL/M-80 COMPILER                                                                                                PAGE   1
+
+
+ISIS-II PL/M-80 V4.0 COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN :F0:LOCVAR.OBJ
+COMPILER INVOKED BY:  PLM80 :F0:LOCVAR.PLM DEBUG XREF
+
+
+
+   1          MAIN: DO;
+   2   1      P: PROCEDURE;
+   3   2      DECLARE LOCAL BYTE;
+   4   2      LOCAL = 42;
+   5   2      RETURN;
+   6   2      END P;
+   7   1      CALL P;
+   8   1      END MAIN;
+PL/M-80 COMPILER                                                                                                PAGE   2
+
+
+CROSS-REFERENCE LISTING
+-----------------------
+
+
+   DEFN  ADDR  SIZE  NAME, ATTRIBUTES, AND REFERENCES
+  ----- ----- -----  --------------------------------
+
+
+      3 0000H     1  LOCAL . . BYTE:  4
+
+      1 0000H     8  MAIN. . . PROCEDURE STACK=0002H
+        0000H        MEMORY. . BYTE ARRAY(0)
+
+      2 0008H     6  P . . . . PROCEDURE STACK=0000H:  7
+
+
+
+MODULE INFORMATION:
+
+     CODE AREA SIZE     = 000EH     14D
+     VARIABLE AREA SIZE = 0001H      1D
+     MAXIMUM STACK SIZE = 0002H      2D
+     8 LINES READ
+     0 PROGRAM ERRORS
+
+END OF PL/M-80 COMPILATION

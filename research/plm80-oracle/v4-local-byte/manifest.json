@@ -1,0 +1,103 @@
+{
+  "schema": "RUNES_PLM80_ORACLE_EXPERIMENT 1",
+  "experiment_id": "v4-local-byte",
+  "question": "Where does PL/M-80 V4.0 place and how does it address one local BYTE in a parameterless procedure?",
+  "toolchain": {
+    "simulator": "z80pack Intel Intellec MDS-800 Simulator Release 1.39",
+    "operating_system": "ISIS-II V4.3",
+    "compiler_reported": "ISIS-II PL/M-80 Compiler V4.0",
+    "compiler_console_banner": "ISIS-II PL/M-80 COMPILER V4.0",
+    "linker": "ISIS-II Object Linker V3.0",
+    "locator": "ISIS-II Object Locater V3.0",
+    "launch_document": "research/plm80-oracle/HEADLESS-ISIS-II.md",
+    "overlay_provenance_note": "The local recipe labels PLM80 and OV0-OV4 V4.0 and OV5-OV6 V3.1. Individual overlay opens were not traced; actual per-run overlay use remains unresolved."
+  },
+  "input": {
+    "host_source": "LOCALB.PLM",
+    "guest_basename": "LOCVAR",
+    "source_bytes": 97,
+    "source_sha256": "1d4cd8dde3024ecd59f6a510764ce04cbb8f884a19e2ae4f1faeb7a5e65559df",
+    "line_endings": "CRLF",
+    "source": "MAIN: DO;\r\nP: PROCEDURE;\r\nDECLARE LOCAL BYTE;\r\nLOCAL = 42;\r\nRETURN;\r\nEND P;\r\nCALL P;\r\nEND MAIN;\r\n",
+    "source_disk_images": {
+      "disks/library/isis-ii-43.dsk": {"bytes": 512512, "sha256": "a335f169dd44de5d860911b1c3ae5b1f2804a686d78074139b1838840def27db"},
+      "disks/library/hd-isis-sys.dsk": {"bytes": 3686400, "sha256": "4402966218dd9996e198dfa6412c862060094dd0941fb80942898813c6786860"},
+      "disks/library/hd-isis-usr.dsk": {"bytes": 3686400, "sha256": "967cde09051751fed68843224c8343af1ccdba498cb123e289e4165c08c3e45b"}
+    }
+  },
+  "commands": [
+    "cd /home/john/pli/cpm/z80pack/intelmdssim && ./isisii43-hd -F",
+    "connect /usr/bin/telnet 127.0.0.1 4010; send one ASCII SPACE (20H)",
+    "COPY :CI: TO :F0:LOCVAR.PLM",
+    "PLM80 :F0:LOCVAR.PLM DEBUG XREF",
+    "LINK :F0:LOCVAR.OBJ TO :F0:LOCVAR.SAT MAP PRINT(:F0:LOCVAR.LMP)",
+    "LOCATE :F0:LOCVAR.SAT TO :F0:LOCVAR.LOC MAP PRINT(:F0:LOCVAR.MAP)",
+    "OBJHEX :F0:LOCVAR.LOC TO :F0:LOCVAR.HEX",
+    "DIR FOR LOCVAR.*",
+    "COPY each LOCVAR artifact TO :HP: and capture from /tmp/.z80pack/intelmdssim.pt"
+  ],
+  "paper_tape_capture": {
+    "transport": "local UNIX socket /tmp/.z80pack/intelmdssim.pt",
+    "observed_framing_per_file": "120 zero leader bytes + file payload + 120 zero trailer bytes",
+    "normalization": "strip the zero leader and truncate to the exact payload byte count reported by ISIS-II DIR; all removed trailer bytes were zero"
+  },
+  "compiler_result": {
+    "banner": "ISIS-II PL/M-80 COMPILER V4.0",
+    "program_errors": 0,
+    "lines_read": 8,
+    "code_bytes": 14,
+    "variable_bytes": 1,
+    "maximum_stack_bytes": 2,
+    "main_stack_bytes": 2,
+    "procedure_stack_bytes": 0,
+    "linker_modules": ["LOCVAR.OBJ(MAIN)"],
+    "plm80_library_needed": false
+  },
+  "observed_code_range": {
+    "start": "0x3680",
+    "end_inclusive": "0x368D",
+    "bytes": 14,
+    "hex": "31 9C 36 CD 88 36 FB 76 21 9C 36 36 2A C9",
+    "main_entry": "0x3680",
+    "main_bytes": 8,
+    "call_site": "0x3683",
+    "procedure_entry": "0x3688",
+    "procedure_bytes": 6,
+    "variable_area": "0x369C-0x369C",
+    "local_LOCAL_address": "0x369C",
+    "stack_range": "0x368E-0x369B",
+    "memory_start": "0x369D"
+  },
+  "direct_observations": [
+    "Listing cross-reference gives LOCAL offset 0000H and size 1; compiler reports VARIABLE area size 0001H.",
+    "Locator assigns the one-byte DATA area to 369CH. P executes LXI H,369CH; MVI M,2AH, so this sample stores the assigned byte at that absolute address, not on the procedure stack.",
+    "MAIN initializes SP to 369CH, calls P at 3688H, then executes EI and HLT. The CALL return address is 3686H; P ends in RET.",
+    "Maximum STACK is 2 bytes; listing attributes 2 to MAIN and 0 to P.",
+    "LINK map includes LOCVAR.OBJ(MAIN) alone; PLM80.LIB was not needed for this program."
+  ],
+  "comparison": {
+    "v4-micro": {"code": 9, "variable": 0, "maximum_stack": 2, "delta_code_variable_stack": "+5 / +1 / 0"},
+    "v4-byte-parameter": {"code": 15, "variable": 1, "maximum_stack": 2, "delta_code_variable_stack": "-1 / 0 / 0"},
+    "v4-address-parameter": {"code": 18, "variable": 3, "maximum_stack": 2, "delta_code_variable_stack": "-4 / -2 / 0"}
+  },
+  "interpretation_limit": "These are observations about one procedure with one BYTE local assigned a constant. They do not establish local allocation behavior for recursion, reentrancy, arrays, other storage classes, or other compiler versions.",
+  "artifacts": {
+    "LOCALB.PLM": {"bytes": 97, "sha256": "1d4cd8dde3024ecd59f6a510764ce04cbb8f884a19e2ae4f1faeb7a5e65559df"},
+    "LOCVAR.PLM": {"bytes": 97, "sha256": "1d4cd8dde3024ecd59f6a510764ce04cbb8f884a19e2ae4f1faeb7a5e65559df"},
+    "LOCVAR.LST": {"bytes": 1194, "sha256": "37e1a5332b539a97c124efebcf1e869e9e2a504ce4d3520febea8e6582fadc74"},
+    "LOCVAR.OBJ": {"bytes": 168, "sha256": "efeb7821fba9aeb4f1d2da475c4dda3989f29b11e84ce573ced25b78895a6a28"},
+    "LOCVAR.SAT": {"bytes": 176, "sha256": "dfed8311d96937078aee7a6b52cbcb638eb5cf7131b925730095f6438455db2a"},
+    "LOCVAR.LMP": {"bytes": 399, "sha256": "8f4598758e2aa16f7578317ab7c0ba72dd1536b083732c463d9b4aaa9491393d"},
+    "LOCVAR.LOC": {"bytes": 133, "sha256": "fe355494bd4b3f13f8606ba95646cdc79b128a1dee2762deedc2832bccf8ccaf"},
+    "LOCVAR.MAP": {"bytes": 400, "sha256": "d236e53e3cd03e010b918c6b4b2439af77c11e220f738abe1c2bcc9a609db915"},
+    "LOCVAR.HEX": {"bytes": 54, "sha256": "2f751f7460df4c85d35d0ec09c82a61d217291f1626a035072d946be26970853"},
+    "console.typescript": {"bytes": 1048, "sha256": "14b77b929310021566c8147ee569d3ac2254ba355c53df22490f16554185825d"},
+    "ptp-capture.typescript": {"bytes": 603, "sha256": "65d3d14339c61b77e07e6e472f1837c674b044cebb5bed591879feb49a774411"},
+    "README.md": {"bytes": 3065, "sha256": "20d963816e48e17a22f96866f8c4269d27059ec57bdbc1b1b5eb4a14abdfcebc"},
+    "DISASSEMBLY.md": {"bytes": 1321, "sha256": "413c03ad1ad257a69f077fa9902f0af95ad3060f38f7893578fe331d58f5f8fe"}
+  },
+  "unresolved_questions": [
+    "The local mixed-overlay recipe's individual PLM80 overlay provenance and whether OV5/OV6 were opened remain unverified.",
+    "This fixture does not establish allocation behavior for recursive/reentrant procedures or other local-variable forms."
+  ]
+}
