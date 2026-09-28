@@ -1,0 +1,99 @@
+{
+  "schema": "RUNES_PLM80_ORACLE_EXPERIMENT 1",
+  "experiment_id": "v4-four-byte-parameters",
+  "question": "In a four-BYTE call, which two parameters are stack-passed, in what order are their slots pushed/retrieved, and how does the callee materialize them?",
+  "toolchain": {
+    "simulator": "z80pack Intel Intellec MDS-800 Simulator Release 1.39",
+    "operating_system": "ISIS-II V4.3",
+    "compiler_reported": "ISIS-II PL/M-80 Compiler V4.0",
+    "compiler_console_banner": "ISIS-II PL/M-80 COMPILER V4.0",
+    "linker": "ISIS-II Object Linker V3.0",
+    "locator": "ISIS-II Object Locater V3.0",
+    "disk_recipe_note": "Local recipe labels PLM80 and OV0-OV4 V4.0, OV5-OV6 V3.1; this run did not trace individual overlay opens.",
+    "launch_document": "research/plm80-oracle/HEADLESS-ISIS-II.md"
+  },
+  "input": {
+    "basename": "FOURB",
+    "source": "MAIN: DO;\r\n\r\nP: PROCEDURE(W,X,Y,Z);\r\nDECLARE (W,X,Y,Z) BYTE;\r\nRETURN;\r\nEND P;\r\n\r\nCALL P(17,34,51,68);\r\nEND MAIN;\r\n",
+    "line_endings": "CRLF",
+    "bytes": 114,
+    "sha256": "210ca7b9fdad55e57a9597a6a452f50680423f87531d4541407e87928a60fd9e",
+    "arguments_decimal_hex": {"W": "17 / 11H", "X": "34 / 22H", "Y": "51 / 33H", "Z": "68 / 44H"}
+  },
+  "source_disk_images_observed": {
+    "disks/library/isis-ii-43.dsk": "a335f169dd44de5d860911b1c3ae5b1f2804a686d78074139b1838840def27db",
+    "disks/library/hd-isis-sys.dsk": "2efce43d32726b4c1235976e5869dbe6a9994e77d0514e5e934eaae34cb8fb60",
+    "disks/library/hd-isis-usr.dsk": "1974773dd67e53385d0aa9165cb614252c47b7c5d6e80d6dfdd344737673f250"
+  },
+  "commands": [
+    "cd /home/john/pli/cpm/z80pack/intelmdssim && ./isisii43-hd -F",
+    "/usr/bin/telnet 127.0.0.1 4010",
+    "send one ASCII SPACE byte (0x20), without CR/LF; wait for ISIS-II, V4.3 and -",
+    "COPY :CI: TO :F0:FOURB.PLM",
+    "PLM80 :F0:FOURB.PLM DEBUG XREF",
+    "LINK :F0:FOURB.OBJ TO :F0:FOURB.SAT MAP PRINT(:F0:FOURB.LMP)",
+    "LOCATE :F0:FOURB.SAT TO :F0:FOURB.LOC MAP PRINT(:F0:FOURB.MAP)",
+    "OBJHEX :F0:FOURB.LOC TO :F0:FOURB.HEX",
+    "DIR FOR FOURB.*"
+  ],
+  "artifacts": {
+    "FOURB.PLM": {"bytes": 114, "sha256": "210ca7b9fdad55e57a9597a6a452f50680423f87531d4541407e87928a60fd9e"},
+    "FOURB.LST": {"bytes": 1380, "sha256": "bbbee40890540152542c78895fb754574c0f3c21658200f2249ebbfe5399a592"},
+    "FOURB.OBJ": {"bytes": 194, "sha256": "25e811aaa5bd8712117ff18510c7df29727831027c49c9ed8c4772bf609f538d"},
+    "FOURB.SAT": {"bytes": 201, "sha256": "48603ee9e4d4d42864ad9a88e28691fe6bfb90d19c55100f30bfc68e8a4ab969"},
+    "FOURB.LOC": {"bytes": 158, "sha256": "d99285f28252a41459ab0616e9e44b38c51ebd399ed0cfca219c9762112f5f6e"},
+    "FOURB.HEX": {"bytes": 118, "sha256": "e1227662ce65963cba1ab025a8c7bee857ef8aeef3257aaba33cb2fee0e414f6"},
+    "FOURB.LMP": {"bytes": 393, "sha256": "41c1281dc37d65ee225d8756ee80593f0c615cdffb2941ceca02ef4a111b95ee"},
+    "FOURB.MAP": {"bytes": 394, "sha256": "2f9247e410a24be0927105ab9f51bd4de10b8fe50cb9d72faeabe1327c6fdf3d"},
+    "console.typescript": {"bytes": 1506, "sha256": "03b05f5f952c5f4ab18876b44e73b1b86a8ecfe6d6d75b1d6146c8db5f4f9212"},
+    "README.md": {"bytes": 3823, "sha256": "c6c9106c7f0a8e4c9a723cd3f32b64dece394f6853d6f2e0753ac1f9caa272c2"},
+    "DISASSEMBLY.md": {"bytes": 5145, "sha256": "e4af2900b7b5cc6ff1ad0f577a92f81e6231c9f9efce4bb9b525810f89ee85c6"}
+  },
+  "observed_code": {
+    "start": "0x3680",
+    "end_inclusive": "0x36A0",
+    "bytes": 33,
+    "hex": "31 B3 36 0E 11 C5 0E 22 C5 1E 44 0E 33 CD 92 36 FB 76 21 B6 36 73 2B 71 2B D1 C1 71 2B C1 71 D5 C9",
+    "main_entry": "0x3680",
+    "main_bytes": 18,
+    "call_site": "0x368D",
+    "procedure_entry": "0x3692",
+    "procedure_bytes": 15,
+    "data_range": "0x36B3-0x36B6",
+    "formal_allocations": {"W": "0x36B3", "X": "0x36B4", "Y": "0x36B5", "Z": "0x36B6"},
+    "stack_segment_reserved": "0x36A1-0x36B2",
+    "initial_sp": "0x36B3"
+  },
+  "sizes": {
+    "code": 33,
+    "variable": 4,
+    "maximum_stack": 6,
+    "main_reported_stack": 6,
+    "procedure_reported_stack": 4,
+    "compiler_errors": 0,
+    "linker_input_modules": ["FOURB.OBJ(MAIN)"],
+    "plm80_library_needed": false
+  },
+  "observations": [
+    "Documented expectation: final two parameters use register slots, earlier parameters are stack-passed. This sample predicts W and X on stack, Y in C, Z in E.",
+    "Observed caller order: MVI C,11H; PUSH B; MVI C,22H; PUSH B; MVI E,44H; MVI C,33H; CALL 3692H. Thus W is pushed first, X second. Before CALL SP=36AFH, C=33H (Y), E=44H (Z); B and D are not established by this argument setup.",
+    "Each pushed BYTE occupies the C byte of a two-byte BC stack pair. The B companion bytes are not established by the emitted setup and are not inferred.",
+    "At procedure entry SP=36ADH: return address 3690H at 36ADH-36AEH, X's C byte 22H at 36AFH, X companion at 36B0H, W's C byte 11H at 36B1H, W companion at 36B2H.",
+    "Callee materialization order is Z from E, Y from C, X after POP D/POP B, then W after another POP B. It restores the saved return address with PUSH D and RET. No caller-side argument cleanup instruction is emitted.",
+    "Maximum stack is 6 bytes: two PUSH B argument pairs plus the CALL return address. This is +2 from the three-BYTE fixture's 4.",
+    "LINK includes only FOURB.OBJ(MAIN); PLM80.LIB was not needed."
+  ],
+  "comparison": {
+    "documented_convention": "Final two parameters in register slots; earlier parameters stack-passed.",
+    "observed_in_this_fixture": "W and X stack-passed; Y in C; Z in E. W pushed before X; X popped/materialized before W.",
+    "three_byte_delta_code_variable_stack": "+6 / +1 / +2",
+    "two_byte_reference_code_variable_stack": "33/4/6 vs 19/2/2"
+  },
+  "unresolved_questions": [
+    "This fixture does not establish ordering for more than two stack-passed arguments in general, nor stack representation/order for ADDRESS or mixed-width parameters.",
+    "WORD parameters, expressions with side effects, return values, external/recursive procedures, and all caller/callee cleanup cases remain untested.",
+    "The B companion bytes in the two pushed pairs are not initialized by this argument setup; their concrete values are not characterized.",
+    "The mixed overlay recipe and actual PLM80 overlay opens remain unresolved. Compiler banner alone does not establish provenance of every overlay.",
+    "System/user disk hashes observed here differ from earlier oracle manifests; no evidence here identifies whether this reflects prior disk writes or another image state, so the discrepancy is retained without attribution."
+  ]
+}
