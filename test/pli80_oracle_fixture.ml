@@ -58,12 +58,21 @@ let test_comparisons () =
   assert (contains three_four "CODE 27 -> 33 (+6)");
   assert (contains three_four "maximum STACK 4 -> 6 (+2)");
   assert (contains three_four "W and X stack-passed");
-  assert (contains three_four "Disassembly difference by byte alignment");
+  assert (contains three_four "Instruction-level disassembly alignment (keyed by opcode");
+  assert (contains three_four "+ B 3686  0E 22    MVI C,22H");
+  assert (contains three_four "+ B 3688  C5       PUSH B");
+  assert (contains three_four "Common toolchain:");
+  assert (not (contains three_four "A toolchain"));
+  assert (not (contains three_four "Compiler version:"));
   let byte = load "v4-byte-return" and address = load "v4-address-return" in
   let returns = Pli80.Oracle_fixture.compare_to_text byte address in
   assert (contains returns "CODE 14 -> 15 (+1)");
   assert (contains returns "VARIABLE 1 -> 3 (+2)");
   assert (contains returns "low byte first");
-  assert (contains returns "does not infer parameter semantics or a generalized ABI")
+  assert (contains returns "STA 369CH");
+  assert (contains returns "SHLD 369EH");
+  assert (contains returns "MVI A,2AH");
+  assert (contains returns "LXI H,369DH");
+  assert (contains returns "No PL/M ABI semantics are inferred")
 
 let () = test_four_byte_fixture (); test_address_return_fixture (); test_comparisons ()

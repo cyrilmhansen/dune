@@ -30,5 +30,5 @@ val load : string -> (t, string) result
 
 val to_text : t -> string
 val compare_to_text : t -> t -> string
-(** [compare_to_text a b] displays only preserved fixture facts and a byte-aligned
+(** [compare_to_text a b] displays only preserved fixture facts and an opcode-aligned
     disassembly difference; it does not infer semantic correspondences. *)

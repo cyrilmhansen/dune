@@ -370,24 +370,73 @@ let to_text fixture =
 
 let signed_delta value = if value >= 0 then Printf.sprintf "+%d" value else string_of_int value
 
-let comparison_disassembly fixture first last =
-  let base = parse_address fixture.code_start in
-  let selected =
-    List.filter
-      (fun instruction ->
-        let start = instruction.address - base in
-        let stop = start + Bytes.length instruction.bytes in
-        start < last && stop > first)
-      fixture.disassembly
+type instruction_alignment =
+  | Aligned of instruction * instruction
+  | Removed of instruction
+  | Added of instruction
+
+let opcode instruction = Char.code (Bytes.get instruction.bytes 0)
+
+let align_instructions left right =
+  let left = Array.of_list left and right = Array.of_list right in
+  let n = Array.length left and m = Array.length right in
+  let lcs = Array.make_matrix (n + 1) (m + 1) 0 in
+  for i = n - 1 downto 0 do
+    for j = m - 1 downto 0 do
+      lcs.(i).(j) <-
+        if opcode left.(i) = opcode right.(j) then 1 + lcs.(i + 1).(j + 1)
+        else max lcs.(i + 1).(j) lcs.(i).(j + 1)
+    done
+  done;
+  let aligned = ref [] and gap_left = ref [] and gap_right = ref [] in
+  let emit row = aligned := row :: !aligned in
+  let flush_gaps () =
+    let a = List.rev !gap_left and b = List.rev !gap_right in
+    gap_left := [];
+    gap_right := [];
+    let rec pair a b =
+      match a, b with
+      | left :: a, right :: b -> emit (Aligned (left, right)); pair a b
+      | left :: a, [] -> emit (Removed left); pair a []
+      | [], right :: b -> emit (Added right); pair [] b
+      | [], [] -> ()
+    in
+    pair a b
   in
-  if first = last then "    (no bytes in this fixture)\n"
-  else if selected = [] then "    (no decoded instructions overlap this byte range)\n"
+  let i = ref 0 and j = ref 0 in
+  while !i < n || !j < m do
+    if !i < n && !j < m && opcode left.(!i) = opcode right.(!j)
+       && lcs.(!i).(!j) = 1 + lcs.(!i + 1).(!j + 1) then (
+      flush_gaps ();
+      emit (Aligned (left.(!i), right.(!j)));
+      incr i;
+      incr j)
+    else if !i < n && (!j = m || lcs.(!i + 1).(!j) > lcs.(!i).(!j + 1)) then (
+      gap_left := left.(!i) :: !gap_left;
+      incr i)
+    else (
+      gap_right := right.(!j) :: !gap_right;
+      incr j)
+  done;
+  flush_gaps ();
+  List.rev !aligned
+
+let instruction_text instruction =
+  Printf.sprintf "%04X  %-8s %s" instruction.address (format_bytes instruction.bytes) instruction.mnemonic
+
+let format_instruction_alignment left right =
+  let rows = align_instructions left right in
+  if rows = [] then "  (no instructions)\n"
   else
-    let result = Buffer.create 256 in
+    let result = Buffer.create (List.length rows * 64) in
     List.iter
-      (fun instruction ->
-        Printf.bprintf result "    %04X  %-8s %s\n" instruction.address (format_bytes instruction.bytes) instruction.mnemonic)
-      selected;
+      (function
+        | Aligned (a, b) ->
+            let marker = if Bytes.equal a.bytes b.bytes && a.mnemonic = b.mnemonic then '=' else '~' in
+            Printf.bprintf result "%c A %-30s | B %s\n" marker (instruction_text a) (instruction_text b)
+        | Removed instruction -> Printf.bprintf result "- A %s\n" (instruction_text instruction)
+        | Added instruction -> Printf.bprintf result "+ B %s\n" (instruction_text instruction))
+      rows;
     Buffer.contents result
 
 let compare_to_text left right =
@@ -399,9 +448,12 @@ let compare_to_text left right =
   line "B" right.id;
   Option.iter (line "A question") left.question;
   Option.iter (line "B question") right.question;
-  List.iter (fun (label, value) -> Printf.bprintf result "A toolchain %s: %s\n" label value) left.toolchain;
-  List.iter (fun (label, value) -> Printf.bprintf result "B toolchain %s: %s\n" label value) right.toolchain;
-  Printf.bprintf result "Compiler version: A=%s; B=%s\n" left.toolchain_version right.toolchain_version;
+  if left.toolchain = right.toolchain then (
+    add "Common toolchain:\n";
+    List.iter (fun (label, value) -> Printf.bprintf result "  %s: %s\n" label value) left.toolchain)
+  else (
+    List.iter (fun (label, value) -> Printf.bprintf result "A toolchain %s: %s\n" label value) left.toolchain;
+    List.iter (fun (label, value) -> Printf.bprintf result "B toolchain %s: %s\n" label value) right.toolchain);
   Printf.bprintf result "Sizes (B - A): CODE %d -> %d (%s), VARIABLE %d -> %d (%s), maximum STACK %d -> %d (%s)\n"
     left.code_size right.code_size (signed_delta (right.code_size - left.code_size))
     left.variable_size right.variable_size (signed_delta (right.variable_size - left.variable_size))
@@ -410,6 +462,9 @@ let compare_to_text left right =
     left.code_start left.code_end_inclusive right.code_start right.code_end_inclusive;
   Printf.bprintf result "Located DATA: A %s; B %s\n"
     (Option.value left.data_range ~default:"not recorded") (Option.value right.data_range ~default:"not recorded");
+  add "\nInstruction-level disassembly alignment (keyed by opcode; operands and addresses remain exact):\n";
+  add "  = same instruction encoding/text; ~ aligned instructions differ; - only in A; + only in B\n";
+  add (format_instruction_alignment left.disassembly right.disassembly);
   List.iter
     (fun (label, fixture) ->
       Printf.bprintf result "\n%s source (CRLF displayed as LF):\n```plm\n%s" label (source_for_display fixture.source);
@@ -418,24 +473,7 @@ let compare_to_text left right =
     [ "A", left; "B", right ];
   Printf.bprintf result "\nA exact code (%d bytes):\n%s\n" left.code_size (format_bytes left.code_bytes);
   Printf.bprintf result "B exact code (%d bytes):\n%s\n" right.code_size (format_bytes right.code_bytes);
-  let left_bytes = Bytes.length left.code_bytes and right_bytes = Bytes.length right.code_bytes in
-  let prefix = ref 0 in
-  while !prefix < min left_bytes right_bytes && Bytes.get left.code_bytes !prefix = Bytes.get right.code_bytes !prefix do
-    incr prefix
-  done;
-  let suffix = ref 0 in
-  while !suffix < min (left_bytes - !prefix) (right_bytes - !prefix)
-        && Bytes.get left.code_bytes (left_bytes - !suffix - 1) = Bytes.get right.code_bytes (right_bytes - !suffix - 1) do
-    incr suffix
-  done;
-  if !prefix = left_bytes && !prefix = right_bytes then add "\nCode bytes are identical; decoded instructions are identical.\n"
-  else (
-    Printf.bprintf result "\nDisassembly difference by byte alignment: common prefix %d bytes, common suffix %d bytes.\n" !prefix !suffix;
-    let left_stop = left_bytes - !suffix and right_stop = right_bytes - !suffix in
-    Printf.bprintf result "A changed byte window [%04X,%04X):\n" !prefix left_stop;
-    add (comparison_disassembly left !prefix left_stop);
-    Printf.bprintf result "B changed byte window [%04X,%04X):\n" !prefix right_stop;
-    add (comparison_disassembly right !prefix right_stop));
+  add "\nPreserved manifest evidence:\n";
   List.iter
     (fun (label, fixture) ->
       Option.iter (fun expectation -> Printf.bprintf result "\n%s documented expectation: %s\n" label expectation) fixture.documented_expectation;
@@ -449,5 +487,5 @@ let compare_to_text left right =
         Printf.bprintf result "\n%s unresolved questions:\n" label;
         List.iter (fun question -> Printf.bprintf result "- %s\n" question) fixture.unresolved_questions))
     [ "A", left; "B", right ];
-  add "\nComparison is positional byte evidence only; it does not infer parameter semantics or a generalized ABI.\n";
+  add "\nAlignment uses decoded opcode identity; all displayed addresses, bytes, and operands remain fixture-exact. No PL/M ABI semantics are inferred.\n";
   Buffer.contents result
