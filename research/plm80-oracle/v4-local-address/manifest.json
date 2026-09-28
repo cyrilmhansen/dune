@@ -1,0 +1,105 @@
+{
+  "schema": "RUNES_PLM80_ORACLE_EXPERIMENT 1",
+  "experiment_id": "v4-local-address",
+  "question": "Where does PL/M-80 V4.0 allocate and how does it store one local ADDRESS assigned the address of a static BYTE?",
+  "toolchain": {
+    "simulator": "z80pack Intel Intellec MDS-800 Simulator Release 1.39",
+    "operating_system": "ISIS-II V4.3",
+    "compiler_reported": "ISIS-II PL/M-80 Compiler V4.0",
+    "compiler_console_banner": "ISIS-II PL/M-80 COMPILER V4.0",
+    "linker": "ISIS-II Object Linker V3.0",
+    "locator": "ISIS-II Object Locater V3.0",
+    "launch_document": "research/plm80-oracle/HEADLESS-ISIS-II.md",
+    "overlay_provenance_note": "The local disk recipe labels PLM80 and OV0-OV4 V4.0 and OV5-OV6 V3.1. Individual overlay opens were not traced; actual per-run overlay use remains unresolved."
+  },
+  "input": {
+    "host_source": "LOCALAD.PLM",
+    "guest_basename": "LOCADR",
+    "source_bytes": 121,
+    "source_sha256": "0080c6a5a1339a05ed6ea183342f7d1ed91418c183d2190bf6427fce7063b188",
+    "line_endings": "CRLF",
+    "source": "MAIN: DO;\r\nDECLARE OBJ BYTE;\r\nP: PROCEDURE;\r\nDECLARE LOCAL ADDRESS;\r\nLOCAL = .OBJ;\r\nRETURN;\r\nEND P;\r\nCALL P;\r\nEND MAIN;\r\n",
+    "source_disk_images_at_experiment_start": {
+      "disks/library/isis-ii-43.dsk": {"bytes": 512512, "sha256": "a335f169dd44de5d860911b1c3ae5b1f2804a686d78074139b1838840def27db"},
+      "disks/library/hd-isis-sys.dsk": {"bytes": 3686400, "sha256": "4402966218dd9996e198dfa6412c862060094dd0941fb80942898813c6786860"},
+      "disks/library/hd-isis-usr.dsk": {"bytes": 3686400, "sha256": "967cde09051751fed68843224c8343af1ccdba498cb123e289e4165c08c3e45b"}
+    }
+  },
+  "commands": [
+    "cd /home/john/pli/cpm/z80pack/intelmdssim && ./isisii43-hd -F",
+    "connect /usr/bin/telnet 127.0.0.1 4010; send one ASCII SPACE (20H)",
+    "COPY :CI: TO :F0:LOCADR.PLM",
+    "PLM80 :F0:LOCADR.PLM DEBUG XREF",
+    "LINK :F0:LOCADR.OBJ TO :F0:LOCADR.SAT MAP PRINT(:F0:LOCADR.LMP)",
+    "LOCATE :F0:LOCADR.SAT TO :F0:LOCADR.LOC MAP PRINT(:F0:LOCADR.MAP)",
+    "OBJHEX :F0:LOCADR.LOC TO :F0:LOCADR.HEX",
+    "DIR FOR LOCADR.*",
+    "COPY each LOCADR artifact TO :HP: and capture from /tmp/.z80pack/intelmdssim.pt"
+  ],
+  "paper_tape_capture": {
+    "transport": "local UNIX socket /tmp/.z80pack/intelmdssim.pt",
+    "observed_framing_per_file": "120 zero leader bytes + file payload + 120 zero trailer bytes",
+    "normalization": "strip the zero leader and truncate to the exact payload byte count reported by ISIS-II DIR; all removed trailer bytes were zero"
+  },
+  "compiler_result": {
+    "banner": "ISIS-II PL/M-80 COMPILER V4.0",
+    "program_errors": 0,
+    "lines_read": 9,
+    "code_bytes": 15,
+    "variable_bytes": 3,
+    "maximum_stack_bytes": 2,
+    "main_stack_bytes": 2,
+    "procedure_stack_bytes": 0,
+    "linker_modules": ["LOCADR.OBJ(MAIN)"],
+    "plm80_library_needed": false
+  },
+  "observed_code_range": {
+    "start": "0x3680",
+    "end_inclusive": "0x368E",
+    "bytes": 15,
+    "hex": "31 9D 36 CD 88 36 FB 76 21 9D 36 22 9E 36 C9",
+    "main_entry": "0x3680",
+    "main_bytes": 8,
+    "call_site": "0x3683",
+    "procedure_entry": "0x3688",
+    "procedure_bytes": 7,
+    "variable_area": "0x369D-0x369F",
+    "static_object_OBJ": "0x369D",
+    "local_LOCAL_address": "0x369E-0x369F",
+    "local_value_bytes_in_increasing_address_order": "9D 36",
+    "stack_range": "0x368F-0x369C",
+    "memory_start": "0x36A0"
+  },
+  "direct_observations": [
+    "Listing cross-reference gives OBJ offset 0000H/size 1 and LOCAL offset 0001H/size 2; compiler reports VARIABLE area size 0003H.",
+    "LOCATE assigns DATA to 369DH-369FH, so OBJ is at 369DH and LOCAL occupies 369EH-369FH. The listing and map therefore show this local ADDRESS as exactly two bytes in VARIABLE/DATA, not on P's stack.",
+    "P executes LXI H,369DH; SHLD 369EH; RET. SHLD stores L=9DH to 369EH and H=36H to 369FH, yielding address 369DH in low-byte-first order.",
+    "MAIN initializes SP to 369DH and CALLs P at 3688H. The return address is 3686H; CALL uses the two bytes below initial SP. P reports stack use zero; maximum STACK is 2 bytes.",
+    "LINK map includes LOCADR.OBJ(MAIN) alone; PLM80.LIB was not needed for this program."
+  ],
+  "comparison": {
+    "v4-local-byte": {"code": 14, "variable": 1, "maximum_stack": 2, "delta_code_variable_stack": "+1 / +2 / 0"},
+    "v4-address-parameter": {"code": 18, "variable": 3, "maximum_stack": 2, "delta_code_variable_stack": "-3 / 0 / 0"},
+    "v4-micro": {"code": 9, "variable": 0, "maximum_stack": 2, "delta_code_variable_stack": "+6 / +3 / 0"}
+  },
+  "interpretation_limit": "This fixture establishes allocation and byte order only for one ADDRESS local assigned one static object's address in this exact V4.0 compilation. It does not establish a general recursion, reentrancy, or local-variable storage model.",
+  "artifacts": {
+    "LOCALAD.PLM": {"bytes": 121, "sha256": "0080c6a5a1339a05ed6ea183342f7d1ed91418c183d2190bf6427fce7063b188"},
+    "LOCADR.PLM": {"bytes": 121, "sha256": "0080c6a5a1339a05ed6ea183342f7d1ed91418c183d2190bf6427fce7063b188"},
+    "LOCADR.LST": {"bytes": 1278, "sha256": "767b9499226cabed0864272fd8eb5ac9f9d83fe3e5378d723aa638baaecfb42d"},
+    "LOCADR.OBJ": {"bytes": 183, "sha256": "83534fdcfeef1320c6a9364f5d508050c9bcea59121183eba3b75c04aa47dcd8"},
+    "LOCADR.SAT": {"bytes": 191, "sha256": "e513ff77c34e22860024cc0bcecea2cfc1684eb3ed5858b5c432bc6b98a1e352"},
+    "LOCADR.LMP": {"bytes": 399, "sha256": "39b711e91fa41117788cceb7847f89b6f465e295c2e3c1cccd28d9cb7f453c40"},
+    "LOCADR.LOC": {"bytes": 146, "sha256": "7a974b52cfdc77d4f05a2559fe8466d1377c39bdc376b2dd9039889e1e9df9fe"},
+    "LOCADR.MAP": {"bytes": 400, "sha256": "1d5e320eb66581e42aee7d27c6433008b5e3f7af8ab30b5b86388c2dda7cc7fe"},
+    "LOCADR.HEX": {"bytes": 56, "sha256": "6a46dfc6dcd032ff9194a19ab48b38ceb61e9596c9d6acd93d3665cdb0b64efc"},
+    "console.typescript": {"bytes": 1782, "sha256": "7475482b480c2ae0f53ee61a6de358c01f46006b4aec3932d6195a4631d36d92"},
+    "ptp-capture.typescript": {"bytes": 512, "sha256": "f36b37ecb1225bcadaa952b46f3b6705d1f8adcad59ba5d72b189af7fbef839d"},
+    "README.md": {"bytes": 3172, "sha256": "c8b0fb4d89d947f2db5f80885215391f8926c2354faf1abf304e21ba63e52315"},
+    "DISASSEMBLY.md": {"bytes": 1367, "sha256": "c2a8eb1fca9aa0758f91a5a388bd422728dc5e04fc49bc840f9e414e6d1b1e5d"}
+  },
+  "unresolved_questions": [
+    "The local mixed-overlay recipe's individual PLM80 overlay provenance and whether OV5/OV6 were opened remain unverified.",
+    "This experiment does not establish whether or how ADDRESS locals behave across recursive or reentrant invocations."
+  ]
+}
