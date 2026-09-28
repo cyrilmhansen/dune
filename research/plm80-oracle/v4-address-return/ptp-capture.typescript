@@ -1,0 +1,14 @@
+The host receiver connected once to the simulator's existing local Unix PTP
+socket:
+
+  /tmp/.z80pack/intelmdssim.pt
+
+Guest files were sent in this order using `COPY :F0:ADRTRN.<ext> TO :HP:`:
+
+  PLM 124, LST 1275, OBJ 186, SAT 194, LMP 399, LOC 143, MAP 400, HEX 56
+
+For each transfer the observed framing was 120 zero leader bytes, exactly
+the ISIS-II DIR payload length, then 120 zero trailer bytes. All leader and
+trailer bytes were verified as zero. Total captured framing stream: 4697
+bytes; extracted payloads: 2777 bytes. The raw framing stream was discarded
+after extraction; only the exact payload artifacts are preserved.

@@ -1,0 +1,48 @@
+PL/M-80 COMPILER                                                                                                PAGE   1
+
+
+ISIS-II PL/M-80 V4.0 COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN :F0:ADRTRN.OBJ
+COMPILER INVOKED BY:  PLM80 :F0:ADRTRN.PLM DEBUG XREF
+
+
+
+   1          MAIN: DO;
+   2   1      DECLARE OBJ BYTE;
+   3   1      P: PROCEDURE ADDRESS;
+   4   2      RETURN .OBJ;
+   5   2      END P;
+   6   1      DECLARE RESULT ADDRESS;
+   7   1      RESULT = P;
+   8   1      END MAIN;
+PL/M-80 COMPILER                                                                                                PAGE   2
+
+
+CROSS-REFERENCE LISTING
+-----------------------
+
+
+   DEFN  ADDR  SIZE  NAME, ATTRIBUTES, AND REFERENCES
+  ----- ----- -----  --------------------------------
+
+
+      1 0000H    11  MAIN. . . PROCEDURE STACK=0002H
+        0000H        MEMORY. . BYTE ARRAY(0)
+
+      2 0000H     1  OBJ . . . BYTE:  4
+
+      3 000BH     4  P . . . . PROCEDURE ADDRESS STACK=0000H:  7
+
+      6 0001H     2  RESULT. . ADDRESS:  7
+
+
+
+MODULE INFORMATION:
+
+     CODE AREA SIZE     = 000FH     15D
+     VARIABLE AREA SIZE = 0003H      3D
+     MAXIMUM STACK SIZE = 0002H      2D
+     8 LINES READ
+     0 PROGRAM ERRORS
+
+END OF PL/M-80 COMPILATION

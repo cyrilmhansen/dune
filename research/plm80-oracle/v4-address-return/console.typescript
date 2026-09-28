@@ -1,0 +1,44 @@
+Oracle launch (non-destructive; run from the simulator directory):
+
+  /home/john/pli/lab/research/plm80-oracle/tools/run-isisii43-isolated.sh -F
+  /usr/bin/telnet 127.0.0.1 4010
+  [sent exactly one ASCII SPACE byte, 20H]
+
+ISIS-II, V4.3
+-
+
+Guest source was entered character-paced, then Ctrl-Z was sent as COPY input
+EOF. The stored source is CRLF and does not include Ctrl-Z.
+
+  COPY :CI: TO :F0:ADRTRN.PLM
+  PLM80 :F0:ADRTRN.PLM DEBUG XREF
+
+ISIS-II PL/M-80 COMPILER V4.0
+PL/M-80 COMPILATION COMPLETE.      0 PROGRAM ERRORS
+
+  LINK :F0:ADRTRN.OBJ TO :F0:ADRTRN.SAT MAP PRINT(:F0:ADRTRN.LMP)
+  LOCATE :F0:ADRTRN.SAT TO :F0:ADRTRN.LOC MAP PRINT(:F0:ADRTRN.MAP)
+  OBJHEX :F0:ADRTRN.LOC TO :F0:ADRTRN.HEX
+  DIR FOR ADRTRN.*
+
+ISIS-II reported:
+
+  ADRTRN.PLM  2 blocks  124 bytes
+  ADRTRN.OBJ  3 blocks  186 bytes
+  ADRTRN.LST 11 blocks 1275 bytes
+  ADRTRN.LMP  5 blocks  399 bytes
+  ADRTRN.SAT  3 blocks  194 bytes
+  ADRTRN.LOC  3 blocks  143 bytes
+  ADRTRN.MAP  5 blocks  400 bytes
+  ADRTRN.HEX  2 blocks   56 bytes
+
+The HEX listing was:
+
+  :0F368000319D36CD8B36229E36FB76219D36C985
+  :0036800149
+
+Each of the eight guest artifacts was copied with `COPY :F0:ADRTRN.<ext>
+TO :HP:` and captured from the simulator PTP socket. The console stayed
+connected until all copies were complete. Disconnecting afterward caused the
+simulator's known monitor socket I/O error during shutdown; the completed
+artifacts and canonical source disk images were unaffected.

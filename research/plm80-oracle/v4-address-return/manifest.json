@@ -1,0 +1,114 @@
+{
+  "schema": "RUNES_PLM80_ORACLE_EXPERIMENT 1",
+  "experiment_id": "v4-address-return",
+  "question": "How does PL/M-80 V4.0 return one parameterless ADDRESS value to MAIN, and how does MAIN store it in a static ADDRESS?",
+  "toolchain": {
+    "simulator": "z80pack Intel Intellec MDS-800 Simulator Release 1.39",
+    "launch_command": "/home/john/pli/lab/research/plm80-oracle/tools/run-isisii43-isolated.sh -F",
+    "operating_system": "ISIS-II V4.3",
+    "compiler_reported": "ISIS-II PL/M-80 Compiler V4.0",
+    "compiler_console_banner": "ISIS-II PL/M-80 COMPILER V4.0",
+    "linker": "ISIS-II Object Linker V3.0",
+    "locator": "ISIS-II Object Locater V3.0",
+    "launch_document": "research/plm80-oracle/tools/README.md",
+    "manual": "Intel PL/M-80 Programming Manual, order 9800268B, January 1980, sections 8.1.3 and 8.2",
+    "overlay_provenance_note": "The local recipe labels PLM80 and OV0-OV4 V4.0 and OV5-OV6 V3.1. The compiler banner reports V4.0, but individual overlay opens/use were not traced; actual overlay provenance remains unresolved."
+  },
+  "input": {
+    "host_source": "ADDRESS-RETURN.PLM",
+    "guest_basename": "ADRTRN",
+    "source_bytes": 124,
+    "source_sha256": "a903255866155af83447fc4a7c87305b371f846cd6f20c747e19a6a26e4f733a",
+    "line_endings": "CRLF",
+    "source": "MAIN: DO;\r\nDECLARE OBJ BYTE;\r\nP: PROCEDURE ADDRESS;\r\nRETURN .OBJ;\r\nEND P;\r\nDECLARE RESULT ADDRESS;\r\nRESULT = P;\r\nEND MAIN;\r\n",
+    "syntax_basis": "Intel manual typed procedure syntax: type follows PROCEDURE; typed procedures return with RETURN expression; function references may appear in expressions. Exact source accepted with zero program errors.",
+    "input_terminator": "One Ctrl-Z was sent to COPY :CI: as console EOF; it is not part of the 124-byte stored source.",
+    "canonical_source_disk_images": {
+      "disks/library/isis-ii-43.dsk": {"bytes": 512512, "sha256": "a335f169dd44de5d860911b1c3ae5b1f2804a686d78074139b1838840def27db"},
+      "disks/library/hd-isis-sys.dsk": {"bytes": 3686400, "sha256": "c3ee6937b302ccfc9fa9a66a928d9365dab0cf66fc4178b71dc482acf876492a"},
+      "disks/library/hd-isis-usr.dsk": {"bytes": 3686400, "sha256": "da1d122e65cd1a6701668b51dd8941bca762eb33a8828c82b408157242dcaa88"}
+    },
+    "canonical_hashes_after_run_match_baseline": true,
+    "working_drive_hashes_after_run": {
+      "drivea.dsk": "a335f169dd44de5d860911b1c3ae5b1f2804a686d78074139b1838840def27db",
+      "drivei.dsk": "e85af4ad8e168fefa698471b207ed3fd67f68db6223063fe4c175dce9de9a0b5",
+      "drivej.dsk": "392c1fbda757950fbb6ff1964da965889de48544774389e8aa72875598981089"
+    },
+    "working_drive_images_removed_after_capture": true
+  },
+  "commands": [
+    "cd /home/john/pli/cpm/z80pack/intelmdssim && /home/john/pli/lab/research/plm80-oracle/tools/run-isisii43-isolated.sh -F",
+    "connect /usr/bin/telnet 127.0.0.1 4010; send exactly one ASCII SPACE byte (20H)",
+    "COPY :CI: TO :F0:ADRTRN.PLM",
+    "PLM80 :F0:ADRTRN.PLM DEBUG XREF",
+    "LINK :F0:ADRTRN.OBJ TO :F0:ADRTRN.SAT MAP PRINT(:F0:ADRTRN.LMP)",
+    "LOCATE :F0:ADRTRN.SAT TO :F0:ADRTRN.LOC MAP PRINT(:F0:ADRTRN.MAP)",
+    "OBJHEX :F0:ADRTRN.LOC TO :F0:ADRTRN.HEX",
+    "DIR FOR ADRTRN.*",
+    "COPY each ADRTRN artifact TO :HP:; capture payloads from /tmp/.z80pack/intelmdssim.pt"
+  ],
+  "compiler_result": {
+    "program_errors": 0,
+    "lines_read": 8,
+    "code_bytes": 15,
+    "variable_bytes": 3,
+    "maximum_stack_bytes": 2,
+    "main_stack_bytes": 2,
+    "procedure_stack_bytes": 0,
+    "linker_modules": ["ADRTRN.OBJ(MAIN)"],
+    "plm80_library_needed": false
+  },
+  "observed_code_range": {
+    "start": "0x3680",
+    "end_inclusive": "0x368E",
+    "bytes": 15,
+    "hex": "31 9D 36 CD 8B 36 22 9E 36 FB 76 21 9D 36 C9",
+    "main_entry": "0x3680",
+    "main_bytes": 11,
+    "call_site": "0x3683",
+    "procedure_entry": "0x368B",
+    "procedure_bytes": 4,
+    "variable_area": "0x369D-0x369F",
+    "static_object_OBJ": "0x369D",
+    "static_result_RESULT": "0x369E-0x369F",
+    "stack_area_reserved_by_locator": "0x368F-0x369C",
+    "memory_start": "0x36A0"
+  },
+  "direct_observations": [
+    "The listing identifies MAIN at code offset 0000H, size 11; P is a typed ADDRESS procedure at code offset 000BH, size 4, and reports PROCEDURE STACK=0000H.",
+    "The listing assigns OBJ data offset 0000H, size 1; RESULT data offset 0001H, size 2. The VARIABLE area is 0003H and LOCATE maps DATA to 369DH-369FH.",
+    "At 368BH P executes LXI H,369DH, placing the address of OBJ in HL, followed directly by RET at 368EH.",
+    "MAIN calls P at 3683H. The instruction immediately after CALL is SHLD 369EH at 3686H, storing the returned HL value into RESULT.",
+    "SHLD stores L at the addressed byte and H at the next byte. For this sample RESULT therefore receives 9DH at 369EH and 36H at 369FH: low byte first.",
+    "MAIN initializes SP to 369DH. CALL consumes two stack bytes; direct RET restores SP. Compiler-reported maximum stack is 2 bytes.",
+    "The LINK map includes ADRTRN.OBJ(MAIN) only; PLM80.LIB was not needed.",
+    "The compiler accepted the source with zero program errors."
+  ],
+  "comparison": {
+    "v4-byte-return": {"code": 14, "variable": 1, "maximum_stack": 2, "delta_code_variable_stack": "+1 / +2 / 0"},
+    "v4-address-parameter": {"code": 18, "variable": 3, "maximum_stack": 2, "delta_code_variable_stack": "-3 / 0 / 0"},
+    "v4-local-address": {"code": 15, "variable": 3, "maximum_stack": 2, "delta_code_variable_stack": "0 / 0 / 0"},
+    "v4-micro": {"code": 9, "variable": 0, "maximum_stack": 2, "delta_code_variable_stack": "+6 / +3 / 0"}
+  },
+  "sample_specific_interpretation": "In this exact no-parameter ADDRESS-return sample, emitted callee code constructs the result in HL and the caller stores it using SHLD. The stored two-byte representation is low-address byte first. This is not asserted as a complete or universal PL/M-80 return ABI.",
+  "artifacts": {
+    "ADDRESS-RETURN.PLM": {"bytes": 124, "sha256": "a903255866155af83447fc4a7c87305b371f846cd6f20c747e19a6a26e4f733a"},
+    "ADRTRN.PLM": {"bytes": 124, "sha256": "a903255866155af83447fc4a7c87305b371f846cd6f20c747e19a6a26e4f733a"},
+    "ADRTRN.LST": {"bytes": 1275, "sha256": "f8a1715051392110c6f0d5c429c5930f5b435383c204ede33261ea10f617ef54"},
+    "ADRTRN.OBJ": {"bytes": 186, "sha256": "87c0ecae4d7d5547ac9f87aaeb0a43d4811f6f6fc7c952002eaca0fe7b2f6f0a"},
+    "ADRTRN.SAT": {"bytes": 194, "sha256": "ab252d674ee492b0a92139a08f404414cb334ab8a455a96680ea3572d2c4e575"},
+    "ADRTRN.LMP": {"bytes": 399, "sha256": "8b8c536be5dfb97f0eeaf70af18bf79a92debd07f6796d65734ed71af6d98528"},
+    "ADRTRN.LOC": {"bytes": 143, "sha256": "9487ad5d2039e3bcd54e2210294fbf24f204f540c43e650c28277a73e0e2e845"},
+    "ADRTRN.MAP": {"bytes": 400, "sha256": "dcc2c2ad30a8254207f3e509e672d0192da822b53539834d3f5da51eefe0c1a3"},
+    "ADRTRN.HEX": {"bytes": 56, "sha256": "2632bb66658bdf72484505acc616fa465ff8479b93800e8190f9dccb9ab4c49e"},
+    "console.typescript": {"bytes": 1450, "sha256": "8eea0667de91d81861a18d13698b1be1ca867e8b0d80a9e368bc1dc2760aa312"},
+    "ptp-capture.typescript": {"bytes": 632, "sha256": "757cf00feeada6e0a9c155e7863f66985db8b7b40fc4850463df341703fb8a41"},
+    "README.md": {"bytes": 3264, "sha256": "aef9c742d33510427ea17f66f8cdffd60df347e2ebdbf0fab5701c18c2a855bb"},
+    "DISASSEMBLY.md": {"bytes": 1393, "sha256": "ffd85515bb43803f435df962cd692e98bc38feb06e1b1e5893384ba89a2e2ed9"}
+  },
+  "unresolved_questions": [
+    "This sample does not test ADDRESS return expressions other than the address of one static BYTE, nested expressions, or returns combined with parameters.",
+    "This sample does not establish return behavior for external, recursive, or reentrant procedures, larger results, or other PL/M-80 compiler versions.",
+    "The local mixed-overlay recipe's individual PLM80 overlay provenance and whether OV5/OV6 were opened remain unverified."
+  ]
+}
