@@ -10,6 +10,7 @@
     "compiler_console_banner": "ISIS-II PL/M-80 COMPILER V4.0",
     "linker": "ISIS-II Object Linker V3.0",
     "locator": "ISIS-II Object Locater V3.0",
+    "non_destructive_rerun_launcher": "/home/john/pli/lab/research/plm80-oracle/tools/run-isisii43-isolated.sh -F",
     "toolchain_disk_recipe_note": "The local isis-ii-43.dsk recipe labels PLM80 and OV0-OV4 V4.0 and OV5-OV6 V3.1. This run did not trace per-overlay opens; actual overlay provenance/use remains unresolved."
   },
   "input_hashes": {
@@ -39,8 +40,31 @@
     "BYADDR.LMP": {"bytes": 399, "sha256": "9d56059891aec3206ce8ac52cf0b703a213b648758d8edf98434e26d80b73009"},
     "BYADDR.MAP": {"bytes": 400, "sha256": "381b726952bcfe632cef498be2e8ab8bbe2adc2f60932b1746cecbe563962337"},
     "console.typescript": {"bytes": 2607, "sha256": "fe772f95c793884a8eaffda19acd347e513dfdb2a949193953349b29a9ab913a"},
-    "README.md": {"bytes": 3282, "sha256": "ff827613e5fed916d0c63222921397fb78ae0ad9a9d35c28034c17e9cad5d289"},
-    "DISASSEMBLY.md": {"bytes": 3130, "sha256": "64717f4250195c9f9bf982dbfbf802cf2e2a90c0084cb5fc16bda10c93f8abd7"}
+    "README.md": {"bytes": 4472, "sha256": "992a22b8ebcb3ec72667c269e815b8158ea917599d539df77cd039f6d46149ea"},
+    "DISASSEMBLY.md": {"bytes": 3130, "sha256": "64717f4250195c9f9bf982dbfbf802cf2e2a90c0084cb5fc16bda10c93f8abd7"},
+    "non-destructive-rerun.typescript": {"bytes": 2146, "sha256": "4fb21fd9161a4c5dbfe91d12ac337331b3f3e71bd9c8755158b6ef0ceda03f69"}
+  },
+  "non_destructive_rerun": {
+    "source_and_compiler_options_changed": false,
+    "simulator_directory": "/home/john/pli/cpm/z80pack/intelmdssim",
+    "launcher_command": "/home/john/pli/lab/research/plm80-oracle/tools/run-isisii43-isolated.sh -F",
+    "console_client": "/usr/bin/telnet 127.0.0.1 4010",
+    "handshake": "One ASCII SPACE byte (20H), no CR/LF; observed ISIS-II, V4.3 prompt.",
+    "console_input": "Character-paced source/commands.",
+    "compiler_program_errors": 0,
+    "exported_payloads_byte_match_committed_artifacts": true,
+    "canonical_image_hashes_before_and_after": {
+      "disks/library/isis-ii-43.dsk": "a335f169dd44de5d860911b1c3ae5b1f2804a686d78074139b1838840def27db",
+      "disks/library/hd-isis-sys.dsk": "c3ee6937b302ccfc9fa9a66a928d9365dab0cf66fc4178b71dc482acf876492a",
+      "disks/library/hd-isis-usr.dsk": "da1d122e65cd1a6701668b51dd8941bca762eb33a8828c82b408157242dcaa88"
+    },
+    "disposable_drive_hashes_after_run": {
+      "drivea.dsk": "a335f169dd44de5d860911b1c3ae5b1f2804a686d78074139b1838840def27db",
+      "drivei.dsk": "9989ae16ccfff146fc7eec2ffb1f713217c60e4619b8820f4509804fcf686ecd",
+      "drivej.dsk": "1fdfc2e5891d765426cfc6179e8e7039ce005a8253e78833a3491591ee837a87"
+    },
+    "disposable_drives_removed_after_stop": true,
+    "transcript": "non-destructive-rerun.typescript"
   },
   "documented_expectation": {
     "source": "Intel PL/M linkage convention description (see README.md and DISASSEMBLY.md)",
@@ -84,6 +108,7 @@
   ],
   "comparisons": {
     "v4-two-byte-parameters": {"code_delta": 3, "variable_delta": 2, "maximum_stack_delta": 0},
+    "v4-four-byte-parameters": {"code": 33, "variable": 4, "maximum_stack": 6, "code_delta": -11, "variable_delta": 0, "maximum_stack_delta": -4},
     "v4-address-parameter": {"code_delta": -2, "variable_delta": -1, "maximum_stack_delta": 0},
     "v4-byte-parameter": {"code_delta": 7, "variable_delta": 3, "maximum_stack_delta": 0},
     "v4-micro": {"code_delta": 13, "variable_delta": 4, "maximum_stack_delta": 0}

@@ -58,6 +58,28 @@ STACK `0002H` (2 bytes). LOCATE assigns CODE `3680H..3695H`, STACK
 `3696H..36A3H`, and DATA `36A4H..36A7H`. The LINK map lists only
 `BYADDR.OBJ(MAIN)`, so PLM80.LIB was not needed for this sample.
 
+The exact signature was recompiled and all eight guest artifacts were
+re-exported using the non-destructive launcher documented in
+[`../tools/README.md`](../tools/README.md), with character-paced console
+input. The safe rerun produced byte-identical PLM/LST/OBJ/SAT/LOC/HEX/LMP/MAP
+payloads; see `non-destructive-rerun.typescript` and the
+`non_destructive_rerun` manifest entry. Canonical source-image hashes matched
+the expected baseline both before and after the rerun. The disposable drive
+images were removed after capture.
+
+## Comparison with neighboring fingerprints
+
+| Fixture | CODE | VARIABLE | Maximum STACK | This fixture minus comparison |
+| --- | ---: | ---: | ---: | --- |
+| one BYTE (`v4-byte-parameter`) | 15 | 1 | 2 | +7 / +3 / 0 |
+| one ADDRESS (`v4-address-parameter`) | 18 | 3 | 2 | +4 / +1 / 0 |
+| four BYTE (`v4-four-byte-parameters`) | 33 | 4 | 6 | -11 / 0 / -4 |
+
+For this signature, the emitted caller prepares DE first with the address,
+then C with the BYTE, and executes no argument PUSH. The reported two-byte
+maximum stack is the CALL return address. The four-BYTE fixture is a size
+and arity comparison only; it does not establish mixed-width stack behavior.
+
 ## Epistemic limits
 
 The code shows this caller constructing the ADDRESS actual directly in DE;

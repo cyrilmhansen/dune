@@ -1,0 +1,57 @@
+Safe re-verification of the existing BYADDR fixture; no source or compiler
+options were changed.
+
+Simulator directory and exact launch command:
+
+  cd /home/john/pli/cpm/z80pack/intelmdssim
+  /home/john/pli/lab/research/plm80-oracle/tools/run-isisii43-isolated.sh -F
+
+Console client and handshake:
+
+  /usr/bin/telnet 127.0.0.1 4010
+  [sent exactly one ASCII SPACE byte (0x20), no CR/LF]
+
+Observed prompt:
+
+  ISIS-II, V4.3
+  -
+
+Commands were entered character-paced:
+
+  PLM80 :F0:BYADDR.PLM DEBUG XREF
+  LINK :F0:BYADDR.OBJ TO :F0:BYADDR.SAT MAP PRINT(:F0:BYADDR.LMP)
+  LOCATE :F0:BYADDR.SAT TO :F0:BYADDR.LOC MAP PRINT(:F0:BYADDR.MAP)
+  OBJHEX :F0:BYADDR.LOC TO :F0:BYADDR.HEX
+  DIR FOR BYADDR.*
+
+Observed compiler output:
+
+  ISIS-II PL/M-80 COMPILER V4.0
+  PL/M-80 COMPILATION COMPLETE.      0 PROGRAM ERRORS
+
+Observed LINK/LOCATE banners:
+
+  ISIS-II OBJECT LINKER V3.0
+  ISIS-II OBJECT LOCATER V3.0
+
+DIR again reported payload lengths PLM 137, LST 1374, OBJ 193, SAT 201,
+LOC 150, HEX 83, LMP 399, and MAP 400 bytes. Each file was exported with
+`COPY :F0:BYADDR.<ext> TO :HP:`. A single host receiver read the existing
+`/tmp/.z80pack/intelmdssim.pt` UNIX socket; each stream had a 120-byte zero
+leader and trailer around the DIR-sized payload. The extracted payloads
+matched the committed artifacts byte-for-byte.
+
+The canonical `isis-ii-43.dsk`, `hd-isis-sys.dsk`, and `hd-isis-usr.dsk`
+hashes were respectively
+`a335f169dd44de5d860911b1c3ae5b1f2804a686d78074139b1838840def27db`,
+`c3ee6937b302ccfc9fa9a66a928d9365dab0cf66fc4178b71dc482acf876492a`, and
+`da1d122e65cd1a6701668b51dd8941bca762eb33a8828c82b408157242dcaa88` both
+before and after the run. Working-copy hashes after the run were:
+
+  drivea.dsk  a335f169dd44de5d860911b1c3ae5b1f2804a686d78074139b1838840def27db
+  drivei.dsk  9989ae16ccfff146fc7eec2ffb1f713217c60e4619b8820f4509804fcf686ecd
+  drivej.dsk  1fdfc2e5891d765426cfc6179e8e7039ce005a8253e78833a3491591ee837a87
+
+The disposable drive files were removed after the simulator stopped. Closing
+the Telnet console before stopping the simulator produced the known monitor
+socket I/O error during shutdown; no canonical image changed.
