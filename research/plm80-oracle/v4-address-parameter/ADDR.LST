@@ -9,14 +9,12 @@ COMPILER INVOKED BY:  PLM80 :F0:ADDR.PLM DEBUG XREF
 
    1          MAIN: DO;
    2   1      DECLARE OBJ BYTE;
-   3   1      DECLARE SAVED ADDRESS;
-   4   1      P: PROCEDURE(X);
-   5   2      DECLARE X ADDRESS;
-   6   2      SAVED = X;
-   7   2      RETURN;
-   8   2      END P;
-   9   1      CALL P(.OBJ);
-  10   1      END MAIN;
+   3   1      P: PROCEDURE(X);
+   4   2      DECLARE X ADDRESS;
+   5   2      RETURN;
+   6   2      END P;
+   7   1      CALL P(.OBJ);
+   8   1      END MAIN;
 PL/M-80 COMPILER                                                                                                PAGE   2
 
 
@@ -31,22 +29,20 @@ CROSS-REFERENCE LISTING
       1 0000H    11  MAIN. . . PROCEDURE STACK=0002H
         0000H        MEMORY. . BYTE ARRAY(0)
 
-      2 0000H     1  OBJ . . . BYTE:  9
+      2 0000H     1  OBJ . . . BYTE:  7
 
-      4 000BH    13  P . . . . PROCEDURE STACK=0000H:  9
+      3 000BH     7  P . . . . PROCEDURE STACK=0000H:  7
 
-      3 0001H     2  SAVED . . ADDRESS:  6
-
-      4 0003H     2  X . . . . ADDRESS PARAMETER:  5 6
+      3 0001H     2  X . . . . ADDRESS PARAMETER:  4
 
 
 
 MODULE INFORMATION:
 
-     CODE AREA SIZE     = 0018H     24D
-     VARIABLE AREA SIZE = 0005H      5D
+     CODE AREA SIZE     = 0012H     18D
+     VARIABLE AREA SIZE = 0003H      3D
      MAXIMUM STACK SIZE = 0002H      2D
-     10 LINES READ
+     8 LINES READ
      0 PROGRAM ERRORS
 
 END OF PL/M-80 COMPILATION

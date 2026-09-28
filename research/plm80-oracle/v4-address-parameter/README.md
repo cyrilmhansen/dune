@@ -1,62 +1,78 @@
-# PL/M-80 ADDRESS parameter code-generation fingerprint
+# Minimal PL/M-80 V4.0 single-ADDRESS fingerprint
 
-This is the next minimal local PL/M-80 V4.0 experiment after
-[`v4-byte-parameter`](../v4-byte-parameter/README.md). It has one procedure
-with one ADDRESS parameter, called with the address of a one-byte statically
-allocated object. The procedure copies the parameter into a static ADDRESS
-variable so the generated code must use the received value. There is no I/O.
+This fixture isolates one static `BYTE` object, a procedure with exactly one
+`ADDRESS` formal, and one call passing `.OBJ`. The procedure body contains
+only `RETURN`; no second variable or explicit assignment is used. The
+compiler nevertheless emits stores that materialize the formal parameter.
+This minimal source supersedes the earlier, nonminimal version of this
+fixture that also copied the formal to a `SAVED` variable; that version
+remains available in Git history.
 
-## Environment and source
+## Source and toolchain result
 
-`ADDR.PLM` is 147 bytes with CRLF line endings. Its SHA-256 is
-`a9f9c45dd2057c4d0947c8b2ce4c52db75faf9cbcedfc7cd09c05c91575efe2a`.
-It was entered through ISIS console input and round-tripped through the
-paper-tape punch path; the extracted bytes match the fixture source.
+`ADDR.PLM` is CRLF-terminated text, 111 bytes, SHA-256
+`e8fa3e126833f5e7c5b05ce03f157724a4981251008c2ddc4922d4edbc108f9f`.
+The `.OBJ` parameter syntax was already accepted by the prior fixture; this
+minimal form also compiled directly with no syntax adjustment:
 
-- Simulator: z80pack Intel Intellec MDS-800 Simulator Release 1.39.
-- Guest OS: ISIS-II V4.3.
-- Compiler-reported version: ISIS-II PL/M-80 Compiler V4.0.
-- LINK: ISIS-II Object Linker V3.0.
-- LOCATE: ISIS-II Object Locater V3.0.
-- The compiler listing reports zero errors, CODE 24 (`0018H`), VARIABLE 5
-  (`0005H`), and maximum STACK 2 (`0002H`).
-- LINK includes only `ADDR.OBJ(MAIN)`; no library module is listed.
-- LOCATE places CODE at `3680H..3697H`, STACK at `3698H..36A5H`, DATA at
-  `36A6H..36AAH`, and MEMORY from `36ABH`.
-
-The absolute bytes and disassembly are in `ADDR.HEX` and
-[`DISASSEMBLY.md`](DISASSEMBLY.md). Exact sizes and hashes are in
-`manifest.json`; the guest-console transcript is preserved in
-`console.typescript`. In that readable transcript, `<Ctrl-Z>` denotes the
-single `1AH` end-of-input keystroke; it is notation, not a literal source
-line. The separate listing and maps preserve their original captured bytes.
-
-## Reproducible ISIS-II commands
-
-The compiler/linker sequence matches the existing fixtures, with the
-experiment basename changed to ADDR:
-
-```text
-PLM80 :F0:ADDR.PLM DEBUG XREF
-LINK :F0:ADDR.OBJ TO :F0:ADDR.SAT MAP PRINT(:F0:ADDR.LMP)
-LOCATE :F0:ADDR.SAT TO :F0:ADDR.LOC MAP PRINT(:F0:ADDR.MAP)
-OBJHEX :F0:ADDR.LOC TO :F0:ADDR.HEX
+```plm
+MAIN: DO;
+DECLARE OBJ BYTE;
+P: PROCEDURE(X);
+DECLARE X ADDRESS;
+RETURN;
+END P;
+CALL P(.OBJ);
+END MAIN;
 ```
 
-The local toolchain disk candidates were used through disposable working
-copies; source toolchain images were not modified. Their hashes are recorded
-in `manifest.json`.
+The reused local environment reported ISIS-II V4.3, PL/M-80 Compiler V4.0,
+Object Linker V3.0, and Object Locater V3.0. Compilation completed with zero
+program errors. LINK lists only `ADDR.OBJ(MAIN)`; no library module was
+needed.
 
-## Comparison and limits
+The listing reports CODE=18 (`0012H`), VARIABLE=3 (`0003H`), and maximum
+STACK=2 (`0002H`). LOCATE places CODE at `3680H..3691H`, reserved STACK at
+`3692H..369FH`, and DATA at `36A0H..36A2H`. `OBJ` is at `36A0H`; the two-byte
+formal allocation begins at `36A1H`.
 
-Compared with v4-byte-parameter, code grows from 15 to 24 bytes (+9), variable
-area from 1 to 5 bytes (+4), and maximum stack remains 2 (delta 0). MAIN grows
-from 10 to 11 code bytes; P grows from 5 to 13. The emitted sequence changes
-from loading the BYTE constant into C to loading OBJ's address into BC. P
-stores BC into the parameter allocation, reloads it into HL, and copies it to
-SAVED. This is a comparison of these exact samples only.
+## Directly observed argument handling
 
-Unresolved: the mixed-recipe ISIS disk labels PLM80/OV0–OV4 V4.0 and OV5–OV6
-V3.1, but this run did not trace which overlays were opened. One sample does
-not establish the general ADDRESS calling convention, parameter storage
-strategy, or behavior for other address expressions and object layouts.
+At `3683H` the caller executes `LXI B,36A0H`, so immediately before the call
+the object's address is in BC: B=`36H` (high byte), C=`A0H` (low byte). The
+CALL at `3686H` targets P at `368BH`; the argument is in registers, not an
+argument stack slot.
+
+P executes `LXI H,36A2H`, `MOV M,B`, `DCX H`, `MOV M,C`, then `RET`. Thus the
+compiler writes the high byte at the higher formal address (`36A2H`) and the
+low byte at the lower address (`36A1H`). The formal occupies exactly two
+bytes in this listing and DATA map: address value `36A0H` is stored as
+`A0H` at `36A1H`, `36H` at `36A2H` (low byte first in increasing memory
+address). These are observations from this generated code only.
+
+Full byte-for-byte disassembly and the CALL stack return-address snapshot are
+in [`DISASSEMBLY.md`](DISASSEMBLY.md). Captured compiler listing, object,
+linker/locator outputs, maps, and Intel HEX are preserved beside this file;
+hashes and sizes are recorded in `manifest.json`.
+
+## Exact-sample comparisons
+
+| Fixture | CODE | VARIABLE | Maximum STACK |
+|---|---:|---:|---:|
+| zero parameters (`v4-micro`) | 9 | 0 | 2 |
+| one BYTE (`v4-byte-parameter`) | 15 | 1 | 2 |
+| one ADDRESS (this minimal fixture) | 18 | 3 | 2 |
+
+Relative to the one-BYTE fixture this sample adds 3 CODE bytes and 2
+VARIABLE bytes, with no maximum-stack change. Relative to the zero-parameter
+micro baseline it adds 9 CODE bytes and 3 VARIABLE bytes, also with no
+maximum-stack change. These deltas describe only these samples. They are
+consistent with BC carrying this ADDRESS argument, but do not establish a
+general parameter-allocation rule.
+
+## Evidence limits
+
+No other address expressions, formal widths, multiple parameters,
+stack-passed ADDRESS values, or return values are tested here. The observed
+register assignment and low/high storage order must not be generalized
+beyond this sample.
