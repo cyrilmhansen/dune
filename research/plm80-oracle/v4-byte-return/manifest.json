@@ -1,0 +1,113 @@
+{
+  "schema": "RUNES_PLM80_ORACLE_EXPERIMENT 1",
+  "experiment_id": "v4-byte-return",
+  "question": "How does PL/M-80 V4.0 return a parameterless BYTE constant to a caller that stores it in a static BYTE?",
+  "toolchain": {
+    "simulator": "z80pack Intel Intellec MDS-800 Simulator Release 1.39",
+    "launch_command": "/home/john/pli/lab/research/plm80-oracle/tools/run-isisii43-isolated.sh -F",
+    "operating_system": "ISIS-II V4.3",
+    "compiler_reported": "ISIS-II PL/M-80 Compiler V4.0",
+    "compiler_console_banner": "ISIS-II PL/M-80 COMPILER V4.0",
+    "linker": "ISIS-II Object Linker V3.0",
+    "locator": "ISIS-II Object Locater V3.0",
+    "launch_document": "research/plm80-oracle/tools/README.md",
+    "manual": "Intel PL/M-80 Programming Manual, order 9800268B, January 1980, sections 8.1.3 and 8.2",
+    "overlay_provenance_note": "The local recipe labels PLM80 and OV0-OV4 V4.0 and OV5-OV6 V3.1. Individual overlay opens were not traced; the banner reports V4.0 but per-run overlay provenance/use remains unresolved."
+  },
+  "input": {
+    "host_source": "BYTE-RETURN.PLM",
+    "guest_basename": "BYTRTN",
+    "source_bytes": 97,
+    "source_sha256": "502bb9a5dd5bb4a4464c1120cd734bee416ba72deafa66685c832a10ede541d7",
+    "line_endings": "CRLF",
+    "source": "MAIN: DO;\r\nP: PROCEDURE BYTE;\r\nRETURN 42;\r\nEND P;\r\nDECLARE RESULT BYTE;\r\nRESULT = P;\r\nEND MAIN;\r\n",
+    "syntax_basis": "Intel PL/M-80 Programming Manual: typed procedure type follows PROCEDURE; typed procedure uses RETURN expression; typed procedure call is used as a function reference in an expression.",
+    "input_terminator": "One Ctrl-Z was sent to COPY :CI: as console EOF; it is not part of the 97-byte stored source file.",
+    "canonical_source_disk_images": {
+      "disks/library/isis-ii-43.dsk": {"bytes": 512512, "sha256": "a335f169dd44de5d860911b1c3ae5b1f2804a686d78074139b1838840def27db"},
+      "disks/library/hd-isis-sys.dsk": {"bytes": 3686400, "sha256": "c3ee6937b302ccfc9fa9a66a928d9365dab0cf66fc4178b71dc482acf876492a"},
+      "disks/library/hd-isis-usr.dsk": {"bytes": 3686400, "sha256": "da1d122e65cd1a6701668b51dd8941bca762eb33a8828c82b408157242dcaa88"}
+    }
+  },
+  "commands": [
+    "cd /home/john/pli/cpm/z80pack/intelmdssim && /home/john/pli/lab/research/plm80-oracle/tools/run-isisii43-isolated.sh -F",
+    "connect /usr/bin/telnet 127.0.0.1 4010; send exactly one ASCII SPACE byte (20H)",
+    "COPY :CI: TO :F0:BYTRTN.PLM",
+    "PLM80 :F0:BYTRTN.PLM DEBUG XREF",
+    "LINK :F0:BYTRTN.OBJ TO :F0:BYTRTN.SAT MAP PRINT(:F0:BYTRTN.LMP)",
+    "LOCATE :F0:BYTRTN.SAT TO :F0:BYTRTN.LOC MAP PRINT(:F0:BYTRTN.MAP)",
+    "OBJHEX :F0:BYTRTN.LOC TO :F0:BYTRTN.HEX",
+    "DIR FOR BYTRTN.*",
+    "COPY each BYTRTN artifact TO :HP:; capture via /tmp/.z80pack/intelmdssim.pt"
+  ],
+  "compiler_result": {
+    "program_errors": 0,
+    "lines_read": 7,
+    "code_bytes": 14,
+    "variable_bytes": 1,
+    "maximum_stack_bytes": 2,
+    "main_stack_bytes": 2,
+    "procedure_stack_bytes": 0,
+    "linker_modules": ["BYTRTN.OBJ(MAIN)"],
+    "plm80_library_needed": false
+  },
+  "observed_code_range": {
+    "start": "0x3680",
+    "end_inclusive": "0x368D",
+    "bytes": 14,
+    "hex": "31 9C 36 CD 8B 36 32 9C 36 FB 76 3E 2A C9",
+    "main_entry": "0x3680",
+    "main_bytes": 11,
+    "call_site": "0x3683",
+    "procedure_entry": "0x368B",
+    "procedure_bytes": 3,
+    "variable_area": "0x369C-0x369C",
+    "static_object_RESULT": "0x369C",
+    "stack_area_reserved_by_locator": "0x368E-0x369B",
+    "memory_start": "0x369D"
+  },
+  "direct_observations": [
+    "The listing identifies P as a typed BYTE procedure at code offset 000BH with size 3 and reports PROCEDURE STACK=0000H.",
+    "The listing gives RESULT offset 0000H, size 1; the module VARIABLE area is 0001H and LOCATE maps DATA to 369CH.",
+    "At 368BH P executes MVI A,2AH followed by RET at 368DH; there is no other callee epilogue instruction.",
+    "MAIN calls P at 368BH from 3683H. Its next instruction, at 3686H, is STA 369CH, storing A directly into RESULT.",
+    "MAIN initializes SP to 369CH. CALL's return address is 3686H; P enters with SP=369AH and direct RET restores SP=369CH. Maximum stack use is 2 bytes.",
+    "The LINK map includes only BYTRTN.OBJ(MAIN); PLM80.LIB was not needed.",
+    "The compiler accepted the exact source form with zero program errors."
+  ],
+  "sample_specific_interpretation": "In this no-parameter BYTE-return sample, emitted code places the returned constant in A and the immediate caller stores it directly with STA. This does not establish a universal return convention.",
+  "comparison": {
+    "v4-micro": {"code": 9, "variable": 0, "maximum_stack": 2, "delta_this_minus_micro": "+5 / +1 / 0"},
+    "v4-local-byte": {"code": 14, "variable": 1, "maximum_stack": 2, "delta_this_minus_local_byte": "0 / 0 / 0"},
+    "v4-byte-parameter": {"code": 15, "variable": 1, "maximum_stack": 2, "delta_this_minus_byte_parameter": "-1 / 0 / 0"}
+  },
+  "disk_isolation_verification": {
+    "canonical_hashes_after_run_match_baseline": true,
+    "canonical_library_images_read_only": true,
+    "working_drive_hashes_after_run": {
+      "drivea.dsk": "a335f169dd44de5d860911b1c3ae5b1f2804a686d78074139b1838840def27db",
+      "drivei.dsk": "349228947b732bdb3b2e41a2d54719b543ab65f379142f2bf424564e3d1f170f",
+      "drivej.dsk": "06ca680cbbb9fc985489fb07f7a70718b47ba8c3e64dbac466bc1cbc9c308969"
+    },
+    "working_images_were_removed_after_capture": true
+  },
+  "artifacts": {
+    "BYTE-RETURN.PLM": {"bytes": 97, "sha256": "502bb9a5dd5bb4a4464c1120cd734bee416ba72deafa66685c832a10ede541d7"},
+    "BYTRTN.PLM": {"bytes": 97, "sha256": "502bb9a5dd5bb4a4464c1120cd734bee416ba72deafa66685c832a10ede541d7"},
+    "BYTRTN.LST": {"bytes": 1185, "sha256": "f3bd9b916c081bdfeed72ecdb3c4d00b6c83dcea20df0aa3fa9b28a96af870ec"},
+    "BYTRTN.OBJ": {"bytes": 165, "sha256": "175dc50f8ae65e786097db60a926efc415e7eaf6692b5b4f75bd80475f88f9e5"},
+    "BYTRTN.SAT": {"bytes": 173, "sha256": "03e674a00552627a23cf302cd09a02b9ac4a4bf5bbe0bb9d8f0ff82be9fdb3ca"},
+    "BYTRTN.LMP": {"bytes": 399, "sha256": "45412827e7a2824dbc4521d91bebc67ff1f1ea0c8ecd521735ed59bc23bad5b4"},
+    "BYTRTN.LOC": {"bytes": 130, "sha256": "070dd1586d91f013f3c6939ef7b7b2bd4f1e393316e3cf5567e40aaf8311bd2d"},
+    "BYTRTN.MAP": {"bytes": 400, "sha256": "e32da704eac5f7e7c913b4bf795adc61236f0964e0b2724fd92aac4240a4317d"},
+    "BYTRTN.HEX": {"bytes": 54, "sha256": "58cf1280a58760e6ac517ea910a0c21aeb55178947820ac902b18e4bee016cb0"},
+    "console.typescript": {"bytes": 1478, "sha256": "d833df12acb69d7f76377c36259ba93aa327cfdf0d45ca68075a3de7402c3470"},
+    "ptp-capture.typescript": {"bytes": 835, "sha256": "f730d2505b9caff33f937e0428af699c2e0fa35f01e2d3032ecc0256be16362f"},
+    "README.md": {"bytes": 3747, "sha256": "63c239bb44bfbcc1743f67a7d8eb1b5bbab161557357aba6abd225d38b64a135"},
+    "DISASSEMBLY.md": {"bytes": 1233, "sha256": "5c227cb5d620410e675d7f6c3730e3ad740556877e2e051f5f47256ef4b7984f"}
+  },
+  "unresolved_questions": [
+    "The local mixed-overlay recipe's individual PLM80 overlay provenance and whether OV5/OV6 were opened remain unverified.",
+    "This fixture does not establish return conventions for ADDRESS, multi-byte values, parameterized/external procedures, or other PL/M-80 compiler versions."
+  ]
+}

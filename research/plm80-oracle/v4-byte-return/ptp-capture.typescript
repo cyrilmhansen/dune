@@ -1,0 +1,14 @@
+Host capture used the simulator Unix PTP socket:
+  /tmp/.z80pack/intelmdssim.pt
+
+For each guest command `COPY :F0:BYTRTN.<ext> TO :HP:`, capture the reported
+directory LENGTH bytes after the zero leader and verify the zero trailer.
+Observed file lengths were PLM 97, LST 1185, OBJ 165, SAT 173, LMP 399, LOC
+130, MAP 400, and HEX 54 bytes. The per-transfer framing was 120 zero bytes,
+payload, 120 zero bytes. Artifact files in this fixture contain only payload.
+
+The HEX transfer was captured independently (294 framed bytes) and the other
+seven transfers were captured over one persistent receiver connection. The
+first byte of an exploratory repeated HEX stream had one fewer leading zero;
+the separately captured 294-byte transfer was used for the preserved HEX
+artifact. Payload lengths and hashes are checked in `manifest.json`.
