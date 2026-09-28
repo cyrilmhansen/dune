@@ -20,6 +20,7 @@ type t = {
   disassembly : instruction list;
   documented_expectation : string option;
   observations : string list;
+  comparison : (string * string) list;
   unresolved_questions : string list;
 }
 
@@ -28,3 +29,6 @@ val load : string -> (t, string) result
     execute tools or modify fixture files. *)
 
 val to_text : t -> string
+val compare_to_text : t -> t -> string
+(** [compare_to_text a b] displays only preserved fixture facts and a byte-aligned
+    disassembly difference; it does not infer semantic correspondences. *)

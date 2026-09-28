@@ -51,7 +51,10 @@
  (name pli80_oracle_fixture)
  (libraries pli80)
  (deps ../research/plm80-oracle/v4-four-byte-parameters/manifest.json
-       ../research/plm80-oracle/v4-address-return/manifest.json))
+       ../research/plm80-oracle/v4-address-return/manifest.json
+       ../research/plm80-oracle/v4-three-byte-parameters/manifest.json
+       ../research/plm80-oracle/v4-three-byte-parameters/THREEB.PLM
+       ../research/plm80-oracle/v4-byte-return/manifest.json))
 
 (test
  (name dynamic_structure)

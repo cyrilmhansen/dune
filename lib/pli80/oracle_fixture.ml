@@ -16,6 +16,7 @@ type t = {
   disassembly : instruction list;
   documented_expectation : string option;
   observations : string list;
+  comparison : (string * string) list;
   unresolved_questions : string list;
 }
 
@@ -230,17 +231,30 @@ let source_from_manifest root directory =
   match optional_nested_string root [ "input" ] "source" with
   | Some source -> source
   | None ->
+      let input_basename =
+        match optional_nested root [ "input" ] with
+        | Some input -> first_string input [ "basename"; "guest_basename" ]
+        | None -> None
+      in
+      let hashed_source_basename =
+        match object_member root "input_hashes" with
+        | None -> None
+        | Some hashes ->
+            object_members hashes
+            |> List.find_map (fun (name, _) ->
+                   if Filename.check_suffix (String.uppercase_ascii name) ".PLM" then Some (Filename.remove_extension name) else None)
+      in
       let basename =
         match first_string root [ "guest_basename" ] with
         | Some name -> name
-        | None -> (
-            match optional_nested root [ "input" ] with
-            | Some input -> (match first_string input [ "basename"; "guest_basename" ] with Some n -> n | None -> fail "manifest has no source basename")
-            | None -> fail "manifest has no source")
+        | None -> (match input_basename, hashed_source_basename with
+            | Some name, _ -> name
+            | None, Some name -> name
+            | None, None -> fail "manifest has no source basename")
       in
       let files = Sys.readdir directory |> Array.to_list |> List.sort String.compare in
       let source_file =
-        match List.find_opt (fun name -> Filename.check_suffix name ".PLM" && String.uppercase_ascii (Filename.remove_extension name) = String.uppercase_ascii basename) files with
+        match List.find_opt (fun name -> Filename.check_suffix (String.uppercase_ascii name) ".PLM" && String.uppercase_ascii (Filename.remove_extension name) = String.uppercase_ascii basename) files with
         | Some name -> Filename.concat directory name
         | None -> fail "manifest source missing and guest PLM file not found"
       in
@@ -299,12 +313,18 @@ let load directory =
       | Some raw -> array_strings raw
       | None -> (match object_member manifest "direct_observations" with Some raw -> array_strings raw | None -> [])
     in
+    let comparison =
+      match object_member manifest "comparison" with
+      | None -> []
+      | Some raw -> object_members raw |> List.filter_map (fun (key, value) ->
+          if String.starts_with ~prefix:"\"" (String.trim value) then Some (key, string_value value) else None)
+    in
     let unresolved_questions = Option.fold ~none:[] ~some:array_strings (object_member manifest "unresolved_questions") in
     let question = optional_string manifest "question" in
     let code_start_int = parse_address code_start in
     let code_size = Bytes.length code_bytes in
     let disassembly = disassemble code_bytes code_start_int in
-    Ok { id; question; toolchain = toolchain_fields; toolchain_version; source; code_size; variable_size; maximum_stack; code_start; code_end_inclusive; data_range; code_bytes; disassembly; documented_expectation = expectation; observations; unresolved_questions }
+    Ok { id; question; toolchain = toolchain_fields; toolchain_version; source; code_size; variable_size; maximum_stack; code_start; code_end_inclusive; data_range; code_bytes; disassembly; documented_expectation = expectation; observations; comparison; unresolved_questions }
   with
   | Invalid_manifest message -> Error message
   | Sys_error message -> Error message
@@ -346,4 +366,88 @@ let to_text fixture =
   if fixture.unresolved_questions <> [] then (
     add "\nUnresolved questions recorded in the manifest:\n";
     List.iter (fun question -> Printf.bprintf result "- %s\n" question) fixture.unresolved_questions);
+  Buffer.contents result
+
+let signed_delta value = if value >= 0 then Printf.sprintf "+%d" value else string_of_int value
+
+let comparison_disassembly fixture first last =
+  let base = parse_address fixture.code_start in
+  let selected =
+    List.filter
+      (fun instruction ->
+        let start = instruction.address - base in
+        let stop = start + Bytes.length instruction.bytes in
+        start < last && stop > first)
+      fixture.disassembly
+  in
+  if first = last then "    (no bytes in this fixture)\n"
+  else if selected = [] then "    (no decoded instructions overlap this byte range)\n"
+  else
+    let result = Buffer.create 256 in
+    List.iter
+      (fun instruction ->
+        Printf.bprintf result "    %04X  %-8s %s\n" instruction.address (format_bytes instruction.bytes) instruction.mnemonic)
+      selected;
+    Buffer.contents result
+
+let compare_to_text left right =
+  let result = Buffer.create 4096 in
+  let add = Buffer.add_string result in
+  let line label value = Printf.bprintf result "%s: %s\n" label value in
+  add "PL/M-80 oracle fixture comparison (recorded evidence only)\n";
+  line "A" left.id;
+  line "B" right.id;
+  Option.iter (line "A question") left.question;
+  Option.iter (line "B question") right.question;
+  List.iter (fun (label, value) -> Printf.bprintf result "A toolchain %s: %s\n" label value) left.toolchain;
+  List.iter (fun (label, value) -> Printf.bprintf result "B toolchain %s: %s\n" label value) right.toolchain;
+  Printf.bprintf result "Compiler version: A=%s; B=%s\n" left.toolchain_version right.toolchain_version;
+  Printf.bprintf result "Sizes (B - A): CODE %d -> %d (%s), VARIABLE %d -> %d (%s), maximum STACK %d -> %d (%s)\n"
+    left.code_size right.code_size (signed_delta (right.code_size - left.code_size))
+    left.variable_size right.variable_size (signed_delta (right.variable_size - left.variable_size))
+    left.maximum_stack right.maximum_stack (signed_delta (right.maximum_stack - left.maximum_stack));
+  Printf.bprintf result "Located CODE: A %s..%s; B %s..%s (inclusive)\n"
+    left.code_start left.code_end_inclusive right.code_start right.code_end_inclusive;
+  Printf.bprintf result "Located DATA: A %s; B %s\n"
+    (Option.value left.data_range ~default:"not recorded") (Option.value right.data_range ~default:"not recorded");
+  List.iter
+    (fun (label, fixture) ->
+      Printf.bprintf result "\n%s source (CRLF displayed as LF):\n```plm\n%s" label (source_for_display fixture.source);
+      if not (String.ends_with ~suffix:"\n" fixture.source) then add "\n";
+      add "```\n")
+    [ "A", left; "B", right ];
+  Printf.bprintf result "\nA exact code (%d bytes):\n%s\n" left.code_size (format_bytes left.code_bytes);
+  Printf.bprintf result "B exact code (%d bytes):\n%s\n" right.code_size (format_bytes right.code_bytes);
+  let left_bytes = Bytes.length left.code_bytes and right_bytes = Bytes.length right.code_bytes in
+  let prefix = ref 0 in
+  while !prefix < min left_bytes right_bytes && Bytes.get left.code_bytes !prefix = Bytes.get right.code_bytes !prefix do
+    incr prefix
+  done;
+  let suffix = ref 0 in
+  while !suffix < min (left_bytes - !prefix) (right_bytes - !prefix)
+        && Bytes.get left.code_bytes (left_bytes - !suffix - 1) = Bytes.get right.code_bytes (right_bytes - !suffix - 1) do
+    incr suffix
+  done;
+  if !prefix = left_bytes && !prefix = right_bytes then add "\nCode bytes are identical; decoded instructions are identical.\n"
+  else (
+    Printf.bprintf result "\nDisassembly difference by byte alignment: common prefix %d bytes, common suffix %d bytes.\n" !prefix !suffix;
+    let left_stop = left_bytes - !suffix and right_stop = right_bytes - !suffix in
+    Printf.bprintf result "A changed byte window [%04X,%04X):\n" !prefix left_stop;
+    add (comparison_disassembly left !prefix left_stop);
+    Printf.bprintf result "B changed byte window [%04X,%04X):\n" !prefix right_stop;
+    add (comparison_disassembly right !prefix right_stop));
+  List.iter
+    (fun (label, fixture) ->
+      Option.iter (fun expectation -> Printf.bprintf result "\n%s documented expectation: %s\n" label expectation) fixture.documented_expectation;
+      if fixture.observations <> [] then (
+        Printf.bprintf result "\n%s manifest observations:\n" label;
+        List.iter (fun observation -> Printf.bprintf result "- %s\n" observation) fixture.observations);
+      if fixture.comparison <> [] then (
+        Printf.bprintf result "\n%s preserved manifest comparison fields:\n" label;
+        List.iter (fun (key, value) -> Printf.bprintf result "- %s: %s\n" key value) fixture.comparison);
+      if fixture.unresolved_questions <> [] then (
+        Printf.bprintf result "\n%s unresolved questions:\n" label;
+        List.iter (fun question -> Printf.bprintf result "- %s\n" question) fixture.unresolved_questions))
+    [ "A", left; "B", right ];
+  add "\nComparison is positional byte evidence only; it does not infer parameter semantics or a generalized ABI.\n";
   Buffer.contents result

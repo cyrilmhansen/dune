@@ -49,4 +49,21 @@ let test_address_return_fixture () =
   assert (report.documented_expectation = None);
   assert (List.length report.observations > 0 && List.length report.unresolved_questions > 0)
 
-let () = test_four_byte_fixture (); test_address_return_fixture ()
+let test_comparisons () =
+  let load name = fixture (fixture_path name) in
+  let three = load "v4-three-byte-parameters" and four = load "v4-four-byte-parameters" in
+  let three_four = Pli80.Oracle_fixture.compare_to_text three four in
+  assert (contains three_four "v4-three-byte-parameters");
+  assert (contains three_four "v4-four-byte-parameters");
+  assert (contains three_four "CODE 27 -> 33 (+6)");
+  assert (contains three_four "maximum STACK 4 -> 6 (+2)");
+  assert (contains three_four "W and X stack-passed");
+  assert (contains three_four "Disassembly difference by byte alignment");
+  let byte = load "v4-byte-return" and address = load "v4-address-return" in
+  let returns = Pli80.Oracle_fixture.compare_to_text byte address in
+  assert (contains returns "CODE 14 -> 15 (+1)");
+  assert (contains returns "VARIABLE 1 -> 3 (+2)");
+  assert (contains returns "low byte first");
+  assert (contains returns "does not infer parameter semantics or a generalized ABI")
+
+let () = test_four_byte_fixture (); test_address_return_fixture (); test_comparisons ()

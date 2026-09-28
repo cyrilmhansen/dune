@@ -326,12 +326,19 @@ let run_compiler (options : options) =
     ignore total_seconds
 
 let run (options : options) =
-  match options.oracle_fixture with
-  | None -> run_compiler options
-  | Some directory ->
+  match options.oracle_fixture, options.oracle_fixture_comparison with
+  | None, None -> run_compiler options
+  | Some directory, None ->
       (match Pli80.Oracle_fixture.load directory with
       | Ok fixture -> print_string (Pli80.Oracle_fixture.to_text fixture)
       | Error message -> failwith ("cannot read PL/M oracle fixture: " ^ message))
+  | None, Some (directory_a, directory_b) ->
+      let load directory = match Pli80.Oracle_fixture.load directory with
+        | Ok fixture -> fixture
+        | Error message -> failwith ("cannot read PL/M oracle fixture " ^ directory ^ ": " ^ message)
+      in
+      print_string (Pli80.Oracle_fixture.compare_to_text (load directory_a) (load directory_b))
+  | Some _, Some _ -> failwith "choose --oracle-fixture or --compare-oracle-fixtures"
 
 let () =
   let args=Array.to_list Sys.argv |> List.tl in
