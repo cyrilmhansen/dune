@@ -57,18 +57,30 @@ let test_comparisons () =
   assert (contains three_four "v4-four-byte-parameters");
   assert (contains three_four "CODE 27 -> 33 (+6)");
   assert (contains three_four "maximum STACK 4 -> 6 (+2)");
-  assert (contains three_four "W and X stack-passed");
+  assert (contains three_four "Unresolved questions (brief recorded excerpts):");
+  assert (contains three_four "A: 3 recorded");
+  assert (not (contains three_four "A source (CRLF displayed as LF)"));
+  assert (not (contains three_four "A exact code (27 bytes)"));
+  assert (not (contains three_four "A manifest observations:"));
   assert (contains three_four "Instruction-level disassembly alignment (keyed by opcode");
   assert (contains three_four "+ B 3686  0E 22    MVI C,22H");
   assert (contains three_four "+ B 3688  C5       PUSH B");
   assert (contains three_four "Common toolchain:");
   assert (not (contains three_four "A toolchain"));
   assert (not (contains three_four "Compiler version:"));
+  let three_four_full = Pli80.Oracle_fixture.compare_to_text ~full_evidence:true three four in
+  assert (contains three_four_full "A source (CRLF displayed as LF)");
+  assert (contains three_four_full "A exact code (27 bytes)");
+  assert (contains three_four_full "A manifest observations:");
+  assert (contains three_four_full "W and X stack-passed");
   let byte = load "v4-byte-return" and address = load "v4-address-return" in
   let returns = Pli80.Oracle_fixture.compare_to_text byte address in
   assert (contains returns "CODE 14 -> 15 (+1)");
   assert (contains returns "VARIABLE 1 -> 3 (+2)");
-  assert (contains returns "low byte first");
+  assert (contains returns "A: 2 recorded");
+  assert (not (contains returns "A source (CRLF displayed as LF)"));
+  let returns_full = Pli80.Oracle_fixture.compare_to_text ~full_evidence:true byte address in
+  assert (contains returns_full "low byte first");
   assert (contains returns "STA 369CH");
   assert (contains returns "SHLD 369EH");
   assert (contains returns "MVI A,2AH");

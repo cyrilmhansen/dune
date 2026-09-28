@@ -337,7 +337,7 @@ let run (options : options) =
         | Ok fixture -> fixture
         | Error message -> failwith ("cannot read PL/M oracle fixture " ^ directory ^ ": " ^ message)
       in
-      print_string (Pli80.Oracle_fixture.compare_to_text (load directory_a) (load directory_b))
+      print_string (Pli80.Oracle_fixture.compare_to_text ~full_evidence:options.full_evidence (load directory_a) (load directory_b))
   | Some _, Some _ -> failwith "choose --oracle-fixture or --compare-oracle-fixtures"
 
 let () =

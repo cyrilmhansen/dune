@@ -2,6 +2,7 @@ type source_text = Cpm | Raw
 type t = {
   oracle_fixture:string option;
   oracle_fixture_comparison:(string * string) option;
+  full_evidence:bool;
   toolchain:string option; source:string option; output_dir:string option;
   module_name:string option; max_steps:int; analysis:Experiment.analysis;
   report:Experiment.report; source_text:source_text; selected_rel:int list;
@@ -10,10 +11,11 @@ type t = {
 
 let usage = {|Usage:
   pli80-analyze --oracle-fixture DIR
-  pli80-analyze --compare-oracle-fixtures DIR_A DIR_B
+  pli80-analyze --compare-oracle-fixtures DIR_A DIR_B [--full-evidence]
   pli80-analyze --toolchain DIR --source FILE --output-dir DIR [options]
   --oracle-fixture DIR      Display preserved PL/M oracle fixture evidence (read-only)
   --compare-oracle-fixtures DIR_A DIR_B  Compare two preserved PL/M fixtures (read-only)
+  --full-evidence          Include full source, exact bytes, and manifest text in comparisons
   --module NAME             Override the CP/M module name (1..8 characters)
   --source-text cpm|raw     Normalize PL/I text to CRLF + one Ctrl-Z (default cpm)
   --analysis run|execution|data|path  Select live analysis (default run)
@@ -33,6 +35,7 @@ let parse args =
   let rec go options = function
     |[]->Ok options
     |"--help"::_->Error"help"
+    |"--full-evidence"::rest->if options.full_evidence then Error "--full-evidence repeated" else go{options with full_evidence=true}rest
     |"--compare-oracle-fixtures"::[]->Error"--compare-oracle-fixtures requires two fixture directories"
     |"--compare-oracle-fixtures"::_first::[]->Error"--compare-oracle-fixtures requires two fixture directories"
     |"--compare-oracle-fixtures"::first::second::_rest when String.starts_with ~prefix:"--" first || String.starts_with ~prefix:"--" second -> Error "--compare-oracle-fixtures requires two fixture directories"
@@ -55,15 +58,17 @@ let parse args =
     |"--raw-slice"::value::rest->(match Experiment.parse_offset value with Error e->Error e|Ok n->go{options with raw_slices=(if List.mem n options.raw_slices then options.raw_slices else options.raw_slices@[n])}rest)
     |option::_->Error("unknown option "^option)
   in
-  let parsed = go {oracle_fixture=None;oracle_fixture_comparison=None;toolchain=None;source=None;output_dir=None;module_name=None;max_steps=10_000_000;
+  let parsed = go {oracle_fixture=None;oracle_fixture_comparison=None;full_evidence=false;toolchain=None;source=None;output_dir=None;module_name=None;max_steps=10_000_000;
     analysis=Experiment.Run;report=Experiment.Summary;source_text=Cpm;structure=false;selected_rel=[];raw_slices=[]} args
   in
   match parsed with
   | Error _ as error -> error
   | Ok options when options.oracle_fixture <> None || options.oracle_fixture_comparison <> None ->
       if options.oracle_fixture <> None && options.oracle_fixture_comparison <> None then Error "choose --oracle-fixture or --compare-oracle-fixtures"
+      else if options.full_evidence && options.oracle_fixture_comparison = None then Error "--full-evidence requires --compare-oracle-fixtures"
       else if options.toolchain=None && options.source=None && options.output_dir=None && options.module_name=None
         && options.max_steps=10_000_000 && options.analysis=Experiment.Run && options.report=Experiment.Summary
         && options.source_text=Cpm && not options.structure && options.selected_rel=[] && options.raw_slices=[] then Ok options
       else Error "oracle fixture inspection cannot be combined with compiler-run options"
+  | Ok options when options.full_evidence -> Error "--full-evidence requires --compare-oracle-fixtures"
   | Ok options -> Ok options

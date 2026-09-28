@@ -29,6 +29,8 @@ val load : string -> (t, string) result
     execute tools or modify fixture files. *)
 
 val to_text : t -> string
-val compare_to_text : t -> t -> string
+val compare_to_text : ?full_evidence:bool -> t -> t -> string
 (** [compare_to_text a b] displays only preserved fixture facts and an opcode-aligned
-    disassembly difference; it does not infer semantic correspondences. *)
+    disassembly difference by default. [full_evidence] includes source, exact
+    code dumps, and complete manifest observations. It does not infer semantic
+    correspondences. *)

@@ -45,8 +45,13 @@ let test_cli_options () =
    |Ok options->assert(options.oracle_fixture=Some"research/plm80-oracle/v4-four-byte-parameters")
    |Error _->assert false);
   (match O.parse["--compare-oracle-fixtures";"fixture-a";"fixture-b"] with
-   |Ok options->assert(options.oracle_fixture_comparison=Some("fixture-a","fixture-b"))
+   |Ok options->assert(options.oracle_fixture_comparison=Some("fixture-a","fixture-b") && not options.full_evidence)
    |Error _->assert false);
+  (match O.parse["--compare-oracle-fixtures";"fixture-a";"fixture-b";"--full-evidence"] with
+   |Ok options->assert(options.full_evidence)
+   |Error _->assert false);
+  assert(match O.parse["--full-evidence"] with Error _->true|_->false);
+  assert(match O.parse["--oracle-fixture";"fixture";"--full-evidence"] with Error _->true|_->false);
   assert(match O.parse["--compare-oracle-fixtures";"fixture-a"] with Error _->true|_->false);
   assert(match O.parse["--oracle-fixture";"fixture";"--compare-oracle-fixtures";"a";"b"] with Error _->true|_->false);
   assert(match O.parse["--oracle-fixture";"fixture";"--source";"x.PLI"] with Error _->true|_->false);

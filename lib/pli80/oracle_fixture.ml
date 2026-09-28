@@ -439,7 +439,11 @@ let format_instruction_alignment left right =
       rows;
     Buffer.contents result
 
-let compare_to_text left right =
+let brief_question text =
+  let limit = 112 in
+  if String.length text <= limit then text else String.sub text 0 limit ^ "..."
+
+let compare_to_text ?(full_evidence = false) left right =
   let result = Buffer.create 4096 in
   let add = Buffer.add_string result in
   let line label value = Printf.bprintf result "%s: %s\n" label value in
@@ -465,27 +469,36 @@ let compare_to_text left right =
   add "\nInstruction-level disassembly alignment (keyed by opcode; operands and addresses remain exact):\n";
   add "  = same instruction encoding/text; ~ aligned instructions differ; - only in A; + only in B\n";
   add (format_instruction_alignment left.disassembly right.disassembly);
-  List.iter
-    (fun (label, fixture) ->
-      Printf.bprintf result "\n%s source (CRLF displayed as LF):\n```plm\n%s" label (source_for_display fixture.source);
-      if not (String.ends_with ~suffix:"\n" fixture.source) then add "\n";
-      add "```\n")
-    [ "A", left; "B", right ];
-  Printf.bprintf result "\nA exact code (%d bytes):\n%s\n" left.code_size (format_bytes left.code_bytes);
-  Printf.bprintf result "B exact code (%d bytes):\n%s\n" right.code_size (format_bytes right.code_bytes);
-  add "\nPreserved manifest evidence:\n";
-  List.iter
-    (fun (label, fixture) ->
-      Option.iter (fun expectation -> Printf.bprintf result "\n%s documented expectation: %s\n" label expectation) fixture.documented_expectation;
-      if fixture.observations <> [] then (
-        Printf.bprintf result "\n%s manifest observations:\n" label;
-        List.iter (fun observation -> Printf.bprintf result "- %s\n" observation) fixture.observations);
-      if fixture.comparison <> [] then (
-        Printf.bprintf result "\n%s preserved manifest comparison fields:\n" label;
-        List.iter (fun (key, value) -> Printf.bprintf result "- %s: %s\n" key value) fixture.comparison);
-      if fixture.unresolved_questions <> [] then (
-        Printf.bprintf result "\n%s unresolved questions:\n" label;
-        List.iter (fun question -> Printf.bprintf result "- %s\n" question) fixture.unresolved_questions))
-    [ "A", left; "B", right ];
+  if full_evidence then (
+    List.iter
+      (fun (label, fixture) ->
+        Printf.bprintf result "\n%s source (CRLF displayed as LF):\n```plm\n%s" label (source_for_display fixture.source);
+        if not (String.ends_with ~suffix:"\n" fixture.source) then add "\n";
+        add "```\n")
+      [ "A", left; "B", right ];
+    Printf.bprintf result "\nA exact code (%d bytes):\n%s\n" left.code_size (format_bytes left.code_bytes);
+    Printf.bprintf result "B exact code (%d bytes):\n%s\n" right.code_size (format_bytes right.code_bytes);
+    add "\nPreserved manifest evidence:\n";
+    List.iter
+      (fun (label, fixture) ->
+        Option.iter (fun expectation -> Printf.bprintf result "\n%s documented expectation: %s\n" label expectation) fixture.documented_expectation;
+        if fixture.observations <> [] then (
+          Printf.bprintf result "\n%s manifest observations:\n" label;
+          List.iter (fun observation -> Printf.bprintf result "- %s\n" observation) fixture.observations);
+        if fixture.comparison <> [] then (
+          Printf.bprintf result "\n%s preserved manifest comparison fields:\n" label;
+          List.iter (fun (key, value) -> Printf.bprintf result "- %s: %s\n" key value) fixture.comparison);
+        if fixture.unresolved_questions <> [] then (
+          Printf.bprintf result "\n%s unresolved questions:\n" label;
+          List.iter (fun question -> Printf.bprintf result "- %s\n" question) fixture.unresolved_questions))
+      [ "A", left; "B", right ])
+  else (
+    add "\nUnresolved questions (brief recorded excerpts):\n";
+    List.iter
+      (fun (label, fixture) ->
+        Printf.bprintf result "%s: %d recorded\n" label (List.length fixture.unresolved_questions);
+        List.iter (fun question -> Printf.bprintf result "  - %s\n" (brief_question question)) fixture.unresolved_questions)
+      [ "A", left; "B", right ];
+    add "Use --full-evidence for verbatim source, complete byte dumps, and manifest text.\n");
   add "\nAlignment uses decoded opcode identity; all displayed addresses, bytes, and operands remain fixture-exact. No PL/M ABI semantics are inferred.\n";
   Buffer.contents result
