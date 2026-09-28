@@ -1,12 +1,16 @@
 type source_text = Cpm | Raw
 type t = {
+  oracle_fixture:string option;
   toolchain:string option; source:string option; output_dir:string option;
   module_name:string option; max_steps:int; analysis:Experiment.analysis;
   report:Experiment.report; source_text:source_text; selected_rel:int list;
   raw_slices:int list; structure:bool;
 }
 
-let usage = {|Usage: pli80-analyze --toolchain DIR --source FILE --output-dir DIR [options]
+let usage = {|Usage:
+  pli80-analyze --oracle-fixture DIR
+  pli80-analyze --toolchain DIR --source FILE --output-dir DIR [options]
+  --oracle-fixture DIR      Display preserved PL/M oracle fixture evidence (read-only)
   --module NAME             Override the CP/M module name (1..8 characters)
   --source-text cpm|raw     Normalize PL/I text to CRLF + one Ctrl-Z (default cpm)
   --analysis run|execution|data|path  Select live analysis (default run)
@@ -20,7 +24,7 @@ let usage = {|Usage: pli80-analyze --toolchain DIR --source FILE --output-dir DI
 The command compiles PL/I through historical PLI.COM. It does not link or run the generated REL.|}
 
 let positive_integer s=match int_of_string_opt s with Some n when n>0->Some n|_->None
-let value_options=["--toolchain";"--source";"--output-dir";"--module";"--max-steps";"--analysis";"--report";"--source-text";"--select-rel";"--raw-slice"]
+let value_options=["--oracle-fixture";"--toolchain";"--source";"--output-dir";"--module";"--max-steps";"--analysis";"--report";"--source-text";"--select-rel";"--raw-slice"]
 
 let parse args =
   let rec go options = function
@@ -28,6 +32,7 @@ let parse args =
     |"--help"::_->Error"help"
     |flag::[] when List.mem flag value_options->Error("missing value after "^flag)
     |flag::value::_ when List.mem flag value_options && String.starts_with ~prefix:"--" value->Error("missing value after "^flag)
+    |"--oracle-fixture"::value::rest->(match options.oracle_fixture with None->go{options with oracle_fixture=Some value}rest|Some _->Error"--oracle-fixture repeated")
     |"--toolchain"::value::rest->(match options.toolchain with None->go{options with toolchain=Some value}rest|Some _->Error"--toolchain repeated")
     |"--source"::value::rest->(match options.source with None->go{options with source=Some value}rest|Some _->Error"--source repeated")
     |"--output-dir"::value::rest->(match options.output_dir with None->go{options with output_dir=Some value}rest|Some _->Error"--output-dir repeated")
@@ -43,5 +48,11 @@ let parse args =
     |"--raw-slice"::value::rest->(match Experiment.parse_offset value with Error e->Error e|Ok n->go{options with raw_slices=(if List.mem n options.raw_slices then options.raw_slices else options.raw_slices@[n])}rest)
     |option::_->Error("unknown option "^option)
   in
-  go {toolchain=None;source=None;output_dir=None;module_name=None;max_steps=10_000_000;
+  let parsed = go {oracle_fixture=None;toolchain=None;source=None;output_dir=None;module_name=None;max_steps=10_000_000;
     analysis=Experiment.Run;report=Experiment.Summary;source_text=Cpm;structure=false;selected_rel=[];raw_slices=[]} args
+  in
+  match parsed with
+  | Ok ({oracle_fixture=Some _;toolchain=None;source=None;output_dir=None;module_name=None;
+      analysis=Experiment.Run;report=Experiment.Summary;source_text=Cpm;structure=false;selected_rel=[];raw_slices=[];_} as options) -> Ok options
+  | Ok {oracle_fixture=Some _;_} -> Error "--oracle-fixture cannot be combined with compiler-run options"
+  | other -> other

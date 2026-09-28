@@ -19,6 +19,21 @@ dune exec pli80-analyze -- \
   --analysis path --report summary
 ```
 
+To inspect a preserved PL/M-80 oracle fixture without running the compiler or
+changing any files, use the same CLI in read-only fixture mode:
+
+```sh
+dune exec pli80-analyze -- --oracle-fixture research/plm80-oracle/v4-four-byte-parameters
+dune exec pli80-analyze -- --oracle-fixture research/plm80-oracle/v4-address-return
+```
+
+This view reads the fixture manifest, displays its recorded source, sizes,
+located ranges, exact code bytes and factual observations, and decodes the
+preserved code bytes with the repository's 8080 decoder/formatter. It does not
+run ISIS-II, PLM80, LINK or LOCATE, and it does not infer a generalized PL/M
+ABI. The reader supports the manifest layouts currently used by the preserved
+PL/M oracle corpus.
+
 The toolchain directory is read-only input. The output directory must not
 already contain any file the command would produce. `--module NAME` overrides
 the uppercased source basename and is validated as a CP/M base name of at most

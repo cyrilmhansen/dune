@@ -1,5 +1,6 @@
 type source_text = Cpm | Raw
 type t = {
+  oracle_fixture : string option;
   toolchain : string option;
   source : string option;
   output_dir : string option;

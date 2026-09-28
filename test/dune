@@ -48,6 +48,12 @@
  (libraries pli80))
 
 (test
+ (name pli80_oracle_fixture)
+ (libraries pli80)
+ (deps ../research/plm80-oracle/v4-four-byte-parameters/manifest.json
+       ../research/plm80-oracle/v4-address-return/manifest.json))
+
+(test
  (name dynamic_structure)
  (libraries i8080 cpm analysis))
 

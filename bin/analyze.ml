@@ -85,7 +85,7 @@ let error_text = function
     |Invalid_step_limit _->"invalid step limit"|Invalid_command_tail _->"invalid command tail")
   |Structure_requires_execution_map->"--structure requires --analysis execution, data, or path"
 
-let run (options : options) =
+let run_compiler (options : options) =
   let total_started=Unix.gettimeofday() in
   match options.toolchain,options.source,options.output_dir with
   |None,_,_->failwith"--toolchain DIR is required"
@@ -324,6 +324,14 @@ let run (options : options) =
     );
     (match options.report with Summary->Printf.printf"summary metadata: %s\n"(Filename.concat output_dir"run-summary.json")|_->());
     ignore total_seconds
+
+let run (options : options) =
+  match options.oracle_fixture with
+  | None -> run_compiler options
+  | Some directory ->
+      (match Pli80.Oracle_fixture.load directory with
+      | Ok fixture -> print_string (Pli80.Oracle_fixture.to_text fixture)
+      | Error message -> failwith ("cannot read PL/M oracle fixture: " ^ message))
 
 let () =
   let args=Array.to_list Sys.argv |> List.tl in
