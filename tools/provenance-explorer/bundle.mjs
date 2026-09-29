@@ -1,14 +1,20 @@
 import { cp, mkdir, readdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { projectCodeRun } from "./src/code_evidence.js";
 
 const root=path.dirname(fileURLToPath(import.meta.url));
 const args=process.argv.slice(2);
-const positional=[],named={};
+const positional=[],named={},codeRunArgs=[];
 for(let i=0;i<args.length;i++){
   if(args[i]==="--structure"||args[i]==="--blocks"||args[i]==="--canonical-code-blocks"){
     const option=args[i],value=args[++i];if(!value||value.startsWith("--")){console.error(`${option} requires a file path`);process.exit(2)}
     if(named[option]){console.error(`${option} may be specified only once`);process.exit(2)}named[option]=value;
+  }else if(args[i]==="--code-run"){
+    const label=args[++i],dir=args[++i];
+    if(!label||!dir||label.startsWith("--")||dir.startsWith("--")){console.error("--code-run requires LABEL DIRECTORY");process.exit(2)}
+    if(codeRunArgs.some(x=>x.label===label)){console.error(`duplicate code-run label: ${label}`);process.exit(2)}
+    codeRunArgs.push({label,dir:path.resolve(dir)});
   }else positional.push(args[i]);
 }
 const [reportArg,controlArg,outputArg]=positional.length===2?[positional[0],null,positional[1]]:positional;
@@ -36,5 +42,20 @@ await cp(path.join(root,"dist"),output,{recursive:true,force:true});
 await writeFile(path.join(output,"provenance-report.json"),text);
 await writeFile(path.join(output,"provenance-control-report.json"),controlText);
 if(structureText){await writeFile(path.join(output,"dynamic-structure.json"),structureText);await writeFile(path.join(output,"dynamic-blocks.json"),blocksText);await writeFile(path.join(output,"canonical-code-blocks.json"),canonicalCodeText)}
-await writeFile(path.join(output,"explorer-manifest.json"),JSON.stringify({structure:Boolean(structureText)})+"\n");
+let codeEvidenceRuns=[];
+if(codeRunArgs.length){
+  if(codeRunArgs.length<2)throw new Error("multi-run code evidence requires at least two --code-run inputs");
+  codeEvidenceRuns=await Promise.all(codeRunArgs.map(async ({label,dir})=>{
+    const [structure,blocks,canonical]=await Promise.all([
+      readFile(path.join(dir,"dynamic-structure.json"),"utf8"),
+      readFile(path.join(dir,"dynamic-blocks.json"),"utf8"),
+      readFile(path.join(dir,"canonical-code-blocks.json"),"utf8")]);
+    for(const [text,header,file] of [[structure,"RUNES_DYNAMIC_STRUCTURE 1","dynamic-structure.json"],[blocks,"RUNES_DYNAMIC_BLOCKS 1","dynamic-blocks.json"],[canonical,"RUNES_CANONICAL_CODE_BLOCKS 1","canonical-code-blocks.json"]])
+      if(!text.startsWith(`${header}\n`))throw new Error(`unsupported ${file} in code run ${label}`);
+    const parse=text=>JSON.parse(text.slice(text.indexOf("\n")+1));
+    return projectCodeRun(label,parse(structure),parse(blocks),parse(canonical));
+  }));
+  await writeFile(path.join(output,"code-evidence.json"),JSON.stringify({schema:"RUNES_CODE_EVIDENCE 1",runs:codeEvidenceRuns})+"\n");
+}
+await writeFile(path.join(output,"explorer-manifest.json"),JSON.stringify({structure:Boolean(structureText),codeEvidence:codeEvidenceRuns.length>1})+"\n");
 console.log(`offline bundle written to ${output}`);

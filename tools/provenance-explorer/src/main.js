@@ -5,7 +5,9 @@ import "@perspective-dev/viewer/themes";
 import serverWasm from "@perspective-dev/server/dist/wasm/perspective-server.wasm?url";
 import viewerWasm from "@perspective-dev/viewer/dist/wasm/perspective-viewer.wasm?url";
 import { Graph } from "@antv/g6";
+import { adjacentInstructions, coordinateEvidence, parseCodeCoordinate } from "./code_evidence.js";
 import "./style.css";
+import "./code_evidence.css";
 
 const reportUrl = new URL("./provenance-report.json", window.location.href);
 const report = await fetch(reportUrl).then(async r => { if (!r.ok) throw new Error(`Report fetch failed: ${r.status}`); const text=await r.text(); const newline=text.indexOf("\n"); if(newline<0||text.slice(0,newline)!=="RUNES_PROVENANCE_REPORT 1")throw new Error("Unsupported provenance report version"); return JSON.parse(text.slice(newline+1)); });
@@ -32,9 +34,20 @@ if (manifest.structure) {
   canonicalCodeReport = JSON.parse(canonicalCodeText.slice(canonicalCodeText.indexOf("\n") + 1));
 }
 const hasStructure = Boolean(structureReport && blocksReport && canonicalCodeReport);
+let codeEvidence = null;
+if (manifest.codeEvidence) {
+  const payload = await fetch(new URL("./code-evidence.json", window.location.href)).then(async r => {
+    if (!r.ok) throw new Error(`Code evidence index fetch failed: ${r.status}`);
+    return r.json();
+  });
+  if (payload.schema !== "RUNES_CODE_EVIDENCE 1") throw new Error("Unsupported code evidence index version");
+  codeEvidence = payload.runs ?? [];
+}
 document.querySelector("#structure-view").hidden = !hasStructure;
 document.querySelector("#structure-missing").hidden = true;
 document.querySelector("#tab-structure").hidden = !hasStructure;
+document.querySelector("#tab-code-evidence").hidden = !codeEvidence;
+document.querySelector("#code-evidence-view").hidden = !codeEvidence;
 if (!hasStructure) document.querySelector("#tab-low-level").classList.add("active");
 else document.querySelector("#tab-structure").classList.add("active");
 if (!hasPathControl) {
@@ -559,7 +572,106 @@ async function initializeStructureView(){
   if(routineRows.length)selectRoutine(routineRows[0].id);
   window.__structureReady=true;
 }
-function showView(view){const structure=view==="structure"&&hasStructure;document.querySelector("#structure-view").hidden=!structure;document.querySelector("#low-level-view").hidden=structure;document.querySelector("#tab-structure").classList.toggle("active",structure);document.querySelector("#tab-low-level").classList.toggle("active",!structure);window.__activeView=structure?"structure":"low-level";}
+const codeImageNames=[...new Set((codeEvidence??[]).flatMap(run=>run.instructions.map(i=>i.image)))].sort();
+function renderCodeEvidence(){
+  if(!codeEvidence)return;
+  const imageSelect=document.querySelector("#code-image");
+  imageSelect.replaceChildren(...codeImageNames.map(name=>{const option=document.createElement("option");option.value=name;option.textContent=name;return option}));
+  const coordinateMap=new Map();
+  for(const run of codeEvidence)for(const instruction of run.instructions){
+    if(!coordinateMap.has(instruction.image))coordinateMap.set(instruction.image,new Set());
+    coordinateMap.get(instruction.image).add(instruction.offset);
+  }
+  const allOffsets=image=>[...(coordinateMap.get(image)??[])].sort((a,b)=>a-b);
+  const evidenceFor=(image,offset)=>coordinateEvidence(codeEvidence,image,offset);
+  const formatOffset=value=>Number(value).toString(16).toUpperCase().padStart(4,"0");
+  function selectCoordinate(image,offset){
+    imageSelect.value=image;document.querySelector("#code-offset").dataset.offset=String(offset);
+    document.querySelector("#code-offset").value=`${image}+${formatOffset(offset)}`;
+    const listing=document.querySelector("#code-listing");listing.replaceChildren();
+    const offsets=allOffsets(image),begin=offsets.indexOf(offset),limit=Math.max(1,Math.min(80,Number(document.querySelector("#code-range-count").value)||24));
+    let expected=offset,shown=0;
+    for(const at of offsets.slice(Math.max(begin,0))){
+      if(shown>0&&at!==expected)break;
+      const data=evidenceFor(image,at),chosen=data.variants[0]?.members[0]?.instruction;
+      const row=document.createElement("li"),button=document.createElement("button");button.type="button";button.className="code-instruction";button.dataset.offset=String(at);
+      button.textContent=`${formatOffset(at)}  ${chosen?.bytes??"??"}  ${chosen?.text??"(no decoded observation)"}  · ${data.observations.filter(x=>x.instruction).length}/${codeEvidence.length} runs${data.byte_disagreement?" · BYTE VARIANT":""}`;
+      button.addEventListener("click",()=>selectCoordinate(image,at));row.append(button);listing.append(row);shown++;
+      const length=chosen?chosen.bytes.length/2:0;expected=at+length;if(shown>=limit||!length)break;
+    }
+    const status=document.querySelector("#code-coordinate-status");
+    const present=offsets.includes(offset);
+    status.textContent=present?`${image}+${formatOffset(offset)} · ${dataImageIdentity(image)} · ${shown} contiguous observed instruction starts shown. Code identity is checked against exact bytes.`:`${image}+${formatOffset(offset)} was not observed in these runs.`;
+    document.querySelector("#code-summary").textContent=`${codeEvidence.length} runs · ${offsets.length.toLocaleString("en-US")} observed instruction coordinates in ${image}`;
+    renderSelected(image,offset);
+    window.__codeEvidenceNavigation={image,offset,listed:shown,observed:present};
+  }
+  function dataImageIdentity(name){
+    const found=codeEvidence.find(r=>r.images.some(x=>x[0]===name))?.images.find(x=>x[0]===name);
+    return found?`drive ${found[1]}, user ${found[2]}`:"image identity unavailable";
+  }
+  function renderSelected(image,offset){
+    document.querySelector("#code-offset").dataset.offset=String(offset);
+    const selectedEvidence=document.querySelector("#code-selected-evidence");selectedEvidence.replaceChildren();
+    const coordinate=evidenceFor(image,offset),title=document.createElement("p");
+    title.className=coordinate.byte_disagreement?"code-warning":"code-coordinate-title";
+    title.textContent=coordinate.byte_disagreement?`${image}+${formatOffset(offset)} · BYTE VARIANT: observations remain separated by bytes.`:`${image}+${formatOffset(offset)} · ${coordinate.variants[0]?.bytes??"no bytes observed"} · ${coordinate.variants[0]?.members[0]?.instruction.text??"unobserved"}`;
+    selectedEvidence.append(title);
+    for(const observation of coordinate.observations){
+      observation.runData=codeEvidence.find(x=>x.label===observation.run);
+      const instruction=observation.instruction;
+      const panel=document.createElement("article");panel.className="run-evidence";const head=document.createElement("h4");head.textContent=`${observation.run} · ${instruction?"OBSERVED":"NOT OBSERVED"}`;panel.append(head);
+      if(!instruction){const absent=document.createElement("p");absent.textContent="Not observed at this image coordinate in this run.";panel.append(absent);selectedEvidence.append(panel);continue}
+      const details=document.createElement("p");details.className="evidence-facts";
+      details.textContent=`${instruction.image}+${formatOffset(instruction.offset)} · runtime PC ${instruction.runtime_pcs.map(x=>formatOffset(x)).join(", ")||"unknown"} · ${instruction.bytes} ${instruction.text} · executions ${instruction.executions} · steps ${instruction.first_step}–${instruction.last_step}`;panel.append(details);
+      const contextsTitle=document.createElement("strong");contextsTitle.textContent="RoutineCandidate contexts · run-local analytical assignments";panel.append(contextsTitle);
+      const runRoutines=new Map((observation.runData.routines??[]).map(r=>[r[0],r]));
+      const contexts=instruction.contexts??[];
+      const contextsNode=document.createElement("p");contextsNode.textContent=contexts.length?contexts.map(c=>{const r=runRoutines.get(c[0]);return `${r?.[1]??`R${String(c[0]).padStart(3,"0")}`} [entry ${r?.[2]??"?"}+${r?.[3]==null?"?":formatOffset(r[3])}] · ${c[1]} executions · ${r?.[4]?.join(",")||"no tags"}`}).join("; "):"none recorded";panel.append(contextsNode);
+      const contextIds=new Set(contexts.map(c=>c[0]));
+      const candidateTransitions=(observation.runData.routine_transitions??[]).filter(t=>contextIds.has(t.from)||contextIds.has(t.to));
+      if(candidateTransitions.length){const relationHeading=document.createElement("strong");relationHeading.textContent="Observed aggregate transitions between these run-local candidates";panel.append(relationHeading);
+        const relationList=document.createElement("ul");relationList.className="transfer-list";
+        for(const t of candidateTransitions.slice(0,12)){const from=runRoutines.get(t.from),to=runRoutines.get(t.to),li=document.createElement("li");li.textContent=`${from?.[1]??`R${t.from}`} → ${to?.[1]??`R${t.to}`} · ${t.kinds.join(", ")} · ${t.count} observations · steps ${t.first_step}–${t.last_step}`;relationList.append(li)}
+        panel.append(relationList);
+      }
+      const blocksTitle=document.createElement("strong");blocksTitle.textContent="Observed block partition(s)";panel.append(blocksTitle);
+      const runBlocks=(observation.runData.blocks??[]).filter(b=>instruction.block_ids?.includes(b.id));
+      if(!runBlocks.length){const p=document.createElement("p");p.textContent="No block partition available.";panel.append(p)}
+      else for(const block of runBlocks){const p=document.createElement("p");p.textContent=`[${formatOffset(block.start)}, ${formatOffset(block.end)}) · ${block.byte_length} bytes · contexts ${block.contexts.map(c=>`R${String(c[0]).padStart(3,"0")} ${(c[1]??[]).join(",")||"no tags"}`).join("; ")||"none"}`;panel.append(p)}
+      for(const kind of ["Incoming observed transfers","Outgoing observed transfers"]){
+        const heading=document.createElement("strong");heading.textContent=kind;panel.append(heading);
+        const list=document.createElement("ul");list.className="transfer-list";
+        const incoming=kind.startsWith("Incoming"), edges=(observation.runData.transitions??[]).filter(t=>incoming?(t.to_image===image&&t.to_offset===offset):(t.from_image===image&&t.from_offset===offset));
+        for(const transfer of edges.slice(0,12)){
+          const other=incoming?{image:transfer.from_image,offset:transfer.from_offset}:{image:transfer.to_image,offset:transfer.to_offset};
+          const counterpart=observation.runData.instructions.find(x=>x.image===other.image&&x.offset===other.offset);
+          const li=document.createElement("li");li.textContent=`${other.image}+${formatOffset(other.offset)}${counterpart?` ${counterpart.text}`:""} · ${transfer.kind} · ${transfer.count} observations · steps ${transfer.first_step}–${transfer.last_step}`;list.append(li);
+        }
+        if(edges.length>12){const more=document.createElement("li");more.textContent=`${edges.length-12} more transfer rows omitted from this compact pane`;list.append(more)}
+        if(!edges.length){const none=document.createElement("li");none.textContent="none retained";list.append(none)}panel.append(list);
+      }
+      selectedEvidence.append(panel);
+    }
+    window.__selectedCodeCoordinate={image,offset,variants:coordinate.variants.map(x=>x.bytes),observed:coordinate.observations.map(x=>Boolean(x.instruction))};
+  }
+  const parseCurrent=()=>{
+    const parsed=parseCodeCoordinate(document.querySelector("#code-offset").value);
+    if(!parsed){document.querySelector("#code-coordinate-status").textContent="Enter IMAGE+hex-offset, for example PLI.COM+0BDA.";return null}
+    return parsed;
+  };
+  document.querySelector("#code-jump").addEventListener("click",()=>{const p=parseCurrent();if(p)selectCoordinate(p.image,p.offset)});
+  document.querySelector("#code-offset").addEventListener("keydown",e=>{if(e.key==="Enter"){const p=parseCurrent();if(p)selectCoordinate(p.image,p.offset)}});
+  imageSelect.addEventListener("change",()=>{const p=parseCurrent();if(p)selectCoordinate(imageSelect.value,p.offset)});
+  document.querySelector("#code-range-count").addEventListener("change",()=>{const p=parseCurrent();if(p)selectCoordinate(p.image,p.offset)});
+  const move=delta=>{const p=parseCurrent();if(!p)return;const offsets=allOffsets(p.image),index=offsets.indexOf(p.offset);const next=offsets[index+delta];if(next!=null)selectCoordinate(p.image,next)};
+  document.querySelector("#code-previous").addEventListener("click",()=>move(-1));document.querySelector("#code-next").addEventListener("click",()=>move(1));
+  const initial=parseCodeCoordinate(document.querySelector("#code-offset").value);
+  if(initial&&codeImageNames.includes(initial.image))selectCoordinate(initial.image,initial.offset);else if(codeImageNames.length)selectCoordinate(codeImageNames[0],allOffsets(codeImageNames[0])[0]);
+  window.__codeRuns=codeEvidence;
+  window.__codeEvidenceReady=true;
+}
+function showView(view){const structure=view==="structure"&&hasStructure,code=view==="code-evidence"&&Boolean(codeEvidence);document.querySelector("#structure-view").hidden=!structure;document.querySelector("#code-evidence-view").hidden=!code;document.querySelector("#low-level-view").hidden=structure||code;document.querySelector("#tab-structure").classList.toggle("active",structure);document.querySelector("#tab-code-evidence").classList.toggle("active",code);document.querySelector("#tab-low-level").classList.toggle("active",!structure&&!code);window.__activeView=structure?"structure":code?"code-evidence":"low-level";}
 async function renderProjection(p){current=p;currentPath=controlSelection.get(`${outputIdentity}:${p.sink.offset}`)??null;window.__explorerReady=false;safeText(document.querySelector("#sink-meta"),"Selected output write · detailed provenance projection embedded");renderExplanationOverview(p,currentPath);
   const pathSummary=document.querySelector("#path-summary");if(currentPath)pathSummary.textContent=`Cumulative concrete path context: ${currentPath.context_depth} decisions at ${currentPath.distinct_branch_locations} static branch locations; steps ${currentPath.earliest_decision_step}–${currentPath.latest_decision_step}. Combined reachable nodes ${currentPath.combined_reachable_nodes} (${currentPath.additional_decision_nodes} decisions, ${currentPath.additional_context_nodes} contexts, ${currentPath.additional_flag_ancestors} additional flag/value ancestors; ${currentPath.control_relations} Control relations). This is not minimal control dependence.`;else pathSummary.textContent="No path-control projection embedded for this output byte.";
   const source=document.querySelector("#source-summary");source.replaceChildren();for(const s of p.sources){const div=document.createElement("div");div.textContent=`${s.classification??s.kind} · ${s.identity}: ${s.distinct_source_bytes} distinct offsets / ${s.leaf_occurrences} leaf occurrences · ${s.ranges.map(r=>r.first===r.last?r.first.toString(16):`${r.first.toString(16)}–${r.last.toString(16)}`).join(", ")}`;source.append(div);}
@@ -573,8 +685,10 @@ async function selectOffset(offset){const p=selection.get(`${outputIdentity}:${o
 for(const p of report.selections){const opt=document.createElement("option");opt.value=p.sink.offset;opt.textContent=`${p.sink.file.name} +${p.sink.offset.toString(16).toUpperCase().padStart(4,"0")}`;document.querySelector("#sink").append(opt)}
 document.querySelector("#sink").addEventListener("change",e=>void selectOffset(Number(e.target.value)));document.querySelector("#mode").addEventListener("change",()=>current&&renderHeatmaps(current,currentPath));document.querySelector("#analysis-mode").addEventListener("change",e=>{analysisMode=e.target.value;if(current)void renderProjection(current)});
 document.querySelector("#tab-structure").addEventListener("click",()=>{showView("structure");if(hasStructure&&!routineGraph)void renderRoutineGraph()});document.querySelector("#tab-low-level").addEventListener("click",()=>showView("low-level"));
+document.querySelector("#tab-code-evidence").addEventListener("click",()=>showView("code-evidence"));
 document.querySelector("#routine-map-global").addEventListener("click",()=>{routineGraphMode="global";activeNarrativeOrdinal=null;document.querySelector("#routine-map-global").classList.add("active");document.querySelector("#routine-map-local").classList.remove("active");void renderRoutineGraph()});
 document.querySelector("#routine-map-local").addEventListener("click",()=>{routineGraphMode="neighborhood";activeNarrativeOrdinal=null;document.querySelector("#routine-map-local").classList.add("active");document.querySelector("#routine-map-global").classList.remove("active");void renderRoutineGraph()});
 document.querySelector("#image-overview").replaceChildren(...report.execution.images.map(im=>{const d=document.createElement("div");d.className="image-card";d.textContent=`${im.display_name} · virtual ${im.virtual_base.toString(16)}–${(im.virtual_base+im.span-1).toString(16)} · ${im.unique_fetched_byte_count}/${im.known_byte_count} unique bytes fetched · ${im.total_instruction_executions} executions`;return d}));
 window.__reportLoaded={images:report.execution.images.length,outputBytes:report.output_bytes.length,selectedProjections:report.selections.length,controlRows:controlReport.decisions.length};
 await initializeStructureView();showView("low-level");await selectOffset(report.selections[0]?.sink.offset??-1);showView(hasStructure?"structure":"low-level");if(hasStructure)await renderRoutineGraph();
+renderCodeEvidence();

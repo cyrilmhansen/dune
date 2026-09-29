@@ -15,6 +15,10 @@ npm run bundle -- /path/to/provenance-report.json /path/to/provenance-control-re
 npm run bundle -- /path/to/provenance-report.json /path/to/provenance-control-report.json /path/to/output-bundle \
   --structure /path/to/dynamic-structure.json --blocks /path/to/dynamic-blocks.json \
   --canonical-code-blocks /path/to/canonical-code-blocks.json
+# add a compact multi-run code index (repeat --code-run LABEL REPORT_DIRECTORY):
+npm run bundle -- /path/to/provenance-report.json /path/to/provenance-control-report.json /path/to/output-bundle \
+  --code-run MINIMAL /path/to/minimal-report --code-run FIZZBUZ /path/to/fizzbuz-report \
+  --code-run FACTOR /path/to/factor-report --code-run OPTIMIST /path/to/optimist-report
 npm run smoke -- /path/to/output-bundle
 ```
 
@@ -27,6 +31,13 @@ then shows canonical image-backed code contexts and their separate routine
 relations. Shared contexts can be followed to other candidates; owner-specific
 context splits are marked. Repeated graph edges point to existing routine IDs,
 and recursion remains a badge rather than expanded calls.
+
+When multiple `--code-run LABEL DIRECTORY` inputs are supplied, the bundle
+also enables the Code evidence tab. It projects the existing canonical code,
+dynamic block, and structure reports into `code-evidence.json`. Instructions
+are compared by image identity plus file offset and their observed bytes;
+blocks and RoutineCandidate contexts remain per-run evidence. See
+`../../docs/code-centric-evidence.md` for the exact interpretation limits.
 
 Serve the output directory locally (e.g. `python3 -m http.server -d
 /path/to/output-bundle`). The report and WASM/runtime assets are local; no CDN

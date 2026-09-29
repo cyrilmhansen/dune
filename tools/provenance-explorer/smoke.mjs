@@ -134,6 +134,32 @@ try {
   const roles=await page.evaluate(()=>window.__roleOverlayCounts);if(roles.value&&roles.address&&roles.flag&&new Set([heatHashes.value,heatHashes.address,heatHashes.flag]).size<3)throw new Error("role-specific heatmaps did not differ");if(roles.control&&heatHashes.control===heatHashes.execution)throw new Error("control heatmap did not differ from execution heat");
   if(await page.locator("#source-summary img").count())throw new Error("source label was interpreted as HTML");
   const config=await page.evaluate(()=>window.__tableGroups);if(JSON.stringify(config["#producers"])!==JSON.stringify(["image","operation_kind"]))throw new Error("producer grouping configuration missing");
+  const codeReady=await page.evaluate(()=>window.__codeEvidenceReady===true);
+  if(codeReady){
+    await page.click("#tab-code-evidence");await page.waitForFunction(()=>window.__activeView==="code-evidence");
+    const jump=async(image,offset)=>{await page.locator("#code-offset").fill(`${image}+${offset.toString(16).toUpperCase()}`);await page.click("#code-jump");await page.waitForFunction(([i,o])=>window.__selectedCodeCoordinate?.image===i&&window.__selectedCodeCoordinate?.offset===o,[image,offset])};
+    await jump("PLI.COM",0x0bda);
+    let facts=await page.locator("#code-selected-evidence").innerText();
+    if(!facts.includes("MINIMAL · OBSERVED")||!facts.includes("FIZZBUZ · OBSERVED")||!facts.includes("0BE2")||!facts.includes("0BDF"))throw new Error(`multi-run block partition example is missing: ${facts.slice(0,900)}`);
+    await jump("PLI2.OVL",0x11e6);facts=await page.locator("#code-selected-evidence").innerText();
+    if(!facts.includes("PLI2.OVL+11E6")||!facts.includes("R403")||!facts.includes("executions 442"))throw new Error(`multi-context overlay code evidence missing: ${facts.slice(0,1200)}`);
+    await jump("PLI0.OVL",0x01dd);facts=await page.locator("#code-selected-evidence").innerText();if(!facts.includes("JMP 038EH"))throw new Error("PLI0 overlay exit evidence missing");
+    await jump("PLI1.OVL",0x0138);facts=await page.locator("#code-selected-evidence").innerText();if(!facts.includes("JMP 038EH"))throw new Error("PLI1 overlay exit evidence missing");
+    await jump("PLI.COM",0x0d32);facts=await page.locator("#code-listing").innerText();if(!facts.includes("LDA 20A8H")||!facts.includes("STA 201EH")||!facts.includes("JNC 0E3FH"))throw new Error("resident overlay-exit sequence was not listed");
+    await jump("PLI.COM",0x19d4);facts=await page.locator("#code-selected-evidence").innerText();if(!facts.includes("JMP 0005H")||!facts.includes("R009"))throw new Error("resident BDOS bridge observation missing");
+    const codeTests=await page.evaluate(()=>{
+      const byLabel=Object.fromEntries(window.__codeRuns.map(r=>[r.label,r]));
+      const all=new Set(window.__codeRuns.flatMap(r=>r.instructions.map(i=>`${i.image}:${i.offset}`)));
+      const opt=new Set((byLabel.OPTIMIST?.instructions??[]).map(i=>`${i.image}:${i.offset}`));
+      return {runs:window.__codeRuns.map(r=>r.label),coords:all.size,otherOnly:[...all].find(x=>!opt.has(x)),
+        selected:window.__selectedCodeCoordinate,listingButtons:document.querySelectorAll("#code-listing .code-instruction").length};
+    });
+    if(codeTests.runs.length!==4||!codeTests.otherOnly||codeTests.otherOnly.startsWith("undefined:")||codeTests.selected.offset!==0x19d4||!codeTests.listingButtons)throw new Error(`multi-run code view did not retain complete run coverage/navigation: ${JSON.stringify(codeTests)}`);
+    const [otherImage,otherOffset]=codeTests.otherOnly.split(":");await jump(otherImage,Number(otherOffset));facts=await page.locator("#code-selected-evidence").innerText();
+    if(!facts.includes("OPTIMIST · NOT OBSERVED")||facts.includes("OPTIMIST · OBSERVED"))throw new Error(`coordinate absent from OPTIMIST was not kept as a per-run absence: ${facts.slice(0,800)}`);
+    await page.click("#code-next");await page.waitForFunction(()=>window.__selectedCodeCoordinate.offset!==0x19d4);
+    interactions.push(`code evidence: four runs, ${codeTests.coords} coordinates, direct coordinate jump, per-run partitions/contexts/transfers, absent-from-OPTIMIST coordinate ${codeTests.otherOnly}`);
+  }
   if(requests.some(url=>!url.startsWith(`http://127.0.0.1:${port}/`)&&!url.startsWith(`blob:http://127.0.0.1:${port}/`)))throw new Error(`non-local asset request: ${requests.find(url=>!url.startsWith(`http://127.0.0.1:${port}/`)&&!url.startsWith(`blob:http://127.0.0.1:${port}/`))}`);
   if(errors.length)throw new Error(errors.join("; "));
   console.log(JSON.stringify({loaded:before,tableGroups:config,roles,interactions}));
