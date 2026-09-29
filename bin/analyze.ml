@@ -46,8 +46,10 @@ let json_summary ~module_name ~source ~host_source_bytes ~normalized_source_byte
   Printf.bprintf b ",\"step_indexed_console_messages\":%d,\"step_indexed_file_events\":%d,\"timeline_report\":\"compiler-timeline.json\""
     (List.length experiment.console_messages) (List.length experiment.file_events);
   (match experiment.event_witnesses with None->Buffer.add_string b ",\"event_witnesses\":null"|Some w->
-    Printf.bprintf b ",\"event_witnesses\":{\"report\":\"event-witnesses.json\",\"instruction_witnesses\":%d,\"file_events\":%d,\"transfer_mismatches\":%d}"
-      (Analysis.Event_witness.instruction_count w)(Analysis.Event_witness.file_event_count w)(Analysis.Event_witness.transfer_mismatch_count w));
+    Printf.bprintf b ",\"event_witnesses\":{\"report\":\"event-witnesses.json\",\"instruction_witnesses\":%d,\"file_events\":%d,\"transfer_mismatches\":%d,\"hardware_frame_returns\":%d,\"software_continuation_returns\":%d}"
+      (Analysis.Event_witness.instruction_count w)(Analysis.Event_witness.file_event_count w)
+      (Analysis.Event_witness.transfer_mismatch_count w)(Analysis.Event_witness.hardware_return_count w)
+      (Analysis.Event_witness.software_continuation_count w));
   let file name bytes=match bytes with None->Printf.bprintf b ",\"%s\":null" name|Some bytes->Printf.bprintf b ",\"%s\":{\"name\":%s,\"size\":%d,\"sha256\":%s}" name(json_quote(if name="rel" then rel_name else int_name))(Bytes.length bytes)(json_quote(Pli80.Experiment.sha256_hex bytes)) in
   file "rel" rel_bytes;file "int" int_bytes;
   (match execution_map with None->add b ",\"execution_map\":null"|Some map->let s=Analysis.Execution_map.summary map in Printf.bprintf b ",\"execution_map\":{\"steps\":%d,\"attributed\":%d,\"unknown\":%d,\"mixed\":%d}" s.total_instruction_executions s.attributed_instruction_executions s.unknown_executions s.mixed_or_unresolved_executions);
@@ -259,8 +261,10 @@ let run_compiler (options : options) =
       experiment.run.data_bytes_read experiment.run.data_bytes_written experiment.run.data_bytes_total;
     if options.report<>No_report then Printf.printf "step-indexed chronology: compiler-timeline.json (%d console messages, %d file events)\n\n"
       (List.length experiment.console_messages)(List.length experiment.file_events);
-    Option.iter(fun w->Printf.printf "event witnesses: event-witnesses.json + event-witnesses/chunks/ (%d instruction witnesses, %d file events, %d CALL/RET mismatches)\n"
-      (Analysis.Event_witness.instruction_count w)(Analysis.Event_witness.file_event_count w)(Analysis.Event_witness.transfer_mismatch_count w))experiment.event_witnesses;
+    Option.iter(fun w->Printf.printf "event witnesses: event-witnesses.json + event-witnesses/chunks/ (%d instruction witnesses, %d file events, %d unmatched returns, %d stack-verified hardware returns, %d software-continuation returns)\n"
+      (Analysis.Event_witness.instruction_count w)(Analysis.Event_witness.file_event_count w)
+      (Analysis.Event_witness.transfer_mismatch_count w)(Analysis.Event_witness.hardware_return_count w)
+      (Analysis.Event_witness.software_continuation_count w))experiment.event_witnesses;
     (match experiment.rel_bytes with None->print_endline"output: REL not produced"|Some rel->Printf.printf"output:\n  %s: %d bytes\n  SHA-256: %s\n  %s survives: %s\n\n"
       experiment.rel_name(Bytes.length rel)(Pli80.Experiment.sha256_hex rel)experiment.int_name(if experiment.int_bytes=None then"no"else"yes"));
     (match experiment.execution_map with None->()|Some map->let x=Analysis.Execution_map.summary map in Printf.printf"execution attributed: %d / %d\n"

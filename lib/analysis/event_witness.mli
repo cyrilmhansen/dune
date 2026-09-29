@@ -4,8 +4,14 @@
 type origin = { image : Cpm.Filesystem.key; offset : int }
 type memory_read = { address : int; value : int }
 type memory_write = { address : int; old_value : int option; new_value : int }
-type frame = { call_step : int; callsite : origin option; call_pc : int;
-               return_address : int; target_pc : int; target : origin option }
+type hardware_transfer = Call_frame | Restart_frame
+type frame = { hardware_transfer : hardware_transfer; call_step : int; callsite : origin option; call_pc : int;
+               return_address : int; stack_slot : int; target_pc : int; target : origin option }
+type written_byte = { writer_step : int; writer_pc : int; writer_origin : origin option;
+                      writer_disassembly : string; written_value : int }
+type software_continuation = { stack_slot : int; return_address : int;
+  low_byte_writer : written_byte; high_byte_writer : written_byte;
+  consumed_step : int; consumer_pc : int; consumer_origin : origin option }
 type certainty = Certain | Uncertain of string list
 
 type instruction = {
@@ -29,6 +35,8 @@ type event =
   | Host_effect of { step_index : int; old_value : int option; detail : Cpm.Bdos.external_effect }
   | Bdos_resume of { step_index : int; state : Runner.state_snapshot }
   | Call_mismatch of { step_index : int; observed_target : int option; expected_frame : frame option }
+  | Hardware_frame_return of { step_index : int; frame : frame }
+  | Software_continuation_return of software_continuation
   | Termination of { step_index : int; reason : string }
 
 type t
@@ -48,6 +56,8 @@ val events : t -> event list
 val instruction_count : t -> int
 val file_event_count : t -> int
 val transfer_mismatch_count : t -> int
+val hardware_return_count : t -> int
+val software_continuation_count : t -> int
 (** Stream a deterministic report. Per-step writes have [old_value = null]:
     the live Step boundary reports the concrete new byte but not the overwritten
     byte. *)

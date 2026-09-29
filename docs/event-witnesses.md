@@ -32,17 +32,52 @@ callback/report order, not a claim about the exact internal order of host
 mutations. Consequently a CPU post-step snapshot is never used as a substitute
 for the post-BDOS guest state.
 
-The chronological call-frame list is **DEDUCED**, not directly observed as a
-whole. It is reconstructed from taken CALL/RST and RET outcomes and includes
-call/return coordinates. A taken call's expected return PC is the sequential
-address after its fetched instruction bytes; `pc_after` separately remains the
-observed transfer destination. If a return does not match the top observed
-frame, or has no frame, subsequent contexts are marked uncertain. This is
-important for non-structured control flow and overlay changes; an uncertain
-stack is not presented as a recovered procedure call tree.
-Each such mismatch is also retained as a chronological
-`call_context_mismatch` event with the observed target and expected frame (if
-one existed), not merely as an aggregate count.
+The chronological call-context reconstruction is **DEDUCED**, not directly
+observed as a whole, and is not procedure recovery. It distinguishes two
+return sources:
+
+- A **hardware CALL/RST frame** is created from the observed taken transfer.
+  Its expected return PC and stack slot (`SP` after the transfer) are retained.
+  A RET restores that frame only when its observed SP, consumed bytes, target,
+  and still-current guest writes all match that particular slot. Frames are
+  searched by consumed slot, not simply popped newest-first, so a frame remains
+  available while SP is temporarily rebased elsewhere.
+- A **software continuation return** is recorded only when RET's concrete
+  memory reads match two bytes most recently written by guest instructions at
+  the consumed stack addresses. Its `software_continuation_return` event
+  identifies both byte writers and the consuming RET. The value is not
+  classified by whether it resembles an address; RET's observed transfer plus
+  the exact guest-written bytes are the evidence. Host-side memory writes and
+  BDOS record reads invalidate prior guest-write evidence for affected bytes.
+
+The JSON `hardware_frame_return` and `software_continuation_return` events are
+deduced relations. The instruction witnesses beside them remain the observed
+CALL/RST/RET, SP values, memory reads, and writes. A `call_context_mismatch`
+continues to be emitted when neither an intact hardware frame nor an explicitly
+guest-written consumed word explains a taken RET. Such a mismatch marks the
+current caller context uncertain and does not silently consume an unrelated
+dormant frame. A later RET that exactly consumes a known hardware frame restores
+the certainty captured when that frame was created. Unknown or overwritten
+stack words therefore remain mismatches; numerical resemblance to code alone
+never repairs context.
+
+For OPTIMIST, the prior reconstruction reported 372 return mismatches. With
+stack-slot matching and guest-write evidence, the same 2,535,509-step run
+reports 0 unmatched returns: 95,504 RETs matched hardware CALL/RST frames and
+194 were classified as software-continuation returns. The former step
+1,681,339 mismatch is now a software continuation at `FFE4H` written by the
+observed `PUSH H` of `42B4H`; step 1,681,418 matches the dormant hardware frame
+created at step 1,674,802 and stored at `FFF2H`. All five inspected BDOS
+contexts—REL write at 840,539, final INT write at 1,668,911, first INT read at
+1,671,945, REL write at 1,987,517, and final REL write at 2,533,978—are certain
+in this run. These counts describe witnessed stack relationships, not source
+procedure boundaries or a general compiler convention.
+
+This update applies to `Analysis.Event_witness` caller contexts. The separate
+`Dynamic_structure` routine-ownership analysis still uses its own
+CALL/RETURN-driven candidate ownership model and does not consume these
+stack-slot classifications; its ownership anomalies are not silently rewritten
+by the event-witness result.
 
 ## Query and bundle workflow
 
@@ -85,9 +120,10 @@ retained as distinct events.
 
 The same bridge also handles an earlier REL record write at step 840,539; its
 reconstructed frames include callsites in `PLI1.OVL`, while the final REL
-record write is at 2,533,978. At the latter event the frame context is marked
-uncertain because an earlier observed RET mismatch occurred at step 1,681,339
-(observed target `42B4H`, expected top-frame return `434CH`). These are
+record write is at 2,533,978. The earlier witness capture marked the latter
+context uncertain after an observed RET mismatch at step 1,681,339 (observed
+target `42B4H`, expected top-frame return `434CH`). With the slot-aware
+reconstruction described above, that REL context is certain. These are
 execution-context facts, not compiler-stage names.
 
 The exact historical capture retained 2,535,509 instruction witnesses and 744

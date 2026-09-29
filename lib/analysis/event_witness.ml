@@ -1,8 +1,15 @@
 type origin = { image : Cpm.Filesystem.key; offset : int }
 type memory_read = { address : int; value : int }
 type memory_write = { address : int; old_value : int option; new_value : int }
-type frame = { call_step : int; callsite : origin option; call_pc : int;
-               return_address : int; target_pc : int; target : origin option }
+type hardware_transfer = Call_frame | Restart_frame
+type frame = { hardware_transfer : hardware_transfer; call_step : int; callsite : origin option; call_pc : int;
+               return_address : int; stack_slot : int; target_pc : int; target : origin option }
+type tracked_frame = { frame : frame; caller_uncertainty : string list }
+type written_byte = { writer_step : int; writer_pc : int; writer_origin : origin option;
+                      writer_disassembly : string; written_value : int }
+type software_continuation = { stack_slot : int; return_address : int;
+  low_byte_writer : written_byte; high_byte_writer : written_byte;
+  consumed_step : int; consumer_pc : int; consumer_origin : origin option }
 type certainty = Certain | Uncertain of string list
 type instruction = {
   step_index : int; pc : int; pc_after : int; origin : origin option; target_origin : origin option; runtime_pc : int;
@@ -24,6 +31,8 @@ type event =
   | Host_effect of { step_index : int; old_value : int option; detail : Cpm.Bdos.external_effect }
   | Bdos_resume of { step_index : int; state : Runner.state_snapshot }
   | Call_mismatch of { step_index : int; observed_target : int option; expected_frame : frame option }
+  | Hardware_frame_return of { step_index : int; frame : frame }
+  | Software_continuation_return of software_continuation
   | Termination of { step_index : int; reason : string }
 
 open I8080.Step
@@ -35,14 +44,18 @@ type t = {
   mutable instruction_count : int;
   mutable file_event_count : int;
   mutable mismatch_count : int;
-  mutable frames : frame list;
+  mutable hardware_return_count : int;
+  mutable software_continuation_count : int;
+  mutable frames : tracked_frame list;
+  guest_write_bytes : (int, written_byte) Hashtbl.t;
   mutable recent_transfers : instruction list;
   mutable uncertainty : string list;
   mutable last_instruction : instruction option;
 }
 
 let create ~run_id ~origin_at = { run_id; origin_at; reversed_events=[];
-  instruction_count=0; file_event_count=0; mismatch_count=0; frames=[];
+  instruction_count=0; file_event_count=0; mismatch_count=0;hardware_return_count=0;frames=[];
+  software_continuation_count=0;guest_write_bytes=Hashtbl.create 257;
   recent_transfers=[]; uncertainty=[]; last_instruction=None }
 let push t event = t.reversed_events <- event :: t.reversed_events
 let origin_for t ~pc ~fetched = t.origin_at ~pc ~fetched
@@ -50,6 +63,40 @@ let target_origin t pc = origin_for t ~pc ~fetched:Bytes.empty
 
 let is_transfer = function I8080.Step.Sequential | Halt -> false | _ -> true
 let sequential_address pc bytes = (pc + Bytes.length bytes) land 0xffff
+let option_or_else value fallback = match value with Some _->value|None->fallback()
+
+let stack_byte address writes = List.find_opt (fun (w:memory_read) -> w.address=address) writes
+let consumed_word i =
+  let low=(stack_byte i.sp_before i.reads) and high=(stack_byte ((i.sp_before+1) land 0xffff) i.reads) in
+  match low,high with
+  |Some low,Some high->Some(low.value lor (high.value lsl 8))
+  |_->None
+let remove_hardware_frame frames call_step =
+  let rec loop acc = function
+    |[]->None,frames
+    |tracked::rest when tracked.frame.call_step=call_step->Some tracked,List.rev_append acc rest
+    |frame::rest->loop(frame::acc)rest in
+  loop [] frames
+let hardware_frame_at t i target =
+  let slot=i.sp_before in
+  List.find_opt (fun tracked -> let frame=tracked.frame in
+    frame.stack_slot=slot && frame.return_address=target && consumed_word i=Some target &&
+    match Hashtbl.find_opt t.guest_write_bytes slot,
+          Hashtbl.find_opt t.guest_write_bytes ((slot+1) land 0xffff) with
+    |Some low,Some high -> low.writer_step=frame.call_step && high.writer_step=frame.call_step &&
+      low.written_value=(target land 0xff) && high.written_value=(target lsr 8)
+    |_->false) t.frames
+let software_continuation_at t i target =
+  match consumed_word i with
+  |Some word when word=target ->
+      (match Hashtbl.find_opt t.guest_write_bytes i.sp_before,
+             Hashtbl.find_opt t.guest_write_bytes ((i.sp_before+1) land 0xffff) with
+       |Some low,Some high when low.written_value=(word land 0xff) &&
+           high.written_value=(word lsr 8) -> Some {stack_slot=i.sp_before;return_address=target;
+          low_byte_writer=low;high_byte_writer=high;consumed_step=i.step_index;
+          consumer_pc=i.pc;consumer_origin=i.origin}
+       |_->None)
+  |_->None
 
 let observe_step t ~step_index ~before ~after step =
   let mismatch = ref None in
@@ -69,22 +116,59 @@ let observe_step t ~step_index ~before ~after step =
     disassembly=I8080.Instr_format.format (I8080.Step.decoded step).instr;
     source=I8080.Step.source step;before;after;reads=List.rev reads;writes=List.rev writes;
     flow=I8080.Step.control_flow step;sp_before=before.Runner.sp;sp_after=after.Runner.sp} in
+  (* Keep the latest concrete guest writer for each byte. This is deliberately
+     independent of whether a value resembles code: a later RET must consume
+     the exact two guest-written bytes before they can support a software
+     continuation classification. *)
+  List.iter (fun (w:memory_write)->Hashtbl.replace t.guest_write_bytes w.address
+    {writer_step=step_index;writer_pc=pc;writer_origin=origin;
+     writer_disassembly=instruction.disassembly;written_value=w.new_value}) instruction.writes;
+  let hardware_call = match instruction.flow with
+    |I8080.Step.Call {target;taken=true}->Some (Call_frame,target)
+    |I8080.Step.Restart {target}->Some (Restart_frame,target)
+    |_->None in
+  (match hardware_call with
+   |Some (hardware_transfer,target)->
+       let return_address=sequential_address pc bytes and stack_slot=after.Runner.sp in
+       let frame={hardware_transfer;call_step=step_index;callsite=origin;call_pc=pc;return_address;stack_slot;
+         target_pc=target;target=target_origin t target} in
+       t.frames <- {frame;caller_uncertainty=t.uncertainty}::t.frames
+   |None->());
+  let software_return=ref None in
+  let hardware_return=ref None in
   (match instruction.flow with
-   |I8080.Step.Call {target;taken=true}|I8080.Step.Restart {target}->
-       t.frames <- {call_step=step_index;callsite=origin;call_pc=pc;
-         return_address=sequential_address pc bytes;target_pc=target;target=target_origin t target}::t.frames
-   |I8080.Step.Return {target; taken=true}->
-       (match t.frames with
-        |frame::rest when target=Some frame.return_address -> t.frames<-rest
-        |frame::rest ->
-            t.mismatch_count<-t.mismatch_count+1;
-            mismatch:=Some (target,Some frame);
-            let detail=Printf.sprintf "return target %s at step %d did not match expected %04X from call step %d"
-              (Option.fold ~none:"unknown" ~some:(Printf.sprintf "%04X") target) step_index frame.return_address frame.call_step in
-            if t.uncertainty=[] then t.uncertainty<-[detail];
-            (* The observed RET consumes one active frame; ownership after a
-               mismatch remains explicitly uncertain. *) t.frames<-rest
-        |[]->t.mismatch_count<-t.mismatch_count+1;mismatch:=Some(target,None);if t.uncertainty=[] then t.uncertainty<-[Printf.sprintf "return at step %d has no observed active CALL frame" step_index])
+   |I8080.Step.Return {target=Some target;taken=true}->
+       (match hardware_frame_at t instruction target with
+        |Some tracked->
+            let removed,remaining=remove_hardware_frame t.frames tracked.frame.call_step in
+            (match removed with Some _->t.frames<-remaining|None->assert false);
+            hardware_return:=Some tracked.frame;
+            t.hardware_return_count<-t.hardware_return_count+1;
+            (* A return to a specifically observed CALL/RST slot resynchronizes
+               caller certainty to the certainty captured at that frame. *)
+            t.uncertainty<-tracked.caller_uncertainty
+        |None->
+            (match software_continuation_at t instruction target with
+             |Some continuation->software_return:=Some continuation;t.software_continuation_count<-t.software_continuation_count+1
+             |None->
+                 t.mismatch_count<-t.mismatch_count+1;
+                 let expected_tracked=option_or_else
+                   (List.find_opt(fun f->f.frame.stack_slot=instruction.sp_before)t.frames)
+                   (fun()->List.nth_opt t.frames 0) in
+                 let expected_frame=Option.map(fun f->f.frame)expected_tracked in
+                 mismatch:=Some(Some target,expected_frame);
+                 let detail=Printf.sprintf "return target %04X at step %d did not consume a verified hardware CALL/RST slot or guest-written continuation word at SP=%04X%s"
+                   target step_index instruction.sp_before
+                   (Option.fold ~none:"" ~some:(fun f->Printf.sprintf "; outstanding frame from call step %d expects %04X at SP=%04X" f.call_step f.return_address f.stack_slot)expected_frame) in
+                 if t.uncertainty=[] then t.uncertainty<-[detail]))
+   |I8080.Step.Return {target=None;taken=true}->
+       t.mismatch_count<-t.mismatch_count+1;
+       let expected_tracked=option_or_else
+         (List.find_opt(fun f->f.frame.stack_slot=instruction.sp_before)t.frames)
+         (fun()->List.nth_opt t.frames 0) in
+       let expected_frame=Option.map(fun f->f.frame)expected_tracked in
+       mismatch:=Some(None,expected_frame);
+       if t.uncertainty=[] then t.uncertainty<-[Printf.sprintf "return at step %d has unknown target and no verified consumed frame at SP=%04X" step_index instruction.sp_before]
    |_ -> ());
   if is_transfer instruction.flow then (
     t.recent_transfers <- instruction :: t.recent_transfers;
@@ -92,7 +176,9 @@ let observe_step t ~step_index ~before ~after step =
   t.last_instruction<-Some instruction;
   t.instruction_count<-t.instruction_count+1;
   push t (Instruction instruction);
-  Option.iter(fun(observed_target,expected_frame)->push t(Call_mismatch{step_index;observed_target;expected_frame}))!mismatch
+  Option.iter(fun(observed_target,expected_frame)->push t(Call_mismatch{step_index;observed_target;expected_frame}))!mismatch;
+  Option.iter(fun frame->push t(Hardware_frame_return{step_index;frame}))!hardware_return;
+  Option.iter(fun continuation->push t(Software_continuation_return continuation))!software_return
 
 let observe_bdos_call t ~step_index ~state ~dma ~read_memory =
   let function_number=state.Runner.c in
@@ -102,16 +188,21 @@ let observe_bdos_call t ~step_index ~state ~dma ~read_memory =
   push t (Bdos_call {step_index;function_number;state;dma;fcb_address;fcb_bytes;
     bridge_step=Option.map(fun i->i.step_index)t.last_instruction;
     bridge_origin=Option.bind t.last_instruction (fun i->i.origin);
-    frames=t.frames;recent_transfers=List.rev t.recent_transfers;certainty})
+    frames=List.map(fun x->x.frame)t.frames;recent_transfers=List.rev t.recent_transfers;certainty})
 
 let observe_bdos_record t ~step_index = function
-  |Cpm.Bdos.Read_record {file;logical_record;dma;data}->push t(Bdos_record{step_index;operation="read_record";file;logical_record;dma;data})
+  |Cpm.Bdos.Read_record {file;logical_record;dma;data}->
+      Bytes.iteri(fun i _->Hashtbl.remove t.guest_write_bytes ((dma+i)land 0xffff))data;
+      push t(Bdos_record{step_index;operation="read_record";file;logical_record;dma;data})
   |Write_record {file;logical_record;dma;data}->push t(Bdos_record{step_index;operation="write_record";file;logical_record;dma;data})
 let observe_file_operation t ~step_index (event:Cpm.Bdos.file_event) =
   t.file_event_count<-t.file_event_count+1;
   let operation=match event.operation with Open->"open"|Close->"close"|Make->"make"|Delete->"delete"|Sequential_read->"sequential_read"|Sequential_write->"sequential_write" in
   push t(File_operation{step_index;operation;file=event.file;succeeded=event.succeeded;logical_record=event.logical_record})
 let observe_host_effect t ~step_index detail=
+  (match detail with
+   |Cpm.Bdos.Memory_write{address;_}->Hashtbl.remove t.guest_write_bytes (address land 0xffff)
+   |Register_write _->());
   let old_value=match detail with
     |Cpm.Bdos.Register_write{register;_}->
         let state=List.find_map(function Bdos_call e when e.step_index=step_index->Some e.state|_->None)t.reversed_events in
@@ -130,6 +221,8 @@ let events t=List.rev t.reversed_events
 let instruction_count t=t.instruction_count
 let file_event_count t=t.file_event_count
 let transfer_mismatch_count t=t.mismatch_count
+let hardware_return_count t=t.hardware_return_count
+let software_continuation_count t=t.software_continuation_count
 
 let quote s =
   let b=Buffer.create(String.length s+8) in Buffer.add_char b '"';
@@ -155,7 +248,13 @@ let instruction_json i=
   let return_address=match i.flow with I8080.Step.Call{taken=true;_}|Restart _->Some(sequential_address i.pc i.bytes)|_->None in
   Printf.sprintf"{\"step_index\":%d,\"pc\":%d,\"pc_after\":%d,\"origin\":%s,\"target_origin\":%s,\"runtime_pc\":%d,\"bytes\":%s,\"disassembly\":%s,\"source\":%s,\"before\":%s,\"after\":%s,\"sp_before\":%d,\"sp_after\":%d,\"call_return_address\":%s,\"reads\":[%s],\"writes\":[%s],\"control\":%s}"
     i.step_index i.pc i.pc_after(origin_json i.origin)(origin_json i.target_origin)i.runtime_pc(quote(bytes_hex i.bytes))(quote i.disassembly)(quote source)(snapshot_json i.before)(snapshot_json i.after)i.sp_before i.sp_after(opt_int return_address)reads writes(flow_json i.flow)
-let frame_json f=Printf.sprintf"{\"call_step\":%d,\"call_pc\":%d,\"callsite\":%s,\"return_address\":%d,\"target_pc\":%d,\"target\":%s}"f.call_step f.call_pc(origin_json f.callsite)f.return_address f.target_pc(origin_json f.target)
+let frame_json f=let kind=match f.hardware_transfer with Call_frame->"hardware_call"|Restart_frame->"hardware_restart" in
+  Printf.sprintf"{\"kind\":%s,\"call_step\":%d,\"call_pc\":%d,\"callsite\":%s,\"return_address\":%d,\"stack_slot\":%d,\"target_pc\":%d,\"target\":%s}"
+    (quote kind)f.call_step f.call_pc(origin_json f.callsite)f.return_address f.stack_slot f.target_pc(origin_json f.target)
+let written_byte_json w=Printf.sprintf"{\"step\":%d,\"pc\":%d,\"origin\":%s,\"instruction\":%s,\"value\":%d}"
+  w.writer_step w.writer_pc(origin_json w.writer_origin)(quote w.writer_disassembly)w.written_value
+let software_continuation_json c=Printf.sprintf"{\"type\":\"software_continuation_return\",\"step_index\":%d,\"stack_slot\":%d,\"return_address\":%d,\"low_byte_writer\":%s,\"high_byte_writer\":%s,\"consumer_pc\":%d,\"consumer_origin\":%s}"
+  c.consumed_step c.stack_slot c.return_address(written_byte_json c.low_byte_writer)(written_byte_json c.high_byte_writer)c.consumer_pc(origin_json c.consumer_origin)
 let event_json=function
  |Instruction i->"{\"type\":\"instruction\",\"witness\":"^instruction_json i^"}"
  |Bdos_call e->let frames=String.concat","(List.map frame_json e.frames)and recent=String.concat","(List.map instruction_json e.recent_transfers)in
@@ -171,10 +270,12 @@ let event_json=function
    Printf.sprintf"{\"type\":\"host_effect\",\"step_index\":%d,\"effect\":%s}"e.step_index effect_json
  |Bdos_resume e->Printf.sprintf"{\"type\":\"bdos_resume\",\"step_index\":%d,\"state\":%s}"e.step_index(snapshot_json e.state)
  |Call_mismatch e->Printf.sprintf"{\"type\":\"call_context_mismatch\",\"step_index\":%d,\"observed_return_target\":%s,\"expected_frame\":%s}"e.step_index(opt_int e.observed_target)(Option.fold ~none:"null" ~some:frame_json e.expected_frame)
+ |Hardware_frame_return e->Printf.sprintf"{\"type\":\"hardware_frame_return\",\"step_index\":%d,\"frame\":%s}"e.step_index(frame_json e.frame)
+ |Software_continuation_return e->software_continuation_json e
  |Termination e->Printf.sprintf"{\"type\":\"termination\",\"step_index\":%d,\"reason\":%s}"e.step_index(quote e.reason)
 let write_json ~output t=
   output"RUNES_EVENT_WITNESSES 1\n{\"run_id\":";output(quote t.run_id);
-  Printf.ksprintf output ",\"summary\":{\"instruction_witnesses\":%d,\"file_events\":%d,\"transfer_mismatches\":%d},\"events\":[" t.instruction_count t.file_event_count t.mismatch_count;
+  Printf.ksprintf output ",\"summary\":{\"instruction_witnesses\":%d,\"file_events\":%d,\"transfer_mismatches\":%d,\"hardware_frame_returns\":%d,\"software_continuation_returns\":%d},\"events\":[" t.instruction_count t.file_event_count t.mismatch_count t.hardware_return_count t.software_continuation_count;
   List.iteri(fun i event->if i>0 then output",";output(event_json event))(events t);
   output"]}\n"
 
@@ -207,8 +308,8 @@ let write_chunked_json ~chunk_size ~write_chunk ~write_index t =
     write_chunk chunk_id (Printf.sprintf "RUNES_EVENT_WITNESS_CHUNK 1\n{\"run_id\":%s,\"chunk_id\":%d,\"events\":[%s]}\n" (quote t.run_id) chunk_id body)) chunks;
   let b = Buffer.create 8192 and add = Buffer.add_string in
   add b "RUNES_EVENT_WITNESSES 1\n{\"run_id\":"; add b (quote t.run_id);
-  Printf.bprintf b ",\"encoding\":\"chronological-chunks\",\"chunk_prefix\":\"event-witnesses/chunks/\",\"summary\":{\"instruction_witnesses\":%d,\"file_events\":%d,\"transfer_mismatches\":%d},\"chunks\":["
-    t.instruction_count t.file_event_count t.mismatch_count;
+  Printf.bprintf b ",\"encoding\":\"chronological-chunks\",\"chunk_prefix\":\"event-witnesses/chunks/\",\"summary\":{\"instruction_witnesses\":%d,\"file_events\":%d,\"transfer_mismatches\":%d,\"hardware_frame_returns\":%d,\"software_continuation_returns\":%d},\"chunks\":["
+    t.instruction_count t.file_event_count t.mismatch_count t.hardware_return_count t.software_continuation_count;
   List.iteri (fun index (chunk_id,items) -> if index>0 then add b ",";
     Printf.bprintf b "{\"id\":%d,\"event_count\":%d}" chunk_id (List.length items)) chunks;
   add b "],\"instruction_index\":[";
