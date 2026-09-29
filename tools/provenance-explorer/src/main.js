@@ -334,8 +334,32 @@ function renderStructureTimeline(routines){
   }
   const groups=[...groupsByImage.values()].sort((a,b)=>
     (a.firstStep??Number.MAX_SAFE_INTEGER)-(b.firstStep??Number.MAX_SAFE_INTEGER)||a.imageName.localeCompare(b.imageName));
+  const runEnd=Number(report.execution.execution_summary?.total);
+  const imageLandmarks=(report.execution.images??[]).filter(image=>image.first_execution_step!=null).map(image=>{
+    const imageName=image.id?.name??image.display_name;
+    const entry=structureReport.narrative.find(edge=>edge.kind==="IMAGE_ENTRY"&&
+      structureReport.routines.find(routine=>routine.id===edge.to)?.image?.name===imageName);
+    return {image:imageName,step:image.first_execution_step,entry_kind:entry?.kind??(image.first_execution_step===0?"PROGRAM_ENTRY":"FIRST_EXECUTION"),routine_id:entry?.to??null};
+  });
+  const imageReads=(report.execution.images??[]).filter(image=>image.first_record_read_step!=null&&image.last_record_read_step!=null)
+    .map(image=>({image:image.id?.name??image.display_name,start:image.first_record_read_step,end:image.last_record_read_step}));
+  const writesByStep=new Map();
+  for(const byte of report.output_bytes??[])if(Number.isFinite(byte.write_step)){
+    const offsets=writesByStep.get(byte.write_step)??[];offsets.push(byte.offset);writesByStep.set(byte.write_step,offsets);
+  }
+  const outputWrites=[];
+  for(const [step,offsets] of writesByStep){
+    offsets.sort((a,b)=>a-b);let first=null,last=null;
+    for(const offset of offsets){if(first==null){first=last=offset}else if(offset===last+1)last=offset;else{outputWrites.push({step,first,last});first=last=offset}}
+    if(first!=null)outputWrites.push({step,first,last});
+  }
+  outputWrites.sort((a,b)=>a.step-b.step||a.first-b.first);
   const stepEnds=routines.flatMap(r=>[r.first_step,r.last_step]).filter(Number.isFinite);
   for(const transition of structureReport.transitions??[])for(const step of [transition.first_step,transition.last_step])if(Number.isFinite(step))stepEnds.push(step);
+  for(const image of imageLandmarks)stepEnds.push(image.step);
+  for(const read of imageReads)stepEnds.push(read.start,read.end);
+  for(const write of outputWrites)stepEnds.push(write.step);
+  if(Number.isFinite(runEnd))stepEnds.push(runEnd);
   const axisStart=0,axisEnd=Math.max(1,...stepEnds),width=1120,left=280,right=910,plotWidth=right-left;
   const label=(text,attrs={})=>{const node=document.createElementNS(timelineSvgNamespace,"text");node.textContent=text;for(const [name,value] of Object.entries(attrs))node.setAttribute(name,String(value));return node};
   const axis=document.querySelector("#structure-timeline-axis");axis.replaceChildren();
@@ -349,6 +373,55 @@ function renderStructureTimeline(routines){
     axisSvg.append(label(step.toLocaleString("en-US"),{x,y:35,class:"timeline-tick","text-anchor":i===0?"start":i===4?"end":"middle"}));
   }
   axis.append(axisSvg);
+  const landmarkRoot=document.querySelector("#structure-landmark-lane");landmarkRoot.replaceChildren();
+  const landmarkSvg=document.createElementNS(timelineSvgNamespace,"svg");landmarkSvg.setAttribute("viewBox",`0 0 ${width} 132`);landmarkSvg.setAttribute("role","group");landmarkSvg.setAttribute("aria-label","Factual image reads, first executions, output writes, and run boundaries on the execution-step axis");
+  const xFor=step=>left+plotWidth*step/axisEnd;
+  for(let i=0;i<=4;i++){const x=left+plotWidth*i/4;const line=document.createElementNS(timelineSvgNamespace,"line");line.setAttribute("x1",String(x));line.setAttribute("x2",String(x));line.setAttribute("y1","4");line.setAttribute("y2","126");line.setAttribute("class","landmark-gridline");landmarkSvg.append(line)}
+  const detail=document.querySelector("#structure-landmark-detail");
+  const addInteractive=(kind,description,draw,metadata={})=>{
+    const group=document.createElementNS(timelineSvgNamespace,"g");group.classList.add("timeline-landmark",`landmark-${kind}`);group.dataset.landmarkKind=kind;group.setAttribute("tabindex","0");group.setAttribute("role","button");group.setAttribute("aria-label",description);
+    for(const [name,value] of Object.entries(metadata))group.dataset[name]=String(value);
+    const title=document.createElementNS(timelineSvgNamespace,"title");title.textContent=description;group.append(title);draw(group);
+    const show=()=>{detail.textContent=description};group.addEventListener("mouseenter",show);group.addEventListener("focus",show);group.addEventListener("click",show);group.addEventListener("keydown",event=>{if(event.key==="Enter"||event.key===" "){event.preventDefault();show()}});landmarkSvg.append(group);return group;
+  };
+  const rowLabel=(text,y)=>landmarkSvg.append(label(text,{x:8,y:y+4,class:"landmark-row-label"}));
+  const imageNames=new Set([...imageReads.map(x=>x.image),...imageLandmarks.filter(x=>x.step>0).map(x=>x.image)]);
+  const orderedImages=[...imageNames].sort((a,b)=>{
+    const ai=imageReads.find(x=>x.image===a)?.start??imageLandmarks.find(x=>x.image===a)?.step??0;
+    const bi=imageReads.find(x=>x.image===b)?.start??imageLandmarks.find(x=>x.image===b)?.step??0;return ai-bi||a.localeCompare(b);
+  });
+  const rowGap=20,firstImageY=13;
+  orderedImages.forEach((imageName,index)=>{
+    const y=firstImageY+index*rowGap;rowLabel(`read ${imageName}`,y);
+    const read=imageReads.find(x=>x.image===imageName);
+    if(read){const x1=xFor(read.start),x2=xFor(read.end),intervalDescription=`Image loading · successful record-read interval · ${imageName} · steps ${read.start.toLocaleString("en-US")}–${read.end.toLocaleString("en-US")}`;
+      addInteractive("io",intervalDescription,g=>{const bar=document.createElementNS(timelineSvgNamespace,"rect");bar.setAttribute("x",String(x1));bar.setAttribute("y",String(y-3));bar.setAttribute("width",String(Math.max(1,x2-x1)));bar.setAttribute("height","6");bar.setAttribute("rx","2");bar.setAttribute("class","landmark-read-bar");g.append(bar);for(const x of [x1,x2]){const cap=document.createElementNS(timelineSvgNamespace,"line");cap.setAttribute("x1",String(x));cap.setAttribute("x2",String(x));cap.setAttribute("y1",String(y-5));cap.setAttribute("y2",String(y+5));cap.setAttribute("class","landmark-read-cap");g.append(cap)}},{image:imageName,start:read.start,end:read.end});
+    }
+    const execution=imageLandmarks.find(x=>x.image===imageName);
+    if(execution){const routine=execution.routine_id==null?null:structureReport.routines.find(x=>x.id===execution.routine_id);const step=execution.step;
+      const description=`Image execution · ${execution.entry_kind=== "IMAGE_ENTRY"?"IMAGE_ENTRY / first observed execution":"first observed execution"} · ${imageName} · step ${step.toLocaleString("en-US")}${routine?` · ${routine.display}`:""}`;
+      addInteractive("entry",description,g=>{const x=xFor(step),diamond=document.createElementNS(timelineSvgNamespace,"path");diamond.setAttribute("d",`M ${x} ${y+1} l 5 5 l -5 5 l -5 -5 Z`);diamond.setAttribute("class","landmark-entry-marker");g.append(diamond)},{image:imageName,step,routineId:execution.routine_id??""});
+    }
+  });
+  const writesY=firstImageY+orderedImages.length*rowGap+2;rowLabel(`write ${report.output_file.name}`,writesY);
+  for(const write of outputWrites){
+    const range=`+${write.first.toString(16).toUpperCase().padStart(4,"0")}h–+${write.last.toString(16).toUpperCase().padStart(4,"0")}h`;
+    const description=`Output record write · ${report.output_file.name} · byte range ${range} · step ${write.step.toLocaleString("en-US")}`;
+    addInteractive("write",description,g=>{const x=xFor(write.step),line=document.createElementNS(timelineSvgNamespace,"line");line.setAttribute("x1",String(x));line.setAttribute("x2",String(x));line.setAttribute("y1",String(writesY-5));line.setAttribute("y2",String(writesY+5));line.setAttribute("class","landmark-write-marker");g.append(line);const square=document.createElementNS(timelineSvgNamespace,"rect");square.setAttribute("x",String(x-3));square.setAttribute("y",String(writesY-3));square.setAttribute("width","6");square.setAttribute("height","6");square.setAttribute("class","landmark-write-square");g.append(square)},{step:write.step,firstOffset:write.first,lastOffset:write.last});
+  }
+  const boundaryY=writesY+rowGap;rowLabel("run boundaries",boundaryY);
+  const startDescription=`Execution start · step ${axisStart.toLocaleString("en-US")} · PLI.COM first observed execution`;
+  addInteractive("boundary",startDescription,g=>{const x=xFor(axisStart),line=document.createElementNS(timelineSvgNamespace,"line");line.setAttribute("x1",String(x));line.setAttribute("x2",String(x));line.setAttribute("y1",String(boundaryY-6));line.setAttribute("y2",String(boundaryY+6));line.setAttribute("class","landmark-start-marker");g.append(line)},{step:axisStart,boundary:"start"});
+  const initialImage=imageLandmarks.find(image=>image.step===axisStart);
+  if(initialImage){const description=`Image execution · program entry / first observed execution · ${initialImage.image} · step ${axisStart.toLocaleString("en-US")}`;
+    addInteractive("entry",description,g=>{const x=xFor(axisStart),circle=document.createElementNS(timelineSvgNamespace,"circle");circle.setAttribute("cx",String(x));circle.setAttribute("cy",String(boundaryY-7));circle.setAttribute("r","4");circle.setAttribute("class","landmark-entry-marker");g.append(circle)},{image:initialImage.image,step:axisStart,routineId:initialImage.routine_id??""});
+  }
+  if(Number.isFinite(runEnd)){const endDescription=`Run end · execution-summary step boundary ${runEnd.toLocaleString("en-US")} · termination reason is not present in the loaded report`;
+    addInteractive("boundary",endDescription,g=>{const x=xFor(runEnd),line=document.createElementNS(timelineSvgNamespace,"line");line.setAttribute("x1",String(x));line.setAttribute("x2",String(x));line.setAttribute("y1",String(boundaryY-6));line.setAttribute("y2",String(boundaryY+6));line.setAttribute("class","landmark-end-marker");g.append(line)},{step:runEnd,boundary:"end"});
+  }
+  landmarkRoot.append(landmarkSvg);
+  const laneHeight=boundaryY+14;landmarkSvg.setAttribute("viewBox",`0 0 ${width} ${laneHeight}`);
+  window.__structureLandmarkFacts={axisEnd,reads:imageReads,entries:imageLandmarks,writes:outputWrites,run_start:axisStart,run_end:Number.isFinite(runEnd)?runEnd:null};
   const progression=document.querySelector("#structure-timeline-progression");progression.replaceChildren();
   progression.append(document.createTextNode("First observed image appearances: "));
   const observedGroups=groups.filter(group=>group.firstStep!=null);
