@@ -5,7 +5,7 @@ import "@perspective-dev/viewer/themes";
 import serverWasm from "@perspective-dev/server/dist/wasm/perspective-server.wasm?url";
 import viewerWasm from "@perspective-dev/viewer/dist/wasm/perspective-viewer.wasm?url";
 import { Graph } from "@antv/g6";
-import { adjacentInstructions, coordinateEvidence, parseCodeCoordinate } from "./code_evidence.js";
+import { adjacentInstructions, coordinateEvidence, indexedFileEventChunks, parseCodeCoordinate, selectInstructionWitnesses, witnessChunkIds } from "./code_evidence.js";
 import "./style.css";
 import "./code_evidence.css";
 
@@ -43,6 +43,9 @@ if (manifest.codeEvidence) {
   if (payload.schema !== "RUNES_CODE_EVIDENCE 1") throw new Error("Unsupported code evidence index version");
   codeEvidence = payload.runs ?? [];
 }
+const eventWitnessSources = manifest.eventWitnesses ?? [];
+const eventWitnessCache = new Map();
+const eventWitnessChunkCache = new Map();
 document.querySelector("#structure-view").hidden = !hasStructure;
 document.querySelector("#structure-missing").hidden = true;
 document.querySelector("#tab-structure").hidden = !hasStructure;
@@ -604,6 +607,7 @@ function renderCodeEvidence(){
     status.textContent=present?`${image}+${formatOffset(offset)} · ${dataImageIdentity(image)} · ${shown} contiguous observed instruction starts shown. Code identity is checked against exact bytes.`:`${image}+${formatOffset(offset)} was not observed in these runs.`;
     document.querySelector("#code-summary").textContent=`${codeEvidence.length} runs · ${offsets.length.toLocaleString("en-US")} observed instruction coordinates in ${image}`;
     renderSelected(image,offset);
+    void renderWitnesses(image,offset);
     window.__codeEvidenceNavigation={image,offset,listed:shown,observed:present};
   }
   function dataImageIdentity(name){
@@ -654,6 +658,71 @@ function renderCodeEvidence(){
       selectedEvidence.append(panel);
     }
     window.__selectedCodeCoordinate={image,offset,variants:coordinate.variants.map(x=>x.bytes),observed:coordinate.observations.map(x=>Boolean(x.instruction))};
+  }
+  const stateText=s=>`A=${hexValue(s.a,2)} BC=${hexValue((s.b<<8)|s.c,4)} DE=${hexValue((s.d<<8)|s.e,4)} HL=${hexValue((s.h<<8)|s.l,4)} SP=${hexValue(s.sp,4)} PC=${hexValue(s.pc,4)} flags S/Z/AC/P/CY=${[s.flags.sign,s.flags.zero,s.flags.auxiliary_carry,s.flags.parity,s.flags.carry].map(Number).join("")}`;
+  function witnessText(w){
+    const accesses=[...(w.reads??[]).map(x=>`read ${hexValue(x.address,4)}=${hexValue(x.value,2)}`),...(w.writes??[]).map(x=>`write ${hexValue(x.address,4)}=${hexValue(x.new_value,2)} (old ${x.old_value==null?"unavailable":hexValue(x.old_value,2)})`)];
+    return `step ${formatCount(w.step_index)} · ${w.origin?`${w.origin.image.name}+${formatOffset(w.origin.offset)}`:"unresolved origin"} @${hexValue(w.runtime_pc,4)} · ${w.bytes} ${w.disassembly}\npre  ${stateText(w.before)}\npost ${stateText(w.after)}\nSP ${hexValue(w.sp_before,4)} → ${hexValue(w.sp_after,4)} · ${JSON.stringify(w.control)}${accesses.length?`\n${accesses.join("; ")}`:""}`;
+  }
+  function showFileEvents(source,index){
+    const root=document.querySelector("#event-file-operations"),section=document.createElement("div");section.className="witness-file-run";
+    const heading=document.createElement("strong");heading.textContent=`${source.label} · OBSERVED BDOS file/record events`;section.append(heading);
+    const rows=index.file_events??[];
+    for(const event of rows){
+      const button=document.createElement("button");button.type="button";button.className="witness-event-link";
+      const range=event.byte_range==null?"":` · bytes ${hexValue(event.byte_range[0],4)}–${hexValue(event.byte_range[1],4)}`;
+      button.textContent=`step ${formatCount(event.step_index)} · ${event.operation} ${event.file.name} · ${event.succeeded?"succeeded":"failed"}${event.record==null?"":` record ${event.record}`}${range}`;
+      const originNode=document.createElement("small");originNode.className="witness-context";originNode.textContent="Select to load exact BDOS-entry and caller context.";
+      const transferDetails=document.createElement("details"),transferSummary=document.createElement("summary"),transferList=document.createElement("ol");transferDetails.className="witness-transfer-context";transferSummary.textContent="OBSERVED preceding control transfers";transferDetails.append(transferSummary,transferList);
+      button.addEventListener("click",async()=>{
+        const chunks=indexedFileEventChunks(event);
+        const loaded=await Promise.all(chunks.map(id=>loadWitnessChunk(source,index,id)));
+        const call=loaded.flatMap(x=>x.events).find(x=>x.type==="bdos_call"&&x.step_index===event.step_index);
+        if(!call){originNode.textContent="BDOS-entry context was not present in the indexed chunk(s).";return}
+        const reasons=call.call_context.reasons?.length?` · ${call.call_context.reasons.join(" | ")}`:"";
+        originNode.textContent=`OBSERVED BDOS function ${hexValue(call.function,2)} · ${stateText(call.state)} · DMA=${hexValue(call.dma,4)} · FCB=${call.fcb_address==null?"—":hexValue(call.fcb_address,4)}${call.fcb_bytes?` bytes=${call.fcb_bytes}`:""} · DEDUCED CALL frames ${call.frames.map(f=>`${f.callsite?`${f.callsite.image.name}+${formatOffset(f.callsite.offset)}`:hexValue(f.call_pc,4)} → ${hexValue(f.target_pc,4)}`).join(" / ")||"none"} · ${call.call_context.status}${reasons}`;
+        transferList.replaceChildren();
+        for(const transfer of call.recent_transfers??[]){const item=document.createElement("li"),w=transfer.witness??transfer,flow=w.control??{};item.textContent=`step ${formatCount(w.step_index)} · ${w.origin?`${w.origin.image.name}+${formatOffset(w.origin.offset)}`:"unresolved origin"} @${hexValue(w.runtime_pc,4)} ${w.disassembly} · ${flow.kind??"transfer"}${flow.target==null?"":` → ${hexValue(flow.target,4)}`}${flow.taken===false?" (not taken)":""}`;transferList.append(item)}
+        transferSummary.textContent=`OBSERVED preceding control transfers (${transferList.children.length}, bounded)`;transferDetails.open=true;
+        if(call.bridge_origin)selectCoordinate(call.bridge_origin.image.name,call.bridge_origin.offset);
+      });
+      section.append(button);
+      section.append(originNode,transferDetails)
+    }
+    if(!rows.length){const empty=document.createElement("p");empty.textContent="No BDOS file events are present in this run.";section.append(empty)}
+    root.append(section);
+  }
+  async function getEventWitness(source){
+    if(eventWitnessCache.has(source.label))return eventWitnessCache.get(source.label);
+    const text=await fetch(new URL(source.file,window.location.href)).then(async r=>{if(!r.ok)throw new Error(`Witness report fetch failed for ${source.label}`);return r.text()});
+    const newline=text.indexOf("\n");if(text.slice(0,newline)!=="RUNES_EVENT_WITNESSES 1")throw new Error(`Unsupported event witness schema for ${source.label}`);
+    const report=JSON.parse(text.slice(newline+1));if(report.encoding!=="chronological-chunks")throw new Error(`Unsupported event witness encoding for ${source.label}`);eventWitnessCache.set(source.label,report);showFileEvents(source,report);return report;
+  }
+  async function loadWitnessChunk(source,index,id){
+    const key=`${source.label}:${id}`;if(eventWitnessChunkCache.has(key))return eventWitnessChunkCache.get(key);
+    const url=new URL(`${index.chunk_prefix}${String(id).padStart(6,"0")}.json`,new URL(source.file,window.location.href));
+    const text=await fetch(url).then(async r=>{if(!r.ok)throw new Error(`Witness chunk ${id} failed for ${source.label}`);return r.text()});
+    const newline=text.indexOf("\n");if(text.slice(0,newline)!=="RUNES_EVENT_WITNESS_CHUNK 1")throw new Error(`Unsupported witness chunk ${id}`);
+    const chunk=JSON.parse(text.slice(newline+1));if(chunk.run_id!==index.run_id)throw new Error(`Witness chunk ${id} belongs to a different run`);eventWitnessChunkCache.set(key,chunk);return chunk;
+  }
+  async function renderWitnesses(image,offset){
+    const root=document.querySelector("#event-witness-status");root.replaceChildren();
+    if(!eventWitnessSources.length){root.textContent="No witness reports bundled. Generate with pli80-analyze --event-witnesses and pass --witness-run LABEL FILE to the bundle command.";return}
+    for(const source of eventWitnessSources){
+      const panel=document.createElement("article");panel.className="run-evidence";const heading=document.createElement("h4");heading.textContent=`${source.label} · loading indexed witness chunks…`;panel.append(heading);root.append(panel);
+      try{
+        const report=await getEventWitness(source);
+        const chunkIds=witnessChunkIds(report,image,offset);
+        const chunks=await Promise.all(chunkIds.map(id=>loadWitnessChunk(source,report,id)));
+        const witnesses=selectInstructionWitnesses(chunks,image,offset);
+        heading.textContent=`${source.label} · ${witnesses.length.toLocaleString("en-US")} OBSERVED executions at ${image}+${formatOffset(offset)}`;
+        if(!witnesses.length){const p=document.createElement("p");p.textContent="No event-time witness at this canonical instruction in this run.";panel.append(p);continue}
+        witnesses.slice(0,3).forEach(w=>{const pre=document.createElement("pre");pre.className="event-witness-sample";pre.textContent=witnessText(w);panel.append(pre)});
+        const browse=document.createElement("details"),summary=document.createElement("summary"),list=document.createElement("div"),controls=document.createElement("div");let page=0;const pageSize=100;
+        const draw=()=>{list.replaceChildren();for(const w of witnesses.slice(page*pageSize,(page+1)*pageSize)){const pre=document.createElement("pre");pre.className="event-witness-sample";pre.textContent=witnessText(w);list.append(pre)}summary.textContent=`Executions ${page*pageSize+1}–${Math.min(witnesses.length,(page+1)*pageSize)} of ${witnesses.length.toLocaleString("en-US")}`};
+        const previous=document.createElement("button"),next=document.createElement("button");previous.type=next.type="button";previous.textContent="Previous 100";next.textContent="Next 100";previous.addEventListener("click",()=>{page=Math.max(0,page-1);draw()});next.addEventListener("click",()=>{if((page+1)*pageSize<witnesses.length)page++;draw()});controls.append(previous,next);browse.append(summary,controls,list);draw();panel.append(browse);
+      }catch(error){heading.textContent=`${source.label} · could not load witness stream`;const p=document.createElement("p");p.textContent=String(error);panel.append(p)}
+    }
   }
   const parseCurrent=()=>{
     const parsed=parseCodeCoordinate(document.querySelector("#code-offset").value);

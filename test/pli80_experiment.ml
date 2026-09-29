@@ -50,7 +50,7 @@ let test_cli_options () =
   let module O=Pli80.Analyze_options in
   (match O.parse[] with Ok options->
     assert(options.oracle_fixture=None && options.max_steps=10_000_000 && options.analysis=Pli80.Experiment.Run);
-    assert(options.report=Pli80.Experiment.Summary && options.source_text=O.Cpm)
+    assert(options.report=Pli80.Experiment.Summary && options.source_text=O.Cpm && not options.event_witnesses)
    |Error _->assert false);
   (match O.parse["--oracle-fixture";"research/plm80-oracle/v4-four-byte-parameters"] with
    |Ok options->assert(options.oracle_fixture=Some"research/plm80-oracle/v4-four-byte-parameters")
@@ -66,6 +66,12 @@ let test_cli_options () =
   assert(match O.parse["--compare-oracle-fixtures";"fixture-a"] with Error _->true|_->false);
   assert(match O.parse["--oracle-fixture";"fixture";"--compare-oracle-fixtures";"a";"b"] with Error _->true|_->false);
   assert(match O.parse["--oracle-fixture";"fixture";"--source";"x.PLI"] with Error _->true|_->false);
+  (match O.parse["--analysis";"execution";"--event-witnesses"] with
+   |Ok options->assert(options.event_witnesses && options.analysis=Pli80.Experiment.Execution)
+   |Error _->assert false);
+  (match O.parse["--event-witnesses"] with
+   |Ok options->assert(options.event_witnesses && options.analysis=Pli80.Experiment.Run)
+   |Error _->assert false);
   (match O.parse["--analysis";"path";"--report";"explorer";"--source-text";"raw";
       "--structure";"--select-rel";"0x20";"--select-rel";"44";"--raw-slice";"0x2c0";"--raw-slice";"704";"--max-steps";"42"] with
    |Ok options->assert(options.analysis=Pli80.Experiment.Path && options.report=Pli80.Experiment.Explorer);

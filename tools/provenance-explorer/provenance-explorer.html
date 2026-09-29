@@ -28,6 +28,7 @@
         <section><h2>Canonical instruction evidence</h2><p>OBSERVED rows come from individual compiler runs. Image + file offset and matching bytes identify comparable code. Block partitions and RoutineCandidate assignments are run-local evidence, not procedure boundaries. Step numbers are never averaged.</p>
           <div class="code-evidence-toolbar"><label>Image <select id="code-image"></select></label><label>Offset <input id="code-offset" value="PLI.COM+0BDA" aria-label="Image plus hexadecimal offset"></label><button id="code-jump" type="button">Go</button><button id="code-previous" type="button">Previous observed instruction</button><button id="code-next" type="button">Next observed instruction</button><label>Range <input id="code-range-count" type="number" min="1" max="80" value="24"> instructions</label><span id="code-summary"></span></div>
           <div class="code-evidence-columns"><div><h3>8080 image code</h3><p id="code-coordinate-status"></p><ol id="code-listing" class="code-listing"></ol></div><div><h3>Run evidence</h3><div id="code-selected-evidence">Select an instruction.</div></div></div>
+          <section id="event-witness-section"><h3>Event-time execution witnesses</h3><p>OBSERVED states and accesses are kept in step order. Reconstructed CALL frames are marked DEDUCED; a mismatch makes subsequent context uncertain.</p><div id="event-file-operations"></div><div id="event-witness-status">No event-witness reports bundled.</div></section>
         </section>
       </div>
       <div id="low-level-view" hidden>

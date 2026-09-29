@@ -9,6 +9,7 @@ let bdos_entry_address Cpm22 = 0x0005
 let transient_stack_word_address Cpm22 = 0x0006
 let initial_stack_pointer Cpm22 = 0xfffe
 let maximum_command_tail_length Cpm22 = 127
+let dma Cpm22 process = Bdos.dma process.bdos
 
 let load_bytes Cpm22 = Loader.load_bytes
 let load_file Cpm22 = Loader.load_file

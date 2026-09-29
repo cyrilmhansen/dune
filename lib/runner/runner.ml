@@ -52,7 +52,7 @@ let completed_run ~termination ~steps ~t_states ~data_bytes_read ~data_bytes_wri
   { termination; steps; t_states; data_bytes_read; data_bytes_written;
     data_bytes_total = data_bytes_read + data_bytes_written }
 
-let run_loaded ~personality ~max_steps ~on_step ~on_step_state ~on_event ~on_bdos_event ~on_bdos_file_event ~on_bdos_effect ~on_start ~on_start_state ~on_console_output ~output ~filesystem ~command_tail memory loaded =
+let run_loaded ~personality ~max_steps ~on_step ~on_step_state ~on_step_state_pair ~on_event ~on_bdos_event ~on_bdos_file_event ~on_bdos_effect ~on_bdos_effect_at ~on_bdos_call_state ~on_bdos_resume ~on_start ~on_start_state ~on_console_output ~output ~filesystem ~command_tail memory loaded =
   let process = Cpm.Personality.launch personality ~filesystem ~command_tail memory in
   let state = I8080.State.create () in
   I8080.State.set_pc state (Cpm.Personality.entry_point personality loaded);
@@ -68,38 +68,47 @@ let run_loaded ~personality ~max_steps ~on_step ~on_step_state ~on_event ~on_bdo
             ~data_bytes_read ~data_bytes_written))
     else if I8080.State.pc state = Cpm.Personality.bdos_entry_address personality then
       let function_number = I8080.State.c state in
+      let dma = Cpm.Personality.dma personality process in
+      on_bdos_call_state ~step_index:steps ~state:(snapshot state) ~dma
+        ~read_memory:(fun address -> I8080.Memory.read memory (address land 0xffff));
       on_event
         (Bdos_call
            { step_index = steps; function_number; de = I8080.State.de state });
       (match Cpm.Personality.dispatch_with_file_events personality process
                ~on_event:(fun event -> on_bdos_event ~step_index:steps event)
                ~on_file_event:(fun event -> on_bdos_file_event ~step_index:steps event)
-               ~on_effect:on_bdos_effect
+               ~on_effect:(fun external_effect -> on_bdos_effect external_effect; on_bdos_effect_at ~step_index:steps external_effect)
                ~memory ~state ~output:(fun char -> output char; on_console_output ~step_index:steps char) with
       | Error error -> Error (Bdos_error error)
       | Ok Cpm.Bdos.Terminate ->
+          on_bdos_resume ~step_index:steps ~state:(snapshot state);
           let reason = Bdos_function function_number in
           on_event (Termination { step_index = steps; reason });
           Ok (completed_run ~termination:reason ~steps ~t_states
                 ~data_bytes_read ~data_bytes_written)
-      | Ok Cpm.Bdos.Continue -> execute_step steps t_states data_bytes_read data_bytes_written)
+      | Ok Cpm.Bdos.Continue ->
+          on_bdos_resume ~step_index:steps ~state:(snapshot state);
+          execute_step steps t_states data_bytes_read data_bytes_written)
     else execute_step steps t_states data_bytes_read data_bytes_written
   and execute_step steps t_states data_bytes_read data_bytes_written =
     if steps >= max_steps then Error (Step_limit_exceeded { max_steps; steps })
     else
+      let before = snapshot state in
       match I8080.Cpu.step cpu with
       | Error error -> Error (Cpu_error error)
       | Ok step ->
           let step_reads, step_writes = data_access_counts step in
           on_step step;
-          on_step_state ~step_index:steps (snapshot state) step;
+          let after = snapshot state in
+          on_step_state_pair ~step_index:steps ~before ~after step;
+          on_step_state ~step_index:steps after step;
           on_event (Step step);
           run (steps + 1) (t_states + I8080.Timing.cost step)
             (data_bytes_read + step_reads) (data_bytes_written + step_writes)
   in
   run 0 0 0 0
 
-let run_with_loader ~personality ~max_steps ~on_step ~on_step_state ~on_event ~on_bdos_event ~on_bdos_file_event ~on_bdos_effect ~on_start ~on_start_state ~on_console_output ~output ~filesystem ~command_tail load =
+let run_with_loader ~personality ~max_steps ~on_step ~on_step_state ~on_step_state_pair ~on_event ~on_bdos_event ~on_bdos_file_event ~on_bdos_effect ~on_bdos_effect_at ~on_bdos_call_state ~on_bdos_resume ~on_start ~on_start_state ~on_console_output ~output ~filesystem ~command_tail load =
   if max_steps <= 0 then Error (Invalid_step_limit max_steps)
   else if Bytes.length command_tail > Cpm.Personality.maximum_command_tail_length personality then Error (Invalid_command_tail (Bytes.length command_tail))
   else
@@ -108,28 +117,36 @@ let run_with_loader ~personality ~max_steps ~on_step ~on_step_state ~on_event ~o
     match load memory with
     | Error error -> Error (Load_error error)
     | Ok loaded ->
-        run_loaded ~personality ~max_steps ~on_step ~on_step_state ~on_event ~on_bdos_event ~on_bdos_file_event ~on_bdos_effect ~on_start ~on_start_state ~on_console_output ~output ~filesystem ~command_tail memory loaded
+        run_loaded ~personality ~max_steps ~on_step ~on_step_state ~on_step_state_pair ~on_event ~on_bdos_event ~on_bdos_file_event ~on_bdos_effect ~on_bdos_effect_at ~on_bdos_call_state ~on_bdos_resume ~on_start ~on_start_state ~on_console_output ~output ~filesystem ~command_tail memory loaded
 
 let run_bytes ?(personality = default_personality) ?(max_steps = default_max_steps) ?(on_step = fun _ -> ())
     ?(on_step_state = fun ~step_index:_ _ _ -> ())
+    ?(on_step_state_pair = fun ~step_index:_ ~before:_ ~after:_ _ -> ())
     ?(on_event = fun _ -> ()) ?(on_bdos_event = fun ~step_index:_ _ -> ())
     ?(on_bdos_file_event = fun ~step_index:_ _ -> ())
     ?(on_console_output = fun ~step_index:_ _ -> ())
     ?(on_bdos_effect = fun _ -> ())
+    ?(on_bdos_effect_at = fun ~step_index:_ _ -> ())
+    ?(on_bdos_call_state = fun ~step_index:_ ~state:_ ~dma:_ ~read_memory:_ -> ())
+    ?(on_bdos_resume = fun ~step_index:_ ~state:_ -> ())
     ?(on_start = fun _ -> ()) ?filesystem
     ?(on_start_state = fun _ -> ())
     ?(command_tail = Bytes.empty) ~output bytes =
-  run_with_loader ~personality ~max_steps ~on_step ~on_step_state ~on_event ~on_bdos_event ~on_bdos_file_event ~on_bdos_effect ~on_start ~on_start_state ~on_console_output ~output ~filesystem ~command_tail (fun memory ->
+  run_with_loader ~personality ~max_steps ~on_step ~on_step_state ~on_step_state_pair ~on_event ~on_bdos_event ~on_bdos_file_event ~on_bdos_effect ~on_bdos_effect_at ~on_bdos_call_state ~on_bdos_resume ~on_start ~on_start_state ~on_console_output ~output ~filesystem ~command_tail (fun memory ->
       Cpm.Personality.load_bytes personality memory bytes)
 
 let run_file ?(personality = default_personality) ?(max_steps = default_max_steps) ?(on_step = fun _ -> ())
     ?(on_step_state = fun ~step_index:_ _ _ -> ())
+    ?(on_step_state_pair = fun ~step_index:_ ~before:_ ~after:_ _ -> ())
     ?(on_event = fun _ -> ()) ?(on_bdos_event = fun ~step_index:_ _ -> ())
     ?(on_bdos_file_event = fun ~step_index:_ _ -> ())
     ?(on_console_output = fun ~step_index:_ _ -> ())
     ?(on_bdos_effect = fun _ -> ())
+    ?(on_bdos_effect_at = fun ~step_index:_ _ -> ())
+    ?(on_bdos_call_state = fun ~step_index:_ ~state:_ ~dma:_ ~read_memory:_ -> ())
+    ?(on_bdos_resume = fun ~step_index:_ ~state:_ -> ())
     ?(on_start = fun _ -> ()) ?filesystem
     ?(on_start_state = fun _ -> ())
     ?(command_tail = Bytes.empty) ~output ~path () =
-  run_with_loader ~personality ~max_steps ~on_step ~on_step_state ~on_event ~on_bdos_event ~on_bdos_file_event ~on_bdos_effect ~on_start ~on_start_state ~on_console_output ~output ~filesystem ~command_tail (fun memory ->
+  run_with_loader ~personality ~max_steps ~on_step ~on_step_state ~on_step_state_pair ~on_event ~on_bdos_event ~on_bdos_file_event ~on_bdos_effect ~on_bdos_effect_at ~on_bdos_call_state ~on_bdos_resume ~on_start ~on_start_state ~on_console_output ~output ~filesystem ~command_tail (fun memory ->
       Cpm.Personality.load_file personality memory ~path)

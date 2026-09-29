@@ -38,11 +38,12 @@ type result = {
   dynamic_structure : Analysis.Dynamic_structure.t option;
   dynamic_blocks : Analysis.Dynamic_blocks.report option;
   ownership_audit : Analysis.Ownership_audit.t option;
+  event_witnesses : Analysis.Event_witness.t option;
   timings : timings;
 }
 
 type error = Invalid_module_name of string | Filesystem_error of Cpm.Filesystem.error
-  | Run_error of Runner.error | Structure_requires_execution_map
+  | Run_error of Runner.error | Structure_requires_execution_map | Witnesses_require_execution_map
 
 val analysis_name : analysis -> string
 val parse_analysis : string -> (analysis, string) Stdlib.result
@@ -56,4 +57,4 @@ val output_names : string -> ((string * string), error) Stdlib.result
 val normalize_cpm_source : bytes -> bytes
 val prepare_source : normalize:bool -> bytes -> bytes
 val sha256_hex : bytes -> string
-val run : ?structure:bool -> analysis:analysis -> input -> (result, error) Stdlib.result
+val run : ?structure:bool -> ?event_witnesses:bool -> analysis:analysis -> input -> (result, error) Stdlib.result

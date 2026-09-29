@@ -50,8 +50,14 @@ val default_max_steps : int
     a copy of the initialized 256-byte page zero immediately before the first
     CPU instruction. [on_start_state] receives an immutable initial register
     and flag snapshot; [on_step_state] receives the post-step snapshot and
-    index alongside the live [Step]. [on_bdos_effect] exposes host-side
-    register/FCB mutations separately from record-transfer events.
+    index alongside the live [Step]. [on_step_state_pair] receives immutable
+    snapshots immediately before and after that CPU instruction, before any
+    subsequent BDOS dispatch. BDOS boundaries retain the current zero-based
+    step count without incrementing it: [on_bdos_call_state] runs at guest PC
+    0005H before dispatch and [on_bdos_resume] after the host effects and before
+    another guest instruction. This distinction is needed because the previous
+    post-step state may differ from the resumed guest state. [on_bdos_effect]
+    exposes host-side register/FCB mutations separately from record-transfer events.
     [on_bdos_file_event] reports factual file operations at BDOS dispatch and
     preserves the CP/M file key. [on_console_output] receives BDOS-emitted
     characters with the current zero-based step boundary; it does not add
@@ -63,11 +69,15 @@ val run_bytes :
   ?max_steps:int ->
   ?on_step:(I8080.Step.t -> unit) ->
   ?on_step_state:(step_index:int -> state_snapshot -> I8080.Step.t -> unit) ->
+  ?on_step_state_pair:(step_index:int -> before:state_snapshot -> after:state_snapshot -> I8080.Step.t -> unit) ->
   ?on_event:(event -> unit) ->
   ?on_bdos_event:(step_index:int -> Cpm.Bdos.event -> unit) ->
   ?on_bdos_file_event:(step_index:int -> Cpm.Bdos.file_event -> unit) ->
   ?on_console_output:(step_index:int -> char -> unit) ->
   ?on_bdos_effect:(Cpm.Bdos.external_effect -> unit) ->
+  ?on_bdos_effect_at:(step_index:int -> Cpm.Bdos.external_effect -> unit) ->
+  ?on_bdos_call_state:(step_index:int -> state:state_snapshot -> dma:int -> read_memory:(int -> int) -> unit) ->
+  ?on_bdos_resume:(step_index:int -> state:state_snapshot -> unit) ->
   ?on_start:(bytes -> unit) ->
   ?filesystem:Cpm.Filesystem.t ->
   ?on_start_state:(state_snapshot -> unit) ->
@@ -81,11 +91,15 @@ val run_file :
   ?max_steps:int ->
   ?on_step:(I8080.Step.t -> unit) ->
   ?on_step_state:(step_index:int -> state_snapshot -> I8080.Step.t -> unit) ->
+  ?on_step_state_pair:(step_index:int -> before:state_snapshot -> after:state_snapshot -> I8080.Step.t -> unit) ->
   ?on_event:(event -> unit) ->
   ?on_bdos_event:(step_index:int -> Cpm.Bdos.event -> unit) ->
   ?on_bdos_file_event:(step_index:int -> Cpm.Bdos.file_event -> unit) ->
   ?on_console_output:(step_index:int -> char -> unit) ->
   ?on_bdos_effect:(Cpm.Bdos.external_effect -> unit) ->
+  ?on_bdos_effect_at:(step_index:int -> Cpm.Bdos.external_effect -> unit) ->
+  ?on_bdos_call_state:(step_index:int -> state:state_snapshot -> dma:int -> read_memory:(int -> int) -> unit) ->
+  ?on_bdos_resume:(step_index:int -> state:state_snapshot -> unit) ->
   ?on_start:(bytes -> unit) ->
   ?filesystem:Cpm.Filesystem.t ->
   ?on_start_state:(state_snapshot -> unit) ->

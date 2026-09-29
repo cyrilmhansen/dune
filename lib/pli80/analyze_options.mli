@@ -14,6 +14,7 @@ type t = {
   selected_rel : int list;
   raw_slices : int list;
   structure : bool;
+  event_witnesses : bool;
 }
 
 val usage : string

@@ -45,6 +45,9 @@ let json_summary ~module_name ~source ~host_source_bytes ~normalized_source_byte
     (pass_ok experiment.console "NO ERROR(S) IN PASS 2") (pass_ok experiment.console "END  COMPILATION");
   Printf.bprintf b ",\"step_indexed_console_messages\":%d,\"step_indexed_file_events\":%d,\"timeline_report\":\"compiler-timeline.json\""
     (List.length experiment.console_messages) (List.length experiment.file_events);
+  (match experiment.event_witnesses with None->Buffer.add_string b ",\"event_witnesses\":null"|Some w->
+    Printf.bprintf b ",\"event_witnesses\":{\"report\":\"event-witnesses.json\",\"instruction_witnesses\":%d,\"file_events\":%d,\"transfer_mismatches\":%d}"
+      (Analysis.Event_witness.instruction_count w)(Analysis.Event_witness.file_event_count w)(Analysis.Event_witness.transfer_mismatch_count w));
   let file name bytes=match bytes with None->Printf.bprintf b ",\"%s\":null" name|Some bytes->Printf.bprintf b ",\"%s\":{\"name\":%s,\"size\":%d,\"sha256\":%s}" name(json_quote(if name="rel" then rel_name else int_name))(Bytes.length bytes)(json_quote(Pli80.Experiment.sha256_hex bytes)) in
   file "rel" rel_bytes;file "int" int_bytes;
   (match execution_map with None->add b ",\"execution_map\":null"|Some map->let s=Analysis.Execution_map.summary map in Printf.bprintf b ",\"execution_map\":{\"steps\":%d,\"attributed\":%d,\"unknown\":%d,\"mixed\":%d}" s.total_instruction_executions s.attributed_instruction_executions s.unknown_executions s.mixed_or_unresolved_executions);
@@ -86,6 +89,7 @@ let error_text = function
     |Step_limit_exceeded{max_steps;steps}->Printf.sprintf"instruction budget exhausted at %d/%d"steps max_steps
     |Invalid_step_limit _->"invalid step limit"|Invalid_command_tail _->"invalid command tail")
   |Structure_requires_execution_map->"--structure requires --analysis execution, data, or path"
+  |Witnesses_require_execution_map->"--event-witnesses requires --analysis execution, data, or path"
 
 let run_compiler (options : options) =
   let total_started=Unix.gettimeofday() in
@@ -109,16 +113,18 @@ let run_compiler (options : options) =
       (if options.report=Summary then["run-summary.json"]else[]) @
       (if options.report<>No_report then["compiler-timeline.json"]else[]) @
       (if options.structure then["dynamic-structure.json";"dynamic-blocks.json";"dynamic-ownership-audit.json";"canonical-block-audit.json";"canonical-code-blocks.json"]else[]) @
+      (if options.event_witnesses then["event-witnesses.json";"event-witnesses"]else[]) @
       (if options.report=Explorer then["provenance-report.json"]@(if options.analysis=Path then["provenance-control-report.json"]else[])else[]) @
       List.map(fun n->Printf.sprintf"slice-%04X.json"n)options.raw_slices in
     if options.report=Explorer && not(List.mem options.analysis [Data;Path]) then failwith"--report explorer requires --analysis data or path";
     if options.structure && options.analysis=Run then failwith"--structure requires --analysis execution, data, or path";
+    if options.event_witnesses && options.analysis=Run then failwith"--event-witnesses requires --analysis execution, data, or path";
     if options.raw_slices<>[] && not(List.mem options.analysis [Data;Path]) then failwith"--raw-slice requires --analysis data or path";
     mkdir output_dir;check_outputs output_dir targets;
     let command_tail=Bytes.of_string(" "^module_name) in
     let input={Pli80.Experiment.pli_com;pli0_ovl=pli0;pli1_ovl=pli1;pli2_ovl=pli2;
       source_name=module_name^".PLI";source_bytes=source_compiler;module_name;command_tail;max_steps=options.max_steps} in
-    let experiment=match Pli80.Experiment.run ~structure:options.structure ~analysis:options.analysis input with Ok x->x|Error e->failwith(error_text e) in
+    let experiment=match Pli80.Experiment.run ~structure:options.structure ~event_witnesses:options.event_witnesses ~analysis:options.analysis input with Ok x->x|Error e->failwith(error_text e) in
     let canonical_block_audit=Option.map Analysis.Canonical_block_audit.analyze experiment.dynamic_blocks in
     let canonical_code_blocks=Option.map Analysis.Canonical_code_blocks.materialize experiment.dynamic_blocks in
     print_string experiment.console;
@@ -146,6 +152,17 @@ let run_compiler (options : options) =
       report_timings:=("compiler_timeline_serialization",Unix.gettimeofday()-.started)::!report_timings);
     Option.iter(save experiment.rel_name) experiment.rel_bytes;
     Option.iter(save experiment.int_name) experiment.int_bytes;
+    Option.iter(fun witnesses->let started=Unix.gettimeofday() in
+      let root=Filename.concat output_dir "event-witnesses" in mkdir root;let chunks=Filename.concat root "chunks" in mkdir chunks;
+      let total_chunk_bytes=ref 0 in
+      let index_path=Filename.concat output_dir "event-witnesses.json" and index=open_out_bin(Filename.concat output_dir "event-witnesses.json") in
+      Fun.protect ~finally:(fun()->close_out index)(fun()->
+        Analysis.Event_witness.write_chunked_json ~chunk_size:8192
+          ~write_chunk:(fun id text->let path=Filename.concat chunks(Printf.sprintf"%06d.json"id)in let ch=open_out_bin path in Fun.protect~finally:(fun()->close_out ch)(fun()->output_string ch text);total_chunk_bytes:= !total_chunk_bytes+String.length text)
+          ~write_index:(output_string index) witnesses);
+      let index_size=(Unix.stat index_path).Unix.st_size in
+      host_writes:=("event-witnesses.json",index_size)::("event-witness-chunks",!total_chunk_bytes)::!host_writes;
+      report_timings:=("event_witness_serialization",Unix.gettimeofday()-.started)::!report_timings)experiment.event_witnesses;
     let serialization_started=Unix.gettimeofday() in
     if options.report=Explorer then (
       let map=Option.get experiment.execution_map and provenance=Option.get experiment.provenance in
@@ -242,6 +259,8 @@ let run_compiler (options : options) =
       experiment.run.data_bytes_read experiment.run.data_bytes_written experiment.run.data_bytes_total;
     if options.report<>No_report then Printf.printf "step-indexed chronology: compiler-timeline.json (%d console messages, %d file events)\n\n"
       (List.length experiment.console_messages)(List.length experiment.file_events);
+    Option.iter(fun w->Printf.printf "event witnesses: event-witnesses.json + event-witnesses/chunks/ (%d instruction witnesses, %d file events, %d CALL/RET mismatches)\n"
+      (Analysis.Event_witness.instruction_count w)(Analysis.Event_witness.file_event_count w)(Analysis.Event_witness.transfer_mismatch_count w))experiment.event_witnesses;
     (match experiment.rel_bytes with None->print_endline"output: REL not produced"|Some rel->Printf.printf"output:\n  %s: %d bytes\n  SHA-256: %s\n  %s survives: %s\n\n"
       experiment.rel_name(Bytes.length rel)(Pli80.Experiment.sha256_hex rel)experiment.int_name(if experiment.int_bytes=None then"no"else"yes"));
     (match experiment.execution_map with None->()|Some map->let x=Analysis.Execution_map.summary map in Printf.printf"execution attributed: %d / %d\n"

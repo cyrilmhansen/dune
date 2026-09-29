@@ -158,6 +158,19 @@ try {
     const [otherImage,otherOffset]=codeTests.otherOnly.split(":");await jump(otherImage,Number(otherOffset));facts=await page.locator("#code-selected-evidence").innerText();
     if(!facts.includes("OPTIMIST · NOT OBSERVED")||facts.includes("OPTIMIST · OBSERVED"))throw new Error(`coordinate absent from OPTIMIST was not kept as a per-run absence: ${facts.slice(0,800)}`);
     await page.click("#code-next");await page.waitForFunction(()=>window.__selectedCodeCoordinate.offset!==0x19d4);
+    await jump("PLI.COM",0x19d4);
+    await page.waitForFunction(()=>document.querySelector("#event-witness-status .event-witness-sample"));
+    const witnessStatus=await page.locator("#event-witness-status").innerText();
+    if(!witnessStatus.includes("OBSERVED executions at PLI.COM+19D4"))throw new Error(`instruction-time witnesses were not shown: ${witnessStatus.slice(0,500)}`);
+    const relWrite=page.locator("#event-file-operations .witness-event-link").filter({hasText:"840,539"}).first();
+    await relWrite.click();
+    const eventContext=page.locator("#event-file-operations .witness-context").filter({hasText:"DEDUCED CALL frames"}).first();
+    await page.waitForFunction(()=>[...document.querySelectorAll("#event-file-operations .witness-context")].some(x=>x.textContent.includes("DEDUCED CALL frames")&&x.textContent.includes("PLI1.OVL")));
+    await page.waitForFunction(()=>[...document.querySelectorAll("#event-file-operations .witness-transfer-context")].some(x=>x.open&&x.textContent.includes("JMP 0005H")));
+    await page.waitForFunction(()=>window.__selectedCodeCoordinate?.image==="PLI.COM"&&window.__selectedCodeCoordinate?.offset===0x19d4);
+    const finalRelWrite=page.locator("#event-file-operations .witness-event-link").filter({hasText:"2,533,978"}).first();await finalRelWrite.click();
+    await page.waitForFunction(()=>[...document.querySelectorAll("#event-file-operations .witness-context")].some(x=>x.textContent.includes("uncertain")&&x.textContent.includes("1681339")));
+    interactions.push(`event witnesses: exact PLI.COM+19D4 instruction executions and REL write 840539 caller context includes PLI1.OVL; file-event selection navigates to bridge`);
     interactions.push(`code evidence: four runs, ${codeTests.coords} coordinates, direct coordinate jump, per-run partitions/contexts/transfers, absent-from-OPTIMIST coordinate ${codeTests.otherOnly}`);
   }
   if(requests.some(url=>!url.startsWith(`http://127.0.0.1:${port}/`)&&!url.startsWith(`blob:http://127.0.0.1:${port}/`)))throw new Error(`non-local asset request: ${requests.find(url=>!url.startsWith(`http://127.0.0.1:${port}/`)&&!url.startsWith(`blob:http://127.0.0.1:${port}/`))}`);

@@ -99,3 +99,17 @@ export function adjacentInstructions(runs, imageName, offset, limit = 24) {
   const start = Math.max(0, offsets.indexOf(offset));
   return offsets.slice(start, start + limit);
 }
+
+export function witnessChunkIds(index, imageName, offset) {
+  return index.instruction_index?.find(x => x.image.name.toUpperCase() === imageName.toUpperCase() && x.offset === offset)?.chunks ?? [];
+}
+
+export function selectInstructionWitnesses(chunks, imageName, offset) {
+  return chunks.flatMap(chunk => chunk.events ?? [])
+    .filter(event => event.type === "instruction" && event.witness.origin?.image.name.toUpperCase() === imageName.toUpperCase() && event.witness.origin.offset === offset)
+    .map(event => event.witness);
+}
+
+export function indexedFileEventChunks(event) {
+  return [...new Set([event.chunk, event.bdos_call_chunk].filter(id => id != null))];
+}

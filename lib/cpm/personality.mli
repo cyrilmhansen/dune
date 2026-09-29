@@ -15,6 +15,7 @@ val bdos_entry_address : t -> int
 val transient_stack_word_address : t -> int
 val initial_stack_pointer : t -> int
 val maximum_command_tail_length : t -> int
+val dma : t -> process -> int
 
 val load_bytes : t -> I8080.Memory.t -> bytes -> (Loader.loaded, Loader.error) result
 val load_file : t -> I8080.Memory.t -> path:string -> (Loader.loaded, Loader.error) result

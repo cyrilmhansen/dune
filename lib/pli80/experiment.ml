@@ -26,10 +26,11 @@ type result = {
   dynamic_structure:Analysis.Dynamic_structure.t option;
   dynamic_blocks:Analysis.Dynamic_blocks.report option;
   ownership_audit:Analysis.Ownership_audit.t option;
+  event_witnesses:Analysis.Event_witness.t option;
   timings:timings;
 }
 type error = Invalid_module_name of string | Filesystem_error of Cpm.Filesystem.error
-  | Run_error of Runner.error | Structure_requires_execution_map
+  | Run_error of Runner.error | Structure_requires_execution_map | Witnesses_require_execution_map
 
 let analysis_name = function Run->"run"|Execution->"execution"|Data->"data"|Path->"path"
 let parse_analysis = function
@@ -149,10 +150,11 @@ let sha256_hex input =
   done;
   Array.to_list h |> List.map(Printf.sprintf "%08lx") |> String.concat ""
 
-let run ?(structure=false) ~analysis input =
+let run ?(structure=false) ?(event_witnesses=false) ~analysis input =
   match validate_module_name input.module_name with
   |Error _ as error->error
   |Ok _ when structure && analysis=Run->Error Structure_requires_execution_map
+  |Ok _ when event_witnesses && analysis=Run->Error Witnesses_require_execution_map
   |Ok module_name->
     let setup_started=Unix.gettimeofday() in
     let filesystem=Cpm.Filesystem.create() in
@@ -164,6 +166,19 @@ let run ?(structure=false) ~analysis input =
     |Error _ as error->error
     |Ok()->
       let execution_map=match analysis with Run->None|Execution|Data|Path->Some(Analysis.Execution_map.create()) in
+      let run_id=Printf.sprintf "%s:%s" module_name (sha256_hex (Bytes.concat (Bytes.of_string "\000")
+        [Bytes.of_string input.source_name;Bytes.of_string input.module_name;input.command_tail;
+         Bytes.of_string (string_of_int input.max_steps);input.pli_com;input.pli0_ovl;
+         input.pli1_ovl;input.pli2_ovl;input.source_bytes])) in
+      let event_witnesses=if event_witnesses then Some(Analysis.Event_witness.create ~run_id
+        ~origin_at:(fun ~pc ~fetched -> match execution_map with
+          |None->None
+          |Some map->(match Analysis.Execution_map.origin_at map pc with
+            |Analysis.Execution_map.Image_byte {image;offset}->
+                let consistent=ref true in
+                Bytes.iteri(fun i byte->if Analysis.Execution_map.byte_at map ~image ~offset:(offset+i)<>Some(Char.code byte) then consistent:=false)fetched;
+                if !consistent then Some{Analysis.Event_witness.image;offset}else None
+            |Unknown->None))) else None in
       let dynamic_structure=if structure then Some(Analysis.Dynamic_structure.create()) else None in
       let dynamic_blocks_builder=if structure then Some(Analysis.Dynamic_blocks.create()) else None in
       let ownership_audit=if structure then Some(Analysis.Ownership_audit.create()) else None in
@@ -189,6 +204,8 @@ let run ?(structure=false) ~analysis input =
       let on_start_state=if provenance=None && dynamic_structure=None then None else Some(fun state->
         Option.iter(fun p->Analysis.Provenance.seed_initial_registers p state) provenance;
         if dynamic_structure<>None then last_sp:=Some state.Runner.sp) in
+      let on_step_state_pair=Option.map(fun witnesses ~step_index ~before ~after step->
+        Analysis.Event_witness.observe_step witnesses ~step_index ~before ~after step)event_witnesses in
       let on_step_state=match provenance,dynamic_structure,dynamic_blocks_builder with
         |None,None,None->None
         |provenance,dynamic_structure,dynamic_blocks_builder->Some(fun ~step_index state step->
@@ -216,12 +233,21 @@ let run ?(structure=false) ~analysis input =
           Analysis.Provenance.observe_step ~origin_at:resolve p ~step_index state step)provenance;
           if dynamic_structure<>None then last_sp:=Some state.Runner.sp) in
       let on_event=Option.map Analysis.Execution_map.observe_runner_event execution_map in
+      let on_event=match on_event,event_witnesses with
+        |None,None->None
+        |map_callback,witnesses->Some(fun event->Option.iter(fun callback->callback event)map_callback;
+          match witnesses,event with Some w,Runner.Termination{step_index;reason}->Analysis.Event_witness.observe_termination w ~step_index reason|_->()) in
       let on_bdos_event=match execution_map,provenance with
         |None,None->None
         |_->Some(fun ~step_index event->
           Option.iter(fun map->Analysis.Execution_map.observe_bdos_event ~step_index map event)execution_map;
           Option.iter(fun p->Analysis.Provenance.observe_bdos_event p ~step_index event)provenance) in
+      let on_bdos_event=match on_bdos_event,event_witnesses with
+        |None,None->None
+        |callback,witnesses->Some(fun ~step_index event->Option.iter(fun f->f ~step_index event)callback;
+          Option.iter(fun w->Analysis.Event_witness.observe_bdos_record w ~step_index event)witnesses) in
       let on_bdos_file_event ~step_index (event:Cpm.Bdos.file_event)=
+        Option.iter(fun w->Analysis.Event_witness.observe_file_operation w ~step_index event)event_witnesses;
         let operation=match event.operation with
           |Cpm.Bdos.Open->Open|Close->Close|Make->Make|Delete->Delete
           |Sequential_read->Sequential_read|Sequential_write->Sequential_write in
@@ -229,9 +255,12 @@ let run ?(structure=false) ~analysis input =
         file_events:={step_index;operation;file=event.file;succeeded=event.succeeded;
           logical_record=event.logical_record;byte_range}::!file_events in
       let on_bdos_effect=Option.map Analysis.Provenance.observe_bdos_effect provenance in
+      let on_bdos_effect_at=Option.map(fun w ~step_index external_effect->Analysis.Event_witness.observe_host_effect w ~step_index external_effect)event_witnesses in
+      let on_bdos_call_state=Option.map(fun w ~step_index ~state ~dma ~read_memory->Analysis.Event_witness.observe_bdos_call w ~step_index ~state ~dma ~read_memory)event_witnesses in
+      let on_bdos_resume=Option.map(fun w ~step_index ~state->Analysis.Event_witness.observe_bdos_resume w ~step_index state)event_witnesses in
       let setup_seconds=Unix.gettimeofday()-.setup_started in
       let execution_started=Unix.gettimeofday() in
-      let run_result=Runner.run_bytes ~max_steps:input.max_steps ?on_step_state ?on_event ?on_bdos_event ?on_bdos_effect
+      let run_result=Runner.run_bytes ~max_steps:input.max_steps ?on_step_state ?on_step_state_pair ?on_event ?on_bdos_event ?on_bdos_effect ?on_bdos_effect_at ?on_bdos_call_state ?on_bdos_resume
         ~on_start ?on_start_state ~filesystem ~command_tail:input.command_tail
         ~on_bdos_file_event ~on_console_output:(Console_capture.emit console)
         ~output:(fun _ -> ()) input.pli_com in
@@ -244,5 +273,5 @@ let run ?(structure=false) ~analysis input =
           |_->None in
         Ok{run;console=Console_capture.text console;console_messages=Console_capture.messages console;
           file_events=List.rev !file_events;filesystem;rel_name;rel_bytes=read rel_name;
-          int_name;int_bytes=read int_name;execution_map;provenance;dynamic_structure;dynamic_blocks;ownership_audit;
+          int_name;int_bytes=read int_name;execution_map;provenance;dynamic_structure;dynamic_blocks;ownership_audit;event_witnesses;
           timings={setup_seconds;execution_seconds}})

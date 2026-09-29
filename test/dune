@@ -75,3 +75,7 @@
 (test
  (name canonical_code_blocks)
  (libraries i8080 cpm analysis))
+
+(test
+ (name event_witness)
+ (libraries i8080 cpm runner analysis))

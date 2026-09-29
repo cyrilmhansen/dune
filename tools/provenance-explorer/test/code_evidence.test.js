@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { adjacentInstructions, coordinateEvidence, parseCodeCoordinate, projectCodeRun } from "../src/code_evidence.js";
+import { adjacentInstructions, coordinateEvidence, indexedFileEventChunks, parseCodeCoordinate, projectCodeRun, selectInstructionWitnesses, witnessChunkIds } from "../src/code_evidence.js";
 
 const image = { drive: 0, user: 0, name: "PLI.COM" };
 function reports({ split = false, contexts = [1], bytes = "C30001", withCode = true } = {}) {
@@ -48,4 +48,16 @@ test("direct image plus hexadecimal offset navigation and adjacent instruction s
   assert.equal(parseCodeCoordinate("not-a-coordinate"), null);
   const r = reports(), projected = projectCodeRun("A", r.structure, r.blocks, r.canonical);
   assert.deepEqual(adjacentInstructions([projected], "PLI.COM", 0x100, 8), [0x100, 0x103]);
+});
+
+test("event witness lookup fetches indexed chunks and retains every matching execution", () => {
+  const index={instruction_index:[{image:{name:"PLI.COM"},offset:0x100,chunks:[2,5]}]};
+  const chunks=[{events:[{type:"instruction",witness:{step_index:10,origin:{image:{name:"PLI.COM"},offset:0x100}}},
+      {type:"instruction",witness:{step_index:11,origin:{image:{name:"PLI.COM"},offset:0x103}}}]},
+    {events:[{type:"instruction",witness:{step_index:99,origin:{image:{name:"PLI.COM"},offset:0x100}}}]}];
+  assert.deepEqual(witnessChunkIds(index,"pli.com",0x100),[2,5]);
+  assert.deepEqual(witnessChunkIds(index,"PLI.COM",0x200),[]);
+  assert.deepEqual(selectInstructionWitnesses(chunks,"PLI.COM",0x100).map(x=>x.step_index),[10,99]);
+  assert.deepEqual(indexedFileEventChunks({chunk:4,bdos_call_chunk:3}),[4,3]);
+  assert.deepEqual(indexedFileEventChunks({chunk:4,bdos_call_chunk:4}),[4]);
 });

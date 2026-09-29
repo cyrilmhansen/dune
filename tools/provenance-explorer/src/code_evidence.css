@@ -19,4 +19,13 @@
 .run-evidence strong{display:block;margin-top:5px;color:#394b59}
 .evidence-facts,.run-evidence p{margin:3px 0;color:#465866;overflow-wrap:anywhere}
 .transfer-list{margin:2px 0 5px;padding-left:20px;color:#465866;font:11px ui-monospace,monospace}
+#event-witness-section{margin-top:14px;border-top:2px solid #b8c7d2;padding-top:8px}
+#event-witness-section>p{color:#5b6975;font-size:12px}
+.witness-file-run{border-top:1px solid #dce2e8;padding:7px 0}
+.witness-event-link{display:block;width:100%;text-align:left;border:0;background:#f1f5f8;padding:4px 6px;margin:3px 0;color:#243746;font:11px ui-monospace,monospace;cursor:pointer}
+.witness-event-link:hover{background:#e1ebf2}
+.witness-context{display:block;padding:2px 8px 5px;color:#526273;font:11px ui-monospace,monospace;overflow-wrap:anywhere}
+.event-witness-sample{white-space:pre-wrap;overflow-wrap:anywhere;padding:6px;background:#f5f7f9;border-left:2px solid #8fa7b7;font:10px ui-monospace,monospace;color:#344653}
+#event-witness-status details{margin:4px 0}
+#event-witness-status details>div{display:flex;gap:4px;flex-wrap:wrap}
 @media(max-width:900px){.code-evidence-columns{grid-template-columns:1fr}.code-listing{max-height:45vh}}

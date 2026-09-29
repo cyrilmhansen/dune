@@ -6,7 +6,7 @@ type t = {
   toolchain:string option; source:string option; output_dir:string option;
   module_name:string option; max_steps:int; analysis:Experiment.analysis;
   report:Experiment.report; source_text:source_text; selected_rel:int list;
-  raw_slices:int list; structure:bool;
+  raw_slices:int list; structure:bool; event_witnesses:bool;
 }
 
 let usage = {|Usage:
@@ -23,6 +23,7 @@ let usage = {|Usage:
   --select-rel OFFSET       Select explorer sink; repeatable (decimal or 0xHEX)
   --raw-slice OFFSET        Write exact slice JSON; repeatable, data/path only
   --structure               Collect routine transitions and observed blocks (requires execution analysis)
+  --event-witnesses         Retain all instruction and BDOS witnesses in indexed JSON chunks
   --max-steps N             Positive instruction budget (default 10000000)
   --help                    Show this help
 
@@ -54,12 +55,13 @@ let parse args =
     |"--source-text"::"raw"::rest->go{options with source_text=Raw}rest
     |"--source-text"::_::_->Error"--source-text must be cpm or raw"
     |"--structure"::rest->if options.structure then Error "--structure repeated" else go{options with structure=true}rest
+    |"--event-witnesses"::rest->if options.event_witnesses then Error "--event-witnesses repeated" else go{options with event_witnesses=true}rest
     |"--select-rel"::value::rest->(match Experiment.parse_offset value with Error e->Error e|Ok n->go{options with selected_rel=options.selected_rel@[n]}rest)
     |"--raw-slice"::value::rest->(match Experiment.parse_offset value with Error e->Error e|Ok n->go{options with raw_slices=(if List.mem n options.raw_slices then options.raw_slices else options.raw_slices@[n])}rest)
     |option::_->Error("unknown option "^option)
   in
   let parsed = go {oracle_fixture=None;oracle_fixture_comparison=None;full_evidence=false;toolchain=None;source=None;output_dir=None;module_name=None;max_steps=10_000_000;
-    analysis=Experiment.Run;report=Experiment.Summary;source_text=Cpm;structure=false;selected_rel=[];raw_slices=[]} args
+    analysis=Experiment.Run;report=Experiment.Summary;source_text=Cpm;structure=false;event_witnesses=false;selected_rel=[];raw_slices=[]} args
   in
   match parsed with
   | Error _ as error -> error
@@ -68,7 +70,7 @@ let parse args =
       else if options.full_evidence && options.oracle_fixture_comparison = None then Error "--full-evidence requires --compare-oracle-fixtures"
       else if options.toolchain=None && options.source=None && options.output_dir=None && options.module_name=None
         && options.max_steps=10_000_000 && options.analysis=Experiment.Run && options.report=Experiment.Summary
-        && options.source_text=Cpm && not options.structure && options.selected_rel=[] && options.raw_slices=[] then Ok options
+        && options.source_text=Cpm && not options.structure && not options.event_witnesses && options.selected_rel=[] && options.raw_slices=[] then Ok options
       else Error "oracle fixture inspection cannot be combined with compiler-run options"
   | Ok options when options.full_evidence -> Error "--full-evidence requires --compare-oracle-fixtures"
   | Ok options -> Ok options
