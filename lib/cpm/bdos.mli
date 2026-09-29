@@ -14,13 +14,22 @@ type event =
       logical_record : int;
       dma : int;
       data : bytes;
-    }
+  }
   | Write_record of {
       file : Filesystem.key;
       logical_record : int;
       dma : int;
       data : bytes;
     }
+
+type file_operation = Open | Close | Make | Delete | Sequential_read | Sequential_write
+
+type file_event = {
+  operation : file_operation;
+  file : Filesystem.key;
+  succeeded : bool;
+  logical_record : int option;
+}
 
 type register = A | B | C | D | E | H | L | SP
 type memory_write_cause = Fcb_update
@@ -56,6 +65,19 @@ val dispatch_with_effects :
   on_effect:(external_effect -> unit) ->
   runtime:t -> memory:I8080.Memory.t -> state:I8080.State.t ->
   output:(char -> unit) -> (action, error) result
+
+val dispatch_instrumented_with_file_events :
+  on_event:(event -> unit) -> on_file_event:(file_event -> unit) -> runtime:t ->
+  memory:I8080.Memory.t -> state:I8080.State.t -> output:(char -> unit) -> (action, error) result
+
+val dispatch_with_effects_and_file_events :
+  on_event:(event -> unit) -> on_file_event:(file_event -> unit) -> on_effect:(external_effect -> unit) ->
+  runtime:t -> memory:I8080.Memory.t -> state:I8080.State.t -> output:(char -> unit) -> (action, error) result
+
+(** The [*_with_file_events] variants additionally report factual BDOS file
+    operations. They do not replace the established record-transfer events.
+    If an FCB cannot be resolved to a canonical file key, no file event can
+    be emitted. *)
 
 (** Like [dispatch_instrumented], with factual post-dispatch register writes
     and guest-visible FCB byte writes. These effects contain no analysis or

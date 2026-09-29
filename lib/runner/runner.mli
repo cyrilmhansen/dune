@@ -52,6 +52,10 @@ val default_max_steps : int
     and flag snapshot; [on_step_state] receives the post-step snapshot and
     index alongside the live [Step]. [on_bdos_effect] exposes host-side
     register/FCB mutations separately from record-transfer events.
+    [on_bdos_file_event] reports factual file operations at BDOS dispatch and
+    preserves the CP/M file key. [on_console_output] receives BDOS-emitted
+    characters with the current zero-based step boundary; it does not add
+    anything to [Runner.event].
     The initial SP is a deterministic runner convention, not a claim about
     every historical CP/M launch environment. *)
 val run_bytes :
@@ -61,6 +65,8 @@ val run_bytes :
   ?on_step_state:(step_index:int -> state_snapshot -> I8080.Step.t -> unit) ->
   ?on_event:(event -> unit) ->
   ?on_bdos_event:(step_index:int -> Cpm.Bdos.event -> unit) ->
+  ?on_bdos_file_event:(step_index:int -> Cpm.Bdos.file_event -> unit) ->
+  ?on_console_output:(step_index:int -> char -> unit) ->
   ?on_bdos_effect:(Cpm.Bdos.external_effect -> unit) ->
   ?on_start:(bytes -> unit) ->
   ?filesystem:Cpm.Filesystem.t ->
@@ -77,6 +83,8 @@ val run_file :
   ?on_step_state:(step_index:int -> state_snapshot -> I8080.Step.t -> unit) ->
   ?on_event:(event -> unit) ->
   ?on_bdos_event:(step_index:int -> Cpm.Bdos.event -> unit) ->
+  ?on_bdos_file_event:(step_index:int -> Cpm.Bdos.file_event -> unit) ->
+  ?on_console_output:(step_index:int -> char -> unit) ->
   ?on_bdos_effect:(Cpm.Bdos.external_effect -> unit) ->
   ?on_start:(bytes -> unit) ->
   ?filesystem:Cpm.Filesystem.t ->

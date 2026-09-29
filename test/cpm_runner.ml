@@ -724,6 +724,30 @@ let test_runner_errors () =
   | Error (Runner.Invalid_command_tail _) -> failwith "wrong invalid step limit error"
   | Ok _ -> failwith "zero instruction limit unexpectedly ran")
 
+let test_step_indexed_filename_preserving_bdos_history () =
+  (* The command tail seeds the default FCB as TEST; a normal BDOS MAKE call
+     exercises the Runner -> personality -> BDOS event path. *)
+  let program=Bytes.of_string "\x11\x5c\x00\x0e\x16\xcd\x05\x00\xc3\x00\x00" in
+  let events=ref [] in
+  let result:Runner.run_result=Runner.run_bytes ~command_tail:(Bytes.of_string " TEST")
+    ~on_bdos_file_event:(fun ~step_index event->events:=(step_index,event)::!events)
+    ~output:(fun _->()) program |> expect_result in
+  assert(result.Runner.termination=Runner.Warm_boot && result.Runner.steps=5);
+  match List.rev !events with
+  |[3,(event:Cpm.Bdos.file_event)]->
+      let file:Cpm.Filesystem.key=event.Cpm.Bdos.file in
+      assert(event.Cpm.Bdos.operation=Cpm.Bdos.Make && file.Cpm.Filesystem.drive=0 && file.Cpm.Filesystem.user=0
+        && file.Cpm.Filesystem.name="TEST" && event.Cpm.Bdos.succeeded && event.Cpm.Bdos.logical_record=None)
+  |_->failwith "step-indexed BDOS file history lost the canonical filename or MAKE step"
+
+let test_runner_console_output_step () =
+  let output=Buffer.create 1 and observed=ref [] in
+  let program=Bytes.of_string "\x1eX\x0e\x02\xcd\x05\x00\xc3\x00\x00" in
+  ignore(Runner.run_bytes ~on_console_output:(fun ~step_index char->observed:=(step_index,char)::!observed)
+    ~output:(Buffer.add_char output) program |> expect_result);
+  assert(Buffer.contents output="X");
+  assert(List.rev !observed=[3,'X'])
+
 let () =
   test_loader ();
   test_bdos_print_string ();
@@ -742,4 +766,6 @@ let () =
   test_warm_boot_and_page_zero ();
   test_personality_boundary ();
   test_data_memory_traffic ();
+  test_step_indexed_filename_preserving_bdos_history ();
+  test_runner_console_output_step ();
   test_runner_errors ()

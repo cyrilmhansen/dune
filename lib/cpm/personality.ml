@@ -77,3 +77,6 @@ let launch Cpm22 ~filesystem ~command_tail memory =
 
 let dispatch_with_effects Cpm22 process =
   Bdos.dispatch_with_effects ~runtime:process.bdos
+
+let dispatch_with_file_events Cpm22 process =
+  Bdos.dispatch_with_effects_and_file_events ~runtime:process.bdos

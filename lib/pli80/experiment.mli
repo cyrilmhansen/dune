@@ -14,9 +14,20 @@ type input = {
 }
 
 type timings = { setup_seconds : float; execution_seconds : float }
+type file_event_operation = Open | Close | Make | Delete | Sequential_read | Sequential_write
+type file_event = {
+  step_index : int;
+  operation : file_event_operation;
+  file : Cpm.Filesystem.key;
+  succeeded : bool;
+  logical_record : int option;
+  byte_range : (int * int) option;
+}
 type result = {
   run : Runner.run_result;
   console : string;
+  console_messages : Console_capture.message list;
+  file_events : file_event list;
   filesystem : Cpm.Filesystem.t;
   rel_name : string;
   rel_bytes : bytes option;

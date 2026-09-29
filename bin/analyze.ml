@@ -43,6 +43,8 @@ let json_summary ~module_name ~source ~host_source_bytes ~normalized_source_byte
     run.data_bytes_read run.data_bytes_written run.data_bytes_total
     (pass_ok experiment.Pli80.Experiment.console "NO ERROR(S) IN PASS 1")
     (pass_ok experiment.console "NO ERROR(S) IN PASS 2") (pass_ok experiment.console "END  COMPILATION");
+  Printf.bprintf b ",\"step_indexed_console_messages\":%d,\"step_indexed_file_events\":%d,\"timeline_report\":\"compiler-timeline.json\""
+    (List.length experiment.console_messages) (List.length experiment.file_events);
   let file name bytes=match bytes with None->Printf.bprintf b ",\"%s\":null" name|Some bytes->Printf.bprintf b ",\"%s\":{\"name\":%s,\"size\":%d,\"sha256\":%s}" name(json_quote(if name="rel" then rel_name else int_name))(Bytes.length bytes)(json_quote(Pli80.Experiment.sha256_hex bytes)) in
   file "rel" rel_bytes;file "int" int_bytes;
   (match execution_map with None->add b ",\"execution_map\":null"|Some map->let s=Analysis.Execution_map.summary map in Printf.bprintf b ",\"execution_map\":{\"steps\":%d,\"attributed\":%d,\"unknown\":%d,\"mixed\":%d}" s.total_instruction_executions s.attributed_instruction_executions s.unknown_executions s.mixed_or_unresolved_executions);
@@ -105,6 +107,7 @@ let run_compiler (options : options) =
     let source_seconds=Unix.gettimeofday()-.source_started in
     let targets=[module_name^".REL";module_name^".INT"] @
       (if options.report=Summary then["run-summary.json"]else[]) @
+      (if options.report<>No_report then["compiler-timeline.json"]else[]) @
       (if options.structure then["dynamic-structure.json";"dynamic-blocks.json";"dynamic-ownership-audit.json";"canonical-block-audit.json";"canonical-code-blocks.json"]else[]) @
       (if options.report=Explorer then["provenance-report.json"]@(if options.analysis=Path then["provenance-control-report.json"]else[])else[]) @
       List.map(fun n->Printf.sprintf"slice-%04X.json"n)options.raw_slices in
@@ -135,9 +138,14 @@ let run_compiler (options : options) =
         (Bytes.length rel) with Ok _->()|Error message->failwith("invalid --select-rel: "^message));
     let host_writes=ref[] in
     let save name bytes=let path=Filename.concat output_dir name in write_bytes path bytes;host_writes:=(name,Bytes.length bytes)::!host_writes in
+    let report_timings=ref[] in
+    if options.report<>No_report then (
+      let started=Unix.gettimeofday() in
+      let timeline=Pli80.Compiler_timeline.of_experiment experiment in
+      save "compiler-timeline.json" (Bytes.of_string(Pli80.Compiler_timeline.to_json_string timeline));
+      report_timings:=("compiler_timeline_serialization",Unix.gettimeofday()-.started)::!report_timings);
     Option.iter(save experiment.rel_name) experiment.rel_bytes;
     Option.iter(save experiment.int_name) experiment.int_bytes;
-    let report_timings=ref[] in
     let serialization_started=Unix.gettimeofday() in
     if options.report=Explorer then (
       let map=Option.get experiment.execution_map and provenance=Option.get experiment.provenance in
@@ -232,6 +240,8 @@ let run_compiler (options : options) =
       (if pass_ok experiment.console"END  COMPILATION"then"yes"else"no");
     Printf.printf "data-memory traffic (Step byte accesses): read=%d written=%d total=%d\n\n"
       experiment.run.data_bytes_read experiment.run.data_bytes_written experiment.run.data_bytes_total;
+    if options.report<>No_report then Printf.printf "step-indexed chronology: compiler-timeline.json (%d console messages, %d file events)\n\n"
+      (List.length experiment.console_messages)(List.length experiment.file_events);
     (match experiment.rel_bytes with None->print_endline"output: REL not produced"|Some rel->Printf.printf"output:\n  %s: %d bytes\n  SHA-256: %s\n  %s survives: %s\n\n"
       experiment.rel_name(Bytes.length rel)(Pli80.Experiment.sha256_hex rel)experiment.int_name(if experiment.int_bytes=None then"no"else"yes"));
     (match experiment.execution_map with None->()|Some map->let x=Analysis.Execution_map.summary map in Printf.printf"execution attributed: %d / %d\n"

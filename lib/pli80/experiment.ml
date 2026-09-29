@@ -8,8 +8,18 @@ type input = {
   max_steps:int;
 }
 type timings = {setup_seconds:float;execution_seconds:float}
+type file_event_operation = Open | Close | Make | Delete | Sequential_read | Sequential_write
+type file_event = {
+  step_index : int;
+  operation : file_event_operation;
+  file : Cpm.Filesystem.key;
+  succeeded : bool;
+  logical_record : int option;
+  byte_range : (int * int) option;
+}
 type result = {
-  run:Runner.run_result;console:string;filesystem:Cpm.Filesystem.t;
+  run:Runner.run_result;console:string;console_messages:Console_capture.message list;
+  file_events:file_event list;filesystem:Cpm.Filesystem.t;
   rel_name:string;rel_bytes:bytes option;int_name:string;int_bytes:bytes option;
   execution_map:Analysis.Execution_map.t option;
   provenance:Analysis.Provenance.t option;
@@ -167,7 +177,8 @@ let run ?(structure=false) ~analysis input =
       Option.iter(fun map->match Analysis.Execution_map.seed_image map ~image:com_image ~runtime_base:0x100 input.pli_com with
         |Ok()->()|Error message->failwith message)execution_map;
       Option.iter(fun p->Analysis.Provenance.seed_image p ~image:com_image ~runtime_base:0x100 input.pli_com)provenance;
-      let console=Buffer.create 256 in
+      let console=Console_capture.create() in
+      let file_events=ref [] in
       let on_start page=Option.iter(fun p->
         Analysis.Provenance.seed_memory p ~class_:Analysis.Provenance.System ~address:0 page;
         Analysis.Provenance.seed_command_tail p ~address:0x81 input.command_tail;
@@ -210,12 +221,20 @@ let run ?(structure=false) ~analysis input =
         |_->Some(fun ~step_index event->
           Option.iter(fun map->Analysis.Execution_map.observe_bdos_event ~step_index map event)execution_map;
           Option.iter(fun p->Analysis.Provenance.observe_bdos_event p ~step_index event)provenance) in
+      let on_bdos_file_event ~step_index (event:Cpm.Bdos.file_event)=
+        let operation=match event.operation with
+          |Cpm.Bdos.Open->Open|Close->Close|Make->Make|Delete->Delete
+          |Sequential_read->Sequential_read|Sequential_write->Sequential_write in
+        let byte_range=if event.succeeded then Option.map(fun record->record*128,(record+1)*128)event.logical_record else None in
+        file_events:={step_index;operation;file=event.file;succeeded=event.succeeded;
+          logical_record=event.logical_record;byte_range}::!file_events in
       let on_bdos_effect=Option.map Analysis.Provenance.observe_bdos_effect provenance in
       let setup_seconds=Unix.gettimeofday()-.setup_started in
       let execution_started=Unix.gettimeofday() in
       let run_result=Runner.run_bytes ~max_steps:input.max_steps ?on_step_state ?on_event ?on_bdos_event ?on_bdos_effect
         ~on_start ?on_start_state ~filesystem ~command_tail:input.command_tail
-        ~output:(Buffer.add_char console) input.pli_com in
+        ~on_bdos_file_event ~on_console_output:(Console_capture.emit console)
+        ~output:(fun _ -> ()) input.pli_com in
       let execution_seconds=Unix.gettimeofday()-.execution_started in
       (match run_result with Error e->Error(Run_error e)|Ok run->
         let rel_name,int_name=match output_names module_name with Ok names->names|Error _->assert false in
@@ -223,6 +242,7 @@ let run ?(structure=false) ~analysis input =
         let dynamic_blocks=match dynamic_structure,dynamic_blocks_builder with
           |Some structure,Some blocks->Some(Analysis.Dynamic_blocks.materialize blocks (Analysis.Dynamic_structure.routines structure))
           |_->None in
-        Ok{run;console=Buffer.contents console;filesystem;rel_name;rel_bytes=read rel_name;
+        Ok{run;console=Console_capture.text console;console_messages=Console_capture.messages console;
+          file_events=List.rev !file_events;filesystem;rel_name;rel_bytes=read rel_name;
           int_name;int_bytes=read int_name;execution_map;provenance;dynamic_structure;dynamic_blocks;ownership_audit;
           timings={setup_seconds;execution_seconds}})

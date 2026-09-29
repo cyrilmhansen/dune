@@ -19,6 +19,15 @@ type event =
       data : bytes;
     }
 
+type file_operation = Open | Close | Make | Delete | Sequential_read | Sequential_write
+
+type file_event = {
+  operation : file_operation;
+  file : Filesystem.key;
+  succeeded : bool;
+  logical_record : int option;
+}
+
 type register = A | B | C | D | E | H | L | SP
 type memory_write_cause = Fcb_update
 type external_effect =
@@ -109,7 +118,7 @@ let transfer_record_from_memory memory ~dma =
 
 let bdos_function_limit = 40
 
-let dispatch_inner ~runtime ~memory ~state ~output ~on_event =
+let dispatch_inner ~runtime ~memory ~state ~output ~on_event ~on_file_event =
   let function_number = I8080.State.c state in
   match function_number with
   | 0 -> Ok Terminate
@@ -128,7 +137,7 @@ let dispatch_inner ~runtime ~memory ~state ~output ~on_event =
       | Error _ -> set_result state 0xff
       | Ok key ->
           (match Filesystem.record_count runtime.filesystem key with
-          | None -> set_result state 0xff
+          | None -> on_file_event {operation=Open;file=key;succeeded=false;logical_record=None}; set_result state 0xff
           | Some records ->
               let fcb = Fcb.at memory ~address:(I8080.State.de state) in
               Fcb.set_s1 fcb 0;
@@ -139,19 +148,22 @@ let dispatch_inner ~runtime ~memory ~state ~output ~on_event =
               let extent_start = Fcb.extent fcb * 128 in
               Fcb.set_record_count fcb (max 0 (min 128 (records - extent_start)));
               Fcb.set_file_write_flag fcb true;
+              on_file_event {operation=Open;file=key;succeeded=true;logical_record=None};
               set_result state 0))
   | 16 ->
       (match resolve_fcb runtime memory (I8080.State.de state) with
       | Error _ -> set_result state 0xff
       | Ok key ->
-          if Filesystem.record_count runtime.filesystem key = None then set_result state 0xff
-          else set_result state 0)
+          let succeeded=Filesystem.record_count runtime.filesystem key <> None in
+          on_file_event {operation=Close;file=key;succeeded;logical_record=None};
+          set_result state (if succeeded then 0 else 0xff))
   | 19 ->
       (match resolve_fcb runtime memory (I8080.State.de state) with
       | Error _ -> set_result state 0xff
       | Ok key ->
           let found = Filesystem.record_count runtime.filesystem key <> None in
           if found then ignore (Filesystem.delete runtime.filesystem key);
+          on_file_event {operation=Delete;file=key;succeeded=found;logical_record=None};
           set_result state (if found then 0 else 0xff))
   | 20 ->
       (match resolve_fcb runtime memory (I8080.State.de state) with
@@ -163,14 +175,17 @@ let dispatch_inner ~runtime ~memory ~state ~output ~on_event =
           let current_record = Fcb.current_record fcb in
           let record_number = position_of_fcb memory ~fcb_address in
           (match Filesystem.record_count runtime.filesystem key with
-          | None -> set_result state 1
+          | None -> on_file_event {operation=Sequential_read;file=key;succeeded=false;logical_record=Some record_number}; set_result state 1
           | Some records when current_record > 128 || record_number >= records ->
               (* EOF leaves the caller-visible cursor and extent untouched. *)
+              on_file_event {operation=Sequential_read;file=key;succeeded=false;logical_record=Some record_number};
               set_result state 1
           | Some records ->
               (match Filesystem.read_record runtime.filesystem key ~record:record_number with
               | Error error -> Error (Filesystem_model_limit error)
-              | Ok None -> set_result state 1
+              | Ok None ->
+                  on_file_event {operation=Sequential_read;file=key;succeeded=false;logical_record=Some record_number};
+                  set_result state 1
               | Ok (Some record) ->
                   transfer_record_to_memory memory ~dma:runtime.dma record;
                   set_fcb_read_position memory ~fcb_address ~record_count:records
@@ -179,17 +194,22 @@ let dispatch_inner ~runtime ~memory ~state ~output ~on_event =
                     (Read_record
                        { file = key; logical_record = record_number; dma = runtime.dma;
                          data = Bytes.copy record });
+                  on_file_event {operation=Sequential_read;file=key;succeeded=true;logical_record=Some record_number};
                   set_result state 0)))
   | 21 ->
       (match resolve_fcb runtime memory (I8080.State.de state) with
       | Error _ -> set_result state 1
       | Ok key ->
           (match Filesystem.record_count runtime.filesystem key with
-          | None -> set_result state 1
+          | None ->
+              let record_number=position_of_fcb memory ~fcb_address:(I8080.State.de state) in
+              on_file_event {operation=Sequential_write;file=key;succeeded=false;logical_record=Some record_number};
+              set_result state 1
           | Some _ ->
               let record_number = position_of_fcb memory ~fcb_address:(I8080.State.de state) in
               if record_number >= Filesystem.maximum_records then
-                Error (Filesystem_model_limit (Filesystem.Record_out_of_range record_number))
+                (on_file_event {operation=Sequential_write;file=key;succeeded=false;logical_record=Some record_number};
+                 Error (Filesystem_model_limit (Filesystem.Record_out_of_range record_number)))
               else
                 let record = transfer_record_from_memory memory ~dma:runtime.dma in
                 (match Filesystem.write_record runtime.filesystem key ~record:record_number record with
@@ -207,12 +227,14 @@ let dispatch_inner ~runtime ~memory ~state ~output ~on_event =
                       (Write_record
                          { file = key; logical_record = record_number; dma = runtime.dma;
                            data = Bytes.copy record });
+                    on_file_event {operation=Sequential_write;file=key;succeeded=true;logical_record=Some record_number};
                     set_result state 0)))
   | 22 ->
       (match resolve_fcb runtime memory (I8080.State.de state) with
       | Error _ -> set_result state 0xff
       | Ok key ->
           Filesystem.make runtime.filesystem key;
+          on_file_event {operation=Make;file=key;succeeded=true;logical_record=None};
           let fcb = Fcb.at memory ~address:(I8080.State.de state) in
           Fcb.set_s1 fcb 0;
           Fcb.set_s2 fcb 0;
@@ -232,8 +254,8 @@ let dispatch_inner ~runtime ~memory ~state ~output ~on_event =
       Ok Continue
   | number -> Error (Unsupported_function number)
 
-let dispatch_instrumented ~on_event ~runtime ~memory ~state ~output =
-  match dispatch_inner ~runtime ~memory ~state ~output ~on_event with
+let dispatch_instrumented_with_file_events ~on_event ~on_file_event ~runtime ~memory ~state ~output =
+  match dispatch_inner ~runtime ~memory ~state ~output ~on_event ~on_file_event with
   | Ok Continue ->
       (* CP/M's compatibility convention aliases the byte return in A to L
          and the high byte in B to H, including calls without a modeled
@@ -244,7 +266,7 @@ let dispatch_instrumented ~on_event ~runtime ~memory ~state ~output =
   | Ok Terminate -> Ok Terminate
   | Error error -> Error error
 
-let dispatch_with_effects ~on_event ~on_effect ~runtime ~memory ~state ~output =
+let dispatch_with_effects_and_file_events ~on_event ~on_file_event ~on_effect ~runtime ~memory ~state ~output =
   let before =
     [ (A, I8080.State.a state); (B, I8080.State.b state);
       (C, I8080.State.c state); (D, I8080.State.d state);
@@ -259,11 +281,12 @@ let dispatch_with_effects ~on_event ~on_effect ~runtime ~memory ~state ~output =
     else None
   in
   let successful_record = ref None in
-  match dispatch_instrumented
+  match dispatch_instrumented_with_file_events
           ~on_event:(fun event ->
             (match event with Read_record _ -> successful_record := Some 20
              | Write_record _ -> successful_record := Some 21);
             on_event event)
+          ~on_file_event
           ~runtime ~memory ~state ~output with
   | Error error -> Error error
   | Ok action ->
@@ -297,6 +320,12 @@ let dispatch_with_effects ~on_event ~on_effect ~runtime ~memory ~state ~output =
               on_effect (Memory_write { address; value; cause = Fcb_update })
           done);
       Ok action
+
+let dispatch_instrumented ~on_event ~runtime ~memory ~state ~output =
+  dispatch_instrumented_with_file_events ~on_event ~on_file_event:(fun _ -> ()) ~runtime ~memory ~state ~output
+
+let dispatch_with_effects ~on_event ~on_effect ~runtime ~memory ~state ~output =
+  dispatch_with_effects_and_file_events ~on_event ~on_file_event:(fun _ -> ()) ~on_effect ~runtime ~memory ~state ~output
 
 let dispatch ~runtime ~memory ~state ~output =
   dispatch_instrumented ~on_event:(fun _ -> ()) ~runtime ~memory ~state ~output

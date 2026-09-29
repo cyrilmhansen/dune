@@ -8,6 +8,20 @@ Runner termination/steps, the memory-backed virtual filesystem and REL/INT
 bytes, plus setup and execution-plus-live-analysis timings. Report projection
 is deliberately outside this module.
 
+For `--report summary` and `--report explorer`, the CLI writes
+`compiler-timeline.json`, headed `RUNES_PLI80_FILE_TIMELINE 1`. It records
+zero-based step-indexed compiler console messages, CP/M-visible OPEN/CLOSE/
+MAKE/DELETE and sequential READ/WRITE operations (including unsuccessful
+attempts where a canonical FCB identity is available), record numbers and
+half-open byte ranges, first observed execution of images, and run boundaries.
+Console message bounds identify the first and last output steps. File events
+are observed at BDOS dispatch; console characters are timestamped as the
+BDOS output callback emits them. Record indices are zero-based and byte
+ranges are `[start,end)`. These describe Runes' deterministic,
+memory-backed CP/M filesystem, not physical disk latency or host disk I/O.
+The report is factual chronology only: message labels are not inferred pass
+boundaries, and image/file events do not establish compiler-phase semantics.
+
 The CLI is `pli80-analyze`. For example:
 
 ```sh

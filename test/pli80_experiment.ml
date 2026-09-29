@@ -19,6 +19,17 @@ let test_source_normalization () =
   let raw=Bytes.of_string"x\ny\026\026" in
   expect_bytes (Bytes.to_string raw) (Pli80.Experiment.prepare_source ~normalize:false raw)
 
+let test_step_indexed_console_messages () =
+  let capture=Pli80.Console_capture.create() in
+  let emit text step=String.iter(Pli80.Console_capture.emit capture ~step_index:step)text in
+  emit "prefix NO ERROR(S) IN " 41;
+  emit "PASS 1 then NO ERROR(S) IN PASS 2 / END  COMPILATION" 42;
+  assert(Pli80.Console_capture.text capture="prefix NO ERROR(S) IN PASS 1 then NO ERROR(S) IN PASS 2 / END  COMPILATION");
+  match Pli80.Console_capture.messages capture with
+  |[{text=a;first_step=41;last_step=42};{text=b;first_step=42;last_step=42};{text=c;first_step=42;last_step=42}]->
+      assert(a="NO ERROR(S) IN PASS 1"&&b="NO ERROR(S) IN PASS 2"&&c="END  COMPILATION")
+  |_->failwith "console compiler messages were not captured with exact output-step bounds"
+
 let test_sha256 () =
   assert(Pli80.Experiment.sha256_hex(Bytes.of_string"abc")=
     "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad")
@@ -72,5 +83,5 @@ let test_structure_requires_map () =
   assert(Pli80.Experiment.run ~structure:true ~analysis:Pli80.Experiment.Run input=
     Error Pli80.Experiment.Structure_requires_execution_map)
 
-let () = test_module_names(); test_source_normalization(); test_sha256(); test_offsets_and_selection();
+let () = test_module_names(); test_source_normalization(); test_step_indexed_console_messages(); test_sha256(); test_offsets_and_selection();
   test_cli_options();test_structure_requires_map()

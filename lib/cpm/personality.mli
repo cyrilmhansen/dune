@@ -35,3 +35,8 @@ val dispatch_with_effects :
   state:I8080.State.t ->
   output:(char -> unit) ->
   (Bdos.action, Bdos.error) result
+
+val dispatch_with_file_events :
+  t -> process -> on_event:(Bdos.event -> unit) -> on_file_event:(Bdos.file_event -> unit) ->
+  on_effect:(Bdos.external_effect -> unit) -> memory:I8080.Memory.t -> state:I8080.State.t ->
+  output:(char -> unit) -> (Bdos.action, Bdos.error) result

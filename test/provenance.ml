@@ -332,6 +332,59 @@ let historical_run () =
       assert(contains console "NO ERROR(S) IN PASS 1");
       assert(contains console "NO ERROR(S) IN PASS 2");
       assert(contains console "END  COMPILATION");
+      let message text=List.find(fun (m:Pli80.Console_capture.message)->m.text=text) experiment.console_messages in
+      let pass1=message "NO ERROR(S) IN PASS 1" and pass2=message "NO ERROR(S) IN PASS 2"
+      and ending=message "END  COMPILATION" in
+      assert(pass1.first_step=642_446 && pass1.last_step=643_686);
+      assert(pass2.first_step=1_636_627 && pass2.last_step=1_637_867);
+      assert(ending.first_step=2_534_253 && ending.last_step=2_535_183);
+      let file_events=experiment.file_events in
+      let timeline_report=Pli80.Compiler_timeline.of_experiment experiment in
+      List.iter(fun(name,count,first_step,last_step,entry_step)->
+        let reads=List.filter(fun (e:Pli80.Experiment.file_event)->e.file.name=name
+          && e.operation=Pli80.Experiment.Sequential_read && e.succeeded)file_events in
+        assert(List.length reads=count);
+        assert(List.fold_left(fun n (e:Pli80.Experiment.file_event)->min n e.step_index)max_int reads=first_step);
+        assert(List.fold_left(fun n (e:Pli80.Experiment.file_event)->max n e.step_index)min_int reads=last_step);
+        assert(List.exists(fun (e:Pli80.Compiler_timeline.event)->match e with
+          |Pli80.Compiler_timeline.Image_first_execution{step_index;image;runtime_pc;image_offset}->
+              image=name && step_index=entry_step && runtime_pc=0x2200 && image_offset=0
+          |_->false)(Pli80.Compiler_timeline.events timeline_report)))
+        ["PLI0.OVL",141,644,14_084,14_310;"PLI1.OVL",272,644_035,670_051,670_277;
+         "PLI2.OVL",264,1_638_236,1_663_484,1_663_710];
+      let exact_event name operation step record success=
+        List.exists(fun (e:Pli80.Experiment.file_event)->e.file.name=name && e.operation=operation
+          && e.step_index=step && e.logical_record=record && e.succeeded=success)file_events in
+      assert(exact_event "OPTIMIST.INT" Pli80.Experiment.Delete 672_790 None false);
+      assert(exact_event "OPTIMIST.INT" Pli80.Experiment.Make 672_870 None true);
+      List.iter(fun(step,record)->assert(exact_event "OPTIMIST.INT" Pli80.Experiment.Sequential_write step (Some record) true))
+        [1_155_478,0;1_354_102,1;1_545_545,2;1_668_911,3];
+      assert(exact_event "OPTIMIST.INT" Pli80.Experiment.Close 1_668_996 None true);
+      assert(exact_event "OPTIMIST.INT" Pli80.Experiment.Open 1_669_083 None true);
+      List.iter(fun(step,record)->assert(exact_event "OPTIMIST.INT" Pli80.Experiment.Sequential_read step (Some record) true))
+        [1_671_945,0;1_852_632,1;2_058_466,2;2_107_256,3];
+      assert(exact_event "OPTIMIST.INT" Pli80.Experiment.Delete 2_535_414 None true);
+      assert(List.exists(fun (e:Pli80.Experiment.file_event)->e.file.name="OPTIMIST.PLI"
+        && e.operation=Pli80.Experiment.Sequential_read && e.step_index=404_497
+        && e.logical_record=Some 11 && not e.succeeded && e.byte_range=None)file_events);
+      List.iter(fun(name,opened,closed)->
+        assert(exact_event name Pli80.Experiment.Open opened None true);
+        assert(exact_event name Pli80.Experiment.Close closed None true))
+        ["PLI0.OVL",563,14_260;"PLI1.OVL",643_954,670_227;"PLI2.OVL",1_638_155,1_663_660];
+      List.iter(fun(step,record)->assert(exact_event "OPTIMIST.PLI" Pli80.Experiment.Sequential_read step (Some record) true))
+        [68_699,0;229_318,7;404_397,10;673_327,0;936_391,7;1_275_112,10;1_669_537,0;1_669_837,3];
+      assert(pass1.last_step<672_790 && 1_155_478<pass2.first_step && pass2.last_step<1_668_911);
+      assert(1_668_911<1_668_996 && 1_668_996<1_669_083 && 1_669_083<1_671_945);
+      List.iter(fun(step,record)->assert(exact_event "OPTIMIST.REL" Pli80.Experiment.Sequential_write step (Some record) true))
+        [840_539,0;952_112,1;1_714_977,2;1_810_847,3;1_895_082,4;1_987_517,5;
+         2_251_801,6;2_323_496,7;2_380_943,8;2_474_871,9;2_533_978,10];
+      assert(exact_event "OPTIMIST.REL" Pli80.Experiment.Close 2_534_076 None true);
+      assert(2_533_978<2_534_076 && 2_534_076<ending.first_step && ending.last_step<2_535_414);
+      let timeline=Pli80.Compiler_timeline.to_json_string timeline_report in
+      assert(String.starts_with ~prefix:"RUNES_PLI80_FILE_TIMELINE 1\n{" timeline);
+      assert(contains timeline "OPTIMIST.INT" && contains timeline "NO ERROR(S) IN PASS 2");
+      assert(contains timeline "\"image\":\"PLI2.OVL\"");
+      assert(contains timeline "\"byte_range\":{\"start\":1280,\"end_exclusive\":1408}");
       let elapsed=Sys.time()-.started in
       let rel_key=match Cpm.Filesystem.key_of_name ~drive:0 ~user:0 ~name:"OPTIMIST.REL" with
         |Ok x->x|Error _->assert false in
