@@ -87,6 +87,63 @@ const roleColor={value:"#2878b5",address:"#d18a16",flag:"#bc3b82",control:"#555"
 let graph=null, routineGraph=null, routineGraphMode="global", activeNarrativeOrdinal=null;
 let current=null, currentPath=null, currentProducer=null, analysisMode="data";
 function safeText(el,text){el.textContent=text;}
+const formatCount=value=>Number(value??0).toLocaleString("en-US");
+const hexValue=(value,width)=>value==null?"unknown":`${Number(value).toString(16).toUpperCase().padStart(width,"0")}h`;
+function overviewJump(selector){document.querySelector(selector)?.scrollIntoView({behavior:"smooth",block:"start"});}
+function renderUnprojectedOverview(byte){
+  const offset=byte?.offset??window.__selectedSink??0;
+  safeText(document.querySelector("#overview-what-value"),`${report.output_file.name} +${hexValue(offset,4)} = ${hexValue(byte?.value,2)}`);
+  safeText(document.querySelector("#overview-when-value"),`write step ${byte?.write_step==null?"unknown":formatCount(byte.write_step)}`);
+  safeText(document.querySelector("#overview-how-value"),"Detailed provenance projection not embedded");
+  document.querySelector("#overview-source-rows").replaceChildren();
+  const sourceNote=document.createElement("p");sourceNote.className="overview-empty";sourceNote.textContent="Source projection not embedded for this output byte.";document.querySelector("#overview-source-rows").append(sourceNote);
+  document.querySelector("#overview-operation-rows").replaceChildren();
+  document.querySelector("#overview-path-row").replaceChildren();
+  window.__explanationOverview={offset,value:byte?.value??null,write_step:byte?.write_step??null,projection_embedded:false,sources:[],operations:[]};
+}
+function renderExplanationOverview(projection,path){
+  const {sink,value:sink_value,write_step,full_node_count,source_leaf_count,sources,operations}=projection;
+  safeText(document.querySelector("#overview-what-value"),`${sink.file.name} +${hexValue(sink.offset,4)} = ${hexValue(sink_value,2)}`);
+  safeText(document.querySelector("#overview-when-value"),`write step ${write_step==null?"unknown":formatCount(write_step)}`);
+  const pathCount=path?`${formatCount(path.context_depth)} path-context decisions · ${formatCount(path.distinct_branch_locations)} branch locations`:"path-control projection not embedded";
+  safeText(document.querySelector("#overview-how-value"),`${formatCount(full_node_count)} exact data-slice nodes · ${formatCount(source_leaf_count)} source leaves · ${pathCount}`);
+
+  const sourceRoot=document.querySelector("#overview-source-rows");sourceRoot.replaceChildren();
+  for(const source of sources){
+    const row=document.createElement("button");row.type="button";row.className="overview-source-row";row.title=`Open detailed source influence for ${source.identity}`;
+    const category=document.createElement("span");category.className="overview-source-kind";category.textContent=source.classification??source.kind;
+    const identity=document.createElement("span");identity.className="overview-source-identity";identity.textContent=source.identity;
+    const offsets=document.createElement("span");offsets.textContent=`${formatCount(source.distinct_source_bytes)} distinct offsets`;
+    const leaves=document.createElement("span");leaves.textContent=`${formatCount(source.leaf_occurrences)} leaf occurrences`;
+    row.append(category,identity,offsets,leaves);row.addEventListener("click",()=>overviewJump("#source-influence"));sourceRoot.append(row);
+  }
+  if(!sources.length){const note=document.createElement("p");note.className="overview-empty";note.textContent="No source leaves in this slice.";sourceRoot.append(note)}
+
+  const operationRoot=document.querySelector("#overview-operation-rows");operationRoot.replaceChildren();
+  const topOperations=operations.slice().sort((a,b)=>b.node_count-a.node_count||a.kind.localeCompare(b.kind)).slice(0,4);
+  for(const operation of topOperations){
+    const row=document.createElement("button");row.type="button";row.className="overview-operation-row";row.title="Open the complete operation summary";
+    const name=document.createElement("span");name.textContent=operation.kind;
+    const count=document.createElement("span");count.textContent=`${formatCount(operation.node_count)} nodes`;
+    row.append(name,count);row.addEventListener("click",()=>overviewJump("#operation-summary"));operationRoot.append(row);
+  }
+  const pathRoot=document.querySelector("#overview-path-row");pathRoot.replaceChildren();
+  if(path){
+    const button=document.createElement("button");button.type="button";button.className="overview-path-link";
+    button.textContent=`Path context: ${pathCount} · steps ${path.earliest_decision_step==null?"unknown":formatCount(path.earliest_decision_step)}–${path.latest_decision_step==null?"unknown":formatCount(path.latest_decision_step)}`;
+    button.addEventListener("click",()=>{
+      const selector=document.querySelector("#analysis-mode");
+      if(selector.value!=="path"){selector.value="path";selector.dispatchEvent(new Event("change",{bubbles:true}))}
+      overviewJump("#path-section");
+    });pathRoot.append(button);
+  }
+  window.__explanationOverview={offset:sink.offset,value:sink_value,write_step,nodes:full_node_count,source_leaves:source_leaf_count,
+    path_context_depth:path?.context_depth??null,path_branch_locations:path?.distinct_branch_locations??null,
+    sources:sources.map(source=>({kind:source.kind,classification:source.classification??null,identity:source.identity,distinct_source_bytes:source.distinct_source_bytes,leaf_occurrences:source.leaf_occurrences})),
+    operations:topOperations.map(operation=>({kind:operation.kind,node_count:operation.node_count}))};
+}
+for(const button of document.querySelectorAll("#overview-what,#overview-when,#overview-operation-jump"))button.addEventListener("click",()=>overviewJump(button.dataset.target));
+document.querySelector("#overview-source-jump").addEventListener("click",()=>overviewJump("#source-influence"));
 function roleSummary(p){const roles=p.roles;document.querySelector("#roles").innerHTML="";for(const role of ["value","address","flag","control"]){const d=document.createElement("span");d.className=`role-${role}`;d.textContent=`${role}: ${roles[role]}  `;document.querySelector("#roles").append(d);}}
 function groupedRows(p){
   const producers=p.producers.map(x=>({producer_id:x.id,image:x.image.identity,image_offset:x.image_offset,virtual_offset:x.virtual_offset,runtime_pc:x.runtime_pc,operation_kind:x.operation_kind,operation_nodes:x.operation_nodes,producer_steps:x.producer_steps,first_step:x.first_step,last_step:x.last_step,value_edges:x.value_edges,address_edges:x.address_edges,flag_edges:x.flag_edges,control_edges:x.control_edges}));
@@ -430,7 +487,7 @@ async function initializeStructureView(){
   window.__structureReady=true;
 }
 function showView(view){const structure=view==="structure"&&hasStructure;document.querySelector("#structure-view").hidden=!structure;document.querySelector("#low-level-view").hidden=structure;document.querySelector("#tab-structure").classList.toggle("active",structure);document.querySelector("#tab-low-level").classList.toggle("active",!structure);window.__activeView=structure?"structure":"low-level";}
-async function renderProjection(p){current=p;currentPath=controlSelection.get(`${outputIdentity}:${p.sink.offset}`)??null;window.__explorerReady=false;safeText(document.querySelector("#sink-meta"),`${p.sink.file.name} +${p.sink.offset.toString(16).toUpperCase().padStart(4,"0")}h = ${p.value?.toString(16).toUpperCase().padStart(2,"0")}h · write step ${p.write_step} · root ${p.root} · ${p.full_node_count} exact data-slice nodes · ${p.source_leaf_count} source leaves`);
+async function renderProjection(p){current=p;currentPath=controlSelection.get(`${outputIdentity}:${p.sink.offset}`)??null;window.__explorerReady=false;safeText(document.querySelector("#sink-meta"),"Selected output write · detailed provenance projection embedded");renderExplanationOverview(p,currentPath);
   const pathSummary=document.querySelector("#path-summary");if(currentPath)pathSummary.textContent=`Cumulative concrete path context: ${currentPath.context_depth} decisions at ${currentPath.distinct_branch_locations} static branch locations; steps ${currentPath.earliest_decision_step}–${currentPath.latest_decision_step}. Combined reachable nodes ${currentPath.combined_reachable_nodes} (${currentPath.additional_decision_nodes} decisions, ${currentPath.additional_context_nodes} contexts, ${currentPath.additional_flag_ancestors} additional flag/value ancestors; ${currentPath.control_relations} Control relations). This is not minimal control dependence.`;else pathSummary.textContent="No path-control projection embedded for this output byte.";
   const source=document.querySelector("#source-summary");source.replaceChildren();for(const s of p.sources){const div=document.createElement("div");div.textContent=`${s.classification??s.kind} · ${s.identity}: ${s.distinct_source_bytes} distinct offsets / ${s.leaf_occurrences} leaf occurrences · ${s.ranges.map(r=>r.first===r.last?r.first.toString(16):`${r.first.toString(16)}–${r.last.toString(16)}`).join(", ")}`;source.append(div);}
   roleSummary(p);renderHeatmaps(p,currentPath);await Promise.all([setTableData(p,currentPath),renderGraph(p,currentPath)]);
@@ -439,7 +496,7 @@ async function renderProjection(p){current=p;currentPath=controlSelection.get(`$
   for(const button of outputGrid.children)button.classList.toggle("selected",Number(button.dataset.offset)===p.sink.offset);
   window.__selectedSink=p.sink.offset;window.__explorerReady=true;window.__selectProducer=id=>highlightProducer(id);window.__heatMode=document.querySelector("#mode").value;window.__analysisMode=analysisMode;window.__pathRows=currentPath?.locations.length??0;window.__controlPreviewOrigins=currentPath?.preview.nodes.filter(n=>n.origin).map(n=>({image:n.origin.image.identity,offset:n.origin.offset,runtime_pc:n.origin.runtime_pc}))??[];window.__roleOverlayCounts=Object.fromEntries(["value","address","flag","control"].map(k=>[k,k==="control"?(currentPath?.locations.reduce((n,x)=>n+x.decision_count,0)??0):p.producers.reduce((n,x)=>n+x[`${k}_edges`],0)]));}
 async function clearProjection(){current=null;currentPath=null;currentProducer=null;document.querySelector("#heatmaps").replaceChildren();document.querySelector("#source-data").replaceChildren();document.querySelector("#source-summary").replaceChildren();document.querySelector("#roles").replaceChildren();document.querySelector("#path-summary").textContent="No detailed projection embedded for this output byte.";document.querySelector("#preview").replaceChildren();document.querySelector("#preview-meta").textContent="No detailed projection embedded for this output byte.";document.querySelector("#graph-meta").textContent="No detailed projection embedded.";document.querySelector("#producer-highlight").textContent="";if(graph){graph.destroy();graph=null;}for(const id of ["#producers","#sources","#operations","#source-ranges","#control-decisions"]){const old=viewerTables[id],table=await worker.table([{status:"No projection embedded"}]);await old.viewer.load(table);await old.viewer.restore({plugin:"Datagrid"});old.table.delete?.();viewerTables[id]={...old,table,rows:0};}window.__perspectiveRows=Object.fromEntries(Object.entries(viewerTables).map(([k,v])=>[k,v.rows]));}
-async function selectOffset(offset){const p=selection.get(`${outputIdentity}:${offset}`);document.querySelector("#sink").value=String(offset);for(const button of outputGrid.children)button.classList.toggle("selected",Number(button.dataset.offset)===offset);if(!p){const b=report.output_bytes.find(x=>x.offset===offset);safeText(document.querySelector("#sink-meta"),`Metadata only · ${report.output_file.name} +${offset.toString(16).toUpperCase().padStart(4,"0")}h · value ${b?.value.toString(16).toUpperCase().padStart(2,"0")}h · write step ${b?.write_step??"?"} · rewrites ${b?.rewrite_count??0} · detailed projection not embedded.`);await clearProjection();window.__selectedSink=offset;window.__explorerReady=true;return;}await renderProjection(p);}
+async function selectOffset(offset){const p=selection.get(`${outputIdentity}:${offset}`);document.querySelector("#sink").value=String(offset);for(const button of outputGrid.children)button.classList.toggle("selected",Number(button.dataset.offset)===offset);if(!p){const b=report.output_bytes.find(x=>x.offset===offset);safeText(document.querySelector("#sink-meta"),`Metadata only · detailed projection not embedded · rewrites ${b?.rewrite_count??0}`);await clearProjection();window.__selectedSink=offset;renderUnprojectedOverview(b);window.__explorerReady=true;return;}await renderProjection(p);}
 for(const p of report.selections){const opt=document.createElement("option");opt.value=p.sink.offset;opt.textContent=`${p.sink.file.name} +${p.sink.offset.toString(16).toUpperCase().padStart(4,"0")}`;document.querySelector("#sink").append(opt)}
 document.querySelector("#sink").addEventListener("change",e=>void selectOffset(Number(e.target.value)));document.querySelector("#mode").addEventListener("change",()=>current&&renderHeatmaps(current,currentPath));document.querySelector("#analysis-mode").addEventListener("change",e=>{analysisMode=e.target.value;if(current)void renderProjection(current)});
 document.querySelector("#tab-structure").addEventListener("click",()=>{showView("structure");if(hasStructure&&!routineGraph)void renderRoutineGraph()});document.querySelector("#tab-low-level").addEventListener("click",()=>showView("low-level"));
