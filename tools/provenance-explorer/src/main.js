@@ -263,11 +263,90 @@ function selectBlock(routineId, blockId) {
   const el = document.querySelector(`#canonical-block-${canonicalId}`);
   if (el) { el.open = true; el.scrollIntoView({behavior:"smooth",block:"center"}); }
 }
+const timelineSvgNamespace="http://www.w3.org/2000/svg";
+const timelineImageColors=["#2878b5","#27835e","#a35c9f","#c47c08","#526d82"];
+function renderStructureTimeline(routines){
+  const groupsByImage=new Map();
+  for(const routine of routines){
+    const image=routine.image;
+    const key=image?`${image.drive}:${image.user}:${image.name}`:"unresolved";
+    let group=groupsByImage.get(key);
+    if(!group){group={key,imageName:image?.name??"unresolved image origin",routines:[],firstStep:null};groupsByImage.set(key,group)}
+    group.routines.push(routine);
+    if(routine.first_step!=null&&(group.firstStep==null||routine.first_step<group.firstStep))group.firstStep=routine.first_step;
+  }
+  const groups=[...groupsByImage.values()].sort((a,b)=>
+    (a.firstStep??Number.MAX_SAFE_INTEGER)-(b.firstStep??Number.MAX_SAFE_INTEGER)||a.imageName.localeCompare(b.imageName));
+  const stepEnds=routines.flatMap(r=>[r.first_step,r.last_step]).filter(Number.isFinite);
+  for(const transition of structureReport.transitions??[])for(const step of [transition.first_step,transition.last_step])if(Number.isFinite(step))stepEnds.push(step);
+  const axisStart=0,axisEnd=Math.max(1,...stepEnds),width=1120,left=280,right=910,plotWidth=right-left;
+  const label=(text,attrs={})=>{const node=document.createElementNS(timelineSvgNamespace,"text");node.textContent=text;for(const [name,value] of Object.entries(attrs))node.setAttribute(name,String(value));return node};
+  const axis=document.querySelector("#structure-timeline-axis");axis.replaceChildren();
+  const axisSvg=document.createElementNS(timelineSvgNamespace,"svg");axisSvg.setAttribute("viewBox",`0 0 ${width} 38`);axisSvg.setAttribute("role","img");axisSvg.setAttribute("aria-label",`Step index axis from ${axisStart} to ${axisEnd}`);
+  axisSvg.append(label("routine / image",{x:8,y:28,class:"timeline-axis-label"}));
+  axisSvg.append(label("first / last observed step",{x:left,y:10,class:"timeline-axis-label"}));
+  axisSvg.append(label("executions",{x:930,y:28,class:"timeline-axis-label"}));
+  for(let i=0;i<=4;i++){
+    const step=Math.round(axisStart+(axisEnd-axisStart)*i/4),x=left+plotWidth*i/4;
+    const line=document.createElementNS(timelineSvgNamespace,"line");line.setAttribute("x1",String(x));line.setAttribute("x2",String(x));line.setAttribute("y1","15");line.setAttribute("y2","35");line.setAttribute("class","timeline-gridline");axisSvg.append(line);
+    axisSvg.append(label(step.toLocaleString("en-US"),{x,y:35,class:"timeline-tick","text-anchor":i===0?"start":i===4?"end":"middle"}));
+  }
+  axis.append(axisSvg);
+  const progression=document.querySelector("#structure-timeline-progression");progression.replaceChildren();
+  progression.append(document.createTextNode("First observed image appearances: "));
+  const observedGroups=groups.filter(group=>group.firstStep!=null);
+  for(const [index,group] of observedGroups.entries()){
+    if(index)progression.append(document.createTextNode("  →  "));
+    const firstRoutine=[...group.routines].filter(r=>r.first_step===group.firstStep).sort((a,b)=>a.id-b.id)[0];
+    const button=document.createElement("button");button.type="button";button.className="timeline-appearance";
+    button.textContent=`${group.imageName} · step ${group.firstStep.toLocaleString("en-US")}`;
+    button.title=`Select first observed routine ${firstRoutine?routineLabel(firstRoutine.id):""} in ${group.imageName}`;
+    if(firstRoutine)button.addEventListener("click",()=>selectRoutine(firstRoutine.id));
+    progression.append(button);
+  }
+  const timeline=document.querySelector("#structure-timeline");timeline.replaceChildren();
+  const rowHeight=21,groupHeaderHeight=27,top=8;
+  const height=top+groups.reduce((sum,group)=>sum+groupHeaderHeight+group.routines.length*rowHeight,0)+8;
+  const svg=document.createElementNS(timelineSvgNamespace,"svg");svg.setAttribute("viewBox",`0 0 ${width} ${height}`);svg.setAttribute("role","list");svg.setAttribute("aria-label",`${routines.length} routine observation envelopes from step ${axisStart} to ${axisEnd}`);
+  const rowFacts=[];let y=top;
+  for(const [groupIndex,group] of groups.entries()){
+    const color=timelineImageColors[groupIndex%timelineImageColors.length];
+    const groupTitle=label(`${group.imageName} · first observed ${group.firstStep==null?"unknown":`step ${group.firstStep.toLocaleString("en-US")}`} · ${group.routines.length} routines`,{x:8,y:y+17,class:"timeline-image-heading",fill:color});svg.append(groupTitle);y+=groupHeaderHeight;
+    const ordered=group.routines.slice().sort((a,b)=>(a.first_step??Number.MAX_SAFE_INTEGER)-(b.first_step??Number.MAX_SAFE_INTEGER)||a.id-b.id);
+    for(const routine of ordered){
+      const row=document.createElementNS(timelineSvgNamespace,"g");row.classList.add("timeline-routine");row.setAttribute("data-routine-id",String(routine.id));row.setAttribute("role","listitem");row.setAttribute("tabindex","0");row.setAttribute("aria-label",`${routineLabel(routine.id)} · ${routine.image?.name??"unresolved image"} · first step ${routine.first_step??"unknown"} · last step ${routine.last_step??"unknown"} · ${routine.executions} executions`);
+      const start=routine.first_step,end=routine.last_step;
+      const details=`${routineLabel(routine.id)}\nImage: ${routine.image?.name??"unresolved image origin"}\nFirst observed step: ${start??"unknown"}\nLast observed step: ${end??"unknown"}\nInstruction execution count: ${routine.executions}`;
+      const title=document.createElementNS(timelineSvgNamespace,"title");title.textContent=details;row.append(title);
+      const hitArea=document.createElementNS(timelineSvgNamespace,"rect");hitArea.setAttribute("x","0");hitArea.setAttribute("y",String(y-rowHeight/2));hitArea.setAttribute("width",String(width));hitArea.setAttribute("height",String(rowHeight));hitArea.setAttribute("class","timeline-hit-area");row.append(hitArea);
+      const rowLabel=label(`R${String(routine.id).padStart(3,"0")} · ${routine.offset==null?"unresolved":Number(routine.offset).toString(16).toUpperCase().padStart(4,"0")}`,{x:8,y:y+4,class:"timeline-routine-label"});row.append(rowLabel);
+      if(start!=null&&end!=null){
+        const x1=left+plotWidth*start/axisEnd,x2=left+plotWidth*end/axisEnd;
+        const envelope=document.createElementNS(timelineSvgNamespace,"line");envelope.setAttribute("x1",String(x1));envelope.setAttribute("x2",String(Math.max(x1+1,x2)));envelope.setAttribute("y1",String(y));envelope.setAttribute("y2",String(y));envelope.setAttribute("class","timeline-envelope");envelope.setAttribute("stroke",color);row.append(envelope);
+        const first=document.createElementNS(timelineSvgNamespace,"circle");first.setAttribute("cx",String(x1));first.setAttribute("cy",String(y));first.setAttribute("r","4");first.setAttribute("class","timeline-first-marker");first.setAttribute("fill",color);row.append(first);
+        const last=document.createElementNS(timelineSvgNamespace,"path");last.setAttribute("d",`M ${x2} ${y-4} L ${x2+4} ${y} L ${x2} ${y+4} L ${x2-4} ${y} Z`);last.setAttribute("class","timeline-last-marker");last.setAttribute("fill",color);row.append(last);
+      }
+      row.append(label(`${routine.executions.toLocaleString("en-US")}`,{x:930,y:y+4,class:"timeline-execution-count"}));
+      const activate=()=>selectRoutine(routine.id);
+      row.addEventListener("click",activate);row.addEventListener("keydown",event=>{if(event.key==="Enter"||event.key===" "){event.preventDefault();activate()}});
+      svg.append(row);rowFacts.push({routine_id:routine.id,image:group.imageName,first_step:start,last_step:end,executions:routine.executions});y+=rowHeight;
+    }
+  }
+  timeline.append(svg);
+  window.__structureTimelineFacts={routineCount:rowFacts.length,axisStart,axisEnd,groups:groups.map(group=>({image:group.imageName,first_step:group.firstStep,routines:group.routines.length})),rows:rowFacts};
+}
+function updateTimelineSelection(routineId){
+  for(const row of document.querySelectorAll("#structure-timeline [data-routine-id]")){
+    const selected=Number(row.getAttribute("data-routine-id"))===routineId;
+    row.classList.toggle("selected",selected);row.setAttribute("aria-current",selected?"true":"false");
+  }
+}
 function selectRoutine(id, preserveNarrative=false) {
   if (!hasStructure || !routineById.has(id)) return;
   if(!preserveNarrative)activeNarrativeOrdinal=null;
   const routine = routineById.get(id), detail = document.querySelector("#routine-detail");
   window.__selectedRoutine = id;
+  updateTimelineSelection(id);
   detail.replaceChildren();
   const heading = document.createElement("div"); heading.className = "routine-head";
   const title = document.createElement("h2"); title.textContent = routineLabel(routine.id); heading.append(title);
@@ -337,6 +416,7 @@ async function initializeStructureView(){
     from:routineLabel(e.from),to_id:e.to,to:routineLabel(e.to),
     first_kind:e.kind,first_step:e.first_step,count:edge?.count??1,kinds:edge?.kinds?.join(", ")??e.kind};});
   window.__structureRoutineRows=routineRows;window.__structureNarrativeRows=narrativeRows;
+  renderStructureTimeline(structureReport.routines);
   for(const [selector,data,group_by,sort] of [["#structure-routines",routineRows,[],[["id","asc"]]],
       ["#structure-narrative",narrativeRows,[],[["ordinal","asc"]]]]){
     const old=viewerTables[selector],table=await worker.table(data.length?data:[{empty:"no rows"}]);await old.viewer.load(table);

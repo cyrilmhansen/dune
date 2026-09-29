@@ -36,6 +36,17 @@ try {
     if(!simpleReturns.length||simpleReturns.some(e=>e.cycle))throw new Error("ordinary CALL/RETURN pairs were not kept distinct from cycle edges");
     if(expectedInput==="OPTIMIST"&&(structure.rows.routines!==599||structure.rows.narrative!==2940))throw new Error(`unexpected OPTIMIST structure metrics ${JSON.stringify(structure.rows)}`);
     if(expectedInput==="FIZZBUZ"&&(structure.rows.routines!==530||structure.rows.narrative!==2362))throw new Error(`unexpected FIZZBUZ structure metrics ${JSON.stringify(structure.rows)}`);
+    const timeline=await page.evaluate(()=>({facts:window.__structureTimelineFacts,rows:document.querySelectorAll("#structure-timeline [data-routine-id]").length,firstMarkers:document.querySelectorAll("#structure-timeline .timeline-first-marker").length,lastMarkers:document.querySelectorAll("#structure-timeline .timeline-last-marker").length,explanation:document.querySelector("#structure-timeline-panel > p").textContent,progression:[...document.querySelectorAll("#structure-timeline-progression .timeline-appearance")].map(x=>x.textContent)}));
+    if(timeline.rows!==structure.rows.routines||timeline.facts.routineCount!==structure.rows.routines||timeline.facts.axisStart!==0||timeline.facts.axisEnd<Math.max(...structure.routines.map(r=>r.last_step??0))||timeline.firstMarkers!==timeline.rows||timeline.lastMarkers!==timeline.rows||!timeline.explanation.includes("does not mean the routine ran continuously"))throw new Error(`routine observation timeline is incomplete or ambiguously described: ${JSON.stringify(timeline)}`);
+    if(expectedInput==="OPTIMIST"){
+      const imageOrder=timeline.facts.groups.map(x=>x.image),i0=imageOrder.indexOf("PLI0.OVL"),i1=imageOrder.indexOf("PLI1.OVL"),i2=imageOrder.indexOf("PLI2.OVL");
+      if(i0<0||i1<=i0||i2<=i1)throw new Error(`overlay first-observation order is not visible: ${JSON.stringify(timeline.facts.groups)}`);
+      if(!timeline.progression[i0].startsWith("PLI0.OVL")||!timeline.progression[i1].startsWith("PLI1.OVL")||!timeline.progression[i2].startsWith("PLI2.OVL"))throw new Error(`overlay first-observation sequence is not displayed: ${JSON.stringify(timeline.progression)}`);
+      const p0=timeline.facts.groups[i0],p1=timeline.facts.groups[i1],p2=timeline.facts.groups[i2];
+      if(!(p0.first_step<p1.first_step&&p1.first_step<p2.first_step))throw new Error(`overlay appearance steps are not chronological: ${JSON.stringify([p0,p1,p2])}`);
+      const p1Routine=structure.routines.find(r=>r.image==="PLI1.OVL");const row=page.locator(`#structure-timeline [data-routine-id="${p1Routine.id}"]`);await row.click();await page.waitForFunction(id=>window.__selectedRoutine===id,p1Routine.id);
+      if(await page.locator("#routine-detail h2").textContent()!==p1Routine.display)throw new Error("timeline selection did not reuse the routine detail view");
+    }
     const first=structure.routines[0];await page.evaluate(row=>document.querySelector("#structure-routines").dispatchEvent(new CustomEvent("perspective-click",{detail:{row}})),first);
     await page.waitForFunction(()=>window.__selectedRoutine===0&&window.__selectedRoutineBlocks>0);
     await page.evaluate(()=>window.__selectRoutineFromGraph(0));await page.waitForFunction(()=>window.__selectedRoutine===0);
