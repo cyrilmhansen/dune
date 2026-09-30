@@ -328,7 +328,7 @@ def analyze(capture, canonical_paths, manifest_path, images_dir, output):
             else "STRUCTURED"
             if seed
             and e["status_at_entry"] == "STRUCTURED"
-            and seed["matched_return_sample"]
+            and (seed["matched_return_sample"] or seed.get("software_return_sample"))
             else "unresolved"
         )
         e["cross_run_presence"] = {}

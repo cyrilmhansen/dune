@@ -182,3 +182,8 @@ The [MINIMAL baseline](../minimal-baseline/README.md) extends these seeds with
 ten reviewed helper families, explicit secondary entries, local RET alternatives,
 and the guarded BDOS bridge's specific external hardware return at `0005H`.
 It retains separate execution coverage and reconstruction-status measurements.
+
+[MINIMAL pass 1](../minimal-baseline/pass-1/README.md) adds scoped reader/filter
+contracts, the PLI0 bound/tag predicate, the PLI2 save/dispatch/restore shape, and
+a separate PLI1 constructor with an explicit argument-consuming software-return
+proof. Unobserved paths and unresolved PCHL handler bodies remain RAW.

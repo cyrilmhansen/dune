@@ -121,6 +121,43 @@ def check_source(image, source, assembly, seeds):
     return rebuilt
 
 
+def check_software_return(seed, images, originals):
+    """The reviewed PLI1 argument-consuming return; preserve byte/slot checks."""
+    proof = seed['software_return_sample']
+    call, writer, ret, relation = (proof[k] for k in ('call', 'writer', 'ret', 'relation'))
+    for witness in (call, writer, ret):
+        origin = witness['origin']
+        require(origin is not None, f'{seed["id"]}: software proof lacks image origin')
+        name, offset = origin['image']['name'], origin['offset']
+        raw = bytes.fromhex(witness['bytes'])
+        require(originals[name][offset:offset + len(raw)] == raw and
+                witness['pc'] == images[name]['runtime_base'] + offset,
+                f'{seed["id"]}: software proof coordinate/bytes mismatch')
+    require(call['bytes'] == 'CD' + (images[seed['image']]['runtime_base'] + seed['start_offset']).to_bytes(2, 'little').hex().upper() and call['pc_after'] == images[seed['image']]['runtime_base'] + seed['start_offset'] and
+            writer['origin']['image']['name'] == seed['image'] and
+            seed['start_offset'] <= writer['origin']['offset'] < seed['end_offset'] and writer['bytes'] == 'D5' and
+            ret['origin']['image']['name'] == seed['image'] and ret['origin']['offset'] in seed['observed_return_offsets'] and ret['bytes'] == 'C9',
+            f'{seed["id"]}: software entry/writer/exit mismatch')
+    # This optional proof admits only the established two-byte stack argument ABI.
+    require(proof['stack_argument_bytes'] == 2 and ret['sp_before'] == call['sp_after'] + 2 and
+            ret['pc_after'] == call['pc'] + 3 and ret['sp_after'] == call['sp_after'] + 4,
+            f'{seed["id"]}: software return argument/target mismatch')
+    writes = {w['address']: w['new_value'] for w in writer['writes']}
+    reads = {r['address']: r['value'] for r in ret['reads']}
+    slot = ret['sp_before']
+    require(writes == reads and set(reads) == {slot, (slot + 1) & 65535} and writer['sp_after'] == slot and
+            call['step_index'] < writer['step_index'] < ret['step_index'] and
+            reads[slot] + 256 * reads[(slot + 1) & 65535] == ret['pc_after'],
+            f'{seed["id"]}: software writer/stack bytes mismatch')
+    require(relation['type'] == 'software_continuation_return' and relation['step_index'] == ret['step_index'] and
+            relation['stack_slot'] == slot and relation['return_address'] == ret['pc_after'],
+            f'{seed["id"]}: software continuation relation mismatch')
+    for field, address in [('low_byte_writer', slot), ('high_byte_writer', (slot + 1) & 65535)]:
+        fact = relation[field]
+        require(fact['step'] == writer['step_index'] and fact['pc'] == writer['pc'] and fact['origin'] == writer['origin'] and
+                fact['value'] == writes[address], f'{seed["id"]}: software latest-writer fact mismatch')
+
+
 def check_evidence(evidence, images, originals):
     bases = {b['image']: b for b in evidence['load_bases']}
     for name, image in images.items():
@@ -157,6 +194,8 @@ def check_evidence(evidence, images, originals):
                     any(i['offset'] == seed['end_offset'] - 3 and i['bytes'] == 'C30500'
                         for i in seed['instructions']),
                     f'{seed["id"]}: external BDOS return without retained terminal JMP 0005H')
+        if seed.get('software_return_sample'):
+            check_software_return(seed, images, originals)
         match = seed['matched_return_sample']
         if match:
             call, ret = match['call'], match['ret']
@@ -207,7 +246,7 @@ def verify(manifest_path, images_dir):
             if section['status'] != 'RAW':
                 require(refs, f'{name}: promoted section without seed evidence')
             if section['status'] in ('STRUCTURED', 'UNDERSTOOD'):
-                require(any(s['matched_return_sample'] for s in refs), f'{name}: structure without matched pair')
+                require(any(s['matched_return_sample'] or s.get('software_return_sample') for s in refs), f'{name}: structure without matched pair')
             if section['status'] == 'UNDERSTOOD':
                 require(any(s.get('behavioral_contract') for s in refs), f'{name}: understood section without contract')
         source = manifest_path.parent / image['source']

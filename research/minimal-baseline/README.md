@@ -1,4 +1,22 @@
-# MINIMAL decompilation baseline V0
+# MINIMAL baseline: current through pass 1
+
+The [pass-1 report](pass-1/README.md) is the current decompilation result.
+MINIMAL coverage remains **21,012 image bytes**: **19,574 RAW, 304 DECODED,
+659 STRUCTURED, 475 UNDERSTOOD**. Understood CALL entries increase **15→21**;
+there are now 8 STRUCTURED and 362 unresolved CALL entries, plus eleven separate
+unresolved PCHL handlers. All 94,720 historical bytes remain exact.
+
+Current machine-readable status intersections and classifications are in
+[coverage.json](coverage.json), [instructions.jsonl](instructions.jsonl), and
+[inventory.json](inventory.json). The pass report states scoped contracts,
+refines the PLI1 shared-tail hypothesis, and lists the next five MINIMAL targets.
+FIZZBUZ delta facts below are unchanged; its code has not been decompiled.
+
+The following is the **historical V0 record at 6c77397**. Its status tables and
+priorities describe that snapshot; pass-1 before/after metrics are retained in
+[pass-1/progress.json](pass-1/progress.json).
+
+# Historical MINIMAL decompilation baseline V0
 
 Task `MINIMAL_DECOMPILATION_BASELINE_V0`, building on annotated assembly commit
 `3403dcc`. This is a coverage snapshot and a first set of low-level contracts,
