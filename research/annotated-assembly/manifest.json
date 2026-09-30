@@ -1,0 +1,566 @@
+{
+  "schema_version": 1,
+  "coordinate_system": "file offsets, end exclusive; runtime address = runtime_base + file offset",
+  "assembler": {
+    "package": "asm8080",
+    "version": "1.0.34"
+  },
+  "evidence": "evidence.json",
+  "images": [
+    {
+      "name": "PLI.COM",
+      "version": "Digital Research PL/I-80 v1.4 (exact SHA-256 identifies this image)",
+      "sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+      "length": 8064,
+      "runtime_base": 256,
+      "label_prefix": "PLI",
+      "source": "PLI.asm",
+      "original_filename": "PLI.COM",
+      "load_base_evidence_ref": "evidence.json#load_bases/PLI.COM",
+      "sections": [
+        {
+          "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+          "start_offset": 0,
+          "end_offset": 3830,
+          "length": 3830,
+          "runtime_start": 256,
+          "runtime_end": 4086,
+          "status": "RAW",
+          "original_sha256": "354b625cfbeafe9f1a1b00b10504efc5ca4cb0b31f6456022ec8eacefe8a3d30",
+          "reassembled_sha256": "354b625cfbeafe9f1a1b00b10504efc5ca4cb0b31f6456022ec8eacefe8a3d30",
+          "exact_match": true,
+          "evidence_refs": []
+        },
+        {
+          "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+          "start_offset": 3830,
+          "end_offset": 3881,
+          "length": 51,
+          "runtime_start": 4086,
+          "runtime_end": 4137,
+          "status": "DECODED",
+          "original_sha256": "2a5c99e46f7964ab21f1f436bff3dfc29f4789133cb1015e61794eabedf3163d",
+          "reassembled_sha256": "2a5c99e46f7964ab21f1f436bff3dfc29f4789133cb1015e61794eabedf3163d",
+          "exact_match": true,
+          "evidence_refs": [
+            "evidence.json#seeds/PLI.COM+0EF6"
+          ]
+        },
+        {
+          "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+          "start_offset": 3881,
+          "end_offset": 3884,
+          "length": 3,
+          "runtime_start": 4137,
+          "runtime_end": 4140,
+          "status": "RAW",
+          "original_sha256": "81013cc49f36c8987718f8b74ddd7c19b16be2da3b4242c58f3798f20e3dc616",
+          "reassembled_sha256": "81013cc49f36c8987718f8b74ddd7c19b16be2da3b4242c58f3798f20e3dc616",
+          "exact_match": true,
+          "evidence_refs": [
+            "evidence.json#seeds/PLI.COM+0EF6"
+          ]
+        },
+        {
+          "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+          "start_offset": 3884,
+          "end_offset": 3885,
+          "length": 1,
+          "runtime_start": 4140,
+          "runtime_end": 4141,
+          "status": "DECODED",
+          "original_sha256": "4fb733bedb74fec8d65bedf056b935189a289e928b3302bec38a281814de523a",
+          "reassembled_sha256": "4fb733bedb74fec8d65bedf056b935189a289e928b3302bec38a281814de523a",
+          "exact_match": true,
+          "evidence_refs": [
+            "evidence.json#seeds/PLI.COM+0EF6"
+          ]
+        },
+        {
+          "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+          "start_offset": 3885,
+          "end_offset": 4416,
+          "length": 531,
+          "runtime_start": 4141,
+          "runtime_end": 4672,
+          "status": "RAW",
+          "original_sha256": "12aecedf243fb77b7aa2d32fbbf03fd2e2823a66edf7b49f46c0294787a23daa",
+          "reassembled_sha256": "12aecedf243fb77b7aa2d32fbbf03fd2e2823a66edf7b49f46c0294787a23daa",
+          "exact_match": true,
+          "evidence_refs": []
+        },
+        {
+          "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+          "start_offset": 4416,
+          "end_offset": 4427,
+          "length": 11,
+          "runtime_start": 4672,
+          "runtime_end": 4683,
+          "status": "DECODED",
+          "original_sha256": "f40fb2b977462a9b2cbde40f3def21481c75f8ec2b253e441c29c7e54a7babde",
+          "reassembled_sha256": "f40fb2b977462a9b2cbde40f3def21481c75f8ec2b253e441c29c7e54a7babde",
+          "exact_match": true,
+          "evidence_refs": [
+            "evidence.json#seeds/PLI.COM+1140"
+          ]
+        },
+        {
+          "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+          "start_offset": 4427,
+          "end_offset": 4428,
+          "length": 1,
+          "runtime_start": 4683,
+          "runtime_end": 4684,
+          "status": "RAW",
+          "original_sha256": "4fb733bedb74fec8d65bedf056b935189a289e928b3302bec38a281814de523a",
+          "reassembled_sha256": "4fb733bedb74fec8d65bedf056b935189a289e928b3302bec38a281814de523a",
+          "exact_match": true,
+          "evidence_refs": [
+            "evidence.json#seeds/PLI.COM+1140"
+          ]
+        },
+        {
+          "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+          "start_offset": 4428,
+          "end_offset": 4501,
+          "length": 73,
+          "runtime_start": 4684,
+          "runtime_end": 4757,
+          "status": "DECODED",
+          "original_sha256": "4c1b8a273ce90e229372deed3a9ec8aa1a6c9cd13fe910eed4c2f56216e58bef",
+          "reassembled_sha256": "4c1b8a273ce90e229372deed3a9ec8aa1a6c9cd13fe910eed4c2f56216e58bef",
+          "exact_match": true,
+          "evidence_refs": [
+            "evidence.json#seeds/PLI.COM+1140"
+          ]
+        },
+        {
+          "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+          "start_offset": 4501,
+          "end_offset": 4504,
+          "length": 3,
+          "runtime_start": 4757,
+          "runtime_end": 4760,
+          "status": "RAW",
+          "original_sha256": "81013cc49f36c8987718f8b74ddd7c19b16be2da3b4242c58f3798f20e3dc616",
+          "reassembled_sha256": "81013cc49f36c8987718f8b74ddd7c19b16be2da3b4242c58f3798f20e3dc616",
+          "exact_match": true,
+          "evidence_refs": [
+            "evidence.json#seeds/PLI.COM+1140"
+          ]
+        },
+        {
+          "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+          "start_offset": 4504,
+          "end_offset": 4510,
+          "length": 6,
+          "runtime_start": 4760,
+          "runtime_end": 4766,
+          "status": "DECODED",
+          "original_sha256": "9a8988b89fafe99092ff9459ea75336f61d35419ad85a35565a465932c03aa15",
+          "reassembled_sha256": "9a8988b89fafe99092ff9459ea75336f61d35419ad85a35565a465932c03aa15",
+          "exact_match": true,
+          "evidence_refs": [
+            "evidence.json#seeds/PLI.COM+1140"
+          ]
+        },
+        {
+          "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+          "start_offset": 4510,
+          "end_offset": 4547,
+          "length": 37,
+          "runtime_start": 4766,
+          "runtime_end": 4803,
+          "status": "STRUCTURED",
+          "original_sha256": "643d003f402538aba0a8e03ced2bdcb6d5ca885b7f37b2f5e58e61721627547c",
+          "reassembled_sha256": "643d003f402538aba0a8e03ced2bdcb6d5ca885b7f37b2f5e58e61721627547c",
+          "exact_match": true,
+          "evidence_refs": [
+            "evidence.json#seeds/PLI.COM+119E"
+          ]
+        },
+        {
+          "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+          "start_offset": 4547,
+          "end_offset": 6587,
+          "length": 2040,
+          "runtime_start": 4803,
+          "runtime_end": 6843,
+          "status": "RAW",
+          "original_sha256": "2cb8415bdb3c1e394fd71b66e3a971961f2811350e7e0fbaf6338492be91900b",
+          "reassembled_sha256": "2cb8415bdb3c1e394fd71b66e3a971961f2811350e7e0fbaf6338492be91900b",
+          "exact_match": true,
+          "evidence_refs": []
+        },
+        {
+          "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+          "start_offset": 6587,
+          "end_offset": 6615,
+          "length": 28,
+          "runtime_start": 6843,
+          "runtime_end": 6871,
+          "status": "DECODED",
+          "original_sha256": "dd6d8d0c98b33c4c11c37326dbee2f72a5e9b691fbfcb2b10301da1efde89167",
+          "reassembled_sha256": "dd6d8d0c98b33c4c11c37326dbee2f72a5e9b691fbfcb2b10301da1efde89167",
+          "exact_match": true,
+          "evidence_refs": [
+            "evidence.json#seeds/PLI.COM+19BB"
+          ]
+        },
+        {
+          "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+          "start_offset": 6615,
+          "end_offset": 8064,
+          "length": 1449,
+          "runtime_start": 6871,
+          "runtime_end": 8320,
+          "status": "RAW",
+          "original_sha256": "1e4c517fefcd904d64c85f649799737948fb9736630dcc5f0e008955dbf76e9e",
+          "reassembled_sha256": "1e4c517fefcd904d64c85f649799737948fb9736630dcc5f0e008955dbf76e9e",
+          "exact_match": true,
+          "evidence_refs": []
+        }
+      ]
+    },
+    {
+      "name": "PLI0.OVL",
+      "version": "Digital Research PL/I-80 v1.4 (exact SHA-256 identifies this image)",
+      "sha256": "e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff",
+      "length": 18048,
+      "runtime_base": 8704,
+      "label_prefix": "PLI0",
+      "source": "PLI0.asm",
+      "original_filename": "PLI0.OVL",
+      "load_base_evidence_ref": "evidence.json#load_bases/PLI0.OVL",
+      "sections": [
+        {
+          "image_sha256": "e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff",
+          "start_offset": 0,
+          "end_offset": 18048,
+          "length": 18048,
+          "runtime_start": 8704,
+          "runtime_end": 26752,
+          "status": "RAW",
+          "original_sha256": "e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff",
+          "reassembled_sha256": "e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff",
+          "exact_match": true,
+          "evidence_refs": []
+        }
+      ]
+    },
+    {
+      "name": "PLI1.OVL",
+      "version": "Digital Research PL/I-80 v1.4 (exact SHA-256 identifies this image)",
+      "sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "length": 34816,
+      "runtime_base": 8704,
+      "label_prefix": "PLI1",
+      "source": "PLI1.asm",
+      "original_filename": "PLI1.OVL",
+      "load_base_evidence_ref": "evidence.json#load_bases/PLI1.OVL",
+      "sections": [
+        {
+          "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+          "start_offset": 0,
+          "end_offset": 34816,
+          "length": 34816,
+          "runtime_start": 8704,
+          "runtime_end": 43520,
+          "status": "RAW",
+          "original_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+          "reassembled_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+          "exact_match": true,
+          "evidence_refs": []
+        }
+      ]
+    },
+    {
+      "name": "PLI2.OVL",
+      "version": "Digital Research PL/I-80 v1.4 (exact SHA-256 identifies this image)",
+      "sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "length": 33792,
+      "runtime_base": 8704,
+      "label_prefix": "PLI2",
+      "source": "PLI2.asm",
+      "original_filename": "PLI2.OVL",
+      "load_base_evidence_ref": "evidence.json#load_bases/PLI2.OVL",
+      "sections": [
+        {
+          "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+          "start_offset": 0,
+          "end_offset": 26657,
+          "length": 26657,
+          "runtime_start": 8704,
+          "runtime_end": 35361,
+          "status": "RAW",
+          "original_sha256": "8767a5e06ad9807ba98a8ed32aca100ab7fef4071ddfe5575137138cf8801d5f",
+          "reassembled_sha256": "8767a5e06ad9807ba98a8ed32aca100ab7fef4071ddfe5575137138cf8801d5f",
+          "exact_match": true,
+          "evidence_refs": []
+        },
+        {
+          "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+          "start_offset": 26657,
+          "end_offset": 26667,
+          "length": 10,
+          "runtime_start": 35361,
+          "runtime_end": 35371,
+          "status": "UNDERSTOOD",
+          "original_sha256": "6760970b009715380057844c89261f63d1ad5f112bb9fa8336464915ed2a368b",
+          "reassembled_sha256": "6760970b009715380057844c89261f63d1ad5f112bb9fa8336464915ed2a368b",
+          "exact_match": true,
+          "evidence_refs": [
+            "evidence.json#seeds/PLI2.OVL+6821"
+          ]
+        },
+        {
+          "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+          "start_offset": 26667,
+          "end_offset": 26698,
+          "length": 31,
+          "runtime_start": 35371,
+          "runtime_end": 35402,
+          "status": "STRUCTURED",
+          "original_sha256": "bb89130d82e1fec93469852b7d8f1a6ed4ffddf9ce5cd689b334db7f5bb8faec",
+          "reassembled_sha256": "bb89130d82e1fec93469852b7d8f1a6ed4ffddf9ce5cd689b334db7f5bb8faec",
+          "exact_match": true,
+          "evidence_refs": [
+            "evidence.json#seeds/PLI2.OVL+682B"
+          ]
+        },
+        {
+          "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+          "start_offset": 26698,
+          "end_offset": 30039,
+          "length": 3341,
+          "runtime_start": 35402,
+          "runtime_end": 38743,
+          "status": "RAW",
+          "original_sha256": "82c1aac3b4215fc25b495b5cc8729e0bc41e0cdbcdc983d14beb5059164b6542",
+          "reassembled_sha256": "82c1aac3b4215fc25b495b5cc8729e0bc41e0cdbcdc983d14beb5059164b6542",
+          "exact_match": true,
+          "evidence_refs": []
+        },
+        {
+          "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+          "start_offset": 30039,
+          "end_offset": 30061,
+          "length": 22,
+          "runtime_start": 38743,
+          "runtime_end": 38765,
+          "status": "STRUCTURED",
+          "original_sha256": "d7e65bcfd652138557cd07f688a4ccf3a1e08c1dd6b7b39239cf9f0e64279a9d",
+          "reassembled_sha256": "d7e65bcfd652138557cd07f688a4ccf3a1e08c1dd6b7b39239cf9f0e64279a9d",
+          "exact_match": true,
+          "evidence_refs": [
+            "evidence.json#seeds/PLI2.OVL+7557"
+          ]
+        },
+        {
+          "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+          "start_offset": 30061,
+          "end_offset": 30465,
+          "length": 404,
+          "runtime_start": 38765,
+          "runtime_end": 39169,
+          "status": "RAW",
+          "original_sha256": "1ded674168c1443a38b7d88f2e0473d3bb615adf9a3419c4149c653e89a30c3a",
+          "reassembled_sha256": "1ded674168c1443a38b7d88f2e0473d3bb615adf9a3419c4149c653e89a30c3a",
+          "exact_match": true,
+          "evidence_refs": []
+        },
+        {
+          "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+          "start_offset": 30465,
+          "end_offset": 30531,
+          "length": 66,
+          "runtime_start": 39169,
+          "runtime_end": 39235,
+          "status": "DECODED",
+          "original_sha256": "04b4d632fee0d1f0c34a583a4b3bc75e11f7efc41e452431cd97e5798fd9b5e7",
+          "reassembled_sha256": "04b4d632fee0d1f0c34a583a4b3bc75e11f7efc41e452431cd97e5798fd9b5e7",
+          "exact_match": true,
+          "evidence_refs": [
+            "evidence.json#seeds/PLI2.OVL+7701"
+          ]
+        },
+        {
+          "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+          "start_offset": 30531,
+          "end_offset": 30538,
+          "length": 7,
+          "runtime_start": 39235,
+          "runtime_end": 39242,
+          "status": "RAW",
+          "original_sha256": "21709d74e15d39aa77bb8c5b808a92826467aec3088c074cf0f35a7ad5717f94",
+          "reassembled_sha256": "21709d74e15d39aa77bb8c5b808a92826467aec3088c074cf0f35a7ad5717f94",
+          "exact_match": true,
+          "evidence_refs": [
+            "evidence.json#seeds/PLI2.OVL+7701"
+          ]
+        },
+        {
+          "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+          "start_offset": 30538,
+          "end_offset": 30564,
+          "length": 26,
+          "runtime_start": 39242,
+          "runtime_end": 39268,
+          "status": "DECODED",
+          "original_sha256": "913d9606f2455dbd8af1f5a07f32457be12fa964047b0b80e0cb6a3bf9eabfef",
+          "reassembled_sha256": "913d9606f2455dbd8af1f5a07f32457be12fa964047b0b80e0cb6a3bf9eabfef",
+          "exact_match": true,
+          "evidence_refs": [
+            "evidence.json#seeds/PLI2.OVL+7701"
+          ]
+        },
+        {
+          "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+          "start_offset": 30564,
+          "end_offset": 30575,
+          "length": 11,
+          "runtime_start": 39268,
+          "runtime_end": 39279,
+          "status": "RAW",
+          "original_sha256": "f4920644d119cb94bee7ee7ee73da5b11a7bf0a6223b599c055497123733c3fd",
+          "reassembled_sha256": "f4920644d119cb94bee7ee7ee73da5b11a7bf0a6223b599c055497123733c3fd",
+          "exact_match": true,
+          "evidence_refs": [
+            "evidence.json#seeds/PLI2.OVL+7701"
+          ]
+        },
+        {
+          "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+          "start_offset": 30575,
+          "end_offset": 30582,
+          "length": 7,
+          "runtime_start": 39279,
+          "runtime_end": 39286,
+          "status": "DECODED",
+          "original_sha256": "efe3ecc8a775f1592c96047d01033ae1f122769c5e5d9123cf649a3f32e75c86",
+          "reassembled_sha256": "efe3ecc8a775f1592c96047d01033ae1f122769c5e5d9123cf649a3f32e75c86",
+          "exact_match": true,
+          "evidence_refs": [
+            "evidence.json#seeds/PLI2.OVL+7701"
+          ]
+        },
+        {
+          "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+          "start_offset": 30582,
+          "end_offset": 30585,
+          "length": 3,
+          "runtime_start": 39286,
+          "runtime_end": 39289,
+          "status": "RAW",
+          "original_sha256": "9ccedfa246d7558f9eec9ec52474839b0efe4f36b65fcc8bb845f706973a918e",
+          "reassembled_sha256": "9ccedfa246d7558f9eec9ec52474839b0efe4f36b65fcc8bb845f706973a918e",
+          "exact_match": true,
+          "evidence_refs": [
+            "evidence.json#seeds/PLI2.OVL+7701"
+          ]
+        },
+        {
+          "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+          "start_offset": 30585,
+          "end_offset": 30640,
+          "length": 55,
+          "runtime_start": 39289,
+          "runtime_end": 39344,
+          "status": "DECODED",
+          "original_sha256": "6748e91dd08abb67acdaa47929222f8e57719660f49d7edc6ae8835d251777a2",
+          "reassembled_sha256": "6748e91dd08abb67acdaa47929222f8e57719660f49d7edc6ae8835d251777a2",
+          "exact_match": true,
+          "evidence_refs": [
+            "evidence.json#seeds/PLI2.OVL+7701"
+          ]
+        },
+        {
+          "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+          "start_offset": 30640,
+          "end_offset": 30647,
+          "length": 7,
+          "runtime_start": 39344,
+          "runtime_end": 39351,
+          "status": "RAW",
+          "original_sha256": "4d93882133f1463a89c8cdf5dd4363273a976c954c7fc26e01e9a4bfa291ac2c",
+          "reassembled_sha256": "4d93882133f1463a89c8cdf5dd4363273a976c954c7fc26e01e9a4bfa291ac2c",
+          "exact_match": true,
+          "evidence_refs": [
+            "evidence.json#seeds/PLI2.OVL+7701"
+          ]
+        },
+        {
+          "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+          "start_offset": 30647,
+          "end_offset": 30655,
+          "length": 8,
+          "runtime_start": 39351,
+          "runtime_end": 39359,
+          "status": "DECODED",
+          "original_sha256": "72047bd5626c345e3d30f215b50161fbabae975a84803ff7c760f54aa79794cc",
+          "reassembled_sha256": "72047bd5626c345e3d30f215b50161fbabae975a84803ff7c760f54aa79794cc",
+          "exact_match": true,
+          "evidence_refs": [
+            "evidence.json#seeds/PLI2.OVL+7701"
+          ]
+        },
+        {
+          "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+          "start_offset": 30655,
+          "end_offset": 33317,
+          "length": 2662,
+          "runtime_start": 39359,
+          "runtime_end": 42021,
+          "status": "RAW",
+          "original_sha256": "46314ff5e8a1f34dae26d6e3f052019c43b452230ef01af24e9b25ba7c90f6ed",
+          "reassembled_sha256": "46314ff5e8a1f34dae26d6e3f052019c43b452230ef01af24e9b25ba7c90f6ed",
+          "exact_match": true,
+          "evidence_refs": []
+        },
+        {
+          "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+          "start_offset": 33317,
+          "end_offset": 33352,
+          "length": 35,
+          "runtime_start": 42021,
+          "runtime_end": 42056,
+          "status": "STRUCTURED",
+          "original_sha256": "393c74b41e8b8d110f5e4fdc4975038a32ea073f2c4d350d47c8c8931f7e112d",
+          "reassembled_sha256": "393c74b41e8b8d110f5e4fdc4975038a32ea073f2c4d350d47c8c8931f7e112d",
+          "exact_match": true,
+          "evidence_refs": [
+            "evidence.json#seeds/PLI2.OVL+8225"
+          ]
+        },
+        {
+          "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+          "start_offset": 33352,
+          "end_offset": 33368,
+          "length": 16,
+          "runtime_start": 42056,
+          "runtime_end": 42072,
+          "status": "STRUCTURED",
+          "original_sha256": "7417da9608ff284e597e4e3070c0b18a8dfde894ba550288983c0a0a08b2e0cc",
+          "reassembled_sha256": "7417da9608ff284e597e4e3070c0b18a8dfde894ba550288983c0a0a08b2e0cc",
+          "exact_match": true,
+          "evidence_refs": [
+            "evidence.json#seeds/PLI2.OVL+8248"
+          ]
+        },
+        {
+          "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+          "start_offset": 33368,
+          "end_offset": 33792,
+          "length": 424,
+          "runtime_start": 42072,
+          "runtime_end": 42496,
+          "status": "RAW",
+          "original_sha256": "8676243360b4b07b1f35cc661638fc0cc9ad50ebefc9d876a64b9b41f1b7aa63",
+          "reassembled_sha256": "8676243360b4b07b1f35cc661638fc0cc9ad50ebefc9d876a64b9b41f1b7aa63",
+          "exact_match": true,
+          "evidence_refs": []
+        }
+      ]
+    }
+  ]
+}

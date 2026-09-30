@@ -400,3 +400,7 @@ Runes is an experimental research project.
 Interfaces, trace formats beyond explicitly versioned formats, and internal representations may evolve substantially while the PL/I-80 case study develops.
 
 The repository should therefore be treated as a laboratory rather than as a stable emulator distribution.
+
+The [Runes annotated assembly](research/annotated-assembly/README.md) reconstructs
+the four historical compiler images with section statuses, compact evidence, and
+a byte-exact verifier.
