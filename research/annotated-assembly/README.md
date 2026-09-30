@@ -137,10 +137,10 @@ available. No new compiler execution or broad automatic disassembly was used.
 
 Unobserved branches within seed envelopes remain separate RAW sections.
 Instruction starts were imported only within these established seed ranges and
-only when fetched bytes matched the original image. PLI0/PLI1 remain entirely
+only when fetched bytes matched the original image. At V0, PLI0/PLI1 were entirely
 RAW. The counted serializer and four fully witnessed PLI2 wrappers have
-STRUCTURED sequences supported by a matched stack pair. Only the ten-byte
-arithmetic helper is UNDERSTOOD: its whole documented sequence establishes
+STRUCTURED sequences supported by a matched stack pair. In V0, only the ten-byte
+arithmetic helper was UNDERSTOOD: its whole documented sequence establishes
 `A = 5 * byte[AD0AH] mod 256`, `HL = AD0AH`, no guest memory writes, unchanged
 B/C/D/E, and flags from the final `ADD M`.
 
@@ -177,3 +177,8 @@ Runtime analysis remains evidence. Annotated assembly becomes the accumulating
 reconstruction. V0's evidence field shapes deliberately match its small imported
 corpus; expanding to non-RET blocks or new contract types should extend the
 versioned evidence checks explicitly, without changing CPU or trace semantics.
+
+The [MINIMAL baseline](../minimal-baseline/README.md) extends these seeds with
+ten reviewed helper families, explicit secondary entries, local RET alternatives,
+and the guarded BDOS bridge's specific external hardware return at `0005H`.
+It retains separate execution coverage and reconstruction-status measurements.

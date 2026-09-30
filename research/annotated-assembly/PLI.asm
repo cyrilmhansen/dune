@@ -2,7 +2,7 @@
 ; Image SHA-256: c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80
 ; Labels use FILE offsets, not runtime addresses. Manifest ends are exclusive.
     ORG 00100H
-; SECTION [0000,0EF6) RAW
+; SECTION [0000,02EE) RAW
 PLI_0000: DB 0C3H,0EDH,002H,00CH,024H,050H,04CH,02FH,049H,02DH,038H,030H,020H,056H,031H,02EH ; +0000 runtime=0100H RAW
 PLI_0010: DB 034H,020H,024H,02DH,02DH,02DH,02DH,02DH,02DH,02DH,02DH,02DH,02DH,02DH,02DH,02DH ; +0010 runtime=0110H RAW
 PLI_0020: DB 02DH,02DH,02DH,02DH,02DH,02DH,02DH,02DH,02DH,02DH,02DH,02DH,02DH,02DH,02DH,02DH ; +0020 runtime=0120H RAW
@@ -49,17 +49,78 @@ PLI_02A0: DB 003H,03AH,011H,020H,0D6H,000H,0D6H,001H,09FH,021H,023H,020H,0A6H,01
 PLI_02B0: DB 003H,021H,01DH,020H,036H,001H,021H,026H,020H,036H,001H,03AH,026H,020H,02FH,01FH ; +02B0 runtime=03B0H RAW
 PLI_02C0: DB 0D2H,0D7H,003H,03EH,000H,021H,011H,020H,096H,09FH,021H,029H,020H,0B6H,01FH,0D2H ; +02C0 runtime=03C0H RAW
 PLI_02D0: DB 0D7H,003H,021H,00FH,020H,036H,003H,03EH,002H,021H,00FH,020H,0BEH,0DAH,0E3H,003H ; +02D0 runtime=03D0H RAW
-PLI_02E0: DB 0C3H,083H,003H,0CDH,072H,013H,001H,0DAH,002H,0CDH,07DH,005H,0FBH,076H,021H,060H ; +02E0 runtime=03E0H RAW
-PLI_02F0: DB 020H,070H,02BH,071H,02AH,05FH,020H,0EBH,00EH,01AH,0CDH,0BBH,01AH,0C9H,001H,080H ; +02F0 runtime=03F0H RAW
+PLI_02E0: DB 0C3H,083H,003H,0CDH,072H,013H,001H,0DAH,002H,0CDH,07DH,005H,0FBH,076H ; +02E0 runtime=03E0H RAW
+
+; ProcedureHypothesis: BDOS DMA-address wrapper
+; OBSERVED: 710 MINIMAL CALLs from PLI.COM+0301, PLI.COM+06D3, PLI.COM+06FC, PLI.COM+074F, PLI.COM+0F16, PLI.COM+0F38, PLI.COM+1187
+; OBSERVED RETs: PLI.COM+02FD (710)
+; OBSERVED: all 710 returns consume original CALL stack slots/bytes.
+; DEDUCED: BC supplies DMA address; writes little-endian BC to 205FH/2060H. Calls 19BB with C=26, DE=BC.
+; Pseudocode: scratch[205F:2061]=BC; BDOS(26, DE=BC); return delegated BDOS result
+; HYPOTHESIS: shared DMA setter gateway
+; UNRESOLVED: B/C/D/E/H/L/A/flags after nested bridge follow BDOS; no independent register-preservation claim.
+; Evidence: ../minimal-baseline/contracts.json#PLI.COM+02EE; stable entry PLI_02EE
+; SECTION [02EE,02FE) UNDERSTOOD
+PLI_02EE: LXI H,2060H ; +02EE runtime=03EEH OBSERVED
+PLI_02F1: MOV M,B ; +02F1 runtime=03F1H OBSERVED
+PLI_02F2: DCX H ; +02F2 runtime=03F2H OBSERVED
+PLI_02F3: MOV M,C ; +02F3 runtime=03F3H OBSERVED
+PLI_02F4: LHLD 205FH ; +02F4 runtime=03F4H OBSERVED
+PLI_02F7: XCHG ; +02F7 runtime=03F7H OBSERVED
+PLI_02F8: MVI C,1AH ; +02F8 runtime=03F8H OBSERVED
+PLI_02FA: CALL 1ABBH ; +02FA runtime=03FAH OBSERVED
+PLI_02FD: RET ; +02FD runtime=03FDH OBSERVED
+; SECTION [02FE,0318) RAW
+PLI_02FE: DB 001H,080H ; +02FE runtime=03FEH RAW
 PLI_0300: DB 000H,0CDH,0EEH,003H,0C9H,021H,062H,020H,070H,02BH,071H,0CDH,0FEH,003H,02AH,061H ; +0300 runtime=0400H RAW
-PLI_0310: DB 020H,0EBH,00EH,013H,0CDH,0BBH,01AH,0C9H,021H,064H,020H,070H,02BH,071H,02AH,063H ; +0310 runtime=0410H RAW
-PLI_0320: DB 020H,0EBH,00EH,014H,0CDH,0BBH,01AH,0C9H,021H,066H,020H,070H,02BH,071H,02AH,065H ; +0320 runtime=0420H RAW
+PLI_0310: DB 020H,0EBH,00EH,013H,0CDH,0BBH,01AH,0C9H ; +0310 runtime=0410H RAW
+
+; ProcedureHypothesis: BDOS sequential-read wrapper
+; OBSERVED: 687 MINIMAL CALLs from PLI.COM+06D9, PLI.COM+0755, PLI.COM+0F3E
+; OBSERVED RETs: PLI.COM+0327 (687)
+; OBSERVED: all 687 returns consume original CALL stack slots/bytes.
+; DEDUCED: BC supplies FCB pointer; writes BC to 2063H/2064H. Calls 19BB with C=20, DE=BC.
+; Pseudocode: scratch[2063:2065]=BC; A=BDOS(20, FCB=BC, current_DMA); return A
+; HYPOTHESIS: sequential source/overlay record-read gateway
+; UNRESOLVED: Record/FCB host effects follow the existing BDOS model; A return status is delegated.
+; Evidence: ../minimal-baseline/contracts.json#PLI.COM+0318; stable entry PLI_0318
+; SECTION [0318,0328) UNDERSTOOD
+PLI_0318: LXI H,2064H ; +0318 runtime=0418H OBSERVED
+PLI_031B: MOV M,B ; +031B runtime=041BH OBSERVED
+PLI_031C: DCX H ; +031C runtime=041CH OBSERVED
+PLI_031D: MOV M,C ; +031D runtime=041DH OBSERVED
+PLI_031E: LHLD 2063H ; +031E runtime=041EH OBSERVED
+PLI_0321: XCHG ; +0321 runtime=0421H OBSERVED
+PLI_0322: MVI C,14H ; +0322 runtime=0422H OBSERVED
+PLI_0324: CALL 1ABBH ; +0324 runtime=0424H OBSERVED
+PLI_0327: RET ; +0327 runtime=0427H OBSERVED
+; SECTION [0328,0380) RAW
+PLI_0328: DB 021H,066H,020H,070H,02BH,071H,02AH,065H ; +0328 runtime=0428H RAW
 PLI_0330: DB 020H,0EBH,00EH,015H,0CDH,0BBH,01AH,0C9H,011H,000H,000H,00EH,019H,0CDH,0BBH,01AH ; +0330 runtime=0430H RAW
 PLI_0340: DB 0C9H,011H,000H,000H,00EH,00BH,0CDH,0BBH,01AH,0C9H,021H,067H,020H,071H,02AH,067H ; +0340 runtime=0440H RAW
 PLI_0350: DB 020H,026H,000H,0EBH,00EH,005H,0CDH,0BBH,01AH,0C9H,041H,0C5H,033H,021H,000H,000H ; +0350 runtime=0450H RAW
 PLI_0360: DB 039H,04EH,0CDH,0A7H,00FH,033H,0C9H,011H,000H,000H,00EH,001H,0CDH,0BBH,01AH,0C9H ; +0360 runtime=0460H RAW
 PLI_0370: DB 021H,069H,020H,070H,02BH,071H,02AH,068H,020H,0EBH,00EH,009H,0CDH,0BBH,01AH,0C9H ; +0370 runtime=0470H RAW
-PLI_0380: DB 021H,06AH,020H,071H,02AH,06AH,020H,026H,000H,0EBH,00EH,002H,0CDH,0BBH,01AH,0C9H ; +0380 runtime=0480H RAW
+
+; ProcedureHypothesis: BDOS console-byte wrapper
+; OBSERVED: 424 MINIMAL CALLs from PLI.COM+03E5
+; OBSERVED RETs: PLI.COM+038F (424)
+; OBSERVED: all 424 returns consume original CALL stack slots/bytes.
+; DEDUCED: C supplies byte; stores at 206AH; calls 19BB with C=2 and DE=zero_extend(input_C).
+; Pseudocode: byte[206A]=C; BDOS(2, E=input_C); return delegated result
+; HYPOTHESIS: shared console character output helper
+; UNRESOLVED: Output text meaning belongs to callers; output registers follow BDOS.
+; Evidence: ../minimal-baseline/contracts.json#PLI.COM+0380; stable entry PLI_0380
+; SECTION [0380,0390) UNDERSTOOD
+PLI_0380: LXI H,206AH ; +0380 runtime=0480H OBSERVED
+PLI_0383: MOV M,C ; +0383 runtime=0483H OBSERVED
+PLI_0384: LHLD 206AH ; +0384 runtime=0484H OBSERVED
+PLI_0387: MVI H,00H ; +0387 runtime=0487H OBSERVED
+PLI_0389: XCHG ; +0389 runtime=0489H OBSERVED
+PLI_038A: MVI C,02H ; +038A runtime=048AH OBSERVED
+PLI_038C: CALL 1ABBH ; +038C runtime=048CH OBSERVED
+PLI_038F: RET ; +038F runtime=048FH OBSERVED
+; SECTION [0390,0EF6) RAW
 PLI_0390: DB 021H,06BH,020H,071H,03AH,02AH,020H,01FH,0D2H,0D0H,004H,03AH,06BH,020H,0FEH,00CH ; +0390 runtime=0490H RAW
 PLI_03A0: DB 0C2H,0A8H,004H,021H,035H,020H,036H,000H,03AH,035H,020H,0FEH,03CH,0DAH,0BAH,004H ; +03A0 runtime=04A0H RAW
 PLI_03B0: DB 021H,035H,020H,036H,000H,00EH,00CH,0CDH,04AH,004H,03AH,06BH,020H,0FEH,00AH,0C2H ; +03B0 runtime=04B0H RAW
@@ -536,12 +597,13 @@ PLI_19B3: DB 0ADH,01AH,02AH,055H,021H,036H,0AAH,0C9H ; +19B3 runtime=1AB3H RAW
 ; OBSERVED entry: PLI_19BB (runtime 1ABBH); evidence.json seed PLI.COM+19BB
 ; OBSERVED callers: PLI.COM+02FA, PLI.COM+0314, PLI.COM+0324, PLI.COM+0334, PLI.COM+0346, PLI.COM+038C, PLI.COM+04C4, PLI.COM+04EA, PLI.COM+0639, PLI.COM+0659, PLI.COM+067F
 ; OBSERVED runs: FACTOR, FIZZBUZ, MINIMAL, OPTIMIST
-; DEDUCED matched RET: none claimed; tail bridge or insufficient pair evidence
 ; DEDUCED inputs/effects: B/C/D/E preserved to bridge; reads 215CH and word at 2155H
 ; OBSERVED downstream runtime helpers: 1B0FH comparison; JMP 0005H
 ; HYPOTHESIS semantic name: shared BDOS bridge
-; UNRESOLVED / counterevidence: guard failures jump outside this range to 1AE3H; no local RET
-; SECTION [19BB,19D7) DECODED
+; OBSERVED: 1857 MINIMAL CALLs return through host RET at runtime 0005H.
+; DEDUCED: original CALL stack slots/bytes consumed there; no local RET.
+; UNRESOLVED: guard failures to 1AE3H unobserved; see minimal baseline inventory.
+; SECTION [19BB,19D7) STRUCTURED
 PLI_19BB: PUSH B ; +19BB runtime=1ABBH OBSERVED
 PLI_19BC: PUSH D ; +19BC runtime=1ABCH OBSERVED
 PLI_19BD: LXI H,215CH ; +19BD runtime=1ABDH OBSERVED
@@ -555,15 +617,180 @@ PLI_19CF: JNZ 1AE3H ; +19CF runtime=1ACFH OBSERVED
 PLI_19D2: POP D ; +19D2 runtime=1AD2H OBSERVED
 PLI_19D3: POP B ; +19D3 runtime=1AD3H OBSERVED
 PLI_19D4: JMP 0005H ; +19D4 runtime=1AD4H OBSERVED
-; SECTION [19D7,1F80) RAW
+; SECTION [19D7,1A0F) RAW
 PLI_19D7: DB 021H,000H,000H,011H,057H,021H,0CDH,00FH,01BH,0CAH,000H,000H,021H,057H,021H,011H ; +19D7 runtime=1AD7H RAW
 PLI_19E7: DB 000H,000H,00EH,008H,07EH,023H,012H,013H,00DH,0C2H,0EBH,01AH,011H,0FEH,01AH,00EH ; +19E7 runtime=1AE7H RAW
 PLI_19F7: DB 009H,0CDH,005H,000H,0C3H,000H,000H,00DH,00AH,043H,04FH,04DH,050H,049H,04CH,045H ; +19F7 runtime=1AF7H RAW
-PLI_1A07: DB 052H,020H,045H,052H,052H,04FH,052H,024H,01AH,0BEH,0C0H,013H,023H,01AH,0BEH,0C0H ; +1A07 runtime=1B07H RAW
-PLI_1A17: DB 013H,023H,01AH,0BEH,0C9H,0EBH,05FH,016H,000H,0EBH,01AH,085H,06FH,013H,01AH,08CH ; +1A17 runtime=1B17H RAW
-PLI_1A27: DB 067H,0C9H,05FH,016H,000H,07BH,095H,06FH,07AH,09CH,067H,0C9H,069H,060H,04EH,023H ; +1A27 runtime=1B27H RAW
-PLI_1A37: DB 046H,01AH,091H,06FH,013H,01AH,098H,067H,0C9H,06FH,026H,000H,01AH,095H,06FH,013H ; +1A37 runtime=1B37H RAW
-PLI_1A47: DB 01AH,09CH,067H,0C9H,090H,010H,010H,010H,010H,010H,010H,010H,010H,021H,010H,0E2H ; +1A47 runtime=1B47H RAW
+PLI_1A07: DB 052H,020H,045H,052H,052H,04FH,052H,024H ; +1A07 runtime=1B07H RAW
+
+; ProcedureHypothesis: three-byte indirect comparison
+; OBSERVED: 1858 MINIMAL CALLs from PLI.COM+19C3, PLI.COM+19DD
+; OBSERVED RETs: PLI.COM+1A1B (1858)
+; OBSERVED: all 1858 returns consume original CALL stack slots/bytes.
+; DEDUCED: HL and DE point at three-byte sequences; compares byte[DE] against byte[HL], stopping at first mismatch. BC unchanged; A=last byte[DE]; flags from last CMP.
+; Pseudocode: for i in 0..2: A=byte[DE]; CMP byte[HL]; if unequal or i==2: return; DE++; HL++
+; HYPOTHESIS: fixed-size guard comparison (bridge caller uses it)
+; UNRESOLVED: MINIMAL observed only full three-byte equality; RNZ at +1A11/+1A16 never taken. Short-circuit mismatch contract follows documented instructions, not a witnessed mismatch.
+; Evidence: ../minimal-baseline/contracts.json#PLI.COM+1A0F; stable entry PLI_1A0F
+; SECTION [1A0F,1A1C) UNDERSTOOD
+PLI_1A0F: LDAX D ; +1A0F runtime=1B0FH OBSERVED
+PLI_1A10: CMP M ; +1A10 runtime=1B10H OBSERVED
+PLI_1A11: RNZ ; +1A11 runtime=1B11H OBSERVED
+PLI_1A12: INX D ; +1A12 runtime=1B12H OBSERVED
+PLI_1A13: INX H ; +1A13 runtime=1B13H OBSERVED
+PLI_1A14: LDAX D ; +1A14 runtime=1B14H OBSERVED
+PLI_1A15: CMP M ; +1A15 runtime=1B15H OBSERVED
+PLI_1A16: RNZ ; +1A16 runtime=1B16H OBSERVED
+PLI_1A17: INX D ; +1A17 runtime=1B17H OBSERVED
+PLI_1A18: INX H ; +1A18 runtime=1B18H OBSERVED
+PLI_1A19: LDAX D ; +1A19 runtime=1B19H OBSERVED
+PLI_1A1A: CMP M ; +1A1A runtime=1B1AH OBSERVED
+PLI_1A1B: RET ; +1A1B runtime=1B1BH OBSERVED
+
+; ProcedureHypothesis: add unsigned byte to indirect word
+; OBSERVED: 528 MINIMAL CALLs from PLI0.OVL+1A36, PLI0.OVL+1E15, PLI0.OVL+2043, PLI0.OVL+2CB2, PLI0.OVL+43B5, PLI1.OVL+79F4, PLI2.OVL+170B
+; OBSERVED RETs: PLI.COM+1A28 (528)
+; OBSERVED: all 528 returns consume original CALL stack slots/bytes.
+; DEDUCED: Primary +1A1C: DE points to word, A is addend. Secondary +1A1D takes pointer in HL. HL=word[p]+unsigned(A) modulo 65536; DE=p+1; A=high result; BC unchanged; carry=16-bit overflow, remaining arithmetic flags from high ADC.
+; Pseudocode: p=DE at +1A1C, or HL at +1A1D; HL=(word[p]+u8(A))&FFFF; DE=p+1; A=hi(HL); return
+; HYPOTHESIS: byte-offset address/word addition helper
+; UNRESOLVED: No memory writes; modulo pointer/result arithmetic. Other flag bits describe the high-byte operation, not full-word zero/sign.
+; Evidence: ../minimal-baseline/contracts.json#PLI.COM+1A1C; stable entry PLI_1A1C
+; SECTION [1A1C,1A1D) UNDERSTOOD
+PLI_1A1C: XCHG ; +1A1C runtime=1B1CH OBSERVED
+
+; ProcedureHypothesis: add unsigned byte to indirect word (secondary entry)
+; OBSERVED: 2 MINIMAL CALLs from PLI1.OVL+444B, PLI1.OVL+4770
+; OBSERVED RETs: PLI.COM+1A28 (2)
+; OBSERVED: all 2 returns consume original CALL stack slots/bytes.
+; DEDUCED: Primary +1A1C: DE points to word, A is addend. Secondary +1A1D takes pointer in HL. HL=word[p]+unsigned(A) modulo 65536; DE=p+1; A=high result; BC unchanged; carry=16-bit overflow, remaining arithmetic flags from high ADC.
+; Pseudocode: p=DE at +1A1C, or HL at +1A1D; HL=(word[p]+u8(A))&FFFF; DE=p+1; A=hi(HL); return
+; HYPOTHESIS: byte-offset address/word addition helper
+; UNRESOLVED: No memory writes; modulo pointer/result arithmetic. Other flag bits describe the high-byte operation, not full-word zero/sign.
+; Evidence: ../minimal-baseline/contracts.json#PLI.COM+1A1D; stable entry PLI_1A1D
+; SECTION [1A1D,1A29) UNDERSTOOD
+PLI_1A1D: MOV E,A ; +1A1D runtime=1B1DH OBSERVED
+PLI_1A1E: MVI D,00H ; +1A1E runtime=1B1EH OBSERVED
+PLI_1A20: XCHG ; +1A20 runtime=1B20H OBSERVED
+PLI_1A21: LDAX D ; +1A21 runtime=1B21H OBSERVED
+PLI_1A22: ADD L ; +1A22 runtime=1B22H OBSERVED
+PLI_1A23: MOV L,A ; +1A23 runtime=1B23H OBSERVED
+PLI_1A24: INX D ; +1A24 runtime=1B24H OBSERVED
+PLI_1A25: LDAX D ; +1A25 runtime=1B25H OBSERVED
+PLI_1A26: ADC H ; +1A26 runtime=1B26H OBSERVED
+PLI_1A27: MOV H,A ; +1A27 runtime=1B27H OBSERVED
+PLI_1A28: RET ; +1A28 runtime=1B28H OBSERVED
+
+; ProcedureHypothesis: subtract HL from DE with byte adapter
+; OBSERVED: 43 MINIMAL CALLs from PLI0.OVL+24B4, PLI2.OVL+25ED, PLI2.OVL+6EBC, PLI2.OVL+6F02, PLI2.OVL+7545
+; OBSERVED RETs: PLI.COM+1A32 (43)
+; OBSERVED: all 43 returns consume original CALL stack slots/bytes.
+; DEDUCED: Primary +1A29 zero-extends A into DE; secondary +1A2C takes DE directly. HL=(DE-HL) modulo 65536; A=high result; DE and BC preserved by core; carry=unsigned borrow; other flags from high SBB.
+; Pseudocode: at +1A29: DE=u8(A); core +1A2C: HL=(DE-HL)&FFFF; A=hi(HL); return
+; HYPOTHESIS: reverse subtraction helper with unsigned-byte entry
+; UNRESOLVED: No memory reads except RET stack, no memory writes. Word sign/zero cannot be inferred from high-byte flags alone.
+; Evidence: ../minimal-baseline/contracts.json#PLI.COM+1A29; stable entry PLI_1A29
+; SECTION [1A29,1A2C) UNDERSTOOD
+PLI_1A29: MOV E,A ; +1A29 runtime=1B29H OBSERVED
+PLI_1A2A: MVI D,00H ; +1A2A runtime=1B2AH OBSERVED
+
+; ProcedureHypothesis: subtract HL from DE with byte adapter (secondary entry)
+; OBSERVED: 240 MINIMAL CALLs from PLI.COM+04CA, PLI.COM+0720, PLI1.OVL+43B2, PLI1.OVL+4B74, PLI1.OVL+7BF7, PLI2.OVL+1902, PLI2.OVL+19B9
+; OBSERVED RETs: PLI.COM+1A32 (240)
+; OBSERVED: all 240 returns consume original CALL stack slots/bytes.
+; DEDUCED: Primary +1A29 zero-extends A into DE; secondary +1A2C takes DE directly. HL=(DE-HL) modulo 65536; A=high result; DE and BC preserved by core; carry=unsigned borrow; other flags from high SBB.
+; Pseudocode: at +1A29: DE=u8(A); core +1A2C: HL=(DE-HL)&FFFF; A=hi(HL); return
+; HYPOTHESIS: reverse subtraction helper with unsigned-byte entry
+; UNRESOLVED: No memory reads except RET stack, no memory writes. Word sign/zero cannot be inferred from high-byte flags alone.
+; Evidence: ../minimal-baseline/contracts.json#PLI.COM+1A2C; stable entry PLI_1A2C
+; SECTION [1A2C,1A33) UNDERSTOOD
+PLI_1A2C: MOV A,E ; +1A2C runtime=1B2CH OBSERVED
+PLI_1A2D: SUB L ; +1A2D runtime=1B2DH OBSERVED
+PLI_1A2E: MOV L,A ; +1A2E runtime=1B2EH OBSERVED
+PLI_1A2F: MOV A,D ; +1A2F runtime=1B2FH OBSERVED
+PLI_1A30: SBB H ; +1A30 runtime=1B30H OBSERVED
+PLI_1A31: MOV H,A ; +1A31 runtime=1B31H OBSERVED
+PLI_1A32: RET ; +1A32 runtime=1B32H OBSERVED
+
+; ProcedureHypothesis: indirect word difference with three entries
+; OBSERVED: 2230 MINIMAL CALLs from PLI.COM+061D, PLI0.OVL+1A5E, PLI0.OVL+1B1A, PLI0.OVL+1E33, PLI0.OVL+1F34, PLI0.OVL+23C9, PLI0.OVL+2848, PLI0.OVL+28F4, PLI0.OVL+2AEB, PLI0.OVL+2AFC, PLI0.OVL+2DD6, PLI1.OVL+427B, PLI1.OVL+4592, PLI1.OVL+480D, PLI1.OVL+4954, PLI1.OVL+80D8, PLI2.OVL+173E, PLI2.OVL+18CB, PLI2.OVL+1969, PLI2.OVL+7404
+; OBSERVED RETs: PLI.COM+1A3F (2230)
+; OBSERVED: all 2230 returns consume original CALL stack slots/bytes.
+; DEDUCED: Primary +1A33 loads subtrahend word through BC; +1A35 loads it through HL; +1A38 takes subtrahend in BC. HL=word[DE]-subtrahend modulo 65536; BC=subtrahend; DE++; A=high result; carry=unsigned borrow; other flags from high SBB.
+; Pseudocode: sub=word[BC] at +1A33, word[HL] at +1A35, or BC at +1A38; HL=(word[DE]-sub)&FFFF; DE++; A=hi(HL); return
+; HYPOTHESIS: shared indirect word comparison/difference primitive
+; UNRESOLVED: No guest memory writes. Entries share a literal tail; preserve all three identities. Flags describe high-byte subtraction.
+; Evidence: ../minimal-baseline/contracts.json#PLI.COM+1A33; stable entry PLI_1A33
+; SECTION [1A33,1A35) UNDERSTOOD
+PLI_1A33: MOV L,C ; +1A33 runtime=1B33H OBSERVED
+PLI_1A34: MOV H,B ; +1A34 runtime=1B34H OBSERVED
+
+; ProcedureHypothesis: indirect word difference with three entries (secondary entry)
+; OBSERVED: 12 MINIMAL CALLs from PLI0.OVL+2826, PLI1.OVL+0B06
+; OBSERVED RETs: PLI.COM+1A3F (12)
+; OBSERVED: all 12 returns consume original CALL stack slots/bytes.
+; DEDUCED: Primary +1A33 loads subtrahend word through BC; +1A35 loads it through HL; +1A38 takes subtrahend in BC. HL=word[DE]-subtrahend modulo 65536; BC=subtrahend; DE++; A=high result; carry=unsigned borrow; other flags from high SBB.
+; Pseudocode: sub=word[BC] at +1A33, word[HL] at +1A35, or BC at +1A38; HL=(word[DE]-sub)&FFFF; DE++; A=hi(HL); return
+; HYPOTHESIS: shared indirect word comparison/difference primitive
+; UNRESOLVED: No guest memory writes. Entries share a literal tail; preserve all three identities. Flags describe high-byte subtraction.
+; Evidence: ../minimal-baseline/contracts.json#PLI.COM+1A35; stable entry PLI_1A35
+; SECTION [1A35,1A38) UNDERSTOOD
+PLI_1A35: MOV C,M ; +1A35 runtime=1B35H OBSERVED
+PLI_1A36: INX H ; +1A36 runtime=1B36H OBSERVED
+PLI_1A37: MOV B,M ; +1A37 runtime=1B37H OBSERVED
+
+; ProcedureHypothesis: indirect word difference with three entries (secondary entry)
+; OBSERVED: 18 MINIMAL CALLs from PLI.COM+021C, PLI.COM+0245, PLI.COM+073F, PLI0.OVL+2438, PLI0.OVL+375B, PLI1.OVL+012C, PLI2.OVL+0466
+; OBSERVED RETs: PLI.COM+1A3F (18)
+; OBSERVED: all 18 returns consume original CALL stack slots/bytes.
+; DEDUCED: Primary +1A33 loads subtrahend word through BC; +1A35 loads it through HL; +1A38 takes subtrahend in BC. HL=word[DE]-subtrahend modulo 65536; BC=subtrahend; DE++; A=high result; carry=unsigned borrow; other flags from high SBB.
+; Pseudocode: sub=word[BC] at +1A33, word[HL] at +1A35, or BC at +1A38; HL=(word[DE]-sub)&FFFF; DE++; A=hi(HL); return
+; HYPOTHESIS: shared indirect word comparison/difference primitive
+; UNRESOLVED: No guest memory writes. Entries share a literal tail; preserve all three identities. Flags describe high-byte subtraction.
+; Evidence: ../minimal-baseline/contracts.json#PLI.COM+1A38; stable entry PLI_1A38
+; SECTION [1A38,1A40) UNDERSTOOD
+PLI_1A38: LDAX D ; +1A38 runtime=1B38H OBSERVED
+PLI_1A39: SUB C ; +1A39 runtime=1B39H OBSERVED
+PLI_1A3A: MOV L,A ; +1A3A runtime=1B3AH OBSERVED
+PLI_1A3B: INX D ; +1A3B runtime=1B3BH OBSERVED
+PLI_1A3C: LDAX D ; +1A3C runtime=1B3CH OBSERVED
+PLI_1A3D: SBB B ; +1A3D runtime=1B3DH OBSERVED
+PLI_1A3E: MOV H,A ; +1A3E runtime=1B3EH OBSERVED
+PLI_1A3F: RET ; +1A3F runtime=1B3FH OBSERVED
+
+; ProcedureHypothesis: indirect word minus byte/word
+; OBSERVED: 35 MINIMAL CALLs from PLI.COM+01F9, PLI.COM+1478, PLI0.OVL+1AD5, PLI1.OVL+2B2E, PLI1.OVL+4286, PLI2.OVL+2930
+; OBSERVED RETs: PLI.COM+1A4A (35)
+; OBSERVED: all 35 returns consume original CALL stack slots/bytes.
+; DEDUCED: Primary +1A40 zero-extends A into HL; +1A43 takes subtrahend in HL. HL=word[DE]-subtrahend modulo 65536; DE++; A=high result; BC unchanged; carry=unsigned borrow; other flags from high SBB.
+; Pseudocode: sub=u8(A) at +1A40 or HL at +1A43; HL=(word[DE]-sub)&FFFF; DE++; A=hi(HL); return
+; HYPOTHESIS: indirect-word subtraction primitive with byte adapter
+; UNRESOLVED: No guest memory writes; no full-word zero/sign contract. Observed secondary entry has 677 MINIMAL calls.
+; Evidence: ../minimal-baseline/contracts.json#PLI.COM+1A40; stable entry PLI_1A40
+; SECTION [1A40,1A43) UNDERSTOOD
+PLI_1A40: MOV L,A ; +1A40 runtime=1B40H OBSERVED
+PLI_1A41: MVI H,00H ; +1A41 runtime=1B41H OBSERVED
+
+; ProcedureHypothesis: indirect word minus byte/word (secondary entry)
+; OBSERVED: 677 MINIMAL CALLs from PLI.COM+06EE
+; OBSERVED RETs: PLI.COM+1A4A (677)
+; OBSERVED: all 677 returns consume original CALL stack slots/bytes.
+; DEDUCED: Primary +1A40 zero-extends A into HL; +1A43 takes subtrahend in HL. HL=word[DE]-subtrahend modulo 65536; DE++; A=high result; BC unchanged; carry=unsigned borrow; other flags from high SBB.
+; Pseudocode: sub=u8(A) at +1A40 or HL at +1A43; HL=(word[DE]-sub)&FFFF; DE++; A=hi(HL); return
+; HYPOTHESIS: indirect-word subtraction primitive with byte adapter
+; UNRESOLVED: No guest memory writes; no full-word zero/sign contract. Observed secondary entry has 677 MINIMAL calls.
+; Evidence: ../minimal-baseline/contracts.json#PLI.COM+1A43; stable entry PLI_1A43
+; SECTION [1A43,1A4B) UNDERSTOOD
+PLI_1A43: LDAX D ; +1A43 runtime=1B43H OBSERVED
+PLI_1A44: SUB L ; +1A44 runtime=1B44H OBSERVED
+PLI_1A45: MOV L,A ; +1A45 runtime=1B45H OBSERVED
+PLI_1A46: INX D ; +1A46 runtime=1B46H OBSERVED
+PLI_1A47: LDAX D ; +1A47 runtime=1B47H OBSERVED
+PLI_1A48: SBB H ; +1A48 runtime=1B48H OBSERVED
+PLI_1A49: MOV H,A ; +1A49 runtime=1B49H OBSERVED
+PLI_1A4A: RET ; +1A4A runtime=1B4AH OBSERVED
+; SECTION [1A4B,1F80) RAW
+PLI_1A4B: DB 090H,010H,010H,010H,010H,010H,010H,010H,010H,021H,010H,0E2H ; +1A4B runtime=1B4BH RAW
 PLI_1A57: DB 0E2H,0DAH,0E2H,0E2H,0F2H,0E2H,0E2H,021H,021H,019H,021H,021H,031H,021H,021H,022H ; +1A57 runtime=1B57H RAW
 PLI_1A67: DB 01AH,022H,022H,01AH,022H,022H,022H,022H,022H,022H,022H,022H,022H,022H,022H,022H ; +1A67 runtime=1B67H RAW
 PLI_1A77: DB 022H,022H,022H,022H,022H,022H,022H,022H,022H,022H,022H,022H,022H,022H,022H,022H ; +1A77 runtime=1B77H RAW

@@ -148,17 +148,32 @@ def check_evidence(evidence, images, originals):
                     f'{seed["id"]}: caller bytes differ')
             require(raw == b'\xcd' + (image['runtime_base'] + seed['start_offset']).to_bytes(2, 'little'),
                     f'{seed["id"]}: caller does not CALL seed entry')
+        for offset in seed.get('observed_return_offsets', []):
+            require(seed['start_offset'] <= offset < seed['end_offset'] and
+                    any(i['offset'] == offset and i['bytes'] == 'C9' for i in seed['instructions']),
+                    f'{seed["id"]}: declared RET site is not a retained in-range RET instruction')
+        if seed.get('tail_return_runtime_pc') is not None:
+            require(seed['tail_return_runtime_pc'] == 5 and
+                    any(i['offset'] == seed['end_offset'] - 3 and i['bytes'] == 'C30500'
+                        for i in seed['instructions']),
+                    f'{seed["id"]}: external BDOS return without retained terminal JMP 0005H')
         match = seed['matched_return_sample']
         if match:
             call, ret = match['call'], match['ret']
             for w in (call, ret):
-                origin = w['origin']; name = origin['image']['name']; offset = origin['offset']
+                origin = w['origin']
+                if origin is None:
+                    require(w is ret and seed.get('tail_return_runtime_pc') == 5 and w['pc'] == 5 and w['bytes'] == 'C9',
+                            f'{seed["id"]}: unsupported external return witness')
+                    continue
+                name = origin['image']['name']; offset = origin['offset']
                 raw = bytes.fromhex(w['bytes'])
                 require(originals[name][offset:offset + len(raw)] == raw and
                         w['pc'] == images[name]['runtime_base'] + offset,
                         f'{seed["id"]}: stack-pair witness coordinate/bytes mismatch')
             require(call['pc_after'] == image['runtime_base'] + seed['start_offset'] and
-                    ret['origin']['offset'] == seed['end_offset'] - 1 and ret['bytes'] == 'C9',
+                    ((ret['origin'] is not None and ret['origin']['image']['name'] == seed['image'] and ret['origin']['offset'] in seed.get('observed_return_offsets', [seed['end_offset'] - 1])) or
+                     (ret['origin'] is None and seed.get('tail_return_runtime_pc') == 5)) and ret['bytes'] == 'C9',
                     f'{seed["id"]}: matched pair is not seed entry/exit')
             writes = {w['address']: w['new_value'] for w in call['writes']}
             reads = {r['address']: r['value'] for r in ret['reads']}

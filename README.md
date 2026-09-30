@@ -404,3 +404,7 @@ The repository should therefore be treated as a laboratory rather than as a stab
 The [Runes annotated assembly](research/annotated-assembly/README.md) reconstructs
 the four historical compiler images with section statuses, compact evidence, and
 a byte-exact verifier.
+
+The [MINIMAL decompilation baseline](research/minimal-baseline/README.md) records
+exact coverage, all observed callable entries, and the first reviewed low-level
+contracts persisted in those sources.

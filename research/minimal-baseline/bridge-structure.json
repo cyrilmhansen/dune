@@ -1,0 +1,2131 @@
+[
+  {
+    "call": {
+      "step_index": 503,
+      "pc": 1018,
+      "pc_after": 6843,
+      "origin": {
+        "image": {
+          "drive": 0,
+          "user": 0,
+          "name": "PLI.COM",
+          "identity": "0:0:PLI.COM"
+        },
+        "offset": 762
+      },
+      "target_origin": {
+        "image": {
+          "drive": 0,
+          "user": 0,
+          "name": "PLI.COM",
+          "identity": "0:0:PLI.COM"
+        },
+        "offset": 6587
+      },
+      "runtime_pc": 1018,
+      "bytes": "CDBB1A",
+      "disassembly": "CALL 1ABBH",
+      "source": "memory",
+      "before": {
+        "a": 0,
+        "b": 0,
+        "c": 26,
+        "d": 0,
+        "e": 128,
+        "h": 33,
+        "l": 86,
+        "sp": 65520,
+        "pc": 1018,
+        "flags": {
+          "sign": false,
+          "zero": false,
+          "auxiliary_carry": false,
+          "parity": true,
+          "carry": false
+        }
+      },
+      "after": {
+        "a": 0,
+        "b": 0,
+        "c": 26,
+        "d": 0,
+        "e": 128,
+        "h": 33,
+        "l": 86,
+        "sp": 65518,
+        "pc": 6843,
+        "flags": {
+          "sign": false,
+          "zero": false,
+          "auxiliary_carry": false,
+          "parity": true,
+          "carry": false
+        }
+      },
+      "sp_before": 65520,
+      "sp_after": 65518,
+      "call_return_address": 1021,
+      "reads": [],
+      "writes": [
+        {
+          "address": 65519,
+          "old_value": null,
+          "new_value": 3
+        },
+        {
+          "address": 65518,
+          "old_value": null,
+          "new_value": 253
+        }
+      ],
+      "control": {
+        "kind": "call",
+        "target": 6843,
+        "taken": true
+      }
+    },
+    "entry_key": "PLI.COM+19BB",
+    "witnesses": [
+      {
+        "step_index": 504,
+        "pc": 6843,
+        "pc_after": 6844,
+        "origin": {
+          "image": {
+            "drive": 0,
+            "user": 0,
+            "name": "PLI.COM",
+            "identity": "0:0:PLI.COM"
+          },
+          "offset": 6587
+        },
+        "target_origin": null,
+        "runtime_pc": 6843,
+        "bytes": "C5",
+        "disassembly": "PUSH B",
+        "source": "memory",
+        "before": {
+          "a": 0,
+          "b": 0,
+          "c": 26,
+          "d": 0,
+          "e": 128,
+          "h": 33,
+          "l": 86,
+          "sp": 65518,
+          "pc": 6843,
+          "flags": {
+            "sign": false,
+            "zero": false,
+            "auxiliary_carry": false,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "after": {
+          "a": 0,
+          "b": 0,
+          "c": 26,
+          "d": 0,
+          "e": 128,
+          "h": 33,
+          "l": 86,
+          "sp": 65516,
+          "pc": 6844,
+          "flags": {
+            "sign": false,
+            "zero": false,
+            "auxiliary_carry": false,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "sp_before": 65518,
+        "sp_after": 65516,
+        "call_return_address": null,
+        "reads": [],
+        "writes": [
+          {
+            "address": 65517,
+            "old_value": null,
+            "new_value": 0
+          },
+          {
+            "address": 65516,
+            "old_value": null,
+            "new_value": 26
+          }
+        ],
+        "control": {
+          "kind": "sequential"
+        }
+      },
+      {
+        "step_index": 505,
+        "pc": 6844,
+        "pc_after": 6845,
+        "origin": {
+          "image": {
+            "drive": 0,
+            "user": 0,
+            "name": "PLI.COM",
+            "identity": "0:0:PLI.COM"
+          },
+          "offset": 6588
+        },
+        "target_origin": null,
+        "runtime_pc": 6844,
+        "bytes": "D5",
+        "disassembly": "PUSH D",
+        "source": "memory",
+        "before": {
+          "a": 0,
+          "b": 0,
+          "c": 26,
+          "d": 0,
+          "e": 128,
+          "h": 33,
+          "l": 86,
+          "sp": 65516,
+          "pc": 6844,
+          "flags": {
+            "sign": false,
+            "zero": false,
+            "auxiliary_carry": false,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "after": {
+          "a": 0,
+          "b": 0,
+          "c": 26,
+          "d": 0,
+          "e": 128,
+          "h": 33,
+          "l": 86,
+          "sp": 65514,
+          "pc": 6845,
+          "flags": {
+            "sign": false,
+            "zero": false,
+            "auxiliary_carry": false,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "sp_before": 65516,
+        "sp_after": 65514,
+        "call_return_address": null,
+        "reads": [],
+        "writes": [
+          {
+            "address": 65515,
+            "old_value": null,
+            "new_value": 0
+          },
+          {
+            "address": 65514,
+            "old_value": null,
+            "new_value": 128
+          }
+        ],
+        "control": {
+          "kind": "sequential"
+        }
+      },
+      {
+        "step_index": 506,
+        "pc": 6845,
+        "pc_after": 6848,
+        "origin": {
+          "image": {
+            "drive": 0,
+            "user": 0,
+            "name": "PLI.COM",
+            "identity": "0:0:PLI.COM"
+          },
+          "offset": 6589
+        },
+        "target_origin": null,
+        "runtime_pc": 6845,
+        "bytes": "215C21",
+        "disassembly": "LXI H,215CH",
+        "source": "memory",
+        "before": {
+          "a": 0,
+          "b": 0,
+          "c": 26,
+          "d": 0,
+          "e": 128,
+          "h": 33,
+          "l": 86,
+          "sp": 65514,
+          "pc": 6845,
+          "flags": {
+            "sign": false,
+            "zero": false,
+            "auxiliary_carry": false,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "after": {
+          "a": 0,
+          "b": 0,
+          "c": 26,
+          "d": 0,
+          "e": 128,
+          "h": 33,
+          "l": 92,
+          "sp": 65514,
+          "pc": 6848,
+          "flags": {
+            "sign": false,
+            "zero": false,
+            "auxiliary_carry": false,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "sp_before": 65514,
+        "sp_after": 65514,
+        "call_return_address": null,
+        "reads": [],
+        "writes": [],
+        "control": {
+          "kind": "sequential"
+        }
+      },
+      {
+        "step_index": 507,
+        "pc": 6848,
+        "pc_after": 6851,
+        "origin": {
+          "image": {
+            "drive": 0,
+            "user": 0,
+            "name": "PLI.COM",
+            "identity": "0:0:PLI.COM"
+          },
+          "offset": 6592
+        },
+        "target_origin": null,
+        "runtime_pc": 6848,
+        "bytes": "110500",
+        "disassembly": "LXI D,0005H",
+        "source": "memory",
+        "before": {
+          "a": 0,
+          "b": 0,
+          "c": 26,
+          "d": 0,
+          "e": 128,
+          "h": 33,
+          "l": 92,
+          "sp": 65514,
+          "pc": 6848,
+          "flags": {
+            "sign": false,
+            "zero": false,
+            "auxiliary_carry": false,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "after": {
+          "a": 0,
+          "b": 0,
+          "c": 26,
+          "d": 0,
+          "e": 5,
+          "h": 33,
+          "l": 92,
+          "sp": 65514,
+          "pc": 6851,
+          "flags": {
+            "sign": false,
+            "zero": false,
+            "auxiliary_carry": false,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "sp_before": 65514,
+        "sp_after": 65514,
+        "call_return_address": null,
+        "reads": [],
+        "writes": [],
+        "control": {
+          "kind": "sequential"
+        }
+      },
+      {
+        "step_index": 508,
+        "pc": 6851,
+        "pc_after": 6927,
+        "origin": {
+          "image": {
+            "drive": 0,
+            "user": 0,
+            "name": "PLI.COM",
+            "identity": "0:0:PLI.COM"
+          },
+          "offset": 6595
+        },
+        "target_origin": {
+          "image": {
+            "drive": 0,
+            "user": 0,
+            "name": "PLI.COM",
+            "identity": "0:0:PLI.COM"
+          },
+          "offset": 6671
+        },
+        "runtime_pc": 6851,
+        "bytes": "CD0F1B",
+        "disassembly": "CALL 1B0FH",
+        "source": "memory",
+        "before": {
+          "a": 0,
+          "b": 0,
+          "c": 26,
+          "d": 0,
+          "e": 5,
+          "h": 33,
+          "l": 92,
+          "sp": 65514,
+          "pc": 6851,
+          "flags": {
+            "sign": false,
+            "zero": false,
+            "auxiliary_carry": false,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "after": {
+          "a": 0,
+          "b": 0,
+          "c": 26,
+          "d": 0,
+          "e": 5,
+          "h": 33,
+          "l": 92,
+          "sp": 65512,
+          "pc": 6927,
+          "flags": {
+            "sign": false,
+            "zero": false,
+            "auxiliary_carry": false,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "sp_before": 65514,
+        "sp_after": 65512,
+        "call_return_address": 6854,
+        "reads": [],
+        "writes": [
+          {
+            "address": 65513,
+            "old_value": null,
+            "new_value": 26
+          },
+          {
+            "address": 65512,
+            "old_value": null,
+            "new_value": 198
+          }
+        ],
+        "control": {
+          "kind": "call",
+          "target": 6927,
+          "taken": true
+        }
+      },
+      {
+        "step_index": 509,
+        "pc": 6927,
+        "pc_after": 6928,
+        "origin": {
+          "image": {
+            "drive": 0,
+            "user": 0,
+            "name": "PLI.COM",
+            "identity": "0:0:PLI.COM"
+          },
+          "offset": 6671
+        },
+        "target_origin": null,
+        "runtime_pc": 6927,
+        "bytes": "1A",
+        "disassembly": "LDAX D",
+        "source": "memory",
+        "before": {
+          "a": 0,
+          "b": 0,
+          "c": 26,
+          "d": 0,
+          "e": 5,
+          "h": 33,
+          "l": 92,
+          "sp": 65512,
+          "pc": 6927,
+          "flags": {
+            "sign": false,
+            "zero": false,
+            "auxiliary_carry": false,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "after": {
+          "a": 201,
+          "b": 0,
+          "c": 26,
+          "d": 0,
+          "e": 5,
+          "h": 33,
+          "l": 92,
+          "sp": 65512,
+          "pc": 6928,
+          "flags": {
+            "sign": false,
+            "zero": false,
+            "auxiliary_carry": false,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "sp_before": 65512,
+        "sp_after": 65512,
+        "call_return_address": null,
+        "reads": [
+          {
+            "address": 5,
+            "value": 201
+          }
+        ],
+        "writes": [],
+        "control": {
+          "kind": "sequential"
+        }
+      },
+      {
+        "step_index": 510,
+        "pc": 6928,
+        "pc_after": 6929,
+        "origin": {
+          "image": {
+            "drive": 0,
+            "user": 0,
+            "name": "PLI.COM",
+            "identity": "0:0:PLI.COM"
+          },
+          "offset": 6672
+        },
+        "target_origin": null,
+        "runtime_pc": 6928,
+        "bytes": "BE",
+        "disassembly": "CMP M",
+        "source": "memory",
+        "before": {
+          "a": 201,
+          "b": 0,
+          "c": 26,
+          "d": 0,
+          "e": 5,
+          "h": 33,
+          "l": 92,
+          "sp": 65512,
+          "pc": 6928,
+          "flags": {
+            "sign": false,
+            "zero": false,
+            "auxiliary_carry": false,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "after": {
+          "a": 201,
+          "b": 0,
+          "c": 26,
+          "d": 0,
+          "e": 5,
+          "h": 33,
+          "l": 92,
+          "sp": 65512,
+          "pc": 6929,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "sp_before": 65512,
+        "sp_after": 65512,
+        "call_return_address": null,
+        "reads": [
+          {
+            "address": 8540,
+            "value": 201
+          }
+        ],
+        "writes": [],
+        "control": {
+          "kind": "sequential"
+        }
+      },
+      {
+        "step_index": 511,
+        "pc": 6929,
+        "pc_after": 6930,
+        "origin": {
+          "image": {
+            "drive": 0,
+            "user": 0,
+            "name": "PLI.COM",
+            "identity": "0:0:PLI.COM"
+          },
+          "offset": 6673
+        },
+        "target_origin": null,
+        "runtime_pc": 6929,
+        "bytes": "C0",
+        "disassembly": "RNZ",
+        "source": "memory",
+        "before": {
+          "a": 201,
+          "b": 0,
+          "c": 26,
+          "d": 0,
+          "e": 5,
+          "h": 33,
+          "l": 92,
+          "sp": 65512,
+          "pc": 6929,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "after": {
+          "a": 201,
+          "b": 0,
+          "c": 26,
+          "d": 0,
+          "e": 5,
+          "h": 33,
+          "l": 92,
+          "sp": 65512,
+          "pc": 6930,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "sp_before": 65512,
+        "sp_after": 65512,
+        "call_return_address": null,
+        "reads": [],
+        "writes": [],
+        "control": {
+          "kind": "return",
+          "target": null,
+          "taken": false
+        }
+      },
+      {
+        "step_index": 512,
+        "pc": 6930,
+        "pc_after": 6931,
+        "origin": {
+          "image": {
+            "drive": 0,
+            "user": 0,
+            "name": "PLI.COM",
+            "identity": "0:0:PLI.COM"
+          },
+          "offset": 6674
+        },
+        "target_origin": null,
+        "runtime_pc": 6930,
+        "bytes": "13",
+        "disassembly": "INX D",
+        "source": "memory",
+        "before": {
+          "a": 201,
+          "b": 0,
+          "c": 26,
+          "d": 0,
+          "e": 5,
+          "h": 33,
+          "l": 92,
+          "sp": 65512,
+          "pc": 6930,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "after": {
+          "a": 201,
+          "b": 0,
+          "c": 26,
+          "d": 0,
+          "e": 6,
+          "h": 33,
+          "l": 92,
+          "sp": 65512,
+          "pc": 6931,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "sp_before": 65512,
+        "sp_after": 65512,
+        "call_return_address": null,
+        "reads": [],
+        "writes": [],
+        "control": {
+          "kind": "sequential"
+        }
+      },
+      {
+        "step_index": 513,
+        "pc": 6931,
+        "pc_after": 6932,
+        "origin": {
+          "image": {
+            "drive": 0,
+            "user": 0,
+            "name": "PLI.COM",
+            "identity": "0:0:PLI.COM"
+          },
+          "offset": 6675
+        },
+        "target_origin": null,
+        "runtime_pc": 6931,
+        "bytes": "23",
+        "disassembly": "INX H",
+        "source": "memory",
+        "before": {
+          "a": 201,
+          "b": 0,
+          "c": 26,
+          "d": 0,
+          "e": 6,
+          "h": 33,
+          "l": 92,
+          "sp": 65512,
+          "pc": 6931,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "after": {
+          "a": 201,
+          "b": 0,
+          "c": 26,
+          "d": 0,
+          "e": 6,
+          "h": 33,
+          "l": 93,
+          "sp": 65512,
+          "pc": 6932,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "sp_before": 65512,
+        "sp_after": 65512,
+        "call_return_address": null,
+        "reads": [],
+        "writes": [],
+        "control": {
+          "kind": "sequential"
+        }
+      },
+      {
+        "step_index": 514,
+        "pc": 6932,
+        "pc_after": 6933,
+        "origin": {
+          "image": {
+            "drive": 0,
+            "user": 0,
+            "name": "PLI.COM",
+            "identity": "0:0:PLI.COM"
+          },
+          "offset": 6676
+        },
+        "target_origin": null,
+        "runtime_pc": 6932,
+        "bytes": "1A",
+        "disassembly": "LDAX D",
+        "source": "memory",
+        "before": {
+          "a": 201,
+          "b": 0,
+          "c": 26,
+          "d": 0,
+          "e": 6,
+          "h": 33,
+          "l": 93,
+          "sp": 65512,
+          "pc": 6932,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "after": {
+          "a": 254,
+          "b": 0,
+          "c": 26,
+          "d": 0,
+          "e": 6,
+          "h": 33,
+          "l": 93,
+          "sp": 65512,
+          "pc": 6933,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "sp_before": 65512,
+        "sp_after": 65512,
+        "call_return_address": null,
+        "reads": [
+          {
+            "address": 6,
+            "value": 254
+          }
+        ],
+        "writes": [],
+        "control": {
+          "kind": "sequential"
+        }
+      },
+      {
+        "step_index": 515,
+        "pc": 6933,
+        "pc_after": 6934,
+        "origin": {
+          "image": {
+            "drive": 0,
+            "user": 0,
+            "name": "PLI.COM",
+            "identity": "0:0:PLI.COM"
+          },
+          "offset": 6677
+        },
+        "target_origin": null,
+        "runtime_pc": 6933,
+        "bytes": "BE",
+        "disassembly": "CMP M",
+        "source": "memory",
+        "before": {
+          "a": 254,
+          "b": 0,
+          "c": 26,
+          "d": 0,
+          "e": 6,
+          "h": 33,
+          "l": 93,
+          "sp": 65512,
+          "pc": 6933,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "after": {
+          "a": 254,
+          "b": 0,
+          "c": 26,
+          "d": 0,
+          "e": 6,
+          "h": 33,
+          "l": 93,
+          "sp": 65512,
+          "pc": 6934,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "sp_before": 65512,
+        "sp_after": 65512,
+        "call_return_address": null,
+        "reads": [
+          {
+            "address": 8541,
+            "value": 254
+          }
+        ],
+        "writes": [],
+        "control": {
+          "kind": "sequential"
+        }
+      },
+      {
+        "step_index": 516,
+        "pc": 6934,
+        "pc_after": 6935,
+        "origin": {
+          "image": {
+            "drive": 0,
+            "user": 0,
+            "name": "PLI.COM",
+            "identity": "0:0:PLI.COM"
+          },
+          "offset": 6678
+        },
+        "target_origin": null,
+        "runtime_pc": 6934,
+        "bytes": "C0",
+        "disassembly": "RNZ",
+        "source": "memory",
+        "before": {
+          "a": 254,
+          "b": 0,
+          "c": 26,
+          "d": 0,
+          "e": 6,
+          "h": 33,
+          "l": 93,
+          "sp": 65512,
+          "pc": 6934,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "after": {
+          "a": 254,
+          "b": 0,
+          "c": 26,
+          "d": 0,
+          "e": 6,
+          "h": 33,
+          "l": 93,
+          "sp": 65512,
+          "pc": 6935,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "sp_before": 65512,
+        "sp_after": 65512,
+        "call_return_address": null,
+        "reads": [],
+        "writes": [],
+        "control": {
+          "kind": "return",
+          "target": null,
+          "taken": false
+        }
+      },
+      {
+        "step_index": 517,
+        "pc": 6935,
+        "pc_after": 6936,
+        "origin": {
+          "image": {
+            "drive": 0,
+            "user": 0,
+            "name": "PLI.COM",
+            "identity": "0:0:PLI.COM"
+          },
+          "offset": 6679
+        },
+        "target_origin": null,
+        "runtime_pc": 6935,
+        "bytes": "13",
+        "disassembly": "INX D",
+        "source": "memory",
+        "before": {
+          "a": 254,
+          "b": 0,
+          "c": 26,
+          "d": 0,
+          "e": 6,
+          "h": 33,
+          "l": 93,
+          "sp": 65512,
+          "pc": 6935,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "after": {
+          "a": 254,
+          "b": 0,
+          "c": 26,
+          "d": 0,
+          "e": 7,
+          "h": 33,
+          "l": 93,
+          "sp": 65512,
+          "pc": 6936,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "sp_before": 65512,
+        "sp_after": 65512,
+        "call_return_address": null,
+        "reads": [],
+        "writes": [],
+        "control": {
+          "kind": "sequential"
+        }
+      },
+      {
+        "step_index": 518,
+        "pc": 6936,
+        "pc_after": 6937,
+        "origin": {
+          "image": {
+            "drive": 0,
+            "user": 0,
+            "name": "PLI.COM",
+            "identity": "0:0:PLI.COM"
+          },
+          "offset": 6680
+        },
+        "target_origin": null,
+        "runtime_pc": 6936,
+        "bytes": "23",
+        "disassembly": "INX H",
+        "source": "memory",
+        "before": {
+          "a": 254,
+          "b": 0,
+          "c": 26,
+          "d": 0,
+          "e": 7,
+          "h": 33,
+          "l": 93,
+          "sp": 65512,
+          "pc": 6936,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "after": {
+          "a": 254,
+          "b": 0,
+          "c": 26,
+          "d": 0,
+          "e": 7,
+          "h": 33,
+          "l": 94,
+          "sp": 65512,
+          "pc": 6937,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "sp_before": 65512,
+        "sp_after": 65512,
+        "call_return_address": null,
+        "reads": [],
+        "writes": [],
+        "control": {
+          "kind": "sequential"
+        }
+      },
+      {
+        "step_index": 519,
+        "pc": 6937,
+        "pc_after": 6938,
+        "origin": {
+          "image": {
+            "drive": 0,
+            "user": 0,
+            "name": "PLI.COM",
+            "identity": "0:0:PLI.COM"
+          },
+          "offset": 6681
+        },
+        "target_origin": null,
+        "runtime_pc": 6937,
+        "bytes": "1A",
+        "disassembly": "LDAX D",
+        "source": "memory",
+        "before": {
+          "a": 254,
+          "b": 0,
+          "c": 26,
+          "d": 0,
+          "e": 7,
+          "h": 33,
+          "l": 94,
+          "sp": 65512,
+          "pc": 6937,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "after": {
+          "a": 255,
+          "b": 0,
+          "c": 26,
+          "d": 0,
+          "e": 7,
+          "h": 33,
+          "l": 94,
+          "sp": 65512,
+          "pc": 6938,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "sp_before": 65512,
+        "sp_after": 65512,
+        "call_return_address": null,
+        "reads": [
+          {
+            "address": 7,
+            "value": 255
+          }
+        ],
+        "writes": [],
+        "control": {
+          "kind": "sequential"
+        }
+      },
+      {
+        "step_index": 520,
+        "pc": 6938,
+        "pc_after": 6939,
+        "origin": {
+          "image": {
+            "drive": 0,
+            "user": 0,
+            "name": "PLI.COM",
+            "identity": "0:0:PLI.COM"
+          },
+          "offset": 6682
+        },
+        "target_origin": null,
+        "runtime_pc": 6938,
+        "bytes": "BE",
+        "disassembly": "CMP M",
+        "source": "memory",
+        "before": {
+          "a": 255,
+          "b": 0,
+          "c": 26,
+          "d": 0,
+          "e": 7,
+          "h": 33,
+          "l": 94,
+          "sp": 65512,
+          "pc": 6938,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "after": {
+          "a": 255,
+          "b": 0,
+          "c": 26,
+          "d": 0,
+          "e": 7,
+          "h": 33,
+          "l": 94,
+          "sp": 65512,
+          "pc": 6939,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "sp_before": 65512,
+        "sp_after": 65512,
+        "call_return_address": null,
+        "reads": [
+          {
+            "address": 8542,
+            "value": 255
+          }
+        ],
+        "writes": [],
+        "control": {
+          "kind": "sequential"
+        }
+      },
+      {
+        "step_index": 521,
+        "pc": 6939,
+        "pc_after": 6854,
+        "origin": {
+          "image": {
+            "drive": 0,
+            "user": 0,
+            "name": "PLI.COM",
+            "identity": "0:0:PLI.COM"
+          },
+          "offset": 6683
+        },
+        "target_origin": {
+          "image": {
+            "drive": 0,
+            "user": 0,
+            "name": "PLI.COM",
+            "identity": "0:0:PLI.COM"
+          },
+          "offset": 6598
+        },
+        "runtime_pc": 6939,
+        "bytes": "C9",
+        "disassembly": "RET",
+        "source": "memory",
+        "before": {
+          "a": 255,
+          "b": 0,
+          "c": 26,
+          "d": 0,
+          "e": 7,
+          "h": 33,
+          "l": 94,
+          "sp": 65512,
+          "pc": 6939,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "after": {
+          "a": 255,
+          "b": 0,
+          "c": 26,
+          "d": 0,
+          "e": 7,
+          "h": 33,
+          "l": 94,
+          "sp": 65514,
+          "pc": 6854,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "sp_before": 65512,
+        "sp_after": 65514,
+        "call_return_address": null,
+        "reads": [
+          {
+            "address": 65512,
+            "value": 198
+          },
+          {
+            "address": 65513,
+            "value": 26
+          }
+        ],
+        "writes": [],
+        "control": {
+          "kind": "return",
+          "target": 6854,
+          "taken": true
+        }
+      },
+      {
+        "step_index": 522,
+        "pc": 6854,
+        "pc_after": 6857,
+        "origin": {
+          "image": {
+            "drive": 0,
+            "user": 0,
+            "name": "PLI.COM",
+            "identity": "0:0:PLI.COM"
+          },
+          "offset": 6598
+        },
+        "target_origin": {
+          "image": {
+            "drive": 0,
+            "user": 0,
+            "name": "PLI.COM",
+            "identity": "0:0:PLI.COM"
+          },
+          "offset": 6627
+        },
+        "runtime_pc": 6854,
+        "bytes": "C2E31A",
+        "disassembly": "JNZ 1AE3H",
+        "source": "memory",
+        "before": {
+          "a": 255,
+          "b": 0,
+          "c": 26,
+          "d": 0,
+          "e": 7,
+          "h": 33,
+          "l": 94,
+          "sp": 65514,
+          "pc": 6854,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "after": {
+          "a": 255,
+          "b": 0,
+          "c": 26,
+          "d": 0,
+          "e": 7,
+          "h": 33,
+          "l": 94,
+          "sp": 65514,
+          "pc": 6857,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "sp_before": 65514,
+        "sp_after": 65514,
+        "call_return_address": null,
+        "reads": [],
+        "writes": [],
+        "control": {
+          "kind": "jump",
+          "target": 6883,
+          "taken": false
+        }
+      },
+      {
+        "step_index": 523,
+        "pc": 6857,
+        "pc_after": 6860,
+        "origin": {
+          "image": {
+            "drive": 0,
+            "user": 0,
+            "name": "PLI.COM",
+            "identity": "0:0:PLI.COM"
+          },
+          "offset": 6601
+        },
+        "target_origin": null,
+        "runtime_pc": 6857,
+        "bytes": "2A5521",
+        "disassembly": "LHLD 2155H",
+        "source": "memory",
+        "before": {
+          "a": 255,
+          "b": 0,
+          "c": 26,
+          "d": 0,
+          "e": 7,
+          "h": 33,
+          "l": 94,
+          "sp": 65514,
+          "pc": 6857,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "after": {
+          "a": 255,
+          "b": 0,
+          "c": 26,
+          "d": 0,
+          "e": 7,
+          "h": 253,
+          "l": 254,
+          "sp": 65514,
+          "pc": 6860,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "sp_before": 65514,
+        "sp_after": 65514,
+        "call_return_address": null,
+        "reads": [
+          {
+            "address": 8533,
+            "value": 254
+          },
+          {
+            "address": 8534,
+            "value": 253
+          }
+        ],
+        "writes": [],
+        "control": {
+          "kind": "sequential"
+        }
+      },
+      {
+        "step_index": 524,
+        "pc": 6860,
+        "pc_after": 6862,
+        "origin": {
+          "image": {
+            "drive": 0,
+            "user": 0,
+            "name": "PLI.COM",
+            "identity": "0:0:PLI.COM"
+          },
+          "offset": 6604
+        },
+        "target_origin": null,
+        "runtime_pc": 6860,
+        "bytes": "3EAA",
+        "disassembly": "MVI A,AAH",
+        "source": "memory",
+        "before": {
+          "a": 255,
+          "b": 0,
+          "c": 26,
+          "d": 0,
+          "e": 7,
+          "h": 253,
+          "l": 254,
+          "sp": 65514,
+          "pc": 6860,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "after": {
+          "a": 170,
+          "b": 0,
+          "c": 26,
+          "d": 0,
+          "e": 7,
+          "h": 253,
+          "l": 254,
+          "sp": 65514,
+          "pc": 6862,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "sp_before": 65514,
+        "sp_after": 65514,
+        "call_return_address": null,
+        "reads": [],
+        "writes": [],
+        "control": {
+          "kind": "sequential"
+        }
+      },
+      {
+        "step_index": 525,
+        "pc": 6862,
+        "pc_after": 6863,
+        "origin": {
+          "image": {
+            "drive": 0,
+            "user": 0,
+            "name": "PLI.COM",
+            "identity": "0:0:PLI.COM"
+          },
+          "offset": 6606
+        },
+        "target_origin": null,
+        "runtime_pc": 6862,
+        "bytes": "BE",
+        "disassembly": "CMP M",
+        "source": "memory",
+        "before": {
+          "a": 170,
+          "b": 0,
+          "c": 26,
+          "d": 0,
+          "e": 7,
+          "h": 253,
+          "l": 254,
+          "sp": 65514,
+          "pc": 6862,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "after": {
+          "a": 170,
+          "b": 0,
+          "c": 26,
+          "d": 0,
+          "e": 7,
+          "h": 253,
+          "l": 254,
+          "sp": 65514,
+          "pc": 6863,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "sp_before": 65514,
+        "sp_after": 65514,
+        "call_return_address": null,
+        "reads": [
+          {
+            "address": 65022,
+            "value": 170
+          }
+        ],
+        "writes": [],
+        "control": {
+          "kind": "sequential"
+        }
+      },
+      {
+        "step_index": 526,
+        "pc": 6863,
+        "pc_after": 6866,
+        "origin": {
+          "image": {
+            "drive": 0,
+            "user": 0,
+            "name": "PLI.COM",
+            "identity": "0:0:PLI.COM"
+          },
+          "offset": 6607
+        },
+        "target_origin": {
+          "image": {
+            "drive": 0,
+            "user": 0,
+            "name": "PLI.COM",
+            "identity": "0:0:PLI.COM"
+          },
+          "offset": 6627
+        },
+        "runtime_pc": 6863,
+        "bytes": "C2E31A",
+        "disassembly": "JNZ 1AE3H",
+        "source": "memory",
+        "before": {
+          "a": 170,
+          "b": 0,
+          "c": 26,
+          "d": 0,
+          "e": 7,
+          "h": 253,
+          "l": 254,
+          "sp": 65514,
+          "pc": 6863,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "after": {
+          "a": 170,
+          "b": 0,
+          "c": 26,
+          "d": 0,
+          "e": 7,
+          "h": 253,
+          "l": 254,
+          "sp": 65514,
+          "pc": 6866,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "sp_before": 65514,
+        "sp_after": 65514,
+        "call_return_address": null,
+        "reads": [],
+        "writes": [],
+        "control": {
+          "kind": "jump",
+          "target": 6883,
+          "taken": false
+        }
+      },
+      {
+        "step_index": 527,
+        "pc": 6866,
+        "pc_after": 6867,
+        "origin": {
+          "image": {
+            "drive": 0,
+            "user": 0,
+            "name": "PLI.COM",
+            "identity": "0:0:PLI.COM"
+          },
+          "offset": 6610
+        },
+        "target_origin": null,
+        "runtime_pc": 6866,
+        "bytes": "D1",
+        "disassembly": "POP D",
+        "source": "memory",
+        "before": {
+          "a": 170,
+          "b": 0,
+          "c": 26,
+          "d": 0,
+          "e": 7,
+          "h": 253,
+          "l": 254,
+          "sp": 65514,
+          "pc": 6866,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "after": {
+          "a": 170,
+          "b": 0,
+          "c": 26,
+          "d": 0,
+          "e": 128,
+          "h": 253,
+          "l": 254,
+          "sp": 65516,
+          "pc": 6867,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "sp_before": 65514,
+        "sp_after": 65516,
+        "call_return_address": null,
+        "reads": [
+          {
+            "address": 65514,
+            "value": 128
+          },
+          {
+            "address": 65515,
+            "value": 0
+          }
+        ],
+        "writes": [],
+        "control": {
+          "kind": "sequential"
+        }
+      },
+      {
+        "step_index": 528,
+        "pc": 6867,
+        "pc_after": 6868,
+        "origin": {
+          "image": {
+            "drive": 0,
+            "user": 0,
+            "name": "PLI.COM",
+            "identity": "0:0:PLI.COM"
+          },
+          "offset": 6611
+        },
+        "target_origin": null,
+        "runtime_pc": 6867,
+        "bytes": "C1",
+        "disassembly": "POP B",
+        "source": "memory",
+        "before": {
+          "a": 170,
+          "b": 0,
+          "c": 26,
+          "d": 0,
+          "e": 128,
+          "h": 253,
+          "l": 254,
+          "sp": 65516,
+          "pc": 6867,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "after": {
+          "a": 170,
+          "b": 0,
+          "c": 26,
+          "d": 0,
+          "e": 128,
+          "h": 253,
+          "l": 254,
+          "sp": 65518,
+          "pc": 6868,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "sp_before": 65516,
+        "sp_after": 65518,
+        "call_return_address": null,
+        "reads": [
+          {
+            "address": 65516,
+            "value": 26
+          },
+          {
+            "address": 65517,
+            "value": 0
+          }
+        ],
+        "writes": [],
+        "control": {
+          "kind": "sequential"
+        }
+      },
+      {
+        "step_index": 529,
+        "pc": 6868,
+        "pc_after": 5,
+        "origin": {
+          "image": {
+            "drive": 0,
+            "user": 0,
+            "name": "PLI.COM",
+            "identity": "0:0:PLI.COM"
+          },
+          "offset": 6612
+        },
+        "target_origin": null,
+        "runtime_pc": 6868,
+        "bytes": "C30500",
+        "disassembly": "JMP 0005H",
+        "source": "memory",
+        "before": {
+          "a": 170,
+          "b": 0,
+          "c": 26,
+          "d": 0,
+          "e": 128,
+          "h": 253,
+          "l": 254,
+          "sp": 65518,
+          "pc": 6868,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "after": {
+          "a": 170,
+          "b": 0,
+          "c": 26,
+          "d": 0,
+          "e": 128,
+          "h": 253,
+          "l": 254,
+          "sp": 65518,
+          "pc": 5,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "sp_before": 65518,
+        "sp_after": 65518,
+        "call_return_address": null,
+        "reads": [],
+        "writes": [],
+        "control": {
+          "kind": "jump",
+          "target": 5,
+          "taken": true
+        }
+      },
+      {
+        "step_index": 530,
+        "pc": 5,
+        "pc_after": 1021,
+        "origin": null,
+        "target_origin": {
+          "image": {
+            "drive": 0,
+            "user": 0,
+            "name": "PLI.COM",
+            "identity": "0:0:PLI.COM"
+          },
+          "offset": 765
+        },
+        "runtime_pc": 5,
+        "bytes": "C9",
+        "disassembly": "RET",
+        "source": "memory",
+        "before": {
+          "a": 0,
+          "b": 0,
+          "c": 26,
+          "d": 0,
+          "e": 128,
+          "h": 0,
+          "l": 0,
+          "sp": 65518,
+          "pc": 5,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "after": {
+          "a": 0,
+          "b": 0,
+          "c": 26,
+          "d": 0,
+          "e": 128,
+          "h": 0,
+          "l": 0,
+          "sp": 65520,
+          "pc": 1021,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "sp_before": 65518,
+        "sp_after": 65520,
+        "call_return_address": null,
+        "reads": [
+          {
+            "address": 65518,
+            "value": 253
+          },
+          {
+            "address": 65519,
+            "value": 3
+          }
+        ],
+        "writes": [],
+        "control": {
+          "kind": "return",
+          "target": 1021,
+          "taken": true
+        }
+      }
+    ],
+    "relation": {
+      "type": "hardware_frame_return",
+      "step_index": 530,
+      "frame": {
+        "kind": "hardware_call",
+        "call_step": 503,
+        "call_pc": 1018,
+        "callsite": {
+          "image": {
+            "drive": 0,
+            "user": 0,
+            "name": "PLI.COM",
+            "identity": "0:0:PLI.COM"
+          },
+          "offset": 762
+        },
+        "return_address": 1021,
+        "stack_slot": 65518,
+        "target_pc": 6843,
+        "target": {
+          "image": {
+            "drive": 0,
+            "user": 0,
+            "name": "PLI.COM",
+            "identity": "0:0:PLI.COM"
+          },
+          "offset": 6587
+        }
+      }
+    },
+    "entry": {
+      "step_index": 504,
+      "pc": 6843,
+      "pc_after": 6844,
+      "origin": {
+        "image": {
+          "drive": 0,
+          "user": 0,
+          "name": "PLI.COM",
+          "identity": "0:0:PLI.COM"
+        },
+        "offset": 6587
+      },
+      "target_origin": null,
+      "runtime_pc": 6843,
+      "bytes": "C5",
+      "disassembly": "PUSH B",
+      "source": "memory",
+      "before": {
+        "a": 0,
+        "b": 0,
+        "c": 26,
+        "d": 0,
+        "e": 128,
+        "h": 33,
+        "l": 86,
+        "sp": 65518,
+        "pc": 6843,
+        "flags": {
+          "sign": false,
+          "zero": false,
+          "auxiliary_carry": false,
+          "parity": true,
+          "carry": false
+        }
+      },
+      "after": {
+        "a": 0,
+        "b": 0,
+        "c": 26,
+        "d": 0,
+        "e": 128,
+        "h": 33,
+        "l": 86,
+        "sp": 65516,
+        "pc": 6844,
+        "flags": {
+          "sign": false,
+          "zero": false,
+          "auxiliary_carry": false,
+          "parity": true,
+          "carry": false
+        }
+      },
+      "sp_before": 65518,
+      "sp_after": 65516,
+      "call_return_address": null,
+      "reads": [],
+      "writes": [
+        {
+          "address": 65517,
+          "old_value": null,
+          "new_value": 0
+        },
+        {
+          "address": 65516,
+          "old_value": null,
+          "new_value": 26
+        }
+      ],
+      "control": {
+        "kind": "sequential"
+      }
+    },
+    "ret": {
+      "step_index": 530,
+      "pc": 5,
+      "pc_after": 1021,
+      "origin": null,
+      "target_origin": {
+        "image": {
+          "drive": 0,
+          "user": 0,
+          "name": "PLI.COM",
+          "identity": "0:0:PLI.COM"
+        },
+        "offset": 765
+      },
+      "runtime_pc": 5,
+      "bytes": "C9",
+      "disassembly": "RET",
+      "source": "memory",
+      "before": {
+        "a": 0,
+        "b": 0,
+        "c": 26,
+        "d": 0,
+        "e": 128,
+        "h": 0,
+        "l": 0,
+        "sp": 65518,
+        "pc": 5,
+        "flags": {
+          "sign": false,
+          "zero": true,
+          "auxiliary_carry": true,
+          "parity": true,
+          "carry": false
+        }
+      },
+      "after": {
+        "a": 0,
+        "b": 0,
+        "c": 26,
+        "d": 0,
+        "e": 128,
+        "h": 0,
+        "l": 0,
+        "sp": 65520,
+        "pc": 1021,
+        "flags": {
+          "sign": false,
+          "zero": true,
+          "auxiliary_carry": true,
+          "parity": true,
+          "carry": false
+        }
+      },
+      "sp_before": 65518,
+      "sp_after": 65520,
+      "call_return_address": null,
+      "reads": [
+        {
+          "address": 65518,
+          "value": 253
+        },
+        {
+          "address": 65519,
+          "value": 3
+        }
+      ],
+      "writes": [],
+      "control": {
+        "kind": "return",
+        "target": 1021,
+        "taken": true
+      }
+    }
+  }
+]

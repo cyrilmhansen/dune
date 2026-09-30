@@ -66,6 +66,20 @@
       "id": "OPTIMIST-chunk-000223",
       "path_at_capture": "/var/tmp/runes-event-witness-opt-final4/event-witnesses/chunks/000223.json",
       "sha256": "ad1cdce71ec4bbb9df70e92c05353b6ff3cf17bbd3b71b87324facb119920a88"
+    },
+    {
+      "id": "MINIMAL-current-events",
+      "path_at_capture": "_build/minimal-baseline/capture/event-witnesses.json",
+      "sha256": "aeb71479f8f5c4bb72124153db4f748f4c1eb1fcf3a6c0dacbdea099bcd1333a",
+      "run_id": "MINIMAL:efb57286cd9ece9983df85452329dda70f2f05a63d0835fd8e10f4f6a1dd90c4",
+      "summary": {
+        "report": "event-witnesses.json",
+        "instruction_witnesses": 441855,
+        "file_events": 707,
+        "transfer_mismatches": 0,
+        "hardware_frame_returns": 18405,
+        "software_continuation_returns": 16
+      }
     }
   ],
   "load_bases": [
@@ -4916,7 +4930,7 @@
       "description": "shared BDOS bridge",
       "inputs_and_effects": "B/C/D/E preserved to bridge; reads 215CH and word at 2155H",
       "downstream_helpers_runtime": "1B0FH comparison; JMP 0005H",
-      "unresolved": "guard failures jump outside this range to 1AE3H; no local RET",
+      "unresolved": "No local RET. All 1857 MINIMAL invocations tail-jump to 0005H and hardware-return there; guard failure paths to 1AE3H unobserved.",
       "instructions": [
         {
           "offset": 6587,
@@ -5689,7 +5703,168 @@
           "first_step": 68208
         }
       ],
-      "matched_return_sample": null
+      "matched_return_sample": {
+        "relation": "DEDUCED: CALL to guarded bridge returns through host BDOS RET at 0005H using the original hardware frame",
+        "call": {
+          "step_index": 503,
+          "pc": 1018,
+          "pc_after": 6843,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI.COM",
+              "identity": "0:0:PLI.COM"
+            },
+            "offset": 762
+          },
+          "target_origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI.COM",
+              "identity": "0:0:PLI.COM"
+            },
+            "offset": 6587
+          },
+          "runtime_pc": 1018,
+          "bytes": "CDBB1A",
+          "disassembly": "CALL 1ABBH",
+          "source": "memory",
+          "before": {
+            "a": 0,
+            "b": 0,
+            "c": 26,
+            "d": 0,
+            "e": 128,
+            "h": 33,
+            "l": 86,
+            "sp": 65520,
+            "pc": 1018,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 0,
+            "b": 0,
+            "c": 26,
+            "d": 0,
+            "e": 128,
+            "h": 33,
+            "l": 86,
+            "sp": 65518,
+            "pc": 6843,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "sp_before": 65520,
+          "sp_after": 65518,
+          "call_return_address": 1021,
+          "reads": [],
+          "writes": [
+            {
+              "address": 65519,
+              "old_value": null,
+              "new_value": 3
+            },
+            {
+              "address": 65518,
+              "old_value": null,
+              "new_value": 253
+            }
+          ],
+          "control": {
+            "kind": "call",
+            "target": 6843,
+            "taken": true
+          }
+        },
+        "ret": {
+          "step_index": 530,
+          "pc": 5,
+          "pc_after": 1021,
+          "origin": null,
+          "target_origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI.COM",
+              "identity": "0:0:PLI.COM"
+            },
+            "offset": 765
+          },
+          "runtime_pc": 5,
+          "bytes": "C9",
+          "disassembly": "RET",
+          "source": "memory",
+          "before": {
+            "a": 0,
+            "b": 0,
+            "c": 26,
+            "d": 0,
+            "e": 128,
+            "h": 0,
+            "l": 0,
+            "sp": 65518,
+            "pc": 5,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 0,
+            "b": 0,
+            "c": 26,
+            "d": 0,
+            "e": 128,
+            "h": 0,
+            "l": 0,
+            "sp": 65520,
+            "pc": 1021,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "sp_before": 65518,
+          "sp_after": 65520,
+          "call_return_address": null,
+          "reads": [
+            {
+              "address": 65518,
+              "value": 253
+            },
+            {
+              "address": 65519,
+              "value": 3
+            }
+          ],
+          "writes": [],
+          "control": {
+            "kind": "return",
+            "target": 1021,
+            "taken": true
+          }
+        }
+      },
+      "tail_return_runtime_pc": 5
     },
     {
       "id": "PLI2.OVL+6821",
@@ -11686,6 +11861,5678 @@
             "step_index": 1681338
           }
         ]
+      }
+    },
+    {
+      "id": "PLI.COM+02EE",
+      "image": "PLI.COM",
+      "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+      "start_offset": 750,
+      "end_offset": 766,
+      "description": "BDOS DMA-address wrapper",
+      "inputs_and_effects": "BC supplies DMA address; writes little-endian BC to 205FH/2060H. Calls 19BB with C=26, DE=BC.",
+      "downstream_helpers_runtime": "1ABBH (PLI.COM+19BB)",
+      "unresolved": "B/C/D/E/H/L/A/flags after nested bridge follow BDOS; no independent register-preservation claim.",
+      "instructions": [
+        {
+          "offset": 750,
+          "bytes": "216020",
+          "decoded": "LXI H,2060H",
+          "runtime_pc": 1006,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 710,
+              "first_step": 496,
+              "last_step": 441693
+            }
+          ]
+        },
+        {
+          "offset": 753,
+          "bytes": "70",
+          "decoded": "MOV M,B",
+          "runtime_pc": 1009,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 710,
+              "first_step": 497,
+              "last_step": 441694
+            }
+          ]
+        },
+        {
+          "offset": 754,
+          "bytes": "2B",
+          "decoded": "DCX H",
+          "runtime_pc": 1010,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 710,
+              "first_step": 498,
+              "last_step": 441695
+            }
+          ]
+        },
+        {
+          "offset": 755,
+          "bytes": "71",
+          "decoded": "MOV M,C",
+          "runtime_pc": 1011,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 710,
+              "first_step": 499,
+              "last_step": 441696
+            }
+          ]
+        },
+        {
+          "offset": 756,
+          "bytes": "2A5F20",
+          "decoded": "LHLD 205FH",
+          "runtime_pc": 1012,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 710,
+              "first_step": 500,
+              "last_step": 441697
+            }
+          ]
+        },
+        {
+          "offset": 759,
+          "bytes": "EB",
+          "decoded": "XCHG",
+          "runtime_pc": 1015,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 710,
+              "first_step": 501,
+              "last_step": 441698
+            }
+          ]
+        },
+        {
+          "offset": 760,
+          "bytes": "0E1A",
+          "decoded": "MVI C,1AH",
+          "runtime_pc": 1016,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 710,
+              "first_step": 502,
+              "last_step": 441699
+            }
+          ]
+        },
+        {
+          "offset": 762,
+          "bytes": "CDBB1A",
+          "decoded": "CALL 1ABBH",
+          "runtime_pc": 1018,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 710,
+              "first_step": 503,
+              "last_step": 441700
+            }
+          ]
+        },
+        {
+          "offset": 765,
+          "bytes": "C9",
+          "decoded": "RET",
+          "runtime_pc": 1021,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 710,
+              "first_step": 531,
+              "last_step": 441728
+            }
+          ]
+        }
+      ],
+      "observed_callers": [
+        {
+          "run": "MINIMAL",
+          "image": "PLI.COM",
+          "offset": 769,
+          "bytes": "CDEE03",
+          "execution_count": 20,
+          "first_step": 495
+        },
+        {
+          "run": "MINIMAL",
+          "image": "PLI.COM",
+          "offset": 1747,
+          "bytes": "CDEE03",
+          "execution_count": 3,
+          "first_step": 571
+        },
+        {
+          "run": "MINIMAL",
+          "image": "PLI.COM",
+          "offset": 1788,
+          "bytes": "CDEE03",
+          "execution_count": 677,
+          "first_step": 666
+        },
+        {
+          "run": "MINIMAL",
+          "image": "PLI.COM",
+          "offset": 1871,
+          "bytes": "CDEE03",
+          "execution_count": 6,
+          "first_step": 68576
+        },
+        {
+          "run": "MINIMAL",
+          "image": "PLI.COM",
+          "offset": 3862,
+          "bytes": "CDEE03",
+          "execution_count": 1,
+          "first_step": 319829
+        },
+        {
+          "run": "MINIMAL",
+          "image": "PLI.COM",
+          "offset": 3896,
+          "bytes": "CDEE03",
+          "execution_count": 1,
+          "first_step": 325741
+        },
+        {
+          "run": "MINIMAL",
+          "image": "PLI.COM",
+          "offset": 4487,
+          "bytes": "CDEE03",
+          "execution_count": 2,
+          "first_step": 382503
+        }
+      ],
+      "matched_return_sample": {
+        "relation": "DEDUCED by current Event_witness hardware stack-slot/byte matching; independently rechecked",
+        "call": {
+          "step_index": 495,
+          "pc": 1025,
+          "pc_after": 1006,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI.COM",
+              "identity": "0:0:PLI.COM"
+            },
+            "offset": 769
+          },
+          "target_origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI.COM",
+              "identity": "0:0:PLI.COM"
+            },
+            "offset": 750
+          },
+          "runtime_pc": 1025,
+          "bytes": "CDEE03",
+          "disassembly": "CALL 03EEH",
+          "source": "memory",
+          "before": {
+            "a": 0,
+            "b": 0,
+            "c": 128,
+            "d": 33,
+            "e": 86,
+            "h": 32,
+            "l": 131,
+            "sp": 65522,
+            "pc": 1025,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 0,
+            "b": 0,
+            "c": 128,
+            "d": 33,
+            "e": 86,
+            "h": 32,
+            "l": 131,
+            "sp": 65520,
+            "pc": 1006,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "sp_before": 65522,
+          "sp_after": 65520,
+          "call_return_address": 1028,
+          "reads": [],
+          "writes": [
+            {
+              "address": 65521,
+              "old_value": null,
+              "new_value": 4
+            },
+            {
+              "address": 65520,
+              "old_value": null,
+              "new_value": 4
+            }
+          ],
+          "control": {
+            "kind": "call",
+            "target": 1006,
+            "taken": true
+          }
+        },
+        "ret": {
+          "step_index": 531,
+          "pc": 1021,
+          "pc_after": 1028,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI.COM",
+              "identity": "0:0:PLI.COM"
+            },
+            "offset": 765
+          },
+          "target_origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI.COM",
+              "identity": "0:0:PLI.COM"
+            },
+            "offset": 772
+          },
+          "runtime_pc": 1021,
+          "bytes": "C9",
+          "disassembly": "RET",
+          "source": "memory",
+          "before": {
+            "a": 0,
+            "b": 0,
+            "c": 26,
+            "d": 0,
+            "e": 128,
+            "h": 0,
+            "l": 0,
+            "sp": 65520,
+            "pc": 1021,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 0,
+            "b": 0,
+            "c": 26,
+            "d": 0,
+            "e": 128,
+            "h": 0,
+            "l": 0,
+            "sp": 65522,
+            "pc": 1028,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "sp_before": 65520,
+          "sp_after": 65522,
+          "call_return_address": null,
+          "reads": [
+            {
+              "address": 65520,
+              "value": 4
+            },
+            {
+              "address": 65521,
+              "value": 4
+            }
+          ],
+          "writes": [],
+          "control": {
+            "kind": "return",
+            "target": 1028,
+            "taken": true
+          }
+        }
+      },
+      "observed_return_offsets": [
+        765
+      ],
+      "behavioral_contract": {
+        "classification": "DEDUCED",
+        "description": "BC supplies DMA address; writes little-endian BC to 205FH/2060H. Calls 19BB with C=26, DE=BC.",
+        "pseudocode": "scratch[205F:2061]=BC; BDOS(26, DE=BC); return delegated BDOS result",
+        "scope_and_limits": "B/C/D/E/H/L/A/flags after nested bridge follow BDOS; no independent register-preservation claim.",
+        "basis": "Exact documented bytes plus 710 MINIMAL invocation checks",
+        "report_ref": "../minimal-baseline/contracts.json#PLI.COM+02EE"
+      }
+    },
+    {
+      "id": "PLI.COM+0318",
+      "image": "PLI.COM",
+      "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+      "start_offset": 792,
+      "end_offset": 808,
+      "description": "BDOS sequential-read wrapper",
+      "inputs_and_effects": "BC supplies FCB pointer; writes BC to 2063H/2064H. Calls 19BB with C=20, DE=BC.",
+      "downstream_helpers_runtime": "1ABBH (PLI.COM+19BB)",
+      "unresolved": "Record/FCB host effects follow the existing BDOS model; A return status is delegated.",
+      "instructions": [
+        {
+          "offset": 792,
+          "bytes": "216420",
+          "decoded": "LXI H,2064H",
+          "runtime_pc": 1048,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 687,
+              "first_step": 610,
+              "last_step": 325780
+            }
+          ]
+        },
+        {
+          "offset": 795,
+          "bytes": "70",
+          "decoded": "MOV M,B",
+          "runtime_pc": 1051,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 687,
+              "first_step": 611,
+              "last_step": 325781
+            }
+          ]
+        },
+        {
+          "offset": 796,
+          "bytes": "2B",
+          "decoded": "DCX H",
+          "runtime_pc": 1052,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 687,
+              "first_step": 612,
+              "last_step": 325782
+            }
+          ]
+        },
+        {
+          "offset": 797,
+          "bytes": "71",
+          "decoded": "MOV M,C",
+          "runtime_pc": 1053,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 687,
+              "first_step": 613,
+              "last_step": 325783
+            }
+          ]
+        },
+        {
+          "offset": 798,
+          "bytes": "2A6320",
+          "decoded": "LHLD 2063H",
+          "runtime_pc": 1054,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 687,
+              "first_step": 614,
+              "last_step": 325784
+            }
+          ]
+        },
+        {
+          "offset": 801,
+          "bytes": "EB",
+          "decoded": "XCHG",
+          "runtime_pc": 1057,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 687,
+              "first_step": 615,
+              "last_step": 325785
+            }
+          ]
+        },
+        {
+          "offset": 802,
+          "bytes": "0E14",
+          "decoded": "MVI C,14H",
+          "runtime_pc": 1058,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 687,
+              "first_step": 616,
+              "last_step": 325786
+            }
+          ]
+        },
+        {
+          "offset": 804,
+          "bytes": "CDBB1A",
+          "decoded": "CALL 1ABBH",
+          "runtime_pc": 1060,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 687,
+              "first_step": 617,
+              "last_step": 325787
+            }
+          ]
+        },
+        {
+          "offset": 807,
+          "bytes": "C9",
+          "decoded": "RET",
+          "runtime_pc": 1063,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 687,
+              "first_step": 645,
+              "last_step": 325815
+            }
+          ]
+        }
+      ],
+      "observed_callers": [
+        {
+          "run": "MINIMAL",
+          "image": "PLI.COM",
+          "offset": 1753,
+          "bytes": "CD1804",
+          "execution_count": 680,
+          "first_step": 609
+        },
+        {
+          "run": "MINIMAL",
+          "image": "PLI.COM",
+          "offset": 1877,
+          "bytes": "CD1804",
+          "execution_count": 6,
+          "first_step": 68614
+        },
+        {
+          "run": "MINIMAL",
+          "image": "PLI.COM",
+          "offset": 3902,
+          "bytes": "CD1804",
+          "execution_count": 1,
+          "first_step": 325779
+        }
+      ],
+      "matched_return_sample": {
+        "relation": "DEDUCED by current Event_witness hardware stack-slot/byte matching; independently rechecked",
+        "call": {
+          "step_index": 609,
+          "pc": 2009,
+          "pc_after": 1048,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI.COM",
+              "identity": "0:0:PLI.COM"
+            },
+            "offset": 1753
+          },
+          "target_origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI.COM",
+              "identity": "0:0:PLI.COM"
+            },
+            "offset": 792
+          },
+          "runtime_pc": 2009,
+          "bytes": "CD1804",
+          "disassembly": "CALL 0418H",
+          "source": "memory",
+          "before": {
+            "a": 0,
+            "b": 28,
+            "c": 93,
+            "d": 34,
+            "e": 0,
+            "h": 0,
+            "l": 0,
+            "sp": 65526,
+            "pc": 2009,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 0,
+            "b": 28,
+            "c": 93,
+            "d": 34,
+            "e": 0,
+            "h": 0,
+            "l": 0,
+            "sp": 65524,
+            "pc": 1048,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "sp_before": 65526,
+          "sp_after": 65524,
+          "call_return_address": 2012,
+          "reads": [],
+          "writes": [
+            {
+              "address": 65525,
+              "old_value": null,
+              "new_value": 7
+            },
+            {
+              "address": 65524,
+              "old_value": null,
+              "new_value": 220
+            }
+          ],
+          "control": {
+            "kind": "call",
+            "target": 1048,
+            "taken": true
+          }
+        },
+        "ret": {
+          "step_index": 645,
+          "pc": 1063,
+          "pc_after": 2012,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI.COM",
+              "identity": "0:0:PLI.COM"
+            },
+            "offset": 807
+          },
+          "target_origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI.COM",
+              "identity": "0:0:PLI.COM"
+            },
+            "offset": 1756
+          },
+          "runtime_pc": 1063,
+          "bytes": "C9",
+          "disassembly": "RET",
+          "source": "memory",
+          "before": {
+            "a": 0,
+            "b": 0,
+            "c": 20,
+            "d": 28,
+            "e": 93,
+            "h": 0,
+            "l": 0,
+            "sp": 65524,
+            "pc": 1063,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 0,
+            "b": 0,
+            "c": 20,
+            "d": 28,
+            "e": 93,
+            "h": 0,
+            "l": 0,
+            "sp": 65526,
+            "pc": 2012,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "sp_before": 65524,
+          "sp_after": 65526,
+          "call_return_address": null,
+          "reads": [
+            {
+              "address": 65524,
+              "value": 220
+            },
+            {
+              "address": 65525,
+              "value": 7
+            }
+          ],
+          "writes": [],
+          "control": {
+            "kind": "return",
+            "target": 2012,
+            "taken": true
+          }
+        }
+      },
+      "observed_return_offsets": [
+        807
+      ],
+      "behavioral_contract": {
+        "classification": "DEDUCED",
+        "description": "BC supplies FCB pointer; writes BC to 2063H/2064H. Calls 19BB with C=20, DE=BC.",
+        "pseudocode": "scratch[2063:2065]=BC; A=BDOS(20, FCB=BC, current_DMA); return A",
+        "scope_and_limits": "Record/FCB host effects follow the existing BDOS model; A return status is delegated.",
+        "basis": "Exact documented bytes plus 687 MINIMAL invocation checks",
+        "report_ref": "../minimal-baseline/contracts.json#PLI.COM+0318"
+      }
+    },
+    {
+      "id": "PLI.COM+0380",
+      "image": "PLI.COM",
+      "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+      "start_offset": 896,
+      "end_offset": 912,
+      "description": "BDOS console-byte wrapper",
+      "inputs_and_effects": "C supplies byte; stores at 206AH; calls 19BB with C=2 and DE=zero_extend(input_C).",
+      "downstream_helpers_runtime": "1ABBH (PLI.COM+19BB)",
+      "unresolved": "Output text meaning belongs to callers; output registers follow BDOS.",
+      "instructions": [
+        {
+          "offset": 896,
+          "bytes": "216A20",
+          "decoded": "LXI H,206AH",
+          "runtime_pc": 1152,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 424,
+              "first_step": 49731,
+              "last_step": 441620
+            }
+          ]
+        },
+        {
+          "offset": 899,
+          "bytes": "71",
+          "decoded": "MOV M,C",
+          "runtime_pc": 1155,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 424,
+              "first_step": 49732,
+              "last_step": 441621
+            }
+          ]
+        },
+        {
+          "offset": 900,
+          "bytes": "2A6A20",
+          "decoded": "LHLD 206AH",
+          "runtime_pc": 1156,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 424,
+              "first_step": 49733,
+              "last_step": 441622
+            }
+          ]
+        },
+        {
+          "offset": 903,
+          "bytes": "2600",
+          "decoded": "MVI H,00H",
+          "runtime_pc": 1159,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 424,
+              "first_step": 49734,
+              "last_step": 441623
+            }
+          ]
+        },
+        {
+          "offset": 905,
+          "bytes": "EB",
+          "decoded": "XCHG",
+          "runtime_pc": 1161,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 424,
+              "first_step": 49735,
+              "last_step": 441624
+            }
+          ]
+        },
+        {
+          "offset": 906,
+          "bytes": "0E02",
+          "decoded": "MVI C,02H",
+          "runtime_pc": 1162,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 424,
+              "first_step": 49736,
+              "last_step": 441625
+            }
+          ]
+        },
+        {
+          "offset": 908,
+          "bytes": "CDBB1A",
+          "decoded": "CALL 1ABBH",
+          "runtime_pc": 1164,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 424,
+              "first_step": 49737,
+              "last_step": 441626
+            }
+          ]
+        },
+        {
+          "offset": 911,
+          "bytes": "C9",
+          "decoded": "RET",
+          "runtime_pc": 1167,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 424,
+              "first_step": 49765,
+              "last_step": 441654
+            }
+          ]
+        }
+      ],
+      "observed_callers": [
+        {
+          "run": "MINIMAL",
+          "image": "PLI.COM",
+          "offset": 997,
+          "bytes": "CD8004",
+          "execution_count": 424,
+          "first_step": 49730
+        }
+      ],
+      "matched_return_sample": {
+        "relation": "DEDUCED by current Event_witness hardware stack-slot/byte matching; independently rechecked",
+        "call": {
+          "step_index": 49730,
+          "pc": 1253,
+          "pc_after": 1152,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI.COM",
+              "identity": "0:0:PLI.COM"
+            },
+            "offset": 997
+          },
+          "target_origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI.COM",
+              "identity": "0:0:PLI.COM"
+            },
+            "offset": 896
+          },
+          "runtime_pc": 1253,
+          "bytes": "CD8004",
+          "disassembly": "CALL 0480H",
+          "source": "memory",
+          "before": {
+            "a": 0,
+            "b": 1,
+            "c": 12,
+            "d": 0,
+            "e": 0,
+            "h": 0,
+            "l": 12,
+            "sp": 65520,
+            "pc": 1253,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 0,
+            "b": 1,
+            "c": 12,
+            "d": 0,
+            "e": 0,
+            "h": 0,
+            "l": 12,
+            "sp": 65518,
+            "pc": 1152,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "sp_before": 65520,
+          "sp_after": 65518,
+          "call_return_address": 1256,
+          "reads": [],
+          "writes": [
+            {
+              "address": 65519,
+              "old_value": null,
+              "new_value": 4
+            },
+            {
+              "address": 65518,
+              "old_value": null,
+              "new_value": 232
+            }
+          ],
+          "control": {
+            "kind": "call",
+            "target": 1152,
+            "taken": true
+          }
+        },
+        "ret": {
+          "step_index": 49765,
+          "pc": 1167,
+          "pc_after": 1256,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI.COM",
+              "identity": "0:0:PLI.COM"
+            },
+            "offset": 911
+          },
+          "target_origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI.COM",
+              "identity": "0:0:PLI.COM"
+            },
+            "offset": 1000
+          },
+          "runtime_pc": 1167,
+          "bytes": "C9",
+          "disassembly": "RET",
+          "source": "memory",
+          "before": {
+            "a": 170,
+            "b": 1,
+            "c": 2,
+            "d": 0,
+            "e": 12,
+            "h": 1,
+            "l": 170,
+            "sp": 65518,
+            "pc": 1167,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 170,
+            "b": 1,
+            "c": 2,
+            "d": 0,
+            "e": 12,
+            "h": 1,
+            "l": 170,
+            "sp": 65520,
+            "pc": 1256,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "sp_before": 65518,
+          "sp_after": 65520,
+          "call_return_address": null,
+          "reads": [
+            {
+              "address": 65518,
+              "value": 232
+            },
+            {
+              "address": 65519,
+              "value": 4
+            }
+          ],
+          "writes": [],
+          "control": {
+            "kind": "return",
+            "target": 1256,
+            "taken": true
+          }
+        }
+      },
+      "observed_return_offsets": [
+        911
+      ],
+      "behavioral_contract": {
+        "classification": "DEDUCED",
+        "description": "C supplies byte; stores at 206AH; calls 19BB with C=2 and DE=zero_extend(input_C).",
+        "pseudocode": "byte[206A]=C; BDOS(2, E=input_C); return delegated result",
+        "scope_and_limits": "Output text meaning belongs to callers; output registers follow BDOS.",
+        "basis": "Exact documented bytes plus 424 MINIMAL invocation checks",
+        "report_ref": "../minimal-baseline/contracts.json#PLI.COM+0380"
+      }
+    },
+    {
+      "id": "PLI.COM+1A0F",
+      "image": "PLI.COM",
+      "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+      "start_offset": 6671,
+      "end_offset": 6684,
+      "description": "three-byte indirect comparison",
+      "inputs_and_effects": "HL and DE point at three-byte sequences; compares byte[DE] against byte[HL], stopping at first mismatch. BC unchanged; A=last byte[DE]; flags from last CMP.",
+      "downstream_helpers_runtime": "none",
+      "unresolved": "MINIMAL observed only full three-byte equality; RNZ at +1A11/+1A16 never taken. Short-circuit mismatch contract follows documented instructions, not a witnessed mismatch.",
+      "instructions": [
+        {
+          "offset": 6671,
+          "bytes": "1A",
+          "decoded": "LDAX D",
+          "runtime_pc": 6927,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 1858,
+              "first_step": 509,
+              "last_step": 441841
+            }
+          ]
+        },
+        {
+          "offset": 6672,
+          "bytes": "BE",
+          "decoded": "CMP M",
+          "runtime_pc": 6928,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 1858,
+              "first_step": 510,
+              "last_step": 441842
+            }
+          ]
+        },
+        {
+          "offset": 6673,
+          "bytes": "C0",
+          "decoded": "RNZ",
+          "runtime_pc": 6929,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 1858,
+              "first_step": 511,
+              "last_step": 441843
+            }
+          ]
+        },
+        {
+          "offset": 6674,
+          "bytes": "13",
+          "decoded": "INX D",
+          "runtime_pc": 6930,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 1858,
+              "first_step": 512,
+              "last_step": 441844
+            }
+          ]
+        },
+        {
+          "offset": 6675,
+          "bytes": "23",
+          "decoded": "INX H",
+          "runtime_pc": 6931,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 1858,
+              "first_step": 513,
+              "last_step": 441845
+            }
+          ]
+        },
+        {
+          "offset": 6676,
+          "bytes": "1A",
+          "decoded": "LDAX D",
+          "runtime_pc": 6932,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 1858,
+              "first_step": 514,
+              "last_step": 441846
+            }
+          ]
+        },
+        {
+          "offset": 6677,
+          "bytes": "BE",
+          "decoded": "CMP M",
+          "runtime_pc": 6933,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 1858,
+              "first_step": 515,
+              "last_step": 441847
+            }
+          ]
+        },
+        {
+          "offset": 6678,
+          "bytes": "C0",
+          "decoded": "RNZ",
+          "runtime_pc": 6934,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 1858,
+              "first_step": 516,
+              "last_step": 441848
+            }
+          ]
+        },
+        {
+          "offset": 6679,
+          "bytes": "13",
+          "decoded": "INX D",
+          "runtime_pc": 6935,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 1858,
+              "first_step": 517,
+              "last_step": 441849
+            }
+          ]
+        },
+        {
+          "offset": 6680,
+          "bytes": "23",
+          "decoded": "INX H",
+          "runtime_pc": 6936,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 1858,
+              "first_step": 518,
+              "last_step": 441850
+            }
+          ]
+        },
+        {
+          "offset": 6681,
+          "bytes": "1A",
+          "decoded": "LDAX D",
+          "runtime_pc": 6937,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 1858,
+              "first_step": 519,
+              "last_step": 441851
+            }
+          ]
+        },
+        {
+          "offset": 6682,
+          "bytes": "BE",
+          "decoded": "CMP M",
+          "runtime_pc": 6938,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 1858,
+              "first_step": 520,
+              "last_step": 441852
+            }
+          ]
+        },
+        {
+          "offset": 6683,
+          "bytes": "C9",
+          "decoded": "RET",
+          "runtime_pc": 6939,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 1858,
+              "first_step": 521,
+              "last_step": 441853
+            }
+          ]
+        }
+      ],
+      "observed_callers": [
+        {
+          "run": "MINIMAL",
+          "image": "PLI.COM",
+          "offset": 6595,
+          "bytes": "CD0F1B",
+          "execution_count": 1857,
+          "first_step": 508
+        },
+        {
+          "run": "MINIMAL",
+          "image": "PLI.COM",
+          "offset": 6621,
+          "bytes": "CD0F1B",
+          "execution_count": 1,
+          "first_step": 441840
+        }
+      ],
+      "matched_return_sample": {
+        "relation": "DEDUCED by current Event_witness hardware stack-slot/byte matching; independently rechecked",
+        "call": {
+          "step_index": 508,
+          "pc": 6851,
+          "pc_after": 6927,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI.COM",
+              "identity": "0:0:PLI.COM"
+            },
+            "offset": 6595
+          },
+          "target_origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI.COM",
+              "identity": "0:0:PLI.COM"
+            },
+            "offset": 6671
+          },
+          "runtime_pc": 6851,
+          "bytes": "CD0F1B",
+          "disassembly": "CALL 1B0FH",
+          "source": "memory",
+          "before": {
+            "a": 0,
+            "b": 0,
+            "c": 26,
+            "d": 0,
+            "e": 5,
+            "h": 33,
+            "l": 92,
+            "sp": 65514,
+            "pc": 6851,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 0,
+            "b": 0,
+            "c": 26,
+            "d": 0,
+            "e": 5,
+            "h": 33,
+            "l": 92,
+            "sp": 65512,
+            "pc": 6927,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "sp_before": 65514,
+          "sp_after": 65512,
+          "call_return_address": 6854,
+          "reads": [],
+          "writes": [
+            {
+              "address": 65513,
+              "old_value": null,
+              "new_value": 26
+            },
+            {
+              "address": 65512,
+              "old_value": null,
+              "new_value": 198
+            }
+          ],
+          "control": {
+            "kind": "call",
+            "target": 6927,
+            "taken": true
+          }
+        },
+        "ret": {
+          "step_index": 521,
+          "pc": 6939,
+          "pc_after": 6854,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI.COM",
+              "identity": "0:0:PLI.COM"
+            },
+            "offset": 6683
+          },
+          "target_origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI.COM",
+              "identity": "0:0:PLI.COM"
+            },
+            "offset": 6598
+          },
+          "runtime_pc": 6939,
+          "bytes": "C9",
+          "disassembly": "RET",
+          "source": "memory",
+          "before": {
+            "a": 255,
+            "b": 0,
+            "c": 26,
+            "d": 0,
+            "e": 7,
+            "h": 33,
+            "l": 94,
+            "sp": 65512,
+            "pc": 6939,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 255,
+            "b": 0,
+            "c": 26,
+            "d": 0,
+            "e": 7,
+            "h": 33,
+            "l": 94,
+            "sp": 65514,
+            "pc": 6854,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "sp_before": 65512,
+          "sp_after": 65514,
+          "call_return_address": null,
+          "reads": [
+            {
+              "address": 65512,
+              "value": 198
+            },
+            {
+              "address": 65513,
+              "value": 26
+            }
+          ],
+          "writes": [],
+          "control": {
+            "kind": "return",
+            "target": 6854,
+            "taken": true
+          }
+        }
+      },
+      "observed_return_offsets": [
+        6683
+      ],
+      "behavioral_contract": {
+        "classification": "DEDUCED",
+        "description": "HL and DE point at three-byte sequences; compares byte[DE] against byte[HL], stopping at first mismatch. BC unchanged; A=last byte[DE]; flags from last CMP.",
+        "pseudocode": "for i in 0..2: A=byte[DE]; CMP byte[HL]; if unequal or i==2: return; DE++; HL++",
+        "scope_and_limits": "MINIMAL observed only full three-byte equality; RNZ at +1A11/+1A16 never taken. Short-circuit mismatch contract follows documented instructions, not a witnessed mismatch.",
+        "basis": "Exact documented bytes plus 1858 MINIMAL invocation checks",
+        "report_ref": "../minimal-baseline/contracts.json#PLI.COM+1A0F"
+      }
+    },
+    {
+      "id": "PLI.COM+1A1C",
+      "image": "PLI.COM",
+      "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+      "start_offset": 6684,
+      "end_offset": 6697,
+      "description": "add unsigned byte to indirect word",
+      "inputs_and_effects": "Primary +1A1C: DE points to word, A is addend. Secondary +1A1D takes pointer in HL. HL=word[p]+unsigned(A) modulo 65536; DE=p+1; A=high result; BC unchanged; carry=16-bit overflow, remaining arithmetic flags from high ADC.",
+      "downstream_helpers_runtime": "none",
+      "unresolved": "No memory writes; modulo pointer/result arithmetic. Other flag bits describe the high-byte operation, not full-word zero/sign.",
+      "instructions": [
+        {
+          "offset": 6684,
+          "bytes": "EB",
+          "decoded": "XCHG",
+          "runtime_pc": 6940,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 528,
+              "first_step": 16924,
+              "last_step": 335085
+            }
+          ]
+        },
+        {
+          "offset": 6685,
+          "bytes": "5F",
+          "decoded": "MOV E,A",
+          "runtime_pc": 6941,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 530,
+              "first_step": 16925,
+              "last_step": 335086
+            }
+          ]
+        },
+        {
+          "offset": 6686,
+          "bytes": "1600",
+          "decoded": "MVI D,00H",
+          "runtime_pc": 6942,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 530,
+              "first_step": 16926,
+              "last_step": 335087
+            }
+          ]
+        },
+        {
+          "offset": 6688,
+          "bytes": "EB",
+          "decoded": "XCHG",
+          "runtime_pc": 6944,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 530,
+              "first_step": 16927,
+              "last_step": 335088
+            }
+          ]
+        },
+        {
+          "offset": 6689,
+          "bytes": "1A",
+          "decoded": "LDAX D",
+          "runtime_pc": 6945,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 530,
+              "first_step": 16928,
+              "last_step": 335089
+            }
+          ]
+        },
+        {
+          "offset": 6690,
+          "bytes": "85",
+          "decoded": "ADD L",
+          "runtime_pc": 6946,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 530,
+              "first_step": 16929,
+              "last_step": 335090
+            }
+          ]
+        },
+        {
+          "offset": 6691,
+          "bytes": "6F",
+          "decoded": "MOV L,A",
+          "runtime_pc": 6947,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 530,
+              "first_step": 16930,
+              "last_step": 335091
+            }
+          ]
+        },
+        {
+          "offset": 6692,
+          "bytes": "13",
+          "decoded": "INX D",
+          "runtime_pc": 6948,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 530,
+              "first_step": 16931,
+              "last_step": 335092
+            }
+          ]
+        },
+        {
+          "offset": 6693,
+          "bytes": "1A",
+          "decoded": "LDAX D",
+          "runtime_pc": 6949,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 530,
+              "first_step": 16932,
+              "last_step": 335093
+            }
+          ]
+        },
+        {
+          "offset": 6694,
+          "bytes": "8C",
+          "decoded": "ADC H",
+          "runtime_pc": 6950,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 530,
+              "first_step": 16933,
+              "last_step": 335094
+            }
+          ]
+        },
+        {
+          "offset": 6695,
+          "bytes": "67",
+          "decoded": "MOV H,A",
+          "runtime_pc": 6951,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 530,
+              "first_step": 16934,
+              "last_step": 335095
+            }
+          ]
+        },
+        {
+          "offset": 6696,
+          "bytes": "C9",
+          "decoded": "RET",
+          "runtime_pc": 6952,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 530,
+              "first_step": 16935,
+              "last_step": 335096
+            }
+          ]
+        }
+      ],
+      "observed_callers": [
+        {
+          "run": "MINIMAL",
+          "image": "PLI0.OVL",
+          "offset": 6710,
+          "bytes": "CD1C1B",
+          "execution_count": 152,
+          "first_step": 16923
+        },
+        {
+          "run": "MINIMAL",
+          "image": "PLI0.OVL",
+          "offset": 7701,
+          "bytes": "CD1C1B",
+          "execution_count": 87,
+          "first_step": 16956
+        },
+        {
+          "run": "MINIMAL",
+          "image": "PLI0.OVL",
+          "offset": 8259,
+          "bytes": "CD1C1B",
+          "execution_count": 64,
+          "first_step": 17057
+        },
+        {
+          "run": "MINIMAL",
+          "image": "PLI0.OVL",
+          "offset": 11442,
+          "bytes": "CD1C1B",
+          "execution_count": 2,
+          "first_step": 151172
+        },
+        {
+          "run": "MINIMAL",
+          "image": "PLI0.OVL",
+          "offset": 17333,
+          "bytes": "CD1C1B",
+          "execution_count": 103,
+          "first_step": 74604
+        },
+        {
+          "run": "MINIMAL",
+          "image": "PLI1.OVL",
+          "offset": 31220,
+          "bytes": "CD1C1B",
+          "execution_count": 117,
+          "first_step": 224420
+        },
+        {
+          "run": "MINIMAL",
+          "image": "PLI2.OVL",
+          "offset": 5899,
+          "bytes": "CD1C1B",
+          "execution_count": 3,
+          "first_step": 325951
+        }
+      ],
+      "matched_return_sample": {
+        "relation": "DEDUCED by current Event_witness hardware stack-slot/byte matching; independently rechecked",
+        "call": {
+          "step_index": 16923,
+          "pc": 15414,
+          "pc_after": 6940,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI0.OVL",
+              "identity": "0:0:PLI0.OVL"
+            },
+            "offset": 6710
+          },
+          "target_origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI.COM",
+              "identity": "0:0:PLI.COM"
+            },
+            "offset": 6684
+          },
+          "runtime_pc": 15414,
+          "bytes": "CD1C1B",
+          "disassembly": "CALL 1B1CH",
+          "source": "memory",
+          "before": {
+            "a": 6,
+            "b": 107,
+            "c": 6,
+            "d": 105,
+            "e": 197,
+            "h": 105,
+            "l": 199,
+            "sp": 65516,
+            "pc": 15414,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 6,
+            "b": 107,
+            "c": 6,
+            "d": 105,
+            "e": 197,
+            "h": 105,
+            "l": 199,
+            "sp": 65514,
+            "pc": 6940,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "sp_before": 65516,
+          "sp_after": 65514,
+          "call_return_address": 15417,
+          "reads": [],
+          "writes": [
+            {
+              "address": 65515,
+              "old_value": null,
+              "new_value": 60
+            },
+            {
+              "address": 65514,
+              "old_value": null,
+              "new_value": 57
+            }
+          ],
+          "control": {
+            "kind": "call",
+            "target": 6940,
+            "taken": true
+          }
+        },
+        "ret": {
+          "step_index": 16935,
+          "pc": 6952,
+          "pc_after": 15417,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI.COM",
+              "identity": "0:0:PLI.COM"
+            },
+            "offset": 6696
+          },
+          "target_origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI0.OVL",
+              "identity": "0:0:PLI0.OVL"
+            },
+            "offset": 6713
+          },
+          "runtime_pc": 6952,
+          "bytes": "C9",
+          "disassembly": "RET",
+          "source": "memory",
+          "before": {
+            "a": 107,
+            "b": 107,
+            "c": 6,
+            "d": 105,
+            "e": 198,
+            "h": 107,
+            "l": 156,
+            "sp": 65514,
+            "pc": 6952,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 107,
+            "b": 107,
+            "c": 6,
+            "d": 105,
+            "e": 198,
+            "h": 107,
+            "l": 156,
+            "sp": 65516,
+            "pc": 15417,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "sp_before": 65514,
+          "sp_after": 65516,
+          "call_return_address": null,
+          "reads": [
+            {
+              "address": 65514,
+              "value": 57
+            },
+            {
+              "address": 65515,
+              "value": 60
+            }
+          ],
+          "writes": [],
+          "control": {
+            "kind": "return",
+            "target": 15417,
+            "taken": true
+          }
+        }
+      },
+      "observed_return_offsets": [
+        6696
+      ],
+      "behavioral_contract": {
+        "classification": "DEDUCED",
+        "description": "Primary +1A1C: DE points to word, A is addend. Secondary +1A1D takes pointer in HL. HL=word[p]+unsigned(A) modulo 65536; DE=p+1; A=high result; BC unchanged; carry=16-bit overflow, remaining arithmetic flags from high ADC.",
+        "pseudocode": "p=DE at +1A1C, or HL at +1A1D; HL=(word[p]+u8(A))&FFFF; DE=p+1; A=hi(HL); return",
+        "scope_and_limits": "No memory writes; modulo pointer/result arithmetic. Other flag bits describe the high-byte operation, not full-word zero/sign.",
+        "basis": "Exact documented bytes plus 528 MINIMAL invocation checks",
+        "report_ref": "../minimal-baseline/contracts.json#PLI.COM+1A1C"
+      }
+    },
+    {
+      "id": "PLI.COM+1A1D",
+      "image": "PLI.COM",
+      "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+      "start_offset": 6685,
+      "end_offset": 6697,
+      "description": "add unsigned byte to indirect word (secondary entry)",
+      "inputs_and_effects": "Primary +1A1C: DE points to word, A is addend. Secondary +1A1D takes pointer in HL. HL=word[p]+unsigned(A) modulo 65536; DE=p+1; A=high result; BC unchanged; carry=16-bit overflow, remaining arithmetic flags from high ADC.",
+      "downstream_helpers_runtime": "none",
+      "unresolved": "No memory writes; modulo pointer/result arithmetic. Other flag bits describe the high-byte operation, not full-word zero/sign.",
+      "instructions": [
+        {
+          "offset": 6685,
+          "bytes": "5F",
+          "decoded": "MOV E,A",
+          "runtime_pc": 6941,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 530,
+              "first_step": 16925,
+              "last_step": 335086
+            }
+          ]
+        },
+        {
+          "offset": 6686,
+          "bytes": "1600",
+          "decoded": "MVI D,00H",
+          "runtime_pc": 6942,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 530,
+              "first_step": 16926,
+              "last_step": 335087
+            }
+          ]
+        },
+        {
+          "offset": 6688,
+          "bytes": "EB",
+          "decoded": "XCHG",
+          "runtime_pc": 6944,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 530,
+              "first_step": 16927,
+              "last_step": 335088
+            }
+          ]
+        },
+        {
+          "offset": 6689,
+          "bytes": "1A",
+          "decoded": "LDAX D",
+          "runtime_pc": 6945,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 530,
+              "first_step": 16928,
+              "last_step": 335089
+            }
+          ]
+        },
+        {
+          "offset": 6690,
+          "bytes": "85",
+          "decoded": "ADD L",
+          "runtime_pc": 6946,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 530,
+              "first_step": 16929,
+              "last_step": 335090
+            }
+          ]
+        },
+        {
+          "offset": 6691,
+          "bytes": "6F",
+          "decoded": "MOV L,A",
+          "runtime_pc": 6947,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 530,
+              "first_step": 16930,
+              "last_step": 335091
+            }
+          ]
+        },
+        {
+          "offset": 6692,
+          "bytes": "13",
+          "decoded": "INX D",
+          "runtime_pc": 6948,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 530,
+              "first_step": 16931,
+              "last_step": 335092
+            }
+          ]
+        },
+        {
+          "offset": 6693,
+          "bytes": "1A",
+          "decoded": "LDAX D",
+          "runtime_pc": 6949,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 530,
+              "first_step": 16932,
+              "last_step": 335093
+            }
+          ]
+        },
+        {
+          "offset": 6694,
+          "bytes": "8C",
+          "decoded": "ADC H",
+          "runtime_pc": 6950,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 530,
+              "first_step": 16933,
+              "last_step": 335094
+            }
+          ]
+        },
+        {
+          "offset": 6695,
+          "bytes": "67",
+          "decoded": "MOV H,A",
+          "runtime_pc": 6951,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 530,
+              "first_step": 16934,
+              "last_step": 335095
+            }
+          ]
+        },
+        {
+          "offset": 6696,
+          "bytes": "C9",
+          "decoded": "RET",
+          "runtime_pc": 6952,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 530,
+              "first_step": 16935,
+              "last_step": 335096
+            }
+          ]
+        }
+      ],
+      "observed_callers": [
+        {
+          "run": "MINIMAL",
+          "image": "PLI1.OVL",
+          "offset": 17483,
+          "bytes": "CD1D1B",
+          "execution_count": 1,
+          "first_step": 218216
+        },
+        {
+          "run": "MINIMAL",
+          "image": "PLI1.OVL",
+          "offset": 18288,
+          "bytes": "CD1D1B",
+          "execution_count": 1,
+          "first_step": 265041
+        }
+      ],
+      "matched_return_sample": {
+        "relation": "DEDUCED by current Event_witness hardware stack-slot/byte matching; independently rechecked",
+        "call": {
+          "step_index": 218216,
+          "pc": 26187,
+          "pc_after": 6941,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI1.OVL",
+              "identity": "0:0:PLI1.OVL"
+            },
+            "offset": 17483
+          },
+          "target_origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI.COM",
+              "identity": "0:0:PLI.COM"
+            },
+            "offset": 6685
+          },
+          "runtime_pc": 26187,
+          "bytes": "CD1D1B",
+          "disassembly": "CALL 1B1DH",
+          "source": "memory",
+          "before": {
+            "a": 2,
+            "b": 168,
+            "c": 171,
+            "d": 251,
+            "e": 228,
+            "h": 251,
+            "l": 227,
+            "sp": 65528,
+            "pc": 26187,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 2,
+            "b": 168,
+            "c": 171,
+            "d": 251,
+            "e": 228,
+            "h": 251,
+            "l": 227,
+            "sp": 65526,
+            "pc": 6941,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "sp_before": 65528,
+          "sp_after": 65526,
+          "call_return_address": 26190,
+          "reads": [],
+          "writes": [
+            {
+              "address": 65527,
+              "old_value": null,
+              "new_value": 102
+            },
+            {
+              "address": 65526,
+              "old_value": null,
+              "new_value": 78
+            }
+          ],
+          "control": {
+            "kind": "call",
+            "target": 6941,
+            "taken": true
+          }
+        },
+        "ret": {
+          "step_index": 218227,
+          "pc": 6952,
+          "pc_after": 26190,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI.COM",
+              "identity": "0:0:PLI.COM"
+            },
+            "offset": 6696
+          },
+          "target_origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI1.OVL",
+              "identity": "0:0:PLI1.OVL"
+            },
+            "offset": 17486
+          },
+          "runtime_pc": 6952,
+          "bytes": "C9",
+          "disassembly": "RET",
+          "source": "memory",
+          "before": {
+            "a": 0,
+            "b": 168,
+            "c": 171,
+            "d": 251,
+            "e": 228,
+            "h": 0,
+            "l": 2,
+            "sp": 65526,
+            "pc": 6952,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 0,
+            "b": 168,
+            "c": 171,
+            "d": 251,
+            "e": 228,
+            "h": 0,
+            "l": 2,
+            "sp": 65528,
+            "pc": 26190,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "sp_before": 65526,
+          "sp_after": 65528,
+          "call_return_address": null,
+          "reads": [
+            {
+              "address": 65526,
+              "value": 78
+            },
+            {
+              "address": 65527,
+              "value": 102
+            }
+          ],
+          "writes": [],
+          "control": {
+            "kind": "return",
+            "target": 26190,
+            "taken": true
+          }
+        }
+      },
+      "observed_return_offsets": [
+        6696
+      ],
+      "behavioral_contract": {
+        "classification": "DEDUCED",
+        "description": "Primary +1A1C: DE points to word, A is addend. Secondary +1A1D takes pointer in HL. HL=word[p]+unsigned(A) modulo 65536; DE=p+1; A=high result; BC unchanged; carry=16-bit overflow, remaining arithmetic flags from high ADC.",
+        "pseudocode": "p=DE at +1A1C, or HL at +1A1D; HL=(word[p]+u8(A))&FFFF; DE=p+1; A=hi(HL); return",
+        "scope_and_limits": "No memory writes; modulo pointer/result arithmetic. Other flag bits describe the high-byte operation, not full-word zero/sign.",
+        "basis": "Exact documented bytes plus 2 MINIMAL invocation checks",
+        "report_ref": "../minimal-baseline/contracts.json#PLI.COM+1A1D"
+      }
+    },
+    {
+      "id": "PLI.COM+1A29",
+      "image": "PLI.COM",
+      "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+      "start_offset": 6697,
+      "end_offset": 6707,
+      "description": "subtract HL from DE with byte adapter",
+      "inputs_and_effects": "Primary +1A29 zero-extends A into DE; secondary +1A2C takes DE directly. HL=(DE-HL) modulo 65536; A=high result; DE and BC preserved by core; carry=unsigned borrow; other flags from high SBB.",
+      "downstream_helpers_runtime": "none",
+      "unresolved": "No memory reads except RET stack, no memory writes. Word sign/zero cannot be inferred from high-byte flags alone.",
+      "instructions": [
+        {
+          "offset": 6697,
+          "bytes": "5F",
+          "decoded": "MOV E,A",
+          "runtime_pc": 6953,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 43,
+              "first_step": 185599,
+              "last_step": 398780
+            }
+          ]
+        },
+        {
+          "offset": 6698,
+          "bytes": "1600",
+          "decoded": "MVI D,00H",
+          "runtime_pc": 6954,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 43,
+              "first_step": 185600,
+              "last_step": 398781
+            }
+          ]
+        },
+        {
+          "offset": 6700,
+          "bytes": "7B",
+          "decoded": "MOV A,E",
+          "runtime_pc": 6956,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 283,
+              "first_step": 68512,
+              "last_step": 441794
+            }
+          ]
+        },
+        {
+          "offset": 6701,
+          "bytes": "95",
+          "decoded": "SUB L",
+          "runtime_pc": 6957,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 283,
+              "first_step": 68513,
+              "last_step": 441795
+            }
+          ]
+        },
+        {
+          "offset": 6702,
+          "bytes": "6F",
+          "decoded": "MOV L,A",
+          "runtime_pc": 6958,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 283,
+              "first_step": 68514,
+              "last_step": 441796
+            }
+          ]
+        },
+        {
+          "offset": 6703,
+          "bytes": "7A",
+          "decoded": "MOV A,D",
+          "runtime_pc": 6959,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 283,
+              "first_step": 68515,
+              "last_step": 441797
+            }
+          ]
+        },
+        {
+          "offset": 6704,
+          "bytes": "9C",
+          "decoded": "SBB H",
+          "runtime_pc": 6960,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 283,
+              "first_step": 68516,
+              "last_step": 441798
+            }
+          ]
+        },
+        {
+          "offset": 6705,
+          "bytes": "67",
+          "decoded": "MOV H,A",
+          "runtime_pc": 6961,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 283,
+              "first_step": 68517,
+              "last_step": 441799
+            }
+          ]
+        },
+        {
+          "offset": 6706,
+          "bytes": "C9",
+          "decoded": "RET",
+          "runtime_pc": 6962,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 283,
+              "first_step": 68518,
+              "last_step": 441800
+            }
+          ]
+        }
+      ],
+      "observed_callers": [
+        {
+          "run": "MINIMAL",
+          "image": "PLI0.OVL",
+          "offset": 9396,
+          "bytes": "CD291B",
+          "execution_count": 1,
+          "first_step": 185598
+        },
+        {
+          "run": "MINIMAL",
+          "image": "PLI2.OVL",
+          "offset": 9709,
+          "bytes": "CD291B",
+          "execution_count": 1,
+          "first_step": 350382
+        },
+        {
+          "run": "MINIMAL",
+          "image": "PLI2.OVL",
+          "offset": 28348,
+          "bytes": "CD291B",
+          "execution_count": 1,
+          "first_step": 351426
+        },
+        {
+          "run": "MINIMAL",
+          "image": "PLI2.OVL",
+          "offset": 28418,
+          "bytes": "CD291B",
+          "execution_count": 1,
+          "first_step": 354354
+        },
+        {
+          "run": "MINIMAL",
+          "image": "PLI2.OVL",
+          "offset": 30021,
+          "bytes": "CD291B",
+          "execution_count": 39,
+          "first_step": 329121
+        }
+      ],
+      "matched_return_sample": {
+        "relation": "DEDUCED by current Event_witness hardware stack-slot/byte matching; independently rechecked",
+        "call": {
+          "step_index": 185598,
+          "pc": 18100,
+          "pc_after": 6953,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI0.OVL",
+              "identity": "0:0:PLI0.OVL"
+            },
+            "offset": 9396
+          },
+          "target_origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI.COM",
+              "identity": "0:0:PLI.COM"
+            },
+            "offset": 6697
+          },
+          "runtime_pc": 18100,
+          "bytes": "CD291B",
+          "disassembly": "CALL 1B29H",
+          "source": "memory",
+          "before": {
+            "a": 0,
+            "b": 0,
+            "c": 6,
+            "d": 107,
+            "e": 163,
+            "h": 0,
+            "l": 0,
+            "sp": 65500,
+            "pc": 18100,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 0,
+            "b": 0,
+            "c": 6,
+            "d": 107,
+            "e": 163,
+            "h": 0,
+            "l": 0,
+            "sp": 65498,
+            "pc": 6953,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "sp_before": 65500,
+          "sp_after": 65498,
+          "call_return_address": 18103,
+          "reads": [],
+          "writes": [
+            {
+              "address": 65499,
+              "old_value": null,
+              "new_value": 70
+            },
+            {
+              "address": 65498,
+              "old_value": null,
+              "new_value": 183
+            }
+          ],
+          "control": {
+            "kind": "call",
+            "target": 6953,
+            "taken": true
+          }
+        },
+        "ret": {
+          "step_index": 185607,
+          "pc": 6962,
+          "pc_after": 18103,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI.COM",
+              "identity": "0:0:PLI.COM"
+            },
+            "offset": 6706
+          },
+          "target_origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI0.OVL",
+              "identity": "0:0:PLI0.OVL"
+            },
+            "offset": 9399
+          },
+          "runtime_pc": 6962,
+          "bytes": "C9",
+          "disassembly": "RET",
+          "source": "memory",
+          "before": {
+            "a": 0,
+            "b": 0,
+            "c": 6,
+            "d": 0,
+            "e": 0,
+            "h": 0,
+            "l": 0,
+            "sp": 65498,
+            "pc": 6962,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 0,
+            "b": 0,
+            "c": 6,
+            "d": 0,
+            "e": 0,
+            "h": 0,
+            "l": 0,
+            "sp": 65500,
+            "pc": 18103,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "sp_before": 65498,
+          "sp_after": 65500,
+          "call_return_address": null,
+          "reads": [
+            {
+              "address": 65498,
+              "value": 183
+            },
+            {
+              "address": 65499,
+              "value": 70
+            }
+          ],
+          "writes": [],
+          "control": {
+            "kind": "return",
+            "target": 18103,
+            "taken": true
+          }
+        }
+      },
+      "observed_return_offsets": [
+        6706
+      ],
+      "behavioral_contract": {
+        "classification": "DEDUCED",
+        "description": "Primary +1A29 zero-extends A into DE; secondary +1A2C takes DE directly. HL=(DE-HL) modulo 65536; A=high result; DE and BC preserved by core; carry=unsigned borrow; other flags from high SBB.",
+        "pseudocode": "at +1A29: DE=u8(A); core +1A2C: HL=(DE-HL)&FFFF; A=hi(HL); return",
+        "scope_and_limits": "No memory reads except RET stack, no memory writes. Word sign/zero cannot be inferred from high-byte flags alone.",
+        "basis": "Exact documented bytes plus 43 MINIMAL invocation checks",
+        "report_ref": "../minimal-baseline/contracts.json#PLI.COM+1A29"
+      }
+    },
+    {
+      "id": "PLI.COM+1A2C",
+      "image": "PLI.COM",
+      "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+      "start_offset": 6700,
+      "end_offset": 6707,
+      "description": "subtract HL from DE with byte adapter (secondary entry)",
+      "inputs_and_effects": "Primary +1A29 zero-extends A into DE; secondary +1A2C takes DE directly. HL=(DE-HL) modulo 65536; A=high result; DE and BC preserved by core; carry=unsigned borrow; other flags from high SBB.",
+      "downstream_helpers_runtime": "none",
+      "unresolved": "No memory reads except RET stack, no memory writes. Word sign/zero cannot be inferred from high-byte flags alone.",
+      "instructions": [
+        {
+          "offset": 6700,
+          "bytes": "7B",
+          "decoded": "MOV A,E",
+          "runtime_pc": 6956,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 283,
+              "first_step": 68512,
+              "last_step": 441794
+            }
+          ]
+        },
+        {
+          "offset": 6701,
+          "bytes": "95",
+          "decoded": "SUB L",
+          "runtime_pc": 6957,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 283,
+              "first_step": 68513,
+              "last_step": 441795
+            }
+          ]
+        },
+        {
+          "offset": 6702,
+          "bytes": "6F",
+          "decoded": "MOV L,A",
+          "runtime_pc": 6958,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 283,
+              "first_step": 68514,
+              "last_step": 441796
+            }
+          ]
+        },
+        {
+          "offset": 6703,
+          "bytes": "7A",
+          "decoded": "MOV A,D",
+          "runtime_pc": 6959,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 283,
+              "first_step": 68515,
+              "last_step": 441797
+            }
+          ]
+        },
+        {
+          "offset": 6704,
+          "bytes": "9C",
+          "decoded": "SBB H",
+          "runtime_pc": 6960,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 283,
+              "first_step": 68516,
+              "last_step": 441798
+            }
+          ]
+        },
+        {
+          "offset": 6705,
+          "bytes": "67",
+          "decoded": "MOV H,A",
+          "runtime_pc": 6961,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 283,
+              "first_step": 68517,
+              "last_step": 441799
+            }
+          ]
+        },
+        {
+          "offset": 6706,
+          "bytes": "C9",
+          "decoded": "RET",
+          "runtime_pc": 6962,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 283,
+              "first_step": 68518,
+              "last_step": 441800
+            }
+          ]
+        }
+      ],
+      "observed_callers": [
+        {
+          "run": "MINIMAL",
+          "image": "PLI.COM",
+          "offset": 1226,
+          "bytes": "CD2C1B",
+          "execution_count": 1,
+          "first_step": 441793
+        },
+        {
+          "run": "MINIMAL",
+          "image": "PLI.COM",
+          "offset": 1824,
+          "bytes": "CD2C1B",
+          "execution_count": 197,
+          "first_step": 68511
+        },
+        {
+          "run": "MINIMAL",
+          "image": "PLI1.OVL",
+          "offset": 17330,
+          "bytes": "CD2C1B",
+          "execution_count": 3,
+          "first_step": 218096
+        },
+        {
+          "run": "MINIMAL",
+          "image": "PLI1.OVL",
+          "offset": 19316,
+          "bytes": "CD2C1B",
+          "execution_count": 1,
+          "first_step": 215978
+        },
+        {
+          "run": "MINIMAL",
+          "image": "PLI1.OVL",
+          "offset": 31735,
+          "bytes": "CD2C1B",
+          "execution_count": 36,
+          "first_step": 251459
+        },
+        {
+          "run": "MINIMAL",
+          "image": "PLI2.OVL",
+          "offset": 6402,
+          "bytes": "CD2C1B",
+          "execution_count": 1,
+          "first_step": 315742
+        },
+        {
+          "run": "MINIMAL",
+          "image": "PLI2.OVL",
+          "offset": 6585,
+          "bytes": "CD2C1B",
+          "execution_count": 1,
+          "first_step": 315512
+        }
+      ],
+      "matched_return_sample": {
+        "relation": "DEDUCED by current Event_witness hardware stack-slot/byte matching; independently rechecked",
+        "call": {
+          "step_index": 68511,
+          "pc": 2080,
+          "pc_after": 6956,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI.COM",
+              "identity": "0:0:PLI.COM"
+            },
+            "offset": 1824
+          },
+          "target_origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI.COM",
+              "identity": "0:0:PLI.COM"
+            },
+            "offset": 6700
+          },
+          "runtime_pc": 2080,
+          "bytes": "CD2C1B",
+          "disassembly": "CALL 1B2CH",
+          "source": "memory",
+          "before": {
+            "a": 0,
+            "b": 32,
+            "c": 67,
+            "d": 1,
+            "e": 255,
+            "h": 2,
+            "l": 1,
+            "sp": 65514,
+            "pc": 2080,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 0,
+            "b": 32,
+            "c": 67,
+            "d": 1,
+            "e": 255,
+            "h": 2,
+            "l": 1,
+            "sp": 65512,
+            "pc": 6956,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "sp_before": 65514,
+          "sp_after": 65512,
+          "call_return_address": 2083,
+          "reads": [],
+          "writes": [
+            {
+              "address": 65513,
+              "old_value": null,
+              "new_value": 8
+            },
+            {
+              "address": 65512,
+              "old_value": null,
+              "new_value": 35
+            }
+          ],
+          "control": {
+            "kind": "call",
+            "target": 6956,
+            "taken": true
+          }
+        },
+        "ret": {
+          "step_index": 68518,
+          "pc": 6962,
+          "pc_after": 2083,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI.COM",
+              "identity": "0:0:PLI.COM"
+            },
+            "offset": 6706
+          },
+          "target_origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI.COM",
+              "identity": "0:0:PLI.COM"
+            },
+            "offset": 1827
+          },
+          "runtime_pc": 6962,
+          "bytes": "C9",
+          "disassembly": "RET",
+          "source": "memory",
+          "before": {
+            "a": 255,
+            "b": 32,
+            "c": 67,
+            "d": 1,
+            "e": 255,
+            "h": 255,
+            "l": 254,
+            "sp": 65512,
+            "pc": 6962,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": true
+            }
+          },
+          "after": {
+            "a": 255,
+            "b": 32,
+            "c": 67,
+            "d": 1,
+            "e": 255,
+            "h": 255,
+            "l": 254,
+            "sp": 65514,
+            "pc": 2083,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": true
+            }
+          },
+          "sp_before": 65512,
+          "sp_after": 65514,
+          "call_return_address": null,
+          "reads": [
+            {
+              "address": 65512,
+              "value": 35
+            },
+            {
+              "address": 65513,
+              "value": 8
+            }
+          ],
+          "writes": [],
+          "control": {
+            "kind": "return",
+            "target": 2083,
+            "taken": true
+          }
+        }
+      },
+      "observed_return_offsets": [
+        6706
+      ],
+      "behavioral_contract": {
+        "classification": "DEDUCED",
+        "description": "Primary +1A29 zero-extends A into DE; secondary +1A2C takes DE directly. HL=(DE-HL) modulo 65536; A=high result; DE and BC preserved by core; carry=unsigned borrow; other flags from high SBB.",
+        "pseudocode": "at +1A29: DE=u8(A); core +1A2C: HL=(DE-HL)&FFFF; A=hi(HL); return",
+        "scope_and_limits": "No memory reads except RET stack, no memory writes. Word sign/zero cannot be inferred from high-byte flags alone.",
+        "basis": "Exact documented bytes plus 240 MINIMAL invocation checks",
+        "report_ref": "../minimal-baseline/contracts.json#PLI.COM+1A2C"
+      }
+    },
+    {
+      "id": "PLI.COM+1A33",
+      "image": "PLI.COM",
+      "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+      "start_offset": 6707,
+      "end_offset": 6720,
+      "description": "indirect word difference with three entries",
+      "inputs_and_effects": "Primary +1A33 loads subtrahend word through BC; +1A35 loads it through HL; +1A38 takes subtrahend in BC. HL=word[DE]-subtrahend modulo 65536; BC=subtrahend; DE++; A=high result; carry=unsigned borrow; other flags from high SBB.",
+      "downstream_helpers_runtime": "none",
+      "unresolved": "No guest memory writes. Entries share a literal tail; preserve all three identities. Flags describe high-byte subtraction.",
+      "instructions": [
+        {
+          "offset": 6707,
+          "bytes": "69",
+          "decoded": "MOV L,C",
+          "runtime_pc": 6963,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 2230,
+              "first_step": 16825,
+              "last_step": 402803
+            }
+          ]
+        },
+        {
+          "offset": 6708,
+          "bytes": "60",
+          "decoded": "MOV H,B",
+          "runtime_pc": 6964,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 2230,
+              "first_step": 16826,
+              "last_step": 402804
+            }
+          ]
+        },
+        {
+          "offset": 6709,
+          "bytes": "4E",
+          "decoded": "MOV C,M",
+          "runtime_pc": 6965,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 2242,
+              "first_step": 16827,
+              "last_step": 402805
+            }
+          ]
+        },
+        {
+          "offset": 6710,
+          "bytes": "23",
+          "decoded": "INX H",
+          "runtime_pc": 6966,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 2242,
+              "first_step": 16828,
+              "last_step": 402806
+            }
+          ]
+        },
+        {
+          "offset": 6711,
+          "bytes": "46",
+          "decoded": "MOV B,M",
+          "runtime_pc": 6967,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 2242,
+              "first_step": 16829,
+              "last_step": 402807
+            }
+          ]
+        },
+        {
+          "offset": 6712,
+          "bytes": "1A",
+          "decoded": "LDAX D",
+          "runtime_pc": 6968,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 2260,
+              "first_step": 373,
+              "last_step": 402808
+            }
+          ]
+        },
+        {
+          "offset": 6713,
+          "bytes": "91",
+          "decoded": "SUB C",
+          "runtime_pc": 6969,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 2260,
+              "first_step": 374,
+              "last_step": 402809
+            }
+          ]
+        },
+        {
+          "offset": 6714,
+          "bytes": "6F",
+          "decoded": "MOV L,A",
+          "runtime_pc": 6970,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 2260,
+              "first_step": 375,
+              "last_step": 402810
+            }
+          ]
+        },
+        {
+          "offset": 6715,
+          "bytes": "13",
+          "decoded": "INX D",
+          "runtime_pc": 6971,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 2260,
+              "first_step": 376,
+              "last_step": 402811
+            }
+          ]
+        },
+        {
+          "offset": 6716,
+          "bytes": "1A",
+          "decoded": "LDAX D",
+          "runtime_pc": 6972,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 2260,
+              "first_step": 377,
+              "last_step": 402812
+            }
+          ]
+        },
+        {
+          "offset": 6717,
+          "bytes": "98",
+          "decoded": "SBB B",
+          "runtime_pc": 6973,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 2260,
+              "first_step": 378,
+              "last_step": 402813
+            }
+          ]
+        },
+        {
+          "offset": 6718,
+          "bytes": "67",
+          "decoded": "MOV H,A",
+          "runtime_pc": 6974,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 2260,
+              "first_step": 379,
+              "last_step": 402814
+            }
+          ]
+        },
+        {
+          "offset": 6719,
+          "bytes": "C9",
+          "decoded": "RET",
+          "runtime_pc": 6975,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 2260,
+              "first_step": 380,
+              "last_step": 402815
+            }
+          ]
+        }
+      ],
+      "observed_callers": [
+        {
+          "run": "MINIMAL",
+          "image": "PLI.COM",
+          "offset": 1565,
+          "bytes": "CD331B",
+          "execution_count": 3,
+          "first_step": 187668
+        },
+        {
+          "run": "MINIMAL",
+          "image": "PLI0.OVL",
+          "offset": 6750,
+          "bytes": "CD331B",
+          "execution_count": 1219,
+          "first_step": 16887
+        },
+        {
+          "run": "MINIMAL",
+          "image": "PLI0.OVL",
+          "offset": 6938,
+          "bytes": "CD331B",
+          "execution_count": 3,
+          "first_step": 109313
+        },
+        {
+          "run": "MINIMAL",
+          "image": "PLI0.OVL",
+          "offset": 7731,
+          "bytes": "CD331B",
+          "execution_count": 2,
+          "first_step": 16824
+        },
+        {
+          "run": "MINIMAL",
+          "image": "PLI0.OVL",
+          "offset": 7988,
+          "bytes": "CD331B",
+          "execution_count": 256,
+          "first_step": 109460
+        },
+        {
+          "run": "MINIMAL",
+          "image": "PLI0.OVL",
+          "offset": 9161,
+          "bytes": "CD331B",
+          "execution_count": 334,
+          "first_step": 151264
+        },
+        {
+          "run": "MINIMAL",
+          "image": "PLI0.OVL",
+          "offset": 10312,
+          "bytes": "CD331B",
+          "execution_count": 1,
+          "first_step": 186322
+        },
+        {
+          "run": "MINIMAL",
+          "image": "PLI0.OVL",
+          "offset": 10484,
+          "bytes": "CD331B",
+          "execution_count": 1,
+          "first_step": 150902
+        },
+        {
+          "run": "MINIMAL",
+          "image": "PLI0.OVL",
+          "offset": 10987,
+          "bytes": "CD331B",
+          "execution_count": 65,
+          "first_step": 151373
+        },
+        {
+          "run": "MINIMAL",
+          "image": "PLI0.OVL",
+          "offset": 11004,
+          "bytes": "CD331B",
+          "execution_count": 64,
+          "first_step": 151393
+        },
+        {
+          "run": "MINIMAL",
+          "image": "PLI0.OVL",
+          "offset": 11734,
+          "bytes": "CD331B",
+          "execution_count": 1,
+          "first_step": 109413
+        },
+        {
+          "run": "MINIMAL",
+          "image": "PLI1.OVL",
+          "offset": 17019,
+          "bytes": "CD331B",
+          "execution_count": 6,
+          "first_step": 257162
+        },
+        {
+          "run": "MINIMAL",
+          "image": "PLI1.OVL",
+          "offset": 17810,
+          "bytes": "CD331B",
+          "execution_count": 4,
+          "first_step": 228245
+        },
+        {
+          "run": "MINIMAL",
+          "image": "PLI1.OVL",
+          "offset": 18445,
+          "bytes": "CD331B",
+          "execution_count": 2,
+          "first_step": 227615
+        },
+        {
+          "run": "MINIMAL",
+          "image": "PLI1.OVL",
+          "offset": 18772,
+          "bytes": "CD331B",
+          "execution_count": 257,
+          "first_step": 277115
+        },
+        {
+          "run": "MINIMAL",
+          "image": "PLI1.OVL",
+          "offset": 32984,
+          "bytes": "CD331B",
+          "execution_count": 1,
+          "first_step": 242534
+        },
+        {
+          "run": "MINIMAL",
+          "image": "PLI2.OVL",
+          "offset": 5950,
+          "bytes": "CD331B",
+          "execution_count": 2,
+          "first_step": 325927
+        },
+        {
+          "run": "MINIMAL",
+          "image": "PLI2.OVL",
+          "offset": 6347,
+          "bytes": "CD331B",
+          "execution_count": 3,
+          "first_step": 315602
+        },
+        {
+          "run": "MINIMAL",
+          "image": "PLI2.OVL",
+          "offset": 6505,
+          "bytes": "CD331B",
+          "execution_count": 4,
+          "first_step": 315811
+        },
+        {
+          "run": "MINIMAL",
+          "image": "PLI2.OVL",
+          "offset": 29700,
+          "bytes": "CD331B",
+          "execution_count": 2,
+          "first_step": 350157
+        }
+      ],
+      "matched_return_sample": {
+        "relation": "DEDUCED by current Event_witness hardware stack-slot/byte matching; independently rechecked",
+        "call": {
+          "step_index": 16824,
+          "pc": 16435,
+          "pc_after": 6963,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI0.OVL",
+              "identity": "0:0:PLI0.OVL"
+            },
+            "offset": 7731
+          },
+          "target_origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI.COM",
+              "identity": "0:0:PLI.COM"
+            },
+            "offset": 6707
+          },
+          "runtime_pc": 16435,
+          "bytes": "CD331B",
+          "disassembly": "CALL 1B33H",
+          "source": "memory",
+          "before": {
+            "a": 0,
+            "b": 28,
+            "c": 50,
+            "d": 28,
+            "e": 54,
+            "h": 106,
+            "l": 76,
+            "sp": 65520,
+            "pc": 16435,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 0,
+            "b": 28,
+            "c": 50,
+            "d": 28,
+            "e": 54,
+            "h": 106,
+            "l": 76,
+            "sp": 65518,
+            "pc": 6963,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "sp_before": 65520,
+          "sp_after": 65518,
+          "call_return_address": 16438,
+          "reads": [],
+          "writes": [
+            {
+              "address": 65519,
+              "old_value": null,
+              "new_value": 64
+            },
+            {
+              "address": 65518,
+              "old_value": null,
+              "new_value": 54
+            }
+          ],
+          "control": {
+            "kind": "call",
+            "target": 6963,
+            "taken": true
+          }
+        },
+        "ret": {
+          "step_index": 16837,
+          "pc": 6975,
+          "pc_after": 16438,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI.COM",
+              "identity": "0:0:PLI.COM"
+            },
+            "offset": 6719
+          },
+          "target_origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI0.OVL",
+              "identity": "0:0:PLI0.OVL"
+            },
+            "offset": 7734
+          },
+          "runtime_pc": 6975,
+          "bytes": "C9",
+          "disassembly": "RET",
+          "source": "memory",
+          "before": {
+            "a": 0,
+            "b": 251,
+            "c": 253,
+            "d": 28,
+            "e": 55,
+            "h": 0,
+            "l": 0,
+            "sp": 65518,
+            "pc": 6975,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 0,
+            "b": 251,
+            "c": 253,
+            "d": 28,
+            "e": 55,
+            "h": 0,
+            "l": 0,
+            "sp": 65520,
+            "pc": 16438,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "sp_before": 65518,
+          "sp_after": 65520,
+          "call_return_address": null,
+          "reads": [
+            {
+              "address": 65518,
+              "value": 54
+            },
+            {
+              "address": 65519,
+              "value": 64
+            }
+          ],
+          "writes": [],
+          "control": {
+            "kind": "return",
+            "target": 16438,
+            "taken": true
+          }
+        }
+      },
+      "observed_return_offsets": [
+        6719
+      ],
+      "behavioral_contract": {
+        "classification": "DEDUCED",
+        "description": "Primary +1A33 loads subtrahend word through BC; +1A35 loads it through HL; +1A38 takes subtrahend in BC. HL=word[DE]-subtrahend modulo 65536; BC=subtrahend; DE++; A=high result; carry=unsigned borrow; other flags from high SBB.",
+        "pseudocode": "sub=word[BC] at +1A33, word[HL] at +1A35, or BC at +1A38; HL=(word[DE]-sub)&FFFF; DE++; A=hi(HL); return",
+        "scope_and_limits": "No guest memory writes. Entries share a literal tail; preserve all three identities. Flags describe high-byte subtraction.",
+        "basis": "Exact documented bytes plus 2230 MINIMAL invocation checks",
+        "report_ref": "../minimal-baseline/contracts.json#PLI.COM+1A33"
+      }
+    },
+    {
+      "id": "PLI.COM+1A35",
+      "image": "PLI.COM",
+      "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+      "start_offset": 6709,
+      "end_offset": 6720,
+      "description": "indirect word difference with three entries (secondary entry)",
+      "inputs_and_effects": "Primary +1A33 loads subtrahend word through BC; +1A35 loads it through HL; +1A38 takes subtrahend in BC. HL=word[DE]-subtrahend modulo 65536; BC=subtrahend; DE++; A=high result; carry=unsigned borrow; other flags from high SBB.",
+      "downstream_helpers_runtime": "none",
+      "unresolved": "No guest memory writes. Entries share a literal tail; preserve all three identities. Flags describe high-byte subtraction.",
+      "instructions": [
+        {
+          "offset": 6709,
+          "bytes": "4E",
+          "decoded": "MOV C,M",
+          "runtime_pc": 6965,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 2242,
+              "first_step": 16827,
+              "last_step": 402805
+            }
+          ]
+        },
+        {
+          "offset": 6710,
+          "bytes": "23",
+          "decoded": "INX H",
+          "runtime_pc": 6966,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 2242,
+              "first_step": 16828,
+              "last_step": 402806
+            }
+          ]
+        },
+        {
+          "offset": 6711,
+          "bytes": "46",
+          "decoded": "MOV B,M",
+          "runtime_pc": 6967,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 2242,
+              "first_step": 16829,
+              "last_step": 402807
+            }
+          ]
+        },
+        {
+          "offset": 6712,
+          "bytes": "1A",
+          "decoded": "LDAX D",
+          "runtime_pc": 6968,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 2260,
+              "first_step": 373,
+              "last_step": 402808
+            }
+          ]
+        },
+        {
+          "offset": 6713,
+          "bytes": "91",
+          "decoded": "SUB C",
+          "runtime_pc": 6969,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 2260,
+              "first_step": 374,
+              "last_step": 402809
+            }
+          ]
+        },
+        {
+          "offset": 6714,
+          "bytes": "6F",
+          "decoded": "MOV L,A",
+          "runtime_pc": 6970,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 2260,
+              "first_step": 375,
+              "last_step": 402810
+            }
+          ]
+        },
+        {
+          "offset": 6715,
+          "bytes": "13",
+          "decoded": "INX D",
+          "runtime_pc": 6971,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 2260,
+              "first_step": 376,
+              "last_step": 402811
+            }
+          ]
+        },
+        {
+          "offset": 6716,
+          "bytes": "1A",
+          "decoded": "LDAX D",
+          "runtime_pc": 6972,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 2260,
+              "first_step": 377,
+              "last_step": 402812
+            }
+          ]
+        },
+        {
+          "offset": 6717,
+          "bytes": "98",
+          "decoded": "SBB B",
+          "runtime_pc": 6973,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 2260,
+              "first_step": 378,
+              "last_step": 402813
+            }
+          ]
+        },
+        {
+          "offset": 6718,
+          "bytes": "67",
+          "decoded": "MOV H,A",
+          "runtime_pc": 6974,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 2260,
+              "first_step": 379,
+              "last_step": 402814
+            }
+          ]
+        },
+        {
+          "offset": 6719,
+          "bytes": "C9",
+          "decoded": "RET",
+          "runtime_pc": 6975,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 2260,
+              "first_step": 380,
+              "last_step": 402815
+            }
+          ]
+        }
+      ],
+      "observed_callers": [
+        {
+          "run": "MINIMAL",
+          "image": "PLI0.OVL",
+          "offset": 10278,
+          "bytes": "CD351B",
+          "execution_count": 11,
+          "first_step": 156246
+        },
+        {
+          "run": "MINIMAL",
+          "image": "PLI1.OVL",
+          "offset": 2822,
+          "bytes": "CD351B",
+          "execution_count": 1,
+          "first_step": 282020
+        }
+      ],
+      "matched_return_sample": {
+        "relation": "DEDUCED by current Event_witness hardware stack-slot/byte matching; independently rechecked",
+        "call": {
+          "step_index": 156246,
+          "pc": 18982,
+          "pc_after": 6965,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI0.OVL",
+              "identity": "0:0:PLI0.OVL"
+            },
+            "offset": 10278
+          },
+          "target_origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI.COM",
+              "identity": "0:0:PLI.COM"
+            },
+            "offset": 6709
+          },
+          "runtime_pc": 18982,
+          "bytes": "CD351B",
+          "disassembly": "CALL 1B35H",
+          "source": "memory",
+          "before": {
+            "a": 0,
+            "b": 255,
+            "c": 255,
+            "d": 106,
+            "e": 130,
+            "h": 255,
+            "l": 227,
+            "sp": 65502,
+            "pc": 18982,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 0,
+            "b": 255,
+            "c": 255,
+            "d": 106,
+            "e": 130,
+            "h": 255,
+            "l": 227,
+            "sp": 65500,
+            "pc": 6965,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "sp_before": 65502,
+          "sp_after": 65500,
+          "call_return_address": 18985,
+          "reads": [],
+          "writes": [
+            {
+              "address": 65501,
+              "old_value": null,
+              "new_value": 74
+            },
+            {
+              "address": 65500,
+              "old_value": null,
+              "new_value": 41
+            }
+          ],
+          "control": {
+            "kind": "call",
+            "target": 6965,
+            "taken": true
+          }
+        },
+        "ret": {
+          "step_index": 156257,
+          "pc": 6975,
+          "pc_after": 18985,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI.COM",
+              "identity": "0:0:PLI.COM"
+            },
+            "offset": 6719
+          },
+          "target_origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI0.OVL",
+              "identity": "0:0:PLI0.OVL"
+            },
+            "offset": 10281
+          },
+          "runtime_pc": 6975,
+          "bytes": "C9",
+          "disassembly": "RET",
+          "source": "memory",
+          "before": {
+            "a": 255,
+            "b": 248,
+            "c": 98,
+            "d": 106,
+            "e": 131,
+            "h": 255,
+            "l": 248,
+            "sp": 65500,
+            "pc": 6975,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": true
+            }
+          },
+          "after": {
+            "a": 255,
+            "b": 248,
+            "c": 98,
+            "d": 106,
+            "e": 131,
+            "h": 255,
+            "l": 248,
+            "sp": 65502,
+            "pc": 18985,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": true
+            }
+          },
+          "sp_before": 65500,
+          "sp_after": 65502,
+          "call_return_address": null,
+          "reads": [
+            {
+              "address": 65500,
+              "value": 41
+            },
+            {
+              "address": 65501,
+              "value": 74
+            }
+          ],
+          "writes": [],
+          "control": {
+            "kind": "return",
+            "target": 18985,
+            "taken": true
+          }
+        }
+      },
+      "observed_return_offsets": [
+        6719
+      ],
+      "behavioral_contract": {
+        "classification": "DEDUCED",
+        "description": "Primary +1A33 loads subtrahend word through BC; +1A35 loads it through HL; +1A38 takes subtrahend in BC. HL=word[DE]-subtrahend modulo 65536; BC=subtrahend; DE++; A=high result; carry=unsigned borrow; other flags from high SBB.",
+        "pseudocode": "sub=word[BC] at +1A33, word[HL] at +1A35, or BC at +1A38; HL=(word[DE]-sub)&FFFF; DE++; A=hi(HL); return",
+        "scope_and_limits": "No guest memory writes. Entries share a literal tail; preserve all three identities. Flags describe high-byte subtraction.",
+        "basis": "Exact documented bytes plus 12 MINIMAL invocation checks",
+        "report_ref": "../minimal-baseline/contracts.json#PLI.COM+1A35"
+      }
+    },
+    {
+      "id": "PLI.COM+1A38",
+      "image": "PLI.COM",
+      "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+      "start_offset": 6712,
+      "end_offset": 6720,
+      "description": "indirect word difference with three entries (secondary entry)",
+      "inputs_and_effects": "Primary +1A33 loads subtrahend word through BC; +1A35 loads it through HL; +1A38 takes subtrahend in BC. HL=word[DE]-subtrahend modulo 65536; BC=subtrahend; DE++; A=high result; carry=unsigned borrow; other flags from high SBB.",
+      "downstream_helpers_runtime": "none",
+      "unresolved": "No guest memory writes. Entries share a literal tail; preserve all three identities. Flags describe high-byte subtraction.",
+      "instructions": [
+        {
+          "offset": 6712,
+          "bytes": "1A",
+          "decoded": "LDAX D",
+          "runtime_pc": 6968,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 2260,
+              "first_step": 373,
+              "last_step": 402808
+            }
+          ]
+        },
+        {
+          "offset": 6713,
+          "bytes": "91",
+          "decoded": "SUB C",
+          "runtime_pc": 6969,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 2260,
+              "first_step": 374,
+              "last_step": 402809
+            }
+          ]
+        },
+        {
+          "offset": 6714,
+          "bytes": "6F",
+          "decoded": "MOV L,A",
+          "runtime_pc": 6970,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 2260,
+              "first_step": 375,
+              "last_step": 402810
+            }
+          ]
+        },
+        {
+          "offset": 6715,
+          "bytes": "13",
+          "decoded": "INX D",
+          "runtime_pc": 6971,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 2260,
+              "first_step": 376,
+              "last_step": 402811
+            }
+          ]
+        },
+        {
+          "offset": 6716,
+          "bytes": "1A",
+          "decoded": "LDAX D",
+          "runtime_pc": 6972,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 2260,
+              "first_step": 377,
+              "last_step": 402812
+            }
+          ]
+        },
+        {
+          "offset": 6717,
+          "bytes": "98",
+          "decoded": "SBB B",
+          "runtime_pc": 6973,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 2260,
+              "first_step": 378,
+              "last_step": 402813
+            }
+          ]
+        },
+        {
+          "offset": 6718,
+          "bytes": "67",
+          "decoded": "MOV H,A",
+          "runtime_pc": 6974,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 2260,
+              "first_step": 379,
+              "last_step": 402814
+            }
+          ]
+        },
+        {
+          "offset": 6719,
+          "bytes": "C9",
+          "decoded": "RET",
+          "runtime_pc": 6975,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 2260,
+              "first_step": 380,
+              "last_step": 402815
+            }
+          ]
+        }
+      ],
+      "observed_callers": [
+        {
+          "run": "MINIMAL",
+          "image": "PLI.COM",
+          "offset": 540,
+          "bytes": "CD381B",
+          "execution_count": 1,
+          "first_step": 372
+        },
+        {
+          "run": "MINIMAL",
+          "image": "PLI.COM",
+          "offset": 581,
+          "bytes": "CD381B",
+          "execution_count": 1,
+          "first_step": 449
+        },
+        {
+          "run": "MINIMAL",
+          "image": "PLI.COM",
+          "offset": 1855,
+          "bytes": "CD381B",
+          "execution_count": 9,
+          "first_step": 68560
+        },
+        {
+          "run": "MINIMAL",
+          "image": "PLI0.OVL",
+          "offset": 9272,
+          "bytes": "CD381B",
+          "execution_count": 4,
+          "first_step": 163032
+        },
+        {
+          "run": "MINIMAL",
+          "image": "PLI0.OVL",
+          "offset": 14171,
+          "bytes": "CD381B",
+          "execution_count": 1,
+          "first_step": 187650
+        },
+        {
+          "run": "MINIMAL",
+          "image": "PLI1.OVL",
+          "offset": 300,
+          "bytes": "CD381B",
+          "execution_count": 1,
+          "first_step": 287942
+        },
+        {
+          "run": "MINIMAL",
+          "image": "PLI2.OVL",
+          "offset": 1126,
+          "bytes": "CD381B",
+          "execution_count": 1,
+          "first_step": 402784
+        }
+      ],
+      "matched_return_sample": {
+        "relation": "DEDUCED by current Event_witness hardware stack-slot/byte matching; independently rechecked",
+        "call": {
+          "step_index": 372,
+          "pc": 796,
+          "pc_after": 6968,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI.COM",
+              "identity": "0:0:PLI.COM"
+            },
+            "offset": 540
+          },
+          "target_origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI.COM",
+              "identity": "0:0:PLI.COM"
+            },
+            "offset": 6712
+          },
+          "runtime_pc": 796,
+          "bytes": "CD381B",
+          "disassembly": "CALL 1B38H",
+          "source": "memory",
+          "before": {
+            "a": 128,
+            "b": 2,
+            "c": 0,
+            "d": 0,
+            "e": 6,
+            "h": 32,
+            "l": 179,
+            "sp": 65528,
+            "pc": 796,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 128,
+            "b": 2,
+            "c": 0,
+            "d": 0,
+            "e": 6,
+            "h": 32,
+            "l": 179,
+            "sp": 65526,
+            "pc": 6968,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "sp_before": 65528,
+          "sp_after": 65526,
+          "call_return_address": 799,
+          "reads": [],
+          "writes": [
+            {
+              "address": 65527,
+              "old_value": null,
+              "new_value": 3
+            },
+            {
+              "address": 65526,
+              "old_value": null,
+              "new_value": 31
+            }
+          ],
+          "control": {
+            "kind": "call",
+            "target": 6968,
+            "taken": true
+          }
+        },
+        "ret": {
+          "step_index": 380,
+          "pc": 6975,
+          "pc_after": 799,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI.COM",
+              "identity": "0:0:PLI.COM"
+            },
+            "offset": 6719
+          },
+          "target_origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI.COM",
+              "identity": "0:0:PLI.COM"
+            },
+            "offset": 543
+          },
+          "runtime_pc": 6975,
+          "bytes": "C9",
+          "disassembly": "RET",
+          "source": "memory",
+          "before": {
+            "a": 253,
+            "b": 2,
+            "c": 0,
+            "d": 0,
+            "e": 7,
+            "h": 253,
+            "l": 254,
+            "sp": 65526,
+            "pc": 6975,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 253,
+            "b": 2,
+            "c": 0,
+            "d": 0,
+            "e": 7,
+            "h": 253,
+            "l": 254,
+            "sp": 65528,
+            "pc": 799,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "sp_before": 65526,
+          "sp_after": 65528,
+          "call_return_address": null,
+          "reads": [
+            {
+              "address": 65526,
+              "value": 31
+            },
+            {
+              "address": 65527,
+              "value": 3
+            }
+          ],
+          "writes": [],
+          "control": {
+            "kind": "return",
+            "target": 799,
+            "taken": true
+          }
+        }
+      },
+      "observed_return_offsets": [
+        6719
+      ],
+      "behavioral_contract": {
+        "classification": "DEDUCED",
+        "description": "Primary +1A33 loads subtrahend word through BC; +1A35 loads it through HL; +1A38 takes subtrahend in BC. HL=word[DE]-subtrahend modulo 65536; BC=subtrahend; DE++; A=high result; carry=unsigned borrow; other flags from high SBB.",
+        "pseudocode": "sub=word[BC] at +1A33, word[HL] at +1A35, or BC at +1A38; HL=(word[DE]-sub)&FFFF; DE++; A=hi(HL); return",
+        "scope_and_limits": "No guest memory writes. Entries share a literal tail; preserve all three identities. Flags describe high-byte subtraction.",
+        "basis": "Exact documented bytes plus 18 MINIMAL invocation checks",
+        "report_ref": "../minimal-baseline/contracts.json#PLI.COM+1A38"
+      }
+    },
+    {
+      "id": "PLI.COM+1A40",
+      "image": "PLI.COM",
+      "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+      "start_offset": 6720,
+      "end_offset": 6731,
+      "description": "indirect word minus byte/word",
+      "inputs_and_effects": "Primary +1A40 zero-extends A into HL; +1A43 takes subtrahend in HL. HL=word[DE]-subtrahend modulo 65536; DE++; A=high result; BC unchanged; carry=unsigned borrow; other flags from high SBB.",
+      "downstream_helpers_runtime": "none",
+      "unresolved": "No guest memory writes; no full-word zero/sign contract. Observed secondary entry has 677 MINIMAL calls.",
+      "instructions": [
+        {
+          "offset": 6720,
+          "bytes": "6F",
+          "decoded": "MOV L,A",
+          "runtime_pc": 6976,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 35,
+              "first_step": 7,
+              "last_step": 328577
+            }
+          ]
+        },
+        {
+          "offset": 6721,
+          "bytes": "2600",
+          "decoded": "MVI H,00H",
+          "runtime_pc": 6977,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 35,
+              "first_step": 8,
+              "last_step": 328578
+            }
+          ]
+        },
+        {
+          "offset": 6723,
+          "bytes": "1A",
+          "decoded": "LDAX D",
+          "runtime_pc": 6979,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 712,
+              "first_step": 9,
+              "last_step": 328579
+            }
+          ]
+        },
+        {
+          "offset": 6724,
+          "bytes": "95",
+          "decoded": "SUB L",
+          "runtime_pc": 6980,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 712,
+              "first_step": 10,
+              "last_step": 328580
+            }
+          ]
+        },
+        {
+          "offset": 6725,
+          "bytes": "6F",
+          "decoded": "MOV L,A",
+          "runtime_pc": 6981,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 712,
+              "first_step": 11,
+              "last_step": 328581
+            }
+          ]
+        },
+        {
+          "offset": 6726,
+          "bytes": "13",
+          "decoded": "INX D",
+          "runtime_pc": 6982,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 712,
+              "first_step": 12,
+              "last_step": 328582
+            }
+          ]
+        },
+        {
+          "offset": 6727,
+          "bytes": "1A",
+          "decoded": "LDAX D",
+          "runtime_pc": 6983,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 712,
+              "first_step": 13,
+              "last_step": 328583
+            }
+          ]
+        },
+        {
+          "offset": 6728,
+          "bytes": "9C",
+          "decoded": "SBB H",
+          "runtime_pc": 6984,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 712,
+              "first_step": 14,
+              "last_step": 328584
+            }
+          ]
+        },
+        {
+          "offset": 6729,
+          "bytes": "67",
+          "decoded": "MOV H,A",
+          "runtime_pc": 6985,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 712,
+              "first_step": 15,
+              "last_step": 328585
+            }
+          ]
+        },
+        {
+          "offset": 6730,
+          "bytes": "C9",
+          "decoded": "RET",
+          "runtime_pc": 6986,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 712,
+              "first_step": 16,
+              "last_step": 328586
+            }
+          ]
+        }
+      ],
+      "observed_callers": [
+        {
+          "run": "MINIMAL",
+          "image": "PLI.COM",
+          "offset": 505,
+          "bytes": "CD401B",
+          "execution_count": 1,
+          "first_step": 6
+        },
+        {
+          "run": "MINIMAL",
+          "image": "PLI.COM",
+          "offset": 5240,
+          "bytes": "CD401B",
+          "execution_count": 18,
+          "first_step": 74507
+        },
+        {
+          "run": "MINIMAL",
+          "image": "PLI0.OVL",
+          "offset": 6869,
+          "bytes": "CD401B",
+          "execution_count": 3,
+          "first_step": 75701
+        },
+        {
+          "run": "MINIMAL",
+          "image": "PLI1.OVL",
+          "offset": 11054,
+          "bytes": "CD401B",
+          "execution_count": 1,
+          "first_step": 264139
+        },
+        {
+          "run": "MINIMAL",
+          "image": "PLI1.OVL",
+          "offset": 17030,
+          "bytes": "CD401B",
+          "execution_count": 11,
+          "first_step": 257217
+        },
+        {
+          "run": "MINIMAL",
+          "image": "PLI2.OVL",
+          "offset": 10544,
+          "bytes": "CD401B",
+          "execution_count": 1,
+          "first_step": 328576
+        }
+      ],
+      "matched_return_sample": {
+        "relation": "DEDUCED by current Event_witness hardware stack-slot/byte matching; independently rechecked",
+        "call": {
+          "step_index": 6,
+          "pc": 761,
+          "pc_after": 6976,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI.COM",
+              "identity": "0:0:PLI.COM"
+            },
+            "offset": 505
+          },
+          "target_origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI.COM",
+              "identity": "0:0:PLI.COM"
+            },
+            "offset": 6720
+          },
+          "runtime_pc": 761,
+          "bytes": "CD401B",
+          "disassembly": "CALL 1B40H",
+          "source": "memory",
+          "before": {
+            "a": 6,
+            "b": 0,
+            "c": 0,
+            "d": 0,
+            "e": 6,
+            "h": 1,
+            "l": 0,
+            "sp": 256,
+            "pc": 761,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 6,
+            "b": 0,
+            "c": 0,
+            "d": 0,
+            "e": 6,
+            "h": 1,
+            "l": 0,
+            "sp": 254,
+            "pc": 6976,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "sp_before": 256,
+          "sp_after": 254,
+          "call_return_address": 764,
+          "reads": [],
+          "writes": [
+            {
+              "address": 255,
+              "old_value": null,
+              "new_value": 2
+            },
+            {
+              "address": 254,
+              "old_value": null,
+              "new_value": 252
+            }
+          ],
+          "control": {
+            "kind": "call",
+            "target": 6976,
+            "taken": true
+          }
+        },
+        "ret": {
+          "step_index": 16,
+          "pc": 6986,
+          "pc_after": 764,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI.COM",
+              "identity": "0:0:PLI.COM"
+            },
+            "offset": 6730
+          },
+          "target_origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI.COM",
+              "identity": "0:0:PLI.COM"
+            },
+            "offset": 508
+          },
+          "runtime_pc": 6986,
+          "bytes": "C9",
+          "disassembly": "RET",
+          "source": "memory",
+          "before": {
+            "a": 255,
+            "b": 0,
+            "c": 0,
+            "d": 0,
+            "e": 7,
+            "h": 255,
+            "l": 248,
+            "sp": 254,
+            "pc": 6986,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 255,
+            "b": 0,
+            "c": 0,
+            "d": 0,
+            "e": 7,
+            "h": 255,
+            "l": 248,
+            "sp": 256,
+            "pc": 764,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "sp_before": 254,
+          "sp_after": 256,
+          "call_return_address": null,
+          "reads": [
+            {
+              "address": 254,
+              "value": 252
+            },
+            {
+              "address": 255,
+              "value": 2
+            }
+          ],
+          "writes": [],
+          "control": {
+            "kind": "return",
+            "target": 764,
+            "taken": true
+          }
+        }
+      },
+      "observed_return_offsets": [
+        6730
+      ],
+      "behavioral_contract": {
+        "classification": "DEDUCED",
+        "description": "Primary +1A40 zero-extends A into HL; +1A43 takes subtrahend in HL. HL=word[DE]-subtrahend modulo 65536; DE++; A=high result; BC unchanged; carry=unsigned borrow; other flags from high SBB.",
+        "pseudocode": "sub=u8(A) at +1A40 or HL at +1A43; HL=(word[DE]-sub)&FFFF; DE++; A=hi(HL); return",
+        "scope_and_limits": "No guest memory writes; no full-word zero/sign contract. Observed secondary entry has 677 MINIMAL calls.",
+        "basis": "Exact documented bytes plus 35 MINIMAL invocation checks",
+        "report_ref": "../minimal-baseline/contracts.json#PLI.COM+1A40"
+      }
+    },
+    {
+      "id": "PLI.COM+1A43",
+      "image": "PLI.COM",
+      "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+      "start_offset": 6723,
+      "end_offset": 6731,
+      "description": "indirect word minus byte/word (secondary entry)",
+      "inputs_and_effects": "Primary +1A40 zero-extends A into HL; +1A43 takes subtrahend in HL. HL=word[DE]-subtrahend modulo 65536; DE++; A=high result; BC unchanged; carry=unsigned borrow; other flags from high SBB.",
+      "downstream_helpers_runtime": "none",
+      "unresolved": "No guest memory writes; no full-word zero/sign contract. Observed secondary entry has 677 MINIMAL calls.",
+      "instructions": [
+        {
+          "offset": 6723,
+          "bytes": "1A",
+          "decoded": "LDAX D",
+          "runtime_pc": 6979,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 712,
+              "first_step": 9,
+              "last_step": 328579
+            }
+          ]
+        },
+        {
+          "offset": 6724,
+          "bytes": "95",
+          "decoded": "SUB L",
+          "runtime_pc": 6980,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 712,
+              "first_step": 10,
+              "last_step": 328580
+            }
+          ]
+        },
+        {
+          "offset": 6725,
+          "bytes": "6F",
+          "decoded": "MOV L,A",
+          "runtime_pc": 6981,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 712,
+              "first_step": 11,
+              "last_step": 328581
+            }
+          ]
+        },
+        {
+          "offset": 6726,
+          "bytes": "13",
+          "decoded": "INX D",
+          "runtime_pc": 6982,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 712,
+              "first_step": 12,
+              "last_step": 328582
+            }
+          ]
+        },
+        {
+          "offset": 6727,
+          "bytes": "1A",
+          "decoded": "LDAX D",
+          "runtime_pc": 6983,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 712,
+              "first_step": 13,
+              "last_step": 328583
+            }
+          ]
+        },
+        {
+          "offset": 6728,
+          "bytes": "9C",
+          "decoded": "SBB H",
+          "runtime_pc": 6984,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 712,
+              "first_step": 14,
+              "last_step": 328584
+            }
+          ]
+        },
+        {
+          "offset": 6729,
+          "bytes": "67",
+          "decoded": "MOV H,A",
+          "runtime_pc": 6985,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 712,
+              "first_step": 15,
+              "last_step": 328585
+            }
+          ]
+        },
+        {
+          "offset": 6730,
+          "bytes": "C9",
+          "decoded": "RET",
+          "runtime_pc": 6986,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 712,
+              "first_step": 16,
+              "last_step": 328586
+            }
+          ]
+        }
+      ],
+      "observed_callers": [
+        {
+          "run": "MINIMAL",
+          "image": "PLI.COM",
+          "offset": 1774,
+          "bytes": "CD431B",
+          "execution_count": 677,
+          "first_step": 653
+        }
+      ],
+      "matched_return_sample": {
+        "relation": "DEDUCED by current Event_witness hardware stack-slot/byte matching; independently rechecked",
+        "call": {
+          "step_index": 653,
+          "pc": 2030,
+          "pc_after": 6979,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI.COM",
+              "identity": "0:0:PLI.COM"
+            },
+            "offset": 1774
+          },
+          "target_origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI.COM",
+              "identity": "0:0:PLI.COM"
+            },
+            "offset": 6723
+          },
+          "runtime_pc": 2030,
+          "bytes": "CD431B",
+          "disassembly": "CALL 1B43H",
+          "source": "memory",
+          "before": {
+            "a": 0,
+            "b": 0,
+            "c": 20,
+            "d": 28,
+            "e": 54,
+            "h": 34,
+            "l": 128,
+            "sp": 65526,
+            "pc": 2030,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 0,
+            "b": 0,
+            "c": 20,
+            "d": 28,
+            "e": 54,
+            "h": 34,
+            "l": 128,
+            "sp": 65524,
+            "pc": 6979,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "sp_before": 65526,
+          "sp_after": 65524,
+          "call_return_address": 2033,
+          "reads": [],
+          "writes": [
+            {
+              "address": 65525,
+              "old_value": null,
+              "new_value": 7
+            },
+            {
+              "address": 65524,
+              "old_value": null,
+              "new_value": 241
+            }
+          ],
+          "control": {
+            "kind": "call",
+            "target": 6979,
+            "taken": true
+          }
+        },
+        "ret": {
+          "step_index": 661,
+          "pc": 6986,
+          "pc_after": 2033,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI.COM",
+              "identity": "0:0:PLI.COM"
+            },
+            "offset": 6730
+          },
+          "target_origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI.COM",
+              "identity": "0:0:PLI.COM"
+            },
+            "offset": 1777
+          },
+          "runtime_pc": 6986,
+          "bytes": "C9",
+          "disassembly": "RET",
+          "source": "memory",
+          "before": {
+            "a": 217,
+            "b": 0,
+            "c": 20,
+            "d": 28,
+            "e": 55,
+            "h": 217,
+            "l": 125,
+            "sp": 65524,
+            "pc": 6986,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 217,
+            "b": 0,
+            "c": 20,
+            "d": 28,
+            "e": 55,
+            "h": 217,
+            "l": 125,
+            "sp": 65526,
+            "pc": 2033,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "sp_before": 65524,
+          "sp_after": 65526,
+          "call_return_address": null,
+          "reads": [
+            {
+              "address": 65524,
+              "value": 241
+            },
+            {
+              "address": 65525,
+              "value": 7
+            }
+          ],
+          "writes": [],
+          "control": {
+            "kind": "return",
+            "target": 2033,
+            "taken": true
+          }
+        }
+      },
+      "observed_return_offsets": [
+        6730
+      ],
+      "behavioral_contract": {
+        "classification": "DEDUCED",
+        "description": "Primary +1A40 zero-extends A into HL; +1A43 takes subtrahend in HL. HL=word[DE]-subtrahend modulo 65536; DE++; A=high result; BC unchanged; carry=unsigned borrow; other flags from high SBB.",
+        "pseudocode": "sub=u8(A) at +1A40 or HL at +1A43; HL=(word[DE]-sub)&FFFF; DE++; A=hi(HL); return",
+        "scope_and_limits": "No guest memory writes; no full-word zero/sign contract. Observed secondary entry has 677 MINIMAL calls.",
+        "basis": "Exact documented bytes plus 677 MINIMAL invocation checks",
+        "report_ref": "../minimal-baseline/contracts.json#PLI.COM+1A43"
+      }
+    },
+    {
+      "id": "PLI0.OVL+210B",
+      "image": "PLI0.OVL",
+      "image_sha256": "e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff",
+      "start_offset": 8459,
+      "end_offset": 8473,
+      "description": "increment indexed cursor and fetch byte",
+      "inputs_and_effects": "Reads little-endian cursor at 6A6FH, writes cursor+1 modulo 65536, then reads byte at (65F3H+old_cursor) modulo 65536. A=fetched byte; HL=address; BC=65F3H; DE unchanged; carry from address DAD; other flags preserved.",
+      "downstream_helpers_runtime": "none",
+      "unresolved": "Counter store precedes byte fetch, which matters if addresses alias. No table-length bound or content semantics claimed.",
+      "instructions": [
+        {
+          "offset": 8459,
+          "bytes": "2A6F6A",
+          "decoded": "LHLD 6A6FH",
+          "runtime_pc": 17163,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 225,
+              "first_step": 17017,
+              "last_step": 49682
+            }
+          ]
+        },
+        {
+          "offset": 8462,
+          "bytes": "23",
+          "decoded": "INX H",
+          "runtime_pc": 17166,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 225,
+              "first_step": 17018,
+              "last_step": 49683
+            }
+          ]
+        },
+        {
+          "offset": 8463,
+          "bytes": "226F6A",
+          "decoded": "SHLD 6A6FH",
+          "runtime_pc": 17167,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 225,
+              "first_step": 17019,
+              "last_step": 49684
+            }
+          ]
+        },
+        {
+          "offset": 8466,
+          "bytes": "2B",
+          "decoded": "DCX H",
+          "runtime_pc": 17170,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 225,
+              "first_step": 17020,
+              "last_step": 49685
+            }
+          ]
+        },
+        {
+          "offset": 8467,
+          "bytes": "01F365",
+          "decoded": "LXI B,65F3H",
+          "runtime_pc": 17171,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 225,
+              "first_step": 17021,
+              "last_step": 49686
+            }
+          ]
+        },
+        {
+          "offset": 8470,
+          "bytes": "09",
+          "decoded": "DAD B",
+          "runtime_pc": 17174,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 225,
+              "first_step": 17022,
+              "last_step": 49687
+            }
+          ]
+        },
+        {
+          "offset": 8471,
+          "bytes": "7E",
+          "decoded": "MOV A,M",
+          "runtime_pc": 17175,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 225,
+              "first_step": 17023,
+              "last_step": 49688
+            }
+          ]
+        },
+        {
+          "offset": 8472,
+          "bytes": "C9",
+          "decoded": "RET",
+          "runtime_pc": 17176,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 225,
+              "first_step": 17024,
+              "last_step": 49689
+            }
+          ]
+        }
+      ],
+      "observed_callers": [
+        {
+          "run": "MINIMAL",
+          "image": "PLI0.OVL",
+          "offset": 8217,
+          "bytes": "CD0B43",
+          "execution_count": 65,
+          "first_step": 17016
+        },
+        {
+          "run": "MINIMAL",
+          "image": "PLI0.OVL",
+          "offset": 8292,
+          "bytes": "CD0B43",
+          "execution_count": 64,
+          "first_step": 17357
+        },
+        {
+          "run": "MINIMAL",
+          "image": "PLI0.OVL",
+          "offset": 8304,
+          "bytes": "CD0B43",
+          "execution_count": 64,
+          "first_step": 17371
+        },
+        {
+          "run": "MINIMAL",
+          "image": "PLI0.OVL",
+          "offset": 8357,
+          "bytes": "CD0B43",
+          "execution_count": 10,
+          "first_step": 22243
+        },
+        {
+          "run": "MINIMAL",
+          "image": "PLI0.OVL",
+          "offset": 8366,
+          "bytes": "CD0B43",
+          "execution_count": 10,
+          "first_step": 22256
+        },
+        {
+          "run": "MINIMAL",
+          "image": "PLI0.OVL",
+          "offset": 8407,
+          "bytes": "CD0B43",
+          "execution_count": 6,
+          "first_step": 29560
+        },
+        {
+          "run": "MINIMAL",
+          "image": "PLI0.OVL",
+          "offset": 8416,
+          "bytes": "CD0B43",
+          "execution_count": 6,
+          "first_step": 29573
+        }
+      ],
+      "matched_return_sample": {
+        "relation": "DEDUCED by current Event_witness hardware stack-slot/byte matching; independently rechecked",
+        "call": {
+          "step_index": 17016,
+          "pc": 16921,
+          "pc_after": 17163,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI0.OVL",
+              "identity": "0:0:PLI0.OVL"
+            },
+            "offset": 8217
+          },
+          "target_origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI0.OVL",
+              "identity": "0:0:PLI0.OVL"
+            },
+            "offset": 8459
+          },
+          "runtime_pc": 16921,
+          "bytes": "CD0B43",
+          "disassembly": "CALL 430BH",
+          "source": "memory",
+          "before": {
+            "a": 0,
+            "b": 0,
+            "c": 4,
+            "d": 0,
+            "e": 1,
+            "h": 106,
+            "l": 112,
+            "sp": 65524,
+            "pc": 16921,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 0,
+            "b": 0,
+            "c": 4,
+            "d": 0,
+            "e": 1,
+            "h": 106,
+            "l": 112,
+            "sp": 65522,
+            "pc": 17163,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "sp_before": 65524,
+          "sp_after": 65522,
+          "call_return_address": 16924,
+          "reads": [],
+          "writes": [
+            {
+              "address": 65523,
+              "old_value": null,
+              "new_value": 66
+            },
+            {
+              "address": 65522,
+              "old_value": null,
+              "new_value": 28
+            }
+          ],
+          "control": {
+            "kind": "call",
+            "target": 17163,
+            "taken": true
+          }
+        },
+        "ret": {
+          "step_index": 17024,
+          "pc": 17176,
+          "pc_after": 16924,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI0.OVL",
+              "identity": "0:0:PLI0.OVL"
+            },
+            "offset": 8472
+          },
+          "target_origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI0.OVL",
+              "identity": "0:0:PLI0.OVL"
+            },
+            "offset": 8220
+          },
+          "runtime_pc": 17176,
+          "bytes": "C9",
+          "disassembly": "RET",
+          "source": "memory",
+          "before": {
+            "a": 3,
+            "b": 101,
+            "c": 243,
+            "d": 0,
+            "e": 1,
+            "h": 101,
+            "l": 243,
+            "sp": 65522,
+            "pc": 17176,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 3,
+            "b": 101,
+            "c": 243,
+            "d": 0,
+            "e": 1,
+            "h": 101,
+            "l": 243,
+            "sp": 65524,
+            "pc": 16924,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "sp_before": 65522,
+          "sp_after": 65524,
+          "call_return_address": null,
+          "reads": [
+            {
+              "address": 65522,
+              "value": 28
+            },
+            {
+              "address": 65523,
+              "value": 66
+            }
+          ],
+          "writes": [],
+          "control": {
+            "kind": "return",
+            "target": 16924,
+            "taken": true
+          }
+        }
+      },
+      "observed_return_offsets": [
+        8472
+      ],
+      "behavioral_contract": {
+        "classification": "DEDUCED",
+        "description": "Reads little-endian cursor at 6A6FH, writes cursor+1 modulo 65536, then reads byte at (65F3H+old_cursor) modulo 65536. A=fetched byte; HL=address; BC=65F3H; DE unchanged; carry from address DAD; other flags preserved.",
+        "pseudocode": "i=word[6A6F]; word[6A6F]=(i+1)&FFFF; HL=(65F3+i)&FFFF; A=byte[HL]; return",
+        "scope_and_limits": "Counter store precedes byte fetch, which matters if addresses alias. No table-length bound or content semantics claimed.",
+        "basis": "Exact documented bytes plus 225 MINIMAL invocation checks",
+        "report_ref": "../minimal-baseline/contracts.json#PLI0.OVL+210B"
+      }
+    },
+    {
+      "id": "PLI2.OVL+0F98",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "start_offset": 3992,
+      "end_offset": 4018,
+      "description": "unsigned byte addition saturated on overflow",
+      "inputs_and_effects": "C/E inputs. Stores E at AC87H and wrapped C+E at AC86H; A=min(unsigned(C)+unsigned(E),255); carry=overflow; HL=AC86H; BC/DE unchanged.",
+      "downstream_helpers_runtime": "none",
+      "unresolved": "MINIMAL observes both RETs: +0FAD (overflow) and +0FB1 (no overflow). Other flags follow SBB A/RAR and need not describe returned A.",
+      "instructions": [
+        {
+          "offset": 3992,
+          "bytes": "2187AC",
+          "decoded": "LXI H,AC87H",
+          "runtime_pc": 12696,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 262,
+              "first_step": 326775,
+              "last_step": 396696
+            }
+          ]
+        },
+        {
+          "offset": 3995,
+          "bytes": "73",
+          "decoded": "MOV M,E",
+          "runtime_pc": 12699,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 262,
+              "first_step": 326776,
+              "last_step": 396697
+            }
+          ]
+        },
+        {
+          "offset": 3996,
+          "bytes": "2B",
+          "decoded": "DCX H",
+          "runtime_pc": 12700,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 262,
+              "first_step": 326777,
+              "last_step": 396698
+            }
+          ]
+        },
+        {
+          "offset": 3997,
+          "bytes": "71",
+          "decoded": "MOV M,C",
+          "runtime_pc": 12701,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 262,
+              "first_step": 326778,
+              "last_step": 396699
+            }
+          ]
+        },
+        {
+          "offset": 3998,
+          "bytes": "3A87AC",
+          "decoded": "LDA AC87H",
+          "runtime_pc": 12702,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 262,
+              "first_step": 326779,
+              "last_step": 396700
+            }
+          ]
+        },
+        {
+          "offset": 4001,
+          "bytes": "2186AC",
+          "decoded": "LXI H,AC86H",
+          "runtime_pc": 12705,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 262,
+              "first_step": 326780,
+              "last_step": 396701
+            }
+          ]
+        },
+        {
+          "offset": 4004,
+          "bytes": "86",
+          "decoded": "ADD M",
+          "runtime_pc": 12708,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 262,
+              "first_step": 326781,
+              "last_step": 396702
+            }
+          ]
+        },
+        {
+          "offset": 4005,
+          "bytes": "77",
+          "decoded": "MOV M,A",
+          "runtime_pc": 12709,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 262,
+              "first_step": 326782,
+              "last_step": 396703
+            }
+          ]
+        },
+        {
+          "offset": 4006,
+          "bytes": "9F",
+          "decoded": "SBB A",
+          "runtime_pc": 12710,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 262,
+              "first_step": 326783,
+              "last_step": 396704
+            }
+          ]
+        },
+        {
+          "offset": 4007,
+          "bytes": "1F",
+          "decoded": "RAR",
+          "runtime_pc": 12711,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 262,
+              "first_step": 326784,
+              "last_step": 396705
+            }
+          ]
+        },
+        {
+          "offset": 4008,
+          "bytes": "D2AE31",
+          "decoded": "JNC 31AEH",
+          "runtime_pc": 12712,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 262,
+              "first_step": 326785,
+              "last_step": 396706
+            }
+          ]
+        },
+        {
+          "offset": 4011,
+          "bytes": "3EFF",
+          "decoded": "MVI A,FFH",
+          "runtime_pc": 12715,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 172,
+              "first_step": 326786,
+              "last_step": 396707
+            }
+          ]
+        },
+        {
+          "offset": 4013,
+          "bytes": "C9",
+          "decoded": "RET",
+          "runtime_pc": 12717,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 172,
+              "first_step": 326787,
+              "last_step": 396708
+            }
+          ]
+        },
+        {
+          "offset": 4014,
+          "bytes": "3A86AC",
+          "decoded": "LDA AC86H",
+          "runtime_pc": 12718,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 90,
+              "first_step": 336828,
+              "last_step": 396641
+            }
+          ]
+        },
+        {
+          "offset": 4017,
+          "bytes": "C9",
+          "decoded": "RET",
+          "runtime_pc": 12721,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 90,
+              "first_step": 336829,
+              "last_step": 396642
+            }
+          ]
+        }
+      ],
+      "observed_callers": [
+        {
+          "run": "MINIMAL",
+          "image": "PLI2.OVL",
+          "offset": 3128,
+          "bytes": "CD9831",
+          "execution_count": 256,
+          "first_step": 326774
+        },
+        {
+          "run": "MINIMAL",
+          "image": "PLI2.OVL",
+          "offset": 4030,
+          "bytes": "CD9831",
+          "execution_count": 6,
+          "first_step": 344331
+        }
+      ],
+      "matched_return_sample": {
+        "relation": "DEDUCED by current Event_witness hardware stack-slot/byte matching; independently rechecked",
+        "call": {
+          "step_index": 326774,
+          "pc": 11832,
+          "pc_after": 12696,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI2.OVL",
+              "identity": "0:0:PLI2.OVL"
+            },
+            "offset": 3128
+          },
+          "target_origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI2.OVL",
+              "identity": "0:0:PLI2.OVL"
+            },
+            "offset": 3992
+          },
+          "runtime_pc": 11832,
+          "bytes": "CD9831",
+          "disassembly": "CALL 3198H",
+          "source": "memory",
+          "before": {
+            "a": 31,
+            "b": 171,
+            "c": 255,
+            "d": 0,
+            "e": 1,
+            "h": 0,
+            "l": 255,
+            "sp": 65526,
+            "pc": 11832,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 31,
+            "b": 171,
+            "c": 255,
+            "d": 0,
+            "e": 1,
+            "h": 0,
+            "l": 255,
+            "sp": 65524,
+            "pc": 12696,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "sp_before": 65526,
+          "sp_after": 65524,
+          "call_return_address": 11835,
+          "reads": [],
+          "writes": [
+            {
+              "address": 65525,
+              "old_value": null,
+              "new_value": 46
+            },
+            {
+              "address": 65524,
+              "old_value": null,
+              "new_value": 59
+            }
+          ],
+          "control": {
+            "kind": "call",
+            "target": 12696,
+            "taken": true
+          }
+        },
+        "ret": {
+          "step_index": 326787,
+          "pc": 12717,
+          "pc_after": 11835,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI2.OVL",
+              "identity": "0:0:PLI2.OVL"
+            },
+            "offset": 4013
+          },
+          "target_origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI2.OVL",
+              "identity": "0:0:PLI2.OVL"
+            },
+            "offset": 3131
+          },
+          "runtime_pc": 12717,
+          "bytes": "C9",
+          "disassembly": "RET",
+          "source": "memory",
+          "before": {
+            "a": 255,
+            "b": 171,
+            "c": 255,
+            "d": 0,
+            "e": 1,
+            "h": 172,
+            "l": 134,
+            "sp": 65524,
+            "pc": 12717,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": true
+            }
+          },
+          "after": {
+            "a": 255,
+            "b": 171,
+            "c": 255,
+            "d": 0,
+            "e": 1,
+            "h": 172,
+            "l": 134,
+            "sp": 65526,
+            "pc": 11835,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": true
+            }
+          },
+          "sp_before": 65524,
+          "sp_after": 65526,
+          "call_return_address": null,
+          "reads": [
+            {
+              "address": 65524,
+              "value": 59
+            },
+            {
+              "address": 65525,
+              "value": 46
+            }
+          ],
+          "writes": [],
+          "control": {
+            "kind": "return",
+            "target": 11835,
+            "taken": true
+          }
+        }
+      },
+      "observed_return_offsets": [
+        4013,
+        4017
+      ],
+      "behavioral_contract": {
+        "classification": "DEDUCED",
+        "description": "C/E inputs. Stores E at AC87H and wrapped C+E at AC86H; A=min(unsigned(C)+unsigned(E),255); carry=overflow; HL=AC86H; BC/DE unchanged.",
+        "pseudocode": "s=u8(C)+u8(E); byte[AC87]=E; byte[AC86]=s&FF; return A=(s>FF ? FF : s), CY=(s>FF)",
+        "scope_and_limits": "MINIMAL observes both RETs: +0FAD (overflow) and +0FB1 (no overflow). Other flags follow SBB A/RAR and need not describe returned A.",
+        "basis": "Exact documented bytes plus 262 MINIMAL invocation checks",
+        "report_ref": "../minimal-baseline/contracts.json#PLI2.OVL+0F98"
       }
     }
   ]
