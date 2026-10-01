@@ -23,11 +23,13 @@ BOUNDS = {
 }
 
 
-def gather(capture, bounds=None):
+def gather(capture, bounds=None, *, include_nested_returns=False):
     records = {key: [] for key in (BOUNDS if bounds is None else bounds)}
-    active, returns = {}, {}
+    active, returns, matched = {}, {}, {}
     last = None
-    for path in sorted((capture / "event-witnesses/chunks").glob("*.json")):
+    index = load(capture / "event-witnesses.json")
+    for chunk in index["chunks"]:
+        path = capture / "event-witnesses/chunks" / f"{chunk['id']:06d}.json"
         for event in load(path)["events"]:
             if event["type"] == "instruction":
                 last = w = event["witness"]
@@ -41,7 +43,11 @@ def gather(capture, bounds=None):
                         }
             elif event["type"] == "hardware_frame_return":
                 step = event["frame"]["call_step"]
+                require(last is not None and last["step_index"] == event["step_index"],
+                        "Hardware return event lacks its instruction witness")
                 returns[step] = last["step_index"]
+                if include_nested_returns:
+                    matched[step] = {"ret": last, "relation": event}
                 if step in active:
                     r = active.pop(step)
                     r.update(entry=r["witnesses"][0], ret=last, relation=event)
@@ -50,7 +56,8 @@ def gather(capture, bounds=None):
     for rs in records.values():
         for r in rs:
             own, skip = [], -1
-            for w in r.pop("witnesses"):
+            inclusive = r.pop("witnesses")
+            for w in inclusive:
                 if w["step_index"] <= skip:
                     continue
                 own.append(w)
@@ -59,6 +66,15 @@ def gather(capture, bounds=None):
                             "Nested call needs independent continuation reconstruction")
                     skip = returns[w["step_index"]]
             r["own_witnesses"] = own
+            if include_nested_returns:
+                r["nested_returns"] = {
+                    w["step_index"]: dict(matched[w["step_index"]],
+                        memory_witnesses=[q for q in inclusive
+                            if w["step_index"] < q["step_index"] <= returns[w["step_index"]]
+                            and (q["reads"] or q["writes"])])
+                    for w in own
+                    if w["control"]["kind"] == "call" and w["control"]["taken"]
+                }
     return records
 
 
