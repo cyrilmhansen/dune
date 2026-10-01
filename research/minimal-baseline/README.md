@@ -1,20 +1,24 @@
-# MINIMAL baseline: current through pass 1
+# MINIMAL baseline: current through pass 2
 
-The [pass-1 report](pass-1/README.md) is the current decompilation result.
-MINIMAL coverage remains **21,012 image bytes**: **19,574 RAW, 304 DECODED,
-659 STRUCTURED, 475 UNDERSTOOD**. Understood CALL entries increase **15→21**;
-there are now 8 STRUCTURED and 362 unresolved CALL entries, plus eleven separate
-unresolved PCHL handlers. All 94,720 historical bytes remain exact.
+The [pass-2 report](pass-2/README.md) is the current decompilation result.
+MINIMAL still executes **21,012 image bytes**: **18,991 RAW, 304 DECODED,
+862 STRUCTURED, 855 UNDERSTOOD**. This pass raises understood CALL entries
+**21→30**, with 9 STRUCTURED and 352 unresolved CALL entries, plus eleven separate
+unresolved PCHL entries (402 callable coordinates total). All 94,720 image bytes
+remain exact.
 
-Current machine-readable status intersections and classifications are in
-[coverage.json](coverage.json), [instructions.jsonl](instructions.jsonl), and
-[inventory.json](inventory.json). The pass report states scoped contracts,
-refines the PLI1 shared-tail hypothesis, and lists the next five MINIMAL targets.
-FIZZBUZ delta facts below are unchanged; its code has not been decompiled.
+Current intersections/classifications are in [coverage.json](coverage.json),
+[instructions.jsonl](instructions.jsonl), and [inventory.json](inventory.json).
+The pass establishes the descriptor predicate mechanically, explains its two
+MINIMAL rejections versus OPTIMIST acceptance examples, and recovers scoped
+lookup, cursor, buffer, allocator and polling contracts. It lists the next five
+MINIMAL targets. FIZZBUZ delta facts below remain unchanged; no FIZZBUZ code was
+decompiled in either pass.
 
 The following is the **historical V0 record at 6c77397**. Its status tables and
-priorities describe that snapshot; pass-1 before/after metrics are retained in
-[pass-1/progress.json](pass-1/progress.json).
+priorities describe that snapshot; later snapshots are in
+[pass-1/progress.json](pass-1/progress.json) and
+[pass-2/progress.json](pass-2/progress.json).
 
 # Historical MINIMAL decompilation baseline V0
 

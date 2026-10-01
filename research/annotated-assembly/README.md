@@ -187,3 +187,8 @@ It retains separate execution coverage and reconstruction-status measurements.
 contracts, the PLI0 bound/tag predicate, the PLI2 save/dispatch/restore shape, and
 a separate PLI1 constructor with an explicit argument-consuming software-return
 proof. Unobserved paths and unresolved PCHL handler bodies remain RAW.
+
+[MINIMAL pass 2](../minimal-baseline/pass-2/README.md) adds a STRUCTURED descriptor
+predicate and nine low-level contracts for immediate helpers and the remaining
+priority anchors. Bounds/flags/polling interpretations are explicit, and all
+newly promoted bytes came from existing MINIMAL execution.
