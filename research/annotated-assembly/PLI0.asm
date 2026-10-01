@@ -533,24 +533,51 @@ PLI0_20E0: DB 0CDH,00BH,043H,001H,004H,000H,02AH,0C5H,069H,009H,077H,001H,003H,0
 PLI0_20F0: DB 069H,009H,036H,003H,0CDH,00BH,040H,0C3H,0C5H,042H,03AH,06EH,06AH,03CH,032H,06EH ; +20F0 runtime=42F0H RAW
 PLI0_2100: DB 06AH,0C3H,019H,042H,02AH,0C3H,069H,022H,034H,01CH,0C9H ; +2100 runtime=4300H RAW
 
+; @procedure-v1 PLI0.OVL+210B
 ; ProcedureHypothesis: increment indexed cursor and fetch byte
-; OBSERVED: 225 MINIMAL CALLs from PLI0.OVL+2019, PLI0.OVL+2064, PLI0.OVL+2070, PLI0.OVL+20A5, PLI0.OVL+20AE, PLI0.OVL+20D7, PLI0.OVL+20E0
-; OBSERVED RETs: PLI0.OVL+2118 (225)
-; OBSERVED: all 225 returns consume original CALL stack slots/bytes.
-; DEDUCED: Reads little-endian cursor at 6A6FH, writes cursor+1 modulo 65536, then reads byte at (65F3H+old_cursor) modulo 65536. A=fetched byte; HL=address; BC=65F3H; DE unchanged; carry from address DAD; other flags preserved.
-; Pseudocode: i=word[6A6F]; word[6A6F]=(i+1)&FFFF; HL=(65F3+i)&FFFF; A=byte[HL]; return
-; HYPOTHESIS: indexed input/table stream fetcher
-; UNRESOLVED: Counter store precedes byte fetch, which matters if addresses alias. No table-length bound or content semantics claimed.
-; Evidence: ../minimal-baseline/contracts.json#PLI0.OVL+210B; stable entry PLI0_210B
+; Entry: PLI0_210B = PLI0.OVL+210B @ 430BH; SHA-256
+;   e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff
+; Extent: HYPOTHESIS [210B,2119) file offsets; overlapping entries: none established
+; Callers: OBSERVED PLI0.OVL+2019 (MINIMAL=65); PLI0.OVL+2064 (MINIMAL=64); PLI0.OVL+2070
+;   (MINIMAL=64); PLI0.OVL+20A5 (MINIMAL=10); PLI0.OVL+20AE (MINIMAL=10); PLI0.OVL+20D7
+;   (MINIMAL=6); PLI0.OVL+20E0 (MINIMAL=6)
+; Returns: OBSERVED/DEDUCED ordinary hardware CALL word; observed SP after RET = (entry SP + 2)
+;   mod 65536; PLI0.OVL+2118
+; Inputs: DEDUCED word[6A6F]=cursor
+; Outputs: DEDUCED word[6A6F]=old cursor+1; A=byte[65F3+old cursor] after store; BC=65F3; HL=fetch
+;   address; DE preserved
+; Clobbers: DEDUCED A,BC,HL,CY; NZPA preserved
+; Memory: DEDUCED indexed_byte_base=65F3H (fixed base for indexed fetch; contents unspecified);
+;   indexed_cursor=6A6FH (incremented before fetching old index)
+; Direct callees: OBSERVED none
+; Coverage: OBSERVED MINIMAL: 225 CALLs; 14/14 bytes represented as instructions; local
+;   instruction sequence represented; dynamic counts do not prove exhaustive input-state
+;   coverage
+; Unresolved: No unresolved local operational path at the declared scope. Evidence is not
+;   exhaustive; Counter store precedes byte fetch, which matters if addresses alias. No
+;   table-length bound or content semantics claimed.
+; Contract: DEDUCED (complete; scope: documented local operation, with byte/word wrapping; no
+;   source-language interpretation) Reads little-endian cursor at 6A6FH, writes cursor+1
+;   modulo 65536, then reads byte at (65F3H+old_cursor) modulo 65536. A=fetched byte;
+;   HL=address; BC=65F3H; DE unchanged; carry from address DAD; other flags preserved.
+; Hypothesis: HYPOTHESIS indexed-byte fetch
+; Completeness: bounds=stable; control_flow=complete; contract=complete
+; Evidence: evidence.json#seeds/PLI0.OVL+210B; ../minimal-baseline/contracts.json#PLI0.OVL+210B
+; Procedure pseudo (operational; byte/word arithmetic wraps):
+;   i=word[6A6F]; word[6A6F]=i+1; HL=65F3+i; A=byte[HL]; RET
+; @end-procedure-v1 PLI0.OVL+210B
 ; SECTION [210B,2119) UNDERSTOOD
-PLI0_210B: LHLD 6A6FH ; +210B runtime=430BH OBSERVED
-PLI0_210E: INX H ; +210E runtime=430EH OBSERVED
-PLI0_210F: SHLD 6A6FH ; +210F runtime=430FH OBSERVED
-PLI0_2112: DCX H ; +2112 runtime=4312H OBSERVED
-PLI0_2113: LXI B,65F3H ; +2113 runtime=4313H OBSERVED
-PLI0_2116: DAD B ; +2116 runtime=4316H OBSERVED
-PLI0_2117: MOV A,M ; +2117 runtime=4317H OBSERVED
-PLI0_2118: RET ; +2118 runtime=4318H OBSERVED
+; @block-pseudo 210B
+; pseudo:
+; | store cursor+1 before fetching byte at base+old cursor
+PLI0_210B: LHLD 6A6FH ; HL = little_endian_word[indexed_cursor (6A6FH)] ; +210B runtime=430BH OBSERVED
+PLI0_210E: INX H ; HL = (HL + 1) & FFFF; flags preserved ; +210E runtime=430EH OBSERVED
+PLI0_210F: SHLD 6A6FH ; little_endian_word[indexed_cursor (6A6FH)] = HL (low byte first) ; +210F runtime=430FH OBSERVED
+PLI0_2112: DCX H ; HL = (HL - 1) & FFFF; flags preserved ; +2112 runtime=4312H OBSERVED
+PLI0_2113: LXI B,65F3H ; BC = &indexed_byte_base (65F3H) ; +2113 runtime=4313H OBSERVED
+PLI0_2116: DAD B ; HL = (HL + BC) & FFFF; only CY changes ; +2116 runtime=4316H OBSERVED
+PLI0_2117: MOV A,M ; A = byte[HL] ; +2117 runtime=4317H OBSERVED
+PLI0_2118: RET ; PC = word[SP]; SP += 2; use the convention in procedure header ; +2118 runtime=4318H OBSERVED
 ; SECTION [2119,23C3) RAW
 PLI0_2119: DB 0CDH,078H,040H,00EH,000H,0CDH,09DH ; +2119 runtime=4319H RAW
 PLI0_2120: DB 040H,0C9H,021H,074H,06AH,073H,02BH,071H,0CDH,078H,040H,0CDH,02DH,040H,02AH,073H ; +2120 runtime=4320H RAW
@@ -597,32 +624,67 @@ PLI0_23A0: DB 002H,0C9H,0C3H,0C0H,045H,03AH,092H,06AH,0FEH,044H,0C2H,0C0H,045H,0
 PLI0_23B0: DB 0E6H,040H,0FEH,040H,0C2H,0BAH,045H,03EH,002H,0C9H,0CDH,06AH,03BH,0C6H,022H,0C9H ; +23B0 runtime=45B0H RAW
 PLI0_23C0: DB 03EH,000H,0C9H ; +23C0 runtime=45C0H RAW
 
+; @procedure-v1 PLI0.OVL+23C3
 ; ProcedureHypothesis: pointer bound OR masked-tag predicate
-; OBSERVED: 334 MINIMAL CALLs from PLI0.OVL+23E3, PLI0.OVL+240F, PLI0.OVL+24D2, PLI0.OVL+2672, PLI0.OVL+278A
-; OBSERVED returns: PLI0.OVL+23DE
-; DEDUCED: p=word[6A82], limit=word[1C32], t=byte[(p+1)&FFFF]. Always reads t. A=FF iff p>=limit OR (t&E0)==20; else A=00. BC=FFFF iff p>=limit else 0000; HL=p+1, DE=6A83. Final ORA clears carry and sets S/Z/P from A. Only stack writes (CALL/PUSH PSW); no global writes.
-; Pseudocode: p=word[6A82]; bound=(p>=word[1C32]); t=byte[p+1]; return A=(bound or (t&E0)==20 ? FF : 00), BC=(bound ? FFFF : 0000), CY=0
-; HYPOTHESIS: pointer-bound/tag classifier
-; UNRESOLVED: 334 MINIMAL calls: 332 false, one true from bound, one true from tag. This is not a short-circuit memory read; t is read even when bound true. No higher-level tag meaning claimed.
-; Evidence: ../minimal-baseline/pass-1/regions.json#PLI0.OVL+23C3; stable entry PLI0_23C3
+; Entry: PLI0_23C3 = PLI0.OVL+23C3 @ 45C3H; SHA-256
+;   e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff
+; Extent: HYPOTHESIS [23C3,23DF) file offsets; overlapping entries: none established
+; Callers: OBSERVED PLI0.OVL+23E3 (MINIMAL=86); PLI0.OVL+240F (MINIMAL=152); PLI0.OVL+24D2
+;   (MINIMAL=85); PLI0.OVL+2672 (MINIMAL=1); PLI0.OVL+278A (MINIMAL=10)
+; Returns: OBSERVED/DEDUCED ordinary hardware CALL word; observed SP after RET = (entry SP + 2)
+;   mod 65536; PLI0.OVL+23DE
+; Inputs: DEDUCED word[6A82]=p, word[1C32]=limit, byte[p+1]=tag bits
+; Outputs: DEDUCED A=FF iff p>=limit or (tag&E0)==20; BC=FFFF iff bound alone true; HL=p+1;
+;   DE=6A83; CY=0
+; Clobbers: DEDUCED A,BC,DE,HL,flags; only stack writes
+; Memory: DEDUCED pointer_bound=1C32H (bound read by predicate); tested_pointer=6A82H (pointer
+;   compared with bound; next byte is masked)
+; Direct callees: OBSERVED PLI.COM+1A33 @1B33H
+; Coverage: OBSERVED MINIMAL: 334 CALLs; 28/28 bytes represented as instructions; MINIMAL: 332
+;   false, 1 bound-true and 1 tag-true returns; tag read on all paths
+; Unresolved: No unresolved local operational path at the declared scope. Evidence is not
+;   exhaustive; 334 MINIMAL calls: 332 false, one true from bound, one true from tag.
+;   This is not a short-circuit memory read; t is read even when bound true. No
+;   higher-level tag meaning claimed.
+; Contract: DEDUCED (complete; scope: documented local operation, with byte/word wrapping; no
+;   source-language interpretation) p=word[6A82], limit=word[1C32], t=byte[(p+1)&FFFF].
+;   Always reads t. A=FF iff p>=limit OR (t&E0)==20; else A=00. BC=FFFF iff p>=limit else
+;   0000; HL=p+1, DE=6A83. Final ORA clears carry and sets S/Z/P from A. Only stack writes
+;   (CALL/PUSH PSW); no global writes.
+; Hypothesis: HYPOTHESIS bound/tag predicate
+; Completeness: bounds=stable; control_flow=complete; contract=complete
+; Evidence: evidence.json#seeds/PLI0.OVL+23C3;
+;   ../minimal-baseline/pass-1/regions.json#PLI0.OVL+23C3
+; Procedure pseudo (operational; byte/word arithmetic wraps):
+;   bound_mask=-(p>=limit); always read tag; tag_mask=-((tag&E0)==20); A=bound_mask|tag_mask; RET
+; @end-procedure-v1 PLI0.OVL+23C3
 ; SECTION [23C3,23DF) UNDERSTOOD
-PLI0_23C3: LXI B,1C32H ; +23C3 runtime=45C3H OBSERVED
-PLI0_23C6: LXI D,6A82H ; +23C6 runtime=45C6H OBSERVED
-PLI0_23C9: CALL 1B33H ; +23C9 runtime=45C9H OBSERVED
-PLI0_23CC: SBB A ; +23CC runtime=45CCH OBSERVED
-PLI0_23CD: CMA ; +23CD runtime=45CDH OBSERVED
-PLI0_23CE: LHLD 6A82H ; +23CE runtime=45CEH OBSERVED
-PLI0_23D1: INX H ; +23D1 runtime=45D1H OBSERVED
-PLI0_23D2: PUSH PSW ; +23D2 runtime=45D2H OBSERVED
-PLI0_23D3: MVI A,0E0H ; +23D3 runtime=45D3H OBSERVED
-PLI0_23D5: ANA M ; +23D5 runtime=45D5H OBSERVED
-PLI0_23D6: SUI 20H ; +23D6 runtime=45D6H OBSERVED
-PLI0_23D8: SUI 01H ; +23D8 runtime=45D8H OBSERVED
-PLI0_23DA: SBB A ; +23DA runtime=45DAH OBSERVED
-PLI0_23DB: POP B ; +23DB runtime=45DBH OBSERVED
-PLI0_23DC: MOV C,B ; +23DC runtime=45DCH OBSERVED
-PLI0_23DD: ORA C ; +23DD runtime=45DDH OBSERVED
-PLI0_23DE: RET ; +23DE runtime=45DEH OBSERVED
+; @block-pseudo 23C3
+; pseudo:
+; | bound_mask=-(pointer>=limit) using word-difference carry
+PLI0_23C3: LXI B,1C32H ; BC = &pointer_bound (1C32H) ; +23C3 runtime=45C3H OBSERVED
+PLI0_23C6: LXI D,6A82H ; DE = &tested_pointer (6A82H) ; +23C6 runtime=45C6H OBSERVED
+PLI0_23C9: CALL 1B33H ; push following PC; invoke PLI.COM+1A33; result effects belong to callee ; +23C9 runtime=45C9H OBSERVED
+PLI0_23CC: SBB A ; A = (old_CY ? FF : 00); byte arithmetic flags ; +23CC runtime=45CCH OBSERVED
+PLI0_23CD: CMA ; A = (~A) & FF; flags preserved ; +23CD runtime=45CDH OBSERVED
+; @block-pseudo 23CE
+; pseudo:
+; | always fetch masked tag, even if bound_mask is true
+PLI0_23CE: LHLD 6A82H ; HL = little_endian_word[tested_pointer (6A82H)] ; +23CE runtime=45CEH OBSERVED
+PLI0_23D1: INX H ; HL = (HL + 1) & FFFF; flags preserved ; +23D1 runtime=45D1H OBSERVED
+PLI0_23D2: PUSH PSW ; SP -= 2; push A with packed flags (PSW) little-endian ; +23D2 runtime=45D2H OBSERVED
+PLI0_23D3: MVI A,0E0H ; A = E0H ; +23D3 runtime=45D3H OBSERVED
+PLI0_23D5: ANA M ; A = E0H & byte[p+1]; always read tag even when bound test was true ; +23D5 runtime=45D5H OBSERVED
+PLI0_23D6: SUI 20H ; A = (A - 20H) & FF; arithmetic flags updated ; +23D6 runtime=45D6H OBSERVED
+PLI0_23D8: SUI 01H ; A = (A - 01H) & FF; arithmetic flags updated ; +23D8 runtime=45D8H OBSERVED
+PLI0_23DA: SBB A ; A = (old_CY ? FF : 00); byte arithmetic flags ; +23DA runtime=45DAH OBSERVED
+; @block-pseudo 23DB
+; pseudo:
+; | return tag_mask OR bound_mask; ORA clears carry
+PLI0_23DB: POP B ; BC = word[SP]; SP += 2 ; +23DB runtime=45DBH OBSERVED
+PLI0_23DC: MOV C,B ; C = B ; +23DC runtime=45DCH OBSERVED
+PLI0_23DD: ORA C ; A = A | C; logical byte flags, CY=0 ; +23DD runtime=45DDH OBSERVED
+PLI0_23DE: RET ; PC = word[SP]; SP += 2; use the convention in procedure header ; +23DE runtime=45DEH OBSERVED
 ; SECTION [23DF,4680) RAW
 PLI0_23DF: DB 021H ; +23DF runtime=45DFH RAW
 PLI0_23E0: DB 095H,06AH,071H,0CDH,0C3H,045H,02FH,01FH,0D2H,00AH,046H,02AH,082H,06AH,05EH,016H ; +23E0 runtime=45E0H RAW

@@ -312,6 +312,18 @@ Do not perform opportunistic large refactors unrelated to the current task.
 
 Avoid speculative abstractions unless an imminent requirement justifies them.
 
+### Annotated assembly and decompilation
+
+Before promoting or materially updating an annotated-assembly ProcedureHypothesis,
+read and follow [Annotated decompilation conventions V1](research/annotated-assembly/CONVENTIONS.md).
+This requirement applies to every agent/model, including Luna and Sol sessions.
+Preserve stable image+offset identity and byte-exact reconstruction. Maintain the
+standard procedure header, local semantic comments, nearby block pseudocode,
+scoped data-role names and machine-readable procedure completeness. Byte/range
+status is independent of bounds/control-flow/contract completeness; partial
+contracts and unobserved paths must remain explicit. Update the procedure catalog
+and run the annotated-assembly verifier and relevant contract/conventions tests.
+
 ---
 
 ## Initial roadmap

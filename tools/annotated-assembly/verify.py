@@ -259,6 +259,12 @@ def verify(manifest_path, images_dir):
         counts = {status: sum(s['length'] for s in image['sections'] if s['status'] == status) for status in STATUSES}
         progress.append({'image': name, 'sha256': image['sha256'], 'bytes_total': image['length'],
                          'statuses': {s: {'bytes': counts[s], 'percent': round(100 * counts[s] / image['length'], 4)} for s in STATUSES}})
+    # Procedure completeness is independent of byte status; enforce V1 source form.
+    import decompilation_annotations
+    try:
+        decompilation_annotations.validate(manifest_path.parent, manifest, evidence)
+    except ValueError as error:
+        raise VerificationError(f'decompilation conventions: {error}') from error
     return progress
 
 

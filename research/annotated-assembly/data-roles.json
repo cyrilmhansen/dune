@@ -1,0 +1,1005 @@
+{
+  "schema_version": 1,
+  "roles": [
+    {
+      "id": "PLI.COM:source_fcb",
+      "image": "PLI.COM",
+      "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+      "name": "source_fcb",
+      "runtime_address": 92,
+      "width": 36,
+      "role": "FCB argument in observed sequential reads",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI.COM:program_position_word",
+      "image": "PLI.COM",
+      "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+      "name": "program_position_word",
+      "runtime_address": 7212,
+      "width": 2,
+      "role": "word read by existing emission hypotheses",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI.COM:pointer_bound",
+      "image": "PLI.COM",
+      "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+      "name": "pointer_bound",
+      "runtime_address": 7218,
+      "width": 2,
+      "role": "word compared with PLI0 tested pointer",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI.COM:record_top",
+      "image": "PLI.COM",
+      "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+      "name": "record_top",
+      "runtime_address": 7222,
+      "width": 2,
+      "role": "downward record allocation boundary in PLI1",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI.COM:int_fcb",
+      "image": "PLI.COM",
+      "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+      "name": "int_fcb",
+      "runtime_address": 7330,
+      "width": 36,
+      "role": "INT record FCB",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI.COM:rel_fcb",
+      "image": "PLI.COM",
+      "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+      "name": "rel_fcb",
+      "runtime_address": 7396,
+      "width": 36,
+      "role": "REL record FCB",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI.COM:input_buffer_base",
+      "image": "PLI.COM",
+      "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+      "name": "input_buffer_base",
+      "runtime_address": 7430,
+      "width": 2,
+      "role": "word pointer for 512-byte reader",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI.COM:input_buffer_index",
+      "image": "PLI.COM",
+      "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+      "name": "input_buffer_index",
+      "runtime_address": 7432,
+      "width": 2,
+      "role": "word index/refill offset",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI.COM:rel_record_buffer",
+      "image": "PLI.COM",
+      "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+      "name": "rel_record_buffer",
+      "runtime_address": 7434,
+      "width": 128,
+      "role": "bit-writer record destination",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI.COM:rel_byte_index",
+      "image": "PLI.COM",
+      "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+      "name": "rel_byte_index",
+      "runtime_address": 7562,
+      "width": 1,
+      "role": "current REL output byte",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI.COM:rel_bit_index",
+      "image": "PLI.COM",
+      "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+      "name": "rel_bit_index",
+      "runtime_address": 7563,
+      "width": 1,
+      "role": "bits accumulated modulo eight",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI.COM:int_record_buffer",
+      "image": "PLI.COM",
+      "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+      "name": "int_record_buffer",
+      "runtime_address": 7564,
+      "width": 128,
+      "role": "INT byte record destination",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI.COM:int_byte_index",
+      "image": "PLI.COM",
+      "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+      "name": "int_byte_index",
+      "runtime_address": 7692,
+      "width": 1,
+      "role": "INT append index",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI.COM:text_buffer",
+      "image": "PLI.COM",
+      "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+      "name": "text_buffer",
+      "runtime_address": 7822,
+      "width": 120,
+      "role": "bounded byte buffer ending before 1F06",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI.COM:text_index",
+      "image": "PLI.COM",
+      "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+      "name": "text_index",
+      "runtime_address": 7942,
+      "width": 1,
+      "role": "last written/next read index, depending on existing caller",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI.COM:text_aux_zero",
+      "image": "PLI.COM",
+      "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+      "name": "text_aux_zero",
+      "runtime_address": 7943,
+      "width": 1,
+      "role": "cleared adjacent byte; higher meaning unresolved",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI.COM:text_count",
+      "image": "PLI.COM",
+      "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+      "name": "text_count",
+      "runtime_address": 7944,
+      "width": 1,
+      "role": "counted-buffer limit",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI.COM:segment_ready_flag",
+      "image": "PLI.COM",
+      "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+      "name": "segment_ready_flag",
+      "runtime_address": 8202,
+      "width": 1,
+      "role": "set on witnessed segment finalization",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI.COM:byte_source_flags",
+      "image": "PLI.COM",
+      "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+      "name": "byte_source_flags",
+      "runtime_address": 8204,
+      "width": 1,
+      "role": "bit0 gates alternate byte source",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI.COM:byte_filter_mode",
+      "image": "PLI.COM",
+      "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+      "name": "byte_filter_mode",
+      "runtime_address": 8205,
+      "width": 1,
+      "role": "observed zero/two mode transitions",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI.COM:reuse_gate",
+      "image": "PLI.COM",
+      "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+      "name": "reuse_gate",
+      "runtime_address": 8206,
+      "width": 1,
+      "role": "nonzero branch unprocessed",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI.COM:reader_eof_flags",
+      "image": "PLI.COM",
+      "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+      "name": "reader_eof_flags",
+      "runtime_address": 8210,
+      "width": 1,
+      "role": "bit0 gates 1A return",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI.COM:emitter_mode_201C",
+      "image": "PLI.COM",
+      "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+      "name": "emitter_mode_201C",
+      "runtime_address": 8220,
+      "width": 1,
+      "role": "mode bit read by existing emission seed",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI.COM:emitter_mode_201D",
+      "image": "PLI.COM",
+      "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+      "name": "emitter_mode_201D",
+      "runtime_address": 8221,
+      "width": 1,
+      "role": "mode bit read by existing emission seed",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI.COM:rel_gate_flags",
+      "image": "PLI.COM",
+      "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+      "name": "rel_gate_flags",
+      "runtime_address": 8233,
+      "width": 1,
+      "role": "bit0 zero enables witnessed REL writer path",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI.COM:line_counter",
+      "image": "PLI.COM",
+      "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+      "name": "line_counter",
+      "runtime_address": 8246,
+      "width": 2,
+      "role": "incremented by segment builder",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI.COM:format_argument",
+      "image": "PLI.COM",
+      "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+      "name": "format_argument",
+      "runtime_address": 8248,
+      "width": null,
+      "role": "address passed to existing formatter",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI.COM:format_space",
+      "image": "PLI.COM",
+      "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+      "name": "format_space",
+      "runtime_address": 8252,
+      "width": 1,
+      "role": "written 20H",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI.COM:dma_argument",
+      "image": "PLI.COM",
+      "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+      "name": "dma_argument",
+      "runtime_address": 8287,
+      "width": 2,
+      "role": "saved DMA wrapper BC",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI.COM:read_fcb_argument",
+      "image": "PLI.COM",
+      "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+      "name": "read_fcb_argument",
+      "runtime_address": 8291,
+      "width": 2,
+      "role": "saved sequential-reader BC",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI.COM:console_byte",
+      "image": "PLI.COM",
+      "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+      "name": "console_byte",
+      "runtime_address": 8298,
+      "width": 1,
+      "role": "saved console-output C",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI.COM:raw_input_byte",
+      "image": "PLI.COM",
+      "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+      "name": "raw_input_byte",
+      "runtime_address": 8344,
+      "width": 1,
+      "role": "unchanged fetched byte cache",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI.COM:masked_input_byte",
+      "image": "PLI.COM",
+      "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+      "name": "masked_input_byte",
+      "runtime_address": 8345,
+      "width": 1,
+      "role": "seven-bit cache",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI.COM:building_byte",
+      "image": "PLI.COM",
+      "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+      "name": "building_byte",
+      "runtime_address": 8361,
+      "width": 1,
+      "role": "current fetched builder byte",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI.COM:build_status_flags",
+      "image": "PLI.COM",
+      "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+      "name": "build_status_flags",
+      "runtime_address": 8362,
+      "width": 1,
+      "role": "cleared; reporting/capacity path unresolved",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI.COM:append_byte",
+      "image": "PLI.COM",
+      "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+      "name": "append_byte",
+      "runtime_address": 8363,
+      "width": 1,
+      "role": "saved append input C",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI.COM:int_append_byte",
+      "image": "PLI.COM",
+      "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+      "name": "int_append_byte",
+      "runtime_address": 8368,
+      "width": 1,
+      "role": "saved INT append C",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI.COM:rel_input_bit",
+      "image": "PLI.COM",
+      "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+      "name": "rel_input_bit",
+      "runtime_address": 8374,
+      "width": 1,
+      "role": "saved bit-writer C",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI.COM:serialized_value",
+      "image": "PLI.COM",
+      "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+      "name": "serialized_value",
+      "runtime_address": 8375,
+      "width": 1,
+      "role": "rotated serialization value",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI.COM:bits_remaining",
+      "image": "PLI.COM",
+      "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+      "name": "bits_remaining",
+      "runtime_address": 8376,
+      "width": 1,
+      "role": "serializer count",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI.COM:bdos_guard_pointer",
+      "image": "PLI.COM",
+      "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+      "name": "bdos_guard_pointer",
+      "runtime_address": 8533,
+      "width": 2,
+      "role": "pointer dereferenced for AA marker",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI.COM:bdos_stub_signature",
+      "image": "PLI.COM",
+      "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+      "name": "bdos_stub_signature",
+      "runtime_address": 8540,
+      "width": 3,
+      "role": "compared against runtime stub bytes",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI0.OVL:pointer_bound",
+      "image": "PLI0.OVL",
+      "image_sha256": "e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff",
+      "name": "pointer_bound",
+      "runtime_address": 7218,
+      "width": 2,
+      "role": "bound read by predicate",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI0.OVL:indexed_byte_base",
+      "image": "PLI0.OVL",
+      "image_sha256": "e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff",
+      "name": "indexed_byte_base",
+      "runtime_address": 26099,
+      "width": null,
+      "role": "fixed base for indexed fetch; contents unspecified",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI0.OVL:indexed_cursor",
+      "image": "PLI0.OVL",
+      "image_sha256": "e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff",
+      "name": "indexed_cursor",
+      "runtime_address": 27247,
+      "width": 2,
+      "role": "incremented before fetching old index",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI0.OVL:tested_pointer",
+      "image": "PLI0.OVL",
+      "image_sha256": "e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff",
+      "name": "tested_pointer",
+      "runtime_address": 27266,
+      "width": 2,
+      "role": "pointer compared with bound; next byte is masked",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI1.OVL:record_top",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "name": "record_top",
+      "runtime_address": 7222,
+      "width": 2,
+      "role": "downward reservation boundary",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI1.OVL:fixed_payload_count",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "name": "fixed_payload_count",
+      "runtime_address": 8389,
+      "width": 1,
+      "role": "count loaded by existing +4693 adapter",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI1.OVL:fixed_payload_source",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "name": "fixed_payload_source",
+      "runtime_address": 8390,
+      "width": null,
+      "role": "pushed fixed source pointer",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI1.OVL:current_record",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "name": "current_record",
+      "runtime_address": 43107,
+      "width": 2,
+      "role": "record pointer used by reviewed construction/repair",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI1.OVL:saved_record_head",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "name": "saved_record_head",
+      "runtime_address": 43179,
+      "width": 2,
+      "role": "word restored by repair wrapper",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI1.OVL:allocation_count",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "name": "allocation_count",
+      "runtime_address": 43254,
+      "width": 1,
+      "role": "saved allocator input C",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI1.OVL:payload_source",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "name": "payload_source",
+      "runtime_address": 43261,
+      "width": 2,
+      "role": "callee-consumed source argument",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI1.OVL:payload_count",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "name": "payload_count",
+      "runtime_address": 43263,
+      "width": 1,
+      "role": "descending copy count",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI1.OVL:record_tag",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "name": "record_tag",
+      "runtime_address": 43264,
+      "width": 1,
+      "role": "saved constructor E",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI1.OVL:adapter_tag",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "name": "adapter_tag",
+      "runtime_address": 43280,
+      "width": 1,
+      "role": "saved +4693 input C",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI1.OVL:repair_tag",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "name": "repair_tag",
+      "runtime_address": 43286,
+      "width": 1,
+      "role": "saved +4738 input C",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI1.OVL:repair_saved_word",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "name": "repair_saved_word",
+      "runtime_address": 43287,
+      "width": 2,
+      "role": "saved old record field",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI1.OVL:repair_payload_count",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "name": "repair_payload_count",
+      "runtime_address": 43335,
+      "width": 1,
+      "role": "count read for repair/constructor",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI1.OVL:repair_payload_source",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "name": "repair_payload_source",
+      "runtime_address": 43336,
+      "width": null,
+      "role": "pushed source address",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI1.OVL:record_floor_address",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "name": "record_floor_address",
+      "runtime_address": 44666,
+      "width": null,
+      "role": "literal lower guard value, not dereferenced",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI2.OVL:program_position_word",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "name": "program_position_word",
+      "runtime_address": 7212,
+      "width": 2,
+      "role": "word read by existing emission seed",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI2.OVL:emitter_mode_201C",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "name": "emitter_mode_201C",
+      "runtime_address": 8220,
+      "width": 1,
+      "role": "mode flag; general meaning unresolved",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI2.OVL:emitter_mode_201D",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "name": "emitter_mode_201D",
+      "runtime_address": 8221,
+      "width": 1,
+      "role": "mode flag; general meaning unresolved",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI2.OVL:dispatch_trace_flags",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "name": "dispatch_trace_flags",
+      "runtime_address": 8238,
+      "width": 1,
+      "role": "bit0 tracing branches unobserved",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI2.OVL:fallback_pointer_table",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "name": "fallback_pointer_table",
+      "runtime_address": 15379,
+      "width": null,
+      "role": "pointer-table base used by gateway",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI2.OVL:descriptor_pointer_table",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "name": "descriptor_pointer_table",
+      "runtime_address": 15393,
+      "width": null,
+      "role": "pointer-table base used by gateway",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI2.OVL:handler_pointer_table",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "name": "handler_pointer_table",
+      "runtime_address": 15837,
+      "width": null,
+      "role": "pointer-table base used by gateway",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI2.OVL:selector_pointer_base",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "name": "selector_pointer_base",
+      "runtime_address": 34621,
+      "width": null,
+      "role": "fixed base in indexed selector; higher meaning hypothetical",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI2.OVL:class_byte_table",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "name": "class_byte_table",
+      "runtime_address": 42505,
+      "width": null,
+      "role": "second-stage byte lookup; class role hypothetical",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI2.OVL:weight_byte_table",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "name": "weight_byte_table",
+      "runtime_address": 42703,
+      "width": null,
+      "role": "second-stage weights for recurrence; source meaning hypothetical",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI2.OVL:input_byte_vector",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "name": "input_byte_vector",
+      "runtime_address": 43696,
+      "width": null,
+      "role": "first-stage byte lookup indexed by C",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI2.OVL:class_lookup_index",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "name": "class_lookup_index",
+      "runtime_address": 44024,
+      "width": 1,
+      "role": "saved +047D input C",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI2.OVL:weight_lookup_index",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "name": "weight_lookup_index",
+      "runtime_address": 44026,
+      "width": 1,
+      "role": "saved +04A9 input C",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI2.OVL:walk_cursor",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "name": "walk_cursor",
+      "runtime_address": 44091,
+      "width": 1,
+      "role": "backward cursor byte",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI2.OVL:walk_balance",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "name": "walk_balance",
+      "runtime_address": 44092,
+      "width": 1,
+      "role": "byte balance",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI2.OVL:wrapped_byte_sum",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "name": "wrapped_byte_sum",
+      "runtime_address": 44166,
+      "width": 1,
+      "role": "stored low byte C+E",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI2.OVL:byte_addend",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "name": "byte_addend",
+      "runtime_address": 44167,
+      "width": 1,
+      "role": "saved E",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI2.OVL:selector_saved_argument",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "name": "selector_saved_argument",
+      "runtime_address": 44294,
+      "width": 1,
+      "role": "saved selector input C",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI2.OVL:dispatch_state_byte",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "name": "dispatch_state_byte",
+      "runtime_address": 44298,
+      "width": 1,
+      "role": "candidate attempt byte in scan; saved/restored state, not type ID",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI2.OVL:dispatch_positions",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "name": "dispatch_positions",
+      "runtime_address": 44299,
+      "width": 10,
+      "role": "initial cursor and recorded pre-skip positions",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI2.OVL:descriptor_cache",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "name": "descriptor_cache",
+      "runtime_address": 44309,
+      "width": 5,
+      "role": "first-use position bindings; FF sentinel",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI2.OVL:candidates_remaining",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "name": "candidates_remaining",
+      "runtime_address": 44314,
+      "width": 1,
+      "role": "gateway record count",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI2.OVL:candidate_success_byte",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "name": "candidate_success_byte",
+      "runtime_address": 44315,
+      "width": 1,
+      "role": "gateway predicate/fallback result",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI2.OVL:dispatch_table_index",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "name": "dispatch_table_index",
+      "runtime_address": 44316,
+      "width": 1,
+      "role": "lookup result indexing pointer tables",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI2.OVL:descriptor_pointer",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "name": "descriptor_pointer",
+      "runtime_address": 44317,
+      "width": 2,
+      "role": "gateway/current predicate record pointer",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI2.OVL:handler_pointer",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "name": "handler_pointer",
+      "runtime_address": 44319,
+      "width": 2,
+      "role": "word used by gateway PCHL",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI2.OVL:predicate_cursor",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "name": "predicate_cursor",
+      "runtime_address": 44321,
+      "width": 1,
+      "role": "descriptor walk cursor",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI2.OVL:descriptors_processed",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "name": "descriptors_processed",
+      "runtime_address": 44322,
+      "width": 1,
+      "role": "position count",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI2.OVL:cached_position",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "name": "cached_position",
+      "runtime_address": 44323,
+      "width": 1,
+      "role": "scratch cache read",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI2.OVL:descriptors_remaining",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "name": "descriptors_remaining",
+      "runtime_address": 44325,
+      "width": 1,
+      "role": "remaining descriptor count",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI2.OVL:descriptor_or_slot",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "name": "descriptor_or_slot",
+      "runtime_address": 44326,
+      "width": 1,
+      "role": "descriptor byte then marker slot number",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI2.OVL:emitted_byte",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "name": "emitted_byte",
+      "runtime_address": 44498,
+      "width": 1,
+      "role": "saved output byte C",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI2.OVL:chain_input_pointer",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "name": "chain_input_pointer",
+      "runtime_address": 44522,
+      "width": 2,
+      "role": "saved emission pointer BC",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI2.OVL:chain_byte_index",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "name": "chain_byte_index",
+      "runtime_address": 44524,
+      "width": 1,
+      "role": "byte serialization loop index",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI2.OVL:chain_byte",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "name": "chain_byte",
+      "runtime_address": 44525,
+      "width": 1,
+      "role": "saved pointed byte",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI2.OVL:chain_length",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "name": "chain_length",
+      "runtime_address": 44526,
+      "width": 1,
+      "role": "length scan scratch",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI2.OVL:reference_tag",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "name": "reference_tag",
+      "runtime_address": 44641,
+      "width": 1,
+      "role": "saved wrapper C",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI2.OVL:reference_pointer",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "name": "reference_pointer",
+      "runtime_address": 44642,
+      "width": 2,
+      "role": "saved wrapper DE",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI2.OVL:adapter_pointer",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "name": "adapter_pointer",
+      "runtime_address": 44644,
+      "width": 2,
+      "role": "saved adapter BC",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    }
+  ]
+}

@@ -76,52 +76,117 @@ PLI2_0450: DB 061H,0CDH,06EH,017H,0CDH,0ABH,03BH,0CDH,0B5H,0A4H,0CDH,031H,011H,0
 PLI2_0460: DB 001H,06BH,0AEH,011H,036H,01CH,0CDH,038H,01BH,044H,04DH,0CDH,011H,007H,0CDH,0DDH ; +0460 runtime=2660H RAW
 PLI2_0470: DB 0A4H,0C3H,08EH,003H,0FBH,076H,001H,00BH,026H,0CDH,0F2H,005H,0C9H ; +0470 runtime=2670H RAW
 
+; @procedure-v1 PLI2.OVL+047D
 ; ProcedureHypothesis: two-stage byte-table lookup at A609
-; OBSERVED: 67 MINIMAL CALLs from PLI2.OVL+04C7, PLI2.OVL+0C6C, PLI2.OVL+0D8E, PLI2.OVL+1E68, PLI2.OVL+1FDE, PLI2.OVL+3E42, PLI2.OVL+6663
-; OBSERVED returns: PLI2.OVL+0492
-; DEDUCED: C=index; byte[ABF8]=C; j=byte[AAB0+C]; A=byte[A609+j]. BC=j, HL=A609+j, DE unchanged. CY=0; S/Z/P/AC preserved from entry. LHLD also reads ABF9 then discards it via MVI H,0. No nested call/dispatch or return-slot rewrite.
-; Pseudocode: byte[ABF8]=C; j=byte[AAB0+C]; BC=j; HL=A609+j; A=byte[HL]; RET
-; HYPOTHESIS: table-derived byte classification helper
-; UNRESOLVED: 67 MINIMAL calls from seven sites. Table contents remain data/RAW; no classification/type name is assigned from frequency. Adjacent similar lookup entries are not merged.
-; Evidence: ../minimal-baseline/pass-2/regions.json#PLI2.OVL+047D; stable entry PLI2_047D
+; Entry: PLI2_047D = PLI2.OVL+047D @ 267DH; SHA-256
+;   80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a
+; Extent: HYPOTHESIS [047D,0493) file offsets; overlapping entries: none established
+; Callers: OBSERVED PLI2.OVL+04C7 (MINIMAL=32); PLI2.OVL+0C6C (MINIMAL=16); PLI2.OVL+0D8E
+;   (MINIMAL=4); PLI2.OVL+1E68 (MINIMAL=2); PLI2.OVL+1FDE (MINIMAL=11); PLI2.OVL+3E42
+;   (MINIMAL=1); PLI2.OVL+6663 (MINIMAL=1)
+; Returns: OBSERVED/DEDUCED ordinary hardware CALL word; observed SP after RET = (entry SP + 2)
+;   mod 65536; PLI2.OVL+0492
+; Inputs: DEDUCED C=index
+; Outputs: DEDUCED ABF8=input C; j=byte[AAB0+C]; A=byte[A609+j]; BC=j,HL=A609+j,DE preserved;
+;   CY=0; NZPA preserved
+; Clobbers: DEDUCED A,BC,HL,CY
+; Memory: DEDUCED class_byte_table=A609H (second-stage byte lookup; class role hypothetical);
+;   input_byte_vector=AAB0H (first-stage byte lookup indexed by C); class_lookup_index=ABF8H
+;   (saved +047D input C)
+; Direct callees: OBSERVED none
+; Coverage: OBSERVED MINIMAL: 67 CALLs; 22/22 bytes represented as instructions; local instruction
+;   sequence represented; dynamic counts do not prove exhaustive input-state coverage
+; Unresolved: No unresolved local operational path at the declared scope. Evidence is not
+;   exhaustive; 67 MINIMAL calls from seven sites. Table contents remain data/RAW; no
+;   classification/type name is assigned from frequency. Adjacent similar lookup entries
+;   are not merged.
+; Contract: DEDUCED (complete; scope: documented local operation, with byte/word wrapping; no
+;   source-language interpretation) C=index; byte[ABF8]=C; j=byte[AAB0+C]; A=byte[A609+j].
+;   BC=j, HL=A609+j, DE unchanged. CY=0; S/Z/P/AC preserved from entry. LHLD also reads
+;   ABF9 then discards it via MVI H,0. No nested call/dispatch or return-slot rewrite.
+; Hypothesis: HYPOTHESIS class lookup; table meaning unresolved
+; Completeness: bounds=stable; control_flow=complete; contract=complete
+; Evidence: evidence.json#seeds/PLI2.OVL+047D;
+;   ../minimal-baseline/pass-2/regions.json#PLI2.OVL+047D
+; Procedure pseudo (operational; byte/word arithmetic wraps):
+;   save C; j=input_bytes[C]; RET class_table[j]
+; @end-procedure-v1 PLI2.OVL+047D
 ; SECTION [047D,0493) UNDERSTOOD
-PLI2_047D: LXI H,0ABF8H ; +047D runtime=267DH OBSERVED
-PLI2_0480: MOV M,C ; +0480 runtime=2680H OBSERVED
-PLI2_0481: LHLD 0ABF8H ; +0481 runtime=2681H OBSERVED
-PLI2_0484: MVI H,00H ; +0484 runtime=2684H OBSERVED
-PLI2_0486: LXI B,0AAB0H ; +0486 runtime=2686H OBSERVED
-PLI2_0489: DAD B ; +0489 runtime=2689H OBSERVED
-PLI2_048A: MOV C,M ; +048A runtime=268AH OBSERVED
-PLI2_048B: MVI B,00H ; +048B runtime=268BH OBSERVED
-PLI2_048D: LXI H,0A609H ; +048D runtime=268DH OBSERVED
-PLI2_0490: DAD B ; +0490 runtime=2690H OBSERVED
-PLI2_0491: MOV A,M ; +0491 runtime=2691H OBSERVED
-PLI2_0492: RET ; +0492 runtime=2692H OBSERVED
+; @block-pseudo 047D
+; pseudo:
+; | save index; j=input_bytes[index]
+PLI2_047D: LXI H,0ABF8H ; HL = &class_lookup_index (ABF8H) ; +047D runtime=267DH OBSERVED
+PLI2_0480: MOV M,C ; byte[class_lookup_index (ABF8H)] = C ; +0480 runtime=2680H OBSERVED
+PLI2_0481: LHLD 0ABF8H ; L = byte[class_lookup_index (ABF8H)]; H = byte[ABF9H], later discarded ; +0481 runtime=2681H OBSERVED
+PLI2_0484: MVI H,00H ; HL = zero_extend(L); flags preserved ; +0484 runtime=2684H OBSERVED
+PLI2_0486: LXI B,0AAB0H ; BC = &input_byte_vector (AAB0H) ; +0486 runtime=2686H OBSERVED
+PLI2_0489: DAD B ; HL = (HL + BC) & FFFF; only CY changes ; +0489 runtime=2689H OBSERVED
+PLI2_048A: MOV C,M ; C = mapped input byte j from input_byte_vector + saved index ; +048A runtime=268AH OBSERVED
+; @block-pseudo 048B
+; pseudo:
+; | lookup class byte; incoming NZPA flags are preserved
+PLI2_048B: MVI B,00H ; BC = zero_extend(mapped byte j) ; +048B runtime=268BH OBSERVED
+PLI2_048D: LXI H,0A609H ; HL = &class_byte_table (A609H) ; +048D runtime=268DH OBSERVED
+PLI2_0490: DAD B ; HL = &class_byte_table[j] (A609H+j); CY=0 ; +0490 runtime=2690H OBSERVED
+PLI2_0491: MOV A,M ; A = class_byte_table[j]; returning byte does not recompute NZPA ; +0491 runtime=2691H OBSERVED
+PLI2_0492: RET ; PC = word[SP]; SP += 2; use the convention in procedure header ; +0492 runtime=2692H OBSERVED
 ; SECTION [0493,04A9) RAW
 PLI2_0493: DB 021H,0F9H,0ABH,071H,02AH,0F9H,0ABH,026H,000H,001H,0B0H,0AAH,009H ; +0493 runtime=2693H RAW
 PLI2_04A0: DB 04EH,006H,000H,021H,06CH,0A6H,009H,07EH,0C9H ; +04A0 runtime=26A0H RAW
 
+; @procedure-v1 PLI2.OVL+04A9
 ; ProcedureHypothesis: two-stage byte-table lookup at A6CF
-; OBSERVED: 70 MINIMAL CALLs from PLI2.OVL+099F, PLI2.OVL+09D6, PLI2.OVL+0C76
-; OBSERVED returns: PLI2.OVL+04BE
-; DEDUCED: C=index; byte[ABFA]=C; j=byte[AAB0+C]; A=byte[A6CF+j]. BC=j, HL=A6CF+j, DE unchanged. CY=0; S/Z/P/AC preserved. Neighbor ABFB is physically read then discarded by MVI H,0.
-; Pseudocode: byte[ABFA]=C; j=byte[AAB0+C]; BC=j; HL=A6CF+j; A=byte[HL]; RET
-; HYPOTHESIS: per-position weight lookup for balanced walks
-; UNRESOLVED: 70 MINIMAL calls, 38 from +0992; the other two callers are not decompiled here. Interpreting table weights as source-level arity remains a hypothesis.
-; Evidence: ../minimal-baseline/pass-2/regions.json#PLI2.OVL+04A9; stable entry PLI2_04A9
+; Entry: PLI2_04A9 = PLI2.OVL+04A9 @ 26A9H; SHA-256
+;   80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a
+; Extent: HYPOTHESIS [04A9,04BF) file offsets; overlapping entries: none established
+; Callers: OBSERVED PLI2.OVL+099F (MINIMAL=38); PLI2.OVL+09D6 (MINIMAL=16); PLI2.OVL+0C76
+;   (MINIMAL=16)
+; Returns: OBSERVED/DEDUCED ordinary hardware CALL word; observed SP after RET = (entry SP + 2)
+;   mod 65536; PLI2.OVL+04BE
+; Inputs: DEDUCED C=index
+; Outputs: DEDUCED ABFA=input C; j=byte[AAB0+C]; A=byte[A6CF+j]; BC=j,HL=A6CF+j,DE preserved;
+;   CY=0; NZPA preserved
+; Clobbers: DEDUCED A,BC,HL,CY
+; Memory: DEDUCED weight_byte_table=A6CFH (second-stage weights for recurrence; source meaning
+;   hypothetical); input_byte_vector=AAB0H (first-stage byte lookup indexed by C);
+;   weight_lookup_index=ABFAH (saved +04A9 input C)
+; Direct callees: OBSERVED none
+; Coverage: OBSERVED MINIMAL: 70 CALLs; 22/22 bytes represented as instructions; local instruction
+;   sequence represented; dynamic counts do not prove exhaustive input-state coverage
+; Unresolved: No unresolved local operational path at the declared scope. Evidence is not
+;   exhaustive; 70 MINIMAL calls, 38 from +0992; the other two callers are not
+;   decompiled here. Interpreting table weights as source-level arity remains a
+;   hypothesis.
+; Contract: DEDUCED (complete; scope: documented local operation, with byte/word wrapping; no
+;   source-language interpretation) C=index; byte[ABFA]=C; j=byte[AAB0+C]; A=byte[A6CF+j].
+;   BC=j, HL=A6CF+j, DE unchanged. CY=0; S/Z/P/AC preserved. Neighbor ABFB is physically
+;   read then discarded by MVI H,0.
+; Hypothesis: HYPOTHESIS weight lookup; table meaning unresolved
+; Completeness: bounds=stable; control_flow=complete; contract=complete
+; Evidence: evidence.json#seeds/PLI2.OVL+04A9;
+;   ../minimal-baseline/pass-2/regions.json#PLI2.OVL+04A9
+; Procedure pseudo (operational; byte/word arithmetic wraps):
+;   save C; j=input_bytes[C]; RET weight_table[j]
+; @end-procedure-v1 PLI2.OVL+04A9
 ; SECTION [04A9,04BF) UNDERSTOOD
-PLI2_04A9: LXI H,0ABFAH ; +04A9 runtime=26A9H OBSERVED
-PLI2_04AC: MOV M,C ; +04AC runtime=26ACH OBSERVED
-PLI2_04AD: LHLD 0ABFAH ; +04AD runtime=26ADH OBSERVED
-PLI2_04B0: MVI H,00H ; +04B0 runtime=26B0H OBSERVED
-PLI2_04B2: LXI B,0AAB0H ; +04B2 runtime=26B2H OBSERVED
-PLI2_04B5: DAD B ; +04B5 runtime=26B5H OBSERVED
-PLI2_04B6: MOV C,M ; +04B6 runtime=26B6H OBSERVED
-PLI2_04B7: MVI B,00H ; +04B7 runtime=26B7H OBSERVED
-PLI2_04B9: LXI H,0A6CFH ; +04B9 runtime=26B9H OBSERVED
-PLI2_04BC: DAD B ; +04BC runtime=26BCH OBSERVED
-PLI2_04BD: MOV A,M ; +04BD runtime=26BDH OBSERVED
-PLI2_04BE: RET ; +04BE runtime=26BEH OBSERVED
+; @block-pseudo 04A9
+; pseudo:
+; | save index; j=input_bytes[index]
+PLI2_04A9: LXI H,0ABFAH ; HL = &weight_lookup_index (ABFAH) ; +04A9 runtime=26A9H OBSERVED
+PLI2_04AC: MOV M,C ; byte[weight_lookup_index (ABFAH)] = C ; +04AC runtime=26ACH OBSERVED
+PLI2_04AD: LHLD 0ABFAH ; L = byte[weight_lookup_index (ABFAH)]; H = byte[ABFBH], later discarded ; +04AD runtime=26ADH OBSERVED
+PLI2_04B0: MVI H,00H ; HL = zero_extend(L); flags preserved ; +04B0 runtime=26B0H OBSERVED
+PLI2_04B2: LXI B,0AAB0H ; BC = &input_byte_vector (AAB0H) ; +04B2 runtime=26B2H OBSERVED
+PLI2_04B5: DAD B ; HL = (HL + BC) & FFFF; only CY changes ; +04B5 runtime=26B5H OBSERVED
+PLI2_04B6: MOV C,M ; C = mapped input byte j from input_byte_vector + saved index ; +04B6 runtime=26B6H OBSERVED
+; @block-pseudo 04B7
+; pseudo:
+; | lookup weight byte; incoming NZPA flags are preserved
+PLI2_04B7: MVI B,00H ; BC = zero_extend(mapped byte j) ; +04B7 runtime=26B7H OBSERVED
+PLI2_04B9: LXI H,0A6CFH ; HL = &weight_byte_table (A6CFH) ; +04B9 runtime=26B9H OBSERVED
+PLI2_04BC: DAD B ; HL = &weight_byte_table[j] (A6CFH+j); CY=0 ; +04BC runtime=26BCH OBSERVED
+PLI2_04BD: MOV A,M ; A = weight_byte_table[j]; returning byte does not recompute NZPA ; +04BD runtime=26BDH OBSERVED
+PLI2_04BE: RET ; PC = word[SP]; SP += 2; use the convention in procedure header ; +04BE runtime=26BEH OBSERVED
 ; SECTION [04BF,0992) RAW
 PLI2_04BF: DB 021H ; +04BF runtime=26BFH RAW
 PLI2_04C0: DB 0FBH,0ABH,071H,02AH,0FBH,0ABH,04DH,0CDH,07DH,026H,04FH,006H,000H,021H,074H,022H ; +04C0 runtime=26C0H RAW
@@ -203,35 +268,74 @@ PLI2_0970: DB 021H,02AH,0ACH,034H,0C3H,01BH,02AH,02AH,037H,0ACH,022H,09FH,0ACH,0
 PLI2_0980: DB 0ACH,0D6H,001H,09FH,02FH,0F5H,03EH,008H,021H,031H,0ACH,096H,09FH,02FH,0C1H,048H ; +0980 runtime=2B80H RAW
 PLI2_0990: DB 0A1H,0C9H ; +0990 runtime=2B90H RAW
 
+; @procedure-v1 PLI2.OVL+0992
 ; ProcedureHypothesis: backward cursor walk with byte balance recurrence
-; OBSERVED: 24 MINIMAL CALLs from PLI2.OVL+09BE, PLI2.OVL+0A78, PLI2.OVL+0E4E, PLI2.OVL+1FA9
-; OBSERVED returns: PLI2.OVL+09B9
-; DEDUCED: Input C initializes byte[AC3B], balance byte[AC3C]=1. Repeatedly calls +04A9(cursor) and sets balance=(balance+weight-1) mod 256. If nonzero, cursor decrements mod 256; zero returns cursor in A. At return BC=0, HL=AC3C, DE unchanged, Z=1, CY=0 from CMP 0,balance. Mutable scratch includes ABFA through helper. No general termination guarantee for arbitrary tables.
-; Pseudocode: cursor=C; balance=1; loop: balance=(balance+lookup04A9(cursor)-1)&FF; if balance==0: return cursor; cursor=(cursor-1)&FF; goto loop
-; HYPOTHESIS: backward balanced-span walk
-; UNRESOLVED: All 24 MINIMAL invocations terminate; 38 weight lookups, fourteen decrements. Tables/cursor bounds and source-language meaning unresolved. Arithmetic is byte modular, not unbounded tree depth.
-; Evidence: ../minimal-baseline/pass-2/regions.json#PLI2.OVL+0992; stable entry PLI2_0992
+; Entry: PLI2_0992 = PLI2.OVL+0992 @ 2B92H; SHA-256
+;   80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a
+; Extent: HYPOTHESIS [0992,09BA) file offsets; overlapping entries: none established
+; Callers: OBSERVED PLI2.OVL+09BE (MINIMAL=9); PLI2.OVL+0A78 (MINIMAL=7); PLI2.OVL+0E4E
+;   (MINIMAL=2); PLI2.OVL+1FA9 (MINIMAL=6)
+; Returns: OBSERVED/DEDUCED ordinary hardware CALL word; observed SP after RET = (entry SP + 2)
+;   mod 65536; PLI2.OVL+09B9
+; Inputs: DEDUCED C=cursor; lookup weights through +04A9
+; Outputs: DEDUCED A=terminal cursor; AC3B=cursor,AC3C=0; BC=0,HL=AC3C,DE preserved; Z=1,CY=0
+; Clobbers: DEDUCED A,BC,HL,flags; helper scratch ABFA
+; Memory: DEDUCED walk_cursor=AC3BH (backward cursor byte); walk_balance=AC3CH (byte balance)
+; Direct callees: OBSERVED PLI2.OVL+04A9 @26A9H
+; Coverage: OBSERVED MINIMAL: 24 CALLs; 40/40 bytes represented as instructions; MINIMAL: 24
+;   terminating walks, 38 weight lookups and 14 cursor decrements; table meaning/domain
+;   not inferred
+; Unresolved: No unresolved local operational path at the declared scope. Evidence is not
+;   exhaustive; All 24 MINIMAL invocations terminate; 38 weight lookups, fourteen
+;   decrements. Tables/cursor bounds and source-language meaning unresolved. Arithmetic
+;   is byte modular, not unbounded tree depth.
+; Contract: DEDUCED (complete; scope: documented local operation, with byte/word wrapping; no
+;   source-language interpretation) Input C initializes byte[AC3B], balance byte[AC3C]=1.
+;   Repeatedly calls +04A9(cursor) and sets balance=(balance+weight-1) mod 256. If
+;   nonzero, cursor decrements mod 256; zero returns cursor in A. At return BC=0, HL=AC3C,
+;   DE unchanged, Z=1, CY=0 from CMP 0,balance. Mutable scratch includes ABFA through
+;   helper. No general termination guarantee for arbitrary tables.
+; Hypothesis: HYPOTHESIS balanced backward cursor walk
+; Completeness: bounds=stable; control_flow=complete; contract=complete
+; Evidence: evidence.json#seeds/PLI2.OVL+0992;
+;   ../minimal-baseline/pass-2/regions.json#PLI2.OVL+0992
+; Procedure pseudo (operational; byte/word arithmetic wraps):
+;   cursor=C; balance=1; repeat balance=(balance+weight(cursor)-1)&FF; if zero: RET cursor;
+;   cursor--
+; @end-procedure-v1 PLI2.OVL+0992
 ; SECTION [0992,09BA) UNDERSTOOD
-PLI2_0992: LXI H,0AC3BH ; +0992 runtime=2B92H OBSERVED
-PLI2_0995: MOV M,C ; +0995 runtime=2B95H OBSERVED
-PLI2_0996: LXI H,0AC3CH ; +0996 runtime=2B96H OBSERVED
-PLI2_0999: MVI M,01H ; +0999 runtime=2B99H OBSERVED
-PLI2_099B: LHLD 0AC3BH ; +099B runtime=2B9BH OBSERVED
-PLI2_099E: MOV C,L ; +099E runtime=2B9EH OBSERVED
-PLI2_099F: CALL 26A9H ; +099F runtime=2B9FH OBSERVED
-PLI2_09A2: LXI H,0AC3CH ; +09A2 runtime=2BA2H OBSERVED
-PLI2_09A5: ADD M ; +09A5 runtime=2BA5H OBSERVED
-PLI2_09A6: DCR A ; +09A6 runtime=2BA6H OBSERVED
-PLI2_09A7: MOV M,A ; +09A7 runtime=2BA7H OBSERVED
-PLI2_09A8: MOV C,A ; +09A8 runtime=2BA8H OBSERVED
-PLI2_09A9: MVI A,00H ; +09A9 runtime=2BA9H OBSERVED
-PLI2_09AB: CMP C ; +09AB runtime=2BABH OBSERVED
-PLI2_09AC: JNC 2BB6H ; +09AC runtime=2BACH OBSERVED
-PLI2_09AF: LXI H,0AC3BH ; +09AF runtime=2BAFH OBSERVED
-PLI2_09B2: DCR M ; +09B2 runtime=2BB2H OBSERVED
-PLI2_09B3: JMP 2B9BH ; +09B3 runtime=2BB3H OBSERVED
-PLI2_09B6: LDA 0AC3BH ; +09B6 runtime=2BB6H OBSERVED
-PLI2_09B9: RET ; +09B9 runtime=2BB9H OBSERVED
+; @block-pseudo 0992
+; pseudo:
+; | save cursor; initialize byte balance=1
+PLI2_0992: LXI H,0AC3BH ; HL = &walk_cursor (AC3BH) ; +0992 runtime=2B92H OBSERVED
+PLI2_0995: MOV M,C ; byte[walk_cursor (AC3BH)] = C ; +0995 runtime=2B95H OBSERVED
+PLI2_0996: LXI H,0AC3CH ; HL = &walk_balance (AC3CH) ; +0996 runtime=2B96H OBSERVED
+PLI2_0999: MVI M,01H ; byte[walk_balance (AC3CH)] = 01H ; +0999 runtime=2B99H OBSERVED
+; @block-pseudo 099B
+; pseudo:
+; | balance=(balance+weight(cursor)-1)&FF
+PLI2_099B: LHLD 0AC3BH ; L = byte[walk_cursor (AC3BH)]; H = byte[walk_balance (AC3CH)] ; +099B runtime=2B9BH OBSERVED
+PLI2_099E: MOV C,L ; C = L ; +099E runtime=2B9EH OBSERVED
+PLI2_099F: CALL 26A9H ; push following PC; invoke PLI2.OVL+04A9; result effects belong to callee ; +099F runtime=2B9FH OBSERVED
+PLI2_09A2: LXI H,0AC3CH ; HL = &walk_balance (AC3CH) ; +09A2 runtime=2BA2H OBSERVED
+PLI2_09A5: ADD M ; A = (A + byte[walk_balance (AC3CH)]) & FF; arithmetic flags updated ; +09A5 runtime=2BA5H OBSERVED
+PLI2_09A6: DCR A ; A = (A - 1) & FF; NZPA updated, CY preserved ; +09A6 runtime=2BA6H OBSERVED
+PLI2_09A7: MOV M,A ; byte[walk_balance (AC3CH)] = A ; +09A7 runtime=2BA7H OBSERVED
+PLI2_09A8: MOV C,A ; C = A ; +09A8 runtime=2BA8H OBSERVED
+; @block-pseudo 09A9
+; pseudo:
+; | zero balance returns; otherwise decrement cursor and repeat
+PLI2_09A9: MVI A,00H ; A = 00H ; +09A9 runtime=2BA9H OBSERVED
+PLI2_09AB: CMP C ; flags = compare_unsigned(A, C); A unchanged ; +09AB runtime=2BABH OBSERVED
+PLI2_09AC: JNC 2BB6H ; if CY=0: PC -> PLI2.OVL+09B6; flags preserved ; +09AC runtime=2BACH OBSERVED
+PLI2_09AF: LXI H,0AC3BH ; HL = &walk_cursor (AC3BH) ; +09AF runtime=2BAFH OBSERVED
+PLI2_09B2: DCR M ; byte[walk_cursor (AC3BH)] = (byte[walk_cursor (AC3BH)] - 1) & FF; NZPA updated, CY preserved ; +09B2 runtime=2BB2H OBSERVED
+PLI2_09B3: JMP 2B9BH ; if always: PC -> PLI2.OVL+099B; flags preserved ; +09B3 runtime=2BB3H OBSERVED
+; @block-pseudo 09B6
+; pseudo:
+; | return terminal cursor, leaving compare flags intact
+PLI2_09B6: LDA 0AC3BH ; A = byte[walk_cursor (AC3BH)] ; +09B6 runtime=2BB6H OBSERVED
+PLI2_09B9: RET ; PC = word[SP]; SP += 2; use the convention in procedure header ; +09B9 runtime=2BB9H OBSERVED
 ; SECTION [09BA,0F98) RAW
 PLI2_09BA: DB 02AH,0AEH,0AAH,04DH,0CDH,092H ; +09BA runtime=2BBAH RAW
 PLI2_09C0: DB 02BH,032H,04FH,0ACH,032H,0ADH,0AAH,03AH,0AEH,0AAH,03CH,021H,04FH,0ACH,0BEH,0CAH ; +09C0 runtime=2BC0H RAW
@@ -329,31 +433,62 @@ PLI2_0F70: DB 0D2H,076H,031H,0CDH,076H,026H,02AH,075H,0ACH,026H,000H,001H,054H,0
 PLI2_0F80: DB 07FH,0ACH,077H,02AH,075H,0ACH,026H,000H,001H,064H,0ACH,009H,03AH,083H,0ACH,077H ; +0F80 runtime=3180H RAW
 PLI2_0F90: DB 021H,074H,0ACH,034H,0C3H,05EH,02EH,0C9H ; +0F90 runtime=3190H RAW
 
+; @procedure-v1 PLI2.OVL+0F98
 ; ProcedureHypothesis: unsigned byte addition saturated on overflow
-; OBSERVED: 262 MINIMAL CALLs from PLI2.OVL+0C38, PLI2.OVL+0FBE
-; OBSERVED RETs: PLI2.OVL+0FAD (172), PLI2.OVL+0FB1 (90)
-; OBSERVED: all 262 returns consume original CALL stack slots/bytes.
-; DEDUCED: C/E inputs. Stores E at AC87H and wrapped C+E at AC86H; A=min(unsigned(C)+unsigned(E),255); carry=overflow; HL=AC86H; BC/DE unchanged.
-; Pseudocode: s=u8(C)+u8(E); byte[AC87]=E; byte[AC86]=s&FF; return A=(s>FF ? FF : s), CY=(s>FF)
-; HYPOTHESIS: saturating byte-add primitive
-; UNRESOLVED: MINIMAL observes both RETs: +0FAD (overflow) and +0FB1 (no overflow). Other flags follow SBB A/RAR and need not describe returned A.
-; Evidence: ../minimal-baseline/contracts.json#PLI2.OVL+0F98; stable entry PLI2_0F98
+; Entry: PLI2_0F98 = PLI2.OVL+0F98 @ 3198H; SHA-256
+;   80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a
+; Extent: HYPOTHESIS [0F98,0FB2) file offsets; overlapping entries: none established
+; Callers: OBSERVED PLI2.OVL+0C38 (MINIMAL=256); PLI2.OVL+0FBE (MINIMAL=6)
+; Returns: OBSERVED/DEDUCED ordinary hardware CALL word; observed SP after RET = (entry SP + 2)
+;   mod 65536; PLI2.OVL+0FAD, PLI2.OVL+0FB1
+; Inputs: DEDUCED C,E unsigned byte addends
+; Outputs: DEDUCED A=min(C+E,FF); byte[AC86]=(C+E)&FF; byte[AC87]=E; HL=AC86; BC/DE preserved;
+;   CY=overflow
+; Clobbers: DEDUCED A,HL,flags
+; Memory: DEDUCED wrapped_byte_sum=AC86H (stored low byte C+E); byte_addend=AC87H (saved E)
+; Direct callees: OBSERVED none
+; Coverage: OBSERVED MINIMAL: 262 CALLs; 26/26 bytes represented as instructions; MINIMAL: 172
+;   overflow and 90 non-overflow returns
+; Unresolved: No unresolved local operational path at the declared scope. Evidence is not
+;   exhaustive; MINIMAL observes both RETs: +0FAD (overflow) and +0FB1 (no overflow).
+;   Other flags follow SBB A/RAR and need not describe returned A.
+; Contract: DEDUCED (complete; scope: documented local operation, with byte/word wrapping; no
+;   source-language interpretation) C/E inputs. Stores E at AC87H and wrapped C+E at
+;   AC86H; A=min(unsigned(C)+unsigned(E),255); carry=overflow; HL=AC86H; BC/DE unchanged.
+; Hypothesis: none beyond the low-level operational description
+; Completeness: bounds=stable; control_flow=complete; contract=complete
+; Evidence: evidence.json#seeds/PLI2.OVL+0F98; ../minimal-baseline/contracts.json#PLI2.OVL+0F98
+; Procedure pseudo (operational; byte/word arithmetic wraps):
+;   sum=u8(C)+u8(E); cache wrapped sum and E; RET A=(sum>FF?FF:sum),CY=(sum>FF)
+; @end-procedure-v1 PLI2.OVL+0F98
 ; SECTION [0F98,0FB2) UNDERSTOOD
-PLI2_0F98: LXI H,0AC87H ; +0F98 runtime=3198H OBSERVED
-PLI2_0F9B: MOV M,E ; +0F9B runtime=319BH OBSERVED
-PLI2_0F9C: DCX H ; +0F9C runtime=319CH OBSERVED
-PLI2_0F9D: MOV M,C ; +0F9D runtime=319DH OBSERVED
-PLI2_0F9E: LDA 0AC87H ; +0F9E runtime=319EH OBSERVED
-PLI2_0FA1: LXI H,0AC86H ; +0FA1 runtime=31A1H OBSERVED
-PLI2_0FA4: ADD M ; +0FA4 runtime=31A4H OBSERVED
-PLI2_0FA5: MOV M,A ; +0FA5 runtime=31A5H OBSERVED
-PLI2_0FA6: SBB A ; +0FA6 runtime=31A6H OBSERVED
-PLI2_0FA7: RAR ; +0FA7 runtime=31A7H OBSERVED
-PLI2_0FA8: JNC 31AEH ; +0FA8 runtime=31A8H OBSERVED
-PLI2_0FAB: MVI A,0FFH ; +0FAB runtime=31ABH OBSERVED
-PLI2_0FAD: RET ; +0FAD runtime=31ADH OBSERVED
-PLI2_0FAE: LDA 0AC86H ; +0FAE runtime=31AEH OBSERVED
-PLI2_0FB1: RET ; +0FB1 runtime=31B1H OBSERVED
+; @block-pseudo 0F98
+; pseudo:
+; | save E; store wrapped C+E
+PLI2_0F98: LXI H,0AC87H ; HL = &byte_addend (AC87H) ; +0F98 runtime=3198H OBSERVED
+PLI2_0F9B: MOV M,E ; byte[byte_addend (AC87H)] = E ; +0F9B runtime=319BH OBSERVED
+PLI2_0F9C: DCX H ; HL = (HL - 1) & FFFF; flags preserved ; +0F9C runtime=319CH OBSERVED
+PLI2_0F9D: MOV M,C ; byte[wrapped_byte_sum (AC86H)] = C ; +0F9D runtime=319DH OBSERVED
+PLI2_0F9E: LDA 0AC87H ; A = byte[byte_addend (AC87H)] ; +0F9E runtime=319EH OBSERVED
+PLI2_0FA1: LXI H,0AC86H ; HL = &wrapped_byte_sum (AC86H) ; +0FA1 runtime=31A1H OBSERVED
+PLI2_0FA4: ADD M ; A = (A + byte[wrapped_byte_sum (AC86H)]) & FF; arithmetic flags updated ; +0FA4 runtime=31A4H OBSERVED
+PLI2_0FA5: MOV M,A ; byte[wrapped_byte_sum (AC86H)] = A ; +0FA5 runtime=31A5H OBSERVED
+; @block-pseudo 0FA6
+; pseudo:
+; | convert addition carry to mask; branch on overflow
+PLI2_0FA6: SBB A ; A = (old_CY ? FF : 00); byte arithmetic flags ; +0FA6 runtime=31A6H OBSERVED
+PLI2_0FA7: RAR ; A = (old_CY<<7) | (old_A>>1); CY=old_A bit0; NZPA preserved ; +0FA7 runtime=31A7H OBSERVED
+PLI2_0FA8: JNC 31AEH ; if CY=0: PC -> PLI2.OVL+0FAE; flags preserved ; +0FA8 runtime=31A8H OBSERVED
+; @block-pseudo 0FAB
+; pseudo:
+; | overflow: return FF with carry set
+PLI2_0FAB: MVI A,0FFH ; A = FFH ; +0FAB runtime=31ABH OBSERVED
+PLI2_0FAD: RET ; PC = word[SP]; SP += 2; use the convention in procedure header ; +0FAD runtime=31ADH OBSERVED
+; @block-pseudo 0FAE
+; pseudo:
+; | no overflow: return wrapped sum with carry clear
+PLI2_0FAE: LDA 0AC86H ; A = byte[wrapped_byte_sum (AC86H)] ; +0FAE runtime=31AEH OBSERVED
+PLI2_0FB1: RET ; PC = word[SP]; SP += 2; use the convention in procedure header ; +0FB1 runtime=31B1H OBSERVED
 ; SECTION [0FB2,1DFF) RAW
 PLI2_0FB2: DB 021H,088H,0ACH,071H,02AH,085H,0ACH,04DH,02AH,088H,0ACH,0EBH,0CDH,098H ; +0FB2 runtime=31B2H RAW
 PLI2_0FC0: DB 031H,032H,085H,0ACH,0C9H,03AH,080H,0ACH,0D6H,013H,09FH,02FH,0F5H,03EH,01AH,021H ; +0FC0 runtime=31C0H RAW
@@ -585,93 +720,154 @@ PLI2_1DD0: DB 004H,0ADH,011H,002H,0ADH,0CDH,033H,01BH,0B5H,0C2H,0DDH,03FH,0C9H,0
 PLI2_1DE0: DB 011H,020H,0BEH,0D2H,0E7H,03FH,0C9H,001H,099H,03FH,0CDH,0FFH,006H,02AH,002H,0ADH ; +1DE0 runtime=3FE0H RAW
 PLI2_1DF0: DB 022H,004H,0ADH,044H,04DH,0CDH,054H,029H,001H,09FH,03FH,0CDH,0F4H,004H,0C9H ; +1DF0 runtime=3FF0H RAW
 
+; @procedure-v1 PLI2.OVL+1DFF
 ; ProcedureHypothesis: descriptor predicate with cursor/cache scratch
-; OBSERVED: 13 MINIMAL CALLs from PLI2.OVL+2037, PLI2.OVL+2085
-; OBSERVED returns: PLI2.OVL+1E74, PLI2.OVL+1FB4
-; DEDUCED: C=current cursor; word[AD1D]=descriptor pointer, first byte=count. Resets AD15..AD19 to FF, AD22=0; AD0B=input C. Each item decrements cursor AD21, records it at AD0B+processed, and compares literal descriptors via +047D or processes first-use FB/FC markers through +0992. MINIMAL returns A=0 for two literal mismatches, A=1 for eleven completed fallback descriptors. Z is true on completion; mismatch carry is classified<expected, not Boolean A. No AD0A access or software return.
-; Pseudocode: initialize cursor/cache; for each descriptor: cursor--; positions[++processed]=cursor; literal<ED: compare lookup047D(cursor), fail with A=0; first FB/FC marker: cache[descriptor-FB]=processed; cursor=call0992(cursor); exhausted: A=1; RET
-; HYPOTHESIS: descriptor matcher over a backward cursor; PL/I semantic category unknown
-; UNRESOLVED: MINIMAL only sees empty fallback, first-use FB/FC markers and literal mismatches. Literal-success/repeated-cache/ED..FA paths remain RAW. General matching contract unresolved; low-level observed predicate contract verified, but classification remains STRUCTURED.
-; Evidence: ../minimal-baseline/pass-2/regions.json#PLI2.OVL+1DFF; stable entry PLI2_1DFF
+; Entry: PLI2_1DFF = PLI2.OVL+1DFF @ 3FFFH; SHA-256
+;   80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a
+; Extent: HYPOTHESIS [1DFF,1FB5) file offsets; overlapping entries: none established
+; Callers: OBSERVED PLI2.OVL+2037 (MINIMAL=2); PLI2.OVL+2085 (MINIMAL=11)
+; Returns: OBSERVED/DEDUCED ordinary hardware CALL word; observed SP after RET = (entry SP + 2)
+;   mod 65536; PLI2.OVL+1E74, PLI2.OVL+1FB4
+; Inputs: DEDUCED C=cursor; word[AD1D]=descriptor pointer
+; Outputs: DEDUCED A=0 for observed mismatches, A=1 on completion; CY=compare carry on mismatch,0
+;   on completion; cursor/cache writes
+; Clobbers: DEDUCED A,BC,DE,HL,flags; AD0B..AD26 scratch within observed paths
+; Memory: DEDUCED dispatch_positions=AD0BH (initial cursor and recorded pre-skip positions);
+;   descriptor_cache=AD15H (first-use position bindings; FF sentinel);
+;   descriptor_pointer=AD1DH (gateway/current predicate record pointer);
+;   predicate_cursor=AD21H (descriptor walk cursor); descriptors_processed=AD22H (position
+;   count); cached_position=AD23H (scratch cache read); descriptors_remaining=AD25H
+;   (remaining descriptor count); descriptor_or_slot=AD26H (descriptor byte then marker slot
+;   number)
+; Direct callees: OBSERVED PLI2.OVL+047D @267DH; PLI2.OVL+0992 @2B92H
+; Coverage: OBSERVED MINIMAL: 13 CALLs; 203/438 bytes represented as instructions; MINIMAL: 2
+;   rejected literals, 6 empty successes, 4 one-marker and 1 two-marker successes; no
+;   candidate accepted
+; Unresolved: MINIMAL only sees empty fallback, first-use FB/FC markers and literal mismatches.
+;   Literal-success/repeated-cache/ED..FA paths remain RAW. General matching contract
+;   unresolved; low-level observed predicate contract verified, but classification
+;   remains STRUCTURED.
+; Contract: DEDUCED (partial; scope: MINIMAL empty/first-use FB/FC/literal-mismatch descriptor
+;   paths) C=current cursor; word[AD1D]=descriptor pointer, first byte=count. Resets
+;   AD15..AD19 to FF, AD22=0; AD0B=input C. Each item decrements cursor AD21, records it
+;   at AD0B+processed, and compares literal descriptors via +047D or processes first-use
+;   FB/FC markers through +0992. MINIMAL returns A=0 for two literal mismatches, A=1 for
+;   eleven completed fallback descriptors. Z is true on completion; mismatch carry is
+;   classified<expected, not Boolean A. No AD0A access or software return.
+; Hypothesis: HYPOTHESIS descriptor predicate; category unresolved
+; Completeness: bounds=provisional; control_flow=partial; contract=partial
+; Evidence: evidence.json#seeds/PLI2.OVL+1DFF;
+;   ../minimal-baseline/pass-2/regions.json#PLI2.OVL+1DFF
+; Procedure pseudo (operational; byte/word arithmetic wraps):
+;   initialize cursor/cache; iterate descriptors; literal compare or first marker binding/cursor
+;   walk; mismatch RET0; exhaustion RET1
+; @end-procedure-v1 PLI2.OVL+1DFF
 ; SECTION [1DFF,1E75) STRUCTURED
-PLI2_1DFF: LXI H,0AD21H ; +1DFF runtime=3FFFH OBSERVED
-PLI2_1E02: MOV M,C ; +1E02 runtime=4002H OBSERVED
-PLI2_1E03: LHLD 0AD1DH ; +1E03 runtime=4003H OBSERVED
-PLI2_1E06: MOV A,M ; +1E06 runtime=4006H OBSERVED
-PLI2_1E07: STA 0AD25H ; +1E07 runtime=4007H OBSERVED
-PLI2_1E0A: LXI H,0AD15H ; +1E0A runtime=400AH OBSERVED
-PLI2_1E0D: MVI M,0FFH ; +1E0D runtime=400DH OBSERVED
-PLI2_1E0F: INX H ; +1E0F runtime=400FH OBSERVED
-PLI2_1E10: MVI M,0FFH ; +1E10 runtime=4010H OBSERVED
-PLI2_1E12: INX H ; +1E12 runtime=4012H OBSERVED
-PLI2_1E13: MVI M,0FFH ; +1E13 runtime=4013H OBSERVED
-PLI2_1E15: INX H ; +1E15 runtime=4015H OBSERVED
-PLI2_1E16: MVI M,0FFH ; +1E16 runtime=4016H OBSERVED
-PLI2_1E18: INX H ; +1E18 runtime=4018H OBSERVED
-PLI2_1E19: MVI M,0FFH ; +1E19 runtime=4019H OBSERVED
-PLI2_1E1B: LXI H,0AD22H ; +1E1B runtime=401BH OBSERVED
-PLI2_1E1E: MVI M,00H ; +1E1E runtime=401EH OBSERVED
-PLI2_1E20: DCX H ; +1E20 runtime=4020H OBSERVED
-PLI2_1E21: MOV A,M ; +1E21 runtime=4021H OBSERVED
-PLI2_1E22: STA 0AD0BH ; +1E22 runtime=4022H OBSERVED
-PLI2_1E25: LDA 0AD25H ; +1E25 runtime=4025H OBSERVED
-PLI2_1E28: CPI 00H ; +1E28 runtime=4028H OBSERVED
-PLI2_1E2A: JZ 41B2H ; +1E2A runtime=402AH OBSERVED
-PLI2_1E2D: LXI H,0AD25H ; +1E2D runtime=402DH OBSERVED
-PLI2_1E30: DCR M ; +1E30 runtime=4030H OBSERVED
-PLI2_1E31: LHLD 0AD22H ; +1E31 runtime=4031H OBSERVED
-PLI2_1E34: MVI H,00H ; +1E34 runtime=4034H OBSERVED
-PLI2_1E36: LXI B,0001H ; +1E36 runtime=4036H OBSERVED
-PLI2_1E39: DAD B ; +1E39 runtime=4039H OBSERVED
-PLI2_1E3A: XCHG ; +1E3A runtime=403AH OBSERVED
-PLI2_1E3B: LHLD 0AD1DH ; +1E3B runtime=403BH OBSERVED
-PLI2_1E3E: DAD D ; +1E3E runtime=403EH OBSERVED
-PLI2_1E3F: MOV A,M ; +1E3F runtime=403FH OBSERVED
-PLI2_1E40: STA 0AD26H ; +1E40 runtime=4040H OBSERVED
-PLI2_1E43: LDA 0AD21H ; +1E43 runtime=4043H OBSERVED
-PLI2_1E46: DCR A ; +1E46 runtime=4046H OBSERVED
-PLI2_1E47: STA 0AD21H ; +1E47 runtime=4047H OBSERVED
-PLI2_1E4A: PUSH PSW ; +1E4A runtime=404AH OBSERVED
-PLI2_1E4B: LDA 0AD22H ; +1E4B runtime=404BH OBSERVED
-PLI2_1E4E: INR A ; +1E4E runtime=404EH OBSERVED
-PLI2_1E4F: STA 0AD22H ; +1E4F runtime=404FH OBSERVED
-PLI2_1E52: MOV C,A ; +1E52 runtime=4052H OBSERVED
-PLI2_1E53: MVI B,00H ; +1E53 runtime=4053H OBSERVED
-PLI2_1E55: LXI H,0AD0BH ; +1E55 runtime=4055H OBSERVED
-PLI2_1E58: DAD B ; +1E58 runtime=4058H OBSERVED
-PLI2_1E59: POP B ; +1E59 runtime=4059H OBSERVED
-PLI2_1E5A: MOV C,B ; +1E5A runtime=405AH OBSERVED
-PLI2_1E5B: MOV M,C ; +1E5B runtime=405BH OBSERVED
-PLI2_1E5C: LDA 0AD26H ; +1E5C runtime=405CH OBSERVED
-PLI2_1E5F: CPI 0EDH ; +1E5F runtime=405FH OBSERVED
-PLI2_1E61: JNC 4078H ; +1E61 runtime=4061H OBSERVED
-PLI2_1E64: LHLD 0AD21H ; +1E64 runtime=4064H OBSERVED
-PLI2_1E67: MOV C,L ; +1E67 runtime=4067H OBSERVED
-PLI2_1E68: CALL 267DH ; +1E68 runtime=4068H OBSERVED
-PLI2_1E6B: LXI H,0AD26H ; +1E6B runtime=406BH OBSERVED
-PLI2_1E6E: CMP M ; +1E6E runtime=406EH OBSERVED
-PLI2_1E6F: JZ 4075H ; +1E6F runtime=406FH OBSERVED
-PLI2_1E72: MVI A,00H ; +1E72 runtime=4072H OBSERVED
-PLI2_1E74: RET ; +1E74 runtime=4074H OBSERVED
+; @block-pseudo 1DFF
+; pseudo:
+; | save cursor/descriptor count; reset five cache slots to FF
+PLI2_1DFF: LXI H,0AD21H ; HL = &predicate_cursor (AD21H) ; +1DFF runtime=3FFFH OBSERVED
+PLI2_1E02: MOV M,C ; byte[predicate_cursor (AD21H)] = C ; +1E02 runtime=4002H OBSERVED
+PLI2_1E03: LHLD 0AD1DH ; HL = little_endian_word[descriptor_pointer (AD1DH)] ; +1E03 runtime=4003H OBSERVED
+PLI2_1E06: MOV A,M ; A = byte[HL] ; +1E06 runtime=4006H OBSERVED
+PLI2_1E07: STA 0AD25H ; byte[descriptors_remaining (AD25H)] = A ; +1E07 runtime=4007H OBSERVED
+PLI2_1E0A: LXI H,0AD15H ; HL = &descriptor_cache (AD15H) ; +1E0A runtime=400AH OBSERVED
+PLI2_1E0D: MVI M,0FFH ; byte[descriptor_cache (AD15H)] = FFH ; +1E0D runtime=400DH OBSERVED
+PLI2_1E0F: INX H ; HL = (HL + 1) & FFFF; flags preserved ; +1E0F runtime=400FH OBSERVED
+PLI2_1E10: MVI M,0FFH ; byte[AD16H] = FFH ; +1E10 runtime=4010H OBSERVED
+PLI2_1E12: INX H ; HL = (HL + 1) & FFFF; flags preserved ; +1E12 runtime=4012H OBSERVED
+PLI2_1E13: MVI M,0FFH ; byte[AD17H] = FFH ; +1E13 runtime=4013H OBSERVED
+PLI2_1E15: INX H ; HL = (HL + 1) & FFFF; flags preserved ; +1E15 runtime=4015H OBSERVED
+PLI2_1E16: MVI M,0FFH ; byte[AD18H] = FFH ; +1E16 runtime=4016H OBSERVED
+PLI2_1E18: INX H ; HL = (HL + 1) & FFFF; flags preserved ; +1E18 runtime=4018H OBSERVED
+PLI2_1E19: MVI M,0FFH ; byte[AD19H] = FFH ; +1E19 runtime=4019H OBSERVED
+; @block-pseudo 1E1B
+; pseudo:
+; | processed=0; positions[0]=input cursor
+PLI2_1E1B: LXI H,0AD22H ; HL = &descriptors_processed (AD22H) ; +1E1B runtime=401BH OBSERVED
+PLI2_1E1E: MVI M,00H ; byte[descriptors_processed (AD22H)] = 00H ; +1E1E runtime=401EH OBSERVED
+PLI2_1E20: DCX H ; HL = (HL - 1) & FFFF; flags preserved ; +1E20 runtime=4020H OBSERVED
+PLI2_1E21: MOV A,M ; A = byte[predicate_cursor (AD21H)] ; +1E21 runtime=4021H OBSERVED
+PLI2_1E22: STA 0AD0BH ; byte[dispatch_positions (AD0BH)] = A ; +1E22 runtime=4022H OBSERVED
+; @block-pseudo 1E25
+; pseudo:
+; | return 1 if remaining descriptor count is zero
+PLI2_1E25: LDA 0AD25H ; A = byte[descriptors_remaining (AD25H)] ; +1E25 runtime=4025H OBSERVED
+PLI2_1E28: CPI 00H ; flags = compare_unsigned(A, 00H); A unchanged ; +1E28 runtime=4028H OBSERVED
+PLI2_1E2A: JZ 41B2H ; if Z=1: PC -> PLI2.OVL+1FB2; flags preserved ; +1E2A runtime=402AH OBSERVED
+; @block-pseudo 1E2D
+; pseudo:
+; | remaining--; load next descriptor byte
+PLI2_1E2D: LXI H,0AD25H ; HL = &descriptors_remaining (AD25H) ; +1E2D runtime=402DH OBSERVED
+PLI2_1E30: DCR M ; byte[descriptors_remaining (AD25H)] = (byte[descriptors_remaining (AD25H)] - 1) & FF; NZPA updated, CY preserved ; +1E30 runtime=4030H OBSERVED
+PLI2_1E31: LHLD 0AD22H ; L = byte[descriptors_processed (AD22H)]; H = byte[cached_position (AD23H)] ; +1E31 runtime=4031H OBSERVED
+PLI2_1E34: MVI H,00H ; HL = zero_extend(L); flags preserved ; +1E34 runtime=4034H OBSERVED
+PLI2_1E36: LXI B,0001H ; BC = 0001H ; +1E36 runtime=4036H OBSERVED
+PLI2_1E39: DAD B ; HL = (HL + BC) & FFFF; only CY changes ; +1E39 runtime=4039H OBSERVED
+PLI2_1E3A: XCHG ; swap HL and DE; flags preserved ; +1E3A runtime=403AH OBSERVED
+PLI2_1E3B: LHLD 0AD1DH ; HL = little_endian_word[descriptor_pointer (AD1DH)] ; +1E3B runtime=403BH OBSERVED
+PLI2_1E3E: DAD D ; HL = (HL + DE) & FFFF; only CY changes ; +1E3E runtime=403EH OBSERVED
+PLI2_1E3F: MOV A,M ; A = byte[HL] ; +1E3F runtime=403FH OBSERVED
+PLI2_1E40: STA 0AD26H ; byte[descriptor_or_slot (AD26H)] = A ; +1E40 runtime=4040H OBSERVED
+; @block-pseudo 1E43
+; pseudo:
+; | cursor--; positions[++processed]=cursor
+PLI2_1E43: LDA 0AD21H ; A = byte[predicate_cursor (AD21H)] ; +1E43 runtime=4043H OBSERVED
+PLI2_1E46: DCR A ; A = (A - 1) & FF; NZPA updated, CY preserved ; +1E46 runtime=4046H OBSERVED
+PLI2_1E47: STA 0AD21H ; byte[predicate_cursor (AD21H)] = A ; +1E47 runtime=4047H OBSERVED
+PLI2_1E4A: PUSH PSW ; SP -= 2; push A with packed flags (PSW) little-endian ; +1E4A runtime=404AH OBSERVED
+PLI2_1E4B: LDA 0AD22H ; A = byte[descriptors_processed (AD22H)] ; +1E4B runtime=404BH OBSERVED
+PLI2_1E4E: INR A ; A = (A + 1) & FF; NZPA updated, CY preserved ; +1E4E runtime=404EH OBSERVED
+PLI2_1E4F: STA 0AD22H ; byte[descriptors_processed (AD22H)] = A ; +1E4F runtime=404FH OBSERVED
+PLI2_1E52: MOV C,A ; C = A ; +1E52 runtime=4052H OBSERVED
+PLI2_1E53: MVI B,00H ; B = 00H ; +1E53 runtime=4053H OBSERVED
+PLI2_1E55: LXI H,0AD0BH ; HL = &dispatch_positions (AD0BH) ; +1E55 runtime=4055H OBSERVED
+PLI2_1E58: DAD B ; HL = (HL + BC) & FFFF; only CY changes ; +1E58 runtime=4058H OBSERVED
+PLI2_1E59: POP B ; BC = word[SP]; SP += 2 ; +1E59 runtime=4059H OBSERVED
+PLI2_1E5A: MOV C,B ; C = B ; +1E5A runtime=405AH OBSERVED
+PLI2_1E5B: MOV M,C ; byte[HL] = C ; +1E5B runtime=405BH OBSERVED
+; @block-pseudo 1E5C
+; pseudo:
+; | classify descriptor; literal path compares lookup result
+PLI2_1E5C: LDA 0AD26H ; A = byte[descriptor_or_slot (AD26H)] ; +1E5C runtime=405CH OBSERVED
+PLI2_1E5F: CPI 0EDH ; flags = compare_unsigned(A, EDH); A unchanged ; +1E5F runtime=405FH OBSERVED
+PLI2_1E61: JNC 4078H ; if CY=0: PC -> PLI2.OVL+1E78; flags preserved ; +1E61 runtime=4061H OBSERVED
+; @block-pseudo 1E64
+; pseudo:
+; | literal mismatch returns A=0 without recomputing compare flags
+PLI2_1E64: LHLD 0AD21H ; L = byte[predicate_cursor (AD21H)]; H = byte[descriptors_processed (AD22H)] ; +1E64 runtime=4064H OBSERVED
+PLI2_1E67: MOV C,L ; C = L ; +1E67 runtime=4067H OBSERVED
+PLI2_1E68: CALL 267DH ; push following PC; invoke PLI2.OVL+047D; result effects belong to callee ; +1E68 runtime=4068H OBSERVED
+PLI2_1E6B: LXI H,0AD26H ; HL = &descriptor_or_slot (AD26H) ; +1E6B runtime=406BH OBSERVED
+PLI2_1E6E: CMP M ; flags = compare_unsigned(A, byte[descriptor_or_slot (AD26H)]); A unchanged ; +1E6E runtime=406EH OBSERVED
+PLI2_1E6F: JZ 4075H ; if Z=1: PC -> PLI2.OVL+1E75; flags preserved ; +1E6F runtime=406FH OBSERVED
+PLI2_1E72: MVI A,00H ; A = 0 without changing literal-compare flags; CY can be either value ; +1E72 runtime=4072H OBSERVED
+PLI2_1E74: RET ; PC = word[SP]; SP += 2; use the convention in procedure header ; +1E74 runtime=4074H OBSERVED
 ; SECTION [1E75,1E78) RAW
 PLI2_1E75: DB 0C3H,0AFH,041H ; +1E75 runtime=4075H RAW
 ; SECTION [1E78,1E80) STRUCTURED
-PLI2_1E78: LDA 0AD26H ; +1E78 runtime=4078H OBSERVED
-PLI2_1E7B: CPI 0EDH ; +1E7B runtime=407BH OBSERVED
-PLI2_1E7D: JNZ 4091H ; +1E7D runtime=407DH OBSERVED
+; @block-pseudo 1E78
+; pseudo:
+; | unobserved special descriptors stay RAW
+PLI2_1E78: LDA 0AD26H ; A = byte[descriptor_or_slot (AD26H)] ; +1E78 runtime=4078H OBSERVED
+PLI2_1E7B: CPI 0EDH ; flags = compare_unsigned(A, EDH); A unchanged ; +1E7B runtime=407BH OBSERVED
+PLI2_1E7D: JNZ 4091H ; if Z=0: PC -> PLI2.OVL+1E91; flags preserved ; +1E7D runtime=407DH OBSERVED
 ; SECTION [1E80,1E91) RAW
 PLI2_1E80: DB 02AH,021H,0ADH,04DH,0CDH,0AEH,043H,01FH,0DAH,08EH,040H,03EH,000H,0C9H,0C3H,0AFH ; +1E80 runtime=4080H RAW
 PLI2_1E90: DB 041H ; +1E90 runtime=4090H RAW
 ; SECTION [1E91,1E99) STRUCTURED
-PLI2_1E91: LDA 0AD26H ; +1E91 runtime=4091H OBSERVED
-PLI2_1E94: CPI 0EEH ; +1E94 runtime=4094H OBSERVED
-PLI2_1E96: JNZ 409CH ; +1E96 runtime=4096H OBSERVED
+; @block-pseudo 1E91
+; pseudo:
+; | continue dispatching descriptor byte categories
+PLI2_1E91: LDA 0AD26H ; A = byte[descriptor_or_slot (AD26H)] ; +1E91 runtime=4091H OBSERVED
+PLI2_1E94: CPI 0EEH ; flags = compare_unsigned(A, EEH); A unchanged ; +1E94 runtime=4094H OBSERVED
+PLI2_1E96: JNZ 409CH ; if Z=0: PC -> PLI2.OVL+1E9C; flags preserved ; +1E96 runtime=4096H OBSERVED
 ; SECTION [1E99,1E9C) RAW
 PLI2_1E99: DB 0C3H,0AFH,041H ; +1E99 runtime=4099H RAW
 ; SECTION [1E9C,1EA4) STRUCTURED
-PLI2_1E9C: LDA 0AD26H ; +1E9C runtime=409CH OBSERVED
-PLI2_1E9F: CPI 0F6H ; +1E9F runtime=409FH OBSERVED
-PLI2_1EA1: JNC 40F4H ; +1EA1 runtime=40A1H OBSERVED
+PLI2_1E9C: LDA 0AD26H ; A = byte[descriptor_or_slot (AD26H)] ; +1E9C runtime=409CH OBSERVED
+PLI2_1E9F: CPI 0F6H ; flags = compare_unsigned(A, F6H); A unchanged ; +1E9F runtime=409FH OBSERVED
+PLI2_1EA1: JNC 40F4H ; if CY=0: PC -> PLI2.OVL+1EF4; flags preserved ; +1EA1 runtime=40A1H OBSERVED
 ; SECTION [1EA4,1EF4) RAW
 PLI2_1EA4: DB 02AH,021H,0ADH,04DH,0CDH,07DH,026H,0FEH,00AH,0CAH,0B3H,040H ; +1EA4 runtime=40A4H RAW
 PLI2_1EB0: DB 03EH,000H,0C9H,02AH,021H,0ADH,04DH,0CDH,02CH,027H,022H,028H,0ADH,03AH,026H,0ADH ; +1EB0 runtime=40B0H RAW
@@ -680,9 +876,12 @@ PLI2_1ED0: DB 0CDH,038H,01BH,0B5H,0CAH,0DAH,040H,03EH,000H,0C9H,0C3H,0F1H,040H,0
 PLI2_1EE0: DB 0D6H,0EFH,04FH,006H,000H,011H,028H,0ADH,0CDH,038H,01BH,0DAH,0F1H,040H,03EH,000H ; +1EE0 runtime=40E0H RAW
 PLI2_1EF0: DB 0C9H,0C3H,0AFH,041H ; +1EF0 runtime=40F0H RAW
 ; SECTION [1EF4,1EFC) STRUCTURED
-PLI2_1EF4: LDA 0AD26H ; +1EF4 runtime=40F4H OBSERVED
-PLI2_1EF7: CPI 0FBH ; +1EF7 runtime=40F7H OBSERVED
-PLI2_1EF9: JNC 413BH ; +1EF9 runtime=40F9H OBSERVED
+; @block-pseudo 1EF4
+; pseudo:
+; | test high descriptor range
+PLI2_1EF4: LDA 0AD26H ; A = byte[descriptor_or_slot (AD26H)] ; +1EF4 runtime=40F4H OBSERVED
+PLI2_1EF7: CPI 0FBH ; flags = compare_unsigned(A, FBH); A unchanged ; +1EF7 runtime=40F7H OBSERVED
+PLI2_1EF9: JNC 413BH ; if CY=0: PC -> PLI2.OVL+1F3B; flags preserved ; +1EF9 runtime=40F9H OBSERVED
 ; SECTION [1EFC,1F3B) RAW
 PLI2_1EFC: DB 02AH,021H,0ADH,04DH ; +1EFC runtime=40FCH RAW
 PLI2_1F00: DB 0CDH,09EH,027H,032H,027H,0ADH,03AH,026H,0ADH,0FEH,0F9H,0D2H,022H,041H,03AH,026H ; +1F00 runtime=4100H RAW
@@ -690,17 +889,20 @@ PLI2_1F10: DB 0ADH,0D6H,0F6H,0C6H,006H,021H,027H,0ADH,0BEH,0D2H,01FH,041H,03EH,0
 PLI2_1F20: DB 034H,041H,03AH,026H,0ADH,0D6H,0F9H,0C6H,008H,04FH,03AH,027H,0ADH,0B9H,0D2H,034H ; +1F20 runtime=4120H RAW
 PLI2_1F30: DB 041H,03EH,000H,0C9H,021H,021H,0ADH,034H,0C3H,0AFH,041H ; +1F30 runtime=4130H RAW
 ; SECTION [1F3B,1F53) STRUCTURED
-PLI2_1F3B: LDA 0AD26H ; +1F3B runtime=413BH OBSERVED
-PLI2_1F3E: SUI 0FBH ; +1F3E runtime=413EH OBSERVED
-PLI2_1F40: STA 0AD26H ; +1F40 runtime=4140H OBSERVED
-PLI2_1F43: MOV C,A ; +1F43 runtime=4143H OBSERVED
-PLI2_1F44: MVI B,00H ; +1F44 runtime=4144H OBSERVED
-PLI2_1F46: LXI H,0AD15H ; +1F46 runtime=4146H OBSERVED
-PLI2_1F49: DAD B ; +1F49 runtime=4149H OBSERVED
-PLI2_1F4A: MOV A,M ; +1F4A runtime=414AH OBSERVED
-PLI2_1F4B: STA 0AD23H ; +1F4B runtime=414BH OBSERVED
-PLI2_1F4E: CPI 0FFH ; +1F4E runtime=414EH OBSERVED
-PLI2_1F50: JZ 4198H ; +1F50 runtime=4150H OBSERVED
+; @block-pseudo 1F3B
+; pseudo:
+; | slot=descriptor-FB; test cache sentinel
+PLI2_1F3B: LDA 0AD26H ; A = byte[descriptor_or_slot (AD26H)] ; +1F3B runtime=413BH OBSERVED
+PLI2_1F3E: SUI 0FBH ; A = (A - FBH) & FF; arithmetic flags updated ; +1F3E runtime=413EH OBSERVED
+PLI2_1F40: STA 0AD26H ; byte[descriptor_or_slot (AD26H)] = A ; +1F40 runtime=4140H OBSERVED
+PLI2_1F43: MOV C,A ; C = A ; +1F43 runtime=4143H OBSERVED
+PLI2_1F44: MVI B,00H ; B = 00H ; +1F44 runtime=4144H OBSERVED
+PLI2_1F46: LXI H,0AD15H ; HL = &descriptor_cache (AD15H) ; +1F46 runtime=4146H OBSERVED
+PLI2_1F49: DAD B ; HL = (HL + BC) & FFFF; only CY changes ; +1F49 runtime=4149H OBSERVED
+PLI2_1F4A: MOV A,M ; A = byte[HL] ; +1F4A runtime=414AH OBSERVED
+PLI2_1F4B: STA 0AD23H ; byte[cached_position (AD23H)] = A ; +1F4B runtime=414BH OBSERVED
+PLI2_1F4E: CPI 0FFH ; flags = compare_unsigned(A, FFH); A unchanged ; +1F4E runtime=414EH OBSERVED
+PLI2_1F50: JZ 4198H ; if Z=1: PC -> PLI2.OVL+1F98; flags preserved ; +1F50 runtime=4150H OBSERVED
 ; SECTION [1F53,1F98) RAW
 PLI2_1F53: DB 02AH,021H,0ADH,04DH,0CDH,072H,027H,021H,021H,0ADH,086H,0F5H,02AH ; +1F53 runtime=4153H RAW
 PLI2_1F60: DB 023H,0ADH,026H,000H,001H,00BH,0ADH,009H,04EH,0CDH,092H,02BH,032H,024H,0ADH,0C1H ; +1F60 runtime=4160H RAW
@@ -708,182 +910,261 @@ PLI2_1F70: DB 048H,0B9H,0CAH,078H,041H,03EH,000H,0C9H,02AH,021H,0ADH,04DH,0CDH,0
 PLI2_1F80: DB 023H,0ADH,026H,000H,001H,00BH,0ADH,009H,0F5H,07EH,021H,024H,0ADH,096H,03CH,0C1H ; +1F80 runtime=4180H RAW
 PLI2_1F90: DB 048H,0B9H,0CAH,098H,041H,03EH,000H,0C9H ; +1F90 runtime=4190H RAW
 ; SECTION [1F98,1FB5) STRUCTURED
-PLI2_1F98: LHLD 0AD26H ; +1F98 runtime=4198H OBSERVED
-PLI2_1F9B: MVI H,00H ; +1F9B runtime=419BH OBSERVED
-PLI2_1F9D: LXI B,0AD15H ; +1F9D runtime=419DH OBSERVED
-PLI2_1FA0: DAD B ; +1FA0 runtime=41A0H OBSERVED
-PLI2_1FA1: LDA 0AD22H ; +1FA1 runtime=41A1H OBSERVED
-PLI2_1FA4: MOV M,A ; +1FA4 runtime=41A4H OBSERVED
-PLI2_1FA5: LHLD 0AD21H ; +1FA5 runtime=41A5H OBSERVED
-PLI2_1FA8: MOV C,L ; +1FA8 runtime=41A8H OBSERVED
-PLI2_1FA9: CALL 2B92H ; +1FA9 runtime=41A9H OBSERVED
-PLI2_1FAC: STA 0AD21H ; +1FAC runtime=41ACH OBSERVED
-PLI2_1FAF: JMP 4025H ; +1FAF runtime=41AFH OBSERVED
-PLI2_1FB2: MVI A,01H ; +1FB2 runtime=41B2H OBSERVED
-PLI2_1FB4: RET ; +1FB4 runtime=41B4H OBSERVED
+; @block-pseudo 1F98
+; pseudo:
+; | first slot use: bind processed position and walk cursor
+PLI2_1F98: LHLD 0AD26H ; L = byte[descriptor_or_slot (AD26H)]; H = byte[AD27H] ; +1F98 runtime=4198H OBSERVED
+PLI2_1F9B: MVI H,00H ; HL = zero_extend(L); flags preserved ; +1F9B runtime=419BH OBSERVED
+PLI2_1F9D: LXI B,0AD15H ; BC = &descriptor_cache (AD15H) ; +1F9D runtime=419DH OBSERVED
+PLI2_1FA0: DAD B ; HL = (HL + BC) & FFFF; only CY changes ; +1FA0 runtime=41A0H OBSERVED
+PLI2_1FA1: LDA 0AD22H ; A = byte[descriptors_processed (AD22H)] ; +1FA1 runtime=41A1H OBSERVED
+PLI2_1FA4: MOV M,A ; byte[HL] = A ; +1FA4 runtime=41A4H OBSERVED
+PLI2_1FA5: LHLD 0AD21H ; L = byte[predicate_cursor (AD21H)]; H = byte[descriptors_processed (AD22H)] ; +1FA5 runtime=41A5H OBSERVED
+PLI2_1FA8: MOV C,L ; C = L ; +1FA8 runtime=41A8H OBSERVED
+PLI2_1FA9: CALL 2B92H ; push following PC; invoke PLI2.OVL+0992; result effects belong to callee ; +1FA9 runtime=41A9H OBSERVED
+PLI2_1FAC: STA 0AD21H ; byte[predicate_cursor (AD21H)] = A ; +1FAC runtime=41ACH OBSERVED
+PLI2_1FAF: JMP 4025H ; if always: PC -> PLI2.OVL+1E25; flags preserved ; +1FAF runtime=41AFH OBSERVED
+; @block-pseudo 1FB2
+; pseudo:
+; | completion: return A=1 with count-compare flags
+PLI2_1FB2: MVI A,01H ; A = 1 without changing final count-compare flags (Z=1, CY=0) ; +1FB2 runtime=41B2H OBSERVED
+PLI2_1FB4: RET ; PC = word[SP]; SP += 2; use the convention in procedure header ; +1FB4 runtime=41B4H OBSERVED
 
+; @procedure-v1 PLI2.OVL+1FB5
 ; ProcedureHypothesis: stack-local save/restore and table-driven PCHL gateway
-; OBSERVED: 11 MINIMAL CALLs from PLI2.OVL+2149, PLI2.OVL+6862, PLI2.OVL+6FA0, PLI2.OVL+6FFA
-; OBSERVED returns: PLI2.OVL+20EA
-; DEDUCED: C saved at entry_SP-12; AD0B..AD14 (10 bytes) saved at entry_SP-11..-2, AD0A at entry_SP-1. Handler continuation is runtime 42B4H. All 11 MINIMAL calls restore those 11 bytes and return via +20EA on the original CALL slot; A=old AD0A, BC=entry_SP-1, DE=AD15H, HL=entry_SP. Other scratch AD1A..AD20 and handler effects are not restored.
-; Pseudocode: save(C, AD0A, AD0B..AD14); k=call(+047D,C); load record/handler words from 3C21+2*k and 3DDD+2*k; scan via +1DFF, try fallback record table 3C13 when AD1B bit0=0; PUSH 42B4; PCHL current_word[AD1F]; restore saved globals; RET
-; HYPOTHESIS: reentrant table/record dispatch wrapper; byte classification and record semantics unresolved
-; UNRESOLVED: Only bit0[202E]=0 observed. +047D is a lookup leaf; +1DFF is a descriptor predicate with unresolved paths. Two MINIMAL candidate calls fail; fallback succeeds; candidate-success +203E and tracing paths remain RAW. Distinct PCHL handler bodies unresolved.
-; Evidence: ../minimal-baseline/pass-1/regions.json#PLI2.OVL+1FB5; stable entry PLI2_1FB5
+; Entry: PLI2_1FB5 = PLI2.OVL+1FB5 @ 41B5H; SHA-256
+;   80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a
+; Extent: HYPOTHESIS [1FB5,20EB) file offsets; overlapping entries: none established
+; Callers: OBSERVED PLI2.OVL+2149 (MINIMAL=8); PLI2.OVL+6862 (MINIMAL=1); PLI2.OVL+6FA0
+;   (MINIMAL=1); PLI2.OVL+6FFA (MINIMAL=1)
+; Returns: OBSERVED/DEDUCED ordinary hardware CALL word; observed SP after RET = (entry SP + 2)
+;   mod 65536; PLI2.OVL+20EA
+; Inputs: DEDUCED C=dispatch argument; dispatch state AD0A/AD0B..AD14
+; Outputs: DEDUCED saved state restored on observed path; A=old AD0A, BC=S-1, DE=AD15, HL=S before
+;   RET; other dispatch/handler effects not restored
+; Clobbers: DEDUCED A,BC,DE,HL,flags; temporary stack frame S-12
+; Memory: DEDUCED dispatch_trace_flags=202EH (bit0 tracing branches unobserved);
+;   fallback_pointer_table=3C13H (pointer-table base used by gateway);
+;   descriptor_pointer_table=3C21H (pointer-table base used by gateway);
+;   handler_pointer_table=3DDDH (pointer-table base used by gateway);
+;   dispatch_state_byte=AD0AH (candidate attempt byte in scan; saved/restored state, not
+;   type ID); dispatch_positions=AD0BH (initial cursor and recorded pre-skip positions);
+;   candidates_remaining=AD1AH (gateway record count); candidate_success_byte=AD1BH (gateway
+;   predicate/fallback result); dispatch_table_index=AD1CH (lookup result indexing pointer
+;   tables); descriptor_pointer=AD1DH (gateway/current predicate record pointer);
+;   handler_pointer=AD1FH (word used by gateway PCHL); stack[S-12]=C;
+;   stack[S-11..S-2]=AD0B..AD14; stack[S-1]=AD0A; software word at S-14
+; Direct callees: OBSERVED PLI2.OVL+047D @267DH; PLI2.OVL+1DFF @3FFFH; PLI2.OVL+1DFF @3FFFH
+; Coverage: OBSERVED MINIMAL: 11 CALLs; 263/310 bytes represented as instructions; MINIMAL: 11
+;   hardware returns and 11 software handler returns; trace flags zero; two candidates
+;   fail before fallback
+; Unresolved: Only bit0[202E]=0 observed. +047D is a lookup leaf; +1DFF is a descriptor predicate
+;   with unresolved paths. Two MINIMAL candidate calls fail; fallback succeeds;
+;   candidate-success +203E and tracing paths remain RAW. Distinct PCHL handler bodies
+;   unresolved.
+; Contract: DEDUCED (partial; scope: own low-level operation; opaque callees explicitly delegated)
+;   C saved at entry_SP-12; AD0B..AD14 (10 bytes) saved at entry_SP-11..-2, AD0A at
+;   entry_SP-1. Handler continuation is runtime 42B4H. All 11 MINIMAL calls restore those
+;   11 bytes and return via +20EA on the original CALL slot; A=old AD0A, BC=entry_SP-1,
+;   DE=AD15H, HL=entry_SP. Other scratch AD1A..AD20 and handler effects are not restored.
+; Hypothesis: HYPOTHESIS reentrant table/record gateway
+; Completeness: bounds=provisional; control_flow=partial; contract=partial
+; Evidence: evidence.json#seeds/PLI2.OVL+1FB5;
+;   ../minimal-baseline/pass-1/regions.json#PLI2.OVL+1FB5
+; Procedure pseudo (operational; byte/word arithmetic wraps):
+;   save C and 11 state bytes; select record/handler via tables; scan/fallback with +1DFF; PUSH
+;   42B4; PCHL handler; restore 11 state bytes; RET original frame
+; @end-procedure-v1 PLI2.OVL+1FB5
 ; SECTION [1FB5,203E) STRUCTURED
-PLI2_1FB5: LXI H,0FFF5H ; +1FB5 runtime=41B5H OBSERVED
-PLI2_1FB8: DAD SP ; +1FB8 runtime=41B8H OBSERVED
-PLI2_1FB9: SPHL ; +1FB9 runtime=41B9H OBSERVED
-PLI2_1FBA: MOV B,C ; +1FBA runtime=41BAH OBSERVED
-PLI2_1FBB: PUSH B ; +1FBB runtime=41BBH OBSERVED
-PLI2_1FBC: INX SP ; +1FBC runtime=41BCH OBSERVED
-PLI2_1FBD: MVI L,0AH ; +1FBD runtime=41BDH OBSERVED
-PLI2_1FBF: PUSH H ; +1FBF runtime=41BFH OBSERVED
-PLI2_1FC0: LXI H,0003H ; +1FC0 runtime=41C0H OBSERVED
-PLI2_1FC3: DAD SP ; +1FC3 runtime=41C3H OBSERVED
-PLI2_1FC4: XCHG ; +1FC4 runtime=41C4H OBSERVED
-PLI2_1FC5: LXI B,0AD0BH ; +1FC5 runtime=41C5H OBSERVED
-PLI2_1FC8: POP H ; +1FC8 runtime=41C8H OBSERVED
-PLI2_1FC9: LDAX B ; +1FC9 runtime=41C9H OBSERVED
-PLI2_1FCA: STAX D ; +1FCA runtime=41CAH OBSERVED
-PLI2_1FCB: INX B ; +1FCB runtime=41CBH OBSERVED
-PLI2_1FCC: INX D ; +1FCC runtime=41CCH OBSERVED
-PLI2_1FCD: DCR L ; +1FCD runtime=41CDH OBSERVED
-PLI2_1FCE: JNZ 41C9H ; +1FCE runtime=41CEH OBSERVED
-PLI2_1FD1: LDA 0AD0AH ; +1FD1 runtime=41D1H OBSERVED
-PLI2_1FD4: LXI H,000BH ; +1FD4 runtime=41D4H OBSERVED
-PLI2_1FD7: DAD SP ; +1FD7 runtime=41D7H OBSERVED
-PLI2_1FD8: MOV M,A ; +1FD8 runtime=41D8H OBSERVED
-PLI2_1FD9: LXI H,0000H ; +1FD9 runtime=41D9H OBSERVED
-PLI2_1FDC: DAD SP ; +1FDC runtime=41DCH OBSERVED
-PLI2_1FDD: MOV C,M ; +1FDD runtime=41DDH OBSERVED
-PLI2_1FDE: CALL 267DH ; +1FDE runtime=41DEH OBSERVED
-PLI2_1FE1: STA 0AD1CH ; +1FE1 runtime=41E1H OBSERVED
-PLI2_1FE4: MOV C,A ; +1FE4 runtime=41E4H OBSERVED
-PLI2_1FE5: MVI B,00H ; +1FE5 runtime=41E5H OBSERVED
-PLI2_1FE7: LXI H,3C21H ; +1FE7 runtime=41E7H OBSERVED
-PLI2_1FEA: DAD B ; +1FEA runtime=41EAH OBSERVED
-PLI2_1FEB: DAD B ; +1FEB runtime=41EBH OBSERVED
-PLI2_1FEC: MOV E,M ; +1FEC runtime=41ECH OBSERVED
-PLI2_1FED: INX H ; +1FED runtime=41EDH OBSERVED
-PLI2_1FEE: MOV D,M ; +1FEE runtime=41EEH OBSERVED
-PLI2_1FEF: XCHG ; +1FEF runtime=41EFH OBSERVED
-PLI2_1FF0: SHLD 0AD1DH ; +1FF0 runtime=41F0H OBSERVED
-PLI2_1FF3: LXI H,0AD0AH ; +1FF3 runtime=41F3H OBSERVED
-PLI2_1FF6: MVI M,00H ; +1FF6 runtime=41F6H OBSERVED
-PLI2_1FF8: LHLD 0AD1DH ; +1FF8 runtime=41F8H OBSERVED
-PLI2_1FFB: MOV A,M ; +1FFB runtime=41FBH OBSERVED
-PLI2_1FFC: STA 0AD1AH ; +1FFC runtime=41FCH OBSERVED
-PLI2_1FFF: LHLD 0AD1CH ; +1FFF runtime=41FFH OBSERVED
-PLI2_2002: MVI H,00H ; +2002 runtime=4202H OBSERVED
-PLI2_2004: LXI B,3DDDH ; +2004 runtime=4204H OBSERVED
-PLI2_2007: DAD H ; +2007 runtime=4207H OBSERVED
-PLI2_2008: DAD B ; +2008 runtime=4208H OBSERVED
-PLI2_2009: MOV E,M ; +2009 runtime=4209H OBSERVED
-PLI2_200A: INX H ; +200A runtime=420AH OBSERVED
-PLI2_200B: MOV D,M ; +200B runtime=420BH OBSERVED
-PLI2_200C: XCHG ; +200C runtime=420CH OBSERVED
-PLI2_200D: SHLD 0AD1FH ; +200D runtime=420DH OBSERVED
-PLI2_2010: LXI H,0AD1BH ; +2010 runtime=4210H OBSERVED
-PLI2_2013: MVI M,00H ; +2013 runtime=4213H OBSERVED
-PLI2_2015: LDA 0AD1AH ; +2015 runtime=4215H OBSERVED
-PLI2_2018: CPI 00H ; +2018 runtime=4218H OBSERVED
-PLI2_201A: JZ 4256H ; +201A runtime=421AH OBSERVED
-PLI2_201D: LDA 0AD1AH ; +201D runtime=421DH OBSERVED
-PLI2_2020: DCR A ; +2020 runtime=4220H OBSERVED
-PLI2_2021: STA 0AD1AH ; +2021 runtime=4221H OBSERVED
-PLI2_2024: LDA 0AD0AH ; +2024 runtime=4224H OBSERVED
-PLI2_2027: INR A ; +2027 runtime=4227H OBSERVED
-PLI2_2028: STA 0AD0AH ; +2028 runtime=4228H OBSERVED
-PLI2_202B: LHLD 0AD1DH ; +202B runtime=422BH OBSERVED
-PLI2_202E: INX H ; +202E runtime=422EH OBSERVED
-PLI2_202F: SHLD 0AD1DH ; +202F runtime=422FH OBSERVED
-PLI2_2032: LXI H,0000H ; +2032 runtime=4232H OBSERVED
-PLI2_2035: DAD SP ; +2035 runtime=4235H OBSERVED
-PLI2_2036: MOV C,M ; +2036 runtime=4236H OBSERVED
-PLI2_2037: CALL 3FFFH ; +2037 runtime=4237H OBSERVED
-PLI2_203A: RAR ; +203A runtime=423AH OBSERVED
-PLI2_203B: JNC 4246H ; +203B runtime=423BH OBSERVED
+; @block-pseudo 1FB5
+; pseudo:
+; | S=entry SP; reserve 12-byte local frame and save C
+PLI2_1FB5: LXI H,0FFF5H ; HL = FFF5H ; +1FB5 runtime=41B5H OBSERVED
+PLI2_1FB8: DAD SP ; HL = (HL + SP) & FFFF; only CY changes ; +1FB8 runtime=41B8H OBSERVED
+PLI2_1FB9: SPHL ; SP = HL; rebase stack without changing flags ; +1FB9 runtime=41B9H OBSERVED
+PLI2_1FBA: MOV B,C ; B = C ; +1FBA runtime=41BAH OBSERVED
+PLI2_1FBB: PUSH B ; SP -= 2; push BC little-endian ; +1FBB runtime=41BBH OBSERVED
+PLI2_1FBC: INX SP ; SP = (SP + 1) & FFFF; flags preserved ; +1FBC runtime=41BCH OBSERVED
+; @block-pseudo 1FBD
+; pseudo:
+; | copy 10 state bytes onto stack; save dispatch byte
+PLI2_1FBD: MVI L,0AH ; L = 0AH ; +1FBD runtime=41BDH OBSERVED
+PLI2_1FBF: PUSH H ; SP -= 2; push HL little-endian ; +1FBF runtime=41BFH OBSERVED
+PLI2_1FC0: LXI H,0003H ; HL = 0003H ; +1FC0 runtime=41C0H OBSERVED
+PLI2_1FC3: DAD SP ; HL = (HL + SP) & FFFF; only CY changes ; +1FC3 runtime=41C3H OBSERVED
+PLI2_1FC4: XCHG ; swap HL and DE; flags preserved ; +1FC4 runtime=41C4H OBSERVED
+PLI2_1FC5: LXI B,0AD0BH ; BC = &dispatch_positions (AD0BH) ; +1FC5 runtime=41C5H OBSERVED
+PLI2_1FC8: POP H ; HL = word[SP]; SP += 2 ; +1FC8 runtime=41C8H OBSERVED
+PLI2_1FC9: LDAX B ; A = byte[BC] ; +1FC9 runtime=41C9H OBSERVED
+PLI2_1FCA: STAX D ; byte[DE] = A ; +1FCA runtime=41CAH OBSERVED
+PLI2_1FCB: INX B ; BC = (BC + 1) & FFFF; flags preserved ; +1FCB runtime=41CBH OBSERVED
+PLI2_1FCC: INX D ; DE = (DE + 1) & FFFF; flags preserved ; +1FCC runtime=41CCH OBSERVED
+PLI2_1FCD: DCR L ; L = (L - 1) & FF; NZPA updated, CY preserved ; +1FCD runtime=41CDH OBSERVED
+PLI2_1FCE: JNZ 41C9H ; if Z=0: PC -> PLI2.OVL+1FC9; flags preserved ; +1FCE runtime=41CEH OBSERVED
+PLI2_1FD1: LDA 0AD0AH ; A = byte[dispatch_state_byte (AD0AH)] ; +1FD1 runtime=41D1H OBSERVED
+PLI2_1FD4: LXI H,000BH ; HL = 000BH ; +1FD4 runtime=41D4H OBSERVED
+PLI2_1FD7: DAD SP ; HL = (HL + SP) & FFFF; only CY changes ; +1FD7 runtime=41D7H OBSERVED
+PLI2_1FD8: MOV M,A ; byte[HL] = A ; +1FD8 runtime=41D8H OBSERVED
+; @block-pseudo 1FD9
+; pseudo:
+; | look up record and handler pointers using helper result
+PLI2_1FD9: LXI H,0000H ; HL = 0000H ; +1FD9 runtime=41D9H OBSERVED
+PLI2_1FDC: DAD SP ; HL = (HL + SP) & FFFF; only CY changes ; +1FDC runtime=41DCH OBSERVED
+PLI2_1FDD: MOV C,M ; C = byte[HL] ; +1FDD runtime=41DDH OBSERVED
+PLI2_1FDE: CALL 267DH ; push following PC; invoke PLI2.OVL+047D; result effects belong to callee ; +1FDE runtime=41DEH OBSERVED
+PLI2_1FE1: STA 0AD1CH ; byte[dispatch_table_index (AD1CH)] = A ; +1FE1 runtime=41E1H OBSERVED
+PLI2_1FE4: MOV C,A ; C = A ; +1FE4 runtime=41E4H OBSERVED
+PLI2_1FE5: MVI B,00H ; B = 00H ; +1FE5 runtime=41E5H OBSERVED
+PLI2_1FE7: LXI H,3C21H ; HL = &descriptor_pointer_table (3C21H) ; +1FE7 runtime=41E7H OBSERVED
+PLI2_1FEA: DAD B ; HL = (HL + BC) & FFFF; only CY changes ; +1FEA runtime=41EAH OBSERVED
+PLI2_1FEB: DAD B ; HL = (HL + BC) & FFFF; only CY changes ; +1FEB runtime=41EBH OBSERVED
+PLI2_1FEC: MOV E,M ; E = byte[HL] ; +1FEC runtime=41ECH OBSERVED
+PLI2_1FED: INX H ; HL = (HL + 1) & FFFF; flags preserved ; +1FED runtime=41EDH OBSERVED
+PLI2_1FEE: MOV D,M ; D = byte[HL] ; +1FEE runtime=41EEH OBSERVED
+PLI2_1FEF: XCHG ; swap HL and DE; flags preserved ; +1FEF runtime=41EFH OBSERVED
+PLI2_1FF0: SHLD 0AD1DH ; little_endian_word[descriptor_pointer (AD1DH)] = HL (low byte first) ; +1FF0 runtime=41F0H OBSERVED
+PLI2_1FF3: LXI H,0AD0AH ; HL = &dispatch_state_byte (AD0AH) ; +1FF3 runtime=41F3H OBSERVED
+PLI2_1FF6: MVI M,00H ; byte[dispatch_state_byte (AD0AH)] = 00H ; +1FF6 runtime=41F6H OBSERVED
+PLI2_1FF8: LHLD 0AD1DH ; HL = little_endian_word[descriptor_pointer (AD1DH)] ; +1FF8 runtime=41F8H OBSERVED
+PLI2_1FFB: MOV A,M ; A = byte[HL] ; +1FFB runtime=41FBH OBSERVED
+PLI2_1FFC: STA 0AD1AH ; byte[candidates_remaining (AD1AH)] = A ; +1FFC runtime=41FCH OBSERVED
+PLI2_1FFF: LHLD 0AD1CH ; L = byte[dispatch_table_index (AD1CH)]; H = byte[descriptor_pointer (AD1DH)] ; +1FFF runtime=41FFH OBSERVED
+PLI2_2002: MVI H,00H ; HL = zero_extend(L); flags preserved ; +2002 runtime=4202H OBSERVED
+PLI2_2004: LXI B,3DDDH ; BC = &handler_pointer_table (3DDDH) ; +2004 runtime=4204H OBSERVED
+PLI2_2007: DAD H ; HL = (HL + HL) & FFFF; only CY changes ; +2007 runtime=4207H OBSERVED
+PLI2_2008: DAD B ; HL = (HL + BC) & FFFF; only CY changes ; +2008 runtime=4208H OBSERVED
+PLI2_2009: MOV E,M ; E = byte[HL] ; +2009 runtime=4209H OBSERVED
+PLI2_200A: INX H ; HL = (HL + 1) & FFFF; flags preserved ; +200A runtime=420AH OBSERVED
+PLI2_200B: MOV D,M ; D = byte[HL] ; +200B runtime=420BH OBSERVED
+PLI2_200C: XCHG ; swap HL and DE; flags preserved ; +200C runtime=420CH OBSERVED
+PLI2_200D: SHLD 0AD1FH ; little_endian_word[handler_pointer (AD1FH)] = HL (low byte first) ; +200D runtime=420DH OBSERVED
+PLI2_2010: LXI H,0AD1BH ; HL = &candidate_success_byte (AD1BH) ; +2010 runtime=4210H OBSERVED
+PLI2_2013: MVI M,00H ; byte[candidate_success_byte (AD1BH)] = 00H ; +2013 runtime=4213H OBSERVED
+; @block-pseudo 2015
+; pseudo:
+; | while record count nonzero: try descriptor predicate
+PLI2_2015: LDA 0AD1AH ; A = byte[candidates_remaining (AD1AH)] ; +2015 runtime=4215H OBSERVED
+PLI2_2018: CPI 00H ; flags = compare_unsigned(A, 00H); A unchanged ; +2018 runtime=4218H OBSERVED
+PLI2_201A: JZ 4256H ; if Z=1: PC -> PLI2.OVL+2056; flags preserved ; +201A runtime=421AH OBSERVED
+; @block-pseudo 201D
+; pseudo:
+; | decrement remaining; advance candidate ordinal and pointer
+PLI2_201D: LDA 0AD1AH ; A = byte[candidates_remaining (AD1AH)] ; +201D runtime=421DH OBSERVED
+PLI2_2020: DCR A ; A = (A - 1) & FF; NZPA updated, CY preserved ; +2020 runtime=4220H OBSERVED
+PLI2_2021: STA 0AD1AH ; byte[candidates_remaining (AD1AH)] = A ; +2021 runtime=4221H OBSERVED
+PLI2_2024: LDA 0AD0AH ; A = byte[dispatch_state_byte (AD0AH)] ; +2024 runtime=4224H OBSERVED
+PLI2_2027: INR A ; A = (A + 1) & FF; NZPA updated, CY preserved ; +2027 runtime=4227H OBSERVED
+PLI2_2028: STA 0AD0AH ; byte[dispatch_state_byte (AD0AH)] = A ; +2028 runtime=4228H OBSERVED
+PLI2_202B: LHLD 0AD1DH ; HL = little_endian_word[descriptor_pointer (AD1DH)] ; +202B runtime=422BH OBSERVED
+PLI2_202E: INX H ; HL = (HL + 1) & FFFF; flags preserved ; +202E runtime=422EH OBSERVED
+PLI2_202F: SHLD 0AD1DH ; little_endian_word[descriptor_pointer (AD1DH)] = HL (low byte first) ; +202F runtime=422FH OBSERVED
+PLI2_2032: LXI H,0000H ; HL = 0000H ; +2032 runtime=4232H OBSERVED
+PLI2_2035: DAD SP ; HL = (HL + SP) & FFFF; only CY changes ; +2035 runtime=4235H OBSERVED
+PLI2_2036: MOV C,M ; C = byte[HL] ; +2036 runtime=4236H OBSERVED
+PLI2_2037: CALL 3FFFH ; push following PC; invoke PLI2.OVL+1DFF; result effects belong to callee ; +2037 runtime=4237H OBSERVED
+PLI2_203A: RAR ; A = (old_CY<<7) | (old_A>>1); CY=old_A bit0; NZPA preserved ; +203A runtime=423AH OBSERVED
+PLI2_203B: JNC 4246H ; if CY=0: PC -> PLI2.OVL+2046; flags preserved ; +203B runtime=423BH OBSERVED
 ; SECTION [203E,2046) RAW
 PLI2_203E: DB 021H,01AH ; +203E runtime=423EH RAW
 PLI2_2040: DB 0ADH,036H,000H,023H,036H,001H ; +2040 runtime=4240H RAW
 ; SECTION [2046,2092) STRUCTURED
-PLI2_2046: LHLD 0AD1DH ; +2046 runtime=4246H OBSERVED
-PLI2_2049: MOV E,M ; +2049 runtime=4249H OBSERVED
-PLI2_204A: MVI D,00H ; +204A runtime=424AH OBSERVED
-PLI2_204C: LHLD 0AD1DH ; +204C runtime=424CH OBSERVED
-PLI2_204F: DAD D ; +204F runtime=424FH OBSERVED
-PLI2_2050: SHLD 0AD1DH ; +2050 runtime=4250H OBSERVED
-PLI2_2053: JMP 4215H ; +2053 runtime=4253H OBSERVED
-PLI2_2056: LDA 0AD1BH ; +2056 runtime=4256H OBSERVED
-PLI2_2059: CMA ; +2059 runtime=4259H OBSERVED
-PLI2_205A: RAR ; +205A runtime=425AH OBSERVED
-PLI2_205B: JNC 428BH ; +205B runtime=425BH OBSERVED
-PLI2_205E: LXI H,0AD0AH ; +205E runtime=425EH OBSERVED
-PLI2_2061: MVI M,00H ; +2061 runtime=4261H OBSERVED
-PLI2_2063: LHLD 0AD1CH ; +2063 runtime=4263H OBSERVED
-PLI2_2066: MVI H,00H ; +2066 runtime=4266H OBSERVED
-PLI2_2068: LXI B,1B4BH ; +2068 runtime=4268H OBSERVED
-PLI2_206B: DAD B ; +206B runtime=426BH OBSERVED
-PLI2_206C: MVI A,07H ; +206C runtime=426CH OBSERVED
-PLI2_206E: ANA M ; +206E runtime=426EH OBSERVED
-PLI2_206F: MOV C,A ; +206F runtime=426FH OBSERVED
-PLI2_2070: MVI B,00H ; +2070 runtime=4270H OBSERVED
-PLI2_2072: LXI H,3C13H ; +2072 runtime=4272H OBSERVED
-PLI2_2075: DAD B ; +2075 runtime=4275H OBSERVED
-PLI2_2076: DAD B ; +2076 runtime=4276H OBSERVED
-PLI2_2077: MOV C,M ; +2077 runtime=4277H OBSERVED
-PLI2_2078: INX H ; +2078 runtime=4278H OBSERVED
-PLI2_2079: MOV B,M ; +2079 runtime=4279H OBSERVED
-PLI2_207A: INX B ; +207A runtime=427AH OBSERVED
-PLI2_207B: MOV H,B ; +207B runtime=427BH OBSERVED
-PLI2_207C: MOV L,C ; +207C runtime=427CH OBSERVED
-PLI2_207D: SHLD 0AD1DH ; +207D runtime=427DH OBSERVED
-PLI2_2080: LXI H,0000H ; +2080 runtime=4280H OBSERVED
-PLI2_2083: DAD SP ; +2083 runtime=4283H OBSERVED
-PLI2_2084: MOV C,M ; +2084 runtime=4284H OBSERVED
-PLI2_2085: CALL 3FFFH ; +2085 runtime=4285H OBSERVED
-PLI2_2088: STA 0AD1BH ; +2088 runtime=4288H OBSERVED
-PLI2_208B: LDA 202EH ; +208B runtime=428BH OBSERVED
-PLI2_208E: RAR ; +208E runtime=428EH OBSERVED
-PLI2_208F: JNC 42ACH ; +208F runtime=428FH OBSERVED
+; @block-pseudo 2046
+; pseudo:
+; | observed failure: skip by record byte
+PLI2_2046: LHLD 0AD1DH ; HL = little_endian_word[descriptor_pointer (AD1DH)] ; +2046 runtime=4246H OBSERVED
+PLI2_2049: MOV E,M ; E = byte[HL] ; +2049 runtime=4249H OBSERVED
+PLI2_204A: MVI D,00H ; D = 00H ; +204A runtime=424AH OBSERVED
+PLI2_204C: LHLD 0AD1DH ; HL = little_endian_word[descriptor_pointer (AD1DH)] ; +204C runtime=424CH OBSERVED
+PLI2_204F: DAD D ; HL = (HL + DE) & FFFF; only CY changes ; +204F runtime=424FH OBSERVED
+PLI2_2050: SHLD 0AD1DH ; little_endian_word[descriptor_pointer (AD1DH)] = HL (low byte first) ; +2050 runtime=4250H OBSERVED
+PLI2_2053: JMP 4215H ; if always: PC -> PLI2.OVL+2015; flags preserved ; +2053 runtime=4253H OBSERVED
+; @block-pseudo 2056
+; pseudo:
+; | fallback: select record through low 3 bits of table byte
+PLI2_2056: LDA 0AD1BH ; A = byte[candidate_success_byte (AD1BH)] ; +2056 runtime=4256H OBSERVED
+PLI2_2059: CMA ; A = (~A) & FF; flags preserved ; +2059 runtime=4259H OBSERVED
+PLI2_205A: RAR ; A = (old_CY<<7) | (old_A>>1); CY=old_A bit0; NZPA preserved ; +205A runtime=425AH OBSERVED
+PLI2_205B: JNC 428BH ; if CY=0: PC -> PLI2.OVL+208B; flags preserved ; +205B runtime=425BH OBSERVED
+PLI2_205E: LXI H,0AD0AH ; HL = &dispatch_state_byte (AD0AH) ; +205E runtime=425EH OBSERVED
+PLI2_2061: MVI M,00H ; byte[dispatch_state_byte (AD0AH)] = 00H ; +2061 runtime=4261H OBSERVED
+PLI2_2063: LHLD 0AD1CH ; L = byte[dispatch_table_index (AD1CH)]; H = byte[descriptor_pointer (AD1DH)] ; +2063 runtime=4263H OBSERVED
+PLI2_2066: MVI H,00H ; HL = zero_extend(L); flags preserved ; +2066 runtime=4266H OBSERVED
+PLI2_2068: LXI B,1B4BH ; BC = 1B4BH ; +2068 runtime=4268H OBSERVED
+PLI2_206B: DAD B ; HL = (HL + BC) & FFFF; only CY changes ; +206B runtime=426BH OBSERVED
+PLI2_206C: MVI A,07H ; A = 07H ; +206C runtime=426CH OBSERVED
+PLI2_206E: ANA M ; A = A & byte[HL]; logical byte flags, CY=0 ; +206E runtime=426EH OBSERVED
+PLI2_206F: MOV C,A ; C = A ; +206F runtime=426FH OBSERVED
+PLI2_2070: MVI B,00H ; B = 00H ; +2070 runtime=4270H OBSERVED
+PLI2_2072: LXI H,3C13H ; HL = &fallback_pointer_table (3C13H) ; +2072 runtime=4272H OBSERVED
+PLI2_2075: DAD B ; HL = (HL + BC) & FFFF; only CY changes ; +2075 runtime=4275H OBSERVED
+PLI2_2076: DAD B ; HL = (HL + BC) & FFFF; only CY changes ; +2076 runtime=4276H OBSERVED
+PLI2_2077: MOV C,M ; C = byte[HL] ; +2077 runtime=4277H OBSERVED
+PLI2_2078: INX H ; HL = (HL + 1) & FFFF; flags preserved ; +2078 runtime=4278H OBSERVED
+PLI2_2079: MOV B,M ; B = byte[HL] ; +2079 runtime=4279H OBSERVED
+PLI2_207A: INX B ; BC = (BC + 1) & FFFF; flags preserved ; +207A runtime=427AH OBSERVED
+PLI2_207B: MOV H,B ; H = B ; +207B runtime=427BH OBSERVED
+PLI2_207C: MOV L,C ; L = C ; +207C runtime=427CH OBSERVED
+PLI2_207D: SHLD 0AD1DH ; little_endian_word[descriptor_pointer (AD1DH)] = HL (low byte first) ; +207D runtime=427DH OBSERVED
+PLI2_2080: LXI H,0000H ; HL = 0000H ; +2080 runtime=4280H OBSERVED
+PLI2_2083: DAD SP ; HL = (HL + SP) & FFFF; only CY changes ; +2083 runtime=4283H OBSERVED
+PLI2_2084: MOV C,M ; C = byte[HL] ; +2084 runtime=4284H OBSERVED
+PLI2_2085: CALL 3FFFH ; push following PC; invoke PLI2.OVL+1DFF; result effects belong to callee ; +2085 runtime=4285H OBSERVED
+PLI2_2088: STA 0AD1BH ; byte[candidate_success_byte (AD1BH)] = A ; +2088 runtime=4288H OBSERVED
+; @block-pseudo 208B
+; pseudo:
+; | test tracing gate; unobserved branch stays RAW
+PLI2_208B: LDA 202EH ; A = byte[dispatch_trace_flags (202EH)] ; +208B runtime=428BH OBSERVED
+PLI2_208E: RAR ; A = (old_CY<<7) | (old_A>>1); CY=old_A bit0; NZPA preserved ; +208E runtime=428EH OBSERVED
+PLI2_208F: JNC 42ACH ; if CY=0: PC -> PLI2.OVL+20AC; flags preserved ; +208F runtime=428FH OBSERVED
 ; SECTION [2092,20AC) RAW
 PLI2_2092: DB 021H,000H,000H,039H,07EH,021H,0ADH,0AAH,096H,02AH,01CH,0ADH,026H,000H ; +2092 runtime=4292H RAW
 PLI2_20A0: DB 0EBH,04FH,0CDH,084H,029H,02AH,00AH,0ADH,04DH,0CDH,038H,029H ; +20A0 runtime=42A0H RAW
 ; SECTION [20AC,20BB) STRUCTURED
-PLI2_20AC: LXI H,42B4H ; +20AC runtime=42ACH OBSERVED
-PLI2_20AF: PUSH H ; +20AF runtime=42AFH OBSERVED
-PLI2_20B0: LHLD 0AD1FH ; +20B0 runtime=42B0H OBSERVED
-PLI2_20B3: PCHL ; +20B3 runtime=42B3H OBSERVED
-PLI2_20B4: LDA 202EH ; +20B4 runtime=42B4H OBSERVED
-PLI2_20B7: RAR ; +20B7 runtime=42B7H OBSERVED
-PLI2_20B8: JNC 42C8H ; +20B8 runtime=42B8H OBSERVED
+; @block-pseudo 20AC
+; pseudo:
+; | push software continuation; PCHL current handler
+PLI2_20AC: LXI H,42B4H ; HL = 42B4H ; +20AC runtime=42ACH OBSERVED
+PLI2_20AF: PUSH H ; push 42B4H as software continuation before PCHL; this is not a CALL frame ; +20AF runtime=42AFH OBSERVED
+PLI2_20B0: LHLD 0AD1FH ; HL = little_endian_word[handler_pointer (AD1FH)] ; +20B0 runtime=42B0H OBSERVED
+PLI2_20B3: PCHL ; PC = current handler pointer; handler will RET to the guest-pushed 42B4H ; +20B3 runtime=42B3H OBSERVED
+; @block-pseudo 20B4
+; pseudo:
+; | handler resumed here; test post-handler tracing gate
+PLI2_20B4: LDA 202EH ; A = byte[dispatch_trace_flags (202EH)] ; +20B4 runtime=42B4H OBSERVED
+PLI2_20B7: RAR ; A = (old_CY<<7) | (old_A>>1); CY=old_A bit0; NZPA preserved ; +20B7 runtime=42B7H OBSERVED
+PLI2_20B8: JNC 42C8H ; if CY=0: PC -> PLI2.OVL+20C8; flags preserved ; +20B8 runtime=42B8H OBSERVED
 ; SECTION [20BB,20C8) RAW
 PLI2_20BB: DB 03AH,01DH,020H,01FH,0D2H ; +20BB runtime=42BBH RAW
 PLI2_20C0: DB 0C8H,042H,001H,0BCH,03FH,0CDH,0FFH,006H ; +20C0 runtime=42C0H RAW
 ; SECTION [20C8,20EB) STRUCTURED
-PLI2_20C8: MVI L,0AH ; +20C8 runtime=42C8H OBSERVED
-PLI2_20CA: PUSH H ; +20CA runtime=42CAH OBSERVED
-PLI2_20CB: LXI H,0003H ; +20CB runtime=42CBH OBSERVED
-PLI2_20CE: DAD SP ; +20CE runtime=42CEH OBSERVED
-PLI2_20CF: MOV B,H ; +20CF runtime=42CFH OBSERVED
-PLI2_20D0: MOV C,L ; +20D0 runtime=42D0H OBSERVED
-PLI2_20D1: LXI D,0AD0BH ; +20D1 runtime=42D1H OBSERVED
-PLI2_20D4: POP H ; +20D4 runtime=42D4H OBSERVED
-PLI2_20D5: LDAX B ; +20D5 runtime=42D5H OBSERVED
-PLI2_20D6: STAX D ; +20D6 runtime=42D6H OBSERVED
-PLI2_20D7: INX B ; +20D7 runtime=42D7H OBSERVED
-PLI2_20D8: INX D ; +20D8 runtime=42D8H OBSERVED
-PLI2_20D9: DCR L ; +20D9 runtime=42D9H OBSERVED
-PLI2_20DA: JNZ 42D5H ; +20DA runtime=42DAH OBSERVED
-PLI2_20DD: LXI H,000BH ; +20DD runtime=42DDH OBSERVED
-PLI2_20E0: DAD SP ; +20E0 runtime=42E0H OBSERVED
-PLI2_20E1: MOV A,M ; +20E1 runtime=42E1H OBSERVED
-PLI2_20E2: STA 0AD0AH ; +20E2 runtime=42E2H OBSERVED
-PLI2_20E5: LXI H,000CH ; +20E5 runtime=42E5H OBSERVED
-PLI2_20E8: DAD SP ; +20E8 runtime=42E8H OBSERVED
-PLI2_20E9: SPHL ; +20E9 runtime=42E9H OBSERVED
-PLI2_20EA: RET ; +20EA runtime=42EAH OBSERVED
+; @block-pseudo 20C8
+; pseudo:
+; | restore 10 saved state bytes
+PLI2_20C8: MVI L,0AH ; L = 0AH ; +20C8 runtime=42C8H OBSERVED
+PLI2_20CA: PUSH H ; SP -= 2; push HL little-endian ; +20CA runtime=42CAH OBSERVED
+PLI2_20CB: LXI H,0003H ; HL = 0003H ; +20CB runtime=42CBH OBSERVED
+PLI2_20CE: DAD SP ; HL = (HL + SP) & FFFF; only CY changes ; +20CE runtime=42CEH OBSERVED
+PLI2_20CF: MOV B,H ; B = H ; +20CF runtime=42CFH OBSERVED
+PLI2_20D0: MOV C,L ; C = L ; +20D0 runtime=42D0H OBSERVED
+PLI2_20D1: LXI D,0AD0BH ; DE = &dispatch_positions (AD0BH) ; +20D1 runtime=42D1H OBSERVED
+PLI2_20D4: POP H ; HL = word[SP]; SP += 2 ; +20D4 runtime=42D4H OBSERVED
+PLI2_20D5: LDAX B ; A = byte[BC] ; +20D5 runtime=42D5H OBSERVED
+PLI2_20D6: STAX D ; byte[DE] = A ; +20D6 runtime=42D6H OBSERVED
+PLI2_20D7: INX B ; BC = (BC + 1) & FFFF; flags preserved ; +20D7 runtime=42D7H OBSERVED
+PLI2_20D8: INX D ; DE = (DE + 1) & FFFF; flags preserved ; +20D8 runtime=42D8H OBSERVED
+PLI2_20D9: DCR L ; L = (L - 1) & FF; NZPA updated, CY preserved ; +20D9 runtime=42D9H OBSERVED
+PLI2_20DA: JNZ 42D5H ; if Z=0: PC -> PLI2.OVL+20D5; flags preserved ; +20DA runtime=42DAH OBSERVED
+; @block-pseudo 20DD
+; pseudo:
+; | restore dispatch byte; discard local frame; RET original CALL word
+PLI2_20DD: LXI H,000BH ; HL = 000BH ; +20DD runtime=42DDH OBSERVED
+PLI2_20E0: DAD SP ; HL = (HL + SP) & FFFF; only CY changes ; +20E0 runtime=42E0H OBSERVED
+PLI2_20E1: MOV A,M ; A = byte[HL] ; +20E1 runtime=42E1H OBSERVED
+PLI2_20E2: STA 0AD0AH ; byte[dispatch_state_byte (AD0AH)] = A ; +20E2 runtime=42E2H OBSERVED
+PLI2_20E5: LXI H,000CH ; HL = 000CH ; +20E5 runtime=42E5H OBSERVED
+PLI2_20E8: DAD SP ; HL = (HL + SP) & FFFF; only CY changes ; +20E8 runtime=42E8H OBSERVED
+PLI2_20E9: SPHL ; SP = original entry SP; discard the 12-byte local frame ; +20E9 runtime=42E9H OBSERVED
+PLI2_20EA: RET ; PC = word[SP]; SP += 2; use the convention in procedure header ; +20EA runtime=42EAH OBSERVED
 ; SECTION [20EB,6821) RAW
 PLI2_20EB: DB 03AH,034H,020H,02FH,01FH ; +20EB runtime=42EBH RAW
 PLI2_20F0: DB 0D2H,0F6H,042H,0CDH,0CFH,03FH,0C9H ; +20F0 runtime=42F0H RAW
@@ -2057,53 +2338,99 @@ PLI2_6800: DB 00EH,000H,0CDH,004H,089H,0C3H,020H,08AH,0CDH,059H,089H,0C3H,020H,0
 PLI2_6810: DB 0A8H,089H,0C0H,089H,0CFH,089H,0DEH,089H,0E4H,089H,0F3H,089H,0F9H,089H,008H,08AH ; +6810 runtime=8A10H RAW
 PLI2_6820: DB 0C9H ; +6820 runtime=8A20H RAW
 
+; @procedure-v1 PLI2.OVL+6821
 ; ProcedureHypothesis: 5 x AD0A helper
-; OBSERVED entry: PLI2_6821 (runtime 8A21H); evidence.json seed PLI2.OVL+6821
-; OBSERVED callers: PLI2.OVL+6831, PLI2.OVL+6D4A
-; OBSERVED runs: OPTIMIST
-; DEDUCED matched RET: +682A, CALL step 1811644, RET step 1811650; exact stack bytes/slots
-; DEDUCED inputs/effects: byte at AD0AH; A result, HL=AD0AH; flags from ADD M
-; OBSERVED downstream runtime helpers: none
-; HYPOTHESIS semantic name: 5 x AD0A helper
-; UNRESOLVED / counterevidence: no alternate branch; full sequence established
-; DEDUCED contract: A = (5 * byte[AD0AH]) mod 256; HL=AD0AH;
-; no guest memory writes; flags are final ADD M flags. B,C,D,E unchanged.
+; Entry: PLI2_6821 = PLI2.OVL+6821 @ 8A21H; SHA-256
+;   80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a
+; Extent: HYPOTHESIS [6821,682B) file offsets; overlapping entries: none established
+; Callers: OBSERVED PLI2.OVL+6831 (OPTIMIST=1); PLI2.OVL+6D4A (OPTIMIST=1)
+; Returns: OBSERVED/DEDUCED ordinary hardware CALL word; observed SP after RET = (entry SP + 2)
+;   mod 65536; PLI2.OVL+682A
+; Inputs: DEDUCED byte[AD0A]
+; Outputs: DEDUCED A=(5*byte[AD0A])&FF; HL=AD0AH; BC/DE unchanged
+; Clobbers: DEDUCED A,HL,flags
+; Memory: DEDUCED dispatch_state_byte=AD0AH (candidate attempt byte in scan; saved/restored state,
+;   not type ID)
+; Direct callees: OBSERVED none
+; Coverage: OBSERVED OPTIMIST: 2 CALLs; 10/10 bytes represented as instructions; local instruction
+;   sequence represented; dynamic counts do not prove exhaustive input-state coverage
+; Unresolved: No unresolved local operational path at the declared scope. Evidence is not
+;   exhaustive; no alternate branch; full sequence established
+; Contract: DEDUCED (complete; scope: documented local operation, with byte/word wrapping; no
+;   source-language interpretation) A = (5 * byte[AD0AH]) mod 256; HL = AD0AH; no guest
+;   memory writes; B/C/D/E unchanged; arithmetic flags from final ADD M; balanced RET.
+; Hypothesis: none beyond the low-level operational description
+; Completeness: bounds=stable; control_flow=complete; contract=complete
+; Evidence: evidence.json#seeds/PLI2.OVL+6821
+; Procedure pseudo (operational; byte/word arithmetic wraps):
+;   A=byte[AD0A]; A=4*A; A=(A+byte[AD0A])&FF; RET
+; @end-procedure-v1 PLI2.OVL+6821
 ; SECTION [6821,682B) UNDERSTOOD
-PLI2_6821: LDA 0AD0AH ; +6821 runtime=8A21H OBSERVED
-PLI2_6824: ADD A ; +6824 runtime=8A24H OBSERVED
-PLI2_6825: ADD A ; +6825 runtime=8A25H OBSERVED
-PLI2_6826: LXI H,0AD0AH ; +6826 runtime=8A26H OBSERVED
-PLI2_6829: ADD M ; +6829 runtime=8A29H OBSERVED
-PLI2_682A: RET ; +682A runtime=8A2AH OBSERVED
+; @block-pseudo 6821
+; pseudo:
+; | read dispatch byte twice; compute 4*x+x modulo 256
+PLI2_6821: LDA 0AD0AH ; A = byte[dispatch_state_byte (AD0AH)] ; +6821 runtime=8A21H OBSERVED
+PLI2_6824: ADD A ; A = (A + A) & FF; arithmetic flags updated ; +6824 runtime=8A24H OBSERVED
+PLI2_6825: ADD A ; A = (A + A) & FF; arithmetic flags updated ; +6825 runtime=8A25H OBSERVED
+PLI2_6826: LXI H,0AD0AH ; HL = &dispatch_state_byte (AD0AH) ; +6826 runtime=8A26H OBSERVED
+PLI2_6829: ADD M ; A = (A + byte[dispatch_state_byte (AD0AH)]) & FF; arithmetic flags updated ; +6829 runtime=8A29H OBSERVED
+PLI2_682A: RET ; PC = word[SP]; SP += 2; use the convention in procedure header ; +682A runtime=8A2AH OBSERVED
 
+; @procedure-v1 PLI2.OVL+682B
 ; ProcedureHypothesis: indexed external-name selection path
-; OBSERVED entry: PLI2_682B (runtime 8A2BH); evidence.json seed PLI2.OVL+682B
-; OBSERVED callers: PLI2.OVL+6A38
-; OBSERVED runs: OPTIMIST
-; DEDUCED matched RET: +6849, CALL step 1795010, RET step 1816607; exact stack bytes/slots
-; DEDUCED inputs/effects: C saved on stack; indexes base 873DH; writes AD06H
-; OBSERVED downstream runtime helpers: 8992H; 8A21H; A448H
-; HYPOTHESIS semantic name: indexed external-name selection path
-; UNRESOLVED / counterevidence: meaning of selected table entries remains hypothesis
+; Entry: PLI2_682B = PLI2.OVL+682B @ 8A2BH; SHA-256
+;   80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a
+; Extent: HYPOTHESIS [682B,684A) file offsets; overlapping entries: none established
+; Callers: OBSERVED PLI2.OVL+6A38 (OPTIMIST=1)
+; Returns: OBSERVED/DEDUCED ordinary hardware CALL word; observed SP after RET = (entry SP + 2)
+;   mod 65536; PLI2.OVL+6849
+; Inputs: DEDUCED C=saved selector argument; current dispatch byte AD0A
+; Outputs: DEDUCED byte[AD06]=input C; A=input C at local RET; nested adapter effects
+; Clobbers: DEDUCED A,BC,DE,HL,flags; one-byte local removed before RET
+; Memory: DEDUCED selector_pointer_base=873DH (fixed base in indexed selector; higher meaning
+;   hypothetical); selector_saved_argument=AD06H (saved selector input C)
+; Direct callees: OBSERVED PLI2.OVL+6792 @8992H; PLI2.OVL+6821 @8A21H; PLI2.OVL+8248 @A448H
+; Coverage: OBSERVED OPTIMIST: 1 CALLs; 31/31 bytes represented as instructions; local instruction
+;   sequence represented; dynamic counts do not prove exhaustive input-state coverage
+; Unresolved: Opaque/delegated downstream effects or incomplete historical contract: meaning of
+;   selected table entries remains hypothesis
+; Contract: DEDUCED (partial; scope: own low-level operation; opaque callees explicitly delegated)
+;   C saved on stack; indexes base 873DH; writes AD06H
+; Hypothesis: HYPOTHESIS indexed name-pointer selection
+; Completeness: bounds=stable; control_flow=complete; contract=partial
+; Evidence: evidence.json#seeds/PLI2.OVL+682B
+; Procedure pseudo (operational; byte/word arithmetic wraps):
+;   save one byte C; call +6792; offset=call +6821; call +8248(BC=873D+offset); byte[AD06]=saved
+;   C; release byte; RET
+; @end-procedure-v1 PLI2.OVL+682B
 ; SECTION [682B,684A) STRUCTURED
-PLI2_682B: MOV B,C ; +682B runtime=8A2BH OBSERVED
-PLI2_682C: PUSH B ; +682C runtime=8A2CH OBSERVED
-PLI2_682D: INX SP ; +682D runtime=8A2DH OBSERVED
-PLI2_682E: CALL 8992H ; +682E runtime=8A2EH OBSERVED
-PLI2_6831: CALL 8A21H ; +6831 runtime=8A31H OBSERVED
-PLI2_6834: MOV C,A ; +6834 runtime=8A34H OBSERVED
-PLI2_6835: MVI B,00H ; +6835 runtime=8A35H OBSERVED
-PLI2_6837: LXI H,873DH ; +6837 runtime=8A37H OBSERVED
-PLI2_683A: DAD B ; +683A runtime=8A3AH OBSERVED
-PLI2_683B: MOV B,H ; +683B runtime=8A3BH OBSERVED
-PLI2_683C: MOV C,L ; +683C runtime=8A3CH OBSERVED
-PLI2_683D: CALL 0A448H ; +683D runtime=8A3DH OBSERVED
-PLI2_6840: LXI H,0000H ; +6840 runtime=8A40H OBSERVED
-PLI2_6843: DAD SP ; +6843 runtime=8A43H OBSERVED
-PLI2_6844: MOV A,M ; +6844 runtime=8A44H OBSERVED
-PLI2_6845: STA 0AD06H ; +6845 runtime=8A45H OBSERVED
-PLI2_6848: INX SP ; +6848 runtime=8A48H OBSERVED
-PLI2_6849: RET ; +6849 runtime=8A49H OBSERVED
+; @block-pseudo 682B
+; pseudo:
+; | save one-byte argument on stack
+PLI2_682B: MOV B,C ; B = C ; +682B runtime=8A2BH OBSERVED
+PLI2_682C: PUSH B ; SP -= 2; push BC little-endian ; +682C runtime=8A2CH OBSERVED
+PLI2_682D: INX SP ; SP = (SP + 1) & FFFF; flags preserved ; +682D runtime=8A2DH OBSERVED
+PLI2_682E: CALL 8992H ; push following PC; invoke PLI2.OVL+6792; result effects belong to callee ; +682E runtime=8A2EH OBSERVED
+; @block-pseudo 6831
+; pseudo:
+; | offset=5*dispatch byte; pass 873D+offset to adapter
+PLI2_6831: CALL 8A21H ; push following PC; invoke PLI2.OVL+6821; result effects belong to callee ; +6831 runtime=8A31H OBSERVED
+PLI2_6834: MOV C,A ; C = A ; +6834 runtime=8A34H OBSERVED
+PLI2_6835: MVI B,00H ; B = 00H ; +6835 runtime=8A35H OBSERVED
+PLI2_6837: LXI H,873DH ; HL = &selector_pointer_base (873DH) ; +6837 runtime=8A37H OBSERVED
+PLI2_683A: DAD B ; HL = (HL + BC) & FFFF; only CY changes ; +683A runtime=8A3AH OBSERVED
+PLI2_683B: MOV B,H ; B = H ; +683B runtime=8A3BH OBSERVED
+PLI2_683C: MOV C,L ; C = L ; +683C runtime=8A3CH OBSERVED
+PLI2_683D: CALL 0A448H ; push following PC; invoke PLI2.OVL+8248; result effects belong to callee ; +683D runtime=8A3DH OBSERVED
+; @block-pseudo 6840
+; pseudo:
+; | restore argument into selector byte; release one-byte local
+PLI2_6840: LXI H,0000H ; HL = 0000H ; +6840 runtime=8A40H OBSERVED
+PLI2_6843: DAD SP ; HL = (HL + SP) & FFFF; only CY changes ; +6843 runtime=8A43H OBSERVED
+PLI2_6844: MOV A,M ; A = byte[HL] ; +6844 runtime=8A44H OBSERVED
+PLI2_6845: STA 0AD06H ; byte[selector_saved_argument (AD06H)] = A ; +6845 runtime=8A45H OBSERVED
+PLI2_6848: INX SP ; SP = (SP + 1) & FFFF; flags preserved ; +6848 runtime=8A48H OBSERVED
+PLI2_6849: RET ; PC = word[SP]; SP += 2; use the convention in procedure header ; +6849 runtime=8A49H OBSERVED
 ; SECTION [684A,7557) RAW
 
 ; OBSERVED callable PCHL entry PLI2_684A: once from PLI2_20B3.
@@ -2350,26 +2677,53 @@ PLI2_752A: DB 0C8H,094H,0CDH,0FFH,006H,02AH,036H,020H,044H,04DH,0CDH,054H,029H,0
 PLI2_753A: DB 034H,0C9H,02AH,02CH,01CH,023H,022H,02CH,01CH,03EH,000H,0CDH,029H,01BH,0B5H,0C2H ; +753A runtime=973AH RAW
 PLI2_754A: DB 04FH,097H,0CDH,029H,097H,0C9H,0CDH,03CH,097H,0CDH,03CH,097H,0C9H ; +754A runtime=974AH RAW
 
+; @procedure-v1 PLI2.OVL+7557
 ; ProcedureHypothesis: absolute REL item emission use
-; OBSERVED entry: PLI2_7557 (runtime 9757H); evidence.json seed PLI2.OVL+7557
-; OBSERVED callers: PLI2.OVL+75A3, PLI2.OVL+75ED, PLI2.OVL+78FF, PLI2.OVL+799E, PLI2.OVL+7B75
-; OBSERVED runs: FACTOR, FIZZBUZ, MINIMAL, OPTIMIST
-; DEDUCED matched RET: +756C, CALL step 1675144, RET step 1675550; exact stack bytes/slots
-; DEDUCED inputs/effects: C byte; scratch ADD2H; emits zero bit then eight counted bits
-; OBSERVED downstream runtime helpers: 1240H; 129EH; 973CH
-; HYPOTHESIS semantic name: absolute REL item emission use
-; UNRESOLVED / counterevidence: REL item interpretation is hypothesis here
+; Entry: PLI2_7557 = PLI2.OVL+7557 @ 9757H; SHA-256
+;   80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a
+; Extent: HYPOTHESIS [7557,756D) file offsets; overlapping entries: none established
+; Callers: OBSERVED PLI2.OVL+75A3 (FACTOR=17, FIZZBUZ=33, MINIMAL=7, OPTIMIST=54); PLI2.OVL+75ED
+;   (FACTOR=17, FIZZBUZ=33, MINIMAL=6, OPTIMIST=90); PLI2.OVL+78FF (FACTOR=10, FIZZBUZ=8,
+;   OPTIMIST=14); PLI2.OVL+799E (FACTOR=5, FIZZBUZ=10, OPTIMIST=8); PLI2.OVL+7B75
+;   (FACTOR=1, FIZZBUZ=10, OPTIMIST=3)
+; Returns: OBSERVED/DEDUCED ordinary hardware CALL word; observed SP after RET = (entry SP + 2)
+;   mod 65536; PLI2.OVL+756C
+; Inputs: DEDUCED C=byte
+; Outputs: DEDUCED calls bit writer with C=0, then serializer with C=input byte,E=8; +753C output
+;   delegated
+; Clobbers: DEDUCED A,BC,DE,HL,flags
+; Memory: DEDUCED emitted_byte=ADD2H (saved output byte C)
+; Direct callees: OBSERVED PLI.COM+1140 @1240H; PLI.COM+119E @129EH; PLI2.OVL+753C @973CH
+; Coverage: OBSERVED FACTOR: 50 CALLs; FIZZBUZ: 94 CALLs; MINIMAL: 13 CALLs; OPTIMIST: 169 CALLs;
+;   22/22 bytes represented as instructions; local instruction sequence represented;
+;   dynamic counts do not prove exhaustive input-state coverage
+; Unresolved: Opaque/delegated downstream effects or incomplete historical contract: REL item
+;   interpretation is hypothesis here
+; Contract: DEDUCED (partial; scope: own low-level operation; opaque callees explicitly delegated)
+;   C byte; scratch ADD2H; emits zero bit then eight counted bits
+; Hypothesis: HYPOTHESIS absolute REL item emission use
+; Completeness: bounds=stable; control_flow=complete; contract=partial
+; Evidence: evidence.json#seeds/PLI2.OVL+7557
+; Procedure pseudo (operational; byte/word arithmetic wraps):
+;   saved=C; call PLI.COM+1140(C=0); call PLI.COM+119E(C=saved,E=8); call +753C; RET
+; @end-procedure-v1 PLI2.OVL+7557
 ; SECTION [7557,756D) STRUCTURED
-PLI2_7557: LXI H,0ADD2H ; +7557 runtime=9757H OBSERVED
-PLI2_755A: MOV M,C ; +755A runtime=975AH OBSERVED
-PLI2_755B: MVI C,00H ; +755B runtime=975BH OBSERVED
-PLI2_755D: CALL 1240H ; +755D runtime=975DH OBSERVED
-PLI2_7560: LHLD 0ADD2H ; +7560 runtime=9760H OBSERVED
-PLI2_7563: MOV C,L ; +7563 runtime=9763H OBSERVED
-PLI2_7564: MVI E,08H ; +7564 runtime=9764H OBSERVED
-PLI2_7566: CALL 129EH ; +7566 runtime=9766H OBSERVED
-PLI2_7569: CALL 973CH ; +7569 runtime=9769H OBSERVED
-PLI2_756C: RET ; +756C runtime=976CH OBSERVED
+; @block-pseudo 7557
+; pseudo:
+; | save byte; emit zero prefix bit
+PLI2_7557: LXI H,0ADD2H ; HL = &emitted_byte (ADD2H) ; +7557 runtime=9757H OBSERVED
+PLI2_755A: MOV M,C ; byte[emitted_byte (ADD2H)] = C ; +755A runtime=975AH OBSERVED
+PLI2_755B: MVI C,00H ; C = 00H ; +755B runtime=975BH OBSERVED
+PLI2_755D: CALL 1240H ; push following PC; invoke PLI.COM+1140; result effects belong to callee ; +755D runtime=975DH OBSERVED
+; @block-pseudo 7560
+; pseudo:
+; | serialize saved byte with count 8; invoke downstream counter helper
+PLI2_7560: LHLD 0ADD2H ; L = byte[emitted_byte (ADD2H)]; H = byte[ADD3H] ; +7560 runtime=9760H OBSERVED
+PLI2_7563: MOV C,L ; C = L ; +7563 runtime=9763H OBSERVED
+PLI2_7564: MVI E,08H ; E = 08H ; +7564 runtime=9764H OBSERVED
+PLI2_7566: CALL 129EH ; push following PC; invoke PLI.COM+119E; result effects belong to callee ; +7566 runtime=9766H OBSERVED
+PLI2_7569: CALL 973CH ; push following PC; invoke PLI2.OVL+753C; result effects belong to callee ; +7569 runtime=9769H OBSERVED
+PLI2_756C: RET ; PC = word[SP]; SP += 2; use the convention in procedure header ; +756C runtime=976CH OBSERVED
 ; SECTION [756D,7701) RAW
 PLI2_756D: DB 021H,0D4H,0ADH,073H,02BH,071H,03AH,0D3H,0ADH,0D6H,0C2H,0D6H,001H,09FH,0F5H,03AH ; +756D runtime=976DH RAW
 PLI2_757D: DB 0D4H,0ADH,0D6H,009H,0D6H,001H,09FH,0C1H,048H,0A1H,01FH,0D2H,090H,097H,021H,0D4H ; +757D runtime=977DH RAW
@@ -2398,112 +2752,155 @@ PLI2_76DD: DB 0ADH,070H,02BH,071H,001H,000H,000H,0CDH,0F1H,097H,01EH,007H,00EH,0
 PLI2_76ED: DB 012H,02AH,02CH,01CH,02BH,02BH,044H,04DH,0CDH,0E5H,012H,02AH,0E8H,0ADH,044H,04DH ; +76ED runtime=98EDH RAW
 PLI2_76FD: DB 0CDH,065H,037H,0C9H ; +76FD runtime=98FDH RAW
 
+; @procedure-v1 PLI2.OVL+7701
 ; ProcedureHypothesis: emit LINK-80 CHAIN EXTERNAL item
-; OBSERVED entry: PLI2_7701 (runtime 9901H); evidence.json seed PLI2.OVL+7701
-; OBSERVED callers: PLI2.OVL+8244
-; OBSERVED runs: FACTOR, FIZZBUZ, MINIMAL, OPTIMIST
-; DEDUCED matched RET: +77BE, CALL step 1676976, RET step 1681336; exact stack bytes/slots
-; DEDUCED inputs/effects: BC pointer saved at ADEAH/ADEBH; scratch ADECH/ADEDH/ADEEH; reads 1C2CH,201CH,201DH
-; OBSERVED downstream runtime helpers: 97F1H; 129EH; 12E5H
-; HYPOTHESIS semantic name: emit LINK-80 CHAIN EXTERNAL item
-; UNRESOLVED / counterevidence: name trimming/mode branches not fully exercised; item meaning remains hypothesis
+; Entry: PLI2_7701 = PLI2.OVL+7701 @ 9901H; SHA-256
+;   80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a
+; Extent: HYPOTHESIS [7701,77BF) file offsets; overlapping entries: none established
+; Callers: OBSERVED PLI2.OVL+8244 (FACTOR=11, FIZZBUZ=25, MINIMAL=7, OPTIMIST=46)
+; Returns: OBSERVED/DEDUCED ordinary hardware CALL word; observed SP after RET = (entry SP + 2)
+;   mod 65536; PLI2.OVL+77BE
+; Inputs: DEDUCED BC=pointer saved at ADEA/ADEB; scratch/mode state
+; Outputs: DEDUCED serialization/helper effects along witnessed scan paths; full result unresolved
+; Clobbers: DEDUCED A,BC,DE,HL,flags
+; Memory: DEDUCED program_position_word=1C2CH (word read by existing emission seed);
+;   emitter_mode_201C=201CH (mode flag; general meaning unresolved); emitter_mode_201D=201DH
+;   (mode flag; general meaning unresolved); chain_input_pointer=ADEAH (saved emission
+;   pointer BC); chain_byte_index=ADECH (byte serialization loop index); chain_byte=ADEDH
+;   (saved pointed byte); chain_length=ADEEH (length scan scratch)
+; Direct callees: OBSERVED PLI2.OVL+75F1 @97F1H; PLI.COM+119E @129EH; PLI.COM+11E5 @12E5H;
+;   PLI.COM+119E @129EH; PLI.COM+119E @129EH; PLI.COM+119E @129EH
+; Coverage: OBSERVED FACTOR: 11 CALLs; FIZZBUZ: 25 CALLs; MINIMAL: 7 CALLs; OPTIMIST: 46 CALLs;
+;   162/190 bytes represented as instructions; fetched path fragments only; name
+;   trimming/mode branches not fully exercised; item meaning remains hypothesis
+; Unresolved: name trimming/mode branches not fully exercised; item meaning remains hypothesis
+; Contract: DEDUCED (partial; scope: own low-level operation; opaque callees explicitly delegated)
+;   BC pointer saved at ADEAH/ADEBH; scratch ADECH/ADEDH/ADEEH; reads 1C2CH,201CH,201DH
+; Hypothesis: HYPOTHESIS CHAIN EXTERNAL construction
+; Completeness: bounds=provisional; control_flow=partial; contract=partial
+; Evidence: evidence.json#seeds/PLI2.OVL+7701
+; Procedure pseudo (operational; byte/word arithmetic wraps):
+;   save pointer; emit prefix and adjusted program address; scan/trim pointed bytes; emit
+;   length/prefix and bytes; RET on observed path
+; @end-procedure-v1 PLI2.OVL+7701
 ; SECTION [7701,7743) DECODED
-PLI2_7701: LXI H,0ADEBH ; +7701 runtime=9901H OBSERVED
-PLI2_7704: MOV M,B ; +7704 runtime=9904H OBSERVED
-PLI2_7705: DCX H ; +7705 runtime=9905H OBSERVED
-PLI2_7706: MOV M,C ; +7706 runtime=9906H OBSERVED
-PLI2_7707: LXI B,0000H ; +7707 runtime=9907H OBSERVED
-PLI2_770A: CALL 97F1H ; +770A runtime=990AH OBSERVED
-PLI2_770D: MVI E,07H ; +770D runtime=990DH OBSERVED
-PLI2_770F: MVI C,8CH ; +770F runtime=990FH OBSERVED
-PLI2_7711: CALL 129EH ; +7711 runtime=9911H OBSERVED
-PLI2_7714: LHLD 1C2CH ; +7714 runtime=9914H OBSERVED
-PLI2_7717: DCX H ; +7717 runtime=9917H OBSERVED
-PLI2_7718: DCX H ; +7718 runtime=9918H OBSERVED
-PLI2_7719: MOV B,H ; +7719 runtime=9919H OBSERVED
-PLI2_771A: MOV C,L ; +771A runtime=991AH OBSERVED
-PLI2_771B: CALL 12E5H ; +771B runtime=991BH OBSERVED
-PLI2_771E: LXI H,0ADEEH ; +771E runtime=991EH OBSERVED
-PLI2_7721: MVI M,04H ; +7721 runtime=9921H OBSERVED
-PLI2_7723: LHLD 0ADEEH ; +7723 runtime=9923H OBSERVED
-PLI2_7726: MVI H,00H ; +7726 runtime=9926H OBSERVED
-PLI2_7728: XCHG ; +7728 runtime=9928H OBSERVED
-PLI2_7729: LHLD 0ADEAH ; +7729 runtime=9929H OBSERVED
-PLI2_772C: DAD D ; +772C runtime=992CH OBSERVED
-PLI2_772D: MOV A,M ; +772D runtime=992DH OBSERVED
-PLI2_772E: SUI 20H ; +772E runtime=992EH OBSERVED
-PLI2_7730: SUI 01H ; +7730 runtime=9930H OBSERVED
-PLI2_7732: SBB A ; +7732 runtime=9932H OBSERVED
-PLI2_7733: PUSH PSW ; +7733 runtime=9933H OBSERVED
-PLI2_7734: LDA 0ADEEH ; +7734 runtime=9934H OBSERVED
-PLI2_7737: SUI 00H ; +7737 runtime=9937H OBSERVED
-PLI2_7739: ADI 0FFH ; +7739 runtime=9939H OBSERVED
-PLI2_773B: SBB A ; +773B runtime=993BH OBSERVED
-PLI2_773C: POP B ; +773C runtime=993CH OBSERVED
-PLI2_773D: MOV C,B ; +773D runtime=993DH OBSERVED
-PLI2_773E: ANA C ; +773E runtime=993EH OBSERVED
-PLI2_773F: RAR ; +773F runtime=993FH OBSERVED
-PLI2_7740: JNC 994AH ; +7740 runtime=9940H OBSERVED
+; @block-pseudo 7701
+; pseudo:
+; | save pointer; invoke prefix/address serializers
+PLI2_7701: LXI H,0ADEBH ; HL = ADEBH ; +7701 runtime=9901H OBSERVED
+PLI2_7704: MOV M,B ; byte[ADEBH] = B ; +7704 runtime=9904H OBSERVED
+PLI2_7705: DCX H ; HL = (HL - 1) & FFFF; flags preserved ; +7705 runtime=9905H OBSERVED
+PLI2_7706: MOV M,C ; byte[chain_input_pointer (ADEAH)] = C ; +7706 runtime=9906H OBSERVED
+PLI2_7707: LXI B,0000H ; BC = 0000H ; +7707 runtime=9907H OBSERVED
+PLI2_770A: CALL 97F1H ; push following PC; invoke PLI2.OVL+75F1; result effects belong to callee ; +770A runtime=990AH OBSERVED
+PLI2_770D: MVI E,07H ; E = 07H ; +770D runtime=990DH OBSERVED
+PLI2_770F: MVI C,8CH ; C = 8CH ; +770F runtime=990FH OBSERVED
+PLI2_7711: CALL 129EH ; push following PC; invoke PLI.COM+119E; result effects belong to callee ; +7711 runtime=9911H OBSERVED
+PLI2_7714: LHLD 1C2CH ; HL = little_endian_word[program_position_word (1C2CH)] ; +7714 runtime=9914H OBSERVED
+PLI2_7717: DCX H ; HL = (HL - 1) & FFFF; flags preserved ; +7717 runtime=9917H OBSERVED
+PLI2_7718: DCX H ; HL = (HL - 1) & FFFF; flags preserved ; +7718 runtime=9918H OBSERVED
+PLI2_7719: MOV B,H ; B = H ; +7719 runtime=9919H OBSERVED
+PLI2_771A: MOV C,L ; C = L ; +771A runtime=991AH OBSERVED
+PLI2_771B: CALL 12E5H ; push following PC; invoke PLI.COM+11E5; result effects belong to callee ; +771B runtime=991BH OBSERVED
+; @block-pseudo 771E
+; pseudo:
+; | initialize length scan; unobserved trimming path stays RAW
+PLI2_771E: LXI H,0ADEEH ; HL = &chain_length (ADEEH) ; +771E runtime=991EH OBSERVED
+PLI2_7721: MVI M,04H ; byte[chain_length (ADEEH)] = 04H ; +7721 runtime=9921H OBSERVED
+PLI2_7723: LHLD 0ADEEH ; L = byte[chain_length (ADEEH)]; H = byte[ADEFH] ; +7723 runtime=9923H OBSERVED
+PLI2_7726: MVI H,00H ; HL = zero_extend(L); flags preserved ; +7726 runtime=9926H OBSERVED
+PLI2_7728: XCHG ; swap HL and DE; flags preserved ; +7728 runtime=9928H OBSERVED
+PLI2_7729: LHLD 0ADEAH ; HL = little_endian_word[chain_input_pointer (ADEAH)] ; +7729 runtime=9929H OBSERVED
+PLI2_772C: DAD D ; HL = (HL + DE) & FFFF; only CY changes ; +772C runtime=992CH OBSERVED
+PLI2_772D: MOV A,M ; A = byte[HL] ; +772D runtime=992DH OBSERVED
+PLI2_772E: SUI 20H ; A = (A - 20H) & FF; arithmetic flags updated ; +772E runtime=992EH OBSERVED
+PLI2_7730: SUI 01H ; A = (A - 01H) & FF; arithmetic flags updated ; +7730 runtime=9930H OBSERVED
+PLI2_7732: SBB A ; A = (old_CY ? FF : 00); byte arithmetic flags ; +7732 runtime=9932H OBSERVED
+PLI2_7733: PUSH PSW ; SP -= 2; push A with packed flags (PSW) little-endian ; +7733 runtime=9933H OBSERVED
+PLI2_7734: LDA 0ADEEH ; A = byte[chain_length (ADEEH)] ; +7734 runtime=9934H OBSERVED
+PLI2_7737: SUI 00H ; A = (A - 00H) & FF; arithmetic flags updated ; +7737 runtime=9937H OBSERVED
+PLI2_7739: ADI 0FFH ; A = (A + FFH) & FF; arithmetic flags updated ; +7739 runtime=9939H OBSERVED
+PLI2_773B: SBB A ; A = (old_CY ? FF : 00); byte arithmetic flags ; +773B runtime=993BH OBSERVED
+PLI2_773C: POP B ; BC = word[SP]; SP += 2 ; +773C runtime=993CH OBSERVED
+PLI2_773D: MOV C,B ; C = B ; +773D runtime=993DH OBSERVED
+PLI2_773E: ANA C ; A = A & C; logical byte flags, CY=0 ; +773E runtime=993EH OBSERVED
+PLI2_773F: RAR ; A = (old_CY<<7) | (old_A>>1); CY=old_A bit0; NZPA preserved ; +773F runtime=993FH OBSERVED
+PLI2_7740: JNC 994AH ; if CY=0: PC -> PLI2.OVL+774A; flags preserved ; +7740 runtime=9940H OBSERVED
 ; SECTION [7743,774A) RAW
 PLI2_7743: DB 021H,0EEH,0ADH,035H,0C3H,023H,099H ; +7743 runtime=9943H RAW
 ; SECTION [774A,7764) DECODED
-PLI2_774A: LXI H,0ADEEH ; +774A runtime=994AH OBSERVED
-PLI2_774D: INR M ; +774D runtime=994DH OBSERVED
-PLI2_774E: INR M ; +774E runtime=994EH OBSERVED
-PLI2_774F: LDA 0ADEEH ; +774F runtime=994FH OBSERVED
-PLI2_7752: ADD A ; +7752 runtime=9952H OBSERVED
-PLI2_7753: ADD A ; +7753 runtime=9953H OBSERVED
-PLI2_7754: ADD A ; +7754 runtime=9954H OBSERVED
-PLI2_7755: ADD A ; +7755 runtime=9955H OBSERVED
-PLI2_7756: ADD A ; +7756 runtime=9956H OBSERVED
-PLI2_7757: MOV C,A ; +7757 runtime=9957H OBSERVED
-PLI2_7758: MVI E,03H ; +7758 runtime=9958H OBSERVED
-PLI2_775A: CALL 129EH ; +775A runtime=995AH OBSERVED
-PLI2_775D: LDA 201DH ; +775D runtime=995DH OBSERVED
-PLI2_7760: RAR ; +7760 runtime=9960H OBSERVED
-PLI2_7761: JNC 996FH ; +7761 runtime=9961H OBSERVED
+; @block-pseudo 774A
+; pseudo:
+; | form length bits and pass them to serializer
+PLI2_774A: LXI H,0ADEEH ; HL = &chain_length (ADEEH) ; +774A runtime=994AH OBSERVED
+PLI2_774D: INR M ; byte[chain_length (ADEEH)] = (byte[chain_length (ADEEH)] + 1) & FF; NZPA updated, CY preserved ; +774D runtime=994DH OBSERVED
+PLI2_774E: INR M ; byte[chain_length (ADEEH)] = (byte[chain_length (ADEEH)] + 1) & FF; NZPA updated, CY preserved ; +774E runtime=994EH OBSERVED
+PLI2_774F: LDA 0ADEEH ; A = byte[chain_length (ADEEH)] ; +774F runtime=994FH OBSERVED
+PLI2_7752: ADD A ; A = (A + A) & FF; arithmetic flags updated ; +7752 runtime=9952H OBSERVED
+PLI2_7753: ADD A ; A = (A + A) & FF; arithmetic flags updated ; +7753 runtime=9953H OBSERVED
+PLI2_7754: ADD A ; A = (A + A) & FF; arithmetic flags updated ; +7754 runtime=9954H OBSERVED
+PLI2_7755: ADD A ; A = (A + A) & FF; arithmetic flags updated ; +7755 runtime=9955H OBSERVED
+PLI2_7756: ADD A ; A = (A + A) & FF; arithmetic flags updated ; +7756 runtime=9956H OBSERVED
+PLI2_7757: MOV C,A ; C = A ; +7757 runtime=9957H OBSERVED
+PLI2_7758: MVI E,03H ; E = 03H ; +7758 runtime=9958H OBSERVED
+PLI2_775A: CALL 129EH ; push following PC; invoke PLI.COM+119E; result effects belong to callee ; +775A runtime=995AH OBSERVED
+PLI2_775D: LDA 201DH ; A = byte[emitter_mode_201D (201DH)] ; +775D runtime=995DH OBSERVED
+PLI2_7760: RAR ; A = (old_CY<<7) | (old_A>>1); CY=old_A bit0; NZPA preserved ; +7760 runtime=9960H OBSERVED
+PLI2_7761: JNC 996FH ; if CY=0: PC -> PLI2.OVL+776F; flags preserved ; +7761 runtime=9961H OBSERVED
 ; SECTION [7764,776F) RAW
 PLI2_7764: DB 0CDH,04DH,096H,00EH,03FH,0CDH,090H,004H,0C3H,079H,099H ; +7764 runtime=9964H RAW
 ; SECTION [776F,7776) DECODED
-PLI2_776F: LDA 201CH ; +776F runtime=996FH OBSERVED
-PLI2_7772: RAR ; +7772 runtime=9972H OBSERVED
-PLI2_7773: JNC 9979H ; +7773 runtime=9973H OBSERVED
+PLI2_776F: LDA 201CH ; A = byte[emitter_mode_201C (201CH)] ; +776F runtime=996FH OBSERVED
+PLI2_7772: RAR ; A = (old_CY<<7) | (old_A>>1); CY=old_A bit0; NZPA preserved ; +7772 runtime=9972H OBSERVED
+PLI2_7773: JNC 9979H ; if CY=0: PC -> PLI2.OVL+7779; flags preserved ; +7773 runtime=9973H OBSERVED
 ; SECTION [7776,7779) RAW
 PLI2_7776: DB 0CDH,05AH,096H ; +7776 runtime=9976H RAW
 ; SECTION [7779,77B0) DECODED
-PLI2_7779: MVI E,08H ; +7779 runtime=9979H OBSERVED
-PLI2_777B: MVI C,3FH ; +777B runtime=997BH OBSERVED
-PLI2_777D: CALL 129EH ; +777D runtime=997DH OBSERVED
-PLI2_7780: LXI H,0ADECH ; +7780 runtime=9980H OBSERVED
-PLI2_7783: MVI M,00H ; +7783 runtime=9983H OBSERVED
-PLI2_7785: LDA 0ADEEH ; +7785 runtime=9985H OBSERVED
-PLI2_7788: DCR A ; +7788 runtime=9988H OBSERVED
-PLI2_7789: DCR A ; +7789 runtime=9989H OBSERVED
-PLI2_778A: LXI H,0ADECH ; +778A runtime=998AH OBSERVED
-PLI2_778D: CMP M ; +778D runtime=998DH OBSERVED
-PLI2_778E: JC 99BEH ; +778E runtime=998EH OBSERVED
-PLI2_7791: LHLD 0ADECH ; +7791 runtime=9991H OBSERVED
-PLI2_7794: MVI H,00H ; +7794 runtime=9994H OBSERVED
-PLI2_7796: XCHG ; +7796 runtime=9996H OBSERVED
-PLI2_7797: LHLD 0ADEAH ; +7797 runtime=9997H OBSERVED
-PLI2_779A: DAD D ; +779A runtime=999AH OBSERVED
-PLI2_779B: MOV A,M ; +779B runtime=999BH OBSERVED
-PLI2_779C: STA 0ADEDH ; +779C runtime=999CH OBSERVED
-PLI2_779F: MOV C,A ; +779F runtime=999FH OBSERVED
-PLI2_77A0: MVI E,08H ; +77A0 runtime=99A0H OBSERVED
-PLI2_77A2: CALL 129EH ; +77A2 runtime=99A2H OBSERVED
-PLI2_77A5: LDA 201CH ; +77A5 runtime=99A5H OBSERVED
-PLI2_77A8: LXI H,201DH ; +77A8 runtime=99A8H OBSERVED
-PLI2_77AB: ORA M ; +77AB runtime=99ABH OBSERVED
-PLI2_77AC: RAR ; +77AC runtime=99ACH OBSERVED
-PLI2_77AD: JNC 99B7H ; +77AD runtime=99ADH OBSERVED
+; @block-pseudo 7779
+; pseudo:
+; | emit prefix and initialize byte loop
+PLI2_7779: MVI E,08H ; E = 08H ; +7779 runtime=9979H OBSERVED
+PLI2_777B: MVI C,3FH ; C = 3FH ; +777B runtime=997BH OBSERVED
+PLI2_777D: CALL 129EH ; push following PC; invoke PLI.COM+119E; result effects belong to callee ; +777D runtime=997DH OBSERVED
+PLI2_7780: LXI H,0ADECH ; HL = &chain_byte_index (ADECH) ; +7780 runtime=9980H OBSERVED
+PLI2_7783: MVI M,00H ; byte[chain_byte_index (ADECH)] = 00H ; +7783 runtime=9983H OBSERVED
+; @block-pseudo 7785
+; pseudo:
+; | check loop limit
+PLI2_7785: LDA 0ADEEH ; A = byte[chain_length (ADEEH)] ; +7785 runtime=9985H OBSERVED
+PLI2_7788: DCR A ; A = (A - 1) & FF; NZPA updated, CY preserved ; +7788 runtime=9988H OBSERVED
+PLI2_7789: DCR A ; A = (A - 1) & FF; NZPA updated, CY preserved ; +7789 runtime=9989H OBSERVED
+PLI2_778A: LXI H,0ADECH ; HL = &chain_byte_index (ADECH) ; +778A runtime=998AH OBSERVED
+PLI2_778D: CMP M ; flags = compare_unsigned(A, byte[chain_byte_index (ADECH)]); A unchanged ; +778D runtime=998DH OBSERVED
+PLI2_778E: JC 99BEH ; if CY=1: PC -> PLI2.OVL+77BE; flags preserved ; +778E runtime=998EH OBSERVED
+; @block-pseudo 7791
+; pseudo:
+; | load next pointed byte and serialize 8 bits
+PLI2_7791: LHLD 0ADECH ; L = byte[chain_byte_index (ADECH)]; H = byte[chain_byte (ADEDH)] ; +7791 runtime=9991H OBSERVED
+PLI2_7794: MVI H,00H ; HL = zero_extend(L); flags preserved ; +7794 runtime=9994H OBSERVED
+PLI2_7796: XCHG ; swap HL and DE; flags preserved ; +7796 runtime=9996H OBSERVED
+PLI2_7797: LHLD 0ADEAH ; HL = little_endian_word[chain_input_pointer (ADEAH)] ; +7797 runtime=9997H OBSERVED
+PLI2_779A: DAD D ; HL = (HL + DE) & FFFF; only CY changes ; +779A runtime=999AH OBSERVED
+PLI2_779B: MOV A,M ; A = byte[HL] ; +779B runtime=999BH OBSERVED
+PLI2_779C: STA 0ADEDH ; byte[chain_byte (ADEDH)] = A ; +779C runtime=999CH OBSERVED
+PLI2_779F: MOV C,A ; C = A ; +779F runtime=999FH OBSERVED
+PLI2_77A0: MVI E,08H ; E = 08H ; +77A0 runtime=99A0H OBSERVED
+PLI2_77A2: CALL 129EH ; push following PC; invoke PLI.COM+119E; result effects belong to callee ; +77A2 runtime=99A2H OBSERVED
+PLI2_77A5: LDA 201CH ; A = byte[emitter_mode_201C (201CH)] ; +77A5 runtime=99A5H OBSERVED
+PLI2_77A8: LXI H,201DH ; HL = &emitter_mode_201D (201DH) ; +77A8 runtime=99A8H OBSERVED
+PLI2_77AB: ORA M ; A = A | byte[emitter_mode_201D (201DH)]; logical byte flags, CY=0 ; +77AB runtime=99ABH OBSERVED
+PLI2_77AC: RAR ; A = (old_CY<<7) | (old_A>>1); CY=old_A bit0; NZPA preserved ; +77AC runtime=99ACH OBSERVED
+PLI2_77AD: JNC 99B7H ; if CY=0: PC -> PLI2.OVL+77B7; flags preserved ; +77AD runtime=99ADH OBSERVED
 ; SECTION [77B0,77B7) RAW
 PLI2_77B0: DB 02AH,0EDH,0ADH,04DH,0CDH,090H,004H ; +77B0 runtime=99B0H RAW
 ; SECTION [77B7,77BF) DECODED
-PLI2_77B7: LXI H,0ADECH ; +77B7 runtime=99B7H OBSERVED
-PLI2_77BA: INR M ; +77BA runtime=99BAH OBSERVED
-PLI2_77BB: JNZ 9985H ; +77BB runtime=99BBH OBSERVED
-PLI2_77BE: RET ; +77BE runtime=99BEH OBSERVED
+; @block-pseudo 77B7
+; pseudo:
+; | advance loop index; repeat/return
+PLI2_77B7: LXI H,0ADECH ; HL = &chain_byte_index (ADECH) ; +77B7 runtime=99B7H OBSERVED
+PLI2_77BA: INR M ; byte[chain_byte_index (ADECH)] = (byte[chain_byte_index (ADECH)] + 1) & FF; NZPA updated, CY preserved ; +77BA runtime=99BAH OBSERVED
+PLI2_77BB: JNZ 9985H ; if Z=0: PC -> PLI2.OVL+7785; flags preserved ; +77BB runtime=99BBH OBSERVED
+PLI2_77BE: RET ; PC = word[SP]; SP += 2; use the convention in procedure header ; +77BE runtime=99BEH OBSERVED
 ; SECTION [77BF,8225) RAW
 PLI2_77BF: DB 021H,0F2H,0ADH,070H,02BH,071H,02AH,0F1H,0ADH,022H,0EFH,0ADH,0C9H,021H,0F4H,0ADH ; +77BF runtime=99BFH RAW
 PLI2_77CF: DB 070H,02BH,071H,02AH,0F3H,0ADH,022H,09FH,0ACH,023H,023H,07EH,032H,0F5H,0ADH,001H ; +77CF runtime=99CFH RAW
@@ -2673,54 +3070,112 @@ PLI2_81FF: DB 0CDH,017H,09CH,0CDH,0D0H,095H,03AH,01DH,020H,01FH,0D2H,018H,0A4H,0
 PLI2_820F: DB 06FH,096H,02AH,060H,0AEH,04DH,0CDH,04BH,005H,03AH,060H,0AEH,087H,087H,087H,0F6H ; +820F runtime=A40FH RAW
 PLI2_821F: DB 0C7H,04FH,0CDH,057H,097H,0C9H ; +821F runtime=A41FH RAW
 
+; @procedure-v1 PLI2.OVL+8225
 ; ProcedureHypothesis: external CALL reference wrapper
-; OBSERVED entry: PLI2_8225 (runtime A425H); evidence.json seed PLI2.OVL+8225
-; OBSERVED callers: PLI2.OVL+8254
-; OBSERVED runs: FACTOR, FIZZBUZ, MINIMAL, OPTIMIST
-; DEDUCED matched RET: +8247, CALL step 1676402, RET step 1681337; exact stack bytes/slots
-; DEDUCED inputs/effects: C and DE saved at AE61H..AE63H; count/tag 09H
-; OBSERVED downstream runtime helpers: 9BE2H; 9C17H; 95D0H; 976DH; 9901H
-; HYPOTHESIS semantic name: external CALL reference wrapper
-; UNRESOLVED / counterevidence: CALL semantic interpretation remains hypothesis
+; Entry: PLI2_8225 = PLI2.OVL+8225 @ A425H; SHA-256
+;   80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a
+; Extent: HYPOTHESIS [8225,8248) file offsets; overlapping entries: none established
+; Callers: OBSERVED PLI2.OVL+8254 (FACTOR=11, FIZZBUZ=25, MINIMAL=7, OPTIMIST=46)
+; Returns: OBSERVED/DEDUCED ordinary hardware CALL word; observed SP after RET = (entry SP + 2)
+;   mod 65536; PLI2.OVL+8247
+; Inputs: DEDUCED C=tag, DE=pointer
+; Outputs: DEDUCED AE61=tag, word[AE62]=pointer; preparation and emission effects delegated
+; Clobbers: DEDUCED A,BC,DE,HL,flags
+; Memory: DEDUCED reference_tag=AE61H (saved wrapper C); reference_pointer=AE62H (saved wrapper
+;   DE)
+; Direct callees: OBSERVED PLI2.OVL+79E2 @9BE2H; PLI2.OVL+7A17 @9C17H; PLI2.OVL+73D0 @95D0H;
+;   PLI2.OVL+756D @976DH; PLI2.OVL+7701 @9901H
+; Coverage: OBSERVED FACTOR: 11 CALLs; FIZZBUZ: 25 CALLs; MINIMAL: 7 CALLs; OPTIMIST: 46 CALLs;
+;   35/35 bytes represented as instructions; local instruction sequence represented;
+;   dynamic counts do not prove exhaustive input-state coverage
+; Unresolved: Opaque/delegated downstream effects or incomplete historical contract: CALL semantic
+;   interpretation remains hypothesis
+; Contract: DEDUCED (partial; scope: own low-level operation; opaque callees explicitly delegated)
+;   C and DE saved at AE61H..AE63H; count/tag 09H
+; Hypothesis: HYPOTHESIS external CALL reference wrapper
+; Completeness: bounds=stable; control_flow=complete; contract=partial
+; Evidence: evidence.json#seeds/PLI2.OVL+8225
+; Procedure pseudo (operational; byte/word arithmetic wraps):
+;   save tag/pointer; call +79E2,+7A17,+73D0; call +756D(saved_tag,E=9); call
+;   +7701(BC=saved_pointer); RET
+; @end-procedure-v1 PLI2.OVL+8225
 ; SECTION [8225,8248) STRUCTURED
-PLI2_8225: LXI H,0AE63H ; +8225 runtime=A425H OBSERVED
-PLI2_8228: MOV M,D ; +8228 runtime=A428H OBSERVED
-PLI2_8229: DCX H ; +8229 runtime=A429H OBSERVED
-PLI2_822A: MOV M,E ; +822A runtime=A42AH OBSERVED
-PLI2_822B: DCX H ; +822B runtime=A42BH OBSERVED
-PLI2_822C: MOV M,C ; +822C runtime=A42CH OBSERVED
-PLI2_822D: CALL 9BE2H ; +822D runtime=A42DH OBSERVED
-PLI2_8230: CALL 9C17H ; +8230 runtime=A430H OBSERVED
-PLI2_8233: CALL 95D0H ; +8233 runtime=A433H OBSERVED
-PLI2_8236: LHLD 0AE61H ; +8236 runtime=A436H OBSERVED
-PLI2_8239: MOV C,L ; +8239 runtime=A439H OBSERVED
-PLI2_823A: MVI E,09H ; +823A runtime=A43AH OBSERVED
-PLI2_823C: CALL 976DH ; +823C runtime=A43CH OBSERVED
-PLI2_823F: LHLD 0AE62H ; +823F runtime=A43FH OBSERVED
-PLI2_8242: MOV B,H ; +8242 runtime=A442H OBSERVED
-PLI2_8243: MOV C,L ; +8243 runtime=A443H OBSERVED
-PLI2_8244: CALL 9901H ; +8244 runtime=A444H OBSERVED
-PLI2_8247: RET ; +8247 runtime=A447H OBSERVED
+; @block-pseudo 8225
+; pseudo:
+; | save tag and pointer before preparation calls
+PLI2_8225: LXI H,0AE63H ; HL = AE63H ; +8225 runtime=A425H OBSERVED
+PLI2_8228: MOV M,D ; byte[AE63H] = D ; +8228 runtime=A428H OBSERVED
+PLI2_8229: DCX H ; HL = (HL - 1) & FFFF; flags preserved ; +8229 runtime=A429H OBSERVED
+PLI2_822A: MOV M,E ; byte[reference_pointer (AE62H)] = E ; +822A runtime=A42AH OBSERVED
+PLI2_822B: DCX H ; HL = (HL - 1) & FFFF; flags preserved ; +822B runtime=A42BH OBSERVED
+PLI2_822C: MOV M,C ; byte[reference_tag (AE61H)] = C ; +822C runtime=A42CH OBSERVED
+PLI2_822D: CALL 9BE2H ; push following PC; invoke PLI2.OVL+79E2; result effects belong to callee ; +822D runtime=A42DH OBSERVED
+PLI2_8230: CALL 9C17H ; push following PC; invoke PLI2.OVL+7A17; result effects belong to callee ; +8230 runtime=A430H OBSERVED
+PLI2_8233: CALL 95D0H ; push following PC; invoke PLI2.OVL+73D0; result effects belong to callee ; +8233 runtime=A433H OBSERVED
+; @block-pseudo 8236
+; pseudo:
+; | invoke tag/count helper; reload pointer for chain helper
+PLI2_8236: LHLD 0AE61H ; L = byte[reference_tag (AE61H)]; H = byte[reference_pointer (AE62H)] ; +8236 runtime=A436H OBSERVED
+PLI2_8239: MOV C,L ; C = L ; +8239 runtime=A439H OBSERVED
+PLI2_823A: MVI E,09H ; E = 09H ; +823A runtime=A43AH OBSERVED
+PLI2_823C: CALL 976DH ; push following PC; invoke PLI2.OVL+756D; result effects belong to callee ; +823C runtime=A43CH OBSERVED
+PLI2_823F: LHLD 0AE62H ; HL = little_endian_word[reference_pointer (AE62H)] ; +823F runtime=A43FH OBSERVED
+PLI2_8242: MOV B,H ; B = H ; +8242 runtime=A442H OBSERVED
+PLI2_8243: MOV C,L ; C = L ; +8243 runtime=A443H OBSERVED
+PLI2_8244: CALL 9901H ; push following PC; invoke PLI2.OVL+7701; result effects belong to callee ; +8244 runtime=A444H OBSERVED
+PLI2_8247: RET ; PC = word[SP]; SP += 2; use the convention in procedure header ; +8247 runtime=A447H OBSERVED
 
+; @procedure-v1 PLI2.OVL+8248
 ; ProcedureHypothesis: adapter to external CALL reference wrapper
-; OBSERVED entry: PLI2_8248 (runtime A448H); evidence.json seed PLI2.OVL+8248
-; OBSERVED callers: PLI2.OVL+2655, PLI2.OVL+2764, PLI2.OVL+2949, PLI2.OVL+2958, PLI2.OVL+33EF, PLI2.OVL+4310, PLI2.OVL+4333, PLI2.OVL+43B3, PLI2.OVL+683D, PLI2.OVL+6871, PLI2.OVL+687F, PLI2.OVL+692E, PLI2.OVL+6995, PLI2.OVL+6A58, PLI2.OVL+6A98, PLI2.OVL+6AA1, PLI2.OVL+6C22, PLI2.OVL+6C2C, PLI2.OVL+6D25, PLI2.OVL+6D43, PLI2.OVL+6D56, PLI2.OVL+6F0C, PLI2.OVL+6F15, PLI2.OVL+6F4A, PLI2.OVL+6F98, PLI2.OVL+6FB3, PLI2.OVL+700E, PLI2.OVL+701C
-; OBSERVED runs: FACTOR, FIZZBUZ, MINIMAL, OPTIMIST
-; DEDUCED matched RET: +8257, CALL step 1676394, RET step 1681338; exact stack bytes/slots
-; DEDUCED inputs/effects: BC saved at AE64H/AE65H, passed as DE; C=C4H
-; OBSERVED downstream runtime helpers: A425H wrapper
-; HYPOTHESIS semantic name: adapter to external CALL reference wrapper
-; UNRESOLVED / counterevidence: C4H tag meaning remains hypothesis
+; Entry: PLI2_8248 = PLI2.OVL+8248 @ A448H; SHA-256
+;   80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a
+; Extent: HYPOTHESIS [8248,8258) file offsets; overlapping entries: none established
+; Callers: OBSERVED PLI2.OVL+2655 (FACTOR=2); PLI2.OVL+2764 (FACTOR=1); PLI2.OVL+2949 (FACTOR=1,
+;   FIZZBUZ=1, MINIMAL=1, OPTIMIST=1); PLI2.OVL+2958 (FACTOR=1, FIZZBUZ=1, MINIMAL=1);
+;   PLI2.OVL+33EF (FACTOR=1, FIZZBUZ=1); PLI2.OVL+4310 (OPTIMIST=3); PLI2.OVL+4333
+;   (FACTOR=1); PLI2.OVL+43B3 (FIZZBUZ=3); PLI2.OVL+683D (OPTIMIST=1); PLI2.OVL+6871
+;   (FIZZBUZ=3, MINIMAL=1, OPTIMIST=6); PLI2.OVL+687F (OPTIMIST=5); PLI2.OVL+692E
+;   (OPTIMIST=4); PLI2.OVL+6995 (OPTIMIST=2); PLI2.OVL+6A58 (OPTIMIST=2); PLI2.OVL+6A98
+;   (OPTIMIST=2); PLI2.OVL+6AA1 (OPTIMIST=1); PLI2.OVL+6C22 (OPTIMIST=2); PLI2.OVL+6C2C
+;   (OPTIMIST=1); PLI2.OVL+6D25 (OPTIMIST=1); PLI2.OVL+6D43 (OPTIMIST=1); PLI2.OVL+6D56
+;   (OPTIMIST=1); PLI2.OVL+6F0C (OPTIMIST=1); PLI2.OVL+6F15 (FACTOR=1, FIZZBUZ=4,
+;   MINIMAL=1, OPTIMIST=3); PLI2.OVL+6F4A (OPTIMIST=1); PLI2.OVL+6F98 (FACTOR=1,
+;   FIZZBUZ=1); PLI2.OVL+6FB3 (FIZZBUZ=3, MINIMAL=1, OPTIMIST=2); PLI2.OVL+700E (FACTOR=1,
+;   FIZZBUZ=4, MINIMAL=1, OPTIMIST=2); PLI2.OVL+701C (FACTOR=1, FIZZBUZ=4, MINIMAL=1,
+;   OPTIMIST=4)
+; Returns: OBSERVED/DEDUCED ordinary hardware CALL word; observed SP after RET = (entry SP + 2)
+;   mod 65536; PLI2.OVL+8257
+; Inputs: DEDUCED BC=pointer/value passed onward
+; Outputs: DEDUCED word[AE64]=input BC; call +8225(C=C4H,DE=input BC); outputs delegated
+; Clobbers: DEDUCED A,BC,DE,HL,flags
+; Memory: DEDUCED adapter_pointer=AE64H (saved adapter BC)
+; Direct callees: OBSERVED PLI2.OVL+8225 @A425H
+; Coverage: OBSERVED FACTOR: 11 CALLs; FIZZBUZ: 25 CALLs; MINIMAL: 7 CALLs; OPTIMIST: 46 CALLs;
+;   16/16 bytes represented as instructions; local instruction sequence represented;
+;   dynamic counts do not prove exhaustive input-state coverage
+; Unresolved: Opaque/delegated downstream effects or incomplete historical contract: C4H tag
+;   meaning remains hypothesis
+; Contract: DEDUCED (partial; scope: own low-level operation; opaque callees explicitly delegated)
+;   BC saved at AE64H/AE65H, passed as DE; C=C4H
+; Hypothesis: HYPOTHESIS reference-wrapper adapter
+; Completeness: bounds=stable; control_flow=complete; contract=partial
+; Evidence: evidence.json#seeds/PLI2.OVL+8248
+; Procedure pseudo (operational; byte/word arithmetic wraps):
+;   word[AE64]=BC; DE=word[AE64]; C=C4; call +8225; RET
+; @end-procedure-v1 PLI2.OVL+8248
 ; SECTION [8248,8258) STRUCTURED
-PLI2_8248: LXI H,0AE65H ; +8248 runtime=A448H OBSERVED
-PLI2_824B: MOV M,B ; +824B runtime=A44BH OBSERVED
-PLI2_824C: DCX H ; +824C runtime=A44CH OBSERVED
-PLI2_824D: MOV M,C ; +824D runtime=A44DH OBSERVED
-PLI2_824E: LHLD 0AE64H ; +824E runtime=A44EH OBSERVED
-PLI2_8251: XCHG ; +8251 runtime=A451H OBSERVED
-PLI2_8252: MVI C,0C4H ; +8252 runtime=A452H OBSERVED
-PLI2_8254: CALL 0A425H ; +8254 runtime=A454H OBSERVED
-PLI2_8257: RET ; +8257 runtime=A457H OBSERVED
+; @block-pseudo 8248
+; pseudo:
+; | save BC; pass it in DE with fixed C4 tag
+PLI2_8248: LXI H,0AE65H ; HL = AE65H ; +8248 runtime=A448H OBSERVED
+PLI2_824B: MOV M,B ; byte[AE65H] = B ; +824B runtime=A44BH OBSERVED
+PLI2_824C: DCX H ; HL = (HL - 1) & FFFF; flags preserved ; +824C runtime=A44CH OBSERVED
+PLI2_824D: MOV M,C ; byte[adapter_pointer (AE64H)] = C ; +824D runtime=A44DH OBSERVED
+PLI2_824E: LHLD 0AE64H ; HL = little_endian_word[adapter_pointer (AE64H)] ; +824E runtime=A44EH OBSERVED
+PLI2_8251: XCHG ; swap HL and DE; flags preserved ; +8251 runtime=A451H OBSERVED
+PLI2_8252: MVI C,0C4H ; C = C4H ; +8252 runtime=A452H OBSERVED
+PLI2_8254: CALL 0A425H ; push following PC; invoke PLI2.OVL+8225; result effects belong to callee ; +8254 runtime=A454H OBSERVED
+PLI2_8257: RET ; PC = word[SP]; SP += 2; use the convention in procedure header ; +8257 runtime=A457H OBSERVED
 ; SECTION [8258,8400) RAW
 PLI2_8258: DB 021H,067H,0AEH,070H,02BH,071H,0CDH,0D0H,095H,02AH,02CH,01CH,022H,068H,0AEH,02AH ; +8258 runtime=A458H RAW
 PLI2_8268: DB 066H,0AEH,023H,044H,04DH,0CDH,034H,096H,03AH,01DH,020H,01FH,0D2H,088H,0A4H,0CDH ; +8268 runtime=A468H RAW

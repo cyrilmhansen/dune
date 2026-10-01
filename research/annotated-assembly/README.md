@@ -1,4 +1,7 @@
-# Runes annotated assembly V0
+# Runes annotated assembly and readable decompilation
+
+The mandatory [V1 decompilation conventions](CONVENTIONS.md) govern future
+ProcedureHypothesis promotions. Read them before editing these sources.
 
 These four sources accumulate reconstruction of the historical Digital Research
 PL/I-80 v1.4 compiler. The historical binaries remain the authority. Verification
@@ -74,7 +77,7 @@ its position in the evidence array.
 | RAW | Byte-exact source representation only; explicit `DB` directives. |
 | DECODED | Established documented 8080 instruction representation; semantics not structured. |
 | STRUCTURED | Procedure/block/control-flow structure supported by evidence. |
-| UNDERSTOOD | Evidence-backed behavioral contract / semantic description. |
+| UNDERSTOOD | Evidence-backed low-level contract; it may be scoped/partial at procedure level. |
 
 Runtime address equals runtime base plus file offset. PLI.COM's base is `0100H`;
 overlay bases are `2200H`. These were checked against existing Runes canonical
@@ -192,3 +195,10 @@ proof. Unobserved paths and unresolved PCHL handler bodies remain RAW.
 predicate and nine low-level contracts for immediate helpers and the remaining
 priority anchors. Bounds/flags/polling interpretations are explicit, and all
 newly promoted bytes came from existing MINIMAL execution.
+
+V1 supplies standard headers, semantic instruction comments, nearby block
+pseudocode and scoped names in [procedures.json](procedures.json) and
+[data-roles.json](data-roles.json). Procedure bounds/control-flow/contract
+completeness are separate from byte status and enforced by the normal verifier.
+[The review audit](conventions-v1-review.json) qualifies thirteen existing
+UNDERSTOOD hypotheses as partial without changing bytes or byte statuses.

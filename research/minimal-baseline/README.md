@@ -1,6 +1,10 @@
 # MINIMAL baseline: current through pass 2
 
 The [pass-2 report](pass-2/README.md) is the current decompilation result.
+The [V1 annotation review](../annotated-assembly/CONVENTIONS.md) now exposes
+independent procedure completeness and readable local decompilation without
+changing these coverage/status totals.
+
 MINIMAL still executes **21,012 image bytes**: **18,991 RAW, 304 DECODED,
 862 STRUCTURED, 855 UNDERSTOOD**. This pass raises understood CALL entries
 **21→30**, with 9 STRUCTURED and 352 unresolved CALL entries, plus eleven separate
