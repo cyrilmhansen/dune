@@ -65,6 +65,19 @@ class AnnotatedAssemblyTests(unittest.TestCase):
         with self.assertRaisesRegex(v.VerificationError, 'original section SHA-256 mismatch'):
             v.verify(root / 'manifest.json', root)
 
+    def test_coordinate_only_label_mapping_is_verified(self):
+        root = self.fixture()
+        image = next(i for i in self.manifest['images'] if i.get('coordinate_only_labels'))
+        offset = image['coordinate_only_labels'][0]
+        address = image['runtime_base'] + offset
+        source = root / image['source']
+        source.write_text(source.read_text().replace(
+            f'{image["label_prefix"]}_{offset:04X}: EQU 0{address:04X}H',
+            f'{image["label_prefix"]}_{offset:04X}: EQU 0{address + 1:04X}H', 1))
+        # No emitted byte changes; a one-byte coordinate shift must still fail.
+        with self.assertRaisesRegex(v.VerificationError, 'coordinate-only label mapping'):
+            v.verify(root / 'manifest.json', IMAGES)
+
     def test_manifest_gap_and_overlap(self):
         for delta in (-1, 1):
             with self.subTest(delta=delta):

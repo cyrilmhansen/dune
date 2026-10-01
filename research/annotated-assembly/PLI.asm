@@ -308,10 +308,10 @@ PLI_05F0: DB 059H,0C2H,0F7H,006H,0CDH,021H,006H ; +05F0 runtime=06F0H RAW
 ; pseudo:
 ; | return on observed no-key path; intervening key-present body RAW
 PLI_05F7: RET ; PC = word[SP]; SP += 2; use the convention in procedure header ; +05F7 runtime=06F7H OBSERVED
-; SECTION [05F8,070C) RAW
 
 ; OBSERVED: separate CALL entry (11); invokes +05B2 then +03E9, RET +05FE.
 ; HYPOTHESIS: larger parent operation; its body remains unresolved/RAW.
+; SECTION [05F8,070C) RAW
 PLI_05F8: DB 0CDH,0B2H,006H,0CDH,0E9H,004H,0C9H,021H ; +05F8 runtime=06F8H RAW
 PLI_0600: DB 080H,020H,070H,02BH,071H,0CDH,0F8H,006H,02AH,07FH,020H,044H,04DH,0CDH,0F4H,004H ; +0600 runtime=0700H RAW
 PLI_0610: DB 0C9H,021H,082H,020H,070H,02BH,071H,001H,02EH,01CH,011H,081H,020H,0CDH,033H,01BH ; +0610 runtime=0710H RAW
@@ -664,12 +664,80 @@ PLI_0AE0: LDA 2098H ; A = byte[raw_input_byte (2098H)] ; +0AE0 runtime=0BE0H OBS
 PLI_0AE3: ANI 7FH ; A = A & 7FH; logical byte flags, CY=0 ; +0AE3 runtime=0BE3H OBSERVED
 PLI_0AE5: STA 2099H ; byte[masked_input_byte (2099H)] = A ; +0AE5 runtime=0BE5H OBSERVED
 PLI_0AE8: RET ; PC = word[SP]; SP += 2; use the convention in procedure header ; +0AE8 runtime=0BE8H OBSERVED
-; SECTION [0AE9,0D40) RAW
+; SECTION [0AE9,0AF5) RAW
 PLI_0AE9: DB 0CDH,0A9H,00BH,03AH,098H,020H,032H ; +0AE9 runtime=0BE9H RAW
-PLI_0AF0: DB 00EH,020H,0E6H,07FH,0C9H,03AH,008H,020H,0FEH,000H,0C2H,006H,00CH,0CDH,0CBH,00AH ; +0AF0 runtime=0BF0H RAW
-PLI_0B00: DB 032H,09AH,020H,0C3H,019H,00CH,02AH,009H,020H,026H,000H,001H,009H,01FH,009H,07EH ; +0B00 runtime=0C00H RAW
-PLI_0B10: DB 032H,09AH,020H,021H,008H,020H,035H,023H,034H,03AH,09AH,020H,0FEH,01AH,0C2H,026H ; +0B10 runtime=0C10H RAW
-PLI_0B20: DB 00CH,021H,012H,020H,036H,001H,03AH,09AH,020H,0C9H,03AH,00AH,020H,01FH,0D2H,080H ; +0B20 runtime=0C20H RAW
+PLI_0AF0: DB 00EH,020H,0E6H,07FH,0C9H ; +0AF0 runtime=0BF0H RAW
+
+; @procedure-v1 PLI.COM+0AF5
+; ProcedureHypothesis: cached filtered-byte fetch with EOF assignment
+; Entry: PLI_0AF5 = PLI.COM+0AF5 @ 0BF5H; SHA-256
+;   c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80
+; Extent: HYPOTHESIS [0AF5,0B2A) file offsets; overlapping entries: none established
+; Callers: OBSERVED PLI.COM+0D55 (MINIMAL=11); PLI.COM+0DF2 (MINIMAL=188)
+; Returns: OBSERVED/DEDUCED ordinary hardware CALL word; original slot unchanged, SP after RET =
+;   entry SP + 2; PLI.COM+0B29
+; Inputs: DEDUCED byte[2008]=0 for witnessed source path; input registers unused locally; filter
+;   +09CB state/preconditions delegated
+; Outputs: DEDUCED A=cached filter byte; BC/DE follow +09CB. On A=1A, HL=2012; otherwise HL
+;   follows +09CB. Flags are from CPI 1A, not from returned A
+; Clobbers: DEDUCED A,BC,DE,HL,flags through filter; original return slot preserved
+; Memory: DEDUCED source_selector=2008H (zero selects +09CB; nonzero path unprocessed);
+;   reader_eof_flags=2012H (bit0 gates 1A return); cached_source_byte=209AH (+0AF5 saved
+;   filtered byte before EOF comparison)
+; Direct callees: OBSERVED PLI.COM+09CB @0ACBH
+; Coverage: OBSERVED MINIMAL: 199 CALLs; 34/53 bytes represented as instructions; 199 calls:
+;   2008=0 throughout; 195 non-EOF bytes, four EOFs with assignment 2012=1; both EOF
+;   branch outcomes observed
+; Unresolved: 2008!=0 alternate-source branch +0B06..+0B18 remains RAW; source-selection semantics
+;   unresolved. Filter effects are scoped to existing +09CB contract; no universal
+;   callee-save ABI.
+; Contract: DEDUCED (partial; scope: 2008=0 and the existing MINIMAL +09CB filter paths) Call
+;   +09CB, store its A at 209A, compare the cached byte with 1A. If equal, assign
+;   byte[2012]=1 (not OR with prior flags); reload cached byte into A and return. Own data
+;   writes are only 209A and conditional 2012; nested filter effects delegated.
+; Hypothesis: HYPOTHESIS byte-source selection wrapper; no additional source-language role
+; Completeness: bounds=provisional; control_flow=partial; contract=partial
+; Evidence: evidence.json#seeds/PLI.COM+0AF5; ../minimal-baseline/pass-3/regions.json#PLI.COM+0AF5
+; Procedure pseudo (operational; byte/word arithmetic wraps):
+;   scope byte[2008]==0: fetched=call09CB(); byte[209A]=fetched; flags=compare(fetched,1A); if
+;   fetched==1A: byte[2012]=1; return byte[209A]
+; @end-procedure-v1 PLI.COM+0AF5
+; SECTION [0AF5,0B06) UNDERSTOOD
+; @block-pseudo 0AF5
+; pseudo:
+; | if source_selector[2008H]!=0: unresolved alternate source
+; | otherwise cached_byte[209AH]=call09CB()
+PLI_0AF5: LDA 2008H ; A = source_selector (2008H); zero selects the established filter chain ; +0AF5 runtime=0BF5H OBSERVED
+PLI_0AF8: CPI 00H ; flags = compare_unsigned(A, 00H); A unchanged ; +0AF8 runtime=0BF8H OBSERVED
+PLI_0AFA: JNZ 0C06H ; if Z=0: PC -> PLI.COM+0B06; flags preserved ; +0AFA runtime=0BFAH OBSERVED
+PLI_0AFD: CALL 0ACBH ; invoke scoped filtered-byte chain +09CB; returned A is cached next ; +0AFD runtime=0BFDH OBSERVED
+; @block-pseudo 0B00
+; pseudo:
+; | save fetched A; jump over unobserved alternate source
+PLI_0B00: STA 209AH ; cached_source_byte (209AH) = returned filtered byte; preserve callee registers ; +0B00 runtime=0C00H OBSERVED
+PLI_0B03: JMP 0C19H ; if always: PC -> PLI.COM+0B19; flags preserved ; +0B03 runtime=0C03H OBSERVED
+; SECTION [0B06,0B19) RAW
+PLI_0B06: DB 02AH,009H,020H,026H,000H,001H,009H,01FH,009H,07EH ; +0B06 runtime=0C06H RAW
+PLI_0B10: DB 032H,09AH,020H,021H,008H,020H,035H,023H,034H ; +0B10 runtime=0C10H RAW
+; SECTION [0B19,0B2A) UNDERSTOOD
+; @block-pseudo 0B19
+; pseudo:
+; | compare cached_byte[209AH] with 1A; EOF assigns eof_flags[2012H]=1
+PLI_0B19: LDA 209AH ; A = cached_source_byte (209AH); reuse exactly the filtered byte ; +0B19 runtime=0C19H OBSERVED
+PLI_0B1C: CPI 1AH ; flags = compare_unsigned(A, 1AH); A unchanged ; +0B1C runtime=0C1CH OBSERVED
+PLI_0B1E: JNZ 0C26H ; if Z=0: PC -> PLI.COM+0B26; flags preserved ; +0B1E runtime=0C1EH OBSERVED
+; @block-pseudo 0B21
+; pseudo:
+; | EOF: replace eof_flags[2012H] with 1
+PLI_0B21: LXI H,2012H ; HL = &reader_eof_flags (2012H) ; +0B21 runtime=0C21H OBSERVED
+PLI_0B24: MVI M,01H ; reader_eof_flags (2012H) = 1; replace whole byte, do not OR old bits ; +0B24 runtime=0C24H OBSERVED
+; @block-pseudo 0B26
+; pseudo:
+; | reload cached_byte[209AH]; preserve comparison flags; return
+PLI_0B26: LDA 209AH ; A = cached_source_byte (209AH); load preserves EOF comparison flags ; +0B26 runtime=0C26H OBSERVED
+PLI_0B29: RET ; return cached byte; NZPA/CY remain from comparison with 1AH ; +0B29 runtime=0C29H OBSERVED
+; SECTION [0B2A,0D40) RAW
+PLI_0B2A: DB 03AH,00AH,020H,01FH,0D2H,080H ; +0B2A runtime=0C2AH RAW
 PLI_0B30: DB 00CH,021H,000H,000H,022H,040H,020H,001H,038H,020H,0CDH,0FFH,006H,03AH,00FH,020H ; +0B30 runtime=0C30H RAW
 PLI_0B40: DB 0FEH,002H,0C2H,055H,00CH,02AH,02CH,01CH,044H,04DH,0CDH,066H,005H,00EH,020H,0CDH ; +0B40 runtime=0C40H RAW
 PLI_0B50: DB 090H,004H,0C3H,05BH,00CH,001H,0F9H,001H,0CDH,0F4H,004H,021H,09BH,020H,036H,000H ; +0B50 runtime=0C50H RAW
@@ -2008,4 +2076,7 @@ PLI_1F47: DB 020H,020H,020H,020H,045H,052H,052H,04FH,052H,028H,053H,029H,020H,04
 PLI_1F57: DB 050H,041H,053H,053H,020H,020H,024H,01AH,01AH,01AH,01AH,01AH,01AH,01AH,01AH,01AH ; +1F57 runtime=2057H RAW
 PLI_1F67: DB 01AH,01AH,01AH,01AH,01AH,01AH,01AH,01AH,01AH,01AH,01AH,01AH,01AH,01AH,01AH,01AH ; +1F67 runtime=2067H RAW
 PLI_1F77: DB 01AH,01AH,01AH,01AH,01AH,01AH,01AH,01AH,01AH ; +1F77 runtime=2077H RAW
+
+; Prior RAW row labels retained as coordinates inside newly represented instructions.
+PLI_0B20: EQU 00C20H ; +0B20 runtime=0C20H coordinate-only label
     END

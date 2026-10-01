@@ -1,28 +1,32 @@
-# MINIMAL baseline: current through pass 2
+# MINIMAL baseline: current through pass 3
 
-The [pass-2 report](pass-2/README.md) is the current decompilation result.
+The [pass-3 report](pass-3/README.md) is the current decompilation result.
 The [V1 annotation review](../annotated-assembly/CONVENTIONS.md) now exposes
 independent procedure completeness and readable local decompilation without
 changing these coverage/status totals.
 
-MINIMAL still executes **21,012 image bytes**: **18,991 RAW, 304 DECODED,
-862 STRUCTURED, 855 UNDERSTOOD**. This pass raises understood CALL entries
-**21→30**, with 9 STRUCTURED and 352 unresolved CALL entries, plus eleven separate
+MINIMAL still executes **21,012 image bytes**: **18,018 RAW, 304 DECODED,
+1,523 STRUCTURED, 1,167 UNDERSTOOD**. Pass 3 raises understood CALL entries
+**30→36**, with 10 STRUCTURED and 345 unresolved CALL entries, plus eleven separate
 unresolved PCHL entries (402 callable coordinates total). All 94,720 image bytes
 remain exact.
 
 Current intersections/classifications are in [coverage.json](coverage.json),
 [instructions.jsonl](instructions.jsonl), and [inventory.json](inventory.json).
-The pass establishes the descriptor predicate mechanically, explains its two
-MINIMAL rejections versus OPTIMIST acceptance examples, and recovers scoped
-lookup, cursor, buffer, allocator and polling contracts. It lists the next five
-MINIMAL targets. FIZZBUZ delta facts below remain unchanged; no FIZZBUZ code was
-decompiled in either pass.
+Pass 3 adds seven readable V1 hypotheses: cached fetch, mapped-table fold/getter/
+setter, a nonzero-pointer Boolean and a recursive 18-byte-frame operation.
+The independent [dynamic metric](pass-3/dynamic-progress.json) records 439,998
+historical-image instruction occurrences: 125,545 (28.5331%) now execute inside
+UNDERSTOOD bytes. The 1,857 modeled host BDOS RETs are outside that denominator.
+Important high-frequency MINIMAL code remains RAW. The pass report gives the
+next five targets; FIZZBUZ delta facts below remain unchanged and no FIZZBUZ
+decompilation has begun.
 
 The following is the **historical V0 record at 6c77397**. Its status tables and
 priorities describe that snapshot; later snapshots are in
 [pass-1/progress.json](pass-1/progress.json) and
-[pass-2/progress.json](pass-2/progress.json).
+[pass-2/progress.json](pass-2/progress.json) and
+[pass-3/progress.json](pass-3/progress.json).
 
 # Historical MINIMAL decompilation baseline V0
 

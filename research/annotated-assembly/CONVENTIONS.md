@@ -12,6 +12,12 @@ remain in evidence JSON/reports.
   separate coordinate, with the verified load base retained.
 - Preserve address labels such as `PLI2_047D`. Semantic names supplement them.
   Secondary entries and shared tails keep distinct stable identities.
+- When a prior RAW-row label lands inside a newly established instruction's
+  operand bytes, retain it as a numeric coordinate-only `EQU`. List its file
+  offset in the image's `coordinate_only_labels` manifest array. It emits no
+  bytes and asserts no instruction entry; the verifier checks its stable name,
+  literal runtime value and coordinate comment. Do not introduce semantic EQUs
+  or substitute these labels for observed instruction starts.
 - Preserve original opcode encodings, operands, raw directives and bytes. Do
   not canonicalize undocumented aliases or promote data/unprocessed paths.
 - Section intervals remain nonoverlapping and gap-free. Whole-image equality

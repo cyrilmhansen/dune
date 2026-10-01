@@ -202,3 +202,10 @@ pseudocode and scoped names in [procedures.json](procedures.json) and
 completeness are separate from byte status and enforced by the normal verifier.
 [The review audit](conventions-v1-review.json) qualifies thirteen existing
 UNDERSTOOD hypotheses as partial without changing bytes or byte statuses.
+
+MINIMAL [pass 3](../minimal-baseline/pass-3/README.md) adds seven V1 hypotheses,
+312 UNDERSTOOD and 661 STRUCTURED executed bytes. Its mapped-table roles and
+recursive local-frame structure retain explicit partial contracts. The baseline
+also reports instruction-occurrence status independently of static byte coverage.
+Coordinate-only numeric EQU labels retain prior RAW-row identities that now
+fall inside operands; their mapping is verified without emitting bytes.

@@ -94,6 +94,17 @@ def check_source(image, source, assembly, seeds):
     section_index = 0
     for row in assembly['listing']['code']:
         if not row.get('bytes'):
+            if row.get('op') == 'equ':
+                match = re.fullmatch(rf'{image["label_prefix"]}_([0-9A-F]{{4}})', row.get('label', ''))
+                require(match is not None, f'{image["name"]}: unsupported EQU symbol')
+                offset = int(match[1], 16)
+                require(offset in image.get('coordinate_only_labels', []) and
+                        re.fullmatch(r'[0-9A-F]+H', row['arg1']['text'].upper()) and
+                        row['arg1']['value'] == base + offset and
+                        symbols[row['label']] == f'{base + offset:04X}' and
+                        re.search(rf'\+{offset:04X} runtime={base + offset:04X}H\b', row.get('comment', '')),
+                        f'{image["name"]}: coordinate-only label mapping mismatch')
+                continue
             require(row.get('op') in (None, 'org', 'end'), f'{image["name"]}: unsupported layout directive')
             continue
         while cursor >= image['sections'][section_index]['end_offset']:
@@ -118,6 +129,10 @@ def check_source(image, source, assembly, seeds):
             require(normal_mnemonic(statement) == normal_mnemonic(fact['decoded']), f'{where}: mnemonic differs from evidence')
         cursor += len(raw)
     require(cursor == image['length'], f'{image["name"]}: source listing gap')
+    for offset in image.get('coordinate_only_labels', []):
+        label = f'{image["label_prefix"]}_{offset:04X}'
+        require(0 <= offset < image['length'] and symbols.get(label) == f'{base + offset:04X}',
+                f'{image["name"]}: retained coordinate label {label} missing/mismapped')
     return rebuilt
 
 

@@ -2,7 +2,7 @@
 ; Image SHA-256: 1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564
 ; Labels use FILE offsets, not runtime addresses. Manifest ends are exclusive.
     ORG 02200H
-; SECTION [0000,4394) RAW
+; SECTION [0000,4281) RAW
 PLI1_0000: DB 0C3H,0E9H,022H,050H,04CH,02FH,049H,02DH,038H,030H,020H,056H,031H,02EH,034H,020H ; +0000 runtime=2200H RAW
 PLI1_0010: DB 053H,045H,052H,049H,041H,04CH,020H,04EH,04FH,02EH,020H,033H,030H,033H,032H,02DH ; +0010 runtime=2210H RAW
 PLI1_0020: DB 030H,030H,030H,030H,02DH,030H,030H,031H,031H,033H,030H,020H,043H,04FH,050H,059H ; +0020 runtime=2220H RAW
@@ -1067,7 +1067,58 @@ PLI1_4240: DB 0C9H,02AH,063H,0A8H,05EH,016H,000H,02AH,063H,0A8H,019H,022H,063H,0
 PLI1_4250: DB 0F2H,0A8H,071H,0CDH,041H,064H,0EBH,021H,061H,0A8H,0CDH,0A3H,0A5H,0D2H,06EH,064H ; +4250 runtime=6450H RAW
 PLI1_4260: DB 0CDH,01FH,064H,021H,0F2H,0A8H,0BEH,0C2H,06BH,064H,0C9H,0C3H,053H,064H,021H,000H ; +4260 runtime=6460H RAW
 PLI1_4270: DB 000H,022H,063H,0A8H,0C9H,001H,0ABH,0A8H,011H,063H,0A8H,0CDH,033H,01BH,09FH,02FH ; +4270 runtime=6470H RAW
-PLI1_4280: DB 0C9H,03EH,000H,011H,063H,0A8H,0CDH,040H,01BH,0B5H,0C6H,0FFH,09FH,0C9H,001H,008H ; +4280 runtime=6480H RAW
+PLI1_4280: DB 0C9H ; +4280 runtime=6480H RAW
+
+; @procedure-v1 PLI1.OVL+4281
+; ProcedureHypothesis: current-record pointer nonzero Boolean
+; Entry: PLI1_4281 = PLI1.OVL+4281 @ 6481H; SHA-256
+;   1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564
+; Extent: HYPOTHESIS [4281,428E) file offsets; overlapping entries: none established
+; Callers: OBSERVED PLI1.OVL+44E0 (MINIMAL=2); PLI1.OVL+4668 (MINIMAL=1); PLI1.OVL+46B2
+;   (MINIMAL=1); PLI1.OVL+470B (MINIMAL=4); PLI1.OVL+471C (MINIMAL=2); PLI1.OVL+4743
+;   (MINIMAL=1)
+; Returns: OBSERVED/DEDUCED ordinary hardware CALL word; original slot unchanged, SP after RET =
+;   entry SP + 2; PLI1.OVL+428D
+; Inputs: DEDUCED little-endian word[current_record A863H]; register inputs ignored except BC
+;   preserved
+; Outputs: DEDUCED HL=word[A863], DE=A864, BC preserved, A=FF and CY=1 iff pointer nonzero;
+;   otherwise A=0/CY=0; S/Z/P describe Boolean byte, AC follows self-SBB
+; Clobbers: DEDUCED A,DE,HL,flags; no data stores; nested +1A40 slot only
+; Memory: DEDUCED current_record=A863H (record pointer used by reviewed construction/repair)
+; Direct callees: OBSERVED PLI.COM+1A40 @1B40H
+; Coverage: OBSERVED MINIMAL: 11 CALLs; 13/13 bytes represented as instructions; eleven calls from
+;   six sites; six nonzero results FF/CY=1 and five zero results 00/CY=0; branchless
+;   Boolean sequence
+; Unresolved: MINIMAL observes both zero/nonzero pointers; no source-level meaning for pointer
+;   validity. Nonzero is not a bounds/tag validity check.
+; Contract: DEDUCED (complete; scope: documented local operation; word/return stack do not alias)
+;   Set A=0 and DE=A863; +1A40 loads word[A863] minus zero. OR low result into A=high
+;   result; ADI FF sets carry iff either byte nonzero; SBB A converts carry into FF or 00
+;   and retains the Boolean carry. Ordinary CALL/RET; no argument consumption or
+;   continuation rewrite.
+; Hypothesis: HYPOTHESIS record-presence predicate, not complete record validation
+; Completeness: bounds=stable; control_flow=complete; contract=complete
+; Evidence: evidence.json#seeds/PLI1.OVL+4281;
+;   ../minimal-baseline/pass-3/regions.json#PLI1.OVL+4281
+; Procedure pseudo (operational; byte/word arithmetic wraps):
+;   HL=word[A863]; q=hi(HL)|lo(HL); CY=(q!=0); A=CY?FF:00; RET
+; @end-procedure-v1 PLI1.OVL+4281
+; SECTION [4281,428E) UNDERSTOOD
+; @block-pseudo 4281
+; pseudo:
+; | load current_record[A863H] via word-minus-zero primitive +1A40
+PLI1_4281: MVI A,00H ; A = 0 for word-minus-zero adapter; pointer is loaded without subtraction ; +4281 runtime=6481H OBSERVED
+PLI1_4283: LXI D,0A863H ; DE = &current_record (A863H) ; +4283 runtime=6483H OBSERVED
+PLI1_4286: CALL 1B40H ; push following PC; invoke PLI.COM+1A40; result effects belong to callee ; +4286 runtime=6486H OBSERVED
+; @block-pseudo 4289
+; pseudo:
+; | collapse both pointer bytes; return nonzero Boolean in A and CY
+PLI1_4289: ORA L ; A = high(current_record) | low(current_record); detect either nonzero byte ; +4289 runtime=6489H OBSERVED
+PLI1_428A: ADI 0FFH ; A = u8(combined_byte - 1); CY = (combined_byte != 0) ; +428A runtime=648AH OBSERVED
+PLI1_428C: SBB A ; A = CY ? FFH : 00H; CY retains nonzero predicate; NZPA from self-SBB ; +428C runtime=648CH OBSERVED
+PLI1_428D: RET ; PC = word[SP]; SP += 2; use the convention in procedure header ; +428D runtime=648DH OBSERVED
+; SECTION [428E,4394) RAW
+PLI1_428E: DB 001H,008H ; +428E runtime=648EH RAW
 PLI1_4290: DB 000H,02AH,063H,0A8H,009H,05EH,023H,056H,0EBH,022H,063H,0A8H,0C9H,0CDH,09FH,063H ; +4290 runtime=6490H RAW
 PLI1_42A0: DB 032H,0F3H,0A8H,0CDH,0A6H,063H,032H,0F4H,0A8H,001H,004H,000H,02AH,063H,0A8H,009H ; +42A0 runtime=64A0H RAW
 PLI1_42B0: DB 07EH,032H,0F5H,0A8H,03AH,0F3H,0A8H,0FEH,015H,0C2H,0C6H,064H,03AH,0F5H,0A8H,0E6H ; +42B0 runtime=64B0H RAW
@@ -2522,9 +2573,9 @@ PLI1_839C: MOV A,D ; A = D ; +839C runtime=A59CH OBSERVED
 PLI1_839D: SBB B ; A = (A - B - old_CY) & FF; arithmetic flags updated ; +839D runtime=A59DH OBSERVED
 PLI1_839E: MOV H,A ; H = A ; +839E runtime=A59EH OBSERVED
 PLI1_839F: RET ; PC = word[SP]; SP += 2; use the convention in procedure header ; +839F runtime=A59FH OBSERVED
-; SECTION [83A0,8800) RAW
 
 ; OBSERVED: separate called memory-word operation; +8396 terminates with RET at +839F.
+; SECTION [83A0,8800) RAW
 PLI1_83A0: DB 05FH,016H,000H,07BH,096H,05FH,07AH,023H,09EH,057H,0EBH,0C9H,000H,000H,000H,000H ; +83A0 runtime=A5A0H RAW
 PLI1_83B0: DB 000H,000H,000H,000H,000H,000H,000H,000H,000H,000H,000H,000H,000H,000H,000H,000H ; +83B0 runtime=A5B0H RAW
 PLI1_83C0: DB 000H,000H,000H,000H,000H,000H,000H,000H,000H,000H,000H,000H,000H,000H,000H,000H ; +83C0 runtime=A5C0H RAW

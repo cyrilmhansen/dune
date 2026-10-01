@@ -51,8 +51,9 @@ class DecompilationConventionsTests(unittest.TestCase):
             {p["id"] for p in self.catalog["procedures"]},
             {s["id"] for s in self.evidence["seeds"]},
         )
-        self.assertEqual(len(self.catalog["procedures"]), 44)
-        self.assertEqual(
+        # The V1 review is an immutable snapshot; later passes add hypotheses.
+        self.assertGreaterEqual(len(self.catalog["procedures"]), self.review["procedures_reviewed"])
+        self.assertGreaterEqual(
             len(
                 {
                     (p["image"], o)
@@ -62,7 +63,7 @@ class DecompilationConventionsTests(unittest.TestCase):
             ),
             1054,
         )
-        self.assertEqual(
+        self.assertGreaterEqual(
             len(
                 {
                     (p["image"], b["offset"])

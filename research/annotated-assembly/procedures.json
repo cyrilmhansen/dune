@@ -6674,6 +6674,1682 @@
         "0491": "A = class_byte_table[j]; returning byte does not recompute NZPA",
         "0492": "PC = word[SP]; SP += 2; use the convention in procedure header"
       }
+    },
+    {
+      "id": "PLI.COM+0AF5",
+      "image": "PLI.COM",
+      "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+      "stable_label": "PLI_0AF5",
+      "runtime_entry": 3061,
+      "start_offset": 2805,
+      "end_offset": 2858,
+      "length": 53,
+      "byte_status_at_entry": "UNDERSTOOD",
+      "description": "cached filtered-byte fetch with EOF assignment",
+      "completeness": {
+        "bounds": "provisional",
+        "control_flow": "partial",
+        "contract": "partial"
+      },
+      "observed_paths": {
+        "invocations_by_run": {
+          "MINIMAL": 199
+        },
+        "represented_bytes": 34,
+        "description": "199 calls: 2008=0 throughout; 195 non-EOF bytes, four EOFs with assignment 2012=1; both EOF branch outcomes observed"
+      },
+      "unresolved_paths": [
+        "2008!=0 alternate-source branch +0B06..+0B18 remains RAW; source-selection semantics unresolved. Filter effects are scoped to existing +09CB contract; no universal callee-save ABI."
+      ],
+      "inputs": "byte[2008]=0 for witnessed source path; input registers unused locally; filter +09CB state/preconditions delegated",
+      "outputs": "A=cached filter byte; BC/DE follow +09CB. On A=1A, HL=2012; otherwise HL follows +09CB. Flags are from CPI 1A, not from returned A",
+      "clobbers": "A,BC,DE,HL,flags through filter; original return slot preserved",
+      "memory_state": [
+        "source_selector=2008H (zero selects +09CB; nonzero path unprocessed)",
+        "reader_eof_flags=2012H (bit0 gates 1A return)",
+        "cached_source_byte=209AH (+0AF5 saved filtered byte before EOF comparison)"
+      ],
+      "data_role_ids": [
+        "PLI.COM:source_selector",
+        "PLI.COM:reader_eof_flags",
+        "PLI.COM:cached_source_byte"
+      ],
+      "callers": [
+        {
+          "coordinate": "PLI.COM+0D55",
+          "counts_by_run": {
+            "MINIMAL": 11
+          }
+        },
+        {
+          "coordinate": "PLI.COM+0DF2",
+          "counts_by_run": {
+            "MINIMAL": 188
+          }
+        }
+      ],
+      "returns": {
+        "convention": "ordinary hardware CALL word; original slot unchanged, SP after RET = entry SP + 2",
+        "observed_file_offsets": [
+          2857
+        ],
+        "sites_description": "PLI.COM+0B29"
+      },
+      "direct_callees": [
+        {
+          "callsite_offset": 2813,
+          "coordinate": "PLI.COM+09CB",
+          "runtime_address": 2763
+        }
+      ],
+      "overlapping_entries": [],
+      "contract_scope": "2008=0 and the existing MINIMAL +09CB filter paths",
+      "contract": "Call +09CB, store its A at 209A, compare the cached byte with 1A. If equal, assign byte[2012]=1 (not OR with prior flags); reload cached byte into A and return. Own data writes are only 209A and conditional 2012; nested filter effects delegated.",
+      "semantic_hypothesis": "byte-source selection wrapper; no additional source-language role",
+      "pseudocode": "scope byte[2008]==0: fetched=call09CB(); byte[209A]=fetched; flags=compare(fetched,1A); if fetched==1A: byte[2012]=1; return byte[209A]",
+      "evidence_refs": [
+        "evidence.json#seeds/PLI.COM+0AF5",
+        "../minimal-baseline/pass-3/regions.json#PLI.COM+0AF5"
+      ],
+      "blocks": [
+        {
+          "offset": 2805,
+          "pseudocode": [
+            "if source_selector[2008H]!=0: unresolved alternate source",
+            "otherwise cached_byte[209AH]=call09CB()"
+          ]
+        },
+        {
+          "offset": 2816,
+          "pseudocode": [
+            "save fetched A; jump over unobserved alternate source"
+          ]
+        },
+        {
+          "offset": 2841,
+          "pseudocode": [
+            "compare cached_byte[209AH] with 1A; EOF assigns eof_flags[2012H]=1"
+          ]
+        },
+        {
+          "offset": 2849,
+          "pseudocode": [
+            "EOF: replace eof_flags[2012H] with 1"
+          ]
+        },
+        {
+          "offset": 2854,
+          "pseudocode": [
+            "reload cached_byte[209AH]; preserve comparison flags; return"
+          ]
+        }
+      ],
+      "local_comments": {
+        "0AF5": "A = source_selector (2008H); zero selects the established filter chain",
+        "0AF8": "flags = compare_unsigned(A, 00H); A unchanged",
+        "0AFA": "if Z=0: PC -> PLI.COM+0B06; flags preserved",
+        "0AFD": "invoke scoped filtered-byte chain +09CB; returned A is cached next",
+        "0B00": "cached_source_byte (209AH) = returned filtered byte; preserve callee registers",
+        "0B03": "if always: PC -> PLI.COM+0B19; flags preserved",
+        "0B19": "A = cached_source_byte (209AH); reuse exactly the filtered byte",
+        "0B1C": "flags = compare_unsigned(A, 1AH); A unchanged",
+        "0B1E": "if Z=0: PC -> PLI.COM+0B26; flags preserved",
+        "0B21": "HL = &reader_eof_flags (2012H)",
+        "0B24": "reader_eof_flags (2012H) = 1; replace whole byte, do not OR old bits",
+        "0B26": "A = cached_source_byte (209AH); load preserves EOF comparison flags",
+        "0B29": "return cached byte; NZPA/CY remain from comparison with 1AH"
+      }
+    },
+    {
+      "id": "PLI2.OVL+09BA",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "stable_label": "PLI2_09BA",
+      "runtime_entry": 11194,
+      "start_offset": 2490,
+      "end_offset": 2811,
+      "length": 321,
+      "byte_status_at_entry": "UNDERSTOOD",
+      "description": "scoped forward span fold into mutable mapped-byte table",
+      "completeness": {
+        "bounds": "provisional",
+        "control_flow": "partial",
+        "contract": "partial"
+      },
+      "observed_paths": {
+        "invocations_by_run": {
+          "MINIMAL": 9
+        },
+        "represented_bytes": 196,
+        "description": "nine invocations; sixteen outer iterations (weights 0 ten times, 1 five times, 2 once), seven inner iterations; all kinds/mode=0. Unsigned max both retain/update outcomes observed (4/3); repeat flag consumes exactly one pass"
+      },
+      "unresolved_paths": [
+        "Kinds 1/3/4, mode202B bit0=1 and branches that request another fold pass remain RAW. General fold semantics, wrap/alias cases and termination on arbitrary tables unresolved; no PL/I type/depth interpretation."
+      ],
+      "inputs": "span_end byte[AAAE]; input_byte_vector[AAB0], weight_byte_table[A6CF], class_byte_table[A609], class_kind_table[2274], mapped_value_table[A732]; witnessed kinds=0, mode202B bit0=0",
+      "outputs": "AAAD=initial backward span cursor; AC4F=(byte[AAAE]+1)&FF; A=AC4F, HL=AC4F address, Z=1/CY=0 at normal loop RET. BC follows final mapped-table helper (zero-extended mapped index on witnessed nonempty loops); DE=word[AC3F] at final publish: E=accumulator, D=adjacent candidate byte AC40 (may be stale); entry DE preserved if outer loop empty",
+      "clobbers": "A,BC,DE,HL,flags; AC3B/AC3C via walk; ABFA/ABFB/ABF8/ABFC, AC0E/AC0F, AAAD and AC3D..AC4F fields used below; own CALL slot preserved",
+      "memory_state": [
+        "fold_mode_flags=202BH (zero bit0 observed; other mode path RAW)",
+        "class_kind_table=2274H (indexed by class byte from +047D; MINIMAL gives kind zero)",
+        "weight_byte_table=A6CFH (second-stage weights for recurrence; source meaning hypothetical)",
+        "mapped_value_table=A732H (mutable byte table read by +04D3 and written by +061B)",
+        "span_start=AAADH (initial backward cursor saved by +09BA)",
+        "span_end=AAAEH (limit cursor read by +09BA)",
+        "input_byte_vector=AAB0H (first-stage byte lookup indexed by C)",
+        "fold_kind=AC3DH (class-kind result for current forward position)",
+        "repeat_fold=AC3EH (bit0 requests fold pass; consumed before fold)",
+        "fold_accumulator=AC3FH (unsigned-max accumulator)",
+        "fold_candidate=AC40H (byte modular value+remaining-1)",
+        "fold_remaining=AC46H (remaining weight/counter)",
+        "fold_weight=AC47H (initial per-position weight)",
+        "child_cursor=AC49H (backward cursor between child spans)",
+        "child_span_start=AC4AH (saved +0992 result for child span)",
+        "fold_cursor=AC4FH (forward cursor)"
+      ],
+      "data_role_ids": [
+        "PLI2.OVL:fold_mode_flags",
+        "PLI2.OVL:class_kind_table",
+        "PLI2.OVL:weight_byte_table",
+        "PLI2.OVL:mapped_value_table",
+        "PLI2.OVL:span_start",
+        "PLI2.OVL:span_end",
+        "PLI2.OVL:input_byte_vector",
+        "PLI2.OVL:fold_kind",
+        "PLI2.OVL:repeat_fold",
+        "PLI2.OVL:fold_accumulator",
+        "PLI2.OVL:fold_candidate",
+        "PLI2.OVL:fold_remaining",
+        "PLI2.OVL:fold_weight",
+        "PLI2.OVL:child_cursor",
+        "PLI2.OVL:child_span_start",
+        "PLI2.OVL:fold_cursor"
+      ],
+      "callers": [
+        {
+          "coordinate": "PLI2.OVL+127D",
+          "counts_by_run": {
+            "MINIMAL": 9
+          }
+        }
+      ],
+      "returns": {
+        "convention": "ordinary hardware CALL word; original slot unchanged, SP after RET = entry SP + 2",
+        "observed_file_offsets": [
+          2810
+        ],
+        "sites_description": "PLI2.OVL+0AFA"
+      },
+      "direct_callees": [
+        {
+          "callsite_offset": 2494,
+          "coordinate": "PLI2.OVL+0992",
+          "runtime_address": 11154
+        },
+        {
+          "callsite_offset": 2518,
+          "coordinate": "PLI2.OVL+04A9",
+          "runtime_address": 9897
+        },
+        {
+          "callsite_offset": 2528,
+          "coordinate": "PLI2.OVL+04BF",
+          "runtime_address": 9919
+        },
+        {
+          "callsite_offset": 2661,
+          "coordinate": "PLI2.OVL+04D3",
+          "runtime_address": 9939
+        },
+        {
+          "callsite_offset": 2680,
+          "coordinate": "PLI2.OVL+0992",
+          "runtime_address": 11154
+        },
+        {
+          "callsite_offset": 2750,
+          "coordinate": "PLI2.OVL+04D3",
+          "runtime_address": 9939
+        },
+        {
+          "callsite_offset": 2800,
+          "coordinate": "PLI2.OVL+061B",
+          "runtime_address": 10267
+        }
+      ],
+      "overlapping_entries": [],
+      "contract_scope": "MINIMAL paths: kind lookup returns zero, 202B bit0=0; backward walks terminate and table/scratch/stack ranges do not alias",
+      "contract": "Start at call0992(byte[AAAE]); save start at AAAD and cursor at AC4F. For each cursor until (AAAE+1)&FF: obtain weight via +04A9, kind via +04BF; on witnessed kind0/mode0 initialize one fold pass. Accumulator=+04D3(cursor); for remaining=weight down to one, compute child_start=+0992(child), candidate=(+04D3(child)+remaining-1)&FF, accumulator=max_unsigned(accumulator,candidate), child=(child_start-1)&FF. +061B writes accumulator to A732+byte[AAB0+cursor]. Increment cursor. Tables represent bytes; arithmetic is modular. Unprocessed kind/mode/repeat paths are excluded.",
+      "semantic_hypothesis": "mapped-byte attribute propagation across backward spans; source meaning unknown",
+      "pseudocode": "cursor=walk0992(byte[AAAE]); AAAD=cursor; scope kind==0 && mode202B.bit0==0: outer while cursor!=u8(byte[AAAE]+1) { remaining=weight04A9(cursor); kind=kind04BF(cursor); accum=value04D3(cursor); child=u8(cursor-1); inner while remaining!=0 { start=walk0992(child); candidate=u8(value04D3(child)+remaining-1); accum=max_u8(accum,candidate); child=u8(start-1); remaining--; }; store061B(cursor,accum); cursor++; }; RET",
+      "evidence_refs": [
+        "evidence.json#seeds/PLI2.OVL+09BA",
+        "../minimal-baseline/pass-3/regions.json#PLI2.OVL+09BA"
+      ],
+      "blocks": [
+        {
+          "offset": 2490,
+          "pseudocode": [
+            "cursor[AC4FH]=walk0992(span_end[AAAEH]); span_start[AAADH]=cursor"
+          ]
+        },
+        {
+          "offset": 2503,
+          "pseudocode": [
+            "if cursor==u8(span_end[AAAEH]+1): return; otherwise fold this position"
+          ]
+        },
+        {
+          "offset": 2514,
+          "pseudocode": [
+            "weight[AC47H]=weight04A9(cursor); kind[AC3DH]=kind04BF(cursor)",
+            "kind3/kind4 arms unprocessed"
+          ]
+        },
+        {
+          "offset": 2567,
+          "pseudocode": [
+            "kind4 arm unprocessed; witnessed kind0 continues"
+          ]
+        },
+        {
+          "offset": 2615,
+          "pseudocode": [
+            "mode[202BH].bit0=0 => schedule one fold pass"
+          ]
+        },
+        {
+          "offset": 2627,
+          "pseudocode": [
+            "repeat_fold[AC3EH]=1"
+          ]
+        },
+        {
+          "offset": 2632,
+          "pseudocode": [
+            "if repeat_fold[AC3EH].bit0==0: publish folded value; else consume flag"
+          ]
+        },
+        {
+          "offset": 2639,
+          "pseudocode": [
+            "repeat_fold=0; remaining[AC46H]=weight; child[AC49H]=cursor-1",
+            "accumulator[AC3FH]=value04D3(cursor)"
+          ]
+        },
+        {
+          "offset": 2667,
+          "pseudocode": [
+            "if remaining==0: end inner fold; else walk child span"
+          ]
+        },
+        {
+          "offset": 2676,
+          "pseudocode": [
+            "child_start[AC4AH]=walk0992(child); kind1 arm unprocessed"
+          ]
+        },
+        {
+          "offset": 2746,
+          "pseudocode": [
+            "candidate[AC40H]=u8(value04D3(child)+remaining-1)",
+            "accumulator=max_unsigned(accumulator,candidate)"
+          ]
+        },
+        {
+          "offset": 2769,
+          "pseudocode": [
+            "accumulator[AC3FH]=candidate[AC40H]"
+          ]
+        },
+        {
+          "offset": 2775,
+          "pseudocode": [
+            "child=child_start-1; remaining--; loop inner fold"
+          ]
+        },
+        {
+          "offset": 2789,
+          "pseudocode": [
+            "recheck repeat flag; witnessed flag is zero"
+          ]
+        },
+        {
+          "offset": 2792,
+          "pseudocode": [
+            "store061B(cursor,accumulator); cursor++; loop forward"
+          ]
+        },
+        {
+          "offset": 2810,
+          "pseudocode": [
+            "return with Z=1/CY=0 from end comparison"
+          ]
+        }
+      ],
+      "local_comments": {
+        "09BA": "L = byte[span_end (AAAEH)]; H = byte[AAAFH]",
+        "09BD": "C = span_end low byte (AAAEH); adjacent AAAFH is not part of cursor",
+        "09BE": "push following PC; invoke PLI2.OVL+0992; result effects belong to callee",
+        "09C1": "byte[fold_cursor (AC4FH)] = A",
+        "09C4": "byte[span_start (AAADH)] = A",
+        "09C7": "A = byte[span_end (AAAEH)]",
+        "09CA": "A = u8(span_end (AAAEH) + 1); compare with forward fold cursor",
+        "09CB": "HL = &fold_cursor (AC4FH)",
+        "09CE": "flags = compare_unsigned(A, byte[fold_cursor (AC4FH)]); A unchanged",
+        "09CF": "if Z=1: PC -> PLI2.OVL+0AFA; flags preserved",
+        "09D2": "L = byte[fold_cursor (AC4FH)]; H = byte[AC50H]",
+        "09D5": "C = fold_cursor (AC4FH) for weight lookup",
+        "09D6": "push following PC; invoke PLI2.OVL+04A9; result effects belong to callee",
+        "09D9": "byte[fold_weight (AC47H)] = A",
+        "09DC": "L = byte[fold_cursor (AC4FH)]; H = byte[AC50H]",
+        "09DF": "C = fold_cursor (AC4FH) for kind lookup",
+        "09E0": "push following PC; invoke PLI2.OVL+04BF; result effects belong to callee",
+        "09E3": "byte[fold_kind (AC3DH)] = A",
+        "09E6": "flags = compare_unsigned(A, 03H); A unchanged",
+        "09E8": "if Z=0: PC -> PLI2.OVL+0A07; flags preserved",
+        "0A07": "A = byte[fold_kind (AC3DH)]",
+        "0A0A": "flags = compare_unsigned(A, 04H); A unchanged",
+        "0A0C": "if Z=0: PC -> PLI2.OVL+0A37; flags preserved",
+        "0A37": "A = byte[fold_mode_flags (202BH)]",
+        "0A3A": "A = (old_CY<<7) | (old_A>>1); CY=old_A bit0; NZPA preserved",
+        "0A3B": "if CY=0: PC -> PLI2.OVL+0A43; flags preserved",
+        "0A43": "HL = &repeat_fold (AC3EH)",
+        "0A46": "byte[repeat_fold (AC3EH)] = 01H",
+        "0A48": "A = byte[repeat_fold (AC3EH)]",
+        "0A4B": "A = (old_CY<<7) | (old_A>>1); CY=old_A bit0; NZPA preserved",
+        "0A4C": "if CY=0: PC -> PLI2.OVL+0AE8; flags preserved",
+        "0A4F": "HL = &repeat_fold (AC3EH)",
+        "0A52": "byte[repeat_fold (AC3EH)] = 00H",
+        "0A54": "A = byte[fold_weight (AC47H)]",
+        "0A57": "byte[fold_remaining (AC46H)] = A",
+        "0A5A": "A = byte[fold_cursor (AC4FH)]",
+        "0A5D": "A = u8(fold_cursor - 1); first child cursor lies immediately before current position",
+        "0A5E": "byte[child_cursor (AC49H)] = A",
+        "0A61": "L = byte[fold_cursor (AC4FH)]; H = byte[AC50H]",
+        "0A64": "C = fold_cursor (AC4FH) for initial mapped value",
+        "0A65": "push following PC; invoke PLI2.OVL+04D3; result effects belong to callee",
+        "0A68": "byte[fold_accumulator (AC3FH)] = A",
+        "0A6B": "A = 00H",
+        "0A6D": "HL = &fold_remaining (AC46H)",
+        "0A70": "flags = compare_unsigned(A, byte[fold_remaining (AC46H)]); A unchanged",
+        "0A71": "if CY=0: PC -> PLI2.OVL+0AE5; flags preserved",
+        "0A74": "L = byte[child_cursor (AC49H)]; H = byte[child_span_start (AC4AH)]",
+        "0A77": "C = child_cursor (AC49H) for backward-span walk",
+        "0A78": "push following PC; invoke PLI2.OVL+0992; result effects belong to callee",
+        "0A7B": "byte[child_span_start (AC4AH)] = A",
+        "0A7E": "A = byte[fold_kind (AC3DH)]",
+        "0A81": "flags = compare_unsigned(A, 01H); A unchanged",
+        "0A83": "if Z=0: PC -> PLI2.OVL+0ABA; flags preserved",
+        "0ABA": "L = byte[child_cursor (AC49H)]; H = byte[child_span_start (AC4AH)]",
+        "0ABD": "C = child_cursor (AC49H) for mapped value read",
+        "0ABE": "push following PC; invoke PLI2.OVL+04D3; result effects belong to callee",
+        "0AC1": "HL = &fold_remaining (AC46H)",
+        "0AC4": "A = u8(child mapped value + fold_remaining); modular candidate intermediate",
+        "0AC5": "A = u8(child value + remaining - 1); candidate stays byte-sized",
+        "0AC6": "byte[fold_candidate (AC40H)] = A",
+        "0AC9": "C = candidate byte; retain it while loading accumulator",
+        "0ACA": "A = fold_accumulator (AC3FH); C holds candidate byte for unsigned max compare",
+        "0ACD": "compare fold_accumulator with candidate; unsigned CY requests max update",
+        "0ACE": "if CY=0: PC -> PLI2.OVL+0AD7; flags preserved",
+        "0AD1": "A = byte[fold_candidate (AC40H)]",
+        "0AD4": "fold_accumulator (AC3FH) = candidate; only when previous accumulator < candidate",
+        "0AD7": "A = child_span_start (AC4AH); prepare to step past consumed span",
+        "0ADA": "A = u8(child_span_start - 1); step past consumed backward child span",
+        "0ADB": "byte[child_cursor (AC49H)] = A",
+        "0ADE": "HL = &fold_remaining (AC46H)",
+        "0AE1": "fold_remaining (AC46H)-- modulo 256; terminate inner fold at zero",
+        "0AE2": "if always: PC -> PLI2.OVL+0A6B; flags preserved",
+        "0AE5": "if always: PC -> PLI2.OVL+0A48; flags preserved",
+        "0AE8": "L = byte[fold_cursor (AC4FH)]; H = byte[AC50H]",
+        "0AEB": "C = fold_cursor (AC4FH) for mapped-table setter",
+        "0AEC": "L = folded byte (AC3FH); H = adjacent candidate byte (AC40H); only E reaches setter",
+        "0AEF": "DE = word[fold_accumulator AC3FH]; E=accumulator, D=adjacent candidate AC40H (not preserved)",
+        "0AF0": "invoke +061B with C=fold_cursor, E=low-byte accumulator; D is ignored",
+        "0AF3": "HL = &fold_cursor (AC4FH)",
+        "0AF6": "fold_cursor (AC4FH)++; advance forward after publishing mapped value",
+        "0AF7": "if always: PC -> PLI2.OVL+09C7; flags preserved",
+        "0AFA": "PC = word[SP]; SP += 2; use the convention in procedure header"
+      }
+    },
+    {
+      "id": "PLI2.OVL+04BF",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "stable_label": "PLI2_04BF",
+      "runtime_entry": 9919,
+      "start_offset": 1215,
+      "end_offset": 1235,
+      "length": 20,
+      "byte_status_at_entry": "UNDERSTOOD",
+      "description": "class-byte-indexed kind-table lookup",
+      "completeness": {
+        "bounds": "stable",
+        "control_flow": "complete",
+        "contract": "complete"
+      },
+      "observed_paths": {
+        "invocations_by_run": {
+          "MINIMAL": 32
+        },
+        "represented_bytes": 20,
+        "description": "32 conventional calls; positions 1..16 each twice; class bytes differ but all kind-table results zero; branchless wrapper"
+      },
+      "unresolved_paths": [
+        "All 32 MINIMAL returns are zero; other kind-table contents and source meaning uninvestigated. ABFC high byte is physically read before callee, not a 16-bit position input. Alias cases excluded."
+      ],
+      "inputs": "C=position; same two-stage lookup preconditions as +047D; class_kind_table at 2274",
+      "outputs": "A=byte[2274+class047D(C)] (callee +047D); BC=zero_extend(class), HL=2274+class, DE preserved, CY=0, NZPA preserved",
+      "clobbers": "A,BC,HL,CY; scratch ABFB and ABF8 written; DE/NZPA preserved",
+      "memory_state": [
+        "class_kind_table=2274H (indexed by class byte from +047D; MINIMAL gives kind zero)",
+        "class_byte_table=A609H (second-stage byte lookup; class role hypothetical)",
+        "input_byte_vector=AAB0H (first-stage byte lookup indexed by C)",
+        "class_lookup_index=ABF8H (saved +047D input C)",
+        "kind_lookup_index=ABFBH (saved +04BF position)"
+      ],
+      "data_role_ids": [
+        "PLI2.OVL:class_kind_table",
+        "PLI2.OVL:class_byte_table",
+        "PLI2.OVL:input_byte_vector",
+        "PLI2.OVL:class_lookup_index",
+        "PLI2.OVL:kind_lookup_index"
+      ],
+      "callers": [
+        {
+          "coordinate": "PLI2.OVL+09E0",
+          "counts_by_run": {
+            "MINIMAL": 16
+          }
+        },
+        {
+          "coordinate": "PLI2.OVL+0C8A",
+          "counts_by_run": {
+            "MINIMAL": 16
+          }
+        }
+      ],
+      "returns": {
+        "convention": "ordinary hardware CALL word; original slot unchanged, SP after RET = entry SP + 2",
+        "observed_file_offsets": [
+          1234
+        ],
+        "sites_description": "PLI2.OVL+04D2"
+      },
+      "direct_callees": [
+        {
+          "callsite_offset": 1223,
+          "coordinate": "PLI2.OVL+047D",
+          "runtime_address": 9853
+        }
+      ],
+      "overlapping_entries": [],
+      "contract_scope": "documented local operation with nonaliasing tables/scratch/stack as witnessed",
+      "contract": "Save C to ABFB; read ABFB/ABFC and pass low byte to +047D. Use returned class byte as unsigned index into table at 2274; return the selected byte. Nested helper writes ABF8 and reads AAB0/A609. No dispatch or rewritten continuation.",
+      "semantic_hypothesis": "second classification level, described only by table indexing",
+      "pseudocode": "byte[ABFB]=C; class=lookup047D(C); BC=u8(class); HL=2274+class; A=byte[HL]; RET",
+      "evidence_refs": [
+        "evidence.json#seeds/PLI2.OVL+04BF",
+        "../minimal-baseline/pass-3/regions.json#PLI2.OVL+04BF"
+      ],
+      "blocks": [
+        {
+          "offset": 1215,
+          "pseudocode": [
+            "kind_lookup_index[ABFBH]=C; call class lookup +047D"
+          ]
+        },
+        {
+          "offset": 1226,
+          "pseudocode": [
+            "BC=zero_extend(class byte); return class_kind_table[2274H+class]"
+          ]
+        }
+      ],
+      "local_comments": {
+        "04BF": "HL = &kind_lookup_index (ABFBH)",
+        "04C2": "byte[kind_lookup_index (ABFBH)] = C",
+        "04C3": "L = kind_lookup_index (ABFBH); H = adjacent value_lookup_index byte (ABFCH), then discarded by callee",
+        "04C6": "C = saved kind_lookup_index (ABFBH); high neighbor byte is not an index",
+        "04C7": "invoke class lookup +047D(C); caller position scratch ABFB survives",
+        "04CA": "C = returned class byte; next table is indexed by class, not original position",
+        "04CB": "BC = zero_extend(class byte)",
+        "04CD": "HL = &class_kind_table (2274H)",
+        "04D0": "HL = class_kind_table base 2274H + zero-extended class; CY=0",
+        "04D1": "A = class_kind_table[2274H + class byte]",
+        "04D2": "PC = word[SP]; SP += 2; use the convention in procedure header"
+      }
+    },
+    {
+      "id": "PLI1.OVL+4281",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "stable_label": "PLI1_4281",
+      "runtime_entry": 25729,
+      "start_offset": 17025,
+      "end_offset": 17038,
+      "length": 13,
+      "byte_status_at_entry": "UNDERSTOOD",
+      "description": "current-record pointer nonzero Boolean",
+      "completeness": {
+        "bounds": "stable",
+        "control_flow": "complete",
+        "contract": "complete"
+      },
+      "observed_paths": {
+        "invocations_by_run": {
+          "MINIMAL": 11
+        },
+        "represented_bytes": 13,
+        "description": "eleven calls from six sites; six nonzero results FF/CY=1 and five zero results 00/CY=0; branchless Boolean sequence"
+      },
+      "unresolved_paths": [
+        "MINIMAL observes both zero/nonzero pointers; no source-level meaning for pointer validity. Nonzero is not a bounds/tag validity check."
+      ],
+      "inputs": "little-endian word[current_record A863H]; register inputs ignored except BC preserved",
+      "outputs": "HL=word[A863], DE=A864, BC preserved, A=FF and CY=1 iff pointer nonzero; otherwise A=0/CY=0; S/Z/P describe Boolean byte, AC follows self-SBB",
+      "clobbers": "A,DE,HL,flags; no data stores; nested +1A40 slot only",
+      "memory_state": [
+        "current_record=A863H (record pointer used by reviewed construction/repair)"
+      ],
+      "data_role_ids": [
+        "PLI1.OVL:current_record"
+      ],
+      "callers": [
+        {
+          "coordinate": "PLI1.OVL+44E0",
+          "counts_by_run": {
+            "MINIMAL": 2
+          }
+        },
+        {
+          "coordinate": "PLI1.OVL+4668",
+          "counts_by_run": {
+            "MINIMAL": 1
+          }
+        },
+        {
+          "coordinate": "PLI1.OVL+46B2",
+          "counts_by_run": {
+            "MINIMAL": 1
+          }
+        },
+        {
+          "coordinate": "PLI1.OVL+470B",
+          "counts_by_run": {
+            "MINIMAL": 4
+          }
+        },
+        {
+          "coordinate": "PLI1.OVL+471C",
+          "counts_by_run": {
+            "MINIMAL": 2
+          }
+        },
+        {
+          "coordinate": "PLI1.OVL+4743",
+          "counts_by_run": {
+            "MINIMAL": 1
+          }
+        }
+      ],
+      "returns": {
+        "convention": "ordinary hardware CALL word; original slot unchanged, SP after RET = entry SP + 2",
+        "observed_file_offsets": [
+          17037
+        ],
+        "sites_description": "PLI1.OVL+428D"
+      },
+      "direct_callees": [
+        {
+          "callsite_offset": 17030,
+          "coordinate": "PLI.COM+1A40",
+          "runtime_address": 6976
+        }
+      ],
+      "overlapping_entries": [],
+      "contract_scope": "documented local operation; word/return stack do not alias",
+      "contract": "Set A=0 and DE=A863; +1A40 loads word[A863] minus zero. OR low result into A=high result; ADI FF sets carry iff either byte nonzero; SBB A converts carry into FF or 00 and retains the Boolean carry. Ordinary CALL/RET; no argument consumption or continuation rewrite.",
+      "semantic_hypothesis": "record-presence predicate, not complete record validation",
+      "pseudocode": "HL=word[A863]; q=hi(HL)|lo(HL); CY=(q!=0); A=CY?FF:00; RET",
+      "evidence_refs": [
+        "evidence.json#seeds/PLI1.OVL+4281",
+        "../minimal-baseline/pass-3/regions.json#PLI1.OVL+4281"
+      ],
+      "blocks": [
+        {
+          "offset": 17025,
+          "pseudocode": [
+            "load current_record[A863H] via word-minus-zero primitive +1A40"
+          ]
+        },
+        {
+          "offset": 17033,
+          "pseudocode": [
+            "collapse both pointer bytes; return nonzero Boolean in A and CY"
+          ]
+        }
+      ],
+      "local_comments": {
+        "4281": "A = 0 for word-minus-zero adapter; pointer is loaded without subtraction",
+        "4283": "DE = &current_record (A863H)",
+        "4286": "push following PC; invoke PLI.COM+1A40; result effects belong to callee",
+        "4289": "A = high(current_record) | low(current_record); detect either nonzero byte",
+        "428A": "A = u8(combined_byte - 1); CY = (combined_byte != 0)",
+        "428C": "A = CY ? FFH : 00H; CY retains nonzero predicate; NZPA from self-SBB",
+        "428D": "PC = word[SP]; SP += 2; use the convention in procedure header"
+      }
+    },
+    {
+      "id": "PLI0.OVL+24BC",
+      "image": "PLI0.OVL",
+      "image_sha256": "e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff",
+      "stable_label": "PLI0_24BC",
+      "runtime_entry": 18108,
+      "start_offset": 9404,
+      "end_offset": 10395,
+      "length": 991,
+      "byte_status_at_entry": "STRUCTURED",
+      "description": "recursive pointer-record operation with 18-byte locals",
+      "completeness": {
+        "bounds": "provisional",
+        "control_flow": "partial",
+        "contract": "partial"
+      },
+      "observed_paths": {
+        "invocations_by_run": {
+          "MINIMAL": 85
+        },
+        "represented_bytes": 661,
+        "description": "85 own invocations: C=0 80 times, C=4 four times, C=1 once; twenty recursive children at three callsites. All original hardware slots return +289A; one mode1 copy of seventeen bytes. Local projections exclude descendants"
+      },
+      "unresolved_paths": [
+        "RAW arms include initial +23C3 true path, tag70 path, mode2/4 guards, field/pointer-repair alternatives. Helpers +1A8C/+1E0B/+21AB/+2290/+22B3/+23DF/+240B/+242B/+247C/+249A retain opaque effects. Record ownership/complete traversal semantics unresolved. Recursion does not imply software continuation."
+      ],
+      "inputs": "C=mode byte (MINIMAL 0/1/4); tested_pointer word[6A82]; mode_flags[6A84], result_slot_pointer[6A88], working_record_pointer[69C5]; dynamic record bytes at pointer+0,+2,+3,+5",
+      "outputs": "output_record_word[6A8E]=local word F+16 (zero on 84 mode0/4 calls, derived value on mode1); A=0 observed; general output registers/flags follow paths and opaque helpers",
+      "clobbers": "A,BC,DE,HL,flags; locals and nested stack; tested_pointer[6A82], output_record_word[6A8E], dynamic record[p+3] bit7 cleared; mode1 additionally copies/rewrites data, 69C5 and [word(6A88)]",
+      "memory_state": [
+        "pointer_bound=1C32H (bound read by predicate)",
+        "working_record_pointer=69C5H (pointer used for mode1 copy/repair)",
+        "tested_pointer=6A82H (pointer compared with bound; next byte is masked)",
+        "record_mode_flags=6A84H (bit0 enables mode1 auxiliary effects)",
+        "record_copy_count=6A85H (observed copied record byte count)",
+        "result_slot_pointer=6A88H (pointer to word saved/cleared/rewritten on mode1 path)",
+        "output_record_word=6A8EH (zeroed on entry, published from local F+16)",
+        "F=entry_SP-18; F+0 mode; words F+1/+3/+5/+7/+12/+14/+16; bytes F+9 tag, F+10 flags, F+11 count; F+18 original return word",
+        "temporary PSW below F across +2790; recursive child CALLs own separate hardware words"
+      ],
+      "data_role_ids": [
+        "PLI0.OVL:pointer_bound",
+        "PLI0.OVL:working_record_pointer",
+        "PLI0.OVL:tested_pointer",
+        "PLI0.OVL:record_mode_flags",
+        "PLI0.OVL:record_copy_count",
+        "PLI0.OVL:result_slot_pointer",
+        "PLI0.OVL:output_record_word"
+      ],
+      "callers": [
+        {
+          "coordinate": "PLI0.OVL+27B4",
+          "counts_by_run": {
+            "MINIMAL": 10
+          }
+        },
+        {
+          "coordinate": "PLI0.OVL+2808",
+          "counts_by_run": {
+            "MINIMAL": 6
+          }
+        },
+        {
+          "coordinate": "PLI0.OVL+2819",
+          "counts_by_run": {
+            "MINIMAL": 4
+          }
+        },
+        {
+          "coordinate": "PLI0.OVL+2B33",
+          "counts_by_run": {
+            "MINIMAL": 65
+          }
+        }
+      ],
+      "returns": {
+        "convention": "ordinary hardware CALL word; original slot unchanged, SP after RET = entry SP + 2; 18-byte local frame and recursion are not software continuations",
+        "observed_file_offsets": [
+          10394
+        ],
+        "sites_description": "PLI0.OVL+289A"
+      },
+      "direct_callees": [
+        {
+          "callsite_offset": 9426,
+          "coordinate": "PLI0.OVL+23C3",
+          "runtime_address": 17859
+        },
+        {
+          "callsite_offset": 9529,
+          "coordinate": "PLI0.OVL+1A8C",
+          "runtime_address": 15500
+        },
+        {
+          "callsite_offset": 9568,
+          "coordinate": "PLI0.OVL+1E0B",
+          "runtime_address": 16395
+        },
+        {
+          "callsite_offset": 9571,
+          "coordinate": "PLI0.OVL+22B3",
+          "runtime_address": 17587
+        },
+        {
+          "callsite_offset": 9592,
+          "coordinate": "PLI0.OVL+249A",
+          "runtime_address": 18074
+        },
+        {
+          "callsite_offset": 9724,
+          "coordinate": "PLI0.OVL+247C",
+          "runtime_address": 18044
+        },
+        {
+          "callsite_offset": 9804,
+          "coordinate": "PLI0.OVL+240B",
+          "runtime_address": 17931
+        },
+        {
+          "callsite_offset": 9821,
+          "coordinate": "PLI0.OVL+240B",
+          "runtime_address": 17931
+        },
+        {
+          "callsite_offset": 9842,
+          "coordinate": "PLI0.OVL+23C3",
+          "runtime_address": 17859
+        },
+        {
+          "callsite_offset": 9866,
+          "coordinate": "PLI0.OVL+23DF",
+          "runtime_address": 17887
+        },
+        {
+          "callsite_offset": 10066,
+          "coordinate": "PLI0.OVL+21AB",
+          "runtime_address": 17323
+        },
+        {
+          "callsite_offset": 10122,
+          "coordinate": "PLI0.OVL+23C3",
+          "runtime_address": 17859
+        },
+        {
+          "callsite_offset": 10128,
+          "coordinate": "PLI0.OVL+240B",
+          "runtime_address": 17931
+        },
+        {
+          "callsite_offset": 10164,
+          "coordinate": "PLI0.OVL+24BC",
+          "runtime_address": 18108
+        },
+        {
+          "callsite_offset": 10226,
+          "coordinate": "PLI0.OVL+240B",
+          "runtime_address": 17931
+        },
+        {
+          "callsite_offset": 10248,
+          "coordinate": "PLI0.OVL+24BC",
+          "runtime_address": 18108
+        },
+        {
+          "callsite_offset": 10260,
+          "coordinate": "PLI0.OVL+242B",
+          "runtime_address": 17963
+        },
+        {
+          "callsite_offset": 10265,
+          "coordinate": "PLI0.OVL+24BC",
+          "runtime_address": 18108
+        },
+        {
+          "callsite_offset": 10278,
+          "coordinate": "PLI.COM+1A35",
+          "runtime_address": 6965
+        },
+        {
+          "callsite_offset": 10312,
+          "coordinate": "PLI.COM+1A33",
+          "runtime_address": 6963
+        },
+        {
+          "callsite_offset": 10378,
+          "coordinate": "PLI0.OVL+2290",
+          "runtime_address": 17552
+        }
+      ],
+      "overlapping_entries": [],
+      "contract_scope": "observed MINIMAL control/data shape, not complete operation; corrected hardware frames isolate recursive child contexts",
+      "contract": "Let S=entry SP, F=S-18. Save input mode at F+0, initialize output word and local result F+16 to zero; save current pointer at F+14 after +23C3. Clear bit7 of record byte[p+3] and snapshot bytes[p+2], masked[p+3], [p+5] at F+9/+10/+11. Mode bit0 gates copy/repair path. Dispatch local tag 41/40 through recursive +24BC calls (C=mode&1 or 4); keep original pointer in F+3 and child pointer in F+5, restore selected pointers. Publish F+16 to 6A8E. Epilogue SP=F+18 restores original hardware return slot. Opaque calls and unprocessed arms prevent a full behavioral contract.",
+      "semantic_hypothesis": "recursive record traversal/repair operation; extent and higher meaning provisional",
+      "pseudocode": "F=entry_SP-18; local_mode=C; result=0; saved_pointer=tested_pointer; clear record[saved_pointer+3].bit7; snapshot tag/flags/count; if mode.bit0: delegated copy/repair path; handle observed tag41/tag40 through child calls, saved pointer and count loop; word[6A8E]=local_result; restore original SP; RET",
+      "evidence_refs": [
+        "evidence.json#seeds/PLI0.OVL+24BC",
+        "../minimal-baseline/pass-3/regions.json#PLI0.OVL+24BC"
+      ],
+      "blocks": [
+        {
+          "offset": 9404,
+          "pseudocode": [
+            "F=entry_SP-18; byte[F+0]=input C; zero output_record_word[6A8EH] and result word[F+16]"
+          ]
+        },
+        {
+          "offset": 9439,
+          "pseudocode": [
+            "save tested_pointer[6A82H] at F+14; clear record[p+3].bit7",
+            "save tag at F+9, masked flags F+10 and count F+11"
+          ]
+        },
+        {
+          "offset": 9494,
+          "pseudocode": [
+            "if local_mode.bit0==0: skip copy/repair path"
+          ]
+        },
+        {
+          "offset": 9503,
+          "pseudocode": [
+            "mode1: derive copy count[6A85H] from record length under mode_flags.bit0"
+          ]
+        },
+        {
+          "offset": 9525,
+          "pseudocode": [
+            "call opaque +1A8C(count); source=tested_pointer; dest=working_record_pointer[69C5H]"
+          ]
+        },
+        {
+          "offset": 9546,
+          "pseudocode": [
+            "copy byte[source++] to byte[dest++]; repeat until low-byte count becomes zero"
+          ]
+        },
+        {
+          "offset": 9554,
+          "pseudocode": [
+            "select opaque setup helpers; witness skips +255A arm"
+          ]
+        },
+        {
+          "offset": 9568,
+          "pseudocode": [
+            "delegate +1E0B/+22B3; save returned A as zero-extended F+16 result",
+            "initialize local F+1 word=1; call +249A"
+          ]
+        },
+        {
+          "offset": 9717,
+          "pseudocode": [
+            "mode1 conditional +247C; witnessed true enables copied word patch"
+          ]
+        },
+        {
+          "offset": 9732,
+          "pseudocode": [
+            "copy word through result_slot_pointer[6A88H] into working_record+6"
+          ]
+        },
+        {
+          "offset": 9751,
+          "pseudocode": [
+            "local_mode.bit0 gates tag/field handling"
+          ]
+        },
+        {
+          "offset": 9760,
+          "pseudocode": [
+            "tag31 arm unobserved; witnessed tag40 takes +264A"
+          ]
+        },
+        {
+          "offset": 9802,
+          "pseudocode": [
+            "call opaque bit-consumer +240B(5)"
+          ]
+        },
+        {
+          "offset": 9819,
+          "pseudocode": [
+            "call opaque bit-consumer +240B(6)"
+          ]
+        },
+        {
+          "offset": 9836,
+          "pseudocode": [
+            "temporarily test pointer_bound[1C32H] with +23C3; restore F+14 pointer on observed path"
+          ]
+        },
+        {
+          "offset": 9864,
+          "pseudocode": [
+            "call +23DF(C=0); mode_flags & local_mode gates pointed-word save/clear"
+          ]
+        },
+        {
+          "offset": 9881,
+          "pseudocode": [
+            "save word[result_slot_pointer] into F+12; clear that word"
+          ]
+        },
+        {
+          "offset": 9903,
+          "pseudocode": [
+            "tag70 arm unobserved; witnessed tags skip it"
+          ]
+        },
+        {
+          "offset": 10029,
+          "pseudocode": [
+            "mode_flags & local_mode gates working-record rewrite and +21AB"
+          ]
+        },
+        {
+          "offset": 10041,
+          "pseudocode": [
+            "working_record_pointer=word[F+14]; delegate +21AB(BC=word[F+16],DE=word[F+1])",
+            "save returned HL into word[F+16]"
+          ]
+        },
+        {
+          "offset": 10077,
+          "pseudocode": [
+            "word[F+5]=0; word[F+7]=FFFF; inspect local tag[F+9]"
+          ]
+        },
+        {
+          "offset": 10101,
+          "pseudocode": [
+            "tag41: mode2 arm unobserved; save current pointer at F+3; call +23C3/+240B(7)"
+          ]
+        },
+        {
+          "offset": 10156,
+          "pseudocode": [
+            "recursively call +24BC(C=local_mode&1); save child pointer F+5; restore F+3",
+            "set local tag[F+9]=40"
+          ]
+        },
+        {
+          "offset": 10194,
+          "pseudocode": [
+            "tag40 and mode!=4 select count loop"
+          ]
+        },
+        {
+          "offset": 10214,
+          "pseudocode": [
+            "while count[F+11]!=0: query +240B(3)"
+          ]
+        },
+        {
+          "offset": 10233,
+          "pseudocode": [
+            "predicate true: count--; recurse with C=local_mode&1"
+          ]
+        },
+        {
+          "offset": 10254,
+          "pseudocode": [
+            "predicate false: +242B(&word[F+7]); recurse with C=4"
+          ]
+        },
+        {
+          "offset": 10268,
+          "pseudocode": [
+            "repeat count loop"
+          ]
+        },
+        {
+          "offset": 10271,
+          "pseudocode": [
+            "compare current tested_pointer to word[F+5]; restore child pointer only on borrow"
+          ]
+        },
+        {
+          "offset": 10284,
+          "pseudocode": [
+            "tested_pointer[6A82H]=word[F+5]"
+          ]
+        },
+        {
+          "offset": 10295,
+          "pseudocode": [
+            "mode bit0 gates pointer-difference branch; witnessed branch skips RAW patch"
+          ]
+        },
+        {
+          "offset": 10304,
+          "pseudocode": [
+            "compare local F+7 pointer with current pointer via +1A33"
+          ]
+        },
+        {
+          "offset": 10329,
+          "pseudocode": [
+            "output_record_word[6A8EH]=word[F+16]"
+          ]
+        },
+        {
+          "offset": 10340,
+          "pseudocode": [
+            "mode_flags & local_mode gates final copy-back and opaque +2290"
+          ]
+        },
+        {
+          "offset": 10352,
+          "pseudocode": [
+            "restore working_record_pointer from word[F+14]; PUSH shifts SP to F-2",
+            "copy saved_pointed_word[F+12] through result_slot_pointer (SP+14 after PUSH)",
+            "delegate +2290 and store returned HL through result_slot_pointer"
+          ]
+        },
+        {
+          "offset": 10389,
+          "pseudocode": [
+            "SP=F+18; RET consumes original hardware CALL word"
+          ]
+        }
+      ],
+      "local_comments": {
+        "24BC": "HL = FFEFH (-17 modulo 65536); prologue reserve before mode push",
+        "24BF": "HL = entry_SP - 17 modulo 65536",
+        "24C0": "SP = entry_SP - 17; reserve locals before placing input-mode byte",
+        "24C1": "B = input mode C; duplicate mode for one-byte stack placement",
+        "24C2": "push duplicated mode bytes; upper byte becomes local_mode at final frame base F",
+        "24C3": "SP++; final F = entry_SP - 18; discard lower duplicate mode byte",
+        "24C4": "HL = 0000H",
+        "24C7": "little_endian_word[output_record_word (6A8EH)] = HL (low byte first)",
+        "24CA": "swap HL and DE; flags preserved",
+        "24CB": "HL = 0010H",
+        "24CE": "HL = (HL + SP) & FFFF; only CY changes",
+        "24CF": "byte[local_result.low (F+16)] = E",
+        "24D0": "HL = (HL + 1) & FFFF; flags preserved",
+        "24D1": "byte[local_result.high (F+17)] = D",
+        "24D2": "push following PC; invoke PLI0.OVL+23C3; result effects belong to callee",
+        "24D5": "A = (old_CY<<7) | (old_A>>1); CY=old_A bit0; NZPA preserved",
+        "24D6": "if CY=0: PC -> PLI0.OVL+24DF; flags preserved",
+        "24DF": "HL = little_endian_word[tested_pointer (6A82H)]",
+        "24E2": "swap HL and DE; flags preserved",
+        "24E3": "HL = 000EH",
+        "24E6": "HL = (HL + SP) & FFFF; only CY changes",
+        "24E7": "byte[saved_record_pointer.low (F+14)] = E",
+        "24E8": "HL = (HL + 1) & FFFF; flags preserved",
+        "24E9": "byte[saved_record_pointer.high (F+15)] = D",
+        "24EA": "BC = 0003H",
+        "24ED": "HL = little_endian_word[tested_pointer (6A82H)]",
+        "24F0": "HL = (HL + BC) & FFFF; only CY changes",
+        "24F1": "A = 7FH",
+        "24F3": "A = record[p+3] & 7FH; clear dynamic record flag bit7",
+        "24F4": "HL = little_endian_word[tested_pointer (6A82H)]",
+        "24F7": "HL = (HL + BC) & FFFF; only CY changes",
+        "24F8": "record[p+3] = masked_record_flags; update occurs before recursive processing",
+        "24F9": "HL = 000AH",
+        "24FC": "HL = (HL + SP) & FFFF; only CY changes",
+        "24FD": "byte[masked_record_flags (F+10)] = A",
+        "24FE": "HL = little_endian_word[tested_pointer (6A82H)]",
+        "2501": "HL = (HL + 1) & FFFF; flags preserved",
+        "2502": "HL = (HL + 1) & FFFF; flags preserved",
+        "2503": "A = record[tested_pointer + 2] (local tag)",
+        "2504": "HL = 0009H",
+        "2507": "HL = (HL + SP) & FFFF; only CY changes",
+        "2508": "byte[local_tag (F+9)] = A",
+        "2509": "BC = 0005H",
+        "250C": "HL = little_endian_word[tested_pointer (6A82H)]",
+        "250F": "HL = (HL + BC) & FFFF; only CY changes",
+        "2510": "A = record[tested_pointer + 5] (local child count)",
+        "2511": "HL = 000BH",
+        "2514": "HL = (HL + SP) & FFFF; only CY changes",
+        "2515": "byte[child_count (F+11)] = A",
+        "2516": "HL = 0000H",
+        "2519": "HL = (HL + SP) & FFFF; only CY changes",
+        "251A": "A = byte[local_mode (F+0)]",
+        "251B": "A = (old_CY<<7) | (old_A>>1); CY=old_A bit0; NZPA preserved",
+        "251C": "if CY=0: PC -> PLI0.OVL+2617; flags preserved",
+        "251F": "A = byte[record_mode_flags (6A84H)]",
+        "2522": "A = (old_CY<<7) | (old_A>>1); CY=old_A bit0; NZPA preserved",
+        "2523": "if CY=0: PC -> PLI0.OVL+2530; flags preserved",
+        "2526": "HL = little_endian_word[tested_pointer (6A82H)]",
+        "2529": "A = record[tested_pointer + 0] (copy length on mode_flags bit0 path)",
+        "252A": "byte[record_copy_count (6A85H)] = A",
+        "252D": "if always: PC -> PLI0.OVL+2535; flags preserved",
+        "2535": "L = byte[record_copy_count (6A85H)]; H = byte[6A86H]",
+        "2538": "C = record_copy_count (6A85H); adjacent high byte is not passed as count",
+        "2539": "push following PC; invoke PLI0.OVL+1A8C; result effects belong to callee",
+        "253C": "L = byte[record_copy_count (6A85H)]; H = byte[6A86H]",
+        "253F": "SP -= 2; push HL little-endian",
+        "2540": "HL = little_endian_word[tested_pointer (6A82H)]",
+        "2543": "B = high(copy_source pointer)",
+        "2544": "C = low(copy_source pointer)",
+        "2545": "HL = little_endian_word[working_record_pointer (69C5H)]",
+        "2548": "swap HL and DE; flags preserved",
+        "2549": "HL = word[SP]; SP += 2",
+        "254A": "A = byte[copy_source BC]",
+        "254B": "byte[copy_destination DE] = A",
+        "254C": "BC = (BC + 1) & FFFF; flags preserved",
+        "254D": "DE = (DE + 1) & FFFF; flags preserved",
+        "254E": "remaining copy count L--; zero ends the byte-copy loop",
+        "254F": "if Z=0: PC -> PLI0.OVL+254A; flags preserved",
+        "2552": "A = byte[record_mode_flags (6A84H)]",
+        "2555": "A = (~A) & FF; flags preserved",
+        "2556": "A = (old_CY<<7) | (old_A>>1); CY=old_A bit0; NZPA preserved",
+        "2557": "if CY=0: PC -> PLI0.OVL+2560; flags preserved",
+        "2560": "push following PC; invoke PLI0.OVL+1E0B; result effects belong to callee",
+        "2563": "push following PC; invoke PLI0.OVL+22B3; result effects belong to callee",
+        "2566": "HL = 0010H",
+        "2569": "HL = (HL + SP) & FFFF; only CY changes",
+        "256A": "byte[local_result.low (F+16)] = A",
+        "256B": "HL = (HL + 1) & FFFF; flags preserved",
+        "256C": "byte[local_result.high (F+17)] = 00H",
+        "256E": "A = 01H",
+        "2570": "HL = 0001H",
+        "2573": "HL = (HL + SP) & FFFF; only CY changes",
+        "2574": "byte[helper_word_1.low (F+1)] = A",
+        "2575": "HL = (HL + 1) & FFFF; flags preserved",
+        "2576": "byte[helper_word_1.high (F+2)] = 00H",
+        "2578": "push following PC; invoke PLI0.OVL+249A; result effects belong to callee",
+        "257B": "A = (old_CY<<7) | (old_A>>1); CY=old_A bit0; NZPA preserved",
+        "257C": "if CY=0: PC -> PLI0.OVL+25F5; flags preserved",
+        "25F5": "A = byte[record_mode_flags (6A84H)]",
+        "25F8": "A = (old_CY<<7) | (old_A>>1); CY=old_A bit0; NZPA preserved",
+        "25F9": "if CY=0: PC -> PLI0.OVL+2617; flags preserved",
+        "25FC": "push following PC; invoke PLI0.OVL+247C; result effects belong to callee",
+        "25FF": "A = (~A) & FF; flags preserved",
+        "2600": "A = (old_CY<<7) | (old_A>>1); CY=old_A bit0; NZPA preserved",
+        "2601": "if CY=0: PC -> PLI0.OVL+2617; flags preserved",
+        "2604": "HL = little_endian_word[result_slot_pointer (6A88H)]",
+        "2607": "BC = 0006H",
+        "260A": "SP -= 2; push HL little-endian",
+        "260B": "HL = little_endian_word[working_record_pointer (69C5H)]",
+        "260E": "HL = (HL + BC) & FFFF; only CY changes",
+        "260F": "swap HL with word[SP]; temporary pointer exchange, SP/flags unchanged",
+        "2610": "C = byte[HL]",
+        "2611": "HL = (HL + 1) & FFFF; flags preserved",
+        "2612": "B = byte[HL]",
+        "2613": "HL = word[SP]; SP += 2",
+        "2614": "byte[HL] = C",
+        "2615": "HL = (HL + 1) & FFFF; flags preserved",
+        "2616": "byte[HL] = B",
+        "2617": "HL = 0000H",
+        "261A": "HL = (HL + SP) & FFFF; only CY changes",
+        "261B": "A = byte[local_mode (F+0)]",
+        "261C": "A = (old_CY<<7) | (old_A>>1); CY=old_A bit0; NZPA preserved",
+        "261D": "if CY=0: PC -> PLI0.OVL+2688; flags preserved",
+        "2620": "HL = 0009H",
+        "2623": "HL = (HL + SP) & FFFF; only CY changes",
+        "2624": "A = byte[local_tag (F+9)]",
+        "2625": "flags = compare_unsigned(A, 31H); A unchanged",
+        "2627": "if Z=0: PC -> PLI0.OVL+264A; flags preserved",
+        "264A": "C = 05H",
+        "264C": "push following PC; invoke PLI0.OVL+240B; result effects belong to callee",
+        "264F": "A = (old_CY<<7) | (old_A>>1); CY=old_A bit0; NZPA preserved",
+        "2650": "if CY=0: PC -> PLI0.OVL+265B; flags preserved",
+        "265B": "C = 06H",
+        "265D": "push following PC; invoke PLI0.OVL+240B; result effects belong to callee",
+        "2660": "A = (old_CY<<7) | (old_A>>1); CY=old_A bit0; NZPA preserved",
+        "2661": "if CY=0: PC -> PLI0.OVL+266C; flags preserved",
+        "266C": "HL = little_endian_word[pointer_bound (1C32H)]",
+        "266F": "little_endian_word[tested_pointer (6A82H)] = HL (low byte first)",
+        "2672": "push following PC; invoke PLI0.OVL+23C3; result effects belong to callee",
+        "2675": "A = (~A) & FF; flags preserved",
+        "2676": "A = (old_CY<<7) | (old_A>>1); CY=old_A bit0; NZPA preserved",
+        "2677": "if CY=0: PC -> PLI0.OVL+267D; flags preserved",
+        "267D": "HL = 000EH",
+        "2680": "HL = (HL + SP) & FFFF; only CY changes",
+        "2681": "E = byte[saved_record_pointer.low (F+14)]",
+        "2682": "HL = (HL + 1) & FFFF; flags preserved",
+        "2683": "D = byte[saved_record_pointer.high (F+15)]",
+        "2684": "swap HL and DE; flags preserved",
+        "2685": "little_endian_word[tested_pointer (6A82H)] = HL (low byte first)",
+        "2688": "C = 00H",
+        "268A": "push following PC; invoke PLI0.OVL+23DF; result effects belong to callee",
+        "268D": "A = byte[record_mode_flags (6A84H)]",
+        "2690": "HL = 0000H",
+        "2693": "HL = (HL + SP) & FFFF; only CY changes",
+        "2694": "A &= byte[local_mode (F+0)]; logical flags, CY=0",
+        "2695": "A = (old_CY<<7) | (old_A>>1); CY=old_A bit0; NZPA preserved",
+        "2696": "if CY=0: PC -> PLI0.OVL+26AF; flags preserved",
+        "2699": "HL = little_endian_word[result_slot_pointer (6A88H)]",
+        "269C": "C = byte[HL]",
+        "269D": "HL = (HL + 1) & FFFF; flags preserved",
+        "269E": "B = byte[HL]",
+        "269F": "HL = 000CH",
+        "26A2": "HL = (HL + SP) & FFFF; only CY changes",
+        "26A3": "byte[saved_pointed_word.low (F+12)] = C",
+        "26A4": "HL = (HL + 1) & FFFF; flags preserved",
+        "26A5": "byte[saved_pointed_word.high (F+13)] = B",
+        "26A6": "HL = little_endian_word[result_slot_pointer (6A88H)]",
+        "26A9": "A = 00H",
+        "26AB": "byte[HL] = A",
+        "26AC": "HL = (HL + 1) & FFFF; flags preserved",
+        "26AD": "byte[HL] = 00H",
+        "26AF": "HL = 0009H",
+        "26B2": "HL = (HL + SP) & FFFF; only CY changes",
+        "26B3": "A = byte[local_tag (F+9)]",
+        "26B4": "flags = compare_unsigned(A, 70H); A unchanged",
+        "26B6": "if Z=0: PC -> PLI0.OVL+272D; flags preserved",
+        "272D": "A = byte[record_mode_flags (6A84H)]",
+        "2730": "HL = 0000H",
+        "2733": "HL = (HL + SP) & FFFF; only CY changes",
+        "2734": "A &= byte[local_mode (F+0)]; logical flags, CY=0",
+        "2735": "A = (old_CY<<7) | (old_A>>1); CY=old_A bit0; NZPA preserved",
+        "2736": "if CY=0: PC -> PLI0.OVL+275D; flags preserved",
+        "2739": "HL = 000EH",
+        "273C": "HL = (HL + SP) & FFFF; only CY changes",
+        "273D": "E = byte[saved_record_pointer.low (F+14)]",
+        "273E": "HL = (HL + 1) & FFFF; flags preserved",
+        "273F": "D = byte[saved_record_pointer.high (F+15)]",
+        "2740": "swap HL and DE; flags preserved",
+        "2741": "little_endian_word[working_record_pointer (69C5H)] = HL (low byte first)",
+        "2744": "HL = 0010H",
+        "2747": "HL = (HL + SP) & FFFF; only CY changes",
+        "2748": "C = byte[local_result.low (F+16)]",
+        "2749": "HL = (HL + 1) & FFFF; flags preserved",
+        "274A": "B = byte[local_result.high (F+17)]",
+        "274B": "HL = 0001H",
+        "274E": "HL = (HL + SP) & FFFF; only CY changes",
+        "274F": "E = byte[helper_word_1.low (F+1)]",
+        "2750": "HL = (HL + 1) & FFFF; flags preserved",
+        "2751": "D = byte[helper_word_1.high (F+2)]",
+        "2752": "push following PC; invoke PLI0.OVL+21AB; result effects belong to callee",
+        "2755": "swap HL and DE; flags preserved",
+        "2756": "HL = 0010H",
+        "2759": "HL = (HL + SP) & FFFF; only CY changes",
+        "275A": "byte[local_result.low (F+16)] = E",
+        "275B": "HL = (HL + 1) & FFFF; flags preserved",
+        "275C": "byte[local_result.high (F+17)] = D",
+        "275D": "A = 00H",
+        "275F": "HL = 0005H",
+        "2762": "HL = (HL + SP) & FFFF; only CY changes",
+        "2763": "byte[child_pointer.low (F+5)] = A",
+        "2764": "HL = (HL + 1) & FFFF; flags preserved",
+        "2765": "byte[child_pointer.high (F+6)] = 00H",
+        "2767": "BC = FFFFH",
+        "276A": "HL = (HL + 1) & FFFF; flags preserved",
+        "276B": "byte[comparison_pointer.low (F+7)] = C",
+        "276C": "HL = (HL + 1) & FFFF; flags preserved",
+        "276D": "byte[comparison_pointer.high (F+8)] = B",
+        "276E": "HL = (HL + 1) & FFFF; flags preserved",
+        "276F": "A = byte[local_tag (F+9)]",
+        "2770": "flags = compare_unsigned(A, 41H); A unchanged",
+        "2772": "if Z=0: PC -> PLI0.OVL+27D2; flags preserved",
+        "2775": "HL = 0000H",
+        "2778": "HL = (HL + SP) & FFFF; only CY changes",
+        "2779": "A = byte[local_mode (F+0)]",
+        "277A": "flags = compare_unsigned(A, 02H); A unchanged",
+        "277C": "if Z=1: PC -> PLI0.OVL+27CC; flags preserved",
+        "277F": "HL = little_endian_word[tested_pointer (6A82H)]",
+        "2782": "swap HL and DE; flags preserved",
+        "2783": "HL = 0003H",
+        "2786": "HL = (HL + SP) & FFFF; only CY changes",
+        "2787": "byte[saved_recursive_pointer.low (F+3)] = E",
+        "2788": "HL = (HL + 1) & FFFF; flags preserved",
+        "2789": "byte[saved_recursive_pointer.high (F+4)] = D",
+        "278A": "push following PC; invoke PLI0.OVL+23C3; result effects belong to callee",
+        "278D": "save +23C3 Boolean A on stack; +240B(7) may overwrite it",
+        "278E": "C = 07H",
+        "2790": "push following PC; invoke PLI0.OVL+240B; result effects belong to callee",
+        "2793": "BC = saved PSW; B is the earlier Boolean, C contains packed flags",
+        "2794": "C = prior +23C3 Boolean from saved B; combine with +240B result",
+        "2795": "A = result240B | saved_result23C3; combine observed Boolean bytes",
+        "2796": "A = complement(combined Boolean); next RAR tests complemented low bit",
+        "2797": "A = (old_CY<<7) | (old_A>>1); CY=old_A bit0; NZPA preserved",
+        "2798": "if CY=0: PC -> PLI0.OVL+27AC; flags preserved",
+        "27AC": "A = 01H",
+        "27AE": "HL = 0000H",
+        "27B1": "HL = (HL + SP) & FFFF; only CY changes",
+        "27B2": "A &= byte[local_mode (F+0)]; logical flags, CY=0",
+        "27B3": "C = local_mode & 1; recursive mode argument",
+        "27B4": "invoke recursive child with C = local_mode & 1; distinct hardware frame",
+        "27B7": "HL = little_endian_word[tested_pointer (6A82H)]",
+        "27BA": "swap HL and DE; flags preserved",
+        "27BB": "HL = 0005H",
+        "27BE": "HL = (HL + SP) & FFFF; only CY changes",
+        "27BF": "byte[child_pointer.low (F+5)] = E",
+        "27C0": "HL = (HL + 1) & FFFF; flags preserved",
+        "27C1": "byte[child_pointer.high (F+6)] = D",
+        "27C2": "HL = (HL - 1) & FFFF; flags preserved",
+        "27C3": "HL = (HL - 1) & FFFF; flags preserved",
+        "27C4": "HL = (HL - 1) & FFFF; flags preserved",
+        "27C5": "E = byte[saved_recursive_pointer.low (F+3)]",
+        "27C6": "HL = (HL + 1) & FFFF; flags preserved",
+        "27C7": "D = byte[saved_recursive_pointer.high (F+4)]",
+        "27C8": "swap HL and DE; flags preserved",
+        "27C9": "little_endian_word[tested_pointer (6A82H)] = HL (low byte first)",
+        "27CC": "HL = 0009H",
+        "27CF": "HL = (HL + SP) & FFFF; only CY changes",
+        "27D0": "byte[local_tag (F+9)] = 40H",
+        "27D2": "HL = 0009H",
+        "27D5": "HL = (HL + SP) & FFFF; only CY changes",
+        "27D6": "A = byte[local_tag (F+9)]",
+        "27D7": "flags = compare_unsigned(A, 40H); A unchanged",
+        "27D9": "if Z=0: PC -> PLI0.OVL+2837; flags preserved",
+        "27DC": "HL = 0000H",
+        "27DF": "HL = (HL + SP) & FFFF; only CY changes",
+        "27E0": "A = byte[local_mode (F+0)]",
+        "27E1": "flags = compare_unsigned(A, 04H); A unchanged",
+        "27E3": "if Z=1: PC -> PLI0.OVL+2837; flags preserved",
+        "27E6": "A = 00H",
+        "27E8": "HL = 000BH",
+        "27EB": "HL = (HL + SP) & FFFF; only CY changes",
+        "27EC": "compare_unsigned(A, byte[child_count (F+11)]); flags only",
+        "27ED": "if CY=0: PC -> PLI0.OVL+281F; flags preserved",
+        "27F0": "C = 03H",
+        "27F2": "push following PC; invoke PLI0.OVL+240B; result effects belong to callee",
+        "27F5": "A = (old_CY<<7) | (old_A>>1); CY=old_A bit0; NZPA preserved",
+        "27F6": "if CY=0: PC -> PLI0.OVL+280E; flags preserved",
+        "27F9": "HL = 000BH",
+        "27FC": "HL = (HL + SP) & FFFF; only CY changes",
+        "27FD": "A = byte[child_count (F+11)]",
+        "27FE": "A = (A - 1) & FF; NZPA updated, CY preserved",
+        "27FF": "byte[child_count (F+11)] = A",
+        "2800": "A = 01H",
+        "2802": "HL = 0000H",
+        "2805": "HL = (HL + SP) & FFFF; only CY changes",
+        "2806": "A &= byte[local_mode (F+0)]; logical flags, CY=0",
+        "2807": "C = local_mode & 1; recursive mode argument after count decrement",
+        "2808": "invoke recursive child after decrementing local child_count, C = local_mode & 1",
+        "280B": "if always: PC -> PLI0.OVL+281C; flags preserved",
+        "280E": "HL = 0007H",
+        "2811": "HL = (HL + SP) & FFFF; only CY changes",
+        "2812": "B = H",
+        "2813": "C = L",
+        "2814": "push following PC; invoke PLI0.OVL+242B; result effects belong to callee",
+        "2817": "C = 04H",
+        "2819": "invoke recursive child with C=4 after +242B pointer operation",
+        "281C": "if always: PC -> PLI0.OVL+27E6; flags preserved",
+        "281F": "DE = &tested_pointer (6A82H)",
+        "2822": "HL = 0005H",
+        "2825": "HL = (HL + SP) & FFFF; only CY changes",
+        "2826": "push following PC; invoke PLI.COM+1A35; result effects belong to callee",
+        "2829": "if CY=0: PC -> PLI0.OVL+2837; flags preserved",
+        "282C": "HL = 0005H",
+        "282F": "HL = (HL + SP) & FFFF; only CY changes",
+        "2830": "E = byte[child_pointer.low (F+5)]",
+        "2831": "HL = (HL + 1) & FFFF; flags preserved",
+        "2832": "D = byte[child_pointer.high (F+6)]",
+        "2833": "swap HL and DE; flags preserved",
+        "2834": "little_endian_word[tested_pointer (6A82H)] = HL (low byte first)",
+        "2837": "HL = 0000H",
+        "283A": "HL = (HL + SP) & FFFF; only CY changes",
+        "283B": "A = byte[local_mode (F+0)]",
+        "283C": "A = (old_CY<<7) | (old_A>>1); CY=old_A bit0; NZPA preserved",
+        "283D": "if CY=0: PC -> PLI0.OVL+2859; flags preserved",
+        "2840": "HL = 0007H",
+        "2843": "HL = (HL + SP) & FFFF; only CY changes",
+        "2844": "swap HL and DE; flags preserved",
+        "2845": "BC = &tested_pointer (6A82H)",
+        "2848": "push following PC; invoke PLI.COM+1A33; result effects belong to callee",
+        "284B": "if CY=0: PC -> PLI0.OVL+2859; flags preserved",
+        "2859": "HL = 0010H",
+        "285C": "HL = (HL + SP) & FFFF; only CY changes",
+        "285D": "E = byte[local_result.low (F+16)]",
+        "285E": "HL = (HL + 1) & FFFF; flags preserved",
+        "285F": "D = byte[local_result.high (F+17)]",
+        "2860": "swap HL and DE; flags preserved",
+        "2861": "output_record_word (6A8EH) = word[local_result (F+16)]",
+        "2864": "A = byte[record_mode_flags (6A84H)]",
+        "2867": "HL = 0000H",
+        "286A": "HL = (HL + SP) & FFFF; only CY changes",
+        "286B": "A &= byte[local_mode (F+0)]; logical flags, CY=0",
+        "286C": "A = (old_CY<<7) | (old_A>>1); CY=old_A bit0; NZPA preserved",
+        "286D": "if CY=0: PC -> PLI0.OVL+2895; flags preserved",
+        "2870": "HL = 000EH",
+        "2873": "HL = (HL + SP) & FFFF; only CY changes",
+        "2874": "E = byte[saved_record_pointer.low (F+14)]",
+        "2875": "HL = (HL + 1) & FFFF; flags preserved",
+        "2876": "D = byte[saved_record_pointer.high (F+15)]",
+        "2877": "swap HL and DE; flags preserved",
+        "2878": "little_endian_word[working_record_pointer (69C5H)] = HL (low byte first)",
+        "287B": "HL = little_endian_word[result_slot_pointer (6A88H)]",
+        "287E": "SP -= 2; push HL little-endian",
+        "287F": "HL = 000EH",
+        "2882": "HL = (HL + SP) & FFFF; only CY changes",
+        "2883": "C = byte[saved_pointed_word.low (F+12)]",
+        "2884": "HL = (HL + 1) & FFFF; flags preserved",
+        "2885": "B = byte[saved_pointed_word.high (F+13)]",
+        "2886": "HL = word[SP]; SP += 2",
+        "2887": "byte[HL] = C",
+        "2888": "HL = (HL + 1) & FFFF; flags preserved",
+        "2889": "byte[HL] = B",
+        "288A": "push following PC; invoke PLI0.OVL+2290; result effects belong to callee",
+        "288D": "SP -= 2; push HL little-endian",
+        "288E": "HL = little_endian_word[result_slot_pointer (6A88H)]",
+        "2891": "BC = word[SP]; SP += 2",
+        "2892": "byte[HL] = C",
+        "2893": "HL = (HL + 1) & FFFF; flags preserved",
+        "2894": "byte[HL] = B",
+        "2895": "HL = 18-byte frame size for epilogue",
+        "2898": "HL = F + 18 = original entry_SP; CY from modular stack addition",
+        "2899": "SP = F + 18 = original entry_SP; restore original CALL slot",
+        "289A": "consume original hardware CALL word; SP = entry_SP + 2, no software continuation"
+      }
+    },
+    {
+      "id": "PLI2.OVL+04D3",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "stable_label": "PLI2_04D3",
+      "runtime_entry": 9939,
+      "start_offset": 1235,
+      "end_offset": 1257,
+      "length": 22,
+      "byte_status_at_entry": "UNDERSTOOD",
+      "description": "mapped mutable-byte table reader at A732",
+      "completeness": {
+        "bounds": "stable",
+        "control_flow": "complete",
+        "contract": "complete"
+      },
+      "observed_paths": {
+        "invocations_by_run": {
+          "MINIMAL": 39
+        },
+        "represented_bytes": 22,
+        "description": "39 branchless conventional calls; results 0/1; reads share mapped address calculation with +061B"
+      },
+      "unresolved_paths": [
+        "39 MINIMAL reads return 28 zeros/11 ones; other values and alias cases unobserved. Adjacent +04E9 is distinct and unprocessed."
+      ],
+      "inputs": "C=position; input_byte_vector[AAB0] and mapped_value_table[A732]",
+      "outputs": "j=byte[AAB0+C]; A=byte[A732+j], BC=j, HL=A732+j, DE preserved, CY=0/NZPA preserved",
+      "clobbers": "A,BC,HL,CY; ABFC written; DE/NZPA preserved",
+      "memory_state": [
+        "mapped_value_table=A732H (mutable byte table read by +04D3 and written by +061B)",
+        "input_byte_vector=AAB0H (first-stage byte lookup indexed by C)",
+        "value_lookup_index=ABFCH (saved +04D3 position)"
+      ],
+      "data_role_ids": [
+        "PLI2.OVL:mapped_value_table",
+        "PLI2.OVL:input_byte_vector",
+        "PLI2.OVL:value_lookup_index"
+      ],
+      "callers": [
+        {
+          "coordinate": "PLI2.OVL+0A65",
+          "counts_by_run": {
+            "MINIMAL": 16
+          }
+        },
+        {
+          "coordinate": "PLI2.OVL+0ABE",
+          "counts_by_run": {
+            "MINIMAL": 7
+          }
+        },
+        {
+          "coordinate": "PLI2.OVL+0C80",
+          "counts_by_run": {
+            "MINIMAL": 16
+          }
+        }
+      ],
+      "returns": {
+        "convention": "ordinary hardware CALL word; original slot unchanged, SP after RET = entry SP + 2",
+        "observed_file_offsets": [
+          1256
+        ],
+        "sites_description": "PLI2.OVL+04E8"
+      },
+      "direct_callees": [],
+      "overlapping_entries": [],
+      "contract_scope": "documented local table operation, nonaliasing tables/scratch/stack as witnessed",
+      "contract": "Save C at ABFC, read ABFC/ABFD and discard high byte, map the unsigned position through AAB0 then read byte[A732+j]. The second table is mutable: +061B writes the identical mapped address. Table meaning remains unknown.",
+      "semantic_hypothesis": "mutable per-mapped-byte attribute getter",
+      "pseudocode": "byte[ABFC]=C; j=byte[AAB0+C]; BC=j; HL=A732+j; A=byte[HL]; RET",
+      "evidence_refs": [
+        "evidence.json#seeds/PLI2.OVL+04D3",
+        "../minimal-baseline/pass-3/regions.json#PLI2.OVL+04D3"
+      ],
+      "blocks": [
+        {
+          "offset": 1235,
+          "pseudocode": [
+            "value_lookup_index[ABFCH]=C; zero-extend saved low byte"
+          ]
+        },
+        {
+          "offset": 1244,
+          "pseudocode": [
+            "j=input_byte_vector[AAB0H+C]; return mapped_value_table[A732H+j]"
+          ]
+        }
+      ],
+      "local_comments": {
+        "04D3": "HL = &value_lookup_index (ABFCH)",
+        "04D6": "byte[value_lookup_index (ABFCH)] = C",
+        "04D7": "L = byte[value_lookup_index (ABFCH)]; H = byte[ABFDH]",
+        "04DA": "HL = zero_extend(value_lookup_index); discard adjacent ABFDH byte",
+        "04DC": "BC = &input_byte_vector (AAB0H)",
+        "04DF": "HL = input_byte_vector base AAB0H + position; CY=0",
+        "04E0": "C = input_byte_vector[AAB0H + saved position] (mapped index j)",
+        "04E1": "BC = zero_extend(mapped index j)",
+        "04E3": "HL = &mapped_value_table (A732H)",
+        "04E6": "HL = mapped_value_table base A732H + mapped index j; CY=0",
+        "04E7": "A = mapped_value_table[A732H + j]; table is writable through +061B",
+        "04E8": "PC = word[SP]; SP += 2; use the convention in procedure header"
+      }
+    },
+    {
+      "id": "PLI2.OVL+061B",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "stable_label": "PLI2_061B",
+      "runtime_entry": 10267,
+      "start_offset": 1563,
+      "end_offset": 1590,
+      "length": 27,
+      "byte_status_at_entry": "UNDERSTOOD",
+      "description": "mapped mutable-byte table writer at A732",
+      "completeness": {
+        "bounds": "stable",
+        "control_flow": "complete",
+        "contract": "complete"
+      },
+      "observed_paths": {
+        "invocations_by_run": {
+          "MINIMAL": 32
+        },
+        "represented_bytes": 27,
+        "description": "32 branchless conventional calls from two sites; writes table bytes also read by +04D3"
+      },
+      "unresolved_paths": [
+        "32 writes store 23 zeros/nine ones; source meaning and alias cases unobserved. Adjacent setter +0636 is a distinct unprocessed entry."
+      ],
+      "inputs": "C=position, E=value; input_byte_vector[AAB0]",
+      "outputs": "byte[A732+byte[AAB0+input C]]=input E; A=input E, BC=j, HL=A732+j, DE and NZPA preserved, CY=0",
+      "clobbers": "A,BC,HL,CY; AC0E=input C, AC0F=input E and mapped table byte; DE/NZPA preserved",
+      "memory_state": [
+        "mapped_value_table=A732H (mutable byte table read by +04D3 and written by +061B)",
+        "input_byte_vector=AAB0H (first-stage byte lookup indexed by C)",
+        "table_store_index=AC0EH (saved +061B C)",
+        "table_store_value=AC0FH (saved +061B E)"
+      ],
+      "data_role_ids": [
+        "PLI2.OVL:mapped_value_table",
+        "PLI2.OVL:input_byte_vector",
+        "PLI2.OVL:table_store_index",
+        "PLI2.OVL:table_store_value"
+      ],
+      "callers": [
+        {
+          "coordinate": "PLI2.OVL+0AF0",
+          "counts_by_run": {
+            "MINIMAL": 16
+          }
+        },
+        {
+          "coordinate": "PLI2.OVL+1490",
+          "counts_by_run": {
+            "MINIMAL": 16
+          }
+        }
+      ],
+      "returns": {
+        "convention": "ordinary hardware CALL word; original slot unchanged, SP after RET = entry SP + 2",
+        "observed_file_offsets": [
+          1589
+        ],
+        "sites_description": "PLI2.OVL+0635"
+      },
+      "direct_callees": [],
+      "overlapping_entries": [],
+      "contract_scope": "documented local table operation, nonaliasing tables/scratch/stack as witnessed",
+      "contract": "Save E at AC0F then C at AC0E. LHLD physically reads both saved bytes; discard high byte to zero-extend the index. Read j=byte[AAB0+C], compute A732+j, reload saved E and write it. Same mapping as getter +04D3; no nested calls or software continuation.",
+      "semantic_hypothesis": "mutable per-mapped-byte attribute setter",
+      "pseudocode": "byte[AC0F]=E; byte[AC0E]=C; j=byte[AAB0+C]; BC=j; HL=A732+j; A=byte[AC0F]; byte[HL]=A; RET",
+      "evidence_refs": [
+        "evidence.json#seeds/PLI2.OVL+061B",
+        "../minimal-baseline/pass-3/regions.json#PLI2.OVL+061B"
+      ],
+      "blocks": [
+        {
+          "offset": 1563,
+          "pseudocode": [
+            "table_store_value[AC0FH]=E; table_store_index[AC0EH]=C"
+          ]
+        },
+        {
+          "offset": 1569,
+          "pseudocode": [
+            "j=input_byte_vector[AAB0H+saved index]; HL=A732H+j"
+          ]
+        },
+        {
+          "offset": 1585,
+          "pseudocode": [
+            "reload saved value from AC0FH; write mapped_value_table[HL]; return"
+          ]
+        }
+      ],
+      "local_comments": {
+        "061B": "HL = &table_store_value (AC0FH)",
+        "061E": "table_store_value (AC0FH) = input E; save value before mapping index",
+        "061F": "HL = (HL - 1) & FFFF; flags preserved",
+        "0620": "table_store_index (AC0EH) = input C",
+        "0621": "L = table_store_index (AC0EH); H = table_store_value (AC0FH), discarded next",
+        "0624": "HL = zero_extend(saved position); saved value remains at AC0FH",
+        "0626": "BC = &input_byte_vector (AAB0H)",
+        "0629": "HL = input_byte_vector base AAB0H + store position; CY=0",
+        "062A": "C = input_byte_vector[AAB0H + saved store index] (mapped index j)",
+        "062B": "BC = zero_extend(mapped index j)",
+        "062D": "HL = &mapped_value_table (A732H)",
+        "0630": "HL = mapped_value_table base A732H + mapped index j; CY=0",
+        "0631": "A = byte[table_store_value (AC0FH)]",
+        "0634": "mapped_value_table[A732H + j] = saved E from table_store_value (AC0FH)",
+        "0635": "PC = word[SP]; SP += 2; use the convention in procedure header"
+      }
     }
   ]
 }

@@ -1000,6 +1000,256 @@
       "width": 2,
       "role": "saved adapter BC",
       "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI.COM:source_selector",
+      "image": "PLI.COM",
+      "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+      "name": "source_selector",
+      "runtime_address": 8200,
+      "width": 1,
+      "role": "zero selects +09CB; nonzero path unprocessed",
+      "scope": "Only reviewed MINIMAL pass-3 hypotheses; no source-language type."
+    },
+    {
+      "id": "PLI.COM:cached_source_byte",
+      "image": "PLI.COM",
+      "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+      "name": "cached_source_byte",
+      "runtime_address": 8346,
+      "width": 1,
+      "role": "+0AF5 saved filtered byte before EOF comparison",
+      "scope": "Only reviewed MINIMAL pass-3 hypotheses; no source-language type."
+    },
+    {
+      "id": "PLI2.OVL:class_kind_table",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "name": "class_kind_table",
+      "runtime_address": 8820,
+      "width": null,
+      "role": "indexed by class byte from +047D; MINIMAL gives kind zero",
+      "scope": "Only reviewed MINIMAL pass-3 hypotheses; no source-language type."
+    },
+    {
+      "id": "PLI2.OVL:mapped_value_table",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "name": "mapped_value_table",
+      "runtime_address": 42802,
+      "width": null,
+      "role": "mutable byte table read by +04D3 and written by +061B",
+      "scope": "Only reviewed MINIMAL pass-3 hypotheses; no source-language type."
+    },
+    {
+      "id": "PLI2.OVL:kind_lookup_index",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "name": "kind_lookup_index",
+      "runtime_address": 44027,
+      "width": 1,
+      "role": "saved +04BF position",
+      "scope": "Only reviewed MINIMAL pass-3 hypotheses; no source-language type."
+    },
+    {
+      "id": "PLI2.OVL:value_lookup_index",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "name": "value_lookup_index",
+      "runtime_address": 44028,
+      "width": 1,
+      "role": "saved +04D3 position",
+      "scope": "Only reviewed MINIMAL pass-3 hypotheses; no source-language type."
+    },
+    {
+      "id": "PLI2.OVL:table_store_index",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "name": "table_store_index",
+      "runtime_address": 44046,
+      "width": 1,
+      "role": "saved +061B C",
+      "scope": "Only reviewed MINIMAL pass-3 hypotheses; no source-language type."
+    },
+    {
+      "id": "PLI2.OVL:table_store_value",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "name": "table_store_value",
+      "runtime_address": 44047,
+      "width": 1,
+      "role": "saved +061B E",
+      "scope": "Only reviewed MINIMAL pass-3 hypotheses; no source-language type."
+    },
+    {
+      "id": "PLI2.OVL:span_start",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "name": "span_start",
+      "runtime_address": 43693,
+      "width": 1,
+      "role": "initial backward cursor saved by +09BA",
+      "scope": "Only reviewed MINIMAL pass-3 hypotheses; no source-language type."
+    },
+    {
+      "id": "PLI2.OVL:span_end",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "name": "span_end",
+      "runtime_address": 43694,
+      "width": 1,
+      "role": "limit cursor read by +09BA",
+      "scope": "Only reviewed MINIMAL pass-3 hypotheses; no source-language type."
+    },
+    {
+      "id": "PLI2.OVL:fold_kind",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "name": "fold_kind",
+      "runtime_address": 44093,
+      "width": 1,
+      "role": "class-kind result for current forward position",
+      "scope": "Only reviewed MINIMAL pass-3 hypotheses; no source-language type."
+    },
+    {
+      "id": "PLI2.OVL:repeat_fold",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "name": "repeat_fold",
+      "runtime_address": 44094,
+      "width": 1,
+      "role": "bit0 requests fold pass; consumed before fold",
+      "scope": "Only reviewed MINIMAL pass-3 hypotheses; no source-language type."
+    },
+    {
+      "id": "PLI2.OVL:fold_accumulator",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "name": "fold_accumulator",
+      "runtime_address": 44095,
+      "width": 1,
+      "role": "unsigned-max accumulator",
+      "scope": "Only reviewed MINIMAL pass-3 hypotheses; no source-language type."
+    },
+    {
+      "id": "PLI2.OVL:fold_candidate",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "name": "fold_candidate",
+      "runtime_address": 44096,
+      "width": 1,
+      "role": "byte modular value+remaining-1",
+      "scope": "Only reviewed MINIMAL pass-3 hypotheses; no source-language type."
+    },
+    {
+      "id": "PLI2.OVL:fold_remaining",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "name": "fold_remaining",
+      "runtime_address": 44102,
+      "width": 1,
+      "role": "remaining weight/counter",
+      "scope": "Only reviewed MINIMAL pass-3 hypotheses; no source-language type."
+    },
+    {
+      "id": "PLI2.OVL:fold_weight",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "name": "fold_weight",
+      "runtime_address": 44103,
+      "width": 1,
+      "role": "initial per-position weight",
+      "scope": "Only reviewed MINIMAL pass-3 hypotheses; no source-language type."
+    },
+    {
+      "id": "PLI2.OVL:child_cursor",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "name": "child_cursor",
+      "runtime_address": 44105,
+      "width": 1,
+      "role": "backward cursor between child spans",
+      "scope": "Only reviewed MINIMAL pass-3 hypotheses; no source-language type."
+    },
+    {
+      "id": "PLI2.OVL:child_span_start",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "name": "child_span_start",
+      "runtime_address": 44106,
+      "width": 1,
+      "role": "saved +0992 result for child span",
+      "scope": "Only reviewed MINIMAL pass-3 hypotheses; no source-language type."
+    },
+    {
+      "id": "PLI2.OVL:fold_cursor",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "name": "fold_cursor",
+      "runtime_address": 44111,
+      "width": 1,
+      "role": "forward cursor",
+      "scope": "Only reviewed MINIMAL pass-3 hypotheses; no source-language type."
+    },
+    {
+      "id": "PLI2.OVL:fold_mode_flags",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "name": "fold_mode_flags",
+      "runtime_address": 8235,
+      "width": 1,
+      "role": "zero bit0 observed; other mode path RAW",
+      "scope": "Only reviewed MINIMAL pass-3 hypotheses; no source-language type."
+    },
+    {
+      "id": "PLI0.OVL:working_record_pointer",
+      "image": "PLI0.OVL",
+      "image_sha256": "e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff",
+      "name": "working_record_pointer",
+      "runtime_address": 27077,
+      "width": 2,
+      "role": "pointer used for mode1 copy/repair",
+      "scope": "Only reviewed MINIMAL pass-3 hypotheses; no source-language type."
+    },
+    {
+      "id": "PLI0.OVL:record_mode_flags",
+      "image": "PLI0.OVL",
+      "image_sha256": "e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff",
+      "name": "record_mode_flags",
+      "runtime_address": 27268,
+      "width": 1,
+      "role": "bit0 enables mode1 auxiliary effects",
+      "scope": "Only reviewed MINIMAL pass-3 hypotheses; no source-language type."
+    },
+    {
+      "id": "PLI0.OVL:record_copy_count",
+      "image": "PLI0.OVL",
+      "image_sha256": "e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff",
+      "name": "record_copy_count",
+      "runtime_address": 27269,
+      "width": 1,
+      "role": "observed copied record byte count",
+      "scope": "Only reviewed MINIMAL pass-3 hypotheses; no source-language type."
+    },
+    {
+      "id": "PLI0.OVL:result_slot_pointer",
+      "image": "PLI0.OVL",
+      "image_sha256": "e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff",
+      "name": "result_slot_pointer",
+      "runtime_address": 27272,
+      "width": 2,
+      "role": "pointer to word saved/cleared/rewritten on mode1 path",
+      "scope": "Only reviewed MINIMAL pass-3 hypotheses; no source-language type."
+    },
+    {
+      "id": "PLI0.OVL:output_record_word",
+      "image": "PLI0.OVL",
+      "image_sha256": "e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff",
+      "name": "output_record_word",
+      "runtime_address": 27278,
+      "width": 2,
+      "role": "zeroed on entry, published from local F+16",
+      "scope": "Only reviewed MINIMAL pass-3 hypotheses; no source-language type."
     }
   ]
 }
