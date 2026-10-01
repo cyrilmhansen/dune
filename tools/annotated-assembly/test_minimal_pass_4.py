@@ -123,8 +123,10 @@ class MinimalPassFourTests(unittest.TestCase):
         caller = self.catalog["PLI0.OVL+24BC"]
         self.assertEqual(ref["status_after"], "STRUCTURED")
         self.assertEqual(caller["completeness"], {"bounds": "provisional", "control_flow": "partial", "contract": "partial"})
-        self.assertEqual(ref["pseudocode_after"], caller["pseudocode"])
+        # Pass-4 is a historical snapshot. Later evidence-backed corrections
+        # refine this caller without rewriting the snapshot or promoting bytes.
         for term in ("field_equal240B", "scan23DF", "begin_window1A8C"):
+            self.assertIn(term, ref["pseudocode_after"])
             self.assertIn(term, caller["pseudocode"])
             self.assertTrue(any(term in " ".join(b["pseudocode"]) for b in caller["blocks"]))
         self.assertIn("+21AB", " ".join(caller["unresolved_paths"]))

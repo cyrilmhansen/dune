@@ -101,6 +101,72 @@ class ExistingMinimalPacketTests(unittest.TestCase):
         self.assertGreater(len({invocations[n]["initial_local_bytes"][11]["value"]
                                 for n in many["invocations"]}), 1)
 
+    def test_2798_recursion_selects_original_true_boolean(self):
+        blocks = {b["offset"]: b["pseudocode"] for b in self.catalog[TARGET]["blocks"]}
+        self.assertIn("if combined.bit0==1", " ".join(blocks[0x2775]))
+        checked = 0
+        for invocation in self.packet["invocations"]:
+            owned = {self.packet["steps"][str(s)]["coordinate"]: self.packet["steps"][str(s)]
+                     for s in invocation["local_steps"]}
+            if "PLI0.OVL+2798" not in owned:
+                continue
+            with self.subTest(invocation=invocation["call_step"]):
+                def at(offset):
+                    return owned[f"PLI0.OVL+{offset:04X}"]
+
+                calls = {self.packet["calls"][str(s)]["callsite"]: self.packet["calls"][str(s)]
+                         for s in invocation["nested_calls"]}
+                guard = self.packet["steps"][str(calls["PLI0.OVL+278A"]["post_return_state_step"])]["after"]
+                field = self.packet["steps"][str(calls["PLI0.OVL+2790"]["post_return_state_step"])]["after"]
+                self.assertEqual((guard["a"], field["a"]), (0x00, 0xFF))
+                self.assertEqual(at(0x278D)["writes"][0]["new_value"], guard["a"])
+                self.assertEqual(at(0x2793)["after"]["b"], guard["a"])
+                self.assertEqual(at(0x2794)["after"]["c"], guard["a"])
+                combined = field["a"] | guard["a"]
+                complemented = combined ^ 0xFF
+                self.assertEqual(at(0x2795)["after"]["a"], combined)
+                self.assertFalse(at(0x2795)["after"]["flags"]["carry"])
+                self.assertEqual(at(0x2796)["after"]["a"], complemented)
+                self.assertEqual(at(0x2797)["after"]["a"], complemented >> 1)
+                self.assertEqual(at(0x2797)["after"]["flags"]["carry"], bool(complemented & 1))
+                branch = at(0x2798)
+                self.assertEqual(branch["control"]["taken"], bool(combined & 1))
+                self.assertEqual(branch["pc_after"], 0x49AC)
+                self.assertIn("PLI0.OVL+27B4", calls)
+                checked += 1
+        self.assertEqual(checked, 10)
+
+    def test_2601_patch_selects_clear_helper_a_bit_not_helper_carry(self):
+        blocks = {b["offset"]: b["pseudocode"] for b in self.catalog[TARGET]["blocks"]}
+        self.assertIn("clear bit gives CY=1", " ".join(blocks[0x25F5]))
+        calls = [c for c in self.packet["calls"].values() if c["callsite"] == "PLI0.OVL+25FC"]
+        self.assertEqual(len(calls), 1)
+        call = calls[0]
+        returned = self.packet["steps"][str(call["post_return_state_step"])]["after"]
+        self.assertEqual((returned["a"], returned["flags"]["carry"]), (0x00, True))
+        invocation = next(i for i in self.packet["invocations"] if i["call_step"] == call["invocation"])
+        owned = {self.packet["steps"][str(s)]["coordinate"]: self.packet["steps"][str(s)]
+                 for s in invocation["local_steps"]}
+
+        def at(offset):
+            return owned[f"PLI0.OVL+{offset:04X}"]
+
+        complemented = returned["a"] ^ 0xFF
+        self.assertEqual(at(0x25FF)["before"]["a"], returned["a"])
+        self.assertEqual(at(0x25FF)["after"]["a"], complemented)
+        self.assertEqual(at(0x25FF)["after"]["flags"], returned["flags"])
+        self.assertEqual(at(0x2600)["after"]["flags"]["carry"], bool(complemented & 1))
+        self.assertEqual(at(0x2601)["control"]["taken"], bool(returned["a"] & 1))
+        self.assertEqual(at(0x2601)["pc_after"], 0x4804)
+        # The fallthrough actually copies both bytes through the result-slot
+        # pointer into working_record+6; it is not merely a branch-count claim.
+        destination = at(0x260E)["after"]
+        destination = (destination["h"] << 8) | destination["l"]
+        for read_offset, write_offset, delta in [(0x2610, 0x2614, 0), (0x2612, 0x2616, 1)]:
+            written = at(write_offset)["writes"][0]
+            self.assertEqual(written["address"], (destination + delta) & 0xFFFF)
+            self.assertEqual(written["new_value"], at(read_offset)["reads"][0]["value"])
+
     def test_detects_corrupt_bytes_and_branch_counts(self):
         p = copy.deepcopy(self.packet)
         p["instructions"][TARGET]["bytes"] = "00"

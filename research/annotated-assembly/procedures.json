@@ -7378,7 +7378,7 @@
         "record_copy_count=6A85H (observed copied record byte count)",
         "result_slot_pointer=6A88H (pointer to word saved/cleared/rewritten on mode1 path)",
         "output_record_word=6A8EH (zeroed on entry, published from local F+16)",
-        "F=entry_SP-18; F+0 mode; words F+1/+3/+5/+7/+12/+14/+16; bytes F+9 tag, F+10 flags, F+11 count; F+18 original return word",
+        "F=entry_SP-18; F+0 mode; words F+1/+3/+5/+7/+12/+14/+16; F+3 saved pointer before first tag41 child, F+5 pointer after that child; F+7 comparison pointer; bytes F+9 tag, F+10 flags, F+11 decrement-path count, not total children; F+18 original return word",
         "temporary PSW below F across +2790; recursive child CALLs own separate hardware words",
         "staging_cursor=69C3H (source cursor decreased by tail copy; new working base after copy)",
         "extent_count=69C7H (byte-sized counted window extent, reset by +1A8C and grown by +1A14)",
@@ -7548,13 +7548,14 @@
       ],
       "overlapping_entries": [],
       "contract_scope": "observed MINIMAL control/data shape, not complete operation; corrected hardware frames isolate recursive child contexts",
-      "contract": "Let S=entry SP, F=S-18. Save input mode at F+0, initialize output word and local result F+16 to zero; save current pointer at F+14 after +23C3. Clear bit7 of record byte[p+3] and snapshot bytes[p+2], masked[p+3], [p+5] at F+9/+10/+11. Mode bit0 gates copy/repair path. +1A8C(length) drains the staged tail via +1A47, sets working_record_pointer[69C5] to post-copy staging_cursor[69C3], clears extent_count[69C7], then adds/checks the initial extent via +1A14. The caller copies record length bytes to this working base. +240B(k) on guard-false returns FF/CY=1 exactly when record[p+3]&7 equals k; this selects child/field branches, not an ordering test. +23DF(0) advances tested_pointer by length bytes until the advanced tag&E0 equals zero or the bound/tag guard stops it. Dispatch local tag 41/40 through recursive +24BC calls (C=mode&1 or 4); keep original pointer in F+3 and child pointer in F+5, restore selected pointers. Publish F+16 to 6A8E. Epilogue SP=F+18 restores original hardware return slot. Opaque calls and unprocessed arms prevent a full behavioral contract.",
+      "contract": "Let S=entry SP, F=S-18. Save input mode at F+0, initialize output word and local result F+16 to zero; save current pointer at F+14 after +23C3. Clear bit7 of record byte[p+3] and snapshot bytes[p+2], masked[p+3], [p+5] at F+9/+10/+11. Mode bit0 gates copy/repair path. +1A8C(length) drains the staged tail via +1A47, sets working_record_pointer[69C5] to post-copy staging_cursor[69C3], clears extent_count[69C7], then adds/checks the initial extent via +1A14. The caller copies record length bytes to this working base. OBSERVED +247C returns A=00/CY=1; CMA/RAR tests returned A bit0, giving CY=1 and +2601 JNC fallthrough to the word patch. DEDUCED: the patch selects a clear A bit0; the helper meaning remains opaque. +240B(k) on guard-false returns FF/CY=1 exactly when record[p+3]&7 equals k; this selects child/field branches, not an ordering test. +23DF(0) advances tested_pointer by length bytes until the advanced tag&E0 equals zero or the bound/tag guard stops it. Dispatch local tag 41/40 through recursive +24BC calls (C=mode&1 or 4). OBSERVED at +2798: guard A=00 OR field-7 A=FF gives FF on all ten paths; CMA gives 00, RAR gives CY=0 and JNC selects the mode&1 child. DEDUCED: that branch tests the original combined Boolean as true, not false. F+3 saves tested_pointer before this first tag-41 child; F+5 saves tested_pointer after it returns. Restoring F+3 causes the observed C05/C06 mode4 child to revisit the same pointer. F+11 counts decrement-path iterations, not total recursive children: C05 starts at 2 with four children, C06 at 1 with three. After the count loop, +1A35 computes current tested_pointer minus F+5; borrow selects F+5, implementing unsigned max(current tested_pointer,F+5). The later +1A33 computes F+7 minus tested_pointer; its borrow arm would assign F+7 as an upper clamp (STATIC / UNOBSERVED, RAW bytes retained). Publish F+16 to output_record_word[6A8E]; this is distinct from restoring F+12 and publishing opaque +2290 returned HL through result_slot_pointer[6A88]. Epilogue SP=F+18 restores original hardware return slot. Opaque calls and unprocessed arms prevent a full behavioral contract.",
       "semantic_hypothesis": "recursive record traversal/repair operation; extent and higher meaning provisional",
-      "pseudocode": "F=entry_SP-18; local_mode=C; result=0; save tested_pointer; clear record[p+3].bit7; snapshot tag/flags/count; if mode.bit0 { begin_window1A8C(record_copy_count); copy record bytes to working_record_pointer; setup/repair including field_equal240B(5/6) delegated; }; scan23DF(masked_tag=0); if local_tag==41 { combine guard with field_equal240B(7); recurse(mode&1) on observed path; local_tag=40; }; if local_tag==40 && mode!=4 { while count!=0 { if field_equal240B(3) { count--; recurse(mode&1); } else { opaque242B(&comparison_pointer); recurse(4); }; }; }; remaining pointer/repair effects delegated; word[6A8E]=local_result; restore original SP; RET",
+      "pseudocode": "F=entry_SP-18; local_mode=C; result=0; save tested_pointer; clear record[p+3].bit7; snapshot tag/flags/count; if local_mode.bit0 { begin_window1A8C(record_copy_count); copy record bytes to working_record_pointer; setup/repair delegated; observed +247C.A.bit0==0 selects pointed-word patch after CMA/RAR/JNC; field_equal240B(5/6) remains guard-false scoped; }; scan23DF(masked_tag=0); word[F+5]=0; word[F+7]=FFFF; if local_tag==41 { observed path: word[F+3]=tested_pointer; combined=guard23C3_A|field_equal240B(7)_A; if combined.bit0==1 { recurse(local_mode&1); word[F+5]=tested_pointer after child; tested_pointer=word[F+3]; }; other arms unresolved; local_tag=40; }; if local_tag==40 && local_mode!=4 { while byte[F+11]!=0 { if field_equal240B(3) { byte[F+11]--; recurse(local_mode&1); } else { opaque242B(&word[F+7]); recurse(4); no local count decrement; }; }; tested_pointer=unsigned_max(tested_pointer,word[F+5]); }; OBSERVED C05/C06 revisit restored F+3 in mode4; initial F+11 counts 2/1 yield 4/3 children; STATIC / UNOBSERVED: local_mode.bit0 and word[F+7]<tested_pointer permit tested_pointer=word[F+7] through RAW arm; word[output_record_word@6A8E]=word[F+16]; observed auxiliary path: restore word[result_slot_pointer] from F+12; opaque2290(); publish returned HL through freshly loaded result_slot_pointer; restore original SP; RET",
       "evidence_refs": [
         "evidence.json#seeds/PLI0.OVL+24BC",
         "../minimal-baseline/pass-3/regions.json#PLI0.OVL+24BC",
-        "../minimal-baseline/pass-4/caller-refinements.json#PLI0.OVL+24BC"
+        "../minimal-baseline/pass-4/caller-refinements.json#PLI0.OVL+24BC",
+        "../minimal-baseline/evidence-packet-v0/README.md (reproducible joined +24BC evidence)"
       ],
       "blocks": [
         {
@@ -7611,7 +7612,8 @@
         {
           "offset": 9717,
           "pseudocode": [
-            "mode1 conditional +247C; witnessed true enables copied word patch"
+            "mode1 conditional opaque +247C; OBSERVED returned A=00/CY=1",
+            "DEDUCED CMA/RAR tests returned A bit0: clear bit gives CY=1, +2601 JNC falls through to word patch"
           ]
         },
         {
@@ -7691,15 +7693,17 @@
         {
           "offset": 10101,
           "pseudocode": [
-            "tag41: save current pointer at F+3; compute bound/tag23C3 and field_equal240B(7)",
-            "combine Boolean results; observed combined false selects recursive path"
+            "tag41 observed mode0: word[F+3]=tested_pointer before first child; compute guard23C3 and guard-false field_equal240B(7)",
+            "OBSERVED ten paths: guard_A=00, field_A=FF; combined=guard_A|field_A=FF (true)",
+            "DEDUCED if combined.bit0==1: CMA gives 00; RAR gives CY=0; +2798 JNC selects mode&1 recursive path"
           ]
         },
         {
           "offset": 10156,
           "pseudocode": [
-            "recursively call +24BC(C=local_mode&1); save child pointer F+5; restore F+3",
-            "set local tag[F+9]=40"
+            "recurse +24BC(C=local_mode&1); word[F+5]=tested_pointer after first child returns",
+            "tested_pointer=word[F+3] (saved before child); set local tag[F+9]=40",
+            "OBSERVED C05/C06 later revisit restored pointer with a mode4 child"
           ]
         },
         {
@@ -7711,8 +7715,9 @@
         {
           "offset": 10214,
           "pseudocode": [
-            "while count[F+11]!=0: query guard-false field_equal240B(3)",
-            "six true results select count--/mode&1 child; four false select +242B/mode4 child"
+            "while decrement-path count[F+11]!=0: query guard-false field_equal240B(3)",
+            "OBSERVED six true results select count--/mode&1 child; four false select opaque +242B/mode4 child without local count decrement",
+            "F+11 is not total children: OBSERVED C05 count2 has four children; C06 count1 has three"
           ]
         },
         {
@@ -7724,7 +7729,7 @@
         {
           "offset": 10254,
           "pseudocode": [
-            "predicate false: +242B(&word[F+7]); recurse with C=4"
+            "predicate false: opaque +242B(&word[F+7]); recurse with C=4; no local F+11 decrement"
           ]
         },
         {
@@ -7736,7 +7741,8 @@
         {
           "offset": 10271,
           "pseudocode": [
-            "compare current tested_pointer to word[F+5]; restore child pointer only on borrow"
+            "DEDUCED +1A35 subtracts word[F+5] from tested_pointer; CY is unsigned borrow",
+            "if tested_pointer<word[F+5]: assign word[F+5]; together implements unsigned max(tested_pointer,word[F+5])"
           ]
         },
         {
@@ -7748,19 +7754,20 @@
         {
           "offset": 10295,
           "pseudocode": [
-            "mode bit0 gates pointer-difference branch; witnessed branch skips RAW patch"
+            "local_mode bit0 gates comparison against word[F+7]; OBSERVED +284B skips RAW assignment"
           ]
         },
         {
           "offset": 10304,
           "pseudocode": [
-            "compare local F+7 pointer with current pointer via +1A33"
+            "DEDUCED +1A33 computes word[F+7]-tested_pointer; JNC skips assignment when F+7>=tested_pointer",
+            "STATIC / UNOBSERVED: borrow arm in RAW +284E..+2858 assigns tested_pointer=word[F+7] (unsigned upper clamp)"
           ]
         },
         {
           "offset": 10329,
           "pseudocode": [
-            "output_record_word[6A8EH]=word[F+16]"
+            "output_record_word[6A8EH]=word[F+16]; distinct from later writes through result_slot_pointer[6A88H]"
           ]
         },
         {
@@ -7773,8 +7780,9 @@
           "offset": 10352,
           "pseudocode": [
             "restore working_record_pointer from word[F+14]; PUSH shifts SP to F-2",
-            "copy saved_pointed_word[F+12] through result_slot_pointer (SP+14 after PUSH)",
-            "delegate +2290 and store returned HL through result_slot_pointer"
+            "restore saved_pointed_word[F+12] through result_slot_pointer (SP+14 after PUSH)",
+            "delegate opaque +2290; separately publish returned HL through freshly loaded result_slot_pointer",
+            "these indirect publications do not copy local_result[F+16] and are distinct from output_record_word[6A8EH]"
           ]
         },
         {
@@ -7886,10 +7894,10 @@
         "25F5": "A = byte[record_mode_flags (6A84H)]",
         "25F8": "A = (old_CY<<7) | (old_A>>1); CY=old_A bit0; NZPA preserved",
         "25F9": "if CY=0: PC -> PLI0.OVL+2617; flags preserved",
-        "25FC": "push following PC; invoke PLI0.OVL+247C; result effects belong to callee",
-        "25FF": "A = (~A) & FF; flags preserved",
-        "2600": "A = (old_CY<<7) | (old_A>>1); CY=old_A bit0; NZPA preserved",
-        "2601": "if CY=0: PC -> PLI0.OVL+2617; flags preserved",
+        "25FC": "invoke opaque +247C; OBSERVED return A=00/CY=1, semantic meaning unresolved",
+        "25FF": "complement returned A, preserving flags; OBSERVED 00 becomes FF, independently of helper CY=1",
+        "2600": "CY = complemented return bit0; OBSERVED FF gives CY=1; helper return CY is not the tested Boolean",
+        "2601": "if CY=0 (original +247C A bit0 set): skip patch to +2617; OBSERVED clear bit falls through",
         "2604": "HL = little_endian_word[result_slot_pointer (6A88H)]",
         "2607": "BC = 0006H",
         "260A": "SP -= 2; push HL little-endian",
@@ -8024,17 +8032,17 @@
         "2790": "invoke +240B(7) while prior guard Boolean is saved below F",
         "2793": "BC = saved PSW; B is the earlier Boolean, C contains packed flags",
         "2794": "C = prior +23C3 Boolean from saved B; combine with +240B result",
-        "2795": "A = result240B | saved_result23C3; combine observed Boolean bytes",
-        "2796": "A = complement(combined Boolean); next RAR tests complemented low bit",
-        "2797": "A = (old_CY<<7) | (old_A>>1); CY=old_A bit0; NZPA preserved",
-        "2798": "if CY=0: PC -> PLI0.OVL+27AC; flags preserved",
+        "2795": "A = field_result | saved_guard; ORA clears CY; OBSERVED FF | 00 = FF (combined true)",
+        "2796": "complement original combined Boolean; OBSERVED FF (true) becomes 00; flags preserved",
+        "2797": "CY = complemented combined bit0; OBSERVED A=00 gives CY=0; NZPA preserved",
+        "2798": "if CY=0 (original combined bit0 set): PC -> +27AC recursive path; OBSERVED taken ten times",
         "27AC": "A = 01H",
         "27AE": "HL = 0000H",
         "27B1": "HL = (HL + SP) & FFFF; only CY changes",
         "27B2": "A &= byte[local_mode (F+0)]; logical flags, CY=0",
         "27B3": "C = local_mode & 1; recursive mode argument",
         "27B4": "invoke recursive child with C = local_mode & 1; distinct hardware frame",
-        "27B7": "HL = little_endian_word[tested_pointer (6A82H)]",
+        "27B7": "HL = tested_pointer after the first tag41 child returns; save this exit pointer at F+5",
         "27BA": "swap HL and DE; flags preserved",
         "27BB": "HL = 0005H",
         "27BE": "HL = (HL + SP) & FFFF; only CY changes",
@@ -8048,7 +8056,7 @@
         "27C6": "HL = (HL + 1) & FFFF; flags preserved",
         "27C7": "D = byte[saved_recursive_pointer.high (F+4)]",
         "27C8": "swap HL and DE; flags preserved",
-        "27C9": "little_endian_word[tested_pointer (6A82H)] = HL (low byte first)",
+        "27C9": "tested_pointer (6A82H) = saved pre-child word[F+3]; OBSERVED C05/C06 later revisit it in mode4",
         "27CC": "HL = 0009H",
         "27CF": "HL = (HL + SP) & FFFF; only CY changes",
         "27D0": "byte[local_tag (F+9)] = 40H",
@@ -8065,7 +8073,7 @@
         "27E6": "A = 00H",
         "27E8": "HL = 000BH",
         "27EB": "HL = (HL + SP) & FFFF; only CY changes",
-        "27EC": "compare_unsigned(A, byte[child_count (F+11)]); flags only",
+        "27EC": "compare 00 with byte[F+11]; CY=1 iff decrement-path count is nonzero; not a total child count",
         "27ED": "if CY=0: PC -> PLI0.OVL+281F; flags preserved",
         "27F0": "C = 03H",
         "27F2": "invoke +240B(3): field equality selects recursive child path",
@@ -8075,7 +8083,7 @@
         "27FC": "HL = (HL + SP) & FFFF; only CY changes",
         "27FD": "A = byte[child_count (F+11)]",
         "27FE": "A = (A - 1) & FF; NZPA updated, CY preserved",
-        "27FF": "byte[child_count (F+11)] = A",
+        "27FF": "byte[decrement-path count (F+11)] = A; only this observed loop arm decrements it",
         "2800": "A = 01H",
         "2802": "HL = 0000H",
         "2805": "HL = (HL + SP) & FFFF; only CY changes",
@@ -8089,13 +8097,13 @@
         "2813": "C = L",
         "2814": "push following PC; invoke PLI0.OVL+242B; result effects belong to callee",
         "2817": "C = 04H",
-        "2819": "invoke recursive child with C=4 after +242B pointer operation",
+        "2819": "invoke child with C=4 after opaque +242B; no local decrement of F+11 on this arm",
         "281C": "if always: PC -> PLI0.OVL+27E6; flags preserved",
         "281F": "DE = &tested_pointer (6A82H)",
         "2822": "HL = 0005H",
         "2825": "HL = (HL + SP) & FFFF; only CY changes",
-        "2826": "push following PC; invoke PLI.COM+1A35; result effects belong to callee",
-        "2829": "if CY=0: PC -> PLI0.OVL+2837; flags preserved",
+        "2826": "invoke +1A35: HL = tested_pointer - word[F+5]; CY = unsigned word borrow",
+        "2829": "if CY=0 (tested_pointer>=word[F+5]): skip replacement; borrow selects F+5, giving unsigned max",
         "282C": "HL = 0005H",
         "282F": "HL = (HL + SP) & FFFF; only CY changes",
         "2830": "E = byte[child_pointer.low (F+5)]",
@@ -8112,15 +8120,15 @@
         "2843": "HL = (HL + SP) & FFFF; only CY changes",
         "2844": "swap HL and DE; flags preserved",
         "2845": "BC = &tested_pointer (6A82H)",
-        "2848": "push following PC; invoke PLI.COM+1A33; result effects belong to callee",
-        "284B": "if CY=0: PC -> PLI0.OVL+2859; flags preserved",
+        "2848": "invoke +1A33: HL = word[F+7] - tested_pointer; CY = unsigned word borrow",
+        "284B": "if CY=0 (F+7>=tested_pointer): skip RAW upper-clamp assignment; OBSERVED taken once",
         "2859": "HL = 0010H",
         "285C": "HL = (HL + SP) & FFFF; only CY changes",
         "285D": "E = byte[local_result.low (F+16)]",
         "285E": "HL = (HL + 1) & FFFF; flags preserved",
         "285F": "D = byte[local_result.high (F+17)]",
         "2860": "swap HL and DE; flags preserved",
-        "2861": "output_record_word (6A8EH) = word[local_result (F+16)]",
+        "2861": "output_record_word (6A8EH) = word[local_result (F+16)]; distinct from indirect result-slot writes",
         "2864": "A = byte[record_mode_flags (6A84H)]",
         "2867": "HL = 0000H",
         "286A": "HL = (HL + SP) & FFFF; only CY changes",
@@ -8142,16 +8150,16 @@
         "2884": "HL = (HL + 1) & FFFF; flags preserved",
         "2885": "B = byte[saved_pointed_word.high (F+13)]",
         "2886": "HL = word[SP]; SP += 2",
-        "2887": "byte[HL] = C",
+        "2887": "restore low byte of saved_pointed_word[F+12] through result_slot_pointer; distinct from local_result publication",
         "2888": "HL = (HL + 1) & FFFF; flags preserved",
-        "2889": "byte[HL] = B",
+        "2889": "restore high byte of saved_pointed_word[F+12] through result_slot_pointer",
         "288A": "push following PC; invoke PLI0.OVL+2290; result effects belong to callee",
-        "288D": "SP -= 2; push HL little-endian",
-        "288E": "HL = little_endian_word[result_slot_pointer (6A88H)]",
+        "288D": "push opaque +2290 returned HL for separate indirect publication; not a load of local_result[F+16]",
+        "288E": "HL = freshly loaded result_slot_pointer (6A88H) after opaque +2290",
         "2891": "BC = word[SP]; SP += 2",
-        "2892": "byte[HL] = C",
+        "2892": "publish low byte of opaque +2290 returned HL through result_slot_pointer",
         "2893": "HL = (HL + 1) & FFFF; flags preserved",
-        "2894": "byte[HL] = B",
+        "2894": "publish high byte of opaque +2290 returned HL through result_slot_pointer",
         "2895": "HL = 18-byte frame size for epilogue",
         "2898": "HL = F + 18 = original entry_SP; CY from modular stack addition",
         "2899": "SP = F + 18 = original entry_SP; restore original CALL slot",
