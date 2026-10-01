@@ -1,0 +1,44 @@
+{
+  "base_commit": "7138604",
+  "entry": "PLI0.OVL+24BC",
+  "status_before": "STRUCTURED",
+  "status_after": "STRUCTURED",
+  "completeness_before": {
+    "bounds": "provisional",
+    "control_flow": "partial",
+    "contract": "partial"
+  },
+  "completeness_after": {
+    "bounds": "provisional",
+    "control_flow": "partial",
+    "contract": "partial"
+  },
+  "contract_before": "Let S=entry SP, F=S-18. Save input mode at F+0, initialize output word and local result F+16 to zero; save current pointer at F+14 after +23C3. Clear bit7 of record byte[p+3] and snapshot bytes[p+2], masked[p+3], [p+5] at F+9/+10/+11. Mode bit0 gates copy/repair path. Dispatch local tag 41/40 through recursive +24BC calls (C=mode&1 or 4); keep original pointer in F+3 and child pointer in F+5, restore selected pointers. Publish F+16 to 6A8E. Epilogue SP=F+18 restores original hardware return slot. Opaque calls and unprocessed arms prevent a full behavioral contract.",
+  "contract_after": "Let S=entry SP, F=S-18. Save input mode at F+0, initialize output word and local result F+16 to zero; save current pointer at F+14 after +23C3. Clear bit7 of record byte[p+3] and snapshot bytes[p+2], masked[p+3], [p+5] at F+9/+10/+11. Mode bit0 gates copy/repair path. +1A8C(length) drains the staged tail via +1A47, sets working_record_pointer[69C5] to post-copy staging_cursor[69C3], clears extent_count[69C7], then adds/checks the initial extent via +1A14. The caller copies record length bytes to this working base. +240B(k) on guard-false returns FF/CY=1 exactly when record[p+3]&7 equals k; this selects child/field branches, not an ordering test. +23DF(0) advances tested_pointer by length bytes until the advanced tag&E0 equals zero or the bound/tag guard stops it. Dispatch local tag 41/40 through recursive +24BC calls (C=mode&1 or 4); keep original pointer in F+3 and child pointer in F+5, restore selected pointers. Publish F+16 to 6A8E. Epilogue SP=F+18 restores original hardware return slot. Opaque calls and unprocessed arms prevent a full behavioral contract.",
+  "pseudocode_before": "F=entry_SP-18; local_mode=C; result=0; saved_pointer=tested_pointer; clear record[saved_pointer+3].bit7; snapshot tag/flags/count; if mode.bit0: delegated copy/repair path; handle observed tag41/tag40 through child calls, saved pointer and count loop; word[6A8E]=local_result; restore original SP; RET",
+  "pseudocode_after": "F=entry_SP-18; local_mode=C; result=0; save tested_pointer; clear record[p+3].bit7; snapshot tag/flags/count; if mode.bit0 { begin_window1A8C(record_copy_count); copy record bytes to working_record_pointer; setup/repair including field_equal240B(5/6) delegated; }; scan23DF(masked_tag=0); if local_tag==41 { combine guard with field_equal240B(7); recurse(mode&1) on observed path; local_tag=40; }; if local_tag==40 && mode!=4 { while count!=0 { if field_equal240B(3) { count--; recurse(mode&1); } else { opaque242B(&comparison_pointer); recurse(4); }; }; }; remaining pointer/repair effects delegated; word[6A8E]=local_result; restore original SP; RET",
+  "new_helpers_integrated": [
+    "PLI0.OVL+240B",
+    "PLI0.OVL+23DF",
+    "PLI0.OVL+1A8C"
+  ],
+  "block_offsets_updated": [
+    9525,
+    9802,
+    9819,
+    9864,
+    10101,
+    10214
+  ],
+  "remaining_opaque_helpers": [
+    "PLI0.OVL+1E0B",
+    "PLI0.OVL+21AB",
+    "PLI0.OVL+2290",
+    "PLI0.OVL+22B3",
+    "PLI0.OVL+242B",
+    "PLI0.OVL+247C",
+    "PLI0.OVL+249A"
+  ],
+  "new_byte_promotions": 0,
+  "interpretation": "Three formerly opaque helper operations now have explicit effects; full caller/RAW-path semantics remain partial."
+}

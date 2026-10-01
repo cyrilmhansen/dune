@@ -223,13 +223,79 @@ PLI_0389: XCHG ; swap HL and DE; flags preserved ; +0389 runtime=0489H OBSERVED
 PLI_038A: MVI C,02H ; C = 02H ; +038A runtime=048AH OBSERVED
 PLI_038C: CALL 1ABBH ; push following PC; invoke PLI.COM+19BB; result effects belong to callee ; +038C runtime=048CH OBSERVED
 PLI_038F: RET ; PC = word[SP]; SP += 2; use the convention in procedure header ; +038F runtime=048FH OBSERVED
-; SECTION [0390,05B2) RAW
-PLI_0390: DB 021H,06BH,020H,071H,03AH,02AH,020H,01FH,0D2H,0D0H,004H,03AH,06BH,020H,0FEH,00CH ; +0390 runtime=0490H RAW
+
+; @procedure-v1 PLI.COM+0390
+; ProcedureHypothesis: conditional console routing wrapper on plain-output path
+; Entry: PLI_0390 = PLI.COM+0390 @ 0490H; SHA-256
+;   c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80
+; Extent: HYPOTHESIS [0390,03E9) file offsets; overlapping entries: none established
+; Callers: OBSERVED PLI.COM+03EB (MINIMAL=12); PLI.COM+03F0 (MINIMAL=12); PLI.COM+0416
+;   (MINIMAL=381); PLI.COM+0447 (MINIMAL=12); PLI.COM+0FA5 (MINIMAL=7)
+; Returns: OBSERVED/DEDUCED ordinary hardware CALL word; original slot unchanged, SP after RET =
+;   entry SP + 2; PLI.COM+03E8
+; Inputs: DEDUCED C=output byte; bit0 of route flags[202A] and [201E] both zero in MINIMAL;
+;   console +0380 environment delegated
+; Outputs: DEDUCED saved_routed_byte[206B]=input C; +0380 receives that byte unchanged; all
+;   returned registers/flags follow +0380 (MINIMAL A=AA), not the output byte
+; Clobbers: DEDUCED A,BC,DE,HL,flags through output wrapper/BDOS; cache206B plus +0380 cache206A;
+;   output file/console effects delegated
+; Memory: DEDUCED route_flags_201E=201EH (bit0 selects second unprocessed console routing arm);
+;   route_flags_202A=202AH (bit0 selects unprocessed console routing arm);
+;   saved_routed_byte=206BH (+0390 output-byte cache across routing flag checks)
+; Direct callees: OBSERVED PLI.COM+0380 @0480H
+; Coverage: OBSERVED MINIMAL: 424 CALLs; 26/89 bytes represented as instructions; 424 calls from
+;   five sites; both low-bit branches always take plain-output arms; 56 distinct byte
+;   arguments; every call enters +0380 once
+; Unresolved: Nonzero routing-bit arms +039B..+03CF/+03D7..+03E0 remain RAW;
+;   suppression/translation/device meaning unestablished. Full register/flag/host
+;   effects delegated; adjacent +0380 is a separate entry, not merged.
+; Contract: DEDUCED (partial; scope: 202A bit0=0 and 201E bit0=0 (all 424 MINIMAL calls); existing
+;   +0380/BDOS console model) Save input C at 206B; test routing flag low bits via RAR.
+;   Under witnessed zero bits, skip both unprocessed routing arms, read 206B/206C, reload
+;   low byte C and call distinct console wrapper +0380 unchanged. Return its results. The
+;   represented path performs no byte translation/filtering and is an output path, not a
+;   byte source.
+; Hypothesis: HYPOTHESIS console output routing gate, scoped to plain route
+; Completeness: bounds=provisional; control_flow=partial; contract=partial
+; Evidence: evidence.json#seeds/PLI.COM+0390; ../minimal-baseline/pass-4/regions.json#PLI.COM+0390
+; Procedure pseudo (operational; byte/word arithmetic wraps):
+;   byte[206B]=C; scope route202A.bit0==0 && route201E.bit0==0: C=byte[206B]; call0380(C); RET
+; @end-procedure-v1 PLI.COM+0390
+; SECTION [0390,039B) UNDERSTOOD
+; @block-pseudo 0390
+; pseudo:
+; | saved_routed_byte[206BH]=C; if route202A.bit0: unprocessed routing arm
+PLI_0390: LXI H,206BH ; HL = &saved_routed_byte (206BH) ; +0390 runtime=0490H OBSERVED
+PLI_0393: MOV M,C ; saved_routed_byte (206BH) = requested output byte C ; +0393 runtime=0493H OBSERVED
+PLI_0394: LDA 202AH ; A = byte[route_flags_202A (202AH)] ; +0394 runtime=0494H OBSERVED
+PLI_0397: RAR ; A = (old_CY<<7) | (old_A>>1); CY=old_A bit0; NZPA preserved ; +0397 runtime=0497H OBSERVED
+PLI_0398: JNC 04D0H ; if CY=0: PC -> PLI.COM+03D0; flags preserved ; +0398 runtime=0498H OBSERVED
+; SECTION [039B,03D0) RAW
+PLI_039B: DB 03AH,06BH,020H,0FEH,00CH ; +039B runtime=049BH RAW
 PLI_03A0: DB 0C2H,0A8H,004H,021H,035H,020H,036H,000H,03AH,035H,020H,0FEH,03CH,0DAH,0BAH,004H ; +03A0 runtime=04A0H RAW
 PLI_03B0: DB 021H,035H,020H,036H,000H,00EH,00CH,0CDH,04AH,004H,03AH,06BH,020H,0FEH,00AH,0C2H ; +03B0 runtime=04B0H RAW
 PLI_03C0: DB 0C6H,004H,021H,035H,020H,034H,02AH,06BH,020H,04DH,0CDH,04AH,004H,0C3H,0E8H,004H ; +03C0 runtime=04C0H RAW
-PLI_03D0: DB 03AH,01EH,020H,01FH,0D2H,0E1H,004H,02AH,06BH,020H,04DH,0CDH,05AH,004H,0C3H,0E8H ; +03D0 runtime=04D0H RAW
-PLI_03E0: DB 004H,02AH,06BH,020H,04DH,0CDH,080H,004H,0C9H,00EH,00DH,0CDH,090H,004H,00EH,00AH ; +03E0 runtime=04E0H RAW
+; SECTION [03D0,03D7) UNDERSTOOD
+; @block-pseudo 03D0
+; pseudo:
+; | if route201E.bit0: unprocessed second routing arm
+PLI_03D0: LDA 201EH ; A = byte[route_flags_201E (201EH)] ; +03D0 runtime=04D0H OBSERVED
+PLI_03D3: RAR ; A = (old_CY<<7) | (old_A>>1); CY=old_A bit0; NZPA preserved ; +03D3 runtime=04D3H OBSERVED
+PLI_03D4: JNC 04E1H ; if CY=0: PC -> PLI.COM+03E1; flags preserved ; +03D4 runtime=04D4H OBSERVED
+; SECTION [03D7,03E1) RAW
+PLI_03D7: DB 02AH,06BH,020H,04DH,0CDH,05AH,004H,0C3H,0E8H ; +03D7 runtime=04D7H RAW
+PLI_03E0: DB 004H ; +03E0 runtime=04E0H RAW
+; SECTION [03E1,03E9) UNDERSTOOD
+; @block-pseudo 03E1
+; pseudo:
+; | C=saved_routed_byte[206BH]; call existing console output +0380 unchanged
+; | return delegated console-wrapper registers/flags
+PLI_03E1: LHLD 206BH ; L = saved_routed_byte (206BH); H = byte[206CH], unused by output wrapper ; +03E1 runtime=04E1H OBSERVED
+PLI_03E4: MOV C,L ; C = original output byte; plain route performs no translation ; +03E4 runtime=04E4H OBSERVED
+PLI_03E5: CALL 0480H ; invoke separate +0380 console wrapper with unchanged C ; +03E5 runtime=04E5H OBSERVED
+PLI_03E8: RET ; PC = word[SP]; SP += 2; use the convention in procedure header ; +03E8 runtime=04E8H OBSERVED
+; SECTION [03E9,05B2) RAW
+PLI_03E9: DB 00EH,00DH,0CDH,090H,004H,00EH,00AH ; +03E9 runtime=04E9H RAW
 PLI_03F0: DB 0CDH,090H,004H,0C9H,021H,06EH,020H,070H,02BH,071H,021H,06CH,020H,036H,000H,02AH ; +03F0 runtime=04F0H RAW
 PLI_0400: DB 06CH,020H,026H,000H,0EBH,02AH,06DH,020H,019H,07EH,032H,06FH,020H,0FEH,024H,0CAH ; +0400 runtime=0500H RAW
 PLI_0410: DB 020H,005H,02AH,06FH,020H,04DH,0CDH,090H,004H,021H,06CH,020H,034H,0C3H,0FFH,004H ; +0410 runtime=0510H RAW

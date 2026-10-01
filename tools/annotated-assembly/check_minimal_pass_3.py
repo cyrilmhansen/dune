@@ -23,8 +23,8 @@ BOUNDS = {
 }
 
 
-def gather(capture):
-    records = {key: [] for key in BOUNDS}
+def gather(capture, bounds=None):
+    records = {key: [] for key in (BOUNDS if bounds is None else bounds)}
     active, returns = {}, {}
     last = None
     for path in sorted((capture / "event-witnesses/chunks").glob("*.json")):

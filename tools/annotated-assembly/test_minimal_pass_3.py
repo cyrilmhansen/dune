@@ -106,7 +106,10 @@ class MinimalPassThreeTests(unittest.TestCase):
             validate(r)
 
     def test_dynamic_metric_exact_counts_and_denominator(self):
-        self.assertEqual(calculate(self.manifest, self.instructions), self.dynamic)
+        # Pass-3 metrics are an immutable snapshot; validate live classification
+        # against the current baseline artifact after later intentional passes.
+        self.assertEqual(calculate(self.manifest, self.instructions),
+                         read(ROOT / "research/minimal-baseline/dynamic-progress.json"))
         totals = self.dynamic["total"]
         self.assertEqual(totals["instruction_occurrences"], 439998)
         self.assertEqual(totals["occurrences_by_status"],

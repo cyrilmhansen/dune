@@ -1566,7 +1566,7 @@ PLI1_4789: MOV M,E ; byte[HL] = E ; +4789 runtime=6989H OBSERVED
 PLI1_478A: INX H ; HL = (HL + 1) & FFFF; flags preserved ; +478A runtime=698AH OBSERVED
 PLI1_478B: MOV M,D ; byte[HL] = D ; +478B runtime=698BH OBSERVED
 PLI1_478C: RET ; PC = word[SP]; SP += 2; use the convention in procedure header ; +478C runtime=698CH OBSERVED
-; SECTION [478D,8396) RAW
+; SECTION [478D,7A4D) RAW
 PLI1_478D: DB 021H,01AH,0A9H ; +478D runtime=698DH RAW
 PLI1_4790: DB 036H,000H,03AH,0EBH,0A8H,021H,01AH,0A9H,0BEH,0DAH,0D4H,069H,021H,01AH,0A9H,03AH ; +4790 runtime=6990H RAW
 PLI1_47A0: DB 0EBH,0A8H,096H,02BH,077H,04FH,006H,000H,021H,0ABH,0A8H,009H,009H,05EH,023H,056H ; +47A0 runtime=69A0H RAW
@@ -2379,9 +2379,71 @@ PLI1_7A00: DB 000H,0C2H,00CH,09CH,02AH,016H,0AAH,07EH,032H,0C3H,020H,0C9H,0C3H,0
 PLI1_7A10: DB 0C3H,020H,036H,001H,0C9H,021H,014H,0AAH,071H,021H,014H,0AAH,03AH,0C1H,020H,096H ; +7A10 runtime=9C10H RAW
 PLI1_7A20: DB 0D6H,001H,09FH,023H,077H,01FH,0D2H,02EH,09CH,021H,0C1H,020H,036H,000H,03AH,015H ; +7A20 runtime=9C20H RAW
 PLI1_7A30: DB 0AAH,0C9H,045H,058H,050H,052H,045H,053H,053H,049H,04FH,04EH,020H,04FH,056H,045H ; +7A30 runtime=9C30H RAW
-PLI1_7A40: DB 052H,046H,04CH,04FH,057H,024H,001H,032H,09CH,0CDH,0F2H,005H,0C9H,021H,036H,0AEH ; +7A40 runtime=9C40H RAW
-PLI1_7A50: DB 071H,02AH,036H,0AEH,026H,000H,001H,01FH,0AAH,009H,04EH,006H,000H,021H,0B4H,0AAH ; +7A50 runtime=9C50H RAW
-PLI1_7A60: DB 009H,07EH,0C9H,021H,037H,0AEH,071H,02AH,037H,0AEH,04DH,0CDH,04DH,09CH,04FH,006H ; +7A60 runtime=9C60H RAW
+PLI1_7A40: DB 052H,046H,04CH,04FH,057H,024H,001H,032H,09CH,0CDH,0F2H,005H,0C9H ; +7A40 runtime=9C40H RAW
+
+; @procedure-v1 PLI1.OVL+7A4D
+; ProcedureHypothesis: two-stage PLI1 mapped-byte lookup
+; Entry: PLI1_7A4D = PLI1.OVL+7A4D @ 9C4DH; SHA-256
+;   1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564
+; Extent: HYPOTHESIS [7A4D,7A63) file offsets; overlapping entries: none established
+; Callers: OBSERVED PLI1.OVL+7A6B (MINIMAL=55); PLI1.OVL+7C25 (MINIMAL=16); PLI1.OVL+7CC8
+;   (MINIMAL=2); PLI1.OVL+7D91 (MINIMAL=9); PLI1.OVL+7DC5 (MINIMAL=16)
+; Returns: OBSERVED/DEDUCED ordinary hardware CALL word; original slot unchanged, SP after RET =
+;   entry SP + 2; PLI1.OVL+7A62
+; Inputs: DEDUCED C=unsigned byte position; position_map[AA1F], mapped_byte_table[AAB4];
+;   nonaliasing table/scratch/stack
+; Outputs: DEDUCED j=byte[AA1F+input C]; A=byte[AAB4+j], BC=zero_extend(j), HL=AAB4+j, DE
+;   preserved; CY=0, NZPA preserved from entry (not recomputed for A)
+; Clobbers: DEDUCED A,BC,HL,CY; mapped_lookup_index[AE36] written; DE and NZPA preserved
+; Memory: DEDUCED position_map=AA1FH (first-stage byte mapping indexed by unsigned C);
+;   mapped_byte_table=AAB4H (second-stage byte table indexed by mapped j; type meaning
+;   unknown); mapped_lookup_index=AE36H (saved unsigned +7A4D position; adjacent AE37
+;   discarded)
+; Direct callees: OBSERVED none
+; Coverage: OBSERVED MINIMAL: 98 CALLs; 22/22 bytes represented as instructions; 98 calls from
+;   five sites; input positions 0..6 and FE/FF; sixteen returned byte values including
+;   0/0A. Caller +7A6E indexes another table; +7C2D/+7CCB compare 0A, +7D94/+7DD2 compare
+;   F7 after data use
+; Unresolved: Table/source-language meaning and all possible position values uninvestigated.
+;   Preserved NZPA can disagree with returned A; no flags-as-byte-class convention.
+;   Neighbor AE37 is fetched but discarded.
+; Contract: DEDUCED (complete; scope: documented local table mapping, nonaliasing
+;   table/scratch/stack as witnessed) Save C at AE36. LHLD reads AE36/AE37; discard high
+;   neighbor byte. Map unsigned position through byte vector AA1F, zero-extend mapped j
+;   into BC, then return byte[AAB4+j]. No nested call, branch, stack argument or rewritten
+;   continuation. C=FE/FF remains unsigned indexing; no signed/sentinel interpretation
+;   asserted. Callers consume A as data and establish their own comparison flags.
+; Hypothesis: HYPOTHESIS reusable mapped-byte access primitive; no PL/I token/type name
+; Completeness: bounds=stable; control_flow=complete; contract=complete
+; Evidence: evidence.json#seeds/PLI1.OVL+7A4D;
+;   ../minimal-baseline/pass-4/regions.json#PLI1.OVL+7A4D
+; Procedure pseudo (operational; byte/word arithmetic wraps):
+;   byte[AE36]=C; j=byte[AA1F+C]; BC=j; HL=AAB4+j; A=byte[HL]; CY=0; RET (DE/NZPA preserved)
+; @end-procedure-v1 PLI1.OVL+7A4D
+; SECTION [7A4D,7A63) UNDERSTOOD
+; @block-pseudo 7A4D
+; pseudo:
+; | mapped_lookup_index[AE36H]=C; zero_extend(saved low byte)
+PLI1_7A4D: LXI H,0AE36H ; HL = &mapped_lookup_index (AE36H) ; +7A4D runtime=9C4DH OBSERVED
+PLI1_7A50: MOV M,C ; mapped_lookup_index (AE36H) = unsigned input position C ; +7A50 runtime=9C50H OBSERVED
+PLI1_7A51: LHLD 0AE36H ; L = saved position (AE36H); H = byte[AE37H], discarded next ; +7A51 runtime=9C51H OBSERVED
+PLI1_7A54: MVI H,00H ; HL = zero_extend(saved position); FE/FF remain unsigned offsets ; +7A54 runtime=9C54H OBSERVED
+; @block-pseudo 7A56
+; pseudo:
+; | j=position_map[AA1FH+position]; BC=zero_extend(j)
+PLI1_7A56: LXI B,0AA1FH ; BC = &position_map (AA1FH) ; +7A56 runtime=9C56H OBSERVED
+PLI1_7A59: DAD B ; HL = position_map base AA1FH + unsigned position ; +7A59 runtime=9C59H OBSERVED
+PLI1_7A5A: MOV C,M ; C = position_map[AA1FH + position] (mapped index j) ; +7A5A runtime=9C5AH OBSERVED
+PLI1_7A5B: MVI B,00H ; BC = zero_extend(mapped index j) ; +7A5B runtime=9C5BH OBSERVED
+; @block-pseudo 7A5D
+; pseudo:
+; | A=mapped_byte_table[AAB4H+j]; DE/NZPA preserved; CY=0
+PLI1_7A5D: LXI H,0AAB4H ; HL = &mapped_byte_table (AAB4H) ; +7A5D runtime=9C5DH OBSERVED
+PLI1_7A60: DAD B ; HL = mapped_byte_table base AAB4H + mapped index j; CY=0 ; +7A60 runtime=9C60H OBSERVED
+PLI1_7A61: MOV A,M ; A = mapped_byte_table[AAB4H + j]; NZPA not recomputed for returned byte ; +7A61 runtime=9C61H OBSERVED
+PLI1_7A62: RET ; PC = word[SP]; SP += 2; use the convention in procedure header ; +7A62 runtime=9C62H OBSERVED
+; SECTION [7A63,8396) RAW
+PLI1_7A63: DB 021H,037H,0AEH,071H,02AH,037H,0AEH,04DH,0CDH,04DH,09CH,04FH,006H ; +7A63 runtime=9C63H RAW
 PLI1_7A70: DB 000H,021H,04BH,01BH,009H,03EH,007H,0A6H,0C9H,021H,038H,0AEH,071H,02AH,038H,0AEH ; +7A70 runtime=9C70H RAW
 PLI1_7A80: DB 026H,000H,001H,01FH,0AAH,009H,04EH,006H,000H,021H,049H,0ABH,009H,009H,05EH,023H ; +7A80 runtime=9C80H RAW
 PLI1_7A90: DB 056H,0EBH,0C9H,021H,039H,0AEH,071H,02AH,039H,0AEH,026H,000H,001H,01FH,0AAH,009H ; +7A90 runtime=9C90H RAW

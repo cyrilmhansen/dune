@@ -2,7 +2,7 @@
 ; Image SHA-256: e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff
 ; Labels use FILE offsets, not runtime addresses. Manifest ends are exclusive.
     ORG 02200H
-; SECTION [0000,210B) RAW
+; SECTION [0000,1A14) RAW
 PLI0_0000: DB 0C3H,0B0H,023H,050H,04CH,02FH,049H,02DH,038H,030H,020H,056H,031H,02EH,034H,020H ; +0000 runtime=2200H RAW
 PLI0_0010: DB 053H,045H,052H,049H,041H,04CH,020H,04EH,04FH,02EH,020H,033H,030H,033H,032H,02DH ; +0010 runtime=2210H RAW
 PLI0_0020: DB 030H,030H,030H,030H,02DH,030H,030H,031H,031H,033H,030H,020H,043H,04FH,050H,059H ; +0020 runtime=2220H RAW
@@ -420,16 +420,254 @@ PLI0_19D0: DB 0C5H,069H,009H,0EBH,04FH,0CDH,072H,03BH,02AH,052H,06AH,022H,0C5H,0
 PLI0_19E0: DB 0A2H,068H,036H,000H,03AH,0C5H,020H,032H,054H,06AH,03EH,000H,021H,054H,06AH,0BEH ; +19E0 runtime=3BE0H RAW
 PLI0_19F0: DB 0D2H,00BH,03CH,03AH,054H,06AH,03DH,032H,054H,06AH,04FH,006H,000H,021H,0C6H,020H ; +19F0 runtime=3BF0H RAW
 PLI0_1A00: DB 009H,03AH,0A2H,068H,086H,032H,0A2H,068H,0C3H,0EAH,03BH,03AH,0A2H,068H,0E6H,07FH ; +1A00 runtime=3C00H RAW
-PLI0_1A10: DB 032H,0A2H,068H,0C9H,021H,055H,06AH,071H,021H,0C7H,069H,03EH,0FFH,096H,021H,055H ; +1A10 runtime=3C10H RAW
-PLI0_1A20: DB 06AH,0BEH,0D2H,02BH,03CH,001H,00AH,03BH,0CDH,0F2H,005H,03AH,055H,06AH,021H,0C7H ; +1A20 runtime=3C20H RAW
-PLI0_1A30: DB 069H,086H,077H,011H,0C5H,069H,0CDH,01CH,01BH,0EBH,021H,036H,01CH,0CDH,062H,068H ; +1A30 runtime=3C30H RAW
-PLI0_1A40: DB 0DAH,046H,03CH,0CDH,0E2H,023H,0C9H,02AH,04CH,06AH,026H,000H,001H,00DH,06AH,029H ; +1A40 runtime=3C40H RAW
-PLI0_1A50: DB 009H,05EH,023H,056H,0EBH,022H,056H,06AH,011H,056H,06AH,001H,0C3H,069H,0CDH,033H ; +1A50 runtime=3C50H RAW
-PLI0_1A60: DB 01BH,0D2H,07CH,03CH,02AH,0C3H,069H,02BH,022H,0C3H,069H,0E5H,02AH,036H,01CH,0C1H ; +1A60 runtime=3C60H RAW
-PLI0_1A70: DB 00AH,077H,02AH,036H,01CH,02BH,022H,036H,01CH,0C3H,058H,03CH,0C9H,021H,04CH,06AH ; +1A70 runtime=3C70H RAW
-PLI0_1A80: DB 036H,000H,021H,096H,06BH,022H,00DH,06AH,0CDH,047H,03CH,0C9H,021H,058H,06AH,071H ; +1A80 runtime=3C80H RAW
-PLI0_1A90: DB 0CDH,047H,03CH,02AH,0C3H,069H,022H,0C5H,069H,021H,0C7H,069H,036H,000H,02AH,058H ; +1A90 runtime=3C90H RAW
-PLI0_1AA0: DB 06AH,04DH,0CDH,014H,03CH,0C9H,02AH,0C5H,069H,023H,023H,036H,000H,001H,003H,000H ; +1AA0 runtime=3CA0H RAW
+PLI0_1A10: DB 032H,0A2H,068H,0C9H ; +1A10 runtime=3C10H RAW
+
+; @procedure-v1 PLI0.OVL+1A14
+; ProcedureHypothesis: guarded counted-window extent growth
+; Entry: PLI0_1A14 = PLI0.OVL+1A14 @ 3C14H; SHA-256
+;   e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff
+; Extent: HYPOTHESIS [1A14,1A47) file offsets; overlapping entries: none established
+; Callers: OBSERVED PLI0.OVL+1AA2 (MINIMAL=87); PLI0.OVL+1C7E (MINIMAL=65)
+; Returns: OBSERVED/DEDUCED ordinary hardware CALL word; original slot unchanged, SP after RET =
+;   entry SP + 2; PLI0.OVL+1A46
+; Inputs: DEDUCED C=requested byte extent; extent_count[69C7], working_record_pointer word[69C5],
+;   record_top word[1C36]; witnessed count+C<=255 and wrapped end<record_top
+; Outputs: DEDUCED extent_count=old_count+input C; BC preserved; DE=1C37, HL=(u16(working
+;   base+new_count)-record_top)&FFFF, A=high difference, CY=1. NZPA from final high-byte
+;   SBB, not success/whole-word zero
+; Clobbers: DEDUCED A,DE,HL,flags; extent_request[6A55], extent_count[69C7]; only nested stack
+;   otherwise; working pointer/source cursor/record_top not changed
+; Memory: DEDUCED record_top=1C36H (descending destination cursor for +1A47; upper guard in
+;   +1A14); working_record_pointer=69C5H (pointer used for mode1 copy/repair);
+;   extent_count=69C7H (byte-sized counted window extent, reset by +1A8C and grown by
+;   +1A14); extent_request=6A55H (saved +1A14 C; adjacent 6A56 is separately named word)
+; Direct callees: OBSERVED PLI.COM+1A1C @1B1CH; PLI0.OVL+4662 @6862H
+; Coverage: OBSERVED MINIMAL: 152 CALLs; 42/51 bytes represented as instructions; 152 calls;
+;   request5/6/7/8/9/11/17; both guards succeed throughout. Count is stored before top
+;   guard; BC preserved and original slot used
+; Unresolved: Capacity-failure +1A25..+1A2A and top-failure +1A43..+1A45 remain RAW.
+;   Failure/reporting behavior and general storage ownership unresolved; guarded success
+;   contract partial.
+; Contract: DEDUCED (partial; scope: byte capacity available and u16(working
+;   base+new_count)<record_top; documented resident +1A1C and leaf +4662 contracts;
+;   nonaliasing controls/stack) Save C at 6A55. Compute available=255-extent_count and
+;   compare to request. On witnessed capacity-success path add request to extent_count and
+;   store it before checking the address guard. +1A1C computes
+;   end=u16(word[69C5]+new_count); +4662 computes end-word[1C36]. Carry (end<top) selects
+;   observed RET. Byte-capacity and top-guard failure branches remain RAW; no actual data
+;   or staging cursor is advanced by this helper.
+; Hypothesis: HYPOTHESIS checked byte-extent reservation in a staging window
+; Completeness: bounds=provisional; control_flow=partial; contract=partial
+; Evidence: evidence.json#seeds/PLI0.OVL+1A14;
+;   ../minimal-baseline/pass-4/regions.json#PLI0.OVL+1A14
+; Procedure pseudo (operational; byte/word arithmetic wraps):
+;   byte[6A55]=C; scope 255-byte[69C7]>=C: byte[69C7]+=C; end=u16(word[69C5]+byte[69C7]);
+;   HL=end-word[1C36]; scope CY==1: RET
+; @end-procedure-v1 PLI0.OVL+1A14
+; SECTION [1A14,1A25) UNDERSTOOD
+; @block-pseudo 1A14
+; pseudo:
+; | extent_request[6A55H]=C; available=255-extent_count[69C7H]
+; | if available<request: unprocessed error arm
+PLI0_1A14: LXI H,6A55H ; HL = &extent_request (6A55H) ; +1A14 runtime=3C14H OBSERVED
+PLI0_1A17: MOV M,C ; byte[extent_request (6A55H)] = C ; +1A17 runtime=3C17H OBSERVED
+PLI0_1A18: LXI H,69C7H ; HL = &extent_count (69C7H) ; +1A18 runtime=3C18H OBSERVED
+PLI0_1A1B: MVI A,0FFH ; A = FFH ; +1A1B runtime=3C1BH OBSERVED
+PLI0_1A1D: SUB M ; A = 255 - extent_count (69C7H), available byte capacity ; +1A1D runtime=3C1DH OBSERVED
+PLI0_1A1E: LXI H,6A55H ; HL = &extent_request (6A55H) ; +1A1E runtime=3C1EH OBSERVED
+PLI0_1A21: CMP M ; compare available byte capacity with extent_request (6A55H) ; +1A21 runtime=3C21H OBSERVED
+PLI0_1A22: JNC 3C2BH ; if CY=0: PC -> PLI0.OVL+1A2B; flags preserved ; +1A22 runtime=3C22H OBSERVED
+; SECTION [1A25,1A2B) RAW
+PLI0_1A25: DB 001H,00AH,03BH,0CDH,0F2H,005H ; +1A25 runtime=3C25H RAW
+; SECTION [1A2B,1A43) UNDERSTOOD
+; @block-pseudo 1A2B
+; pseudo:
+; | extent_count+=request; compute wrapped window end via +1A1C
+; | compare end with record_top using +4662
+PLI0_1A2B: LDA 6A55H ; A = byte[extent_request (6A55H)] ; +1A2B runtime=3C2BH OBSERVED
+PLI0_1A2E: LXI H,69C7H ; HL = &extent_count (69C7H) ; +1A2E runtime=3C2EH OBSERVED
+PLI0_1A31: ADD M ; A = extent_request + old extent_count on capacity-success path ; +1A31 runtime=3C31H OBSERVED
+PLI0_1A32: MOV M,A ; extent_count (69C7H) = new count, before the address-space guard ; +1A32 runtime=3C32H OBSERVED
+PLI0_1A33: LXI D,69C5H ; DE = &working_record_pointer (69C5H) ; +1A33 runtime=3C33H OBSERVED
+PLI0_1A36: CALL 1B1CH ; invoke resident +1A1C: HL = u16(working_record_pointer + new extent count) ; +1A36 runtime=3C36H OBSERVED
+PLI0_1A39: XCHG ; DE = wrapped working-window end; HL becomes address 69C6H ; +1A39 runtime=3C39H OBSERVED
+PLI0_1A3A: LXI H,1C36H ; HL = &record_top (1C36H) ; +1A3A runtime=3C3AH OBSERVED
+PLI0_1A3D: CALL 6862H ; invoke +4662: wrapped window end minus indirect record_top ; +1A3D runtime=3C3DH OBSERVED
+; @block-pseudo 1A40
+; pseudo:
+; | if end<record_top: return; otherwise unprocessed error arm
+PLI0_1A40: JC 3C46H ; CY=1 means wrapped end < record_top; witnessed successful reserve returns ; +1A40 runtime=3C40H OBSERVED
+; SECTION [1A43,1A46) RAW
+PLI0_1A43: DB 0CDH,0E2H,023H ; +1A43 runtime=3C43H RAW
+; SECTION [1A46,1A47) UNDERSTOOD
+PLI0_1A46: RET ; PC = word[SP]; SP += 2; use the convention in procedure header ; +1A46 runtime=3C46H OBSERVED
+
+; @procedure-v1 PLI0.OVL+1A47
+; ProcedureHypothesis: descending staging-tail copy to record-top cursor
+; Entry: PLI0_1A47 = PLI0.OVL+1A47 @ 3C47H; SHA-256
+;   e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff
+; Extent: HYPOTHESIS [1A47,1A7D) file offsets; overlapping entries: none established
+; Callers: OBSERVED PLI0.OVL+1A88 (MINIMAL=2); PLI0.OVL+1A90 (MINIMAL=87); PLI0.OVL+2DE6
+;   (MINIMAL=1)
+; Returns: OBSERVED/DEDUCED ordinary hardware CALL word; original slot unchanged, SP after RET =
+;   entry SP + 2; PLI0.OVL+1A7C
+; Inputs: DEDUCED byte[6A4C] selects little-endian pointer from table6A0D; staging_cursor
+;   word[69C3], record_top word[1C36]; data/control/stack nonaliasing
+; Outputs: DEDUCED staging_cursor<=selected boundary; selected_boundary[6A56]=table pointer;
+;   record_top decremented once per copied byte. BC=final staging_cursor,
+;   HL=(boundary-staging_cursor)&FFFF, DE=6A57, A=high difference, CY=0. NZPA from final
+;   high-byte subtraction; not full-word Z/S
+; Clobbers: DEDUCED A,BC,DE,HL,flags; selected_boundary[6A56], staging_cursor[69C3],
+;   record_top[1C36], sequential destination bytes; own temporary PUSH/POP balanced
+; Memory: DEDUCED record_top=1C36H (descending destination cursor for +1A47; upper guard in
+;   +1A14); staging_cursor=69C3H (source cursor decreased by tail copy; new working base
+;   after copy); boundary_pointer_table=6A0DH (little-endian pointers selected by byte
+;   index, length unknown); boundary_table_index=6A4CH (unsigned index selecting tail-copy
+;   boundary); selected_boundary=6A56H (selected tail-copy stop pointer)
+; Direct callees: OBSERVED PLI.COM+1A33 @1B33H
+; Coverage: OBSERVED MINIMAL: 90 CALLs; 54/54 bytes represented as instructions; 90 calls: 87
+;   zero-copy and three nonempty tails (6/29/1094 bytes); 1,129 bytes copied and 1,219
+;   comparisons. All stop at equality; no unusual continuation
+; Unresolved: General table contents and source meaning unknown; source already below boundary and
+;   data-alias cases unobserved. Complete local CFG/contract does not imply original
+;   procedure ownership.
+; Contract: DEDUCED (complete; scope: documented local operation; copying does not alias
+;   control/table/return-slot storage; data read/write ordering preserved even if payload
+;   ranges overlap) Load unsigned index low byte from 6A4C (adjacent high byte discarded),
+;   select boundary=word[6A0D+2*index], save at 6A56. While staging_cursor>boundary
+;   according to resident +1A33 unsigned word difference, decrement staging_cursor first,
+;   read byte at that new cursor, write it at current record_top, then decrement
+;   record_top. Recheck boundary against source cursor. Source traversal is descending;
+;   destination write occurs before destination decrement. No record-header/type/ownership
+;   interpretation.
+; Hypothesis: HYPOTHESIS drain staged tail into descending record storage
+; Completeness: bounds=stable; control_flow=complete; contract=complete
+; Evidence: evidence.json#seeds/PLI0.OVL+1A47;
+;   ../minimal-baseline/pass-4/regions.json#PLI0.OVL+1A47
+; Procedure pseudo (operational; byte/word arithmetic wraps):
+;   T=word[6A0D+2*byte[6A4C]]; word[6A56]=T; while word[69C3]>T { word[69C3]--;
+;   byte[word[1C36]]=byte[word[69C3]]; word[1C36]--; }; return difference(T,word[69C3])
+; @end-procedure-v1 PLI0.OVL+1A47
+; SECTION [1A47,1A7D) UNDERSTOOD
+; @block-pseudo 1A47
+; pseudo:
+; | index=byte[6A4CH]; selected_boundary[6A56H]=word[6A0DH+2*index]
+PLI0_1A47: LHLD 6A4CH ; L = byte[boundary_table_index (6A4CH)]; H = byte[6A4DH] ; +1A47 runtime=3C47H OBSERVED
+PLI0_1A4A: MVI H,00H ; HL = zero_extend(boundary_table_index); discard adjacent 6A4DH byte ; +1A4A runtime=3C4AH OBSERVED
+PLI0_1A4C: LXI B,6A0DH ; BC = &boundary_pointer_table (6A0DH) ; +1A4C runtime=3C4CH OBSERVED
+PLI0_1A4F: DAD H ; HL = 2 * boundary_table_index; two-byte pointer-table stride ; +1A4F runtime=3C4FH OBSERVED
+PLI0_1A50: DAD B ; HL = boundary_pointer_table (6A0DH) + 2 * index ; +1A50 runtime=3C50H OBSERVED
+PLI0_1A51: MOV E,M ; E = low(selected boundary pointer) ; +1A51 runtime=3C51H OBSERVED
+PLI0_1A52: INX H ; HL = (HL + 1) & FFFF; flags preserved ; +1A52 runtime=3C52H OBSERVED
+PLI0_1A53: MOV D,M ; D = high(selected boundary pointer) ; +1A53 runtime=3C53H OBSERVED
+PLI0_1A54: XCHG ; swap HL and DE; flags preserved ; +1A54 runtime=3C54H OBSERVED
+PLI0_1A55: SHLD 6A56H ; little_endian_word[selected_boundary (6A56H)] = HL (low byte first) ; +1A55 runtime=3C55H OBSERVED
+; @block-pseudo 1A58
+; pseudo:
+; | if selected_boundary>=staging_cursor (unsigned): return; otherwise copy one byte
+PLI0_1A58: LXI D,6A56H ; DE = &selected_boundary (6A56H) ; +1A58 runtime=3C58H OBSERVED
+PLI0_1A5B: LXI B,69C3H ; BC = &staging_cursor (69C3H) ; +1A5B runtime=3C5BH OBSERVED
+PLI0_1A5E: CALL 1B33H ; invoke +1A33: selected_boundary minus staging_cursor (unsigned borrow) ; +1A5E runtime=3C5EH OBSERVED
+PLI0_1A61: JNC 3C7CH ; CY=0 means boundary>=source cursor: stop without copying ; +1A61 runtime=3C61H OBSERVED
+; @block-pseudo 1A64
+; pseudo:
+; | staging_cursor--; save new source cursor across destination load
+PLI0_1A64: LHLD 69C3H ; HL = little_endian_word[staging_cursor (69C3H)] ; +1A64 runtime=3C64H OBSERVED
+PLI0_1A67: DCX H ; HL = staging_cursor - 1; predecrement source before byte fetch ; +1A67 runtime=3C67H OBSERVED
+PLI0_1A68: SHLD 69C3H ; staging_cursor (69C3H) = predecremented source pointer ; +1A68 runtime=3C68H OBSERVED
+PLI0_1A6B: PUSH H ; save new source pointer across destination load; balanced temporary PUSH ; +1A6B runtime=3C6BH OBSERVED
+PLI0_1A6C: LHLD 1C36H ; HL = little_endian_word[record_top (1C36H)] ; +1A6C runtime=3C6CH OBSERVED
+PLI0_1A6F: POP B ; BC = saved new source pointer; restore original SP before copy ; +1A6F runtime=3C6FH OBSERVED
+; @block-pseudo 1A70
+; pseudo:
+; | byte[current record_top]=byte[new staging_cursor]; record_top--
+PLI0_1A70: LDAX B ; A = byte[predecremented staging_cursor in BC] ; +1A70 runtime=3C70H OBSERVED
+PLI0_1A71: MOV M,A ; byte[current record_top in HL] = fetched staging byte; write before decrement ; +1A71 runtime=3C71H OBSERVED
+PLI0_1A72: LHLD 1C36H ; HL = little_endian_word[record_top (1C36H)] ; +1A72 runtime=3C72H OBSERVED
+PLI0_1A75: DCX H ; HL = current record_top - 1 modulo 65536 ; +1A75 runtime=3C75H OBSERVED
+PLI0_1A76: SHLD 1C36H ; record_top (1C36H) = decremented destination cursor ; +1A76 runtime=3C76H OBSERVED
+; @block-pseudo 1A79
+; pseudo:
+; | repeat boundary comparison
+PLI0_1A79: JMP 3C58H ; if always: PC -> PLI0.OVL+1A58; flags preserved ; +1A79 runtime=3C79H OBSERVED
+; @block-pseudo 1A7C
+; pseudo:
+; | return final word-difference state; CY=0, NZPA describe high-byte difference
+PLI0_1A7C: RET ; PC = word[SP]; SP += 2; use the convention in procedure header ; +1A7C runtime=3C7CH OBSERVED
+; SECTION [1A7D,1A8C) RAW
+PLI0_1A7D: DB 021H,04CH,06AH ; +1A7D runtime=3C7DH RAW
+PLI0_1A80: DB 036H,000H,021H,096H,06BH,022H,00DH,06AH,0CDH,047H,03CH,0C9H ; +1A80 runtime=3C80H RAW
+
+; @procedure-v1 PLI0.OVL+1A8C
+; ProcedureHypothesis: counted working-window initialization after descending tail copy
+; Entry: PLI0_1A8C = PLI0.OVL+1A8C @ 3C8CH; SHA-256
+;   e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff
+; Extent: HYPOTHESIS [1A8C,1AA6) file offsets; overlapping entries: none established
+; Callers: OBSERVED PLI0.OVL+1C6A (MINIMAL=65); PLI0.OVL+1CC9 (MINIMAL=16); PLI0.OVL+1ED1
+;   (MINIMAL=3); PLI0.OVL+2539 (MINIMAL=1); PLI0.OVL+296B (MINIMAL=2)
+; Returns: OBSERVED/DEDUCED ordinary hardware CALL word; original slot unchanged, SP after RET =
+;   entry SP + 2; PLI0.OVL+1AA5
+; Inputs: DEDUCED C=requested initial extent; staging_cursor word[69C3], boundary pointer
+;   table[6A0D] indexed by byte[6A4C], record_top word[1C36]; witnessed +1A14 guard-success
+; Outputs: DEDUCED working_record_pointer[69C5]=post-copy staging_cursor; extent_count[69C7]=input
+;   C on success. Register/flag results propagate +1A14: DE=1C37, HL=(working
+;   base+count-record_top)&FFFF, A=high result, CY=1; BC high follows +1A47, C=request
+; Clobbers: DEDUCED A,BC,DE,HL,flags; saved_window_request[6A58], working pointer/count; nested
+;   tail-copy cursor/top/destination effects; original return slot unchanged
+; Memory: DEDUCED record_top=1C36H (descending destination cursor for +1A47; upper guard in
+;   +1A14); staging_cursor=69C3H (source cursor decreased by tail copy; new working base
+;   after copy); working_record_pointer=69C5H (pointer used for mode1 copy/repair);
+;   extent_count=69C7H (byte-sized counted window extent, reset by +1A8C and grown by
+;   +1A14); boundary_pointer_table=6A0DH (little-endian pointers selected by byte index,
+;   length unknown); boundary_table_index=6A4CH (unsigned index selecting tail-copy
+;   boundary); selected_boundary=6A56H (selected tail-copy stop pointer);
+;   saved_window_request=6A58H (saved +1A8C C across tail-copy helper)
+; Direct callees: OBSERVED PLI0.OVL+1A47 @3C47H; PLI0.OVL+1A14 @3C14H
+; Coverage: OBSERVED MINIMAL: 87 CALLs; 26/26 bytes represented as instructions; 87 calls from
+;   five sites: request6 five times, request8 81 times, request17 once; all nested
+;   reservations succeed. The +24BC invocation uses request17 and zero tail-copy
+;   iterations
+; Unresolved: Error effects in +1A14 remain outside scope. No complete heap ownership/allocation
+;   or source-language buffer role claimed. +1A47 may copy or simply observe
+;   already-matched boundary.
+; Contract: DEDUCED (partial; scope: +1A47 local copy contract and +1A14 byte-capacity/top guards
+;   succeed; nonaliasing controls/scratch/stack) Save C at 6A58; call +1A47 to move
+;   staging tail downward into the record-top destination until staging_cursor<=selected
+;   boundary. Set working_record_pointer to the resulting staging_cursor; zero
+;   extent_count. Reload saved low byte C (adjacent 6A59 high byte fetched but unused) and
+;   call +1A14 to add/check that extent. This establishes a working window; it does not
+;   itself advance staging_cursor or write record header bytes.
+; Hypothesis: HYPOTHESIS begin a counted staging window, not a fully recovered allocator
+; Completeness: bounds=stable; control_flow=complete; contract=partial
+; Evidence: evidence.json#seeds/PLI0.OVL+1A8C;
+;   ../minimal-baseline/pass-4/regions.json#PLI0.OVL+1A8C
+; Procedure pseudo (operational; byte/word arithmetic wraps):
+;   byte[6A58]=C; call1A47(); word[69C5]=word[69C3]; byte[69C7]=0; C=byte[6A58]; call1A14(C); RET
+; @end-procedure-v1 PLI0.OVL+1A8C
+; SECTION [1A8C,1AA6) UNDERSTOOD
+; @block-pseudo 1A8C
+; pseudo:
+; | saved_window_request[6A58H]=C; copy staged tail via +1A47
+PLI0_1A8C: LXI H,6A58H ; HL = &saved_window_request (6A58H) ; +1A8C runtime=3C8CH OBSERVED
+PLI0_1A8F: MOV M,C ; saved_window_request (6A58H) = input C; preserve request across tail copy ; +1A8F runtime=3C8FH OBSERVED
+PLI0_1A90: CALL 3C47H ; invoke +1A47: copy staged tail downward until selected boundary ; +1A90 runtime=3C90H OBSERVED
+; @block-pseudo 1A93
+; pseudo:
+; | working_record_pointer[69C5H]=staging_cursor[69C3H]; extent_count[69C7H]=0
+PLI0_1A93: LHLD 69C3H ; HL = little_endian_word[staging_cursor (69C3H)] ; +1A93 runtime=3C93H OBSERVED
+PLI0_1A96: SHLD 69C5H ; working_record_pointer (69C5H) = post-copy staging_cursor ; +1A96 runtime=3C96H OBSERVED
+PLI0_1A99: LXI H,69C7H ; HL = &extent_count (69C7H) ; +1A99 runtime=3C99H OBSERVED
+PLI0_1A9C: MVI M,00H ; extent_count (69C7H) = 0; begin new counted working window ; +1A9C runtime=3C9CH OBSERVED
+; @block-pseudo 1A9E
+; pseudo:
+; | reload request low byte; reserve/check initial extent via +1A14
+; | return that helper state without further register changes
+PLI0_1A9E: LHLD 6A58H ; L = byte[saved_window_request (6A58H)]; H = byte[6A59H] ; +1A9E runtime=3C9EH OBSERVED
+PLI0_1AA1: MOV C,L ; C = saved_window_request low byte; adjacent 6A59H is not a count ; +1AA1 runtime=3CA1H OBSERVED
+PLI0_1AA2: CALL 3C14H ; invoke +1A14: grow/check initial extent without moving staging_cursor ; +1AA2 runtime=3CA2H OBSERVED
+PLI0_1AA5: RET ; PC = word[SP]; SP += 2; use the convention in procedure header ; +1AA5 runtime=3CA5H OBSERVED
+; SECTION [1AA6,210B) RAW
+PLI0_1AA6: DB 02AH,0C5H,069H,023H,023H,036H,000H,001H,003H,000H ; +1AA6 runtime=3CA6H RAW
 PLI0_1AB0: DB 02AH,0C5H,069H,009H,036H,000H,02AH,0C5H,069H,003H,009H,036H,000H,02AH,0C5H,069H ; +1AB0 runtime=3CB0H RAW
 PLI0_1AC0: DB 003H,009H,036H,000H,02AH,0C5H,069H,003H,009H,03EH,000H,077H,023H,036H,000H,0C9H ; +1AC0 runtime=3CC0H RAW
 PLI0_1AD0: DB 03EH,000H,011H,0C5H,069H,0CDH,040H,01BH,0B5H,0C6H,0FFH,09FH,0C9H,001H,00BH,06AH ; +1AD0 runtime=3CD0H RAW
@@ -685,13 +923,152 @@ PLI0_23DB: POP B ; BC = word[SP]; SP += 2 ; +23DB runtime=45DBH OBSERVED
 PLI0_23DC: MOV C,B ; C = B ; +23DC runtime=45DCH OBSERVED
 PLI0_23DD: ORA C ; A = A | C; logical byte flags, CY=0 ; +23DD runtime=45DDH OBSERVED
 PLI0_23DE: RET ; PC = word[SP]; SP += 2; use the convention in procedure header ; +23DE runtime=45DEH OBSERVED
-; SECTION [23DF,24BC) RAW
-PLI0_23DF: DB 021H ; +23DF runtime=45DFH RAW
-PLI0_23E0: DB 095H,06AH,071H,0CDH,0C3H,045H,02FH,01FH,0D2H,00AH,046H,02AH,082H,06AH,05EH,016H ; +23E0 runtime=45E0H RAW
-PLI0_23F0: DB 000H,02AH,082H,06AH,019H,022H,082H,06AH,02AH,082H,06AH,023H,03EH,0E0H,0A6H,021H ; +23F0 runtime=45F0H RAW
-PLI0_2400: DB 095H,06AH,0BEH,0C2H,007H,046H,0C9H,0C3H,0E3H,045H,0C9H,021H,096H,06AH,071H,0CDH ; +2400 runtime=4600H RAW
-PLI0_2410: DB 0C3H,045H,01FH,0D2H,019H,046H,03EH,001H,0C9H,001H,003H,000H,02AH,082H,06AH,009H ; +2410 runtime=4610H RAW
-PLI0_2420: DB 03EH,007H,0A6H,021H,096H,06AH,096H,0D6H,001H,09FH,0C9H,021H,098H,06AH,070H,02BH ; +2420 runtime=4620H RAW
+
+; @procedure-v1 PLI0.OVL+23DF
+; ProcedureHypothesis: length-based pointer scan to masked-tag match or guard
+; Entry: PLI0_23DF = PLI0.OVL+23DF @ 45DFH; SHA-256
+;   e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff
+; Extent: HYPOTHESIS [23DF,240B) file offsets; overlapping entries: none established
+; Callers: OBSERVED PLI0.OVL+268A (MINIMAL=85)
+; Returns: OBSERVED/DEDUCED ordinary hardware CALL word; original slot unchanged, SP after RET =
+;   entry SP + 2; PLI0.OVL+2406, PLI0.OVL+240A
+; Inputs: DEDUCED C=requested masked tag byte; tested_pointer[6A82], pointer_bound[1C32]; length
+;   byte[p], tag byte[p+1]
+; Outputs: DEDUCED tested_pointer advances by observed record length before each tag comparison;
+;   matched exit: A=input C, BC=0, DE=last length, HL=6A95, Z=1/CY=0. Guard exit: registers
+;   follow +23C3 except A=CMA/RAR result and CY=0 (A=0 for Boolean-true guard); guard exit
+;   preserves guard NZPA (witnessed A=0 with Z=0), unlike matched-tag Z=1
+; Clobbers: DEDUCED A,BC,DE,HL,flags; scan_tag_request[6A95], tested_pointer[6A82]; balanced
+;   nested CALL stack
+; Memory: DEDUCED tested_pointer=6A82H (pointer compared with bound; next byte is masked);
+;   scan_tag_request=6A95H (masked-tag equality target for +23DF)
+; Direct callees: OBSERVED PLI0.OVL+23C3 @45C3H
+; Coverage: OBSERVED MINIMAL: 85 CALLs; 44/44 bytes represented as instructions; 85 calls, all
+;   C=0; 85 pointer advances; 84 matched-tag returns +2406, one mismatch/repeated guard
+;   then bound exit +240A. Both loop branch outcomes/RET sites observed
+; Unresolved: Initial guard-true, more than one advance, nonzero requests and zero-length
+;   nonmatching records unobserved. Local CFG/operation complete, source tag/record
+;   meaning and arbitrary termination unresolved.
+; Contract: DEDUCED (complete; scope: documented local scan; no data alias to controls/return
+;   slots; +23C3 contract applies. Termination not promised for arbitrary records) Save C
+;   at 6A95. At loop head call +23C3; CMA/RAR exits when its Boolean is true. Otherwise
+;   p=word[6A82], len=byte[p], next=(p+len)&FFFF; publish next to 6A82 before reading
+;   byte[next+1]&E0. Return on equality with saved C; otherwise repeat guard at new
+;   pointer. Tag memory is still read inside +23C3 even when its bound test succeeds. A
+;   zero length can prevent progress on a nonmatching record.
+; Hypothesis: HYPOTHESIS record-length skip/scan operation; masked tag semantics unknown
+; Completeness: bounds=stable; control_flow=complete; contract=complete
+; Evidence: evidence.json#seeds/PLI0.OVL+23DF;
+;   ../minimal-baseline/pass-4/regions.json#PLI0.OVL+23DF
+; Procedure pseudo (operational; byte/word arithmetic wraps):
+;   byte[6A95]=C; loop { if call23C3().bit0: A=0; CY=0; RET; p=word[6A82];
+;   word[6A82]=u16(p+byte[p]); tag=byte[word[6A82]+1]&E0; if tag==byte[6A95]: A=tag; Z=1; CY=0;
+;   RET; }
+; @end-procedure-v1 PLI0.OVL+23DF
+; SECTION [23DF,240B) UNDERSTOOD
+; @block-pseudo 23DF
+; pseudo:
+; | scan_tag_request[6A95H]=C
+PLI0_23DF: LXI H,6A95H ; HL = &scan_tag_request (6A95H) ; +23DF runtime=45DFH OBSERVED
+PLI0_23E2: MOV M,C ; byte[scan_tag_request (6A95H)] = C ; +23E2 runtime=45E2H OBSERVED
+; @block-pseudo 23E3
+; pseudo:
+; | if bound_or_tag23C3(tested_pointer) is true: return via guard exit
+PLI0_23E3: CALL 45C3H ; push following PC; invoke PLI0.OVL+23C3; result effects belong to callee ; +23E3 runtime=45E3H OBSERVED
+PLI0_23E6: CMA ; complement guard Boolean; true FF becomes 00, preserving guard NZPA ; +23E6 runtime=45E6H OBSERVED
+PLI0_23E7: RAR ; CY = complemented guard bit0; true guard takes zero-carry exit ; +23E7 runtime=45E7H OBSERVED
+PLI0_23E8: JNC 460AH ; if CY=0: PC -> PLI0.OVL+240A; flags preserved ; +23E8 runtime=45E8H OBSERVED
+; @block-pseudo 23EB
+; pseudo:
+; | p=tested_pointer; len=byte[p]; tested_pointer=u16(p+len)
+; | tag=byte[tested_pointer+1]&E0; if tag==scan_tag_request: return
+PLI0_23EB: LHLD 6A82H ; HL = little_endian_word[tested_pointer (6A82H)] ; +23EB runtime=45EBH OBSERVED
+PLI0_23EE: MOV E,M ; E = byte[current tested_pointer] (record length) ; +23EE runtime=45EEH OBSERVED
+PLI0_23EF: MVI D,00H ; DE = zero_extend(record length) ; +23EF runtime=45EFH OBSERVED
+PLI0_23F1: LHLD 6A82H ; HL = little_endian_word[tested_pointer (6A82H)] ; +23F1 runtime=45F1H OBSERVED
+PLI0_23F4: DAD D ; HL = u16(current pointer + record length); only CY changes ; +23F4 runtime=45F4H OBSERVED
+PLI0_23F5: SHLD 6A82H ; tested_pointer (6A82H) = advanced pointer, before masked-tag fetch ; +23F5 runtime=45F5H OBSERVED
+PLI0_23F8: LHLD 6A82H ; HL = little_endian_word[tested_pointer (6A82H)] ; +23F8 runtime=45F8H OBSERVED
+PLI0_23FB: INX H ; HL = (HL + 1) & FFFF; flags preserved ; +23FB runtime=45FBH OBSERVED
+PLI0_23FC: MVI A,0E0H ; A = E0H ; +23FC runtime=45FCH OBSERVED
+PLI0_23FE: ANA M ; A = byte[advanced pointer+1] & E0H (masked tag) ; +23FE runtime=45FEH OBSERVED
+PLI0_23FF: LXI H,6A95H ; HL = &scan_tag_request (6A95H) ; +23FF runtime=45FFH OBSERVED
+PLI0_2402: CMP M ; compare advanced masked tag with scan_tag_request (6A95H) ; +2402 runtime=4602H OBSERVED
+PLI0_2403: JNZ 4607H ; if Z=0: PC -> PLI0.OVL+2407; flags preserved ; +2403 runtime=4603H OBSERVED
+PLI0_2406: RET ; PC = word[SP]; SP += 2; use the convention in procedure header ; +2406 runtime=4606H OBSERVED
+; @block-pseudo 2407
+; pseudo:
+; | tag mismatch: repeat guard at advanced pointer
+PLI0_2407: JMP 45E3H ; if always: PC -> PLI0.OVL+23E3; flags preserved ; +2407 runtime=4607H OBSERVED
+; @block-pseudo 240A
+; pseudo:
+; | return rotated complement of Boolean guard; witnessed true guard yields A=0/CY=0
+PLI0_240A: RET ; guard exit: A=0/CY=0 but NZPA still describe guard FF (Z=0) ; +240A runtime=460AH OBSERVED
+
+; @procedure-v1 PLI0.OVL+240B
+; ProcedureHypothesis: guarded low-three-bit record-field equality predicate
+; Entry: PLI0_240B = PLI0.OVL+240B @ 460BH; SHA-256
+;   e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff
+; Extent: HYPOTHESIS [240B,242B) file offsets; overlapping entries: none established
+; Callers: OBSERVED PLI0.OVL+264C (MINIMAL=1); PLI0.OVL+265D (MINIMAL=1); PLI0.OVL+2790
+;   (MINIMAL=10); PLI0.OVL+27F2 (MINIMAL=10); PLI0.OVL+2AA5 (MINIMAL=65); PLI0.OVL+2AB7
+;   (MINIMAL=65)
+; Returns: OBSERVED/DEDUCED ordinary hardware CALL word; original slot unchanged, SP after RET =
+;   entry SP + 2; PLI0.OVL+242A
+; Inputs: DEDUCED C=requested byte; tested_pointer word[6A82], pointer_bound word[1C32], tag
+;   byte[p+1]; witnessed +23C3 guard false
+; Outputs: DEDUCED A=FF/CY=1 iff (byte[p+3]&7)==input C, else A=0/CY=0; BC=3, DE=6A83, HL=6A96.
+;   NZPA from final self-SBB
+; Clobbers: DEDUCED A,BC,DE,HL,flags; saved field request[6A96]; nested CALL stack only
+; Memory: DEDUCED tested_pointer=6A82H (pointer compared with bound; next byte is masked);
+;   field_request=6A96H (requested low-three-bit field value for +240B)
+; Direct callees: OBSERVED PLI0.OVL+23C3 @45C3H
+; Coverage: OBSERVED MINIMAL: 152 CALLs; 29/32 bytes represented as instructions; 152 calls from
+;   six sites; 136 false and sixteen true; all guard-false, requests 1/3/4/5/6/7
+; Unresolved: Guard-true bytes +2416..+2418 remain RAW; no contract for that return. Equality
+;   contract is scoped to guard-false; tag/source-language meanings unresolved.
+; Contract: DEDUCED (partial; scope: +23C3 returns A bit0=0; nonaliasing record/control/stack
+;   state as witnessed) Save C at 6A96, invoke +23C3. On witnessed guard-false path, mask
+;   byte[tested_pointer+3] with 7. SUB saved request then SUI 1 sets carry iff the wrapped
+;   first difference is zero: equality, not less-than/less-or-equal. SBB A returns FF or
+;   00 with the same Boolean carry. Caller request is not normalized to three bits.
+; Hypothesis: HYPOTHESIS small record-field equality consumer, not a generic ordering predicate
+; Completeness: bounds=provisional; control_flow=partial; contract=partial
+; Evidence: evidence.json#seeds/PLI0.OVL+240B;
+;   ../minimal-baseline/pass-4/regions.json#PLI0.OVL+240B
+; Procedure pseudo (operational; byte/word arithmetic wraps):
+;   byte[6A96]=C; guard=call23C3(); scope guard.bit0==0: field=byte[word[6A82]+3]&7;
+;   equal=(field==byte[6A96]); A=equal?FF:00; CY=equal; RET
+; @end-procedure-v1 PLI0.OVL+240B
+; SECTION [240B,2416) UNDERSTOOD
+; @block-pseudo 240B
+; pseudo:
+; | field_request[6A96H]=C; guard=bound_or_tag23C3(tested_pointer)
+; | guard-true return path unprocessed
+PLI0_240B: LXI H,6A96H ; HL = &field_request (6A96H) ; +240B runtime=460BH OBSERVED
+PLI0_240E: MOV M,C ; field_request (6A96H) = input C; request is not masked to three bits ; +240E runtime=460EH OBSERVED
+PLI0_240F: CALL 45C3H ; push following PC; invoke PLI0.OVL+23C3; result effects belong to callee ; +240F runtime=460FH OBSERVED
+PLI0_2412: RAR ; CY = guard Boolean bit0; witnessed false guard enters equality test ; +2412 runtime=4612H OBSERVED
+PLI0_2413: JNC 4619H ; if CY=0: PC -> PLI0.OVL+2419; flags preserved ; +2413 runtime=4613H OBSERVED
+; SECTION [2416,2419) RAW
+PLI0_2416: DB 03EH,001H,0C9H ; +2416 runtime=4616H RAW
+; SECTION [2419,242B) UNDERSTOOD
+; @block-pseudo 2419
+; pseudo:
+; | field=byte[tested_pointer+3]&7; diff=u8(field-field_request)
+; | CY=(u8(diff-1) borrows)=(diff==0); A=CY?FF:00; return Boolean
+PLI0_2419: LXI B,0003H ; BC = 0003H ; +2419 runtime=4619H OBSERVED
+PLI0_241C: LHLD 6A82H ; HL = little_endian_word[tested_pointer (6A82H)] ; +241C runtime=461CH OBSERVED
+PLI0_241F: DAD B ; HL = (HL + BC) & FFFF; only CY changes ; +241F runtime=461FH OBSERVED
+PLI0_2420: MVI A,07H ; A = 07H ; +2420 runtime=4620H OBSERVED
+PLI0_2422: ANA M ; A = byte[tested_pointer+3] & 07H (three-bit field) ; +2422 runtime=4622H OBSERVED
+PLI0_2423: LXI H,6A96H ; HL = &field_request (6A96H) ; +2423 runtime=4623H OBSERVED
+PLI0_2426: SUB M ; A = u8(field - field_request); this subtraction carry is overwritten next ; +2426 runtime=4626H OBSERVED
+PLI0_2427: SUI 01H ; A--; CY=(wrapped field-request == 0), hence equality, not ordering ; +2427 runtime=4627H OBSERVED
+PLI0_2429: SBB A ; A = CY ? FFH : 00H; CY is the field-equality result ; +2429 runtime=4629H OBSERVED
+PLI0_242A: RET ; PC = word[SP]; SP += 2; use the convention in procedure header ; +242A runtime=462AH OBSERVED
+; SECTION [242B,24BC) RAW
+PLI0_242B: DB 021H,098H,06AH,070H,02BH ; +242B runtime=462BH RAW
 PLI0_2430: DB 071H,02AH,097H,06AH,0EBH,001H,0FFH,0FFH,0CDH,038H,01BH,0D2H,03FH,046H,0C9H,02AH ; +2430 runtime=4630H RAW
 PLI0_2440: DB 082H,06AH,023H,023H,03EH,0F6H,0A6H,0FEH,040H,0CAH,04DH,046H,0C9H,02AH,097H,06AH ; +2440 runtime=4640H RAW
 PLI0_2450: DB 0E5H,02AH,082H,06AH,0EBH,0E1H,073H,023H,072H,0C9H,02AH,082H,06AH,04EH,0CDH,08CH ; +2450 runtime=4650H RAW
@@ -714,13 +1091,16 @@ PLI0_24B0: DB 0CBH,069H,03EH,000H,0CDH,029H,01BH,0B5H,0C6H,0FFH,09FH,0C9H ; +24B
 ;   PLI0.OVL+289A
 ; Inputs: DEDUCED C=mode byte (MINIMAL 0/1/4); tested_pointer word[6A82]; mode_flags[6A84],
 ;   result_slot_pointer[6A88], working_record_pointer[69C5]; dynamic record bytes at
-;   pointer+0,+2,+3,+5
+;   pointer+0,+2,+3,+5; mode1 window helpers use staging_cursor[69C3],
+;   boundary_table_index[6A4C]/pointer table[6A0D], extent_count[69C7], record_top[1C36]
 ; Outputs: DEDUCED output_record_word[6A8E]=local word F+16 (zero on 84 mode0/4 calls, derived
 ;   value on mode1); A=0 observed; general output registers/flags follow paths and opaque
 ;   helpers
 ; Clobbers: DEDUCED A,BC,DE,HL,flags; locals and nested stack; tested_pointer[6A82],
 ;   output_record_word[6A8E], dynamic record[p+3] bit7 cleared; mode1 additionally
-;   copies/rewrites data, 69C5 and [word(6A88)]
+;   copies/rewrites data, 69C5 and [word(6A88)]; helper scratch6A55/6A56/6A58/6A95/6A96;
+;   mode1 window initialization writes working_record_pointer/extent_count and may copy
+;   staging bytes while decrementing staging_cursor/record_top
 ; Memory: DEDUCED pointer_bound=1C32H (bound read by predicate); working_record_pointer=69C5H
 ;   (pointer used for mode1 copy/repair); tested_pointer=6A82H (pointer compared with bound;
 ;   next byte is masked); record_mode_flags=6A84H (bit0 enables mode1 auxiliary effects);
@@ -729,7 +1109,14 @@ PLI0_24B0: DB 0CBH,069H,03EH,000H,0CDH,029H,01BH,0B5H,0C6H,0FFH,09FH,0C9H ; +24B
 ;   (zeroed on entry, published from local F+16); F=entry_SP-18; F+0 mode; words
 ;   F+1/+3/+5/+7/+12/+14/+16; bytes F+9 tag, F+10 flags, F+11 count; F+18 original return
 ;   word; temporary PSW below F across +2790; recursive child CALLs own separate hardware
-;   words
+;   words; staging_cursor=69C3H (source cursor decreased by tail copy; new working base
+;   after copy); extent_count=69C7H (byte-sized counted window extent, reset by +1A8C and
+;   grown by +1A14); record_top=1C36H (descending destination cursor for +1A47; upper guard
+;   in +1A14); boundary_table_index=6A4CH (unsigned index selecting tail-copy boundary);
+;   boundary_pointer_table=6A0DH (little-endian pointers selected by byte index, length
+;   unknown); field_request=6A96H (guard-false three-bit equality argument);
+;   scan_tag_request=6A95H (masked-tag scan target); saved_window_request=6A58H (initial
+;   counted extent saved across tail copy)
 ; Direct callees: OBSERVED PLI0.OVL+23C3 @45C3H; PLI0.OVL+1A8C @3C8CH; PLI0.OVL+1E0B @400BH;
 ;   PLI0.OVL+22B3 @44B3H; PLI0.OVL+249A @469AH; PLI0.OVL+247C @467CH; PLI0.OVL+240B
 ;   @460BH; PLI0.OVL+240B @460BH; PLI0.OVL+23C3 @45C3H; PLI0.OVL+23DF @45DFH;
@@ -742,15 +1129,24 @@ PLI0_24B0: DB 0CBH,069H,03EH,000H,0CDH,029H,01BH,0B5H,0C6H,0FFH,09FH,0C9H ; +24B
 ;   three callsites. All original hardware slots return +289A; one mode1 copy of seventeen
 ;   bytes. Local projections exclude descendants
 ; Unresolved: RAW arms include initial +23C3 true path, tag70 path, mode2/4 guards,
-;   field/pointer-repair alternatives. Helpers
-;   +1A8C/+1E0B/+21AB/+2290/+22B3/+23DF/+240B/+242B/+247C/+249A retain opaque effects.
-;   Record ownership/complete traversal semantics unresolved. Recursion does not imply
-;   software continuation.
+;   field/pointer-repair alternatives. Helpers +1E0B/+21AB/+2290/+22B3/+242B/+247C/+249A
+;   retain opaque effects. Record ownership/complete traversal semantics unresolved.
+;   Recursion does not imply software continuation. / New helper contracts remove opaque
+;   +1A8C/+23DF and guard-false +240B effects; +240B guard-true, +1A14 failure paths and
+;   remaining parent RAW arms are still unresolved.
+;   result_slot_pointer/output_record_word relationship beyond the existing concrete
+;   copy/publish effects remains partial.
 ; Contract: DEDUCED (partial; scope: observed MINIMAL control/data shape, not complete operation;
 ;   corrected hardware frames isolate recursive child contexts) Let S=entry SP, F=S-18.
 ;   Save input mode at F+0, initialize output word and local result F+16 to zero; save
 ;   current pointer at F+14 after +23C3. Clear bit7 of record byte[p+3] and snapshot
 ;   bytes[p+2], masked[p+3], [p+5] at F+9/+10/+11. Mode bit0 gates copy/repair path.
+;   +1A8C(length) drains the staged tail via +1A47, sets working_record_pointer[69C5] to
+;   post-copy staging_cursor[69C3], clears extent_count[69C7], then adds/checks the
+;   initial extent via +1A14. The caller copies record length bytes to this working base.
+;   +240B(k) on guard-false returns FF/CY=1 exactly when record[p+3]&7 equals k; this
+;   selects child/field branches, not an ordering test. +23DF(0) advances tested_pointer
+;   by length bytes until the advanced tag&E0 equals zero or the bound/tag guard stops it.
 ;   Dispatch local tag 41/40 through recursive +24BC calls (C=mode&1 or 4); keep original
 ;   pointer in F+3 and child pointer in F+5, restore selected pointers. Publish F+16 to
 ;   6A8E. Epilogue SP=F+18 restores original hardware return slot. Opaque calls and
@@ -759,12 +1155,17 @@ PLI0_24B0: DB 0CBH,069H,03EH,000H,0CDH,029H,01BH,0B5H,0C6H,0FFH,09FH,0C9H ; +24B
 ;   provisional
 ; Completeness: bounds=provisional; control_flow=partial; contract=partial
 ; Evidence: evidence.json#seeds/PLI0.OVL+24BC;
-;   ../minimal-baseline/pass-3/regions.json#PLI0.OVL+24BC
+;   ../minimal-baseline/pass-3/regions.json#PLI0.OVL+24BC;
+;   ../minimal-baseline/pass-4/caller-refinements.json#PLI0.OVL+24BC
 ; Procedure pseudo (operational; byte/word arithmetic wraps):
-;   F=entry_SP-18; local_mode=C; result=0; saved_pointer=tested_pointer; clear
-;   record[saved_pointer+3].bit7; snapshot tag/flags/count; if mode.bit0: delegated copy/repair
-;   path; handle observed tag41/tag40 through child calls, saved pointer and count loop;
-;   word[6A8E]=local_result; restore original SP; RET
+;   F=entry_SP-18; local_mode=C; result=0; save tested_pointer; clear record[p+3].bit7; snapshot
+;   tag/flags/count; if mode.bit0 { begin_window1A8C(record_copy_count); copy record bytes to
+;   working_record_pointer; setup/repair including field_equal240B(5/6) delegated; };
+;   scan23DF(masked_tag=0); if local_tag==41 { combine guard with field_equal240B(7);
+;   recurse(mode&1) on observed path; local_tag=40; }; if local_tag==40 && mode!=4 { while
+;   count!=0 { if field_equal240B(3) { count--; recurse(mode&1); } else {
+;   opaque242B(&comparison_pointer); recurse(4); }; }; }; remaining pointer/repair effects
+;   delegated; word[6A8E]=local_result; restore original SP; RET
 ; @end-procedure-v1 PLI0.OVL+24BC
 ; SECTION [24BC,24D9) STRUCTURED
 ; @block-pseudo 24BC
@@ -849,10 +1250,11 @@ PLI0_2530: DB 021H,085H,06AH,036H,008H ; +2530 runtime=4730H RAW
 ; SECTION [2535,255A) STRUCTURED
 ; @block-pseudo 2535
 ; pseudo:
-; | call opaque +1A8C(count); source=tested_pointer; dest=working_record_pointer[69C5H]
+; | begin_window1A8C(record_copy_count): drain staged tail, set working base, reset/reserve extent
+; | copy source=tested_pointer; destination=working_record_pointer (69C5H)
 PLI0_2535: LHLD 6A85H ; L = byte[record_copy_count (6A85H)]; H = byte[6A86H] ; +2535 runtime=4735H OBSERVED
 PLI0_2538: MOV C,L ; C = record_copy_count (6A85H); adjacent high byte is not passed as count ; +2538 runtime=4738H OBSERVED
-PLI0_2539: CALL 3C8CH ; push following PC; invoke PLI0.OVL+1A8C; result effects belong to callee ; +2539 runtime=4739H OBSERVED
+PLI0_2539: CALL 3C8CH ; invoke +1A8C(count): drain staged tail, initialize working base and checked byte extent ; +2539 runtime=4739H OBSERVED
 PLI0_253C: LHLD 6A85H ; L = byte[record_copy_count (6A85H)]; H = byte[6A86H] ; +253C runtime=473CH OBSERVED
 PLI0_253F: PUSH H ; SP -= 2; push HL little-endian ; +253F runtime=473FH OBSERVED
 PLI0_2540: LHLD 6A82H ; HL = little_endian_word[tested_pointer (6A82H)] ; +2540 runtime=4740H OBSERVED
@@ -960,9 +1362,9 @@ PLI0_2640: DB 02BH,02BH,02BH,05EH,023H,056H,0EBH,022H,082H,06AH ; +2640 runtime=
 ; SECTION [264A,2653) STRUCTURED
 ; @block-pseudo 264A
 ; pseudo:
-; | call opaque bit-consumer +240B(5)
+; | on guard-false, field_equal240B(5) tests (record[p+3]&7)==5; witnessed false
 PLI0_264A: MVI C,05H ; C = 05H ; +264A runtime=484AH OBSERVED
-PLI0_264C: CALL 460BH ; push following PC; invoke PLI0.OVL+240B; result effects belong to callee ; +264C runtime=484CH OBSERVED
+PLI0_264C: CALL 460BH ; invoke guard-false low-field equality +240B(5); not a less-than test ; +264C runtime=484CH OBSERVED
 PLI0_264F: RAR ; A = (old_CY<<7) | (old_A>>1); CY=old_A bit0; NZPA preserved ; +264F runtime=484FH OBSERVED
 PLI0_2650: JNC 485BH ; if CY=0: PC -> PLI0.OVL+265B; flags preserved ; +2650 runtime=4850H OBSERVED
 ; SECTION [2653,265B) RAW
@@ -970,9 +1372,9 @@ PLI0_2653: DB 00EH,060H,0CDH,0DFH,045H,0C3H,072H,048H ; +2653 runtime=4853H RAW
 ; SECTION [265B,2664) STRUCTURED
 ; @block-pseudo 265B
 ; pseudo:
-; | call opaque bit-consumer +240B(6)
+; | on guard-false, field_equal240B(6) tests (record[p+3]&7)==6; witnessed false
 PLI0_265B: MVI C,06H ; C = 06H ; +265B runtime=485BH OBSERVED
-PLI0_265D: CALL 460BH ; push following PC; invoke PLI0.OVL+240B; result effects belong to callee ; +265D runtime=485DH OBSERVED
+PLI0_265D: CALL 460BH ; invoke guard-false low-field equality +240B(6) ; +265D runtime=485DH OBSERVED
 PLI0_2660: RAR ; A = (old_CY<<7) | (old_A>>1); CY=old_A bit0; NZPA preserved ; +2660 runtime=4860H OBSERVED
 PLI0_2661: JNC 486CH ; if CY=0: PC -> PLI0.OVL+266C; flags preserved ; +2661 runtime=4861H OBSERVED
 ; SECTION [2664,266C) RAW
@@ -999,9 +1401,10 @@ PLI0_2684: XCHG ; swap HL and DE; flags preserved ; +2684 runtime=4884H OBSERVED
 PLI0_2685: SHLD 6A82H ; little_endian_word[tested_pointer (6A82H)] = HL (low byte first) ; +2685 runtime=4885H OBSERVED
 ; @block-pseudo 2688
 ; pseudo:
-; | call +23DF(C=0); mode_flags & local_mode gates pointed-word save/clear
+; | scan23DF(masked_tag=0): advance tested_pointer by record lengths until match or guard
+; | mode_flags & local_mode then gates pointed-word save/clear
 PLI0_2688: MVI C,00H ; C = 00H ; +2688 runtime=4888H OBSERVED
-PLI0_268A: CALL 45DFH ; push following PC; invoke PLI0.OVL+23DF; result effects belong to callee ; +268A runtime=488AH OBSERVED
+PLI0_268A: CALL 45DFH ; invoke +23DF(0): length-scan to advanced masked-tag zero or bound/tag guard ; +268A runtime=488AH OBSERVED
 PLI0_268D: LDA 6A84H ; A = byte[record_mode_flags (6A84H)] ; +268D runtime=488DH OBSERVED
 PLI0_2690: LXI H,0000H ; HL = 0000H ; +2690 runtime=4890H OBSERVED
 PLI0_2693: DAD SP ; HL = (HL + SP) & FFFF; only CY changes ; +2693 runtime=4893H OBSERVED
@@ -1100,7 +1503,8 @@ PLI0_2770: CPI 41H ; flags = compare_unsigned(A, 41H); A unchanged ; +2770 runti
 PLI0_2772: JNZ 49D2H ; if Z=0: PC -> PLI0.OVL+27D2; flags preserved ; +2772 runtime=4972H OBSERVED
 ; @block-pseudo 2775
 ; pseudo:
-; | tag41: mode2 arm unobserved; save current pointer at F+3; call +23C3/+240B(7)
+; | tag41: save current pointer at F+3; compute bound/tag23C3 and field_equal240B(7)
+; | combine Boolean results; observed combined false selects recursive path
 PLI0_2775: LXI H,0000H ; HL = 0000H ; +2775 runtime=4975H OBSERVED
 PLI0_2778: DAD SP ; HL = (HL + SP) & FFFF; only CY changes ; +2778 runtime=4978H OBSERVED
 PLI0_2779: MOV A,M ; A = byte[local_mode (F+0)] ; +2779 runtime=4979H OBSERVED
@@ -1116,7 +1520,7 @@ PLI0_2789: MOV M,D ; byte[saved_recursive_pointer.high (F+4)] = D ; +2789 runtim
 PLI0_278A: CALL 45C3H ; push following PC; invoke PLI0.OVL+23C3; result effects belong to callee ; +278A runtime=498AH OBSERVED
 PLI0_278D: PUSH PSW ; save +23C3 Boolean A on stack; +240B(7) may overwrite it ; +278D runtime=498DH OBSERVED
 PLI0_278E: MVI C,07H ; C = 07H ; +278E runtime=498EH OBSERVED
-PLI0_2790: CALL 460BH ; push following PC; invoke PLI0.OVL+240B; result effects belong to callee ; +2790 runtime=4990H OBSERVED
+PLI0_2790: CALL 460BH ; invoke +240B(7) while prior guard Boolean is saved below F ; +2790 runtime=4990H OBSERVED
 PLI0_2793: POP B ; BC = saved PSW; B is the earlier Boolean, C contains packed flags ; +2793 runtime=4993H OBSERVED
 PLI0_2794: MOV C,B ; C = prior +23C3 Boolean from saved B; combine with +240B result ; +2794 runtime=4994H OBSERVED
 PLI0_2795: ORA C ; A = result240B | saved_result23C3; combine observed Boolean bytes ; +2795 runtime=4995H OBSERVED
@@ -1170,14 +1574,15 @@ PLI0_27E1: CPI 04H ; flags = compare_unsigned(A, 04H); A unchanged ; +27E1 runti
 PLI0_27E3: JZ 4A37H ; if Z=1: PC -> PLI0.OVL+2837; flags preserved ; +27E3 runtime=49E3H OBSERVED
 ; @block-pseudo 27E6
 ; pseudo:
-; | while count[F+11]!=0: query +240B(3)
+; | while count[F+11]!=0: query guard-false field_equal240B(3)
+; | six true results select count--/mode&1 child; four false select +242B/mode4 child
 PLI0_27E6: MVI A,00H ; A = 00H ; +27E6 runtime=49E6H OBSERVED
 PLI0_27E8: LXI H,000BH ; HL = 000BH ; +27E8 runtime=49E8H OBSERVED
 PLI0_27EB: DAD SP ; HL = (HL + SP) & FFFF; only CY changes ; +27EB runtime=49EBH OBSERVED
 PLI0_27EC: CMP M ; compare_unsigned(A, byte[child_count (F+11)]); flags only ; +27EC runtime=49ECH OBSERVED
 PLI0_27ED: JNC 4A1FH ; if CY=0: PC -> PLI0.OVL+281F; flags preserved ; +27ED runtime=49EDH OBSERVED
 PLI0_27F0: MVI C,03H ; C = 03H ; +27F0 runtime=49F0H OBSERVED
-PLI0_27F2: CALL 460BH ; push following PC; invoke PLI0.OVL+240B; result effects belong to callee ; +27F2 runtime=49F2H OBSERVED
+PLI0_27F2: CALL 460BH ; invoke +240B(3): field equality selects recursive child path ; +27F2 runtime=49F2H OBSERVED
 PLI0_27F5: RAR ; A = (old_CY<<7) | (old_A>>1); CY=old_A bit0; NZPA preserved ; +27F5 runtime=49F5H OBSERVED
 PLI0_27F6: JNC 4A0EH ; if CY=0: PC -> PLI0.OVL+280E; flags preserved ; +27F6 runtime=49F6H OBSERVED
 ; @block-pseudo 27F9
@@ -1304,7 +1709,7 @@ PLI0_2895: LXI H,0012H ; HL = 18-byte frame size for epilogue ; +2895 runtime=4A
 PLI0_2898: DAD SP ; HL = F + 18 = original entry_SP; CY from modular stack addition ; +2898 runtime=4A98H OBSERVED
 PLI0_2899: SPHL ; SP = F + 18 = original entry_SP; restore original CALL slot ; +2899 runtime=4A99H OBSERVED
 PLI0_289A: RET ; consume original hardware CALL word; SP = entry_SP + 2, no software continuation ; +289A runtime=4A9AH OBSERVED
-; SECTION [289B,4680) RAW
+; SECTION [289B,4662) RAW
 PLI0_289B: DB 02AH,0C5H,069H,023H,03EH ; +289B runtime=4A9BH RAW
 PLI0_28A0: DB 0E0H,0A6H,0C9H,02AH,0C5H,069H,023H,03EH,01FH,0A6H,0C9H,001H,003H,000H,02AH,0C5H ; +28A0 runtime=4AA0H RAW
 PLI0_28B0: DB 069H,009H,03EH,003H,0B6H,02AH,0C5H,069H,009H,077H,0C9H,001H,003H,000H,02AH,0C5H ; +28B0 runtime=4AB0H RAW
@@ -1782,10 +2187,68 @@ PLI0_4620: DB 013H,0D2H,026H,068H,009H,01BH,0F1H,03DH,0C2H,014H,068H,0C9H,044H,0
 PLI0_4630: DB 000H,03EH,010H,029H,0EBH,029H,0EBH,0D2H,03BH,068H,009H,03DH,0C2H,033H,068H,0C9H ; +4630 runtime=6830H RAW
 PLI0_4640: DB 059H,050H,0EBH,097H,095H,06FH,03EH,000H,09CH,067H,0C9H,05FH,016H,000H,07BH,0B5H ; +4640 runtime=6840H RAW
 PLI0_4650: DB 06FH,07AH,0B4H,067H,0C9H,05EH,023H,056H,0EBH,029H,00DH,0C2H,059H,068H,0C9H,05FH ; +4650 runtime=6850H RAW
-PLI0_4660: DB 016H,000H,07BH,096H,05FH,07AH,023H,09EH,057H,0EBH,0C9H,01AH,01AH,01AH,01AH,01AH ; +4660 runtime=6860H RAW
+PLI0_4660: DB 016H,000H ; +4660 runtime=6860H RAW
+
+; @procedure-v1 PLI0.OVL+4662
+; ProcedureHypothesis: DE-minus-indirect-word arithmetic leaf
+; Entry: PLI0_4662 = PLI0.OVL+4662 @ 6862H; SHA-256
+;   e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff
+; Extent: HYPOTHESIS [4662,466B) file offsets; overlapping entries: none established
+; Callers: OBSERVED PLI0.OVL+1A3D (MINIMAL=152); PLI0.OVL+290C (MINIMAL=68)
+; Returns: OBSERVED/DEDUCED ordinary hardware CALL word; original slot unchanged, SP after RET =
+;   entry SP + 2; PLI0.OVL+466A
+; Inputs: DEDUCED DE=unsigned value, HL=pointer to little-endian subtractand; BC preserved
+; Outputs: DEDUCED HL=(input DE-word[input HL])&FFFF; DE=input HL+1, A=high result, CY=unsigned
+;   borrow; other flags describe final high-byte SBB
+; Clobbers: DEDUCED A,DE,HL,flags; no data writes; only RET stack reads
+; Memory: DEDUCED operand memory and return stack only
+; Direct callees: OBSERVED none
+; Coverage: OBSERVED MINIMAL: 220 CALLs; 9/9 bytes represented as instructions; 220 branchless
+;   calls from two sites; 219 borrows and one no-borrow; all conventional returns
+; Unresolved: No source-language meaning; general memory alias cases unobserved. Other arithmetic
+;   flags derive from high-byte operation, not whole-word comparisons.
+; Contract: DEDUCED (complete; scope: documented local arithmetic; memory/return slot do not
+;   alias) Subtract low byte at HL from E, increment HL, subtract high byte with borrow
+;   from D, then XCHG. BC unchanged; DE points to subtractand high byte, not original DE.
+;   This computes full unsigned borrow but high-byte arithmetic Z/S do not test the whole
+;   word.
+; Hypothesis: HYPOTHESIS shared indirect word-difference primitive
+; Completeness: bounds=stable; control_flow=complete; contract=complete
+; Evidence: evidence.json#seeds/PLI0.OVL+4662;
+;   ../minimal-baseline/pass-4/regions.json#PLI0.OVL+4662
+; Procedure pseudo (operational; byte/word arithmetic wraps):
+;   p=HL; difference=u16(DE-word[p]); CY=(DE<word[p]); HL=difference; DE=p+1; A=hi(difference);
+;   RET
+; @end-procedure-v1 PLI0.OVL+4662
+; SECTION [4662,466B) UNDERSTOOD
+; @block-pseudo 4662
+; pseudo:
+; | subtract low indirect byte from E; save low difference
+PLI0_4662: MOV A,E ; A = E ; +4662 runtime=6862H OBSERVED
+PLI0_4663: SUB M ; A = input E - low(subtractand); retain low-byte borrow ; +4663 runtime=6863H OBSERVED
+PLI0_4664: MOV E,A ; E = low difference; original input E is clobbered ; +4664 runtime=6864H OBSERVED
+; @block-pseudo 4665
+; pseudo:
+; | increment operand pointer; subtract high byte with borrow; exchange result into HL
+PLI0_4665: MOV A,D ; A = D ; +4665 runtime=6865H OBSERVED
+PLI0_4666: INX H ; HL = (HL + 1) & FFFF; flags preserved ; +4666 runtime=6866H OBSERVED
+PLI0_4667: SBB M ; A = input D - high(subtractand) - low borrow; full-word borrow in CY ; +4667 runtime=6867H OBSERVED
+PLI0_4668: MOV D,A ; D = A ; +4668 runtime=6868H OBSERVED
+PLI0_4669: XCHG ; HL = word difference; DE = original operand pointer + 1 ; +4669 runtime=6869H OBSERVED
+PLI0_466A: RET ; PC = word[SP]; SP += 2; use the convention in procedure header ; +466A runtime=686AH OBSERVED
+; SECTION [466B,4680) RAW
+PLI0_466B: DB 01AH,01AH,01AH,01AH,01AH ; +466B runtime=686BH RAW
 PLI0_4670: DB 01AH,01AH,01AH,01AH,01AH,01AH,01AH,01AH,01AH,01AH,01AH,01AH,01AH,01AH,01AH,01AH ; +4670 runtime=6870H RAW
 
 ; Prior RAW row labels retained as coordinates inside newly represented instructions.
+PLI0_1A20: EQU 03C20H ; +1A20 runtime=3C20H coordinate-only label
+PLI0_1A30: EQU 03C30H ; +1A30 runtime=3C30H coordinate-only label
+PLI0_1A60: EQU 03C60H ; +1A60 runtime=3C60H coordinate-only label
+PLI0_1AA0: EQU 03CA0H ; +1AA0 runtime=3CA0H coordinate-only label
+PLI0_23E0: EQU 045E0H ; +23E0 runtime=45E0H coordinate-only label
+PLI0_23F0: EQU 045F0H ; +23F0 runtime=45F0H coordinate-only label
+PLI0_2400: EQU 04600H ; +2400 runtime=4600H coordinate-only label
+PLI0_2410: EQU 04610H ; +2410 runtime=4610H coordinate-only label
 PLI0_24E0: EQU 046E0H ; +24E0 runtime=46E0H coordinate-only label
 PLI0_2500: EQU 04700H ; +2500 runtime=4700H coordinate-only label
 PLI0_2520: EQU 04720H ; +2520 runtime=4720H coordinate-only label

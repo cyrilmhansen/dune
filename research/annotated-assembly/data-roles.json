@@ -1208,7 +1208,7 @@
       "name": "working_record_pointer",
       "runtime_address": 27077,
       "width": 2,
-      "role": "pointer used for mode1 copy/repair",
+      "role": "base of counted working window; +1A8C assigns post-copy staging_cursor; +24BC uses/restores it during copy/repair",
       "scope": "Only reviewed MINIMAL pass-3 hypotheses; no source-language type."
     },
     {
@@ -1249,6 +1249,166 @@
       "runtime_address": 27278,
       "width": 2,
       "role": "zeroed on entry, published from local F+16",
+      "scope": "Only reviewed MINIMAL pass-3 hypotheses; no source-language type."
+    },
+    {
+      "id": "PLI0.OVL:record_top",
+      "image": "PLI0.OVL",
+      "image_sha256": "e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff",
+      "name": "record_top",
+      "runtime_address": 7222,
+      "width": 2,
+      "role": "descending destination cursor for +1A47; upper guard in +1A14",
+      "scope": "Only reviewed MINIMAL pass-3 hypotheses; no source-language type."
+    },
+    {
+      "id": "PLI0.OVL:staging_cursor",
+      "image": "PLI0.OVL",
+      "image_sha256": "e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff",
+      "name": "staging_cursor",
+      "runtime_address": 27075,
+      "width": 2,
+      "role": "source cursor decreased by tail copy; new working base after copy",
+      "scope": "Only reviewed MINIMAL pass-3 hypotheses; no source-language type."
+    },
+    {
+      "id": "PLI0.OVL:extent_count",
+      "image": "PLI0.OVL",
+      "image_sha256": "e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff",
+      "name": "extent_count",
+      "runtime_address": 27079,
+      "width": 1,
+      "role": "byte-sized counted window extent, reset by +1A8C and grown by +1A14",
+      "scope": "Only reviewed MINIMAL pass-3 hypotheses; no source-language type."
+    },
+    {
+      "id": "PLI0.OVL:boundary_pointer_table",
+      "image": "PLI0.OVL",
+      "image_sha256": "e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff",
+      "name": "boundary_pointer_table",
+      "runtime_address": 27149,
+      "width": null,
+      "role": "little-endian pointers selected by byte index, length unknown",
+      "scope": "Only reviewed MINIMAL pass-3 hypotheses; no source-language type."
+    },
+    {
+      "id": "PLI0.OVL:boundary_table_index",
+      "image": "PLI0.OVL",
+      "image_sha256": "e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff",
+      "name": "boundary_table_index",
+      "runtime_address": 27212,
+      "width": 1,
+      "role": "unsigned index selecting tail-copy boundary",
+      "scope": "Only reviewed MINIMAL pass-3 hypotheses; no source-language type."
+    },
+    {
+      "id": "PLI0.OVL:extent_request",
+      "image": "PLI0.OVL",
+      "image_sha256": "e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff",
+      "name": "extent_request",
+      "runtime_address": 27221,
+      "width": 1,
+      "role": "saved +1A14 C; adjacent 6A56 is separately named word",
+      "scope": "Only reviewed MINIMAL pass-3 hypotheses; no source-language type."
+    },
+    {
+      "id": "PLI0.OVL:selected_boundary",
+      "image": "PLI0.OVL",
+      "image_sha256": "e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff",
+      "name": "selected_boundary",
+      "runtime_address": 27222,
+      "width": 2,
+      "role": "selected tail-copy stop pointer",
+      "scope": "Only reviewed MINIMAL pass-3 hypotheses; no source-language type."
+    },
+    {
+      "id": "PLI0.OVL:saved_window_request",
+      "image": "PLI0.OVL",
+      "image_sha256": "e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff",
+      "name": "saved_window_request",
+      "runtime_address": 27224,
+      "width": 1,
+      "role": "saved +1A8C C across tail-copy helper",
+      "scope": "Only reviewed MINIMAL pass-3 hypotheses; no source-language type."
+    },
+    {
+      "id": "PLI0.OVL:scan_tag_request",
+      "image": "PLI0.OVL",
+      "image_sha256": "e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff",
+      "name": "scan_tag_request",
+      "runtime_address": 27285,
+      "width": 1,
+      "role": "masked-tag equality target for +23DF",
+      "scope": "Only reviewed MINIMAL pass-3 hypotheses; no source-language type."
+    },
+    {
+      "id": "PLI0.OVL:field_request",
+      "image": "PLI0.OVL",
+      "image_sha256": "e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff",
+      "name": "field_request",
+      "runtime_address": 27286,
+      "width": 1,
+      "role": "requested low-three-bit field value for +240B",
+      "scope": "Only reviewed MINIMAL pass-3 hypotheses; no source-language type."
+    },
+    {
+      "id": "PLI1.OVL:position_map",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "name": "position_map",
+      "runtime_address": 43551,
+      "width": null,
+      "role": "first-stage byte mapping indexed by unsigned C",
+      "scope": "Only reviewed MINIMAL pass-3 hypotheses; no source-language type."
+    },
+    {
+      "id": "PLI1.OVL:mapped_byte_table",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "name": "mapped_byte_table",
+      "runtime_address": 43700,
+      "width": null,
+      "role": "second-stage byte table indexed by mapped j; type meaning unknown",
+      "scope": "Only reviewed MINIMAL pass-3 hypotheses; no source-language type."
+    },
+    {
+      "id": "PLI1.OVL:mapped_lookup_index",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "name": "mapped_lookup_index",
+      "runtime_address": 44598,
+      "width": 1,
+      "role": "saved unsigned +7A4D position; adjacent AE37 discarded",
+      "scope": "Only reviewed MINIMAL pass-3 hypotheses; no source-language type."
+    },
+    {
+      "id": "PLI.COM:route_flags_202A",
+      "image": "PLI.COM",
+      "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+      "name": "route_flags_202A",
+      "runtime_address": 8234,
+      "width": 1,
+      "role": "bit0 selects unprocessed console routing arm",
+      "scope": "Only reviewed MINIMAL pass-3 hypotheses; no source-language type."
+    },
+    {
+      "id": "PLI.COM:route_flags_201E",
+      "image": "PLI.COM",
+      "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+      "name": "route_flags_201E",
+      "runtime_address": 8222,
+      "width": 1,
+      "role": "bit0 selects second unprocessed console routing arm",
+      "scope": "Only reviewed MINIMAL pass-3 hypotheses; no source-language type."
+    },
+    {
+      "id": "PLI.COM:saved_routed_byte",
+      "image": "PLI.COM",
+      "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+      "name": "saved_routed_byte",
+      "runtime_address": 8299,
+      "width": 1,
+      "role": "+0390 output-byte cache across routing flag checks",
       "scope": "Only reviewed MINIMAL pass-3 hypotheses; no source-language type."
     }
   ]

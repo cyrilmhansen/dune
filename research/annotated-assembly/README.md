@@ -209,3 +209,8 @@ recursive local-frame structure retain explicit partial contracts. The baseline
 also reports instruction-occurrence status independently of static byte coverage.
 Coordinate-only numeric EQU labels retain prior RAW-row identities that now
 fall inside operands; their mapping is verified without emitting bytes.
+
+MINIMAL [pass 4](../minimal-baseline/pass-4/README.md) adds eight hypotheses and
+252 UNDERSTOOD executed bytes. The refined +24BC blocks now compose explicit
+field-equality, length-scan and counted-window helpers while retaining partial
+completeness. PLI1 gains an unsigned two-stage mapped-byte access contract.

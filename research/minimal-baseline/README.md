@@ -1,32 +1,34 @@
-# MINIMAL baseline: current through pass 3
+# MINIMAL baseline: current through pass 4
 
-The [pass-3 report](pass-3/README.md) is the current decompilation result.
+The [pass-4 report](pass-4/README.md) is the current decompilation result.
 The [V1 annotation review](../annotated-assembly/CONVENTIONS.md) now exposes
 independent procedure completeness and readable local decompilation without
 changing these coverage/status totals.
 
-MINIMAL still executes **21,012 image bytes**: **18,018 RAW, 304 DECODED,
-1,523 STRUCTURED, 1,167 UNDERSTOOD**. Pass 3 raises understood CALL entries
-**30→36**, with 10 STRUCTURED and 345 unresolved CALL entries, plus eleven separate
+MINIMAL still executes **21,012 image bytes**: **17,766 RAW, 304 DECODED,
+1,523 STRUCTURED, 1,419 UNDERSTOOD**. Pass 4 raises understood CALL entries
+**36→44**, with 10 STRUCTURED and 337 unresolved CALL entries, plus eleven separate
 unresolved PCHL entries (402 callable coordinates total). All 94,720 image bytes
 remain exact.
 
 Current intersections/classifications are in [coverage.json](coverage.json),
 [instructions.jsonl](instructions.jsonl), and [inventory.json](inventory.json).
-Pass 3 adds seven readable V1 hypotheses: cached fetch, mapped-table fold/getter/
-setter, a nonzero-pointer Boolean and a recursive 18-byte-frame operation.
-The independent [dynamic metric](pass-3/dynamic-progress.json) records 439,998
-historical-image instruction occurrences: 125,545 (28.5331%) now execute inside
-UNDERSTOOD bytes. The 1,857 modeled host BDOS RETs are outside that denominator.
-Important high-frequency MINIMAL code remains RAW. The pass report gives the
-next five targets; FIZZBUZ delta facts below remain unchanged and no FIZZBUZ
-decompilation has begun.
+Pass 4 adds eight V1 hypotheses for record-field equality, length scanning,
+counted-window/tail-copy operations, PLI1 mapped-byte access and console routing.
+It integrates the PLI0 helpers into +24BC, which remains STRUCTURED and partial.
+The [current dynamic metric](dynamic-progress.json) records 439,998 historical
+instruction occurrences: 161,033 (36.5986%) now execute inside UNDERSTOOD bytes.
+PLI1 improves from 0.5248% to 3.2676% dynamically UNDERSTOOD but remains 95.5429%
+RAW. The 1,857 modeled host BDOS RETs are outside the image-backed denominator.
+Another MINIMAL pass remains justified. The report selects five targets using
+structural and dynamic evidence; FIZZBUZ decompilation has not begun.
 
 The following is the **historical V0 record at 6c77397**. Its status tables and
 priorities describe that snapshot; later snapshots are in
 [pass-1/progress.json](pass-1/progress.json) and
 [pass-2/progress.json](pass-2/progress.json) and
-[pass-3/progress.json](pass-3/progress.json).
+[pass-3/progress.json](pass-3/progress.json) and
+[pass-4/progress.json](pass-4/progress.json).
 
 # Historical MINIMAL decompilation baseline V0
 
