@@ -1,4 +1,4 @@
-# Procedure Evidence Packet V0 experiment
+# Procedure Evidence Packet V0 / V0.1 experiment
 
 Task: `PROCEDURE_EVIDENCE_PACKET_V0`. Starting commit: `6679adb`.
 Selected entry: **PLI0.OVL+24BC**, image SHA-256
@@ -6,6 +6,10 @@ Selected entry: **PLI0.OVL+24BC**, image SHA-256
 runtime entry `46BC`. This experiment mechanically joins existing MINIMAL
 observations and accumulated knowledge for a fresh, independent decompilation
 session. It does not interpret or improve the procedure's semantics.
+
+Current extractor: **V0.1**, infrastructure task `PROCEDURE_EVIDENCE_PACKET_V0_1`,
+starting at `b8c6b47`. The original V0 results below are historical; the V0.1
+report at the end records the bounded additions and current limitations.
 
 ## Reproduce
 
@@ -53,12 +57,12 @@ accesses. Block entries reference `before`; exits reference `after`. A block
 ending in CALL exits before the callee executes; `calls` separately provides
 the post-return state. Known word accesses are DEDUCED groups over the original
 byte accesses, with their observed order retained. `invocations` preserves each
-member's initial frame bytes, local chronology, block visits and nested calls.
+member's first-written local bytes (not an entry snapshot), local chronology, block visits and nested calls.
 
 Classes use entry C, the first writes to **F+9/F+10**, and the **complete ordered
 local transfer path**, including recursive callsites. This gives useful browsing
 groups without discarding the distinct data flow of any of the 85 members.
-For example, the 54-member C=0/F+9=80/F+10=00 path retains different initial
+For example, the 54-member C=0/F+9=80/F+10=00 path retains different first-written
 F+11 values, concrete pointers and memory effects in separate invocation records.
 No independent sets of register values or representative-only data flow replace
 those correlated executions. Class IDs are not semantic categories.
@@ -144,3 +148,160 @@ ProcedureHypotheses, completeness, roles and byte statuses remain unchanged.
 Validation passed: eight packet tests, twenty existing pass-3/pass-4 tests,
 nine conventions tests, both full-capture contract checkers, the historical-byte
 verifier, and `git diff --check`. No task temporary directories remain.
+
+## V0.1 report
+
+Task: `PROCEDURE_EVIDENCE_PACKET_V0_1`; infrastructure baseline `b8c6b47`.
+The corrected +24BC annotations are unchanged accumulated knowledge. No new
+semantic decompilation, ProcedureHypothesis, data role, byte promotion, coverage
+or compiler run is part of this change.
+
+### Added representation and navigation
+
+- `local_dependencies.nodes` retains bounded per-invocation definitions with
+  exact instruction coordinates/step references, observed values, and **value**
+  versus **flag** edges. `local_dependencies.branches` refers to each recorded
+  conditional occurrence and its supported condition or explicit unresolved
+  producer. Only branch/publication-reachable nodes survive serialization.
+  This is a local experiment, not a permanent IR, SSA or general provenance.
+- Supported local operations include comparisons, byte arithmetic/logical
+  operations, complement, rotations, self-SBB, register copies and byte memory
+  loads/stores. PUSH PSW's A byte survives through POP B and MOV C,B. Packed-flag
+  restoration and unsupported producers remain unresolved. DAD/unknown pair
+  arithmetic is not silently given an input relation.
+- Branch polarity uses a small operational condition tree: bit tests,
+  complement, Boolean bit combinations, equality, byte borrow and zero. The
+  renderer shows source expressions, actual instruction transformations, tested
+  flag, observed outcome counts/classes, and per-occurrence JSON references.
+  Different source-chain groups retain their own counts; they are not merged
+  into independent sets of source values.
+- A returned register/flag is an **observed call-output boundary leaf**, never
+  an inferred algorithmic relation to pre-call inputs. This permits the local
+  +247C.A -> CMA -> RAR -> CY -> JNC chain while leaving +247C opaque.
+- Calls visibly distinguish COMPLETE, PARTIAL, MISSING / OPAQUE and RECURSIVE
+  inherited partial contracts. Every call keeps its original exact scope,
+  declared clobbers and scope evidence. Callsite scope-status groups refer to
+  individual calls rather than extrapolating a representative's scope result.
+- Local write/read links and saved-byte definitions survive only supported
+  explicit preservation clauses. The limited recognizer accepts declared
+  unchanged registers/flags or memory, no-memory-write contracts, and explicit
+  `Only stack writes (CALL/PUSH PSW)` / `nested CALL stack only` clauses for ordinary callees and known caller storage above pre-CALL SP. Explicit clobbers win;
+  unspecified state is killed. Guest-only write absence does not establish full
+  memory preservation when host effects are unavailable. Any observed write also kills the prior memory
+  definition, even when its byte value is unchanged. Surviving relations name
+  their intervening calls; dependency edges retain the permitting contract.
+- Partial preservation is conditional on the complete retained contract scope.
+  The one recognized guard form, `+XXXX returns A bit0=0/1`, is checked against
+  the existing callee's recorded inner return coordinates and A states. For
+  +240B this establishes the guard-false clause; alias preconditions remain
+  visible and are not promoted into a universally valid helper contract.
+  Other partial scopes stop preservation. The recognizer has no +24BC/offset
+  semantic dispatch or register-value-equality heuristic.
+- `operational_summaries[invocation]` supplies ordered watched caller-role word reads/writes,
+  declared frame-word/byte writes, recursive child order/modes, frame decrement
+  events, and separate role/indirect/frame/callee publication channels with
+  concrete addresses and source definitions. Class entries reference all their
+  individual member summaries. Representative Markdown rows show correlated
+  pointer and frame chronologies. Full member states/accesses remain in JSON.
+- Opaque-call `observed_effects` records guest write addresses, caller-frame
+  offsets written and watched word roles without recorded guest writes. +242B
+  therefore shows 6A97/6A98 writes, no caller-frame writes and no tested_pointer
+  guest writes in its four invocations, alongside **algorithmic contract:
+  unavailable**. Host effects are still unavailable; these observations do not
+  establish general preservation or a helper contract.
+- `initial_local_bytes` is replaced everywhere in the packet by
+  `first_written_local_bytes`. These writes may occur late in an invocation;
+  they are neither an entry-memory snapshot nor assumed initial contents.
+
+Markdown now presents procedure/frame, classes, predicate dependencies,
+callsite scopes/effects, correlated navigation, gaps, then compact blocks.
+Large state/access lists, nested stack traffic and hardware proofs stay in JSON.
+Code hashes for both generator modules accompany the existing source hashes.
+
+### What is mechanical, and what still requires reasoning
+
+The A/B manual PSW-save/register-copy join and complement/rotation polarity
+calculation are now mechanically represented. +2798 is the original returned
+A-bit OR; its ten observed FF results make JNC taken after CMA/RAR. +2601 is
+JNC taken iff +247C's returned A bit0 is set; the observed clear bit instead
+selects the patch. Helper carry is absent from that tested-bit dependency.
+
+F+3 versus F+5 writes, pointer restoration/revisitation, child call order/modes,
+F+11 decrements versus total children, and distinct publication destinations
+are navigation facts with member links. Tests independently check the C05/C06
+patterns and the separate F+16/indirect publication channels.
+
+Models still must assess source-level hypotheses, helper algorithms, general
+contract validity, alias preconditions, arbitrary termination, unexecuted paths,
+and unresolved producers. The packet does not infer tree ownership or PL/I
+meaning, propagate an opaque output back to its inputs, reconstruct host effects,
+or recover overwritten/never-read memory. Word snapshots describe recorded byte
+accesses/writes, not complete memory states.
+
+A STATIC / UNOBSERVED decoding supplement is deliberately deferred. The current
+inputs do not retain decoded instructions for the +24BC RAW holes. Supplying them
+would require a decoder or a new authored static-evidence source and validation;
+that would broaden this bounded ticket. Existing accumulated static comments
+remain copied with their original status; no RAW bytes are decoded or promoted.
+
+### Size and complexity
+
+Measurements use the same retained MINIMAL capture and compact UTF-8 JSON.
+Physical LOC includes comments/blank lines and **both** generator modules.
+
+| Measurement | V0 at b8c6b47 | V0.1 |
+|---|---:|---:|
+| JSON bytes | 10,848,556 | 13,567,441 |
+| Markdown bytes | 66,279 | 51,481 |
+| Generator LOC | 611 | 1,171 |
+| Test LOC | 219 | 385 |
+| Generation seconds, one sample | 7.383 | 7.374 |
+
+JSON grows about 25%; the Markdown working set shrinks about 22%. The code
+nearly doubles: the conservative effect models, scope checks and correlated
+navigation are a real complexity cost. There is no JSON compression/size
+optimization in this ticket. Timing samples are not a controlled benchmark
+(single samples, with filesystem-cache effects); no performance improvement is claimed.
+The target retains 7,932 dependency nodes, 950 conditional occurrences and 189
+local write/read links that survive explicitly supported calls.
+
+### Secondary reuse check
+
+The unchanged existing complete +23C3 procedure was extracted with its known
+zero-byte frame and no discriminator slots:
+
+```sh
+python3 tools/annotated-assembly/procedure_evidence_packet.py \
+  --images /home/john/pli/cpm/pli80/DISK1 \
+  --entry PLI0.OVL+23C3 --frame-bytes 0 --class-slots \
+  --output _build/evidence-packet/reuse
+```
+
+It succeeds: 334 ordinary invocations, 17 local instruction coordinates, 5,678
+local instruction occurrences, two presentation blocks, twelve path classes,
+no recursive children, and an empty first-written frame-byte map. No special
+semantic code was added to make this secondary extraction work. The shared
+frame/canonical-block restrictions still apply; one reuse case does not establish
+arbitrary-procedure support.
+
+### Validation and recommendation
+
+Seventeen packet tests cover both polarity representations, all supported
+per-occurrence conditions, scope/preservation rejection, same-value opaque
+register outputs, same-value memory writes, call-aware links, correlated pointer
+and child records, publication-channel separation, opaque +242B observations,
+secondary reuse, corruption rejection and deterministic regeneration. Existing
+MINIMAL passes 1–4 (37 tests), V1 annotations (nine tests), and the full historical
+byte verifier pass. All 94,720 bytes, semantic annotations, procedure identities,
+completeness, roles and MINIMAL coverage remain unchanged.
+
+Generate a packet before difficult semantic passes **when the existing bounded
+profile fits**: it makes the observed mechanical joins reviewable and keeps
+contract gaps visible. V0.1 is useful as an experimental companion on those
+targets, not yet a routine general-purpose interface for arbitrary difficult
+procedures. Keep new scope/opcode recognizers small and tested. A new independent
+decompilation experiment is required to claim improved reconstruction stability;
+this infrastructure regression does not establish that claim.
+
+Current regenerated artifacts remain ignored under `_build/evidence-packet`;
+reuse artifacts are under its `reuse` subdirectory. No task temporary files remain.

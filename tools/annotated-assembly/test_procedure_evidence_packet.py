@@ -13,6 +13,7 @@ from pathlib import Path
 from check_minimal_pass_3 import gather
 from minimal_baseline import load
 from procedure_evidence_packet import ROOT, TARGET, build, render, role_matches, validate_packet
+from evidence_packet_local import call_contract, dependency_chain, derive_local, preserved_address
 
 
 class ProjectionTests(unittest.TestCase):
@@ -54,6 +55,70 @@ class ProjectionTests(unittest.TestCase):
         role = {"id": "X:t", "name": "t", "runtime_address": 100, "width": None}
         self.assertEqual(role_matches(101, [role]), [])
         self.assertEqual(role_matches(100, [role])[0]["address"], 100)
+
+    def test_preservation_requires_declaration_and_partial_scope(self):
+        contract = {"outputs": "flags unchanged", "clobbers": "A,BC,DE,HL",
+                    "contract": "No memory writes.", "contract_scope": "declared scope",
+                    "completeness": {"contract": "complete"},
+                    "returns": {"convention": "ordinary hardware CALL word"}}
+        policy = call_contract(contract, "X+0000", "X+0001", [], {})
+        self.assertEqual(set(policy['preserved_state']), {'carry', 'zero', 'sign', 'parity'})
+        self.assertTrue(policy['all_memory_preserved'])
+        guest_only = dict(contract, contract='No guest memory writes.')
+        self.assertFalse(call_contract(guest_only, 'X+0000', 'X+0001', [], {})['all_memory_preserved'])
+        call = {'contract_presentation': policy, 'pre_call_state_step': 1,
+                'callee_memory_effects': {'guest_instruction_accesses': [{'writes': [{'address': 90, 'new_value': 7}]}]}}
+        self.assertFalse(preserved_address(call, 90, 100, 0, {'1': {'before': {'sp': 100}}}))
+        self.assertFalse(call_contract(None, "X+0000", "X+0001", [], {})['caller_storage_preserved'])
+        partial = copy.deepcopy(contract)
+        partial['completeness']['contract'] = 'partial'
+        partial['contract_scope'] = '+0002 returns A bit0=0; remaining preconditions'
+        catalog = {'X+0002': {'returns': {'observed_file_offsets': [3]}}}
+        witness = {'step_index': 9, 'origin': {'image': {'name': 'X'}, 'offset': 3}, 'after': {'a': 1}}
+        self.assertFalse(call_contract(partial, 'X+0000', 'X+0001', [witness], catalog)['all_memory_preserved'])
+        witness['after']['a'] = 0
+        supported = call_contract(partial, 'X+0000', 'X+0001', [witness], catalog)
+        self.assertTrue(supported['all_memory_preserved'])
+        self.assertEqual(supported['scope'], partial['contract_scope'])
+        partial['clobbers'] += ',flags'
+        self.assertEqual(call_contract(partial, 'X+0000', 'X+0001', [witness], catalog)['preserved_state'], [])
+
+    def test_equal_register_value_does_not_connect_through_opaque_call(self):
+        state = {r: 0 for r in 'abcdehl'}
+        state['c'] = 1
+        state['flags'] = dict(carry=False, zero=False, sign=False, parity=False)
+        state['sp'] = 100
+        def step(coordinate, before, after, control=None):
+            return dict(coordinate=coordinate, before=before, after=after, reads=[], writes=[],
+                        control=control or {'kind': 'sequential'})
+        decoded = ['MVI C,01H', 'CALL 0009H', 'RET', 'MOV A,C', 'CMA', 'RAR', 'JNC 000AH']
+        steps = {}
+        previous = copy.deepcopy(state)
+        for n, text in enumerate(decoded, 1):
+            after = copy.deepcopy(previous)
+            if n == 4: after['a'] = 1
+            if n == 5: after['a'] = 0xFE
+            if n == 6: after['a'] = 0x7F
+            steps[str(n)] = step(f'X+{n:04X}', previous, after,
+                                {'kind': 'jump', 'taken': True} if n == 7 else None)
+            previous = after
+        packet = {'entry': 'X+0001', 'instructions': {f'X+{n:04X}': {'decoded': text} for n, text in enumerate(decoded, 1)},
+                  'steps': steps, 'calls': {'2': {'pre_call_state_step': 2, 'post_return_state_step': 3,
+                    'callsite': 'X+0002', 'target': 'X+0009', 'recursive_child_invocation': None,
+                    'contract_presentation': call_contract(None, 'X+0001', 'X+0009', [], {}),
+                    'callee_memory_effects': {'guest_instruction_accesses': []}}},
+                  'callsites': [], 'branches': {}, 'invocation_classes': [],
+                  'invocations': [{'call_step': 0, 'F': 100, 'frame_relation': {'bytes': 0},
+                                   'first_written_local_bytes': {}, 'local_steps': [1, 2, 4, 5, 6, 7]}],
+                  'accumulated_knowledge': {'roles': [], 'procedure': {'memory_state': []}}}
+        derive_local(packet)
+        pred = packet['local_dependencies']['branches']['7']
+        chain = dependency_chain(packet, pred)
+        self.assertIn('2:returned:c', packet['local_dependencies']['nodes'])
+        self.assertNotIn(1, [n['step'] for n in chain])
+        returned = packet['local_dependencies']['nodes']['2:returned:c']
+        self.assertEqual(returned['inputs'], [])
+        self.assertEqual(returned['contract']['algorithmic_contract'], 'unavailable')
 
 
 class ExistingMinimalPacketTests(unittest.TestCase):
@@ -98,12 +163,10 @@ class ExistingMinimalPacketTests(unittest.TestCase):
         # Different input counts within one path remain distinct, fully retained
         # records, rather than a cross product of independent sets.
         many = next(c for c in self.packet["invocation_classes"] if c["count"] == 54)
-        self.assertGreater(len({invocations[n]["initial_local_bytes"][11]["value"]
+        self.assertGreater(len({invocations[n]["first_written_local_bytes"][11]["value"]
                                 for n in many["invocations"]}), 1)
 
     def test_2798_recursion_selects_original_true_boolean(self):
-        blocks = {b["offset"]: b["pseudocode"] for b in self.catalog[TARGET]["blocks"]}
-        self.assertIn("if combined.bit0==1", " ".join(blocks[0x2775]))
         checked = 0
         for invocation in self.packet["invocations"]:
             owned = {self.packet["steps"][str(s)]["coordinate"]: self.packet["steps"][str(s)]
@@ -130,6 +193,19 @@ class ExistingMinimalPacketTests(unittest.TestCase):
                 self.assertEqual(at(0x2797)["after"]["a"], complemented >> 1)
                 self.assertEqual(at(0x2797)["after"]["flags"]["carry"], bool(complemented & 1))
                 branch = at(0x2798)
+                pred = self.packet['local_dependencies']['branches'][str(next(s for s in invocation['local_steps']
+                                          if self.packet['steps'][str(s)]['coordinate'] == 'PLI0.OVL+2798'))]
+                self.assertEqual(pred['condition']['op'], 'or')
+                sources = [self.packet['local_dependencies']['nodes'][arg['node']] for arg in pred['condition']['args']]
+                self.assertEqual([s['coordinate'] for s in sources], ['PLI0.OVL+2790', 'PLI0.OVL+278A'])
+                self.assertTrue(all(s['operation'] == 'call-output' and s['inputs'] == [] for s in sources))
+                chain = dependency_chain(self.packet, pred)
+                for offset in (0x278D, 0x2793, 0x2794, 0x2795, 0x2796, 0x2797):
+                    self.assertIn(f'PLI0.OVL+{offset:04X}', [n['coordinate'] for n in chain])
+                saved = next(n for n in chain if n['operation'] == 'call-preserved-storage')
+                self.assertEqual(saved['contract']['kind'], 'PARTIAL')
+                self.assertTrue(saved['contract']['scope_guard_evidence'])
+                self.assertEqual(chain[-1]['inputs'][0]['kind'], 'value')
                 self.assertEqual(branch["control"]["taken"], bool(combined & 1))
                 self.assertEqual(branch["pc_after"], 0x49AC)
                 self.assertIn("PLI0.OVL+27B4", calls)
@@ -137,8 +213,6 @@ class ExistingMinimalPacketTests(unittest.TestCase):
         self.assertEqual(checked, 10)
 
     def test_2601_patch_selects_clear_helper_a_bit_not_helper_carry(self):
-        blocks = {b["offset"]: b["pseudocode"] for b in self.catalog[TARGET]["blocks"]}
-        self.assertIn("clear bit gives CY=1", " ".join(blocks[0x25F5]))
         calls = [c for c in self.packet["calls"].values() if c["callsite"] == "PLI0.OVL+25FC"]
         self.assertEqual(len(calls), 1)
         call = calls[0]
@@ -158,6 +232,13 @@ class ExistingMinimalPacketTests(unittest.TestCase):
         self.assertEqual(at(0x2600)["after"]["flags"]["carry"], bool(complemented & 1))
         self.assertEqual(at(0x2601)["control"]["taken"], bool(returned["a"] & 1))
         self.assertEqual(at(0x2601)["pc_after"], 0x4804)
+        pred = next(p for p in self.packet['local_dependencies']['branches'].values() if p['coordinate'] == 'PLI0.OVL+2601')
+        self.assertEqual(pred['condition'], {'op': 'bit', 'node': f"{call['pre_call_state_step']}:returned:a", 'bit': 0})
+        chain = dependency_chain(self.packet, pred)
+        self.assertNotIn('returned:carry', [n['output'] for n in chain])
+        source = self.packet['local_dependencies']['nodes'][pred['condition']['node']]
+        self.assertEqual(source['contract']['algorithmic_contract'], 'unavailable')
+        self.assertEqual(source['inputs'], [])
         # The fallthrough actually copies both bytes through the result-slot
         # pointer into working_record+6; it is not merely a branch-count claim.
         destination = at(0x260E)["after"]
@@ -166,6 +247,91 @@ class ExistingMinimalPacketTests(unittest.TestCase):
             written = at(write_offset)["writes"][0]
             self.assertEqual(written["address"], (destination + delta) & 0xFFFF)
             self.assertEqual(written["new_value"], at(read_offset)["reads"][0]["value"])
+
+    def test_correlated_recursion_frame_and_publication_navigation(self):
+        for invocation in self.packet['invocations']:
+            summary = self.packet['operational_summaries'][str(invocation['call_step'])]
+            if invocation['class'] in ('C05', 'C06'):
+                count = invocation['first_written_local_bytes'][11]['value']
+                self.assertEqual(len(summary['frame_decrements']), count)
+                self.assertEqual(len(summary['recursive_calls']), count + 2)
+                self.assertEqual([c['mode_C'] for c in summary['recursive_calls']], [0, 4] + [0] * count)
+                words = {w['coordinate']: w for w in summary['frame_word_writes']}
+                first_child, second_child = [next(i for i in self.packet['invocations'] if i['call_step'] == c['child_invocation'])
+                                             for c in summary['recursive_calls'][:2]]
+                pointer = first_child['first_written_local_bytes'][14]['value'] + 256 * first_child['first_written_local_bytes'][15]['value']
+                revisit = second_child['first_written_local_bytes'][14]['value'] + 256 * second_child['first_written_local_bytes'][15]['value']
+                self.assertEqual(words['PLI0.OVL+2789']['F_offset'], 3)
+                self.assertEqual(words['PLI0.OVL+2789']['value'], pointer)
+                self.assertEqual(pointer, revisit)
+                self.assertEqual(words['PLI0.OVL+27C1']['F_offset'], 5)
+                self.assertNotEqual(words['PLI0.OVL+27C1']['value'], pointer)
+            if invocation['class'] == 'C10':
+                publications = [e for e in summary['events'] if e['channel'] in ('role-write', 'indirect-write')]
+                by_coordinate = {e['coordinate']: e for e in publications}
+                self.assertEqual(by_coordinate['PLI0.OVL+2861']['channel'], 'role-write')
+                for offset in (0x2887, 0x2889, 0x2892, 0x2894):
+                    self.assertEqual(by_coordinate[f'PLI0.OVL+{offset:04X}']['channel'], 'indirect-write')
+                self.assertNotEqual(by_coordinate['PLI0.OVL+2887']['source_definition'], by_coordinate['PLI0.OVL+2892']['source_definition'])
+
+    def test_opaque_effects_are_invocation_observations(self):
+        checked = 0
+        for c in self.packet['calls'].values():
+            if c['target'] == 'PLI0.OVL+242B':
+                self.assertEqual(c['contract_presentation']['algorithmic_contract'], 'unavailable')
+                self.assertFalse(c['contract_presentation']['caller_storage_preserved'])
+                self.assertEqual({a['address'] for a in c['observed_effects']['write_addresses']}, {0x6A97, 0x6A98})
+                self.assertEqual(c['observed_effects']['caller_frame_written_offsets'], [])
+                self.assertIn('PLI0.OVL:tested_pointer', c['observed_effects']['watched_word_roles_without_guest_writes'])
+                checked += 1
+        self.assertEqual(checked, 4)
+
+    def test_call_aware_links_and_dependency_corruption(self):
+        relations = self.packet['deduced']['local_write_read_relations']
+        across = [r for r in relations if r['preserved_across_calls']]
+        self.assertTrue(across)
+        for relation in across:
+            for step in relation['preserved_across_calls']:
+                policy = self.packet['calls'][str(step)]['contract_presentation']
+                self.assertNotEqual(policy['kind'], 'MISSING / OPAQUE')
+                self.assertTrue(policy['caller_storage_preserved'] or policy['all_memory_preserved'])
+        p = copy.deepcopy(self.packet)
+        predicate = next(v for v in p['local_dependencies']['branches'].values() if v['coordinate'] == 'PLI0.OVL+2798')
+        p['local_dependencies']['nodes'][predicate['flag_definition']]['value'] = True
+        with self.assertRaisesRegex(AssertionError, 'Flag definition mismatch'):
+            self.check(p)
+
+    def test_conditions_reproduce_each_correlated_branch_outcome(self):
+        nodes = self.packet['local_dependencies']['nodes']
+        def evaluate(e):
+            op = e['op']
+            if op == 'not': return not evaluate(e['arg'])
+            if op == 'or': return any(evaluate(a) for a in e['args'])
+            if op == 'and': return all(evaluate(a) for a in e['args'])
+            if op == 'xor': return sum(evaluate(a) for a in e['args']) % 2 == 1
+            if op == 'bit': return bool(nodes[e['node']]['value'] & (1 << e['bit']))
+            if op == 'flag': return bool(nodes[e['node']]['value'])
+            if op == 'constant': return e['value']
+            if op == 'zero': return nodes[e['node']]['value'] == 0
+            values = [nodes[n]['value'] for n in e['nodes']]
+            if op == 'equal': return values[0] == values[1]
+            if op == 'borrow': return values[0] < sum(values[1:])
+            self.fail(f'Unsupported condition in regression: {op}')
+        predicates = self.packet['local_dependencies']['branches']
+        for key, predicate in predicates.items():
+            if 'condition' in predicate:
+                with self.subTest(step=key):
+                    self.assertEqual(evaluate(predicate['condition']), predicate['taken'])
+        for branch in self.packet['branches'].values():
+            self.assertEqual(sum(o['count'] for g in branch['polarity_summaries'] for o in g['outcomes']),
+                             len(branch['dependency_steps']))
+
+    def test_secondary_zero_frame_complete_procedure(self):
+        p = build(CAPTURE, IMAGES, entry='PLI0.OVL+23C3', frame_bytes=0, class_slots=())
+        self.assertEqual(p['quality_checks']['invocations'], 334)
+        self.assertEqual(p['quality_checks']['recursive_children'], 0)
+        self.assertEqual(p['accumulated_knowledge']['procedure']['completeness']['contract'], 'complete')
+        self.assertTrue(all(i['first_written_local_bytes'] == {} for i in p['invocations']))
 
     def test_detects_corrupt_bytes_and_branch_counts(self):
         p = copy.deepcopy(self.packet)

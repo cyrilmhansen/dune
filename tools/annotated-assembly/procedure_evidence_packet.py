@@ -9,6 +9,7 @@ from pathlib import Path
 from check_minimal_pass_2 import coord, require
 from check_minimal_pass_3 import gather, validate as validate_pass_3
 from minimal_baseline import digest, load, ranges, status_at
+from evidence_packet_local import call_contract, dependency_chain, derive_local, navigation_effects, preserved_address, validate_local
 
 ROOT = Path(__file__).resolve().parents[2]
 TARGET = "PLI0.OVL+24BC"
@@ -62,7 +63,7 @@ def access_rows(accesses, frame, frame_bytes, roles):
     return rows
 
 
-def initial_slots(ws, frame, frame_bytes):
+def first_written_slots(ws, frame, frame_bytes):
     slots = {}
     for w in ws:
         for q in w["writes"]:
@@ -76,7 +77,7 @@ def initial_slots(ws, frame, frame_bytes):
 def path_signature(r, frame_bytes, class_slots):
     ws = r["own_witnesses"]
     frame = (r["entry"]["before"]["sp"] - frame_bytes) & 65535
-    slots = initial_slots(ws, frame, frame_bytes)
+    slots = first_written_slots(ws, frame, frame_bytes)
     return (r["entry"]["before"]["c"],
             tuple((n, slots.get(n, {}).get("value")) for n in class_slots),
             tuple((coord(w["origin"]), w["control"]["kind"],
@@ -241,13 +242,14 @@ def build(capture, images_dir, entry=TARGET, frame_bytes=18, class_slots=(9, 10)
         require(any(w["sp_after"] == frame for w in ws)
                 and ret["sp_before"] == r["entry"]["sp_before"],
                 "Frame base is inconsistent with observed SP")
-        slots = initial_slots(ws, frame, frame_bytes)
+        slots = first_written_slots(ws, frame, frame_bytes)
         signature = path_signature(r, frame_bytes, class_slots)
         memberships[signature].append(n)
         add_step(call, n, frame, "caller-boundary")
         visits, local_steps, nested_steps = [], [], []
         segment = None
-        writers = {}  # Conservative local relations: clear at every child call.
+        writers = {}  # Retain only explicitly supported caller storage across calls.
+        writer_calls = {}
         prior = None
         for w in ws:
             step = add_step(w, n, frame, "local")
@@ -269,13 +271,15 @@ def build(capture, images_dir, entry=TARGET, frame_bytes=18, class_slots=(9, 10)
                     require(value == q["value"], "Local last-write/read mismatch")
                     relation = {"kind": "local-write-then-read", "invocation": n,
                                 "address": q["address"], "value": value,
-                                "writer_step": producer, "reader_step": step, "reader_access": i}
+                                "writer_step": producer, "reader_step": step, "reader_access": i,
+                                "preserved_across_calls": writer_calls.get(q["address"], [])}
                     local_writes_then_reads.append(relation)
                     block["deduced_mechanical_relations"].append(len(local_writes_then_reads) - 1)
                 else:
                     unresolved_reads[coord(w["origin"])].append({"step": step, "access": i})
             for q in w["writes"]:
                 writers[q["address"]] = (step, q["new_value"])
+                writer_calls[q["address"]] = []
             control = w["control"]
             if control["kind"] in ("jump", "return", "call") and "taken" in control:
                 branch_samples[coord(w["origin"])].append({
@@ -304,6 +308,7 @@ def build(capture, images_dir, entry=TARGET, frame_bytes=18, class_slots=(9, 10)
                                     "hardware_return_proof": nested["relation"],
                                     "contract_ref": f"research/annotated-assembly/procedures.json#id={target}" if target in catalog else None,
                                     "callee_completeness": catalog[target]["completeness"] if target in catalog else None,
+                                    "contract_presentation": call_contract(catalog.get(target), entry, target, nested["memory_witnesses"], catalog),
                                     "unresolved_opaque": target not in catalog or catalog[target]["completeness"]["contract"] != "complete",
                                     "recursive_child_invocation": step if target == entry else None,
                                     "callee_memory_effects": {"scope": "callee subtree, including descendants; separate from parent-local blocks",
@@ -312,7 +317,9 @@ def build(capture, images_dir, entry=TARGET, frame_bytes=18, class_slots=(9, 10)
                 nested_steps.append(step)
                 block["observed"]["calls"].append(step)
                 call_samples[(coord(w["origin"]), target)].append(step)
-                writers.clear()
+                writers = {a: v for a, v in writers.items()
+                           if preserved_address(calls[str(step)], a, frame, frame_bytes, steps)}
+                writer_calls = {a: writer_calls.get(a, []) + [step] for a in writers}
                 prior = return_step
             else:
                 prior = step
@@ -328,7 +335,7 @@ def build(capture, images_dir, entry=TARGET, frame_bytes=18, class_slots=(9, 10)
                             "frame_relation": {"evidence": "DEDUCED", "bytes": frame_bytes,
                                                "source": "existing +24BC frame contract" if entry == TARGET else "explicit --frame-bytes hypothesis"},
                             "hardware_return_proof": r["relation"],
-                            "initial_local_bytes": slots, "local_steps": local_steps,
+                            "first_written_local_bytes": slots, "local_steps": local_steps,
                             "block_visits": [{k: v for k, v in s.items() if k != "steps"} for s in visits],
                             "nested_calls": nested_steps})
 
@@ -337,7 +344,7 @@ def build(capture, images_dir, entry=TARGET, frame_bytes=18, class_slots=(9, 10)
         mode, slot_values, transfers = signature
         cls = {"derived_id": f"C{i:02d}", "count": len(members),
                "distinguishing_observed_conditions": {"entry_C": mode,
-                   "initial_local_bytes": [{"F_offset": o, "value": v} for o, v in slot_values],
+                   "first_written_local_bytes": [{"F_offset": o, "value": v} for o, v in slot_values],
                    "ordered_transfers": [{"coordinate": c, "kind": k, "taken": t, "target": d}
                                          for c, k, t, d in transfers]},
                "representative_invocations": members[:2], "invocations": members,
@@ -369,7 +376,7 @@ def build(capture, images_dir, entry=TARGET, frame_bytes=18, class_slots=(9, 10)
         if conditional and len({s["taken"] for s in samples}) == 1:
             gaps.append(f"{key} ({mnemonic}) has only {'taken' if samples[0]['taken'] else 'fallthrough'} observations.")
         if any(s["predicate_producer"] is None for s in samples) and conditional:
-            block_for[offset]["unresolved"].append(f"{key}: predicate producer is not the immediate recorded instruction; no backward data-flow walk is performed. Full predicate and predecessor states remain available.")
+            block_for[offset]["unresolved"].append(f"{key}: no immediate predicate producer; see per-occurrence local_dependencies for the bounded chain or explicit stop.")
     callsites = []
     for (site, target), samples in sorted(call_samples.items()):
         row = {"callsite": site, "target": target, "invocation_count": len(samples),
@@ -412,18 +419,19 @@ def build(capture, images_dir, entry=TARGET, frame_bytes=18, class_slots=(9, 10)
         unobserved.difference_update(range(o, o + len(bytes.fromhex(i["bytes"]))))
     gaps.extend(["No full memory snapshot at entry: bytes without an observed access remain unavailable.",
                  "Callee subtree guest accesses are separate from local footprints; host-side effects are not joined in V0.",
-                 "General register/memory provenance: not joined in V0. Local write/read links stop at every CALL.",
+                 "General provenance is not joined; local links cross calls only under explicit supported preservation clauses.",
                  "Overwritten memory values are null in source witnesses.",
                  "Unobserved paths have no concrete states or outcome counts; accumulated unresolved paths remain in the catalog entry."])
-    gaps.append(f"{sum(len(v) for v in unresolved_reads.values())} parent-local read accesses have no joined earlier local writer since the last CALL; producer identity outside that projection is unresolved.")
-    sources = [annotation / n for n in ("manifest.json", "procedures.json", "data-roles.json")]
+    gaps.append(f"{sum(len(v) for v in unresolved_reads.values())} parent-local read accesses have no joined earlier local writer under supported call preservation; producer identity outside that projection is unresolved.")
+    sources = [Path(__file__), Path(__file__).with_name("evidence_packet_local.py")]
+    sources += [annotation / n for n in ("manifest.json", "procedures.json", "data-roles.json")]
     sources += [capture / n for n in ("event-witnesses.json", "canonical-code-blocks.json", "dynamic-blocks.json", "run-summary.json")]
     sources += [capture / "event-witnesses/chunks" / f"{c['id']:06d}.json" for c in index["chunks"]]
-    packet = {"experiment": "PROCEDURE_EVIDENCE_PACKET_V0", "baseline_commit": "6679adb",
+    packet = {"experiment": "PROCEDURE_EVIDENCE_PACKET_V0_1", "baseline_commit": "b8c6b47",
               "run_id": index["run_id"], "entry": entry,
               "identity_rule": "Instruction keys abbreviate exact image SHA-256 + file offset resolved in instructions. Derived block/class IDs are packet-local presentation only.",
               "reference_guide": "steps is keyed by chronological step. State references use before for entries/pre-call/predicates and after for exits/post-return. A CALL block exits before callee execution; its joined call provides the post-return state. Reads/writes are ordered byte accesses; raw numeric addresses and values are always retained. Calls and invocations are keyed/referenced by CALL step. Unobserved transfer coordinates assert no decoded instruction entry.",
-              "class_rule": "entry C + selected initial frame bytes + complete ordered local transfers. No semantic labels or independent value sets. All member executions remain distinct.",
+              "class_rule": "entry C + selected first-written frame bytes + complete ordered local transfers. No semantic labels or independent value sets. All member executions remain distinct.",
               "sources": [{"path": str(p.relative_to(ROOT)) if p.is_relative_to(ROOT) else str(p),
                            "sha256": digest(p)} for p in sources],
               "accumulated_knowledge": {"evidence": "ACCUMULATED KNOWLEDGE",
@@ -440,10 +448,12 @@ def build(capture, images_dir, entry=TARGET, frame_bytes=18, class_slots=(9, 10)
               "provenance": "not joined in V0",
               "evidence_gaps": {"facts": gaps, "unobserved_extent_byte_ranges": ranges(unobserved),
                   "reads_without_joined_local_writer": dict(sorted(unresolved_reads.items())),
-                  "read_gap_scope": "No earlier matching parent-local write since the last CALL; not a claim that no producer exists outside this projection."},
+                  "read_gap_scope": "No surviving supported parent-local writer; unspecified call state is unresolved. No assertion about producers outside this projection."},
               "quality_checks": {"invocations": len(records), "local_instruction_occurrences": sum(local_counts.values()),
                   "local_instruction_coordinates": len(local_counts), "derived_blocks": len(blocks),
                   "invocation_path_classes": len(classes), "recursive_children": sum(c["target"] == entry for c in calls.values())}}
+    derive_local(packet)
+    navigation_effects(packet)
     validate_packet(packet, canonical, load(capture / "dynamic-blocks.json"), records, catalog)
     return packet
 
@@ -537,59 +547,106 @@ def validate_packet(packet, canonical, dynamic, records, catalog):
             if rel:
                 require((rel["F"] + rel["offset"]) & 65535 == q["address"], "Frame offset mismatch")
 
+    validate_local(packet)
+
 
 def render(packet):
     checks = packet["quality_checks"]
     p = packet["accumulated_knowledge"]["procedure"]
-    lines = [f"# Procedure evidence packet: {packet['entry']}", "", f"Run: `{packet['run_id']}`. Baseline: `6679adb`.", "",
-             f"OBSERVED: {checks['invocations']} invocations, {checks['recursive_children']} recursive children, "
-             f"{checks['local_instruction_occurrences']} local instruction occurrences. "
-             f"{checks['derived_blocks']} derived presentation blocks; {checks['invocation_path_classes']} invocation/path classes.", "",
-             "Exact identity is image SHA-256 + file offset. Block/class IDs apply only to this packet. "
-             "The JSON retains every member's full state/access chronology; representatives do not replace other data flows.", "",
-             "## ACCUMULATED KNOWLEDGE (unchanged catalog)", "",
-             f"Extent: `[{p['start_offset']:04X},{p['end_offset']:04X})`; completeness: `{p['completeness']}`.", "",
-             p["contract"], "", "Current pseudocode:", "", p["pseudocode"], "",
-             "## OBSERVED invocation/path classes", "",
-             "| Class | Count | Entry C | Initial frame bytes | Representative CALL steps |", "|---|---:|---:|---|---|"]
-    for c in packet["invocation_classes"]:
-        cond = c["distinguishing_observed_conditions"]
-        slots = ", ".join(f"F+{r['F_offset']}={r['value']:02X}" for r in cond["initial_local_bytes"])
+    lines = [f"# Procedure evidence packet V0.1: {packet['entry']}", "",
+             f"Run: `{packet['run_id']}`. Infrastructure baseline: `{packet['baseline_commit']}`.", "",
+             f"OBSERVED: {checks['invocations']} invocations; {checks['recursive_children']} recursive children; "
+             f"{checks['local_instruction_occurrences']} local instructions; {checks['derived_blocks']} blocks.", "",
+             "## Procedure / frame", "",
+             f"ACCUMULATED extent `[{p['start_offset']:04X},{p['end_offset']:04X})`; completeness `{p['completeness']}`.",
+             f"Frame hypothesis: {packet['invocations'][0]['frame_relation'] if packet['invocations'] else 'no invocations'}.",
+             "First-written local bytes are writes during the invocation, never an entry-memory snapshot.", "",
+             "<details><summary>Unchanged accumulated contract / pseudocode</summary>", "", p['contract'], "", p['pseudocode'], "", "</details>", "",
+             "## Invocation classes", "", "| Class | Members | Entry C | First-written discriminator bytes | Invocation references |",
+             "|---|---:|---:|---|---|"]
+    for c in packet['invocation_classes']:
+        cond = c['distinguishing_observed_conditions']
+        slots = ', '.join(f"F+{r['F_offset']}={r['value']:02X}" for r in cond['first_written_local_bytes'])
         lines.append(f"| {c['derived_id']} | {c['count']} | {cond['entry_C']} | {slots} | {c['representative_invocations']} |")
-    lines += ["", "Class definitions also include the complete ordered transfer path. Inputs, outputs, memory effects and nested calls "
-              "are correlated by member invocation and chronological step in JSON. Byte widths are 1; pairs consumed by RET "
-              "are proved together in hardware_return_proof. General provenance: not joined in V0.", "", "## Derived blocks", ""]
-    for b in packet["blocks"]:
-        extent, obs = b["stable_instruction_range"], b["observed"]
-        lines += [f"### {b['derived_id']} · {extent['image']}+{extent['start_offset']:04X}..+{extent['end_offset']:04X} (exclusive)", "",
-                  f"OBSERVED: {obs['execution_count']} executions; classes `{obs['invocation_classes']}`. "
-                  f"Entry/exit states: JSON step references `{obs['entry_states'][:2]}` / `{obs['exit_states'][:2]}` (first two shown).", "", "```text"]
-        for key in b["instructions"]:
-            i = packet["instructions"][key]
-            lines.append(f"{key} PC={i['runtime_pc']:04X} {i['bytes']:6s} {i['decoded']}")
-        lines += ["```", ""]
-        for direction in ("predecessors", "successors"):
-            desc = "; ".join(f"{e['source']} → {e['target']} {e['kind']} ×{e['count']}" for e in obs[direction]) or "none in local projection"
-            lines.append(f"OBSERVED {direction}: {desc}.")
-        lines += ["", f"OBSERVED accesses: {len(obs['reads'])} read steps, {len(obs['writes'])} write steps; "
-                  "ordered address/value pairs and F offsets in JSON."]
-        for branch in obs["branches"]:
-            outcomes = packet["branches"][branch]["outcomes"]
-            lines.append(f"OBSERVED {branch}: " + ", ".join(f"{'taken' if o['taken'] else 'fallthrough'}={o['count']}" for o in outcomes) + ".")
-        if b["joined_roles"]:
-            lines.append("Joined ACCUMULATED roles: " + ", ".join(f"{r['role_id']}@{r['address']:04X}" for r in b["joined_roles"]) + ".")
-        for c in b["joined_callee_contracts"]:
-            lines.append(f"Joined callee: {c['callsite']} → {c['target']} ×{c['invocation_count']}; "
-                         f"contract `{c['contract_ref'] or 'opaque'}`; completeness `{c['callee_completeness']}`. "
-                         f"Pre-call/post-return state pairs: calls at steps `{c['representative_call_steps']}`.")
-        lines += [f"DEDUCED: {len(b['deduced_mechanical_relations'])} conservative local write/read relations; "
-                  "frame equations retain concrete addresses."]
-        lines += [f"Unresolved: {u}" for u in b["unresolved"]]
-        lines += [""]
-    lines += ["## Evidence gaps", ""] + [f"- {g}" for g in packet["evidence_gaps"]["facts"]]
-    lines += ["", "Accumulated unresolved paths:", ""] + [f"- {u}" for u in p["unresolved_paths"]]
-    lines += ["", "Unobserved extent byte ranges (not decoded by V0): `" + str(packet["evidence_gaps"]["unobserved_extent_byte_ranges"]) + "`.", ""]
-    return "\n".join(lines)
+    lines += ["", "All member records and ordered paths remain in JSON. Class summaries reference individual invocations.", "",
+              "## Predicate dependencies / branch polarity", "",
+              "DEDUCED local conditions on recorded sources. Call outputs are boundary leaves; opaque algorithms remain unavailable. "
+              "Partial substitution carries its exact scope; unspecified state stops the chain.", "",
+              "| Branch / flag | Taken iff / unresolved | Transforms (representative occurrence) | Taken / fallthrough classes |", "|---|---|---|---|"]
+    for key, branch in packet['branches'].items():
+        if not branch['dependency_steps']:
+            continue
+        for group in branch['polarity_summaries']:
+            outcomes = '; '.join(f"{'taken' if o['taken'] else 'fallthrough'} {o['count']} {o['classes']}" for o in group['outcomes'])
+            pred = packet['local_dependencies']['branches'][group['dependency_steps'][0]]
+            chain_nodes = dependency_chain(packet, pred)
+            coordinates = dict.fromkeys(n['coordinate'] for n in chain_nodes
+                                        if n['operation'] not in ('call-output', 'observed-read', 'constant', 'unresolved-input'))
+            chain = ' → '.join(packet['instructions'][k]['decoded'] + '@' + k for k in coordinates)
+            lines.append(f"| {key} / {pred['tested_flag']} | {group['condition'].replace('|', ' OR ')} | {chain} | {outcomes} |")
+    lines += ["", "Exact instruction/step nodes and typed value/flag edges: `local_dependencies`. "
+              "Each branch lists its per-occurrence dependency references; counts never substitute for member states.", "",
+              "## Callsite contracts / concrete effects", ""]
+    for c in packet['callsites']:
+        policy = c['contract_presentation']
+        lines += [f"- **{c['callsite']} → {c['target']} ×{c['invocation_count']}: {policy['kind']}**. "
+                  f"Algorithmic contract: {policy['algorithmic_contract']}. Scope: {policy['scope'] or 'unavailable'}. "
+                  f"Scope statuses: {[(g['status'], len(g['call_steps'])) for g in c['scope_status_groups']]}. Calls `{c['representative_call_steps']}`."]
+        for g in c['observed_effect_groups'] if policy['kind'] == 'MISSING / OPAQUE' else []:
+            addresses = ','.join(f"{a:04X}" for a in g['write_addresses']) or 'none'
+            lines.append(f"  - OBSERVED guest write addresses: {addresses}; caller-frame offsets written: "
+                         f"{g['caller_frame_written_offsets']}; calls {g['call_steps'][:2]} ({len(g['call_steps'])} members). "
+                         "Stack traffic/full footprints and watched roles without guest writes remain in JSON. These effects are not a general contract.")
+    lines += ["", "## Correlated pointer / frame / publication navigation", "",
+              "| Class | Correlated child/decrement patterns | Member summary references |", "|---|---|---|"]
+    for c in packet['invocation_classes']:
+        patterns = {}
+        for key in c['operational_members']:
+            summary = packet['operational_summaries'][key]
+            signature = (tuple(x['mode_C'] for x in summary['recursive_calls']),
+                         tuple(x['F_offset'] for x in summary['frame_decrements']))
+            patterns.setdefault(signature, []).append(key)
+        desc = '; '.join(f"children modes {list(modes)} ({len(modes)} calls), frame decrements {list(slots)}: "
+                         f"{len(members)} members" for (modes, slots), members in patterns.items())
+        lines.append(f"| {c['derived_id']} | {desc} | {c['operational_members'][:2]} |")
+    lines += ["", "Representative correlated members (all other members remain linked above):", "",
+              "| Invocation | Pointer-role chronology | Frame word writes | Local publication channels / addresses |", "|---|---|---|---|"]
+    pointer_roles = [r['id'] for r in packet['accumulated_knowledge']['roles'] if r['name'].endswith('pointer') and r['width'] == 2]
+    for c in packet['invocation_classes']:
+        for key in c['operational_members'][:2]:
+            summary = packet['operational_summaries'][key]
+            pointers = []
+            for role in pointer_roles:
+                writes = [w for w in summary['role_word_writes'] if w['role'] == role]
+                reads = [w for w in summary['role_word_reads'] if w['role'] == role]
+                if writes:
+                    values = ([reads[0]['value']] if reads and reads[0]['step'] < writes[0]['step'] else []) + [w['value'] for w in writes]
+                    pointers.append(role.split(':')[-1] + ': ' + '→'.join(f'{v:04X}' for v in values))
+            frames = '; '.join(f"F+{w['F_offset']}={w['value']:04X}@{w['coordinate']}" for w in summary['frame_word_writes'])
+            publications = {}
+            for e in summary['events']:
+                if e['channel'] in ('role-write', 'indirect-write'):
+                    publications.setdefault(e['channel'], set()).add(e['address'])
+            pubs = '; '.join(channel + ': ' + ','.join(f'{a:04X}' for a in sorted(addresses)) for channel, addresses in publications.items())
+            lines.append(f"| {key} ({c['derived_id']}) | {'; '.join(pointers)} | {frames} | {pubs} |")
+    lines += ["", "`operational_summaries[invocation]` retains ordered role-word writes (including callee P updates), "
+              "frame-byte/word writes, child calls/modes, decrement events, and publication addresses/sources. "
+              "Role, indirect, frame and callee effects are distinct channels. F+3/F+5 word snapshots link to their own writes; "
+              "decrement counts are separate from child counts. No tree ownership is inferred.", "",
+              "## Evidence gaps", ""]
+    lines += ['- ' + g for g in packet['evidence_gaps']['facts']]
+    lines += ['- ' + g for g in p['unresolved_paths']]
+    lines += ["", "STATIC / UNOBSERVED supplement deferred: RAW holes have no retained decoded instruction stream; "
+              "V0.1 does not decode them or invent outcomes. Unobserved ranges: "
+              f"`{packet['evidence_gaps']['unobserved_extent_byte_ranges']}`.", "", "## Blocks", ""]
+    for b in packet['blocks']:
+        extent, obs = b['stable_instruction_range'], b['observed']
+        lines += [f"### {b['derived_id']} · {extent['image']}+{extent['start_offset']:04X}..+{extent['end_offset']:04X}", "",
+                  f"OBSERVED {obs['execution_count']} executions; classes {obs['invocation_classes']}. "
+                  f"State refs {obs['entry_states'][:2]} → {obs['exit_states'][:2]}; CALL post-return refs in calls.", "", "```text"]
+        lines += [f"{key} {packet['instructions'][key]['bytes']:6s} {packet['instructions'][key]['decoded']}" for key in b['instructions']]
+        lines += ['```', '']
+    return '\n'.join(lines)
 
 
 if __name__ == "__main__":
