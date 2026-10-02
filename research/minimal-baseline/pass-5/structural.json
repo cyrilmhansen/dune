@@ -1,0 +1,820 @@
+{
+  "PLI0.OVL+1E0B": {
+    "invocations": 87,
+    "callers": {
+      "PLI0.OVL+1ED4": 3,
+      "PLI0.OVL+2097": 64,
+      "PLI0.OVL+20C2": 10,
+      "PLI0.OVL+20F4": 6,
+      "PLI0.OVL+1888": 1,
+      "PLI0.OVL+2984": 2,
+      "PLI0.OVL+2560": 1
+    },
+    "returns": {
+      "PLI0.OVL+1E2C": 87
+    },
+    "own_coordinates": 21,
+    "own_occurrences": 1827,
+    "sp_deltas": {
+      "0": 1131,
+      "-2": 609,
+      "2": 87
+    },
+    "callees": [
+      [
+        "PLI0.OVL+1E15",
+        "PLI.COM+1A1C",
+        87
+      ]
+    ],
+    "branches": [
+      [
+        "PLI0.OVL+1E2C",
+        "return",
+        "PLI0.OVL+1ED7",
+        true,
+        3
+      ],
+      [
+        "PLI0.OVL+1E2C",
+        "return",
+        "PLI0.OVL+209A",
+        true,
+        64
+      ],
+      [
+        "PLI0.OVL+1E2C",
+        "return",
+        "PLI0.OVL+20C5",
+        true,
+        10
+      ],
+      [
+        "PLI0.OVL+1E2C",
+        "return",
+        "PLI0.OVL+20F7",
+        true,
+        6
+      ],
+      [
+        "PLI0.OVL+1E2C",
+        "return",
+        "PLI0.OVL+188B",
+        true,
+        1
+      ],
+      [
+        "PLI0.OVL+1E2C",
+        "return",
+        "PLI0.OVL+2987",
+        true,
+        2
+      ],
+      [
+        "PLI0.OVL+1E2C",
+        "return",
+        "PLI0.OVL+2563",
+        true,
+        1
+      ]
+    ],
+    "candidate_extent": [
+      7691,
+      7725
+    ],
+    "basis": "Exact observed CALL, terminal ordinary RETs, closed observed branch targets, distinct following code/direct callee; all matched original slots. Extent is not a context min/max inference.",
+    "no_observed_secondary_call_entry": true,
+    "no_observed_external_jump_entry": true,
+    "software_continuations": 0,
+    "recursion": 0,
+    "reserved_frame_bytes": 0,
+    "classification": "SMALL / DIRECT",
+    "bounds_confidence": "stable"
+  },
+  "PLI1.OVL+784E": {
+    "invocations": 19,
+    "callers": {
+      "PLI1.OVL+0118": 1,
+      "PLI1.OVL+0C94": 1,
+      "PLI1.OVL+01BD": 9,
+      "PLI1.OVL+0CCC": 4,
+      "PLI1.OVL+01D4": 1,
+      "PLI1.OVL+5A3C": 1,
+      "PLI1.OVL+0B13": 1,
+      "PLI1.OVL+0C64": 1
+    },
+    "returns": {
+      "PLI1.OVL+7A14": 2,
+      "PLI1.OVL+798B": 9,
+      "PLI1.OVL+7A0B": 7,
+      "PLI1.OVL+78BB": 1
+    },
+    "own_coordinates": 139,
+    "own_occurrences": 8437,
+    "sp_deltas": {
+      "-2": 2449,
+      "0": 4955,
+      "-4": 1014,
+      "2": 19
+    },
+    "callees": [
+      [
+        "PLI1.OVL+784E",
+        "PLI.COM+1376",
+        19
+      ],
+      [
+        "PLI1.OVL+79F4",
+        "PLI.COM+1A1C",
+        117
+      ]
+    ],
+    "branches": [
+      [
+        "PLI1.OVL+7872",
+        "jump",
+        "PLI1.OVL+78A3",
+        true,
+        19
+      ],
+      [
+        "PLI1.OVL+78B8",
+        "jump",
+        "PLI1.OVL+78BC",
+        true,
+        18
+      ],
+      [
+        "PLI1.OVL+78C1",
+        "jump",
+        "PLI1.OVL+798C",
+        true,
+        9
+      ],
+      [
+        "PLI1.OVL+7992",
+        "jump",
+        "PLI1.OVL+7996",
+        true,
+        9
+      ],
+      [
+        "PLI1.OVL+79B1",
+        "jump",
+        "PLI1.OVL+7A0F",
+        false,
+        117
+      ],
+      [
+        "PLI1.OVL+79E3",
+        "jump",
+        "PLI1.OVL+79ED",
+        true,
+        117
+      ],
+      [
+        "PLI1.OVL+7A01",
+        "jump",
+        "PLI1.OVL+7A0C",
+        true,
+        110
+      ],
+      [
+        "PLI1.OVL+7A0C",
+        "jump",
+        "PLI1.OVL+79AB",
+        true,
+        110
+      ],
+      [
+        "PLI1.OVL+79E3",
+        "jump",
+        "PLI1.OVL+79ED",
+        false,
+        52
+      ],
+      [
+        "PLI1.OVL+79EA",
+        "jump",
+        "PLI1.OVL+79BD",
+        true,
+        52
+      ],
+      [
+        "PLI1.OVL+79B1",
+        "jump",
+        "PLI1.OVL+7A0F",
+        true,
+        2
+      ],
+      [
+        "PLI1.OVL+7A14",
+        "return",
+        "PLI1.OVL+011B",
+        true,
+        1
+      ],
+      [
+        "PLI1.OVL+78C1",
+        "jump",
+        "PLI1.OVL+798C",
+        false,
+        9
+      ],
+      [
+        "PLI1.OVL+78CC",
+        "jump",
+        "PLI1.OVL+78D4",
+        true,
+        9
+      ],
+      [
+        "PLI1.OVL+78D9",
+        "jump",
+        "PLI1.OVL+78EF",
+        true,
+        9
+      ],
+      [
+        "PLI1.OVL+78F4",
+        "jump",
+        "PLI1.OVL+7908",
+        true,
+        9
+      ],
+      [
+        "PLI1.OVL+790D",
+        "jump",
+        "PLI1.OVL+7921",
+        true,
+        9
+      ],
+      [
+        "PLI1.OVL+7926",
+        "jump",
+        "PLI1.OVL+793A",
+        true,
+        9
+      ],
+      [
+        "PLI1.OVL+793F",
+        "jump",
+        "PLI1.OVL+7953",
+        true,
+        9
+      ],
+      [
+        "PLI1.OVL+7958",
+        "jump",
+        "PLI1.OVL+798B",
+        true,
+        9
+      ],
+      [
+        "PLI1.OVL+798B",
+        "return",
+        "PLI1.OVL+0C97",
+        true,
+        1
+      ],
+      [
+        "PLI1.OVL+7A01",
+        "jump",
+        "PLI1.OVL+7A0C",
+        false,
+        7
+      ],
+      [
+        "PLI1.OVL+7A0B",
+        "return",
+        "PLI1.OVL+01C0",
+        true,
+        5
+      ],
+      [
+        "PLI1.OVL+798B",
+        "return",
+        "PLI1.OVL+0CCF",
+        true,
+        3
+      ],
+      [
+        "PLI1.OVL+7A0B",
+        "return",
+        "PLI1.OVL+0CCF",
+        true,
+        1
+      ],
+      [
+        "PLI1.OVL+7A0B",
+        "return",
+        "PLI1.OVL+01D7",
+        true,
+        1
+      ],
+      [
+        "PLI1.OVL+798B",
+        "return",
+        "PLI1.OVL+01C0",
+        true,
+        2
+      ],
+      [
+        "PLI1.OVL+78B8",
+        "jump",
+        "PLI1.OVL+78BC",
+        false,
+        1
+      ],
+      [
+        "PLI1.OVL+78BB",
+        "return",
+        "PLI1.OVL+01C0",
+        true,
+        1
+      ],
+      [
+        "PLI1.OVL+798B",
+        "return",
+        "PLI1.OVL+5A3F",
+        true,
+        1
+      ],
+      [
+        "PLI1.OVL+7A14",
+        "return",
+        "PLI1.OVL+01C0",
+        true,
+        1
+      ],
+      [
+        "PLI1.OVL+798B",
+        "return",
+        "PLI1.OVL+0B16",
+        true,
+        1
+      ],
+      [
+        "PLI1.OVL+798B",
+        "return",
+        "PLI1.OVL+0C67",
+        true,
+        1
+      ]
+    ],
+    "candidate_extent": [
+      30798,
+      31253
+    ],
+    "basis": "Exact observed CALL, terminal ordinary RETs, closed observed branch targets, distinct following code/direct callee; all matched original slots. Extent is not a context min/max inference.",
+    "no_observed_secondary_call_entry": true,
+    "no_observed_external_jump_entry": true,
+    "software_continuations": 0,
+    "recursion": 0,
+    "reserved_frame_bytes": 0,
+    "classification": "PACKET CANDIDATE",
+    "bounds_confidence": "provisional"
+  },
+  "PLI1.OVL+4929": {
+    "invocations": 2,
+    "callers": {
+      "PLI1.OVL+498B": 2
+    },
+    "returns": {
+      "PLI1.OVL+4985": 2
+    },
+    "own_coordinates": 51,
+    "own_occurrences": 5425,
+    "sp_deltas": {
+      "0": 5166,
+      "-2": 257,
+      "2": 2
+    },
+    "callees": [
+      [
+        "PLI1.OVL+4954",
+        "PLI.COM+1A33",
+        257
+      ]
+    ],
+    "branches": [
+      [
+        "PLI1.OVL+493A",
+        "jump",
+        "PLI1.OVL+4985",
+        false,
+        256
+      ],
+      [
+        "PLI1.OVL+4957",
+        "jump",
+        "PLI1.OVL+497E",
+        true,
+        256
+      ],
+      [
+        "PLI1.OVL+4982",
+        "jump",
+        "PLI1.OVL+4934",
+        true,
+        256
+      ],
+      [
+        "PLI1.OVL+493A",
+        "jump",
+        "PLI1.OVL+4985",
+        true,
+        2
+      ],
+      [
+        "PLI1.OVL+4985",
+        "return",
+        "PLI1.OVL+498E",
+        true,
+        2
+      ],
+      [
+        "PLI1.OVL+4957",
+        "jump",
+        "PLI1.OVL+497E",
+        false,
+        1
+      ],
+      [
+        "PLI1.OVL+497B",
+        "jump",
+        "PLI1.OVL+494E",
+        true,
+        1
+      ]
+    ],
+    "candidate_extent": [
+      18729,
+      18822
+    ],
+    "basis": "Exact observed CALL, terminal ordinary RETs, closed observed branch targets, distinct following code/direct callee; all matched original slots. Extent is not a context min/max inference.",
+    "no_observed_secondary_call_entry": true,
+    "no_observed_external_jump_entry": true,
+    "software_continuations": 0,
+    "recursion": 0,
+    "reserved_frame_bytes": 0,
+    "classification": "PACKET CANDIDATE",
+    "bounds_confidence": "stable"
+  },
+  "PLI1.OVL+8273": {
+    "invocations": 1,
+    "callers": {
+      "PLI1.OVL+011B": 1
+    },
+    "returns": {
+      "PLI1.OVL+82AB": 1
+    },
+    "own_coordinates": 27,
+    "own_occurrences": 2103,
+    "sp_deltas": {
+      "0": 2102,
+      "2": 1
+    },
+    "callees": [],
+    "branches": [
+      [
+        "PLI1.OVL+827E",
+        "jump",
+        "PLI1.OVL+8296",
+        false,
+        149
+      ],
+      [
+        "PLI1.OVL+8293",
+        "jump",
+        "PLI1.OVL+8278",
+        true,
+        149
+      ],
+      [
+        "PLI1.OVL+827E",
+        "jump",
+        "PLI1.OVL+8296",
+        true,
+        1
+      ],
+      [
+        "PLI1.OVL+82AB",
+        "return",
+        "PLI1.OVL+011E",
+        true,
+        1
+      ]
+    ],
+    "candidate_extent": [
+      33395,
+      33452
+    ],
+    "basis": "Exact observed CALL, terminal ordinary RETs, closed observed branch targets, distinct following code/direct callee; all matched original slots. Extent is not a context min/max inference.",
+    "no_observed_secondary_call_entry": true,
+    "no_observed_external_jump_entry": true,
+    "software_continuations": 0,
+    "recursion": 0,
+    "reserved_frame_bytes": 0,
+    "classification": "SMALL / DIRECT",
+    "bounds_confidence": "stable"
+  },
+  "PLI1.OVL+7D53": {
+    "invocations": 21,
+    "callers": {
+      "PLI1.OVL+8069": 10,
+      "PLI1.OVL+7ED3": 7,
+      "PLI1.OVL+80EB": 1,
+      "PLI1.OVL+816B": 3
+    },
+    "returns": {
+      "PLI1.OVL+7D5D": 12,
+      "PLI1.OVL+7E45": 7,
+      "PLI1.OVL+7D65": 2
+    },
+    "own_coordinates": 99,
+    "own_occurrences": 1144,
+    "sp_deltas": {
+      "0": 950,
+      "2": 21,
+      "-2": 173
+    },
+    "callees": [
+      [
+        "PLI1.OVL+7D91",
+        "PLI1.OVL+7A4D",
+        9
+      ],
+      [
+        "PLI1.OVL+7D9D",
+        "PLI1.OVL+7C1B",
+        9
+      ],
+      [
+        "PLI1.OVL+7DA7",
+        "PLI1.OVL+7B7A",
+        9
+      ],
+      [
+        "PLI1.OVL+7DC5",
+        "PLI1.OVL+7A4D",
+        16
+      ],
+      [
+        "PLI1.OVL+7DCC",
+        "PLI.COM+0EF6",
+        16
+      ],
+      [
+        "PLI1.OVL+7DDB",
+        "PLI1.OVL+7B64",
+        16
+      ],
+      [
+        "PLI1.OVL+7DFB",
+        "PLI1.OVL+7AA9",
+        9
+      ],
+      [
+        "PLI1.OVL+7E20",
+        "PLI.COM+0EF6",
+        9
+      ],
+      [
+        "PLI1.OVL+7E35",
+        "PLI1.OVL+7BA2",
+        16
+      ],
+      [
+        "PLI1.OVL+7DE6",
+        "PLI1.OVL+7E46",
+        7
+      ],
+      [
+        "PLI1.OVL+7DF1",
+        "PLI1.OVL+7E56",
+        7
+      ],
+      [
+        "PLI1.OVL+7E0D",
+        "PLI1.OVL+7ABF",
+        1
+      ],
+      [
+        "PLI1.OVL+7E11",
+        "PLI.COM+0EF6",
+        1
+      ]
+    ],
+    "branches": [
+      [
+        "PLI1.OVL+7D5A",
+        "jump",
+        "PLI1.OVL+7D5E",
+        false,
+        12
+      ],
+      [
+        "PLI1.OVL+7D5D",
+        "return",
+        "PLI1.OVL+806C",
+        true,
+        10
+      ],
+      [
+        "PLI1.OVL+7D5A",
+        "jump",
+        "PLI1.OVL+7D5E",
+        true,
+        9
+      ],
+      [
+        "PLI1.OVL+7D62",
+        "jump",
+        "PLI1.OVL+7D66",
+        true,
+        7
+      ],
+      [
+        "PLI1.OVL+7D70",
+        "jump",
+        "PLI1.OVL+7DB0",
+        false,
+        7
+      ],
+      [
+        "PLI1.OVL+7D78",
+        "jump",
+        "PLI1.OVL+7DB0",
+        false,
+        7
+      ],
+      [
+        "PLI1.OVL+7D8A",
+        "jump",
+        "PLI1.OVL+7DB0",
+        false,
+        9
+      ],
+      [
+        "PLI1.OVL+7D96",
+        "jump",
+        "PLI1.OVL+7DAD",
+        false,
+        9
+      ],
+      [
+        "PLI1.OVL+7DAD",
+        "jump",
+        "PLI1.OVL+7D7B",
+        true,
+        9
+      ],
+      [
+        "PLI1.OVL+7D8A",
+        "jump",
+        "PLI1.OVL+7DB0",
+        true,
+        7
+      ],
+      [
+        "PLI1.OVL+7DBE",
+        "jump",
+        "PLI1.OVL+7E3F",
+        false,
+        16
+      ],
+      [
+        "PLI1.OVL+7DD4",
+        "jump",
+        "PLI1.OVL+7E31",
+        false,
+        16
+      ],
+      [
+        "PLI1.OVL+7DE3",
+        "jump",
+        "PLI1.OVL+7DF7",
+        true,
+        9
+      ],
+      [
+        "PLI1.OVL+7E06",
+        "jump",
+        "PLI1.OVL+7E14",
+        true,
+        8
+      ],
+      [
+        "PLI1.OVL+7E19",
+        "jump",
+        "PLI1.OVL+7E23",
+        false,
+        9
+      ],
+      [
+        "PLI1.OVL+7E28",
+        "jump",
+        "PLI1.OVL+7E31",
+        true,
+        9
+      ],
+      [
+        "PLI1.OVL+7E3C",
+        "jump",
+        "PLI1.OVL+7DB6",
+        true,
+        16
+      ],
+      [
+        "PLI1.OVL+7DBE",
+        "jump",
+        "PLI1.OVL+7E3F",
+        true,
+        7
+      ],
+      [
+        "PLI1.OVL+7E45",
+        "return",
+        "PLI1.OVL+7ED6",
+        true,
+        5
+      ],
+      [
+        "PLI1.OVL+7DE3",
+        "jump",
+        "PLI1.OVL+7DF7",
+        false,
+        7
+      ],
+      [
+        "PLI1.OVL+7DEE",
+        "jump",
+        "PLI1.OVL+7DF4",
+        false,
+        7
+      ],
+      [
+        "PLI1.OVL+7DF4",
+        "jump",
+        "PLI1.OVL+7E31",
+        true,
+        7
+      ],
+      [
+        "PLI1.OVL+7E45",
+        "return",
+        "PLI1.OVL+80EE",
+        true,
+        1
+      ],
+      [
+        "PLI1.OVL+7D62",
+        "jump",
+        "PLI1.OVL+7D66",
+        false,
+        2
+      ],
+      [
+        "PLI1.OVL+7D65",
+        "return",
+        "PLI1.OVL+7ED6",
+        true,
+        2
+      ],
+      [
+        "PLI1.OVL+7E06",
+        "jump",
+        "PLI1.OVL+7E14",
+        false,
+        1
+      ],
+      [
+        "PLI1.OVL+7E45",
+        "return",
+        "PLI1.OVL+816E",
+        true,
+        1
+      ],
+      [
+        "PLI1.OVL+7D5D",
+        "return",
+        "PLI1.OVL+816E",
+        true,
+        2
+      ]
+    ],
+    "candidate_extent": [
+      32083,
+      32326
+    ],
+    "basis": "Exact observed CALL, terminal ordinary RETs, closed observed branch targets, distinct following code/direct callee; all matched original slots. Extent is not a context min/max inference.",
+    "no_observed_secondary_call_entry": true,
+    "no_observed_external_jump_entry": true,
+    "software_continuations": 0,
+    "recursion": 0,
+    "reserved_frame_bytes": 0,
+    "classification": "PACKET CANDIDATE",
+    "bounds_confidence": "provisional"
+  }
+}

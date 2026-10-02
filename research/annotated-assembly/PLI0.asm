@@ -666,7 +666,7 @@ PLI0_1A9E: LHLD 6A58H ; L = byte[saved_window_request (6A58H)]; H = byte[6A59H] 
 PLI0_1AA1: MOV C,L ; C = saved_window_request low byte; adjacent 6A59H is not a count ; +1AA1 runtime=3CA1H OBSERVED
 PLI0_1AA2: CALL 3C14H ; invoke +1A14: grow/check initial extent without moving staging_cursor ; +1AA2 runtime=3CA2H OBSERVED
 PLI0_1AA5: RET ; PC = word[SP]; SP += 2; use the convention in procedure header ; +1AA5 runtime=3CA5H OBSERVED
-; SECTION [1AA6,210B) RAW
+; SECTION [1AA6,1E0B) RAW
 PLI0_1AA6: DB 02AH,0C5H,069H,023H,023H,036H,000H,001H,003H,000H ; +1AA6 runtime=3CA6H RAW
 PLI0_1AB0: DB 02AH,0C5H,069H,009H,036H,000H,02AH,0C5H,069H,003H,009H,036H,000H,02AH,0C5H,069H ; +1AB0 runtime=3CB0H RAW
 PLI0_1AC0: DB 003H,009H,036H,000H,02AH,0C5H,069H,003H,009H,03EH,000H,077H,023H,036H,000H,0C9H ; +1AC0 runtime=3CC0H RAW
@@ -721,9 +721,94 @@ PLI0_1DC0: DB 0CDH,086H,03FH,02AH,067H,06AH,044H,04DH,0CDH,086H,03FH,02AH,0CBH,0
 PLI0_1DD0: DB 0CDH,0D6H,03EH,02AH,0CBH,069H,023H,077H,0C9H,001H,006H,000H,02AH,0C5H,069H,009H ; +1DD0 runtime=3FD0H RAW
 PLI0_1DE0: DB 05EH,023H,056H,0EBH,022H,0C8H,069H,03EH,000H,0CDH,029H,01BH,0B5H,0C2H,0F3H,03FH ; +1DE0 runtime=3FE0H RAW
 PLI0_1DF0: DB 03EH,000H,0C9H,02AH,0C8H,069H,0EBH,02AH,00BH,06AH,019H,022H,0CBH,069H,02AH,0CBH ; +1DF0 runtime=3FF0H RAW
-PLI0_1E00: DB 069H,023H,03EH,01FH,0A6H,032H,0CAH,069H,03EH,001H,0C9H,02AH,0C5H,069H,03AH,0C7H ; +1E00 runtime=4000H RAW
-PLI0_1E10: DB 069H,077H,011H,0C3H,069H,0CDH,01CH,01BH,0E5H,02AH,04CH,06AH,026H,000H,001H,00DH ; +1E10 runtime=4010H RAW
-PLI0_1E20: DB 06AH,029H,009H,0C1H,071H,023H,070H,0EBH,02BH,071H,023H,070H,0C9H,001H,032H,01CH ; +1E20 runtime=4020H RAW
+PLI0_1E00: DB 069H,023H,03EH,01FH,0A6H,032H,0CAH,069H,03EH,001H,0C9H ; +1E00 runtime=4000H RAW
+
+; @procedure-v1 PLI0.OVL+1E0B
+; ProcedureHypothesis: publish counted working header and staging end
+; Entry: PLI0_1E0B = PLI0.OVL+1E0B @ 400BH; SHA-256
+;   e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff
+; Extent: HYPOTHESIS [1E0B,1E2D) file offsets; overlapping entries: none established
+; Callers: OBSERVED PLI0.OVL+1888 (MINIMAL=1); PLI0.OVL+1ED4 (MINIMAL=3); PLI0.OVL+2097
+;   (MINIMAL=64); PLI0.OVL+20C2 (MINIMAL=10); PLI0.OVL+20F4 (MINIMAL=6); PLI0.OVL+2560
+;   (MINIMAL=1); PLI0.OVL+2984 (MINIMAL=2)
+; Returns: OBSERVED/DEDUCED ordinary hardware CALL word; original slot unchanged, SP after
+;   RET=entry_SP+2; PLI0.OVL+1E2C
+; Inputs: DEDUCED working_record_pointer[69C5], extent_count[69C7], staging_cursor[69C3], byte
+;   index[6A4C]; writable selected boundary word[6A0D+2*index]
+; Outputs: DEDUCED Working first byte=count; selected boundary word and staging_cursor=next.
+;   BC=next; DE=selected table high-byte address; HL=69C4; A=high(next); CY=0; NZPA from
+;   +1A1C high ADC.
+; Clobbers: DEDUCED A,BC,DE,HL,flags; working first byte, selected boundary word, staging_cursor
+;   and transient stack; original return slot unchanged
+; Memory: DEDUCED working_record_pointer=69C5H (base of counted working window; +1A8C assigns
+;   post-copy staging_cursor; +24BC uses/restores it during copy/repair);
+;   staging_cursor=69C3H (source cursor decreased by tail copy; new working base after
+;   copy); extent_count=69C7H (byte-sized counted window extent, reset by +1A8C and grown by
+;   +1A14); boundary_pointer_table=6A0DH (little-endian pointers selected by byte index,
+;   length unknown); boundary_table_index=6A4CH (unsigned index selecting tail-copy
+;   boundary); F=entry_SP; zero-byte reserved local frame; temporary saves/CALL words below
+;   F; original return word at F.
+; Direct callees: OBSERVED PLI.COM+1A1C @1B1CH
+; Coverage: OBSERVED MINIMAL: 87 CALLs; 34/34 bytes represented as instructions; Corrected matched
+;   hardware returns; no recursion, no reserved local frame; below-entry stack saves/CALL
+;   words only.
+; Unresolved: No unresolved local operation at declared scope; table capacity and
+;   compiler-level/storage ownership meanings are not established. Aliasing outside
+;   scope is untested.
+; Contract: DEDUCED (complete; scope: resident +1A1C word-addition contract; working byte,
+;   staging/count/index controls, selected table word and return stack nonaliasing) Write
+;   extent_count[69C7] to byte[word[working_record_pointer@69C5]]. Compute
+;   next=u16(word[staging_cursor@69C3]+unsigned(extent_count)) via resident +1A1C; save
+;   next across table addressing. Index is byte[boundary_table_index@6A4C], not the
+;   adjacent byte fetched by LHLD. Store next low/high at 6A0D+2*index, then low/high at
+;   staging_cursor[69C3]. Working base, count and index controls are not advanced or
+;   cleared at this scope. Return BC=next, DE=6A0E+2*index, HL=69C4, A=high(next). CY=0
+;   from final address DAD B, while NZPA retain the helper high-byte ADC flags. Ordinary
+;   original hardware return slot; no allocation/ownership or PL/I meaning inferred.
+; Hypothesis: none beyond the low-level operational description
+; Completeness: bounds=stable; control_flow=complete; contract=complete
+; Evidence: evidence.json#seeds/PLI0.OVL+1E0B;
+;   ../minimal-baseline/pass-5/structural.json#PLI0.OVL+1E0B
+; Procedure pseudo (operational; byte/word arithmetic wraps):
+;   byte[word[69C5]]=byte[69C7]; next=add1A1C(A=byte[69C7],DE=&word[69C3]).HL; i=byte[6A4C];
+;   word[6A0D+2*i]=next; word[69C3]=next; RET
+; @end-procedure-v1 PLI0.OVL+1E0B
+; SECTION [1E0B,1E2D) UNDERSTOOD
+; @block-pseudo 1E0B
+; pseudo:
+; | byte[word[working_record_pointer@69C5]]=extent_count[69C7]
+; | resident +1A1C computes next=u16(staging_cursor[69C3]+unsigned(count)); DE=&staging_cursor+1
+PLI0_1E0B: LHLD 69C5H ; HL = little_endian_word[working_record_pointer (69C5H)]; low byte then high byte, flags preserved ; +1E0B runtime=400BH OBSERVED
+PLI0_1E0E: LDA 69C7H ; A = byte[extent_count (69C7H)]; flags preserved ; +1E0E runtime=400EH OBSERVED
+PLI0_1E11: MOV M,A ; byte[HL] = A; flags preserved ; +1E11 runtime=4011H OBSERVED
+PLI0_1E12: LXI D,69C3H ; DE = staging_cursor (69C3H) (literal address/value) ; +1E12 runtime=4012H OBSERVED
+PLI0_1E15: CALL 1B1CH ; resident +1A1C: HL=u16(staging_cursor[69C3]+unsigned(A)); DE=69C4; BC preserved ; +1E15 runtime=4015H OBSERVED
+; @block-pseudo 1E18
+; pseudo:
+; | save next on stack; i=zero_extend(byte[6A4C]); high neighbor 6A4D is discarded
+; | BC=next after POP; write word[6A0D+2*i]=next low byte then high
+PLI0_1E18: PUSH H ; push H register pair below SP; flags unchanged ; +1E18 runtime=4018H OBSERVED
+PLI0_1E19: LHLD 6A4CH ; L=byte[boundary_table_index (6A4CH)]; H=neighbor byte[6A4DH], discarded/unused by the subsequent byte argument/index ; +1E19 runtime=4019H OBSERVED
+PLI0_1E1C: MVI H,00H ; H = 00H; flags preserved ; +1E1C runtime=401CH OBSERVED
+PLI0_1E1E: LXI B,6A0DH ; BC = boundary_pointer_table (6A0DH) (literal address/value) ; +1E1E runtime=401EH OBSERVED
+PLI0_1E21: DAD H ; HL=u16(HL+HL); only CY changes (word overflow) ; +1E21 runtime=4021H OBSERVED
+PLI0_1E22: DAD B ; HL=u16(HL+BC); only CY changes (word overflow) ; +1E22 runtime=4022H OBSERVED
+PLI0_1E23: POP B ; pop B pair, low byte then high; SP+=2; flags unchanged ; +1E23 runtime=4023H OBSERVED
+PLI0_1E24: MOV M,C ; selected boundary_pointer_table[6A0D+2*i].low = next.low from saved C ; +1E24 runtime=4024H OBSERVED
+PLI0_1E25: INX H ; HL=u16(HL+1); flags preserved ; +1E25 runtime=4025H OBSERVED
+PLI0_1E26: MOV M,B ; selected boundary word.high = next.high from saved B ; +1E26 runtime=4026H OBSERVED
+; @block-pseudo 1E27
+; pseudo:
+; | XCHG uses helper DE=69C4; DCX returns to staging_cursor low byte
+; | word[69C3]=next; HL=69C4; CY remains zero from table-address DAD B; RET
+PLI0_1E27: XCHG ; swap HL and DE; flags preserved ; +1E27 runtime=4027H OBSERVED
+PLI0_1E28: DCX H ; HL=u16(HL-1); flags preserved ; +1E28 runtime=4028H OBSERVED
+PLI0_1E29: MOV M,C ; staging_cursor[69C3].low = next.low; working base/count unchanged at nonaliasing scope ; +1E29 runtime=4029H OBSERVED
+PLI0_1E2A: INX H ; HL=u16(HL+1); flags preserved ; +1E2A runtime=402AH OBSERVED
+PLI0_1E2B: MOV M,B ; staging_cursor[69C3].high = next.high; HL=69C4; final CY=0 from table-address DAD B ; +1E2B runtime=402BH OBSERVED
+PLI0_1E2C: RET ; consume original hardware return word at entry SP; SP=entry_SP+2; flags preserved ; +1E2C runtime=402CH OBSERVED
+; SECTION [1E2D,210B) RAW
+PLI0_1E2D: DB 001H,032H,01CH ; +1E2D runtime=402DH RAW
 PLI0_1E30: DB 011H,036H,01CH,0CDH,033H,01BH,0D2H,054H,040H,02AH,036H,01CH,023H,022H,036H,01CH ; +1E30 runtime=4030H RAW
 PLI0_1E40: DB 02AH,036H,01CH,0E5H,02AH,0C3H,069H,0C1H,00AH,077H,02AH,0C3H,069H,023H,022H,0C3H ; +1E40 runtime=4040H RAW
 PLI0_1E50: DB 069H,0C3H,02DH,040H,0C9H,0CDH,014H,03DH,01FH,0D2H,077H,040H,02AH,0C5H,069H,05EH ; +1E50 runtime=4050H RAW
@@ -1131,7 +1216,7 @@ PLI0_24B0: DB 0CBH,069H,03EH,000H,0CDH,029H,01BH,0B5H,0C6H,0FFH,09FH,0C9H ; +24B
 ;   three callsites. All original hardware slots return +289A; one mode1 copy of seventeen
 ;   bytes. Local projections exclude descendants
 ; Unresolved: RAW arms include initial +23C3 true path, tag70 path, mode2/4 guards,
-;   field/pointer-repair alternatives. Helpers +1E0B/+21AB/+2290/+22B3/+242B/+247C/+249A
+;   field/pointer-repair alternatives. Helpers +21AB/+2290/+22B3/+242B/+247C/+249A
 ;   retain opaque effects. Record ownership/complete traversal semantics unresolved.
 ;   Recursion does not imply software continuation. / New helper contracts remove opaque
 ;   +1A8C/+23DF and guard-false +240B effects; +240B guard-true, +1A14 failure paths and
@@ -1146,6 +1231,9 @@ PLI0_24B0: DB 0CBH,069H,03EH,000H,0CDH,029H,01BH,0B5H,0C6H,0FFH,09FH,0C9H ; +24B
 ;   +1A8C(length) drains the staged tail via +1A47, sets working_record_pointer[69C5] to
 ;   post-copy staging_cursor[69C3], clears extent_count[69C7], then adds/checks the
 ;   initial extent via +1A14. The caller copies record length bytes to this working base.
+;   Newly established +1E0B then stores extent_count at the working first byte, computes
+;   next=staging_cursor+extent_count, publishes next to the selected boundary word, and
+;   updates staging_cursor; working base/count stay unchanged at its nonaliasing scope.
 ;   OBSERVED +247C returns A=00/CY=1; CMA/RAR tests returned A bit0, giving CY=1 and +2601
 ;   JNC fallthrough to the word patch. DEDUCED: the patch selects a clear A bit0; the
 ;   helper meaning remains opaque. +240B(k) on guard-false returns FF/CY=1 exactly when
@@ -1172,18 +1260,21 @@ PLI0_24B0: DB 0CBH,069H,03EH,000H,0CDH,029H,01BH,0B5H,0C6H,0FFH,09FH,0C9H ; +24B
 ; Evidence: evidence.json#seeds/PLI0.OVL+24BC;
 ;   ../minimal-baseline/pass-3/regions.json#PLI0.OVL+24BC;
 ;   ../minimal-baseline/pass-4/caller-refinements.json#PLI0.OVL+24BC;
-;   ../minimal-baseline/evidence-packet-v0/README.md (reproducible joined +24BC evidence)
+;   ../minimal-baseline/evidence-packet-v0/README.md (reproducible joined +24BC evidence);
+;   ../minimal-baseline/pass-5/README.md (+1E0B caller refinement)
 ; Procedure pseudo (operational; byte/word arithmetic wraps):
 ;   F=entry_SP-18; local_mode=C; result=0; save tested_pointer; clear record[p+3].bit7; snapshot
 ;   tag/flags/count; if local_mode.bit0 { begin_window1A8C(record_copy_count); copy record bytes
-;   to working_record_pointer; setup/repair delegated; observed +247C.A.bit0==0 selects
-;   pointed-word patch after CMA/RAR/JNC; field_equal240B(5/6) remains guard-false scoped; };
-;   scan23DF(masked_tag=0); word[F+5]=0; word[F+7]=FFFF; if local_tag==41 { observed path:
-;   word[F+3]=tested_pointer; combined=guard23C3_A|field_equal240B(7)_A; if combined.bit0==1 {
-;   recurse(local_mode&1); word[F+5]=tested_pointer after child; tested_pointer=word[F+3]; };
-;   other arms unresolved; local_tag=40; }; if local_tag==40 && local_mode!=4 { while
-;   byte[F+11]!=0 { if field_equal240B(3) { byte[F+11]--; recurse(local_mode&1); } else {
-;   opaque242B(&word[F+7]); recurse(4); no local count decrement; }; };
+;   to working_record_pointer; commit_window1E0B(): byte[working_base]=extent_count;
+;   next=u16(staging_cursor+extent_count); selected_boundary_word=next; staging_cursor=next;
+;   opaque22B3()/remaining repair delegated; observed +247C.A.bit0==0 selects pointed-word patch
+;   after CMA/RAR/JNC; field_equal240B(5/6) remains guard-false scoped; }; scan23DF(masked_tag=0);
+;   word[F+5]=0; word[F+7]=FFFF; if local_tag==41 { observed path: word[F+3]=tested_pointer;
+;   combined=guard23C3_A|field_equal240B(7)_A; if combined.bit0==1 { recurse(local_mode&1);
+;   word[F+5]=tested_pointer after child; tested_pointer=word[F+3]; }; other arms unresolved;
+;   local_tag=40; }; if local_tag==40 && local_mode!=4 { while byte[F+11]!=0 { if
+;   field_equal240B(3) { byte[F+11]--; recurse(local_mode&1); } else { opaque242B(&word[F+7]);
+;   recurse(4); no local count decrement; }; };
 ;   tested_pointer=unsigned_max(tested_pointer,word[F+5]); }; OBSERVED C05/C06 revisit restored
 ;   F+3 in mode4; initial F+11 counts 2/1 yield 4/3 children; STATIC / UNOBSERVED: local_mode.bit0
 ;   and word[F+7]<tested_pointer permit tested_pointer=word[F+7] through RAW arm;
@@ -1308,9 +1399,10 @@ PLI0_255A: DB 02AH,0C5H,069H,023H,036H,000H ; +255A runtime=475AH RAW
 ; SECTION [2560,257F) STRUCTURED
 ; @block-pseudo 2560
 ; pseudo:
-; | delegate +1E0B/+22B3; save returned A as zero-extended F+16 result
-; | initialize local F+1 word=1; call +249A
-PLI0_2560: CALL 400BH ; push following PC; invoke PLI0.OVL+1E0B; result effects belong to callee ; +2560 runtime=4760H OBSERVED
+; | +1E0B commits count header at working base and publishes staging_cursor+extent_count to selected boundary and staging_cursor
+; | working base/count unchanged at helper nonaliasing scope; delegate opaque +22B3; save its returned A as zero-extended F+16
+; | initialize local F+1 word=1; call opaque +249A
+PLI0_2560: CALL 400BH ; invoke established +1E0B: working first byte=count; publish staging_cursor+count to selected boundary and staging_cursor ; +2560 runtime=4760H OBSERVED
 PLI0_2563: CALL 44B3H ; push following PC; invoke PLI0.OVL+22B3; result effects belong to callee ; +2563 runtime=4763H OBSERVED
 PLI0_2566: LXI H,0010H ; HL = 0010H ; +2566 runtime=4766H OBSERVED
 PLI0_2569: DAD SP ; HL = (HL + SP) & FFFF; only CY changes ; +2569 runtime=4769H OBSERVED
@@ -2270,12 +2362,12 @@ PLI0_466A: RET ; PC = word[SP]; SP += 2; use the convention in procedure header 
 ; SECTION [466B,4680) RAW
 PLI0_466B: DB 01AH,01AH,01AH,01AH,01AH ; +466B runtime=686BH RAW
 PLI0_4670: DB 01AH,01AH,01AH,01AH,01AH,01AH,01AH,01AH,01AH,01AH,01AH,01AH,01AH,01AH,01AH,01AH ; +4670 runtime=6870H RAW
-
-; Prior RAW row labels retained as coordinates inside newly represented instructions.
 PLI0_1A20: EQU 03C20H ; +1A20 runtime=3C20H coordinate-only label
 PLI0_1A30: EQU 03C30H ; +1A30 runtime=3C30H coordinate-only label
 PLI0_1A60: EQU 03C60H ; +1A60 runtime=3C60H coordinate-only label
 PLI0_1AA0: EQU 03CA0H ; +1AA0 runtime=3CA0H coordinate-only label
+PLI0_1E10: EQU 04010H ; +1E10 runtime=4010H coordinate-only label
+PLI0_1E20: EQU 04020H ; +1E20 runtime=4020H coordinate-only label
 PLI0_23E0: EQU 045E0H ; +23E0 runtime=45E0H coordinate-only label
 PLI0_23F0: EQU 045F0H ; +23F0 runtime=45F0H coordinate-only label
 PLI0_2400: EQU 04600H ; +2400 runtime=4600H coordinate-only label

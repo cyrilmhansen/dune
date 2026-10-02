@@ -161,14 +161,15 @@ class MinimalPassFourTests(unittest.TestCase):
             self.assertEqual(self.by_entry[key]["completeness"],
                              {"bounds": "stable", "control_flow": "complete", "contract": "complete"})
 
-    def test_all_prior_labels_retained_and_next_queue_is_not_decompiled(self):
+    def test_all_prior_labels_retained_and_historical_queue_not_in_pass_four(self):
         for audit in self.progress["stable_label_audit"]:
             text = (ASM / audit["source"]).read_text()
             labels = set(re.findall(r"^([A-Z0-9]+_[0-9A-F]+):", text, re.MULTILINE))
             self.assertFalse(audit["removed_coordinates"])
             self.assertTrue(set(audit["prior_labels"]) <= labels)
         for r in self.progress["next_targets"]:
-            self.assertNotIn(r["entry"], self.catalog)
+            # Later passes may decompile this queue; pass-4's snapshot must not.
+            self.assertNotIn(r["entry"], self.by_entry)
 
 
 if __name__ == "__main__":

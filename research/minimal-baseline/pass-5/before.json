@@ -1,0 +1,5374 @@
+{
+  "commit": "6983d77",
+  "manifest": {
+    "schema_version": 1,
+    "coordinate_system": "file offsets, end exclusive; runtime address = runtime_base + file offset",
+    "assembler": {
+      "package": "asm8080",
+      "version": "1.0.34"
+    },
+    "evidence": "evidence.json",
+    "images": [
+      {
+        "name": "PLI.COM",
+        "version": "Digital Research PL/I-80 v1.4 (exact SHA-256 identifies this image)",
+        "sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+        "length": 8064,
+        "runtime_base": 256,
+        "label_prefix": "PLI",
+        "source": "PLI.asm",
+        "original_filename": "PLI.COM",
+        "load_base_evidence_ref": "evidence.json#load_bases/PLI.COM",
+        "sections": [
+          {
+            "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+            "start_offset": 0,
+            "end_offset": 750,
+            "length": 750,
+            "runtime_start": 256,
+            "runtime_end": 1006,
+            "status": "RAW",
+            "original_sha256": "b2037a29aa559fa4823ee25b0641b3c9384dd175a24f28fc34d4a7e3039587d5",
+            "reassembled_sha256": "b2037a29aa559fa4823ee25b0641b3c9384dd175a24f28fc34d4a7e3039587d5",
+            "exact_match": true,
+            "evidence_refs": []
+          },
+          {
+            "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+            "start_offset": 750,
+            "end_offset": 766,
+            "length": 16,
+            "runtime_start": 1006,
+            "runtime_end": 1022,
+            "status": "UNDERSTOOD",
+            "original_sha256": "36b2758528da8dc7400a4672ee86698d7508272b27ac69d534763e3f6f2e4e1f",
+            "reassembled_sha256": "36b2758528da8dc7400a4672ee86698d7508272b27ac69d534763e3f6f2e4e1f",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI.COM+02EE"
+            ]
+          },
+          {
+            "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+            "start_offset": 766,
+            "end_offset": 792,
+            "length": 26,
+            "runtime_start": 1022,
+            "runtime_end": 1048,
+            "status": "RAW",
+            "original_sha256": "417cdd457dc3edafe72203754149a616468cef647c438853be4bceaa7f1f7e4b",
+            "reassembled_sha256": "417cdd457dc3edafe72203754149a616468cef647c438853be4bceaa7f1f7e4b",
+            "exact_match": true,
+            "evidence_refs": []
+          },
+          {
+            "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+            "start_offset": 792,
+            "end_offset": 808,
+            "length": 16,
+            "runtime_start": 1048,
+            "runtime_end": 1064,
+            "status": "UNDERSTOOD",
+            "original_sha256": "3e59e7716737466c50fc9ac0b4f03c0833e60afa42d1a631ebbdadb29f3ab45f",
+            "reassembled_sha256": "3e59e7716737466c50fc9ac0b4f03c0833e60afa42d1a631ebbdadb29f3ab45f",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI.COM+0318"
+            ]
+          },
+          {
+            "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+            "start_offset": 808,
+            "end_offset": 833,
+            "length": 25,
+            "runtime_start": 1064,
+            "runtime_end": 1089,
+            "status": "RAW",
+            "original_sha256": "c00d725c29dec4ca3507a3cbdd43fa677eff6b93ce155af0fbac13868bbab733",
+            "reassembled_sha256": "c00d725c29dec4ca3507a3cbdd43fa677eff6b93ce155af0fbac13868bbab733",
+            "exact_match": true,
+            "evidence_refs": []
+          },
+          {
+            "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+            "start_offset": 833,
+            "end_offset": 842,
+            "length": 9,
+            "runtime_start": 1089,
+            "runtime_end": 1098,
+            "status": "UNDERSTOOD",
+            "original_sha256": "688eaa7e859dade16458f4a243b90d09bc6cc832958c21e23dc8b65826770888",
+            "reassembled_sha256": "688eaa7e859dade16458f4a243b90d09bc6cc832958c21e23dc8b65826770888",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI.COM+0341"
+            ]
+          },
+          {
+            "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+            "start_offset": 842,
+            "end_offset": 896,
+            "length": 54,
+            "runtime_start": 1098,
+            "runtime_end": 1152,
+            "status": "RAW",
+            "original_sha256": "9fef4a32929bbda59929e56aa1cea688acfdcfc780e98844d566cabbac816583",
+            "reassembled_sha256": "9fef4a32929bbda59929e56aa1cea688acfdcfc780e98844d566cabbac816583",
+            "exact_match": true,
+            "evidence_refs": []
+          },
+          {
+            "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+            "start_offset": 896,
+            "end_offset": 912,
+            "length": 16,
+            "runtime_start": 1152,
+            "runtime_end": 1168,
+            "status": "UNDERSTOOD",
+            "original_sha256": "ea5ee0b36ecbe0b9bfc0d1e5a9b07c219311088d33fc8df9ca49554e9b06eb95",
+            "reassembled_sha256": "ea5ee0b36ecbe0b9bfc0d1e5a9b07c219311088d33fc8df9ca49554e9b06eb95",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI.COM+0380"
+            ]
+          },
+          {
+            "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+            "start_offset": 912,
+            "end_offset": 923,
+            "length": 11,
+            "runtime_start": 1168,
+            "runtime_end": 1179,
+            "status": "UNDERSTOOD",
+            "original_sha256": "2a8362daee0e95b3c9b092b0a8e0ae570a4fa38b56c3cb2d4a2f2e1640da002a",
+            "reassembled_sha256": "2a8362daee0e95b3c9b092b0a8e0ae570a4fa38b56c3cb2d4a2f2e1640da002a",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI.COM+0390"
+            ]
+          },
+          {
+            "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+            "start_offset": 923,
+            "end_offset": 976,
+            "length": 53,
+            "runtime_start": 1179,
+            "runtime_end": 1232,
+            "status": "RAW",
+            "original_sha256": "aa4255371b927c51a268c961d75a7d9c8a87742979bd12b9d70122fb8f0f16e9",
+            "reassembled_sha256": "aa4255371b927c51a268c961d75a7d9c8a87742979bd12b9d70122fb8f0f16e9",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI.COM+0390"
+            ]
+          },
+          {
+            "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+            "start_offset": 976,
+            "end_offset": 983,
+            "length": 7,
+            "runtime_start": 1232,
+            "runtime_end": 1239,
+            "status": "UNDERSTOOD",
+            "original_sha256": "1fcc6d22005d9119152b2c7155ec6581f6edac103b67858b7e85969c20a54e82",
+            "reassembled_sha256": "1fcc6d22005d9119152b2c7155ec6581f6edac103b67858b7e85969c20a54e82",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI.COM+0390"
+            ]
+          },
+          {
+            "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+            "start_offset": 983,
+            "end_offset": 993,
+            "length": 10,
+            "runtime_start": 1239,
+            "runtime_end": 1249,
+            "status": "RAW",
+            "original_sha256": "68d4fd825f7809ead4742437cd28be50296b14a7092bd97bbd59a0de0a7a8224",
+            "reassembled_sha256": "68d4fd825f7809ead4742437cd28be50296b14a7092bd97bbd59a0de0a7a8224",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI.COM+0390"
+            ]
+          },
+          {
+            "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+            "start_offset": 993,
+            "end_offset": 1001,
+            "length": 8,
+            "runtime_start": 1249,
+            "runtime_end": 1257,
+            "status": "UNDERSTOOD",
+            "original_sha256": "d0d3e1876472c3103ee21be2918183e3335b2457c3eb1d5d1ca3c69ecf57bee9",
+            "reassembled_sha256": "d0d3e1876472c3103ee21be2918183e3335b2457c3eb1d5d1ca3c69ecf57bee9",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI.COM+0390"
+            ]
+          },
+          {
+            "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+            "start_offset": 1001,
+            "end_offset": 1458,
+            "length": 457,
+            "runtime_start": 1257,
+            "runtime_end": 1714,
+            "status": "RAW",
+            "original_sha256": "c43ee88b8eb3e21f031f4055de47a4a3921593a0141f93a4565e593f8ce88987",
+            "reassembled_sha256": "c43ee88b8eb3e21f031f4055de47a4a3921593a0141f93a4565e593f8ce88987",
+            "exact_match": true,
+            "evidence_refs": []
+          },
+          {
+            "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+            "start_offset": 1458,
+            "end_offset": 1465,
+            "length": 7,
+            "runtime_start": 1714,
+            "runtime_end": 1721,
+            "status": "UNDERSTOOD",
+            "original_sha256": "f8d867de1a67583949dd3677525929463e8a38b3c01d2906036bd1d289be4097",
+            "reassembled_sha256": "f8d867de1a67583949dd3677525929463e8a38b3c01d2906036bd1d289be4097",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI.COM+05B2"
+            ]
+          },
+          {
+            "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+            "start_offset": 1465,
+            "end_offset": 1527,
+            "length": 62,
+            "runtime_start": 1721,
+            "runtime_end": 1783,
+            "status": "RAW",
+            "original_sha256": "e75031d6c726ae96a19e3486d8320c11c672a1ddd2ebe05683fa7f578ce24417",
+            "reassembled_sha256": "e75031d6c726ae96a19e3486d8320c11c672a1ddd2ebe05683fa7f578ce24417",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI.COM+05B2"
+            ]
+          },
+          {
+            "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+            "start_offset": 1527,
+            "end_offset": 1528,
+            "length": 1,
+            "runtime_start": 1783,
+            "runtime_end": 1784,
+            "status": "UNDERSTOOD",
+            "original_sha256": "4fb733bedb74fec8d65bedf056b935189a289e928b3302bec38a281814de523a",
+            "reassembled_sha256": "4fb733bedb74fec8d65bedf056b935189a289e928b3302bec38a281814de523a",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI.COM+05B2"
+            ]
+          },
+          {
+            "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+            "start_offset": 1528,
+            "end_offset": 1804,
+            "length": 276,
+            "runtime_start": 1784,
+            "runtime_end": 2060,
+            "status": "RAW",
+            "original_sha256": "a80fc569d16dd434816e6e57c7e5edafc87568902bc89b032fee45f0b4cb3585",
+            "reassembled_sha256": "a80fc569d16dd434816e6e57c7e5edafc87568902bc89b032fee45f0b4cb3585",
+            "exact_match": true,
+            "evidence_refs": []
+          },
+          {
+            "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+            "start_offset": 1804,
+            "end_offset": 1928,
+            "length": 124,
+            "runtime_start": 2060,
+            "runtime_end": 2184,
+            "status": "UNDERSTOOD",
+            "original_sha256": "bedd0372f7f04fdbf35f728e89227a89b3f3cafca691c773db7ce9e88250edc5",
+            "reassembled_sha256": "bedd0372f7f04fdbf35f728e89227a89b3f3cafca691c773db7ce9e88250edc5",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI.COM+070C"
+            ]
+          },
+          {
+            "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+            "start_offset": 1928,
+            "end_offset": 2507,
+            "length": 579,
+            "runtime_start": 2184,
+            "runtime_end": 2763,
+            "status": "RAW",
+            "original_sha256": "78191883cbc5b78ae964e0c8439e430ebf92bcb7e1ed4276c9f69b7d32e2bcf8",
+            "reassembled_sha256": "78191883cbc5b78ae964e0c8439e430ebf92bcb7e1ed4276c9f69b7d32e2bcf8",
+            "exact_match": true,
+            "evidence_refs": []
+          },
+          {
+            "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+            "start_offset": 2507,
+            "end_offset": 2521,
+            "length": 14,
+            "runtime_start": 2763,
+            "runtime_end": 2777,
+            "status": "UNDERSTOOD",
+            "original_sha256": "1e7f76618af553ed522e04e97a4b3acb18ff8e818a23b6cb499ced15500c983f",
+            "reassembled_sha256": "1e7f76618af553ed522e04e97a4b3acb18ff8e818a23b6cb499ced15500c983f",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI.COM+09CB"
+            ]
+          },
+          {
+            "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+            "start_offset": 2521,
+            "end_offset": 2537,
+            "length": 16,
+            "runtime_start": 2777,
+            "runtime_end": 2793,
+            "status": "RAW",
+            "original_sha256": "14f324e58ceccf7049c9ec3e4a4d975880c7ff04ed7bf1f84c89e30eeac48858",
+            "reassembled_sha256": "14f324e58ceccf7049c9ec3e4a4d975880c7ff04ed7bf1f84c89e30eeac48858",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI.COM+09CB"
+            ]
+          },
+          {
+            "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+            "start_offset": 2537,
+            "end_offset": 2562,
+            "length": 25,
+            "runtime_start": 2793,
+            "runtime_end": 2818,
+            "status": "UNDERSTOOD",
+            "original_sha256": "ab292f80e780359fcc10ca4bd138906965d1662e81af88c37b015997527d7f50",
+            "reassembled_sha256": "ab292f80e780359fcc10ca4bd138906965d1662e81af88c37b015997527d7f50",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI.COM+09CB"
+            ]
+          },
+          {
+            "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+            "start_offset": 2562,
+            "end_offset": 2565,
+            "length": 3,
+            "runtime_start": 2818,
+            "runtime_end": 2821,
+            "status": "RAW",
+            "original_sha256": "8807367aaab4103de4555e5c29c97df8d16539fe315aceee4b4551bd89420eba",
+            "reassembled_sha256": "8807367aaab4103de4555e5c29c97df8d16539fe315aceee4b4551bd89420eba",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI.COM+09CB"
+            ]
+          },
+          {
+            "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+            "start_offset": 2565,
+            "end_offset": 2573,
+            "length": 8,
+            "runtime_start": 2821,
+            "runtime_end": 2829,
+            "status": "UNDERSTOOD",
+            "original_sha256": "b4b338c0f78628b2b81c3214bf866ee7cc791c1e2467ae736f939ab0161e4372",
+            "reassembled_sha256": "b4b338c0f78628b2b81c3214bf866ee7cc791c1e2467ae736f939ab0161e4372",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI.COM+09CB"
+            ]
+          },
+          {
+            "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+            "start_offset": 2573,
+            "end_offset": 2604,
+            "length": 31,
+            "runtime_start": 2829,
+            "runtime_end": 2860,
+            "status": "RAW",
+            "original_sha256": "c28883aa8dca5e652e2d2209339a6aa7402039d34152071eb6c434f9edc04f86",
+            "reassembled_sha256": "c28883aa8dca5e652e2d2209339a6aa7402039d34152071eb6c434f9edc04f86",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI.COM+09CB"
+            ]
+          },
+          {
+            "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+            "start_offset": 2604,
+            "end_offset": 2628,
+            "length": 24,
+            "runtime_start": 2860,
+            "runtime_end": 2884,
+            "status": "UNDERSTOOD",
+            "original_sha256": "3f4cfeb810727946df51dab3d24bd9d90a81d3a58aadd540896aa6d47b4981d9",
+            "reassembled_sha256": "3f4cfeb810727946df51dab3d24bd9d90a81d3a58aadd540896aa6d47b4981d9",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI.COM+09CB"
+            ]
+          },
+          {
+            "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+            "start_offset": 2628,
+            "end_offset": 2644,
+            "length": 16,
+            "runtime_start": 2884,
+            "runtime_end": 2900,
+            "status": "RAW",
+            "original_sha256": "9a55cfee127cd5018dbc76dbb592db84f40ee9449260af54781d878d5f869eff",
+            "reassembled_sha256": "9a55cfee127cd5018dbc76dbb592db84f40ee9449260af54781d878d5f869eff",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI.COM+09CB"
+            ]
+          },
+          {
+            "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+            "start_offset": 2644,
+            "end_offset": 2651,
+            "length": 7,
+            "runtime_start": 2900,
+            "runtime_end": 2907,
+            "status": "UNDERSTOOD",
+            "original_sha256": "49d4aefd7327bf75aa3fcda5b45095f4295cec23184f581cb66492715b0bb277",
+            "reassembled_sha256": "49d4aefd7327bf75aa3fcda5b45095f4295cec23184f581cb66492715b0bb277",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI.COM+09CB"
+            ]
+          },
+          {
+            "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+            "start_offset": 2651,
+            "end_offset": 2655,
+            "length": 4,
+            "runtime_start": 2907,
+            "runtime_end": 2911,
+            "status": "RAW",
+            "original_sha256": "75a158b4434c8605ec2fa2aaee31b58c8a80d00c28a6b88d3a31b808119cf462",
+            "reassembled_sha256": "75a158b4434c8605ec2fa2aaee31b58c8a80d00c28a6b88d3a31b808119cf462",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI.COM+09CB"
+            ]
+          },
+          {
+            "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+            "start_offset": 2655,
+            "end_offset": 2663,
+            "length": 8,
+            "runtime_start": 2911,
+            "runtime_end": 2919,
+            "status": "UNDERSTOOD",
+            "original_sha256": "bddc2090b97a25b60e2453f62f840a585af6995c0b5fd5e39cf6f06090fdb132",
+            "reassembled_sha256": "bddc2090b97a25b60e2453f62f840a585af6995c0b5fd5e39cf6f06090fdb132",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI.COM+09CB"
+            ]
+          },
+          {
+            "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+            "start_offset": 2663,
+            "end_offset": 2721,
+            "length": 58,
+            "runtime_start": 2919,
+            "runtime_end": 2977,
+            "status": "RAW",
+            "original_sha256": "18349cc4a25f24e66cd4814f225fbb730a1e3a13eb5b9c4d23ea4bfe26330320",
+            "reassembled_sha256": "18349cc4a25f24e66cd4814f225fbb730a1e3a13eb5b9c4d23ea4bfe26330320",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI.COM+09CB"
+            ]
+          },
+          {
+            "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+            "start_offset": 2721,
+            "end_offset": 2725,
+            "length": 4,
+            "runtime_start": 2977,
+            "runtime_end": 2981,
+            "status": "UNDERSTOOD",
+            "original_sha256": "75a158b4434c8605ec2fa2aaee31b58c8a80d00c28a6b88d3a31b808119cf462",
+            "reassembled_sha256": "75a158b4434c8605ec2fa2aaee31b58c8a80d00c28a6b88d3a31b808119cf462",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI.COM+09CB"
+            ]
+          },
+          {
+            "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+            "start_offset": 2725,
+            "end_offset": 2729,
+            "length": 4,
+            "runtime_start": 2981,
+            "runtime_end": 2985,
+            "status": "RAW",
+            "original_sha256": "81d0dc01a4d63fe168bbbfcb3d3d8e6ce8fb6e5e3e4f8046e63b0d2e998d5508",
+            "reassembled_sha256": "81d0dc01a4d63fe168bbbfcb3d3d8e6ce8fb6e5e3e4f8046e63b0d2e998d5508",
+            "exact_match": true,
+            "evidence_refs": []
+          },
+          {
+            "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+            "start_offset": 2729,
+            "end_offset": 2736,
+            "length": 7,
+            "runtime_start": 2985,
+            "runtime_end": 2992,
+            "status": "UNDERSTOOD",
+            "original_sha256": "2a13bf926150ab0e069005f2db266e40db966eea729099d716bc31ac41324866",
+            "reassembled_sha256": "2a13bf926150ab0e069005f2db266e40db966eea729099d716bc31ac41324866",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI.COM+0AA9"
+            ]
+          },
+          {
+            "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+            "start_offset": 2736,
+            "end_offset": 2778,
+            "length": 42,
+            "runtime_start": 2992,
+            "runtime_end": 3034,
+            "status": "RAW",
+            "original_sha256": "888e8a6cc7c504325d52bc35147641c483f5287e07cdf764978c5d31c288720b",
+            "reassembled_sha256": "888e8a6cc7c504325d52bc35147641c483f5287e07cdf764978c5d31c288720b",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI.COM+0AA9"
+            ]
+          },
+          {
+            "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+            "start_offset": 2778,
+            "end_offset": 2793,
+            "length": 15,
+            "runtime_start": 3034,
+            "runtime_end": 3049,
+            "status": "UNDERSTOOD",
+            "original_sha256": "1491543e036ff4b96e40504a50304bbc534c3a76796f70d7ede3f2b6c2a96e9d",
+            "reassembled_sha256": "1491543e036ff4b96e40504a50304bbc534c3a76796f70d7ede3f2b6c2a96e9d",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI.COM+0AA9"
+            ]
+          },
+          {
+            "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+            "start_offset": 2793,
+            "end_offset": 2805,
+            "length": 12,
+            "runtime_start": 3049,
+            "runtime_end": 3061,
+            "status": "RAW",
+            "original_sha256": "5851547ee85a0d2ccf46aeecb5c6c936ad0a502fd370ffcc1d49f3815dd3225d",
+            "reassembled_sha256": "5851547ee85a0d2ccf46aeecb5c6c936ad0a502fd370ffcc1d49f3815dd3225d",
+            "exact_match": true,
+            "evidence_refs": []
+          },
+          {
+            "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+            "start_offset": 2805,
+            "end_offset": 2822,
+            "length": 17,
+            "runtime_start": 3061,
+            "runtime_end": 3078,
+            "status": "UNDERSTOOD",
+            "original_sha256": "6ed121da96e1eb8ad97717c19a9d6157775acb6a3d64ee89fd96b6d28d6e0a24",
+            "reassembled_sha256": "6ed121da96e1eb8ad97717c19a9d6157775acb6a3d64ee89fd96b6d28d6e0a24",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI.COM+0AF5"
+            ]
+          },
+          {
+            "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+            "start_offset": 2822,
+            "end_offset": 2841,
+            "length": 19,
+            "runtime_start": 3078,
+            "runtime_end": 3097,
+            "status": "RAW",
+            "original_sha256": "4dff98c012841a47b28e1e1e9c96da6ebd2cabc9037c97398a41fe5233ca5fff",
+            "reassembled_sha256": "4dff98c012841a47b28e1e1e9c96da6ebd2cabc9037c97398a41fe5233ca5fff",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI.COM+0AF5"
+            ]
+          },
+          {
+            "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+            "start_offset": 2841,
+            "end_offset": 2858,
+            "length": 17,
+            "runtime_start": 3097,
+            "runtime_end": 3114,
+            "status": "UNDERSTOOD",
+            "original_sha256": "8ab19e73bc95f16e2b8c66330367a7c0a37c275e6a301c55bf9944c6954f5742",
+            "reassembled_sha256": "8ab19e73bc95f16e2b8c66330367a7c0a37c275e6a301c55bf9944c6954f5742",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI.COM+0AF5"
+            ]
+          },
+          {
+            "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+            "start_offset": 2858,
+            "end_offset": 3392,
+            "length": 534,
+            "runtime_start": 3114,
+            "runtime_end": 3648,
+            "status": "RAW",
+            "original_sha256": "b4608fea595fde2633649310be91b858786e742663288100c4c7a29b80c4a382",
+            "reassembled_sha256": "b4608fea595fde2633649310be91b858786e742663288100c4c7a29b80c4a382",
+            "exact_match": true,
+            "evidence_refs": []
+          },
+          {
+            "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+            "start_offset": 3392,
+            "end_offset": 3490,
+            "length": 98,
+            "runtime_start": 3648,
+            "runtime_end": 3746,
+            "status": "UNDERSTOOD",
+            "original_sha256": "e34c481510f6458a7d586cd0de108e5f35efedd85939b27864dbc155458110f0",
+            "reassembled_sha256": "e34c481510f6458a7d586cd0de108e5f35efedd85939b27864dbc155458110f0",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI.COM+0D40"
+            ]
+          },
+          {
+            "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+            "start_offset": 3490,
+            "end_offset": 3519,
+            "length": 29,
+            "runtime_start": 3746,
+            "runtime_end": 3775,
+            "status": "RAW",
+            "original_sha256": "cbf10da741bdf655a98c4d6ea424c9287c19e21b2a2d7569c5e2854465f9de89",
+            "reassembled_sha256": "cbf10da741bdf655a98c4d6ea424c9287c19e21b2a2d7569c5e2854465f9de89",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI.COM+0D40"
+            ]
+          },
+          {
+            "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+            "start_offset": 3519,
+            "end_offset": 3527,
+            "length": 8,
+            "runtime_start": 3775,
+            "runtime_end": 3783,
+            "status": "UNDERSTOOD",
+            "original_sha256": "0c8b8caa5026cca765824a6a4522bd5530512c021ecd6bd0dec79202af006a5c",
+            "reassembled_sha256": "0c8b8caa5026cca765824a6a4522bd5530512c021ecd6bd0dec79202af006a5c",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI.COM+0D40"
+            ]
+          },
+          {
+            "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+            "start_offset": 3527,
+            "end_offset": 3540,
+            "length": 13,
+            "runtime_start": 3783,
+            "runtime_end": 3796,
+            "status": "RAW",
+            "original_sha256": "584c2701680201deff5501c9c2b9572c5eeb5ba6d4ebbd82172755cbcf8d420a",
+            "reassembled_sha256": "584c2701680201deff5501c9c2b9572c5eeb5ba6d4ebbd82172755cbcf8d420a",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI.COM+0D40"
+            ]
+          },
+          {
+            "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+            "start_offset": 3540,
+            "end_offset": 3603,
+            "length": 63,
+            "runtime_start": 3796,
+            "runtime_end": 3859,
+            "status": "UNDERSTOOD",
+            "original_sha256": "153835863ad0c0b7cdf5e0d82aa56b5742944af60c496d0b7e5bc7dfab2e3d40",
+            "reassembled_sha256": "153835863ad0c0b7cdf5e0d82aa56b5742944af60c496d0b7e5bc7dfab2e3d40",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI.COM+0D40"
+            ]
+          },
+          {
+            "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+            "start_offset": 3603,
+            "end_offset": 3609,
+            "length": 6,
+            "runtime_start": 3859,
+            "runtime_end": 3865,
+            "status": "RAW",
+            "original_sha256": "a9e5c02ed5e04f417b493963b1a37bc6442b49960ed0a60a21bcf1031e9dad5f",
+            "reassembled_sha256": "a9e5c02ed5e04f417b493963b1a37bc6442b49960ed0a60a21bcf1031e9dad5f",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI.COM+0D40"
+            ]
+          },
+          {
+            "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+            "start_offset": 3609,
+            "end_offset": 3615,
+            "length": 6,
+            "runtime_start": 3865,
+            "runtime_end": 3871,
+            "status": "UNDERSTOOD",
+            "original_sha256": "9bbd17d06995e0b60cd5f4b1b1c1929608bbcdca69905925855fbe25306bc3de",
+            "reassembled_sha256": "9bbd17d06995e0b60cd5f4b1b1c1929608bbcdca69905925855fbe25306bc3de",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI.COM+0D40"
+            ]
+          },
+          {
+            "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+            "start_offset": 3615,
+            "end_offset": 3649,
+            "length": 34,
+            "runtime_start": 3871,
+            "runtime_end": 3905,
+            "status": "UNDERSTOOD",
+            "original_sha256": "c64c5635c98c8116ce0f726e754f7a2eeb5b5c3011fded02a43b55009ee6d012",
+            "reassembled_sha256": "c64c5635c98c8116ce0f726e754f7a2eeb5b5c3011fded02a43b55009ee6d012",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI.COM+0E1F"
+            ]
+          },
+          {
+            "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+            "start_offset": 3649,
+            "end_offset": 3654,
+            "length": 5,
+            "runtime_start": 3905,
+            "runtime_end": 3910,
+            "status": "RAW",
+            "original_sha256": "5e1f5e752d217aaa1fdebd2e02d1f13267c67331149eb6db4cd2f42f7d55553e",
+            "reassembled_sha256": "5e1f5e752d217aaa1fdebd2e02d1f13267c67331149eb6db4cd2f42f7d55553e",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI.COM+0E1F"
+            ]
+          },
+          {
+            "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+            "start_offset": 3654,
+            "end_offset": 3655,
+            "length": 1,
+            "runtime_start": 3910,
+            "runtime_end": 3911,
+            "status": "UNDERSTOOD",
+            "original_sha256": "4fb733bedb74fec8d65bedf056b935189a289e928b3302bec38a281814de523a",
+            "reassembled_sha256": "4fb733bedb74fec8d65bedf056b935189a289e928b3302bec38a281814de523a",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI.COM+0E1F"
+            ]
+          },
+          {
+            "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+            "start_offset": 3655,
+            "end_offset": 3830,
+            "length": 175,
+            "runtime_start": 3911,
+            "runtime_end": 4086,
+            "status": "RAW",
+            "original_sha256": "09f16488370d538e804d76bcf69e3f44f518e9079733ae401c3d656ffec85d8c",
+            "reassembled_sha256": "09f16488370d538e804d76bcf69e3f44f518e9079733ae401c3d656ffec85d8c",
+            "exact_match": true,
+            "evidence_refs": []
+          },
+          {
+            "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+            "start_offset": 3830,
+            "end_offset": 3881,
+            "length": 51,
+            "runtime_start": 4086,
+            "runtime_end": 4137,
+            "status": "DECODED",
+            "original_sha256": "2a5c99e46f7964ab21f1f436bff3dfc29f4789133cb1015e61794eabedf3163d",
+            "reassembled_sha256": "2a5c99e46f7964ab21f1f436bff3dfc29f4789133cb1015e61794eabedf3163d",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI.COM+0EF6"
+            ]
+          },
+          {
+            "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+            "start_offset": 3881,
+            "end_offset": 3884,
+            "length": 3,
+            "runtime_start": 4137,
+            "runtime_end": 4140,
+            "status": "RAW",
+            "original_sha256": "81013cc49f36c8987718f8b74ddd7c19b16be2da3b4242c58f3798f20e3dc616",
+            "reassembled_sha256": "81013cc49f36c8987718f8b74ddd7c19b16be2da3b4242c58f3798f20e3dc616",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI.COM+0EF6"
+            ]
+          },
+          {
+            "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+            "start_offset": 3884,
+            "end_offset": 3885,
+            "length": 1,
+            "runtime_start": 4140,
+            "runtime_end": 4141,
+            "status": "DECODED",
+            "original_sha256": "4fb733bedb74fec8d65bedf056b935189a289e928b3302bec38a281814de523a",
+            "reassembled_sha256": "4fb733bedb74fec8d65bedf056b935189a289e928b3302bec38a281814de523a",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI.COM+0EF6"
+            ]
+          },
+          {
+            "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+            "start_offset": 3885,
+            "end_offset": 4416,
+            "length": 531,
+            "runtime_start": 4141,
+            "runtime_end": 4672,
+            "status": "RAW",
+            "original_sha256": "12aecedf243fb77b7aa2d32fbbf03fd2e2823a66edf7b49f46c0294787a23daa",
+            "reassembled_sha256": "12aecedf243fb77b7aa2d32fbbf03fd2e2823a66edf7b49f46c0294787a23daa",
+            "exact_match": true,
+            "evidence_refs": []
+          },
+          {
+            "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+            "start_offset": 4416,
+            "end_offset": 4427,
+            "length": 11,
+            "runtime_start": 4672,
+            "runtime_end": 4683,
+            "status": "DECODED",
+            "original_sha256": "f40fb2b977462a9b2cbde40f3def21481c75f8ec2b253e441c29c7e54a7babde",
+            "reassembled_sha256": "f40fb2b977462a9b2cbde40f3def21481c75f8ec2b253e441c29c7e54a7babde",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI.COM+1140"
+            ]
+          },
+          {
+            "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+            "start_offset": 4427,
+            "end_offset": 4428,
+            "length": 1,
+            "runtime_start": 4683,
+            "runtime_end": 4684,
+            "status": "RAW",
+            "original_sha256": "4fb733bedb74fec8d65bedf056b935189a289e928b3302bec38a281814de523a",
+            "reassembled_sha256": "4fb733bedb74fec8d65bedf056b935189a289e928b3302bec38a281814de523a",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI.COM+1140"
+            ]
+          },
+          {
+            "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+            "start_offset": 4428,
+            "end_offset": 4501,
+            "length": 73,
+            "runtime_start": 4684,
+            "runtime_end": 4757,
+            "status": "DECODED",
+            "original_sha256": "4c1b8a273ce90e229372deed3a9ec8aa1a6c9cd13fe910eed4c2f56216e58bef",
+            "reassembled_sha256": "4c1b8a273ce90e229372deed3a9ec8aa1a6c9cd13fe910eed4c2f56216e58bef",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI.COM+1140"
+            ]
+          },
+          {
+            "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+            "start_offset": 4501,
+            "end_offset": 4504,
+            "length": 3,
+            "runtime_start": 4757,
+            "runtime_end": 4760,
+            "status": "RAW",
+            "original_sha256": "81013cc49f36c8987718f8b74ddd7c19b16be2da3b4242c58f3798f20e3dc616",
+            "reassembled_sha256": "81013cc49f36c8987718f8b74ddd7c19b16be2da3b4242c58f3798f20e3dc616",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI.COM+1140"
+            ]
+          },
+          {
+            "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+            "start_offset": 4504,
+            "end_offset": 4510,
+            "length": 6,
+            "runtime_start": 4760,
+            "runtime_end": 4766,
+            "status": "DECODED",
+            "original_sha256": "9a8988b89fafe99092ff9459ea75336f61d35419ad85a35565a465932c03aa15",
+            "reassembled_sha256": "9a8988b89fafe99092ff9459ea75336f61d35419ad85a35565a465932c03aa15",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI.COM+1140"
+            ]
+          },
+          {
+            "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+            "start_offset": 4510,
+            "end_offset": 4547,
+            "length": 37,
+            "runtime_start": 4766,
+            "runtime_end": 4803,
+            "status": "STRUCTURED",
+            "original_sha256": "643d003f402538aba0a8e03ced2bdcb6d5ca885b7f37b2f5e58e61721627547c",
+            "reassembled_sha256": "643d003f402538aba0a8e03ced2bdcb6d5ca885b7f37b2f5e58e61721627547c",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI.COM+119E"
+            ]
+          },
+          {
+            "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+            "start_offset": 4547,
+            "end_offset": 4782,
+            "length": 235,
+            "runtime_start": 4803,
+            "runtime_end": 5038,
+            "status": "RAW",
+            "original_sha256": "1fd6c0e55e8a8bad3ac9ad2a1e1123070bf927b07a47bfaa04ee489ab8bbd92f",
+            "reassembled_sha256": "1fd6c0e55e8a8bad3ac9ad2a1e1123070bf927b07a47bfaa04ee489ab8bbd92f",
+            "exact_match": true,
+            "evidence_refs": []
+          },
+          {
+            "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+            "start_offset": 4782,
+            "end_offset": 4825,
+            "length": 43,
+            "runtime_start": 5038,
+            "runtime_end": 5081,
+            "status": "UNDERSTOOD",
+            "original_sha256": "a7ec81438f8e7448c304713304e1378f21234586600f589766dc823d5180c4da",
+            "reassembled_sha256": "a7ec81438f8e7448c304713304e1378f21234586600f589766dc823d5180c4da",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI.COM+12AE"
+            ]
+          },
+          {
+            "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+            "start_offset": 4825,
+            "end_offset": 6587,
+            "length": 1762,
+            "runtime_start": 5081,
+            "runtime_end": 6843,
+            "status": "RAW",
+            "original_sha256": "65e41a28cfd39a90e2d0f5a1e6be3bffe3e93778d84a4839f50112da154b1ac3",
+            "reassembled_sha256": "65e41a28cfd39a90e2d0f5a1e6be3bffe3e93778d84a4839f50112da154b1ac3",
+            "exact_match": true,
+            "evidence_refs": []
+          },
+          {
+            "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+            "start_offset": 6587,
+            "end_offset": 6615,
+            "length": 28,
+            "runtime_start": 6843,
+            "runtime_end": 6871,
+            "status": "STRUCTURED",
+            "original_sha256": "dd6d8d0c98b33c4c11c37326dbee2f72a5e9b691fbfcb2b10301da1efde89167",
+            "reassembled_sha256": "dd6d8d0c98b33c4c11c37326dbee2f72a5e9b691fbfcb2b10301da1efde89167",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI.COM+19BB"
+            ]
+          },
+          {
+            "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+            "start_offset": 6615,
+            "end_offset": 6671,
+            "length": 56,
+            "runtime_start": 6871,
+            "runtime_end": 6927,
+            "status": "RAW",
+            "original_sha256": "dfcddf540c9966a9601dd9dc419d7289bea780e9d59c14533a167fb3276f250e",
+            "reassembled_sha256": "dfcddf540c9966a9601dd9dc419d7289bea780e9d59c14533a167fb3276f250e",
+            "exact_match": true,
+            "evidence_refs": []
+          },
+          {
+            "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+            "start_offset": 6671,
+            "end_offset": 6684,
+            "length": 13,
+            "runtime_start": 6927,
+            "runtime_end": 6940,
+            "status": "UNDERSTOOD",
+            "original_sha256": "526bd5a0a0660091a9cf2cb0c8185d4072258a21ca999524c75aee793a09c6eb",
+            "reassembled_sha256": "526bd5a0a0660091a9cf2cb0c8185d4072258a21ca999524c75aee793a09c6eb",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI.COM+1A0F"
+            ]
+          },
+          {
+            "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+            "start_offset": 6684,
+            "end_offset": 6685,
+            "length": 1,
+            "runtime_start": 6940,
+            "runtime_end": 6941,
+            "status": "UNDERSTOOD",
+            "original_sha256": "f8d20e598df20877e4d826246fc31ffb4615cbc059aec9ec8e5b28951d844a3f",
+            "reassembled_sha256": "f8d20e598df20877e4d826246fc31ffb4615cbc059aec9ec8e5b28951d844a3f",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI.COM+1A1C"
+            ]
+          },
+          {
+            "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+            "start_offset": 6685,
+            "end_offset": 6697,
+            "length": 12,
+            "runtime_start": 6941,
+            "runtime_end": 6953,
+            "status": "UNDERSTOOD",
+            "original_sha256": "cf7d2120574a4a1dab1012c90f630831055d19632de1ddf94e805ee67db77689",
+            "reassembled_sha256": "cf7d2120574a4a1dab1012c90f630831055d19632de1ddf94e805ee67db77689",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI.COM+1A1C",
+              "evidence.json#seeds/PLI.COM+1A1D"
+            ]
+          },
+          {
+            "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+            "start_offset": 6697,
+            "end_offset": 6700,
+            "length": 3,
+            "runtime_start": 6953,
+            "runtime_end": 6956,
+            "status": "UNDERSTOOD",
+            "original_sha256": "f47aabe2fe5573e985a9f0bc18ed69a0840e69c2dafc9437e880e620a74262f9",
+            "reassembled_sha256": "f47aabe2fe5573e985a9f0bc18ed69a0840e69c2dafc9437e880e620a74262f9",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI.COM+1A29"
+            ]
+          },
+          {
+            "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+            "start_offset": 6700,
+            "end_offset": 6707,
+            "length": 7,
+            "runtime_start": 6956,
+            "runtime_end": 6963,
+            "status": "UNDERSTOOD",
+            "original_sha256": "7adb77c2347557336df7ba14771d9aaf740bdb4d9f340375e44b35d7971b41cb",
+            "reassembled_sha256": "7adb77c2347557336df7ba14771d9aaf740bdb4d9f340375e44b35d7971b41cb",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI.COM+1A29",
+              "evidence.json#seeds/PLI.COM+1A2C"
+            ]
+          },
+          {
+            "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+            "start_offset": 6707,
+            "end_offset": 6709,
+            "length": 2,
+            "runtime_start": 6963,
+            "runtime_end": 6965,
+            "status": "UNDERSTOOD",
+            "original_sha256": "656d2467632828836d1d5741ed20bd82df3123581f5d2bb9384f4299dd6a430d",
+            "reassembled_sha256": "656d2467632828836d1d5741ed20bd82df3123581f5d2bb9384f4299dd6a430d",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI.COM+1A33"
+            ]
+          },
+          {
+            "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+            "start_offset": 6709,
+            "end_offset": 6712,
+            "length": 3,
+            "runtime_start": 6965,
+            "runtime_end": 6968,
+            "status": "UNDERSTOOD",
+            "original_sha256": "8abfa0c7de24fc16013561f722bcdf94606720c491c748c5160531e72faff4c8",
+            "reassembled_sha256": "8abfa0c7de24fc16013561f722bcdf94606720c491c748c5160531e72faff4c8",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI.COM+1A33",
+              "evidence.json#seeds/PLI.COM+1A35"
+            ]
+          },
+          {
+            "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+            "start_offset": 6712,
+            "end_offset": 6720,
+            "length": 8,
+            "runtime_start": 6968,
+            "runtime_end": 6976,
+            "status": "UNDERSTOOD",
+            "original_sha256": "dd7fecc5aabbfbd47fa30102813f5cf9e1747338702173a60ef5c626028ec070",
+            "reassembled_sha256": "dd7fecc5aabbfbd47fa30102813f5cf9e1747338702173a60ef5c626028ec070",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI.COM+1A33",
+              "evidence.json#seeds/PLI.COM+1A35",
+              "evidence.json#seeds/PLI.COM+1A38"
+            ]
+          },
+          {
+            "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+            "start_offset": 6720,
+            "end_offset": 6723,
+            "length": 3,
+            "runtime_start": 6976,
+            "runtime_end": 6979,
+            "status": "UNDERSTOOD",
+            "original_sha256": "bbd288654d2db00725288dd3daf43521075a9b3f5d711f5b5929648ca3470f0a",
+            "reassembled_sha256": "bbd288654d2db00725288dd3daf43521075a9b3f5d711f5b5929648ca3470f0a",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI.COM+1A40"
+            ]
+          },
+          {
+            "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+            "start_offset": 6723,
+            "end_offset": 6731,
+            "length": 8,
+            "runtime_start": 6979,
+            "runtime_end": 6987,
+            "status": "UNDERSTOOD",
+            "original_sha256": "7e70f849dffd763d1ce4d1cb60ffd14d424607b17ca814ce6dafd47be979c4b6",
+            "reassembled_sha256": "7e70f849dffd763d1ce4d1cb60ffd14d424607b17ca814ce6dafd47be979c4b6",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI.COM+1A40",
+              "evidence.json#seeds/PLI.COM+1A43"
+            ]
+          },
+          {
+            "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+            "start_offset": 6731,
+            "end_offset": 8064,
+            "length": 1333,
+            "runtime_start": 6987,
+            "runtime_end": 8320,
+            "status": "RAW",
+            "original_sha256": "be9f77a6c07286041d7a42d3cce35e546ad3390ad916130de5c23173e9d7225b",
+            "reassembled_sha256": "be9f77a6c07286041d7a42d3cce35e546ad3390ad916130de5c23173e9d7225b",
+            "exact_match": true,
+            "evidence_refs": []
+          }
+        ],
+        "coordinate_only_labels": [
+          2848
+        ]
+      },
+      {
+        "name": "PLI0.OVL",
+        "version": "Digital Research PL/I-80 v1.4 (exact SHA-256 identifies this image)",
+        "sha256": "e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff",
+        "length": 18048,
+        "runtime_base": 8704,
+        "label_prefix": "PLI0",
+        "source": "PLI0.asm",
+        "original_filename": "PLI0.OVL",
+        "load_base_evidence_ref": "evidence.json#load_bases/PLI0.OVL",
+        "sections": [
+          {
+            "image_sha256": "e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff",
+            "start_offset": 0,
+            "end_offset": 6676,
+            "length": 6676,
+            "runtime_start": 8704,
+            "runtime_end": 15380,
+            "status": "RAW",
+            "original_sha256": "2f404e397f0fe2b734038adf917b773f6b578471537f6196ec36c663fce7cdda",
+            "reassembled_sha256": "2f404e397f0fe2b734038adf917b773f6b578471537f6196ec36c663fce7cdda",
+            "exact_match": true,
+            "evidence_refs": []
+          },
+          {
+            "image_sha256": "e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff",
+            "start_offset": 6676,
+            "end_offset": 6693,
+            "length": 17,
+            "runtime_start": 15380,
+            "runtime_end": 15397,
+            "status": "UNDERSTOOD",
+            "original_sha256": "5586c3c61608800573b3187f4f0f55248472a96453a6b51c7223d23374a8c22c",
+            "reassembled_sha256": "5586c3c61608800573b3187f4f0f55248472a96453a6b51c7223d23374a8c22c",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI0.OVL+1A14"
+            ]
+          },
+          {
+            "image_sha256": "e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff",
+            "start_offset": 6693,
+            "end_offset": 6699,
+            "length": 6,
+            "runtime_start": 15397,
+            "runtime_end": 15403,
+            "status": "RAW",
+            "original_sha256": "118fe3d951a42dcfaee76be886a07b893b9e13ba8fdbad02b1455cc32ea35244",
+            "reassembled_sha256": "118fe3d951a42dcfaee76be886a07b893b9e13ba8fdbad02b1455cc32ea35244",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI0.OVL+1A14"
+            ]
+          },
+          {
+            "image_sha256": "e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff",
+            "start_offset": 6699,
+            "end_offset": 6723,
+            "length": 24,
+            "runtime_start": 15403,
+            "runtime_end": 15427,
+            "status": "UNDERSTOOD",
+            "original_sha256": "3517eb566e0a177e80cdbaa98b25c37e599fe4adf7f9a3c19cbc18249c991d06",
+            "reassembled_sha256": "3517eb566e0a177e80cdbaa98b25c37e599fe4adf7f9a3c19cbc18249c991d06",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI0.OVL+1A14"
+            ]
+          },
+          {
+            "image_sha256": "e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff",
+            "start_offset": 6723,
+            "end_offset": 6726,
+            "length": 3,
+            "runtime_start": 15427,
+            "runtime_end": 15430,
+            "status": "RAW",
+            "original_sha256": "f7190c15d6deae46200d439af96c0a306345480d74408bc1170d76b7d0a23f31",
+            "reassembled_sha256": "f7190c15d6deae46200d439af96c0a306345480d74408bc1170d76b7d0a23f31",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI0.OVL+1A14"
+            ]
+          },
+          {
+            "image_sha256": "e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff",
+            "start_offset": 6726,
+            "end_offset": 6727,
+            "length": 1,
+            "runtime_start": 15430,
+            "runtime_end": 15431,
+            "status": "UNDERSTOOD",
+            "original_sha256": "4fb733bedb74fec8d65bedf056b935189a289e928b3302bec38a281814de523a",
+            "reassembled_sha256": "4fb733bedb74fec8d65bedf056b935189a289e928b3302bec38a281814de523a",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI0.OVL+1A14"
+            ]
+          },
+          {
+            "image_sha256": "e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff",
+            "start_offset": 6727,
+            "end_offset": 6781,
+            "length": 54,
+            "runtime_start": 15431,
+            "runtime_end": 15485,
+            "status": "UNDERSTOOD",
+            "original_sha256": "cb7d534d6f99ce4e56b8739661726cf95183c8ec1190624d50d76cf4dfa68b11",
+            "reassembled_sha256": "cb7d534d6f99ce4e56b8739661726cf95183c8ec1190624d50d76cf4dfa68b11",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI0.OVL+1A47"
+            ]
+          },
+          {
+            "image_sha256": "e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff",
+            "start_offset": 6781,
+            "end_offset": 6796,
+            "length": 15,
+            "runtime_start": 15485,
+            "runtime_end": 15500,
+            "status": "RAW",
+            "original_sha256": "cc0ab90a5eee2dbbffac5373f27f1ec931f3a1c6a4b021f65760964f9594cdbd",
+            "reassembled_sha256": "cc0ab90a5eee2dbbffac5373f27f1ec931f3a1c6a4b021f65760964f9594cdbd",
+            "exact_match": true,
+            "evidence_refs": []
+          },
+          {
+            "image_sha256": "e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff",
+            "start_offset": 6796,
+            "end_offset": 6822,
+            "length": 26,
+            "runtime_start": 15500,
+            "runtime_end": 15526,
+            "status": "UNDERSTOOD",
+            "original_sha256": "6b4730830d7b7d896c36614b476e9587283f4c112aec0d33614bf4f5f1fdfc4b",
+            "reassembled_sha256": "6b4730830d7b7d896c36614b476e9587283f4c112aec0d33614bf4f5f1fdfc4b",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI0.OVL+1A8C"
+            ]
+          },
+          {
+            "image_sha256": "e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff",
+            "start_offset": 6822,
+            "end_offset": 8459,
+            "length": 1637,
+            "runtime_start": 15526,
+            "runtime_end": 17163,
+            "status": "RAW",
+            "original_sha256": "158cb731beeb91c285ab8c10cdb01b0179412c89d7c646cedd4a5b432385379b",
+            "reassembled_sha256": "158cb731beeb91c285ab8c10cdb01b0179412c89d7c646cedd4a5b432385379b",
+            "exact_match": true,
+            "evidence_refs": []
+          },
+          {
+            "image_sha256": "e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff",
+            "start_offset": 8459,
+            "end_offset": 8473,
+            "length": 14,
+            "runtime_start": 17163,
+            "runtime_end": 17177,
+            "status": "UNDERSTOOD",
+            "original_sha256": "f8e39bd52770dcfbd06326ae1535a11bb379b28f7879405f1ff506dae0bad57c",
+            "reassembled_sha256": "f8e39bd52770dcfbd06326ae1535a11bb379b28f7879405f1ff506dae0bad57c",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI0.OVL+210B"
+            ]
+          },
+          {
+            "image_sha256": "e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff",
+            "start_offset": 8473,
+            "end_offset": 9155,
+            "length": 682,
+            "runtime_start": 17177,
+            "runtime_end": 17859,
+            "status": "RAW",
+            "original_sha256": "c72208162df4209ae2f719b8391c4991e67686f736592db0ea21e34fc9d2e47c",
+            "reassembled_sha256": "c72208162df4209ae2f719b8391c4991e67686f736592db0ea21e34fc9d2e47c",
+            "exact_match": true,
+            "evidence_refs": []
+          },
+          {
+            "image_sha256": "e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff",
+            "start_offset": 9155,
+            "end_offset": 9183,
+            "length": 28,
+            "runtime_start": 17859,
+            "runtime_end": 17887,
+            "status": "UNDERSTOOD",
+            "original_sha256": "2af8357acb7030f956df17a5e679619f2725dfbbe3b8e618d5c5005bfd9e7208",
+            "reassembled_sha256": "2af8357acb7030f956df17a5e679619f2725dfbbe3b8e618d5c5005bfd9e7208",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI0.OVL+23C3"
+            ]
+          },
+          {
+            "image_sha256": "e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff",
+            "start_offset": 9183,
+            "end_offset": 9227,
+            "length": 44,
+            "runtime_start": 17887,
+            "runtime_end": 17931,
+            "status": "UNDERSTOOD",
+            "original_sha256": "3bf03c009bc7525b38f09cbf79e4aa7bfd0bd2ed66e62df09703cd1601afb290",
+            "reassembled_sha256": "3bf03c009bc7525b38f09cbf79e4aa7bfd0bd2ed66e62df09703cd1601afb290",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI0.OVL+23DF"
+            ]
+          },
+          {
+            "image_sha256": "e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff",
+            "start_offset": 9227,
+            "end_offset": 9238,
+            "length": 11,
+            "runtime_start": 17931,
+            "runtime_end": 17942,
+            "status": "UNDERSTOOD",
+            "original_sha256": "0aa0295dd4b9d09566bb8270b0cb62a6f64ac19689637c89742bf245283a0df7",
+            "reassembled_sha256": "0aa0295dd4b9d09566bb8270b0cb62a6f64ac19689637c89742bf245283a0df7",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI0.OVL+240B"
+            ]
+          },
+          {
+            "image_sha256": "e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff",
+            "start_offset": 9238,
+            "end_offset": 9241,
+            "length": 3,
+            "runtime_start": 17942,
+            "runtime_end": 17945,
+            "status": "RAW",
+            "original_sha256": "0b75112fda6b44e2e23995b6374fa2d79f232bab95479e55bfeef1f29a529c8f",
+            "reassembled_sha256": "0b75112fda6b44e2e23995b6374fa2d79f232bab95479e55bfeef1f29a529c8f",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI0.OVL+240B"
+            ]
+          },
+          {
+            "image_sha256": "e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff",
+            "start_offset": 9241,
+            "end_offset": 9259,
+            "length": 18,
+            "runtime_start": 17945,
+            "runtime_end": 17963,
+            "status": "UNDERSTOOD",
+            "original_sha256": "dc4becb3c1b7ec14ddc2b390ef5e1545531a733f35f4b8f7ef0fe8f211676797",
+            "reassembled_sha256": "dc4becb3c1b7ec14ddc2b390ef5e1545531a733f35f4b8f7ef0fe8f211676797",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI0.OVL+240B"
+            ]
+          },
+          {
+            "image_sha256": "e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff",
+            "start_offset": 9259,
+            "end_offset": 9404,
+            "length": 145,
+            "runtime_start": 17963,
+            "runtime_end": 18108,
+            "status": "RAW",
+            "original_sha256": "5788f8641535c481a8648290ce5886aa763a4139a5d9c4ac208a3bf37a7b6ec8",
+            "reassembled_sha256": "5788f8641535c481a8648290ce5886aa763a4139a5d9c4ac208a3bf37a7b6ec8",
+            "exact_match": true,
+            "evidence_refs": []
+          },
+          {
+            "image_sha256": "e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff",
+            "start_offset": 9404,
+            "end_offset": 9433,
+            "length": 29,
+            "runtime_start": 18108,
+            "runtime_end": 18137,
+            "status": "STRUCTURED",
+            "original_sha256": "048c910e07463df1ff0e093140a3374275f26b53bdc4047eaca7e5ec149ba28d",
+            "reassembled_sha256": "048c910e07463df1ff0e093140a3374275f26b53bdc4047eaca7e5ec149ba28d",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI0.OVL+24BC"
+            ]
+          },
+          {
+            "image_sha256": "e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff",
+            "start_offset": 9433,
+            "end_offset": 9439,
+            "length": 6,
+            "runtime_start": 18137,
+            "runtime_end": 18143,
+            "status": "RAW",
+            "original_sha256": "1f56b1a2194060b25507e9f7e173e01dd9284f9567679867d4ab99ebbb2c9386",
+            "reassembled_sha256": "1f56b1a2194060b25507e9f7e173e01dd9284f9567679867d4ab99ebbb2c9386",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI0.OVL+24BC"
+            ]
+          },
+          {
+            "image_sha256": "e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff",
+            "start_offset": 9439,
+            "end_offset": 9520,
+            "length": 81,
+            "runtime_start": 18143,
+            "runtime_end": 18224,
+            "status": "STRUCTURED",
+            "original_sha256": "c6abf4bd63cf1e6c8d42440673ff958aee08451c5b0210b81ad17c06dc17778d",
+            "reassembled_sha256": "c6abf4bd63cf1e6c8d42440673ff958aee08451c5b0210b81ad17c06dc17778d",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI0.OVL+24BC"
+            ]
+          },
+          {
+            "image_sha256": "e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff",
+            "start_offset": 9520,
+            "end_offset": 9525,
+            "length": 5,
+            "runtime_start": 18224,
+            "runtime_end": 18229,
+            "status": "RAW",
+            "original_sha256": "922e5b5c9625e0eba42b8a0907d12c7c82eddfaabfc0d008f1bdffffacbf4476",
+            "reassembled_sha256": "922e5b5c9625e0eba42b8a0907d12c7c82eddfaabfc0d008f1bdffffacbf4476",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI0.OVL+24BC"
+            ]
+          },
+          {
+            "image_sha256": "e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff",
+            "start_offset": 9525,
+            "end_offset": 9562,
+            "length": 37,
+            "runtime_start": 18229,
+            "runtime_end": 18266,
+            "status": "STRUCTURED",
+            "original_sha256": "a7cfdb56f33224fe748a02b1b56ad40f1f6007734793176d1b456d27a12cf317",
+            "reassembled_sha256": "a7cfdb56f33224fe748a02b1b56ad40f1f6007734793176d1b456d27a12cf317",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI0.OVL+24BC"
+            ]
+          },
+          {
+            "image_sha256": "e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff",
+            "start_offset": 9562,
+            "end_offset": 9568,
+            "length": 6,
+            "runtime_start": 18266,
+            "runtime_end": 18272,
+            "status": "RAW",
+            "original_sha256": "d8367b48b447feb382f52bd8c0c2c70eb158e9a7907acc542928a9c33352b282",
+            "reassembled_sha256": "d8367b48b447feb382f52bd8c0c2c70eb158e9a7907acc542928a9c33352b282",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI0.OVL+24BC"
+            ]
+          },
+          {
+            "image_sha256": "e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff",
+            "start_offset": 9568,
+            "end_offset": 9599,
+            "length": 31,
+            "runtime_start": 18272,
+            "runtime_end": 18303,
+            "status": "STRUCTURED",
+            "original_sha256": "84ef26249f0116692dc3e6c195f4914c6639930b4441eb467353dcf797a5a5d1",
+            "reassembled_sha256": "84ef26249f0116692dc3e6c195f4914c6639930b4441eb467353dcf797a5a5d1",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI0.OVL+24BC"
+            ]
+          },
+          {
+            "image_sha256": "e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff",
+            "start_offset": 9599,
+            "end_offset": 9717,
+            "length": 118,
+            "runtime_start": 18303,
+            "runtime_end": 18421,
+            "status": "RAW",
+            "original_sha256": "da1b19284d0d8a8fe7142bc658b9935529c02a3425c78937f38d7f7721766935",
+            "reassembled_sha256": "da1b19284d0d8a8fe7142bc658b9935529c02a3425c78937f38d7f7721766935",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI0.OVL+24BC"
+            ]
+          },
+          {
+            "image_sha256": "e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff",
+            "start_offset": 9717,
+            "end_offset": 9770,
+            "length": 53,
+            "runtime_start": 18421,
+            "runtime_end": 18474,
+            "status": "STRUCTURED",
+            "original_sha256": "e46408c2c321da579c699b5b384b0e8ebfa355e7dad0454396e9f522c88ed486",
+            "reassembled_sha256": "e46408c2c321da579c699b5b384b0e8ebfa355e7dad0454396e9f522c88ed486",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI0.OVL+24BC"
+            ]
+          },
+          {
+            "image_sha256": "e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff",
+            "start_offset": 9770,
+            "end_offset": 9802,
+            "length": 32,
+            "runtime_start": 18474,
+            "runtime_end": 18506,
+            "status": "RAW",
+            "original_sha256": "9159fb8ed1a00c832a00b5e8edb8f03026ffa409d0ac957bdeffb0e20884ecf8",
+            "reassembled_sha256": "9159fb8ed1a00c832a00b5e8edb8f03026ffa409d0ac957bdeffb0e20884ecf8",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI0.OVL+24BC"
+            ]
+          },
+          {
+            "image_sha256": "e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff",
+            "start_offset": 9802,
+            "end_offset": 9811,
+            "length": 9,
+            "runtime_start": 18506,
+            "runtime_end": 18515,
+            "status": "STRUCTURED",
+            "original_sha256": "e4c198b63010e3404f1fc4bd2aa258b714304c321a2ae5f862c25d11c079e782",
+            "reassembled_sha256": "e4c198b63010e3404f1fc4bd2aa258b714304c321a2ae5f862c25d11c079e782",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI0.OVL+24BC"
+            ]
+          },
+          {
+            "image_sha256": "e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff",
+            "start_offset": 9811,
+            "end_offset": 9819,
+            "length": 8,
+            "runtime_start": 18515,
+            "runtime_end": 18523,
+            "status": "RAW",
+            "original_sha256": "d538bd8c0f060be93b859e3a8394c29a55f776dcfb68bf89adf7fdf9caf9ed3b",
+            "reassembled_sha256": "d538bd8c0f060be93b859e3a8394c29a55f776dcfb68bf89adf7fdf9caf9ed3b",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI0.OVL+24BC"
+            ]
+          },
+          {
+            "image_sha256": "e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff",
+            "start_offset": 9819,
+            "end_offset": 9828,
+            "length": 9,
+            "runtime_start": 18523,
+            "runtime_end": 18532,
+            "status": "STRUCTURED",
+            "original_sha256": "90931fc7a4f66a61e9c0b1a37d8046da0c504d481c6bcf32d53dbddd44372575",
+            "reassembled_sha256": "90931fc7a4f66a61e9c0b1a37d8046da0c504d481c6bcf32d53dbddd44372575",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI0.OVL+24BC"
+            ]
+          },
+          {
+            "image_sha256": "e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff",
+            "start_offset": 9828,
+            "end_offset": 9836,
+            "length": 8,
+            "runtime_start": 18532,
+            "runtime_end": 18540,
+            "status": "RAW",
+            "original_sha256": "3d3907d0889103541c2c3368c424d2e6faa3b55c517b12007bf0cb91398272c0",
+            "reassembled_sha256": "3d3907d0889103541c2c3368c424d2e6faa3b55c517b12007bf0cb91398272c0",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI0.OVL+24BC"
+            ]
+          },
+          {
+            "image_sha256": "e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff",
+            "start_offset": 9836,
+            "end_offset": 9850,
+            "length": 14,
+            "runtime_start": 18540,
+            "runtime_end": 18554,
+            "status": "STRUCTURED",
+            "original_sha256": "167d41cd6468af962d7eafd6e9b49ecc1bdf01859b6a8eb185f89db9aeeb0b53",
+            "reassembled_sha256": "167d41cd6468af962d7eafd6e9b49ecc1bdf01859b6a8eb185f89db9aeeb0b53",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI0.OVL+24BC"
+            ]
+          },
+          {
+            "image_sha256": "e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff",
+            "start_offset": 9850,
+            "end_offset": 9853,
+            "length": 3,
+            "runtime_start": 18554,
+            "runtime_end": 18557,
+            "status": "RAW",
+            "original_sha256": "1cfce87f594c6158b3575db9f7b64b77413af4ee949267732e5446af9001f76c",
+            "reassembled_sha256": "1cfce87f594c6158b3575db9f7b64b77413af4ee949267732e5446af9001f76c",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI0.OVL+24BC"
+            ]
+          },
+          {
+            "image_sha256": "e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff",
+            "start_offset": 9853,
+            "end_offset": 9913,
+            "length": 60,
+            "runtime_start": 18557,
+            "runtime_end": 18617,
+            "status": "STRUCTURED",
+            "original_sha256": "7defef0b8abf7c03e8102ebb39dc30d875b168f329186418a3745b29de3815a0",
+            "reassembled_sha256": "7defef0b8abf7c03e8102ebb39dc30d875b168f329186418a3745b29de3815a0",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI0.OVL+24BC"
+            ]
+          },
+          {
+            "image_sha256": "e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff",
+            "start_offset": 9913,
+            "end_offset": 10029,
+            "length": 116,
+            "runtime_start": 18617,
+            "runtime_end": 18733,
+            "status": "RAW",
+            "original_sha256": "11108c7e68c8fdb61f28cd06f36a26561610b318d762a0bf5a9135e09ebafb38",
+            "reassembled_sha256": "11108c7e68c8fdb61f28cd06f36a26561610b318d762a0bf5a9135e09ebafb38",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI0.OVL+24BC"
+            ]
+          },
+          {
+            "image_sha256": "e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff",
+            "start_offset": 10029,
+            "end_offset": 10139,
+            "length": 110,
+            "runtime_start": 18733,
+            "runtime_end": 18843,
+            "status": "STRUCTURED",
+            "original_sha256": "eebf2be0a2213859d90814a954a4ddd42d3caca4f9dee8f5014de56847185276",
+            "reassembled_sha256": "eebf2be0a2213859d90814a954a4ddd42d3caca4f9dee8f5014de56847185276",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI0.OVL+24BC"
+            ]
+          },
+          {
+            "image_sha256": "e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff",
+            "start_offset": 10139,
+            "end_offset": 10156,
+            "length": 17,
+            "runtime_start": 18843,
+            "runtime_end": 18860,
+            "status": "RAW",
+            "original_sha256": "402ada93054b795c407377808a7348c40ca7d2440ba995baebbe517afe0120fd",
+            "reassembled_sha256": "402ada93054b795c407377808a7348c40ca7d2440ba995baebbe517afe0120fd",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI0.OVL+24BC"
+            ]
+          },
+          {
+            "image_sha256": "e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff",
+            "start_offset": 10156,
+            "end_offset": 10318,
+            "length": 162,
+            "runtime_start": 18860,
+            "runtime_end": 19022,
+            "status": "STRUCTURED",
+            "original_sha256": "39eee74042cbc73b3f9593dc039629cdb75ce5b10e6206b20986dac18854e793",
+            "reassembled_sha256": "39eee74042cbc73b3f9593dc039629cdb75ce5b10e6206b20986dac18854e793",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI0.OVL+24BC"
+            ]
+          },
+          {
+            "image_sha256": "e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff",
+            "start_offset": 10318,
+            "end_offset": 10329,
+            "length": 11,
+            "runtime_start": 19022,
+            "runtime_end": 19033,
+            "status": "RAW",
+            "original_sha256": "21196db19cab52280b2c13594f951a426607d78048b660a0af0f1d78c768de56",
+            "reassembled_sha256": "21196db19cab52280b2c13594f951a426607d78048b660a0af0f1d78c768de56",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI0.OVL+24BC"
+            ]
+          },
+          {
+            "image_sha256": "e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff",
+            "start_offset": 10329,
+            "end_offset": 10395,
+            "length": 66,
+            "runtime_start": 19033,
+            "runtime_end": 19099,
+            "status": "STRUCTURED",
+            "original_sha256": "68c34eba905c2b19d81d05dd1809ff30ba3109ac81737bdec035a69e756f0daf",
+            "reassembled_sha256": "68c34eba905c2b19d81d05dd1809ff30ba3109ac81737bdec035a69e756f0daf",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI0.OVL+24BC"
+            ]
+          },
+          {
+            "image_sha256": "e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff",
+            "start_offset": 10395,
+            "end_offset": 18018,
+            "length": 7623,
+            "runtime_start": 19099,
+            "runtime_end": 26722,
+            "status": "RAW",
+            "original_sha256": "831e9ac9145c170fb47ab709749183fa505b8e2eeb8d3fbf35aa11903e4969ed",
+            "reassembled_sha256": "831e9ac9145c170fb47ab709749183fa505b8e2eeb8d3fbf35aa11903e4969ed",
+            "exact_match": true,
+            "evidence_refs": []
+          },
+          {
+            "image_sha256": "e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff",
+            "start_offset": 18018,
+            "end_offset": 18027,
+            "length": 9,
+            "runtime_start": 26722,
+            "runtime_end": 26731,
+            "status": "UNDERSTOOD",
+            "original_sha256": "1d7c4a2c0c7eea01716faeb4f7f82d1d3ba94f24c97200745c134ec2bdfc8fa6",
+            "reassembled_sha256": "1d7c4a2c0c7eea01716faeb4f7f82d1d3ba94f24c97200745c134ec2bdfc8fa6",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI0.OVL+4662"
+            ]
+          },
+          {
+            "image_sha256": "e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff",
+            "start_offset": 18027,
+            "end_offset": 18048,
+            "length": 21,
+            "runtime_start": 26731,
+            "runtime_end": 26752,
+            "status": "RAW",
+            "original_sha256": "69eea54c7b32ca122edf999ba60a4bda487093fff5ca6716733af406bbcfcfae",
+            "reassembled_sha256": "69eea54c7b32ca122edf999ba60a4bda487093fff5ca6716733af406bbcfcfae",
+            "exact_match": true,
+            "evidence_refs": []
+          }
+        ],
+        "coordinate_only_labels": [
+          6688,
+          6704,
+          6752,
+          6816,
+          9184,
+          9200,
+          9216,
+          9232,
+          9440,
+          9472,
+          9504,
+          9552,
+          9840,
+          9888,
+          9904,
+          10080,
+          10112,
+          10160,
+          10256,
+          10272,
+          10368,
+          10384
+        ]
+      },
+      {
+        "name": "PLI1.OVL",
+        "version": "Digital Research PL/I-80 v1.4 (exact SHA-256 identifies this image)",
+        "sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+        "length": 34816,
+        "runtime_base": 8704,
+        "label_prefix": "PLI1",
+        "source": "PLI1.asm",
+        "original_filename": "PLI1.OVL",
+        "load_base_evidence_ref": "evidence.json#load_bases/PLI1.OVL",
+        "sections": [
+          {
+            "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+            "start_offset": 0,
+            "end_offset": 17025,
+            "length": 17025,
+            "runtime_start": 8704,
+            "runtime_end": 25729,
+            "status": "RAW",
+            "original_sha256": "3f4ec343e829be3d6c966a63f9a77c7ca28442e388719980b1439675be7df9fe",
+            "reassembled_sha256": "3f4ec343e829be3d6c966a63f9a77c7ca28442e388719980b1439675be7df9fe",
+            "exact_match": true,
+            "evidence_refs": []
+          },
+          {
+            "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+            "start_offset": 17025,
+            "end_offset": 17038,
+            "length": 13,
+            "runtime_start": 25729,
+            "runtime_end": 25742,
+            "status": "UNDERSTOOD",
+            "original_sha256": "66daf820369b12db3051db503bda485ba9af5692b1ba2b1d5926ff213f3caabf",
+            "reassembled_sha256": "66daf820369b12db3051db503bda485ba9af5692b1ba2b1d5926ff213f3caabf",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI1.OVL+4281"
+            ]
+          },
+          {
+            "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+            "start_offset": 17038,
+            "end_offset": 17300,
+            "length": 262,
+            "runtime_start": 25742,
+            "runtime_end": 26004,
+            "status": "RAW",
+            "original_sha256": "9d65c114d0c5f46c6baa0eb9f10ddd7204eeb0d482c0283f170c0b9438a9e063",
+            "reassembled_sha256": "9d65c114d0c5f46c6baa0eb9f10ddd7204eeb0d482c0283f170c0b9438a9e063",
+            "exact_match": true,
+            "evidence_refs": []
+          },
+          {
+            "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+            "start_offset": 17300,
+            "end_offset": 17336,
+            "length": 36,
+            "runtime_start": 26004,
+            "runtime_end": 26040,
+            "status": "UNDERSTOOD",
+            "original_sha256": "56f5c3ad9c52253b6b0c7d23d28ebd338172a56935e378ee08dbdb1c1b345dc0",
+            "reassembled_sha256": "56f5c3ad9c52253b6b0c7d23d28ebd338172a56935e378ee08dbdb1c1b345dc0",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI1.OVL+4394"
+            ]
+          },
+          {
+            "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+            "start_offset": 17336,
+            "end_offset": 17342,
+            "length": 6,
+            "runtime_start": 26040,
+            "runtime_end": 26046,
+            "status": "RAW",
+            "original_sha256": "0212e755a6ba330c6ad4a17706f81e50458d65b8656e87a62faff4e8fd3a2c9b",
+            "reassembled_sha256": "0212e755a6ba330c6ad4a17706f81e50458d65b8656e87a62faff4e8fd3a2c9b",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI1.OVL+4394"
+            ]
+          },
+          {
+            "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+            "start_offset": 17342,
+            "end_offset": 17365,
+            "length": 23,
+            "runtime_start": 26046,
+            "runtime_end": 26069,
+            "status": "UNDERSTOOD",
+            "original_sha256": "1be83262766f1eec4551acfcde2b46ad5c5b9aa9c66a1fc4d3740b64bcac1c4b",
+            "reassembled_sha256": "1be83262766f1eec4551acfcde2b46ad5c5b9aa9c66a1fc4d3740b64bcac1c4b",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI1.OVL+4394"
+            ]
+          },
+          {
+            "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+            "start_offset": 17365,
+            "end_offset": 17512,
+            "length": 147,
+            "runtime_start": 26069,
+            "runtime_end": 26216,
+            "status": "RAW",
+            "original_sha256": "9033ad17958b1f9fd20efeb9bc7c9b84817c8f5d31939d0684de359360579617",
+            "reassembled_sha256": "9033ad17958b1f9fd20efeb9bc7c9b84817c8f5d31939d0684de359360579617",
+            "exact_match": true,
+            "evidence_refs": []
+          },
+          {
+            "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+            "start_offset": 17512,
+            "end_offset": 17639,
+            "length": 127,
+            "runtime_start": 26216,
+            "runtime_end": 26343,
+            "status": "STRUCTURED",
+            "original_sha256": "70d6b63e0324c1a7bee09b03f089f28b5f3931a283e04ebe9eac88ee2eec8ee0",
+            "reassembled_sha256": "70d6b63e0324c1a7bee09b03f089f28b5f3931a283e04ebe9eac88ee2eec8ee0",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI1.OVL+4468"
+            ]
+          },
+          {
+            "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+            "start_offset": 17639,
+            "end_offset": 17661,
+            "length": 22,
+            "runtime_start": 26343,
+            "runtime_end": 26365,
+            "status": "RAW",
+            "original_sha256": "d94c990474df55f18415c8a033bcca46578d6f0b266fee7fc2241cb76cd34c26",
+            "reassembled_sha256": "d94c990474df55f18415c8a033bcca46578d6f0b266fee7fc2241cb76cd34c26",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI1.OVL+4468"
+            ]
+          },
+          {
+            "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+            "start_offset": 17661,
+            "end_offset": 17707,
+            "length": 46,
+            "runtime_start": 26365,
+            "runtime_end": 26411,
+            "status": "STRUCTURED",
+            "original_sha256": "12857144ff424427a71e43573d5bba9b3d12b5e58d7a93079eb8864a9dc33a8e",
+            "reassembled_sha256": "12857144ff424427a71e43573d5bba9b3d12b5e58d7a93079eb8864a9dc33a8e",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI1.OVL+4468"
+            ]
+          },
+          {
+            "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+            "start_offset": 17707,
+            "end_offset": 18067,
+            "length": 360,
+            "runtime_start": 26411,
+            "runtime_end": 26771,
+            "status": "RAW",
+            "original_sha256": "847721e1472cbd2bdec4f6364ead8a622d282b29143b40ef984dc9f01c7e39f2",
+            "reassembled_sha256": "847721e1472cbd2bdec4f6364ead8a622d282b29143b40ef984dc9f01c7e39f2",
+            "exact_match": true,
+            "evidence_refs": []
+          },
+          {
+            "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+            "start_offset": 18067,
+            "end_offset": 18087,
+            "length": 20,
+            "runtime_start": 26771,
+            "runtime_end": 26791,
+            "status": "UNDERSTOOD",
+            "original_sha256": "d2622b5ad4152b9d4b3421f9afeb5fb9842e42cc1d5ea1acf767e9b37a36bc85",
+            "reassembled_sha256": "d2622b5ad4152b9d4b3421f9afeb5fb9842e42cc1d5ea1acf767e9b37a36bc85",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI1.OVL+4693"
+            ]
+          },
+          {
+            "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+            "start_offset": 18087,
+            "end_offset": 18232,
+            "length": 145,
+            "runtime_start": 26791,
+            "runtime_end": 26936,
+            "status": "RAW",
+            "original_sha256": "4127be3be4e3e35f9d4123f5d1491fcd53b023ef89ef8f7b339dc00bc7a367d7",
+            "reassembled_sha256": "4127be3be4e3e35f9d4123f5d1491fcd53b023ef89ef8f7b339dc00bc7a367d7",
+            "exact_match": true,
+            "evidence_refs": []
+          },
+          {
+            "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+            "start_offset": 18232,
+            "end_offset": 18317,
+            "length": 85,
+            "runtime_start": 26936,
+            "runtime_end": 27021,
+            "status": "STRUCTURED",
+            "original_sha256": "4f4c921d96dbbd5786ad66798c37fd879eead96d25677b81d6264e1a07df22d3",
+            "reassembled_sha256": "4f4c921d96dbbd5786ad66798c37fd879eead96d25677b81d6264e1a07df22d3",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI1.OVL+4738"
+            ]
+          },
+          {
+            "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+            "start_offset": 18317,
+            "end_offset": 31309,
+            "length": 12992,
+            "runtime_start": 27021,
+            "runtime_end": 40013,
+            "status": "RAW",
+            "original_sha256": "612e5c799ea12207c9698a97c2280229ca02450a61b057eacf7c354dc60eceeb",
+            "reassembled_sha256": "612e5c799ea12207c9698a97c2280229ca02450a61b057eacf7c354dc60eceeb",
+            "exact_match": true,
+            "evidence_refs": []
+          },
+          {
+            "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+            "start_offset": 31309,
+            "end_offset": 31331,
+            "length": 22,
+            "runtime_start": 40013,
+            "runtime_end": 40035,
+            "status": "UNDERSTOOD",
+            "original_sha256": "c13a1cf72782a7860917b2eb56a322021067454d2d320693bf7ae26c90a29c8f",
+            "reassembled_sha256": "c13a1cf72782a7860917b2eb56a322021067454d2d320693bf7ae26c90a29c8f",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI1.OVL+7A4D"
+            ]
+          },
+          {
+            "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+            "start_offset": 31331,
+            "end_offset": 33686,
+            "length": 2355,
+            "runtime_start": 40035,
+            "runtime_end": 42390,
+            "status": "RAW",
+            "original_sha256": "1f0512739da9c3c692165c2a23cbac97ae9c08409086cc61002e7dd7d5e28ddd",
+            "reassembled_sha256": "1f0512739da9c3c692165c2a23cbac97ae9c08409086cc61002e7dd7d5e28ddd",
+            "exact_match": true,
+            "evidence_refs": []
+          },
+          {
+            "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+            "start_offset": 33686,
+            "end_offset": 33696,
+            "length": 10,
+            "runtime_start": 42390,
+            "runtime_end": 42400,
+            "status": "UNDERSTOOD",
+            "original_sha256": "eb7c550adca45e0912f7fb24acc865a6fb7d11dc5187b3918995462d05a1fdd9",
+            "reassembled_sha256": "eb7c550adca45e0912f7fb24acc865a6fb7d11dc5187b3918995462d05a1fdd9",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI1.OVL+8396"
+            ]
+          },
+          {
+            "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+            "start_offset": 33696,
+            "end_offset": 34816,
+            "length": 1120,
+            "runtime_start": 42400,
+            "runtime_end": 43520,
+            "status": "RAW",
+            "original_sha256": "760da5eb4d62ec29129e51da014a48ce6883d2f41a73d0ab27b63678ab26deef",
+            "reassembled_sha256": "760da5eb4d62ec29129e51da014a48ce6883d2f41a73d0ab27b63678ab26deef",
+            "exact_match": true,
+            "evidence_refs": []
+          }
+        ],
+        "coordinate_only_labels": []
+      },
+      {
+        "name": "PLI2.OVL",
+        "version": "Digital Research PL/I-80 v1.4 (exact SHA-256 identifies this image)",
+        "sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+        "length": 33792,
+        "runtime_base": 8704,
+        "label_prefix": "PLI2",
+        "source": "PLI2.asm",
+        "original_filename": "PLI2.OVL",
+        "load_base_evidence_ref": "evidence.json#load_bases/PLI2.OVL",
+        "sections": [
+          {
+            "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+            "start_offset": 0,
+            "end_offset": 1149,
+            "length": 1149,
+            "runtime_start": 8704,
+            "runtime_end": 9853,
+            "status": "RAW",
+            "original_sha256": "bef3e4d8be07b011812207d636086124fb20f14b66425c68e6f99ea305381bcf",
+            "reassembled_sha256": "bef3e4d8be07b011812207d636086124fb20f14b66425c68e6f99ea305381bcf",
+            "exact_match": true,
+            "evidence_refs": []
+          },
+          {
+            "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+            "start_offset": 1149,
+            "end_offset": 1171,
+            "length": 22,
+            "runtime_start": 9853,
+            "runtime_end": 9875,
+            "status": "UNDERSTOOD",
+            "original_sha256": "d291b5a1c421225ed034817ac63eb7bcf1b6ba69c2649486c210d9ba62b7bb6c",
+            "reassembled_sha256": "d291b5a1c421225ed034817ac63eb7bcf1b6ba69c2649486c210d9ba62b7bb6c",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI2.OVL+047D"
+            ]
+          },
+          {
+            "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+            "start_offset": 1171,
+            "end_offset": 1193,
+            "length": 22,
+            "runtime_start": 9875,
+            "runtime_end": 9897,
+            "status": "RAW",
+            "original_sha256": "e247d4a13ee7c8d6982b49ea78b99b0dbc93963068be6f1ed2bfd85dcfe5f657",
+            "reassembled_sha256": "e247d4a13ee7c8d6982b49ea78b99b0dbc93963068be6f1ed2bfd85dcfe5f657",
+            "exact_match": true,
+            "evidence_refs": []
+          },
+          {
+            "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+            "start_offset": 1193,
+            "end_offset": 1215,
+            "length": 22,
+            "runtime_start": 9897,
+            "runtime_end": 9919,
+            "status": "UNDERSTOOD",
+            "original_sha256": "68b2b8089d306041bd07b9dd1327e829b2f09e1c6f907eff4519f630f417db29",
+            "reassembled_sha256": "68b2b8089d306041bd07b9dd1327e829b2f09e1c6f907eff4519f630f417db29",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI2.OVL+04A9"
+            ]
+          },
+          {
+            "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+            "start_offset": 1215,
+            "end_offset": 1235,
+            "length": 20,
+            "runtime_start": 9919,
+            "runtime_end": 9939,
+            "status": "UNDERSTOOD",
+            "original_sha256": "8361f1db0de4e535f1678bd09a272bba5fb122eeee77dece8438ee20d7ce18ce",
+            "reassembled_sha256": "8361f1db0de4e535f1678bd09a272bba5fb122eeee77dece8438ee20d7ce18ce",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI2.OVL+04BF"
+            ]
+          },
+          {
+            "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+            "start_offset": 1235,
+            "end_offset": 1257,
+            "length": 22,
+            "runtime_start": 9939,
+            "runtime_end": 9961,
+            "status": "UNDERSTOOD",
+            "original_sha256": "a42ccc47727b5b7fa4b41aa6f39658e5a4f59b8551ed9114cce263c7dc4b0058",
+            "reassembled_sha256": "a42ccc47727b5b7fa4b41aa6f39658e5a4f59b8551ed9114cce263c7dc4b0058",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI2.OVL+04D3"
+            ]
+          },
+          {
+            "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+            "start_offset": 1257,
+            "end_offset": 1563,
+            "length": 306,
+            "runtime_start": 9961,
+            "runtime_end": 10267,
+            "status": "RAW",
+            "original_sha256": "8fb78187177c9665c3a2d23bba612273933acd223c6c53bd804de26dc4a34ab8",
+            "reassembled_sha256": "8fb78187177c9665c3a2d23bba612273933acd223c6c53bd804de26dc4a34ab8",
+            "exact_match": true,
+            "evidence_refs": []
+          },
+          {
+            "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+            "start_offset": 1563,
+            "end_offset": 1590,
+            "length": 27,
+            "runtime_start": 10267,
+            "runtime_end": 10294,
+            "status": "UNDERSTOOD",
+            "original_sha256": "bf2d461557f5319a4e45093f1818a7ca2a6d11e14bbdd46cea400777fe9dc116",
+            "reassembled_sha256": "bf2d461557f5319a4e45093f1818a7ca2a6d11e14bbdd46cea400777fe9dc116",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI2.OVL+061B"
+            ]
+          },
+          {
+            "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+            "start_offset": 1590,
+            "end_offset": 2450,
+            "length": 860,
+            "runtime_start": 10294,
+            "runtime_end": 11154,
+            "status": "RAW",
+            "original_sha256": "db5390af2822fe38b41c1c4846a5dcb97f2657c0194a65bfc8dd876bce6643f7",
+            "reassembled_sha256": "db5390af2822fe38b41c1c4846a5dcb97f2657c0194a65bfc8dd876bce6643f7",
+            "exact_match": true,
+            "evidence_refs": []
+          },
+          {
+            "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+            "start_offset": 2450,
+            "end_offset": 2490,
+            "length": 40,
+            "runtime_start": 11154,
+            "runtime_end": 11194,
+            "status": "UNDERSTOOD",
+            "original_sha256": "0bfdf20bc0c7a13fb12df94bc9e6dd6a2d34e915f7235451d4349fce4511fa44",
+            "reassembled_sha256": "0bfdf20bc0c7a13fb12df94bc9e6dd6a2d34e915f7235451d4349fce4511fa44",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI2.OVL+0992"
+            ]
+          },
+          {
+            "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+            "start_offset": 2490,
+            "end_offset": 2539,
+            "length": 49,
+            "runtime_start": 11194,
+            "runtime_end": 11243,
+            "status": "UNDERSTOOD",
+            "original_sha256": "5c0fa7ba5381ed12ae7b77987ed730776174bb1031b44ece3c1d0729b1dd9410",
+            "reassembled_sha256": "5c0fa7ba5381ed12ae7b77987ed730776174bb1031b44ece3c1d0729b1dd9410",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI2.OVL+09BA"
+            ]
+          },
+          {
+            "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+            "start_offset": 2539,
+            "end_offset": 2567,
+            "length": 28,
+            "runtime_start": 11243,
+            "runtime_end": 11271,
+            "status": "RAW",
+            "original_sha256": "fdad593df2a1fe87e3a22bc6b70c0f4c4c43464f9953459a3f76098cb783af20",
+            "reassembled_sha256": "fdad593df2a1fe87e3a22bc6b70c0f4c4c43464f9953459a3f76098cb783af20",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI2.OVL+09BA"
+            ]
+          },
+          {
+            "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+            "start_offset": 2567,
+            "end_offset": 2575,
+            "length": 8,
+            "runtime_start": 11271,
+            "runtime_end": 11279,
+            "status": "UNDERSTOOD",
+            "original_sha256": "1d16f5a5f26b7f0e3d86851609ad12b5132e853ea1cc144b2520dc0d9804c884",
+            "reassembled_sha256": "1d16f5a5f26b7f0e3d86851609ad12b5132e853ea1cc144b2520dc0d9804c884",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI2.OVL+09BA"
+            ]
+          },
+          {
+            "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+            "start_offset": 2575,
+            "end_offset": 2615,
+            "length": 40,
+            "runtime_start": 11279,
+            "runtime_end": 11319,
+            "status": "RAW",
+            "original_sha256": "6f1f547476517996c2c9661ad5a8280e3d16c7c604524f3f808a4d8102fff2ff",
+            "reassembled_sha256": "6f1f547476517996c2c9661ad5a8280e3d16c7c604524f3f808a4d8102fff2ff",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI2.OVL+09BA"
+            ]
+          },
+          {
+            "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+            "start_offset": 2615,
+            "end_offset": 2622,
+            "length": 7,
+            "runtime_start": 11319,
+            "runtime_end": 11326,
+            "status": "UNDERSTOOD",
+            "original_sha256": "e73b03dc6afff2c3b030d2ea04937e64bc5c35afcd1a8fbc5d6906a9069f5960",
+            "reassembled_sha256": "e73b03dc6afff2c3b030d2ea04937e64bc5c35afcd1a8fbc5d6906a9069f5960",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI2.OVL+09BA"
+            ]
+          },
+          {
+            "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+            "start_offset": 2622,
+            "end_offset": 2627,
+            "length": 5,
+            "runtime_start": 11326,
+            "runtime_end": 11331,
+            "status": "RAW",
+            "original_sha256": "8d872b71a14c9fb9f6e55598e1d5b4756e970eedbad1a3ace7ea82d6789ab127",
+            "reassembled_sha256": "8d872b71a14c9fb9f6e55598e1d5b4756e970eedbad1a3ace7ea82d6789ab127",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI2.OVL+09BA"
+            ]
+          },
+          {
+            "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+            "start_offset": 2627,
+            "end_offset": 2694,
+            "length": 67,
+            "runtime_start": 11331,
+            "runtime_end": 11398,
+            "status": "UNDERSTOOD",
+            "original_sha256": "3467eda65508c2510b6a1f1ba12056ef578b780d59f0651b4e8cd03e427e7bc3",
+            "reassembled_sha256": "3467eda65508c2510b6a1f1ba12056ef578b780d59f0651b4e8cd03e427e7bc3",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI2.OVL+09BA"
+            ]
+          },
+          {
+            "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+            "start_offset": 2694,
+            "end_offset": 2746,
+            "length": 52,
+            "runtime_start": 11398,
+            "runtime_end": 11450,
+            "status": "RAW",
+            "original_sha256": "2d70e8e4c8fa5694cdf990346d145e5da7f7f23c97ff3ec3a5771eb75e96c1b7",
+            "reassembled_sha256": "2d70e8e4c8fa5694cdf990346d145e5da7f7f23c97ff3ec3a5771eb75e96c1b7",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI2.OVL+09BA"
+            ]
+          },
+          {
+            "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+            "start_offset": 2746,
+            "end_offset": 2811,
+            "length": 65,
+            "runtime_start": 11450,
+            "runtime_end": 11515,
+            "status": "UNDERSTOOD",
+            "original_sha256": "b2c58137fa52ed6dea0f5fec7bb25a7580b7e8c05f129b2245254d04e091f82a",
+            "reassembled_sha256": "b2c58137fa52ed6dea0f5fec7bb25a7580b7e8c05f129b2245254d04e091f82a",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI2.OVL+09BA"
+            ]
+          },
+          {
+            "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+            "start_offset": 2811,
+            "end_offset": 3992,
+            "length": 1181,
+            "runtime_start": 11515,
+            "runtime_end": 12696,
+            "status": "RAW",
+            "original_sha256": "3c4c0a89ca27da03eaefa4a786e72af37a9a14db137a45e1709695beb2d326d5",
+            "reassembled_sha256": "3c4c0a89ca27da03eaefa4a786e72af37a9a14db137a45e1709695beb2d326d5",
+            "exact_match": true,
+            "evidence_refs": []
+          },
+          {
+            "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+            "start_offset": 3992,
+            "end_offset": 4018,
+            "length": 26,
+            "runtime_start": 12696,
+            "runtime_end": 12722,
+            "status": "UNDERSTOOD",
+            "original_sha256": "a030aacfc992a41090694377e98d61b2b0e77d39a3fa9dda4f0beb6eeb784c93",
+            "reassembled_sha256": "a030aacfc992a41090694377e98d61b2b0e77d39a3fa9dda4f0beb6eeb784c93",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI2.OVL+0F98"
+            ]
+          },
+          {
+            "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+            "start_offset": 4018,
+            "end_offset": 7679,
+            "length": 3661,
+            "runtime_start": 12722,
+            "runtime_end": 16383,
+            "status": "RAW",
+            "original_sha256": "2df751654a4dd6ab78b2107c68f3d142a038d449f14f7918fb100cffa43906c7",
+            "reassembled_sha256": "2df751654a4dd6ab78b2107c68f3d142a038d449f14f7918fb100cffa43906c7",
+            "exact_match": true,
+            "evidence_refs": []
+          },
+          {
+            "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+            "start_offset": 7679,
+            "end_offset": 7797,
+            "length": 118,
+            "runtime_start": 16383,
+            "runtime_end": 16501,
+            "status": "STRUCTURED",
+            "original_sha256": "59e023d3572a4bb9e52aea4800e794f91d753f3ad26b40267f0397a06961b801",
+            "reassembled_sha256": "59e023d3572a4bb9e52aea4800e794f91d753f3ad26b40267f0397a06961b801",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI2.OVL+1DFF"
+            ]
+          },
+          {
+            "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+            "start_offset": 7797,
+            "end_offset": 7800,
+            "length": 3,
+            "runtime_start": 16501,
+            "runtime_end": 16504,
+            "status": "RAW",
+            "original_sha256": "222019afdd139d3e9ed6f79ee8b629f43143a118a188f4428decce77a8f5a5c4",
+            "reassembled_sha256": "222019afdd139d3e9ed6f79ee8b629f43143a118a188f4428decce77a8f5a5c4",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI2.OVL+1DFF"
+            ]
+          },
+          {
+            "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+            "start_offset": 7800,
+            "end_offset": 7808,
+            "length": 8,
+            "runtime_start": 16504,
+            "runtime_end": 16512,
+            "status": "STRUCTURED",
+            "original_sha256": "b0ce7e7e8a988094ce2cefee16702f1f569cf8b8b6be0114f033bf8ce5738a82",
+            "reassembled_sha256": "b0ce7e7e8a988094ce2cefee16702f1f569cf8b8b6be0114f033bf8ce5738a82",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI2.OVL+1DFF"
+            ]
+          },
+          {
+            "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+            "start_offset": 7808,
+            "end_offset": 7825,
+            "length": 17,
+            "runtime_start": 16512,
+            "runtime_end": 16529,
+            "status": "RAW",
+            "original_sha256": "1e05b64fec507bff51865fdbccb4c3b9fd61c80667bed98a341e41add5f00a1d",
+            "reassembled_sha256": "1e05b64fec507bff51865fdbccb4c3b9fd61c80667bed98a341e41add5f00a1d",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI2.OVL+1DFF"
+            ]
+          },
+          {
+            "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+            "start_offset": 7825,
+            "end_offset": 7833,
+            "length": 8,
+            "runtime_start": 16529,
+            "runtime_end": 16537,
+            "status": "STRUCTURED",
+            "original_sha256": "9dda00a6aeea0633f821ec091ba54888e552690760fbb6259139c834234d236e",
+            "reassembled_sha256": "9dda00a6aeea0633f821ec091ba54888e552690760fbb6259139c834234d236e",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI2.OVL+1DFF"
+            ]
+          },
+          {
+            "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+            "start_offset": 7833,
+            "end_offset": 7836,
+            "length": 3,
+            "runtime_start": 16537,
+            "runtime_end": 16540,
+            "status": "RAW",
+            "original_sha256": "222019afdd139d3e9ed6f79ee8b629f43143a118a188f4428decce77a8f5a5c4",
+            "reassembled_sha256": "222019afdd139d3e9ed6f79ee8b629f43143a118a188f4428decce77a8f5a5c4",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI2.OVL+1DFF"
+            ]
+          },
+          {
+            "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+            "start_offset": 7836,
+            "end_offset": 7844,
+            "length": 8,
+            "runtime_start": 16540,
+            "runtime_end": 16548,
+            "status": "STRUCTURED",
+            "original_sha256": "7d3acb7ee75aa849d60d4280de25e461d37ea5c49e480359a5b079aba87e6a96",
+            "reassembled_sha256": "7d3acb7ee75aa849d60d4280de25e461d37ea5c49e480359a5b079aba87e6a96",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI2.OVL+1DFF"
+            ]
+          },
+          {
+            "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+            "start_offset": 7844,
+            "end_offset": 7924,
+            "length": 80,
+            "runtime_start": 16548,
+            "runtime_end": 16628,
+            "status": "RAW",
+            "original_sha256": "8ad697a29f01389b1ebeb67bd95bca0dcdbb6b9b251d35d1921ad2a5a6811a66",
+            "reassembled_sha256": "8ad697a29f01389b1ebeb67bd95bca0dcdbb6b9b251d35d1921ad2a5a6811a66",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI2.OVL+1DFF"
+            ]
+          },
+          {
+            "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+            "start_offset": 7924,
+            "end_offset": 7932,
+            "length": 8,
+            "runtime_start": 16628,
+            "runtime_end": 16636,
+            "status": "STRUCTURED",
+            "original_sha256": "8c17133caf33b5ef6095b95977f609c96a43d04333b157ecbd96fe3a5ec11a80",
+            "reassembled_sha256": "8c17133caf33b5ef6095b95977f609c96a43d04333b157ecbd96fe3a5ec11a80",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI2.OVL+1DFF"
+            ]
+          },
+          {
+            "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+            "start_offset": 7932,
+            "end_offset": 7995,
+            "length": 63,
+            "runtime_start": 16636,
+            "runtime_end": 16699,
+            "status": "RAW",
+            "original_sha256": "2152b85dcaa90c6269d2d165521e055e40f01ec1a8e27e2658bc4eeb5a41732f",
+            "reassembled_sha256": "2152b85dcaa90c6269d2d165521e055e40f01ec1a8e27e2658bc4eeb5a41732f",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI2.OVL+1DFF"
+            ]
+          },
+          {
+            "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+            "start_offset": 7995,
+            "end_offset": 8019,
+            "length": 24,
+            "runtime_start": 16699,
+            "runtime_end": 16723,
+            "status": "STRUCTURED",
+            "original_sha256": "d16ccd116096a69673af417fc1ed8d387a527acd8dd8758001d2df9a64678acf",
+            "reassembled_sha256": "d16ccd116096a69673af417fc1ed8d387a527acd8dd8758001d2df9a64678acf",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI2.OVL+1DFF"
+            ]
+          },
+          {
+            "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+            "start_offset": 8019,
+            "end_offset": 8088,
+            "length": 69,
+            "runtime_start": 16723,
+            "runtime_end": 16792,
+            "status": "RAW",
+            "original_sha256": "f0afab082eb28e4bc6b50b29ec9119affdaa9f51128680895416ea604e286d1c",
+            "reassembled_sha256": "f0afab082eb28e4bc6b50b29ec9119affdaa9f51128680895416ea604e286d1c",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI2.OVL+1DFF"
+            ]
+          },
+          {
+            "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+            "start_offset": 8088,
+            "end_offset": 8117,
+            "length": 29,
+            "runtime_start": 16792,
+            "runtime_end": 16821,
+            "status": "STRUCTURED",
+            "original_sha256": "5f81da7d7e0c4da99866540f5c2acbb135489730128fd8927acc1a0afd5c329f",
+            "reassembled_sha256": "5f81da7d7e0c4da99866540f5c2acbb135489730128fd8927acc1a0afd5c329f",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI2.OVL+1DFF"
+            ]
+          },
+          {
+            "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+            "start_offset": 8117,
+            "end_offset": 8254,
+            "length": 137,
+            "runtime_start": 16821,
+            "runtime_end": 16958,
+            "status": "STRUCTURED",
+            "original_sha256": "439dbfd6ebac51549ef1ab4818eb74187971c0cb0b6cf5f1c72bb62c50a57c9f",
+            "reassembled_sha256": "439dbfd6ebac51549ef1ab4818eb74187971c0cb0b6cf5f1c72bb62c50a57c9f",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI2.OVL+1FB5"
+            ]
+          },
+          {
+            "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+            "start_offset": 8254,
+            "end_offset": 8262,
+            "length": 8,
+            "runtime_start": 16958,
+            "runtime_end": 16966,
+            "status": "RAW",
+            "original_sha256": "ec799994a1c1f5c77c40534fb16c64595b9be9cba985c2537dc09860588c369c",
+            "reassembled_sha256": "ec799994a1c1f5c77c40534fb16c64595b9be9cba985c2537dc09860588c369c",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI2.OVL+1FB5"
+            ]
+          },
+          {
+            "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+            "start_offset": 8262,
+            "end_offset": 8338,
+            "length": 76,
+            "runtime_start": 16966,
+            "runtime_end": 17042,
+            "status": "STRUCTURED",
+            "original_sha256": "fe12e7e89c8ad4a9d0daf8b481b043498496426610648b2f1c03c3e911838b78",
+            "reassembled_sha256": "fe12e7e89c8ad4a9d0daf8b481b043498496426610648b2f1c03c3e911838b78",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI2.OVL+1FB5"
+            ]
+          },
+          {
+            "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+            "start_offset": 8338,
+            "end_offset": 8364,
+            "length": 26,
+            "runtime_start": 17042,
+            "runtime_end": 17068,
+            "status": "RAW",
+            "original_sha256": "90a9eafaf7221a5b50b6d6a390434d98743095a42554b21f36a7cc86d8b660de",
+            "reassembled_sha256": "90a9eafaf7221a5b50b6d6a390434d98743095a42554b21f36a7cc86d8b660de",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI2.OVL+1FB5"
+            ]
+          },
+          {
+            "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+            "start_offset": 8364,
+            "end_offset": 8379,
+            "length": 15,
+            "runtime_start": 17068,
+            "runtime_end": 17083,
+            "status": "STRUCTURED",
+            "original_sha256": "29ca04e01e1f144a44afcb8531ef8cd69b3a0929eb65801621dcf64f50cc4455",
+            "reassembled_sha256": "29ca04e01e1f144a44afcb8531ef8cd69b3a0929eb65801621dcf64f50cc4455",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI2.OVL+1FB5"
+            ]
+          },
+          {
+            "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+            "start_offset": 8379,
+            "end_offset": 8392,
+            "length": 13,
+            "runtime_start": 17083,
+            "runtime_end": 17096,
+            "status": "RAW",
+            "original_sha256": "8231bb895fe3ca75854ee75890fb59251dc7c70e62242ae41844cd6645775944",
+            "reassembled_sha256": "8231bb895fe3ca75854ee75890fb59251dc7c70e62242ae41844cd6645775944",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI2.OVL+1FB5"
+            ]
+          },
+          {
+            "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+            "start_offset": 8392,
+            "end_offset": 8427,
+            "length": 35,
+            "runtime_start": 17096,
+            "runtime_end": 17131,
+            "status": "STRUCTURED",
+            "original_sha256": "c6683c9c7fa9e31a22b88783d664718fa1a7d84b4b3e86ee91a6a7330048be55",
+            "reassembled_sha256": "c6683c9c7fa9e31a22b88783d664718fa1a7d84b4b3e86ee91a6a7330048be55",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI2.OVL+1FB5"
+            ]
+          },
+          {
+            "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+            "start_offset": 8427,
+            "end_offset": 26657,
+            "length": 18230,
+            "runtime_start": 17131,
+            "runtime_end": 35361,
+            "status": "RAW",
+            "original_sha256": "7a19dd668fcf6107a6363684be0fa7b42770d5a9ba84b07f6b084cf595f952b5",
+            "reassembled_sha256": "7a19dd668fcf6107a6363684be0fa7b42770d5a9ba84b07f6b084cf595f952b5",
+            "exact_match": true,
+            "evidence_refs": []
+          },
+          {
+            "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+            "start_offset": 26657,
+            "end_offset": 26667,
+            "length": 10,
+            "runtime_start": 35361,
+            "runtime_end": 35371,
+            "status": "UNDERSTOOD",
+            "original_sha256": "6760970b009715380057844c89261f63d1ad5f112bb9fa8336464915ed2a368b",
+            "reassembled_sha256": "6760970b009715380057844c89261f63d1ad5f112bb9fa8336464915ed2a368b",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI2.OVL+6821"
+            ]
+          },
+          {
+            "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+            "start_offset": 26667,
+            "end_offset": 26698,
+            "length": 31,
+            "runtime_start": 35371,
+            "runtime_end": 35402,
+            "status": "STRUCTURED",
+            "original_sha256": "bb89130d82e1fec93469852b7d8f1a6ed4ffddf9ce5cd689b334db7f5bb8faec",
+            "reassembled_sha256": "bb89130d82e1fec93469852b7d8f1a6ed4ffddf9ce5cd689b334db7f5bb8faec",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI2.OVL+682B"
+            ]
+          },
+          {
+            "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+            "start_offset": 26698,
+            "end_offset": 30039,
+            "length": 3341,
+            "runtime_start": 35402,
+            "runtime_end": 38743,
+            "status": "RAW",
+            "original_sha256": "82c1aac3b4215fc25b495b5cc8729e0bc41e0cdbcdc983d14beb5059164b6542",
+            "reassembled_sha256": "82c1aac3b4215fc25b495b5cc8729e0bc41e0cdbcdc983d14beb5059164b6542",
+            "exact_match": true,
+            "evidence_refs": []
+          },
+          {
+            "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+            "start_offset": 30039,
+            "end_offset": 30061,
+            "length": 22,
+            "runtime_start": 38743,
+            "runtime_end": 38765,
+            "status": "STRUCTURED",
+            "original_sha256": "d7e65bcfd652138557cd07f688a4ccf3a1e08c1dd6b7b39239cf9f0e64279a9d",
+            "reassembled_sha256": "d7e65bcfd652138557cd07f688a4ccf3a1e08c1dd6b7b39239cf9f0e64279a9d",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI2.OVL+7557"
+            ]
+          },
+          {
+            "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+            "start_offset": 30061,
+            "end_offset": 30465,
+            "length": 404,
+            "runtime_start": 38765,
+            "runtime_end": 39169,
+            "status": "RAW",
+            "original_sha256": "1ded674168c1443a38b7d88f2e0473d3bb615adf9a3419c4149c653e89a30c3a",
+            "reassembled_sha256": "1ded674168c1443a38b7d88f2e0473d3bb615adf9a3419c4149c653e89a30c3a",
+            "exact_match": true,
+            "evidence_refs": []
+          },
+          {
+            "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+            "start_offset": 30465,
+            "end_offset": 30531,
+            "length": 66,
+            "runtime_start": 39169,
+            "runtime_end": 39235,
+            "status": "DECODED",
+            "original_sha256": "04b4d632fee0d1f0c34a583a4b3bc75e11f7efc41e452431cd97e5798fd9b5e7",
+            "reassembled_sha256": "04b4d632fee0d1f0c34a583a4b3bc75e11f7efc41e452431cd97e5798fd9b5e7",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI2.OVL+7701"
+            ]
+          },
+          {
+            "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+            "start_offset": 30531,
+            "end_offset": 30538,
+            "length": 7,
+            "runtime_start": 39235,
+            "runtime_end": 39242,
+            "status": "RAW",
+            "original_sha256": "21709d74e15d39aa77bb8c5b808a92826467aec3088c074cf0f35a7ad5717f94",
+            "reassembled_sha256": "21709d74e15d39aa77bb8c5b808a92826467aec3088c074cf0f35a7ad5717f94",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI2.OVL+7701"
+            ]
+          },
+          {
+            "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+            "start_offset": 30538,
+            "end_offset": 30564,
+            "length": 26,
+            "runtime_start": 39242,
+            "runtime_end": 39268,
+            "status": "DECODED",
+            "original_sha256": "913d9606f2455dbd8af1f5a07f32457be12fa964047b0b80e0cb6a3bf9eabfef",
+            "reassembled_sha256": "913d9606f2455dbd8af1f5a07f32457be12fa964047b0b80e0cb6a3bf9eabfef",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI2.OVL+7701"
+            ]
+          },
+          {
+            "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+            "start_offset": 30564,
+            "end_offset": 30575,
+            "length": 11,
+            "runtime_start": 39268,
+            "runtime_end": 39279,
+            "status": "RAW",
+            "original_sha256": "f4920644d119cb94bee7ee7ee73da5b11a7bf0a6223b599c055497123733c3fd",
+            "reassembled_sha256": "f4920644d119cb94bee7ee7ee73da5b11a7bf0a6223b599c055497123733c3fd",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI2.OVL+7701"
+            ]
+          },
+          {
+            "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+            "start_offset": 30575,
+            "end_offset": 30582,
+            "length": 7,
+            "runtime_start": 39279,
+            "runtime_end": 39286,
+            "status": "DECODED",
+            "original_sha256": "efe3ecc8a775f1592c96047d01033ae1f122769c5e5d9123cf649a3f32e75c86",
+            "reassembled_sha256": "efe3ecc8a775f1592c96047d01033ae1f122769c5e5d9123cf649a3f32e75c86",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI2.OVL+7701"
+            ]
+          },
+          {
+            "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+            "start_offset": 30582,
+            "end_offset": 30585,
+            "length": 3,
+            "runtime_start": 39286,
+            "runtime_end": 39289,
+            "status": "RAW",
+            "original_sha256": "9ccedfa246d7558f9eec9ec52474839b0efe4f36b65fcc8bb845f706973a918e",
+            "reassembled_sha256": "9ccedfa246d7558f9eec9ec52474839b0efe4f36b65fcc8bb845f706973a918e",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI2.OVL+7701"
+            ]
+          },
+          {
+            "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+            "start_offset": 30585,
+            "end_offset": 30640,
+            "length": 55,
+            "runtime_start": 39289,
+            "runtime_end": 39344,
+            "status": "DECODED",
+            "original_sha256": "6748e91dd08abb67acdaa47929222f8e57719660f49d7edc6ae8835d251777a2",
+            "reassembled_sha256": "6748e91dd08abb67acdaa47929222f8e57719660f49d7edc6ae8835d251777a2",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI2.OVL+7701"
+            ]
+          },
+          {
+            "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+            "start_offset": 30640,
+            "end_offset": 30647,
+            "length": 7,
+            "runtime_start": 39344,
+            "runtime_end": 39351,
+            "status": "RAW",
+            "original_sha256": "4d93882133f1463a89c8cdf5dd4363273a976c954c7fc26e01e9a4bfa291ac2c",
+            "reassembled_sha256": "4d93882133f1463a89c8cdf5dd4363273a976c954c7fc26e01e9a4bfa291ac2c",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI2.OVL+7701"
+            ]
+          },
+          {
+            "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+            "start_offset": 30647,
+            "end_offset": 30655,
+            "length": 8,
+            "runtime_start": 39351,
+            "runtime_end": 39359,
+            "status": "DECODED",
+            "original_sha256": "72047bd5626c345e3d30f215b50161fbabae975a84803ff7c760f54aa79794cc",
+            "reassembled_sha256": "72047bd5626c345e3d30f215b50161fbabae975a84803ff7c760f54aa79794cc",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI2.OVL+7701"
+            ]
+          },
+          {
+            "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+            "start_offset": 30655,
+            "end_offset": 33317,
+            "length": 2662,
+            "runtime_start": 39359,
+            "runtime_end": 42021,
+            "status": "RAW",
+            "original_sha256": "46314ff5e8a1f34dae26d6e3f052019c43b452230ef01af24e9b25ba7c90f6ed",
+            "reassembled_sha256": "46314ff5e8a1f34dae26d6e3f052019c43b452230ef01af24e9b25ba7c90f6ed",
+            "exact_match": true,
+            "evidence_refs": []
+          },
+          {
+            "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+            "start_offset": 33317,
+            "end_offset": 33352,
+            "length": 35,
+            "runtime_start": 42021,
+            "runtime_end": 42056,
+            "status": "STRUCTURED",
+            "original_sha256": "393c74b41e8b8d110f5e4fdc4975038a32ea073f2c4d350d47c8c8931f7e112d",
+            "reassembled_sha256": "393c74b41e8b8d110f5e4fdc4975038a32ea073f2c4d350d47c8c8931f7e112d",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI2.OVL+8225"
+            ]
+          },
+          {
+            "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+            "start_offset": 33352,
+            "end_offset": 33368,
+            "length": 16,
+            "runtime_start": 42056,
+            "runtime_end": 42072,
+            "status": "STRUCTURED",
+            "original_sha256": "7417da9608ff284e597e4e3070c0b18a8dfde894ba550288983c0a0a08b2e0cc",
+            "reassembled_sha256": "7417da9608ff284e597e4e3070c0b18a8dfde894ba550288983c0a0a08b2e0cc",
+            "exact_match": true,
+            "evidence_refs": [
+              "evidence.json#seeds/PLI2.OVL+8248"
+            ]
+          },
+          {
+            "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+            "start_offset": 33368,
+            "end_offset": 33792,
+            "length": 424,
+            "runtime_start": 42072,
+            "runtime_end": 42496,
+            "status": "RAW",
+            "original_sha256": "8676243360b4b07b1f35cc661638fc0cc9ad50ebefc9d876a64b9b41f1b7aa63",
+            "reassembled_sha256": "8676243360b4b07b1f35cc661638fc0cc9ad50ebefc9d876a64b9b41f1b7aa63",
+            "exact_match": true,
+            "evidence_refs": []
+          }
+        ],
+        "coordinate_only_labels": [
+          1216,
+          2496,
+          2512,
+          2640,
+          2656,
+          2688,
+          2752,
+          2768,
+          2784
+        ]
+      }
+    ]
+  },
+  "coverage": [
+    {
+      "image": "PLI.COM",
+      "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+      "total_bytes": 8064,
+      "canonical_coordinates": 1544,
+      "executed_bytes": 3321,
+      "executed_percent": 41.183,
+      "instruction_executions": 266524,
+      "executed_status_bytes": {
+        "RAW": 2440,
+        "DECODED": 142,
+        "STRUCTURED": 65,
+        "UNDERSTOOD": 674
+      },
+      "executed_byte_ranges": [
+        [
+          0,
+          3
+        ],
+        [
+          493,
+          519
+        ],
+        [
+          534,
+          597
+        ],
+        [
+          624,
+          689
+        ],
+        [
+          699,
+          722
+        ],
+        [
+          727,
+          748
+        ],
+        [
+          750,
+          824
+        ],
+        [
+          833,
+          842
+        ],
+        [
+          896,
+          923
+        ],
+        [
+          976,
+          983
+        ],
+        [
+          993,
+          1179
+        ],
+        [
+          1187,
+          1194
+        ],
+        [
+          1200,
+          1242
+        ],
+        [
+          1253,
+          1264
+        ],
+        [
+          1458,
+          1465
+        ],
+        [
+          1527,
+          1601
+        ],
+        [
+          1611,
+          1633
+        ],
+        [
+          1646,
+          1671
+        ],
+        [
+          1681,
+          1718
+        ],
+        [
+          1733,
+          1780
+        ],
+        [
+          1783,
+          1928
+        ],
+        [
+          2071,
+          2094
+        ],
+        [
+          2507,
+          2521
+        ],
+        [
+          2537,
+          2562
+        ],
+        [
+          2565,
+          2573
+        ],
+        [
+          2604,
+          2628
+        ],
+        [
+          2644,
+          2651
+        ],
+        [
+          2655,
+          2663
+        ],
+        [
+          2721,
+          2725
+        ],
+        [
+          2729,
+          2736
+        ],
+        [
+          2778,
+          2793
+        ],
+        [
+          2805,
+          2822
+        ],
+        [
+          2841,
+          2858
+        ],
+        [
+          2950,
+          3019
+        ],
+        [
+          3034,
+          3043
+        ],
+        [
+          3289,
+          3304
+        ],
+        [
+          3307,
+          3323
+        ],
+        [
+          3326,
+          3388
+        ],
+        [
+          3391,
+          3490
+        ],
+        [
+          3519,
+          3527
+        ],
+        [
+          3540,
+          3603
+        ],
+        [
+          3609,
+          3649
+        ],
+        [
+          3654,
+          3744
+        ],
+        [
+          3830,
+          3881
+        ],
+        [
+          3884,
+          3910
+        ],
+        [
+          3916,
+          4022
+        ],
+        [
+          4044,
+          4087
+        ],
+        [
+          4144,
+          4176
+        ],
+        [
+          4182,
+          4258
+        ],
+        [
+          4261,
+          4427
+        ],
+        [
+          4428,
+          4501
+        ],
+        [
+          4504,
+          4649
+        ],
+        [
+          4683,
+          4690
+        ],
+        [
+          4691,
+          4736
+        ],
+        [
+          4743,
+          4833
+        ],
+        [
+          4982,
+          4997
+        ],
+        [
+          5000,
+          5016
+        ],
+        [
+          5024,
+          5092
+        ],
+        [
+          5100,
+          5197
+        ],
+        [
+          5202,
+          5247
+        ],
+        [
+          5301,
+          5313
+        ],
+        [
+          5361,
+          5369
+        ],
+        [
+          5400,
+          5408
+        ],
+        [
+          5455,
+          5471
+        ],
+        [
+          5477,
+          5496
+        ],
+        [
+          5539,
+          5548
+        ],
+        [
+          5551,
+          5559
+        ],
+        [
+          5586,
+          5593
+        ],
+        [
+          5594,
+          5642
+        ],
+        [
+          5645,
+          5654
+        ],
+        [
+          5671,
+          5712
+        ],
+        [
+          5741,
+          5857
+        ],
+        [
+          5877,
+          5901
+        ],
+        [
+          5904,
+          5912
+        ],
+        [
+          5916,
+          5924
+        ],
+        [
+          5927,
+          5935
+        ],
+        [
+          5951,
+          5959
+        ],
+        [
+          5980,
+          5988
+        ],
+        [
+          6043,
+          6051
+        ],
+        [
+          6125,
+          6133
+        ],
+        [
+          6139,
+          6166
+        ],
+        [
+          6207,
+          6210
+        ],
+        [
+          6211,
+          6219
+        ],
+        [
+          6227,
+          6259
+        ],
+        [
+          6284,
+          6300
+        ],
+        [
+          6305,
+          6313
+        ],
+        [
+          6314,
+          6332
+        ],
+        [
+          6341,
+          6354
+        ],
+        [
+          6363,
+          6394
+        ],
+        [
+          6565,
+          6627
+        ],
+        [
+          6671,
+          6731
+        ]
+      ]
+    },
+    {
+      "image": "PLI0.OVL",
+      "image_sha256": "e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff",
+      "total_bytes": 18048,
+      "canonical_coordinates": 2201,
+      "executed_bytes": 4357,
+      "executed_percent": 24.1412,
+      "instruction_executions": 94418,
+      "executed_status_bytes": {
+        "RAW": 3450,
+        "DECODED": 0,
+        "STRUCTURED": 661,
+        "UNDERSTOOD": 246
+      },
+      "executed_byte_ranges": [
+        [
+          0,
+          3
+        ],
+        [
+          432,
+          480
+        ],
+        [
+          580,
+          588
+        ],
+        [
+          617,
+          670
+        ],
+        [
+          671,
+          694
+        ],
+        [
+          763,
+          806
+        ],
+        [
+          829,
+          864
+        ],
+        [
+          867,
+          873
+        ],
+        [
+          1290,
+          1306
+        ],
+        [
+          4136,
+          4147
+        ],
+        [
+          4153,
+          4163
+        ],
+        [
+          4169,
+          4178
+        ],
+        [
+          4181,
+          4196
+        ],
+        [
+          4586,
+          4634
+        ],
+        [
+          5023,
+          5030
+        ],
+        [
+          5048,
+          5075
+        ],
+        [
+          5078,
+          5085
+        ],
+        [
+          5088,
+          5095
+        ],
+        [
+          5098,
+          5106
+        ],
+        [
+          5220,
+          5228
+        ],
+        [
+          5308,
+          5316
+        ],
+        [
+          5390,
+          5399
+        ],
+        [
+          5405,
+          5423
+        ],
+        [
+          5542,
+          5581
+        ],
+        [
+          5645,
+          5714
+        ],
+        [
+          5717,
+          5725
+        ],
+        [
+          5852,
+          5873
+        ],
+        [
+          5876,
+          5879
+        ],
+        [
+          5882,
+          5885
+        ],
+        [
+          6004,
+          6017
+        ],
+        [
+          6020,
+          6077
+        ],
+        [
+          6125,
+          6185
+        ],
+        [
+          6188,
+          6365
+        ],
+        [
+          6371,
+          6374
+        ],
+        [
+          6377,
+          6393
+        ],
+        [
+          6406,
+          6410
+        ],
+        [
+          6506,
+          6693
+        ],
+        [
+          6699,
+          6723
+        ],
+        [
+          6726,
+          6877
+        ],
+        [
+          6932,
+          6943
+        ],
+        [
+          7147,
+          7174
+        ],
+        [
+          7271,
+          7382
+        ],
+        [
+          7691,
+          7737
+        ],
+        [
+          7764,
+          7799
+        ],
+        [
+          7800,
+          7814
+        ],
+        [
+          7820,
+          7994
+        ],
+        [
+          8030,
+          8514
+        ],
+        [
+          8619,
+          8752
+        ],
+        [
+          8848,
+          8870
+        ],
+        [
+          8879,
+          8920
+        ],
+        [
+          8930,
+          8938
+        ],
+        [
+          8946,
+          8954
+        ],
+        [
+          8969,
+          8979
+        ],
+        [
+          8994,
+          9004
+        ],
+        [
+          9023,
+          9031
+        ],
+        [
+          9034,
+          9072
+        ],
+        [
+          9075,
+          9083
+        ],
+        [
+          9125,
+          9133
+        ],
+        [
+          9152,
+          9238
+        ],
+        [
+          9241,
+          9278
+        ],
+        [
+          9279,
+          9293
+        ],
+        [
+          9340,
+          9354
+        ],
+        [
+          9370,
+          9377
+        ],
+        [
+          9380,
+          9433
+        ],
+        [
+          9439,
+          9520
+        ],
+        [
+          9525,
+          9562
+        ],
+        [
+          9568,
+          9599
+        ],
+        [
+          9717,
+          9770
+        ],
+        [
+          9802,
+          9811
+        ],
+        [
+          9819,
+          9828
+        ],
+        [
+          9836,
+          9850
+        ],
+        [
+          9853,
+          9913
+        ],
+        [
+          10029,
+          10139
+        ],
+        [
+          10156,
+          10318
+        ],
+        [
+          10329,
+          10411
+        ],
+        [
+          10443,
+          10544
+        ],
+        [
+          10547,
+          10702
+        ],
+        [
+          10741,
+          10776
+        ],
+        [
+          10910,
+          10924
+        ],
+        [
+          10933,
+          10961
+        ],
+        [
+          10970,
+          11100
+        ],
+        [
+          11113,
+          11123
+        ],
+        [
+          11129,
+          11149
+        ],
+        [
+          11186,
+          11193
+        ],
+        [
+          11235,
+          11238
+        ],
+        [
+          11241,
+          11270
+        ],
+        [
+          11436,
+          11451
+        ],
+        [
+          11502,
+          11563
+        ],
+        [
+          11719,
+          11770
+        ],
+        [
+          11797,
+          11812
+        ],
+        [
+          11918,
+          11919
+        ],
+        [
+          14156,
+          14186
+        ],
+        [
+          14564,
+          14565
+        ],
+        [
+          14585,
+          14592
+        ],
+        [
+          14593,
+          14624
+        ],
+        [
+          14680,
+          14691
+        ],
+        [
+          16397,
+          16423
+        ],
+        [
+          16426,
+          16438
+        ],
+        [
+          16570,
+          16580
+        ],
+        [
+          17108,
+          17147
+        ],
+        [
+          17205,
+          17238
+        ],
+        [
+          17239,
+          17366
+        ],
+        [
+          17964,
+          17978
+        ],
+        [
+          17979,
+          17984
+        ],
+        [
+          18005,
+          18015
+        ],
+        [
+          18018,
+          18027
+        ]
+      ]
+    },
+    {
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "total_bytes": 34816,
+      "canonical_coordinates": 3580,
+      "executed_bytes": 7148,
+      "executed_percent": 20.5308,
+      "instruction_executions": 42875,
+      "executed_status_bytes": {
+        "RAW": 6766,
+        "DECODED": 0,
+        "STRUCTURED": 258,
+        "UNDERSTOOD": 124
+      },
+      "executed_byte_ranges": [
+        [
+          0,
+          3
+        ],
+        [
+          233,
+          315
+        ],
+        [
+          317,
+          335
+        ],
+        [
+          431,
+          462
+        ],
+        [
+          468,
+          479
+        ],
+        [
+          482,
+          488
+        ],
+        [
+          526,
+          546
+        ],
+        [
+          609,
+          631
+        ],
+        [
+          745,
+          771
+        ],
+        [
+          777,
+          786
+        ],
+        [
+          789,
+          813
+        ],
+        [
+          914,
+          923
+        ],
+        [
+          941,
+          950
+        ],
+        [
+          1017,
+          1026
+        ],
+        [
+          1133,
+          1142
+        ],
+        [
+          1268,
+          1277
+        ],
+        [
+          1337,
+          1346
+        ],
+        [
+          1366,
+          1375
+        ],
+        [
+          1553,
+          1562
+        ],
+        [
+          1652,
+          1660
+        ],
+        [
+          2610,
+          2656
+        ],
+        [
+          2733,
+          2740
+        ],
+        [
+          2753,
+          2762
+        ],
+        [
+          2768,
+          2829
+        ],
+        [
+          2835,
+          2846
+        ],
+        [
+          2849,
+          2857
+        ],
+        [
+          2860,
+          2869
+        ],
+        [
+          2889,
+          2897
+        ],
+        [
+          2903,
+          2911
+        ],
+        [
+          2930,
+          2943
+        ],
+        [
+          2948,
+          2974
+        ],
+        [
+          3086,
+          3087
+        ],
+        [
+          3099,
+          3253
+        ],
+        [
+          3256,
+          3305
+        ],
+        [
+          3308,
+          3311
+        ],
+        [
+          3314,
+          3320
+        ],
+        [
+          3323,
+          3339
+        ],
+        [
+          3352,
+          3356
+        ],
+        [
+          3438,
+          3485
+        ],
+        [
+          5037,
+          5046
+        ],
+        [
+          5049,
+          5050
+        ],
+        [
+          5091,
+          5363
+        ],
+        [
+          5366,
+          5392
+        ],
+        [
+          5485,
+          5494
+        ],
+        [
+          5497,
+          5498
+        ],
+        [
+          6640,
+          6670
+        ],
+        [
+          6747,
+          6755
+        ],
+        [
+          6818,
+          6849
+        ],
+        [
+          6854,
+          6897
+        ],
+        [
+          6902,
+          6944
+        ],
+        [
+          7033,
+          7051
+        ],
+        [
+          7063,
+          7070
+        ],
+        [
+          7080,
+          7110
+        ],
+        [
+          7118,
+          7153
+        ],
+        [
+          7172,
+          7198
+        ],
+        [
+          7218,
+          7254
+        ],
+        [
+          7344,
+          7351
+        ],
+        [
+          7354,
+          7363
+        ],
+        [
+          7392,
+          7414
+        ],
+        [
+          7420,
+          7436
+        ],
+        [
+          7439,
+          7442
+        ],
+        [
+          7443,
+          7457
+        ],
+        [
+          7465,
+          7479
+        ],
+        [
+          8198,
+          8230
+        ],
+        [
+          8240,
+          8249
+        ],
+        [
+          8257,
+          8274
+        ],
+        [
+          8354,
+          8358
+        ],
+        [
+          8508,
+          8520
+        ],
+        [
+          8523,
+          8531
+        ],
+        [
+          8534,
+          8542
+        ],
+        [
+          8545,
+          8553
+        ],
+        [
+          8556,
+          8564
+        ],
+        [
+          8567,
+          8575
+        ],
+        [
+          8578,
+          8595
+        ],
+        [
+          8598,
+          8609
+        ],
+        [
+          8612,
+          8660
+        ],
+        [
+          8681,
+          8700
+        ],
+        [
+          8703,
+          8718
+        ],
+        [
+          8721,
+          8756
+        ],
+        [
+          8759,
+          8774
+        ],
+        [
+          8777,
+          8793
+        ],
+        [
+          8907,
+          8926
+        ],
+        [
+          8929,
+          8944
+        ],
+        [
+          8947,
+          8962
+        ],
+        [
+          8965,
+          8968
+        ],
+        [
+          8974,
+          9007
+        ],
+        [
+          9010,
+          9038
+        ],
+        [
+          9045,
+          9084
+        ],
+        [
+          9087,
+          9102
+        ],
+        [
+          9105,
+          9113
+        ],
+        [
+          9114,
+          9136
+        ],
+        [
+          9140,
+          9144
+        ],
+        [
+          9170,
+          9287
+        ],
+        [
+          9301,
+          9319
+        ],
+        [
+          9376,
+          9391
+        ],
+        [
+          9429,
+          9457
+        ],
+        [
+          9489,
+          9515
+        ],
+        [
+          10410,
+          10436
+        ],
+        [
+          10450,
+          10472
+        ],
+        [
+          10486,
+          10508
+        ],
+        [
+          10522,
+          10537
+        ],
+        [
+          10538,
+          10562
+        ],
+        [
+          10570,
+          10639
+        ],
+        [
+          10675,
+          10714
+        ],
+        [
+          10728,
+          10743
+        ],
+        [
+          10788,
+          10841
+        ],
+        [
+          10860,
+          10863
+        ],
+        [
+          10891,
+          10939
+        ],
+        [
+          10943,
+          10986
+        ],
+        [
+          11031,
+          11171
+        ],
+        [
+          11182,
+          11353
+        ],
+        [
+          12060,
+          12095
+        ],
+        [
+          12206,
+          12222
+        ],
+        [
+          12225,
+          12226
+        ],
+        [
+          12712,
+          12730
+        ],
+        [
+          12738,
+          12748
+        ],
+        [
+          12789,
+          12795
+        ],
+        [
+          12898,
+          12959
+        ],
+        [
+          13619,
+          13639
+        ],
+        [
+          16799,
+          16826
+        ],
+        [
+          16927,
+          16961
+        ],
+        [
+          17013,
+          17084
+        ],
+        [
+          17094,
+          17102
+        ],
+        [
+          17110,
+          17118
+        ],
+        [
+          17133,
+          17143
+        ],
+        [
+          17158,
+          17168
+        ],
+        [
+          17187,
+          17198
+        ],
+        [
+          17300,
+          17336
+        ],
+        [
+          17342,
+          17639
+        ],
+        [
+          17661,
+          17773
+        ],
+        [
+          17796,
+          17889
+        ],
+        [
+          17894,
+          17897
+        ],
+        [
+          17904,
+          17921
+        ],
+        [
+          18001,
+          18031
+        ],
+        [
+          18066,
+          18113
+        ],
+        [
+          18157,
+          18211
+        ],
+        [
+          18212,
+          18224
+        ],
+        [
+          18225,
+          18317
+        ],
+        [
+          18402,
+          18416
+        ],
+        [
+          18422,
+          18423
+        ],
+        [
+          18434,
+          18451
+        ],
+        [
+          18452,
+          18611
+        ],
+        [
+          18623,
+          18631
+        ],
+        [
+          18643,
+          18903
+        ],
+        [
+          19305,
+          19322
+        ],
+        [
+          19325,
+          19413
+        ],
+        [
+          22455,
+          22508
+        ],
+        [
+          22715,
+          22778
+        ],
+        [
+          22784,
+          22792
+        ],
+        [
+          22797,
+          22798
+        ],
+        [
+          22825,
+          22897
+        ],
+        [
+          23003,
+          23011
+        ],
+        [
+          23025,
+          23033
+        ],
+        [
+          23052,
+          23060
+        ],
+        [
+          23072,
+          23106
+        ],
+        [
+          23109,
+          23110
+        ],
+        [
+          25123,
+          25130
+        ],
+        [
+          25152,
+          25165
+        ],
+        [
+          25181,
+          25197
+        ],
+        [
+          25203,
+          25220
+        ],
+        [
+          25363,
+          25372
+        ],
+        [
+          25378,
+          25388
+        ],
+        [
+          25545,
+          25550
+        ],
+        [
+          25613,
+          25627
+        ],
+        [
+          25717,
+          25733
+        ],
+        [
+          25840,
+          25854
+        ],
+        [
+          25933,
+          25949
+        ],
+        [
+          26102,
+          26117
+        ],
+        [
+          26136,
+          26149
+        ],
+        [
+          26168,
+          26185
+        ],
+        [
+          26222,
+          26275
+        ],
+        [
+          26309,
+          26431
+        ],
+        [
+          26434,
+          26459
+        ],
+        [
+          26469,
+          26555
+        ],
+        [
+          30798,
+          30837
+        ],
+        [
+          30883,
+          30927
+        ],
+        [
+          30932,
+          30940
+        ],
+        [
+          30959,
+          30967
+        ],
+        [
+          30984,
+          30992
+        ],
+        [
+          31009,
+          31017
+        ],
+        [
+          31034,
+          31042
+        ],
+        [
+          31059,
+          31067
+        ],
+        [
+          31115,
+          31125
+        ],
+        [
+          31126,
+          31253
+        ],
+        [
+          31309,
+          31830
+        ],
+        [
+          31927,
+          31952
+        ],
+        [
+          31964,
+          32299
+        ],
+        [
+          32305,
+          32368
+        ],
+        [
+          32371,
+          32591
+        ],
+        [
+          32755,
+          32771
+        ],
+        [
+          32840,
+          32860
+        ],
+        [
+          32873,
+          32977
+        ],
+        [
+          32978,
+          33035
+        ],
+        [
+          33127,
+          33160
+        ],
+        [
+          33384,
+          33452
+        ],
+        [
+          33467,
+          33478
+        ],
+        [
+          33481,
+          33488
+        ],
+        [
+          33505,
+          33514
+        ],
+        [
+          33615,
+          33623
+        ],
+        [
+          33664,
+          33708
+        ]
+      ]
+    },
+    {
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "total_bytes": 33792,
+      "canonical_coordinates": 3053,
+      "executed_bytes": 6186,
+      "executed_percent": 18.3061,
+      "instruction_executions": 36181,
+      "executed_status_bytes": {
+        "RAW": 5110,
+        "DECODED": 162,
+        "STRUCTURED": 539,
+        "UNDERSTOOD": 375
+      },
+      "executed_byte_ranges": [
+        [
+          0,
+          3
+        ],
+        [
+          1076,
+          1085
+        ],
+        [
+          1090,
+          1140
+        ],
+        [
+          1149,
+          1394
+        ],
+        [
+          1438,
+          1460
+        ],
+        [
+          1482,
+          1806
+        ],
+        [
+          1994,
+          2008
+        ],
+        [
+          2450,
+          2539
+        ],
+        [
+          2567,
+          2575
+        ],
+        [
+          2615,
+          2622
+        ],
+        [
+          2627,
+          2694
+        ],
+        [
+          2746,
+          2811
+        ],
+        [
+          3033,
+          3042
+        ],
+        [
+          3043,
+          3089
+        ],
+        [
+          3090,
+          3256
+        ],
+        [
+          3262,
+          3299
+        ],
+        [
+          3308,
+          3316
+        ],
+        [
+          3325,
+          3341
+        ],
+        [
+          3374,
+          3556
+        ],
+        [
+          3581,
+          3734
+        ],
+        [
+          3739,
+          3866
+        ],
+        [
+          3876,
+          3955
+        ],
+        [
+          3958,
+          4075
+        ],
+        [
+          4101,
+          4196
+        ],
+        [
+          4372,
+          4391
+        ],
+        [
+          4397,
+          4469
+        ],
+        [
+          4482,
+          4670
+        ],
+        [
+          4673,
+          4704
+        ],
+        [
+          4717,
+          4822
+        ],
+        [
+          4825,
+          4948
+        ],
+        [
+          4951,
+          4966
+        ],
+        [
+          4979,
+          4982
+        ],
+        [
+          5000,
+          5011
+        ],
+        [
+          5017,
+          5062
+        ],
+        [
+          5067,
+          5221
+        ],
+        [
+          5236,
+          5244
+        ],
+        [
+          5256,
+          5318
+        ],
+        [
+          5331,
+          5349
+        ],
+        [
+          5364,
+          5385
+        ],
+        [
+          5390,
+          5393
+        ],
+        [
+          5399,
+          5427
+        ],
+        [
+          5578,
+          5594
+        ],
+        [
+          5836,
+          5880
+        ],
+        [
+          5883,
+          5922
+        ],
+        [
+          5928,
+          5956
+        ],
+        [
+          5957,
+          6221
+        ],
+        [
+          6232,
+          6252
+        ],
+        [
+          6323,
+          6415
+        ],
+        [
+          6434,
+          6466
+        ],
+        [
+          6469,
+          6591
+        ],
+        [
+          6594,
+          6639
+        ],
+        [
+          7679,
+          7797
+        ],
+        [
+          7800,
+          7808
+        ],
+        [
+          7825,
+          7833
+        ],
+        [
+          7836,
+          7844
+        ],
+        [
+          7924,
+          7932
+        ],
+        [
+          7995,
+          8019
+        ],
+        [
+          8088,
+          8254
+        ],
+        [
+          8262,
+          8338
+        ],
+        [
+          8364,
+          8379
+        ],
+        [
+          8392,
+          8427
+        ],
+        [
+          8439,
+          8456
+        ],
+        [
+          8467,
+          8474
+        ],
+        [
+          8488,
+          8525
+        ],
+        [
+          9627,
+          9657
+        ],
+        [
+          9677,
+          9716
+        ],
+        [
+          9737,
+          9747
+        ],
+        [
+          9750,
+          9754
+        ],
+        [
+          9817,
+          9877
+        ],
+        [
+          9909,
+          9949
+        ],
+        [
+          9957,
+          9979
+        ],
+        [
+          10032,
+          10039
+        ],
+        [
+          10056,
+          10063
+        ],
+        [
+          10087,
+          10108
+        ],
+        [
+          10228,
+          10241
+        ],
+        [
+          10259,
+          10268
+        ],
+        [
+          10278,
+          10298
+        ],
+        [
+          10534,
+          10580
+        ],
+        [
+          10581,
+          10591
+        ],
+        [
+          13920,
+          13927
+        ],
+        [
+          13930,
+          13948
+        ],
+        [
+          13951,
+          13962
+        ],
+        [
+          15926,
+          15965
+        ],
+        [
+          15975,
+          15991
+        ],
+        [
+          16004,
+          16007
+        ],
+        [
+          16055,
+          16058
+        ],
+        [
+          16117,
+          16118
+        ],
+        [
+          26203,
+          26225
+        ],
+        [
+          26372,
+          26406
+        ],
+        [
+          26698,
+          26708
+        ],
+        [
+          26718,
+          26741
+        ],
+        [
+          28325,
+          28362
+        ],
+        [
+          28369,
+          28399
+        ],
+        [
+          28408,
+          28425
+        ],
+        [
+          28434,
+          28441
+        ],
+        [
+          28572,
+          28586
+        ],
+        [
+          28592,
+          28599
+        ],
+        [
+          28662,
+          28676
+        ],
+        [
+          28683,
+          28690
+        ],
+        [
+          28697,
+          28712
+        ],
+        [
+          29460,
+          29512
+        ],
+        [
+          29513,
+          29541
+        ],
+        [
+          29591,
+          29619
+        ],
+        [
+          29620,
+          29636
+        ],
+        [
+          29648,
+          29715
+        ],
+        [
+          29731,
+          29773
+        ],
+        [
+          29807,
+          29818
+        ],
+        [
+          29894,
+          29906
+        ],
+        [
+          29967,
+          29981
+        ],
+        [
+          29992,
+          29993
+        ],
+        [
+          30012,
+          30028
+        ],
+        [
+          30031,
+          30091
+        ],
+        [
+          30096,
+          30130
+        ],
+        [
+          30140,
+          30279
+        ],
+        [
+          30302,
+          30325
+        ],
+        [
+          30465,
+          30531
+        ],
+        [
+          30538,
+          30564
+        ],
+        [
+          30575,
+          30582
+        ],
+        [
+          30585,
+          30640
+        ],
+        [
+          30647,
+          30734
+        ],
+        [
+          30805,
+          30839
+        ],
+        [
+          30870,
+          30871
+        ],
+        [
+          31138,
+          31150
+        ],
+        [
+          31202,
+          31211
+        ],
+        [
+          31255,
+          31264
+        ],
+        [
+          31428,
+          31456
+        ],
+        [
+          31459,
+          31486
+        ],
+        [
+          31489,
+          31490
+        ],
+        [
+          32005,
+          32071
+        ],
+        [
+          32261,
+          32298
+        ],
+        [
+          32442,
+          32485
+        ],
+        [
+          32488,
+          32498
+        ],
+        [
+          32882,
+          32898
+        ],
+        [
+          32901,
+          32916
+        ],
+        [
+          32917,
+          32946
+        ],
+        [
+          33317,
+          33399
+        ],
+        [
+          33416,
+          33539
+        ],
+        [
+          33545,
+          33600
+        ],
+        [
+          33602,
+          33613
+        ],
+        [
+          33616,
+          33636
+        ],
+        [
+          33688,
+          33698
+        ],
+        [
+          33716,
+          33722
+        ],
+        [
+          33756,
+          33768
+        ]
+      ]
+    }
+  ],
+  "classification_counts": {
+    "UNDERSTOOD": 44,
+    "unresolved": 337,
+    "STRUCTURED": 10
+  },
+  "dynamic": {
+    "metric": "MINIMAL canonical instruction occurrences by current annotation status",
+    "denominator": "historical image instructions; modeled host instructions excluded",
+    "per_image": [
+      {
+        "image": "PLI.COM",
+        "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+        "instruction_occurrences": 266524,
+        "occurrences_by_status": {
+          "RAW": 45999,
+          "DECODED": 62488,
+          "STRUCTURED": 43210,
+          "UNDERSTOOD": 114827
+        },
+        "understood_percent": 43.083174
+      },
+      {
+        "image": "PLI0.OVL",
+        "image_sha256": "e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff",
+        "instruction_occurrences": 94418,
+        "occurrences_by_status": {
+          "RAW": 46394,
+          "DECODED": 0,
+          "STRUCTURED": 11322,
+          "UNDERSTOOD": 36702
+        },
+        "understood_percent": 38.871825
+      },
+      {
+        "image": "PLI1.OVL",
+        "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+        "instruction_occurrences": 42875,
+        "occurrences_by_status": {
+          "RAW": 40964,
+          "DECODED": 0,
+          "STRUCTURED": 510,
+          "UNDERSTOOD": 1401
+        },
+        "understood_percent": 3.267638
+      },
+      {
+        "image": "PLI2.OVL",
+        "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+        "instruction_occurrences": 36181,
+        "occurrences_by_status": {
+          "RAW": 23127,
+          "DECODED": 1302,
+          "STRUCTURED": 3649,
+          "UNDERSTOOD": 8103
+        },
+        "understood_percent": 22.395733
+      }
+    ],
+    "total": {
+      "instruction_occurrences": 439998,
+      "occurrences_by_status": {
+        "RAW": 156484,
+        "DECODED": 63790,
+        "STRUCTURED": 58691,
+        "UNDERSTOOD": 161033
+      },
+      "understood_percent": 36.598575
+    },
+    "full_run_instruction_occurrences": 441855,
+    "outside_historical_images": 1857,
+    "understood_percent_of_full_run": 36.444761
+  }
+}
