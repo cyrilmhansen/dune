@@ -374,9 +374,6 @@ PLI_05F0: DB 059H,0C2H,0F7H,006H,0CDH,021H,006H ; +05F0 runtime=06F0H RAW
 ; pseudo:
 ; | return on observed no-key path; intervening key-present body RAW
 PLI_05F7: RET ; PC = word[SP]; SP += 2; use the convention in procedure header ; +05F7 runtime=06F7H OBSERVED
-
-; OBSERVED: separate CALL entry (11); invokes +05B2 then +03E9, RET +05FE.
-; HYPOTHESIS: larger parent operation; its body remains unresolved/RAW.
 ; SECTION [05F8,070C) RAW
 PLI_05F8: DB 0CDH,0B2H,006H,0CDH,0E9H,004H,0C9H,021H ; +05F8 runtime=06F8H RAW
 PLI_0600: DB 080H,020H,070H,02BH,071H,0CDH,0F8H,006H,02AH,07FH,020H,044H,04DH,0CDH,0F4H,004H ; +0600 runtime=0700H RAW
@@ -515,7 +512,7 @@ PLI_0780: SHLD 1D08H ; little_endian_word[input_buffer_index (1D08H)] = HL (low 
 PLI_0783: LHLD 1D06H ; HL = little_endian_word[input_buffer_base (1D06H)] ; +0783 runtime=0883H OBSERVED
 PLI_0786: MOV A,M ; A = byte[HL] ; +0786 runtime=0886H OBSERVED
 PLI_0787: RET ; PC = word[SP]; SP += 2; use the convention in procedure header ; +0787 runtime=0887H OBSERVED
-; SECTION [0788,09CB) RAW
+; SECTION [0788,0817) RAW
 PLI_0788: DB 021H,08CH,020H,071H,03AH,028H,020H,01FH ; +0788 runtime=0888H RAW
 PLI_0790: DB 0D2H,094H,008H,0C9H,03AH,00FH,020H,0FEH,000H,0CAH,09DH,008H,0C9H,03AH,025H,020H ; +0790 runtime=0890H RAW
 PLI_07A0: DB 01FH,0D2H,0A5H,008H,0C9H,02AH,08CH,020H,04DH,0CDH,090H,004H,0C9H,0CDH,00CH,008H ; +07A0 runtime=08A0H RAW
@@ -525,8 +522,65 @@ PLI_07D0: DB 000H,021H,00DH,01EH,009H,07EH,032H,08EH,020H,0C3H,003H,009H,001H,00
 PLI_07E0: DB 0EEH,003H,001H,0C3H,01CH,0CDH,018H,004H,0FEH,000H,0C2H,0FBH,008H,021H,08DH,01EH ; +07E0 runtime=08E0H RAW
 PLI_07F0: DB 036H,000H,03AH,00DH,01EH,032H,08EH,020H,0C3H,000H,009H,021H,08EH,020H,036H,01AH ; +07F0 runtime=08F0H RAW
 PLI_0800: DB 0CDH,0FEH,003H,03AH,08EH,020H,0FEH,020H,0DAH,013H,009H,03AH,08EH,020H,0F6H,080H ; +0800 runtime=0900H RAW
-PLI_0810: DB 032H,08EH,020H,03AH,08EH,020H,0C9H,021H,08FH,020H,071H,03EH,05FH,021H,08FH,020H ; +0810 runtime=0910H RAW
-PLI_0820: DB 0BEH,0D2H,02AH,009H,03AH,08FH,020H,0E6H,05FH,0C9H,03AH,08FH,020H,0C9H,0CDH,0ADH ; +0820 runtime=0920H RAW
+PLI_0810: DB 032H,08EH,020H,03AH,08EH,020H,0C9H ; +0810 runtime=0910H RAW
+
+; @procedure-v1 PLI.COM+0817
+; ProcedureHypothesis: conditional byte mask above unsigned 5F
+; Entry: PLI_0817 = PLI.COM+0817 @ 0917H; SHA-256
+;   c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80
+; Extent: HYPOTHESIS [0817,082E) file offsets; overlapping entries: none established
+; Callers: OBSERVED PLI.COM+12DD (MINIMAL=28); PLI.COM+142C (MINIMAL=114); PLI.COM+17FF
+;   (MINIMAL=4)
+; Returns: OBSERVED/DEDUCED ordinary hardware CALL word; original slot unchanged, SP after
+;   RET=entry_SP+2; PLI.COM+0829; PLI.COM+082D
+; Inputs: DEDUCED C=byte; writable208F
+; Outputs: DEDUCED A=conditional mask of C; BC/DE preserved; HL=208F; flags from last CMP or ANI
+; Clobbers: DEDUCED A,HL,flags; scratch208F; BC,DE unchanged; no stack writes beyond caller CALL
+; Memory: DEDUCED conditional_mask_byte=208FH (saved byte for threshold5F/mask5F transform);
+;   F=entry_SP; zero-byte reserved local frame; temporary saves/CALL words below F; original
+;   return word at F.
+; Direct callees: OBSERVED none
+; Coverage: OBSERVED MINIMAL: 146 CALLs; 23/23 bytes represented as instructions; Corrected
+;   matched hardware returns; no recursion, no reserved local frame; below-entry
+;   saves/CALL words only.
+; Unresolved: No unresolved local algorithm at declared scope; input/table producers and storage
+;   ownership remain general provenance questions.
+; Contract: DEDUCED (complete; scope: DEDUCED local operation at nonaliasing
+;   scratch/table/return-stack scope; bytes and addresses wrap at their machine widths; no
+;   source-language meaning) Save input C at208F. CMP 5FH with saved C: JNC +082A iff
+;   C<=5F; return unchanged C in that arm, otherwise return C &5F. BC and DE preserved;
+;   HL=208F; flags from CMP on unchanged arm or ANI5F on masked arm. Only scratch208F is
+;   written. This is a numeric transform, not a source-language classification.
+; Hypothesis: none beyond the low-level operational description
+; Completeness: bounds=stable; control_flow=complete; contract=complete
+; Evidence: evidence.json#seeds/PLI.COM+0817;
+;   ../minimal-baseline/pass-5/structural.json#PLI.COM+0817
+; Procedure pseudo (operational; byte/word arithmetic wraps):
+;   byte[208F]=C; A=(unsigned(C)>5F)?(C &5F):C; RET
+; @end-procedure-v1 PLI.COM+0817
+; SECTION [0817,082E) UNDERSTOOD
+; @block-pseudo 0817
+; pseudo:
+; | save C at208F; compare unsigned5F with C
+PLI_0817: LXI H,208FH ; HL = conditional_mask_byte (208FH) (literal address/value) ; +0817 runtime=0917H OBSERVED
+PLI_081A: MOV M,C ; byte[HL] = C; flags preserved ; +081A runtime=091AH OBSERVED
+PLI_081B: MVI A,5FH ; A = 5FH; flags preserved ; +081B runtime=091BH OBSERVED
+PLI_081D: LXI H,208FH ; HL = conditional_mask_byte (208FH) (literal address/value) ; +081D runtime=091DH OBSERVED
+PLI_0820: CMP M ; flags = unsigned byte comparison A-byte[HL]; A unchanged ; +0820 runtime=0920H OBSERVED
+PLI_0821: JNC 092AH ; if CY=0: PC=092AH; flags preserved ; +0821 runtime=0921H OBSERVED
+; @block-pseudo 0824
+; pseudo:
+; | C>5F: A=C &5F; flags from ANI; RET
+PLI_0824: LDA 208FH ; A = byte[conditional_mask_byte (208FH)]; flags preserved ; +0824 runtime=0924H OBSERVED
+PLI_0827: ANI 5FH ; A=A  & 5FH; logical flags, CY=0 ; +0827 runtime=0927H OBSERVED
+PLI_0829: RET ; consume original hardware return word at entry SP; SP=entry_SP+2; flags preserved ; +0829 runtime=0929H OBSERVED
+; @block-pseudo 082A
+; pseudo:
+; | C<=5F: A=C; flags still CMP5F-C; RET
+PLI_082A: LDA 208FH ; A = byte[conditional_mask_byte (208FH)]; flags preserved ; +082A runtime=092AH OBSERVED
+PLI_082D: RET ; consume original hardware return word at entry SP; SP=entry_SP+2; flags preserved ; +082D runtime=092DH OBSERVED
+; SECTION [082E,09CB) RAW
+PLI_082E: DB 0CDH,0ADH ; +082E runtime=092EH RAW
 PLI_0830: DB 008H,032H,090H,020H,0FEH,020H,0C2H,03CH,009H,0C3H,02EH,009H,03AH,090H,020H,0C9H ; +0830 runtime=0930H RAW
 PLI_0840: DB 021H,091H,020H,036H,000H,03EH,005H,021H,091H,020H,0BEH,0DAH,06BH,009H,0CDH,05AH ; +0840 runtime=0940H RAW
 PLI_0850: DB 00AH,02AH,091H,020H,026H,000H,001H,012H,002H,009H,03AH,092H,020H,0BEH,0CAH,064H ; +0850 runtime=0950H RAW
@@ -834,15 +888,10 @@ PLI_0CD0: DB 02AH,0A6H,020H,044H,04DH,0CDH,003H,00DH,0C9H,03AH,00FH,020H,0FEH,00
 PLI_0CE0: DB 00DH,03AH,028H,020H,01FH,0D2H,0EBH,00DH,0CDH,02AH,00CH,0C9H,03AH,00FH,020H,0FEH ; +0CE0 runtime=0DE0H RAW
 PLI_0CF0: DB 002H,0C2H,0FEH,00DH,03AH,026H,020H,01FH,0D2H,0FEH,00DH,0CDH,02AH,00CH,0C9H,001H ; +0CF0 runtime=0DF0H RAW
 PLI_0D00: DB 045H,020H,0CDH,0FFH,006H,0CDH,0F8H,006H,0C9H ; +0D00 runtime=0E00H RAW
-
-; OBSERVED: separate CALL entry (two MINIMAL calls), hardware RET at +0D3F.
-; DEDUCED: no observed fallthrough from this earlier region into PLI_0D40; body/exit branch remains RAW.
 PLI_0D09: DB 0CDH,0D9H,00DH,03AH,01EH,020H,032H ; +0D09 runtime=0E09H RAW
 PLI_0D10: DB 0A8H,020H,021H,01EH,020H,036H,000H,03AH,049H,020H,0FEH,020H,0C2H,027H,00EH,021H ; +0D10 runtime=0E10H RAW
 PLI_0D20: DB 048H,020H,036H,04EH,023H,036H,04FH,03AH,00FH,020H,0C6H,031H,032H,05CH,020H,0CDH ; +0D20 runtime=0E20H RAW
 PLI_0D30: DB 0FFH,00DH,03AH,0A8H,020H,032H,01EH,020H,01FH,0D2H,03FH,00EH,0CDH,0FFH,00DH ; +0D30 runtime=0E30H RAW
-
-; OBSERVED: RET site of +0D09 (two); next +0D40 is an independent called entry.
 PLI_0D3F: DB 0C9H ; +0D3F runtime=0E3FH RAW
 
 ; @procedure-v1 PLI.COM+0D40
@@ -1461,8 +1510,59 @@ PLI_12D3: LXI H,1E8EH ; HL = &text_buffer (1E8EH) ; +12D3 runtime=13D3H OBSERVED
 PLI_12D6: DAD B ; HL = (HL + BC) & FFFF; only CY changes ; +12D6 runtime=13D6H OBSERVED
 PLI_12D7: MOV A,M ; A = byte[HL] ; +12D7 runtime=13D7H OBSERVED
 PLI_12D8: RET ; PC = word[SP]; SP += 2; use the convention in procedure header ; +12D8 runtime=13D8H OBSERVED
-; SECTION [12D9,19BB) RAW
-PLI_12D9: DB 0CDH,0AEH,013H,04FH,0CDH,017H,009H,0C9H,02AH,059H ; +12D9 runtime=13D9H RAW
+
+; @procedure-v1 PLI.COM+12D9
+; ProcedureHypothesis: counted-buffer read then conditional mask adapter
+; Entry: PLI_12D9 = PLI.COM+12D9 @ 13D9H; SHA-256
+;   c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80
+; Extent: HYPOTHESIS [12D9,12E1) file offsets; overlapping entries: none established
+; Callers: OBSERVED PLI.COM+13C5 (MINIMAL=26); PLI.COM+156D (MINIMAL=2)
+; Returns: OBSERVED/DEDUCED ordinary hardware CALL word; original slot unchanged, SP after
+;   RET=entry_SP+2; PLI.COM+12E0
+; Inputs: DEDUCED index1F06/count1F08/EOF2012 and existing refill preconditions
+; Outputs: DEDUCED A=conditional mask of reader byte; C=raw byte; HL=208F; B/DE reader-derived;
+;   flags from +0817
+; Clobbers: DEDUCED A,BC,DE,HL,flags; nested CALL stack only in own body; reader/refill and208F
+;   effects delegated
+; Memory: DEDUCED text_buffer=1E8EH (bounded byte buffer ending before 1F06); text_index=1F06H
+;   (last written/next read index, depending on existing caller); text_count=1F08H
+;   (counted-buffer limit); reader_eof_flags=2012H (bit0 gates 1A return);
+;   conditional_mask_byte=208FH (saved byte for threshold5F/mask5F transform); F=entry_SP;
+;   zero-byte reserved local frame; temporary saves/CALL words below F; original return word
+;   at F.
+; Direct callees: OBSERVED PLI.COM+12AE @13AEH; PLI.COM+0817 @0917H
+; Coverage: OBSERVED MINIMAL: 28 CALLs; 8/8 bytes represented as instructions; Corrected matched
+;   hardware returns; no recursion, no reserved local frame; below-entry saves/CALL words
+;   only.
+; Unresolved: partial helper scope: +12AE/+0D40 refill high-bit/tab/capacity and downstream host
+;   paths remain qualified.
+; Contract: DEDUCED (partial; scope: DEDUCED local operation at nonaliasing
+;   scratch/table/return-stack scope; bytes and addresses wrap at their machine widths; no
+;   source-language meaning) Call existing partial +12AE counted-buffer reader/refill. Set
+;   C=returned raw A; call complete +0817. Return transformed A, C=raw returned byte,
+;   HL=208F; B and DE follow reader outputs and are preserved by +0817. Memory/host refill
+;   effects inherit +12AE/+0D40 scope; no input-register dependence of own byte
+;   acquisition. Ordinary nested CALL stack only in own body.
+; Hypothesis: none beyond the low-level operational description
+; Completeness: bounds=stable; control_flow=complete; contract=partial
+; Evidence: evidence.json#seeds/PLI.COM+12D9;
+;   ../minimal-baseline/pass-5/structural.json#PLI.COM+12D9
+; Procedure pseudo (operational; byte/word arithmetic wraps):
+;   raw=read12AE(); C=raw; A=mask0817(C); RET
+; @end-procedure-v1 PLI.COM+12D9
+; SECTION [12D9,12E1) UNDERSTOOD
+; @block-pseudo 12D9
+; pseudo:
+; | read through +12AE at partial buffer/refill scope
+PLI_12D9: CALL 13AEH ; push following PC; invoke PLI.COM+12AE; established partial contract at declared scope ; +12D9 runtime=13D9H OBSERVED
+; @block-pseudo 12DC
+; pseudo:
+; | C=raw read byte; +0817 masks only when raw>5F; RET
+PLI_12DC: MOV C,A ; C = A; flags preserved ; +12DC runtime=13DCH OBSERVED
+PLI_12DD: CALL 0917H ; push following PC; invoke PLI.COM+0817; established complete contract at declared scope ; +12DD runtime=13DDH OBSERVED
+PLI_12E0: RET ; consume original hardware return word at entry SP; SP=entry_SP+2; flags preserved ; +12E0 runtime=13E0H OBSERVED
+; SECTION [12E1,1376) RAW
+PLI_12E1: DB 02AH,059H ; +12E1 runtime=13E1H RAW
 PLI_12E3: DB 01CH,023H,05EH,016H,000H,02AH,059H,01CH,019H,023H,023H,022H,05BH,01CH,02AH,05BH ; +12E3 runtime=13E3H RAW
 PLI_12F3: DB 01CH,023H,023H,03AH,0C5H,020H,0BEH,0CAH,000H,014H,03EH,000H,0C9H,021H,046H,021H ; +12F3 runtime=13F3H RAW
 PLI_1303: DB 036H,000H,03AH,0C5H,020H,03DH,021H,046H,021H,0BEH,0DAH,03BH,014H,02AH,046H,021H ; +1303 runtime=1403H RAW
@@ -1472,54 +1572,631 @@ PLI_1333: DB 021H,03CH,032H,046H,021H,0C2H,005H,014H,03EH,001H,0C9H,021H,047H,02
 PLI_1343: DB 03AH,0C5H,020H,021H,047H,021H,0BEH,0DAH,075H,014H,03AH,047H,021H,03DH,04FH,006H ; +1343 runtime=1443H RAW
 PLI_1353: DB 000H,021H,0C6H,020H,009H,04EH,0CDH,017H,009H,0F5H,03AH,047H,021H,03DH,04FH,006H ; +1353 runtime=1453H RAW
 PLI_1363: DB 000H,021H,0C6H,020H,009H,0C1H,048H,071H,03AH,047H,021H,03CH,032H,047H,021H,0C2H ; +1363 runtime=1463H RAW
-PLI_1373: DB 043H,014H,0C9H,021H,088H,020H,036H,000H,02BH,036H,000H,03AH,012H,020H,01FH,0D2H ; +1373 runtime=1473H RAW
-PLI_1383: DB 088H,014H,0CDH,013H,006H,021H,058H,01CH,036H,000H,021H,0C5H,020H,036H,000H,02BH ; +1383 runtime=1483H RAW
-PLI_1393: DB 07EH,01FH,0D2H,0A0H,014H,021H,0C4H,020H,036H,000H,0C3H,0A5H,014H,021H,0C3H,020H ; +1393 runtime=1493H RAW
-PLI_13A3: DB 036H,000H,03AH,0C3H,020H,0FEH,000H,0C2H,009H,015H,03AH,0C1H,020H,0D6H,020H,0D6H ; +13A3 runtime=14A3H RAW
-PLI_13B3: DB 001H,09FH,0F5H,03AH,0C1H,020H,0D6H,000H,0D6H,001H,09FH,0C1H,048H,0B1H,01FH,0D2H ; +13B3 runtime=14B3H RAW
-PLI_13C3: DB 0CEH,014H,0CDH,0D9H,013H,032H,0C1H,020H,0C3H,006H,015H,0CDH,0E3H,016H,01FH,0D2H ; +13C3 runtime=14C3H RAW
-PLI_13D3: DB 0DDH,014H,021H,0C3H,020H,036H,001H,0C3H,006H,015H,0CDH,0DAH,016H,01FH,0D2H,0ECH ; +13D3 runtime=14D3H RAW
-PLI_13E3: DB 014H,021H,0C3H,020H,036H,002H,0C3H,006H,015H,03AH,0C1H,020H,0FEH,027H,0C2H,001H ; +13E3 runtime=14E3H RAW
-PLI_13F3: DB 015H,021H,0C1H,020H,036H,000H,021H,0C3H,020H,036H,005H,0C3H,006H,015H,021H,0C3H ; +13F3 runtime=14F3H RAW
-PLI_1403: DB 020H,036H,00AH,0C3H,0A5H,014H,03AH,0C1H,020H,0FEH,000H,0CAH,014H,015H,0CDH,027H ; +1403 runtime=1503H RAW
-PLI_1413: DB 017H,03AH,0C1H,020H,032H,0C2H,020H,0CDH,0AEH,013H,032H,0C1H,020H,03AH,0C3H,020H ; +1413 runtime=1513H RAW
-PLI_1423: DB 0FEH,005H,0CAH,032H,015H,02AH,0C1H,020H,04DH,0CDH,017H,009H,032H,0C1H,020H,03AH ; +1423 runtime=1523H RAW
-PLI_1433: DB 0C3H,020H,0FEH,00AH,0C2H,052H,015H,03AH,0C2H,020H,0D6H,02EH,0D6H,001H,09FH,0F5H ; +1433 runtime=1533H RAW
-PLI_1443: DB 0CDH,0DAH,016H,0C1H,048H,0A1H,01FH,0D2H,052H,015H,021H,0C3H,020H,036H,003H,03AH ; +1443 runtime=1543H RAW
-PLI_1453: DB 0C3H,020H,0FEH,001H,0C2H,0B9H,015H,0CDH,0F9H,016H,02FH,01FH,0D2H,0B6H,015H,02AH ; +1453 runtime=1553H RAW
-PLI_1463: DB 058H,01CH,026H,000H,001H,038H,01CH,029H,009H,05EH,023H,056H,0EBH,022H,059H,01CH ; +1463 runtime=1563H RAW
-PLI_1473: DB 03EH,000H,011H,059H,01CH,0CDH,040H,01BH,0B5H,0CAH,0B5H,015H,0CDH,0E1H,013H,01FH ; +1473 runtime=1573H RAW
+PLI_1373: DB 043H,014H,0C9H ; +1373 runtime=1473H RAW
+
+; @procedure-v1 PLI.COM+1376
+; ProcedureHypothesis: scoped counted-input prefix acquisition and retained following byte
+; Entry: PLI_1376 = PLI.COM+1376 @ 1476H; SHA-256
+;   c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80
+; Extent: HYPOTHESIS [1376,15DA) file offsets; overlapping entries: none established
+; Callers: OBSERVED PLI0.OVL+42D4 (MINIMAL=19); PLI1.OVL+784E (MINIMAL=19)
+; Returns: OBSERVED/DEDUCED ordinary hardware CALL word; original slot unchanged, SP after
+;   RET=entry_SP+2; PLI.COM+14B5; PLI.COM+15AB; PLI.COM+15D5
+; Inputs: DEDUCED retained context20C1, EOF2012.bit0/reuse20C4.bit0, counted reader1F06/1F08 and
+;   refill state; writable prefix/count/accumulator; selected word table1C38; nonaliasing
+;   scratch/stack; no meaningful entry-register byte argument on observed scope
+; Outputs: DEDUCED selector20C3, width20C5 and prefix20C6 established; context20C1 is fresh
+;   following/extra read, previous20C2 saved; accumulator1C58=sum mod16; selected-word1C59
+;   on selector1;2087/88 cleared. RET14B5 A0 HL0 BC=selected table high address DE1C5A CY0;
+;   RET15D5 A0A flagsCPI05; RET15AB A=fresh context flagsCPI27; remaining registers
+;   helper-derived.
+; Clobbers: DEDUCED A,BC,DE,HL,flags;
+;   prefix/count/context/previous/selector/accumulator/selected-word/reset controls;
+;   transient PSW saves; reader/refill guest/host side effects at inherited partial scope
+; Memory: DEDUCED pattern_context=20C1H (retained current byte; repeatedly replaced by
+;   reader-derived values); pattern_previous_byte=20C2H (context saved immediately before
+;   counted-buffer read); pattern_selector=20C3H (numeric path selector published by prefix
+;   acquisition); pattern_reuse_flags=20C4H (bit0 gates unobserved acquisition entry
+;   alternative); pattern_width=20C5H (prefix byte count appended by +1627);
+;   pattern_input_bytes=20C6H (prefix bytes; current observed widths1..9, normal append
+;   guard permits offsets0..127); prefix_accumulator=1C58H (sum of appended bytes modulo16);
+;   prefix_pointer_table=1C38H (16 word slots selected by modulo16 accumulator);
+;   selected_prefix_word=1C59H (word copied from selected accumulator-indexed slot);
+;   acquisition_reset_word=2087H (two bytes cleared at acquisition entry);
+;   conditional_mask_byte=208FH (saved byte for threshold5F/mask5F transform);
+;   text_buffer=1E8EH (bounded byte buffer ending before 1F06); text_index=1F06H (last
+;   written/next read index, depending on existing caller); text_count=1F08H (counted-buffer
+;   limit); reader_eof_flags=2012H (bit0 gates 1A return); F=entry_SP; zero-byte reserved
+;   local frame; temporary saves/CALL words below F; original return word at F.
+; Direct callees: OBSERVED PLI.COM+12D9 @13D9H; PLI.COM+15E3 @16E3H; PLI.COM+15DA @16DAH;
+;   PLI.COM+1627 @1727H; PLI.COM+12AE @13AEH; PLI.COM+0817 @0917H; PLI.COM+15DA
+;   @16DAH; PLI.COM+15F9 @16F9H; PLI.COM+1A40 @1B40H; PLI.COM+12D9 @13D9H
+; Coverage: OBSERVED MINIMAL: 38 CALLs; 328/612 bytes represented as instructions; 38 calls:19
+;   PLI0+42D4 and19 PLI1+784E; each ordered stream has9 selector1,9 selector0A,1
+;   selector5;128 appends,130 direct reader calls,28 adapter reads including2 extra reads;
+;   no recursion/frame.
+; Unresolved: partial helper scope: +12AE/+0D40 refill tab/high-bit/capacity paths and +1627
+;   overflow path; +15F9 range30..39 return arm RAW. / unobserved branch: EOF/reuse
+;   entry arms, selector2/3/4 handling, selected-word nonzero handling, previous2E/range
+;   predicate true, selector5 1A/42/27/5E alternatives; bounds/CFG/contract partial. /
+;   general provenance need: reader initialization, pointer-table word producers and
+;   earlier context; host effects are not joined by V0.1. / arbitrary termination
+;   concern: whitespace/acquisition retries depend on reader state/input; no
+;   arbitrary-input termination proof.
+; Contract: DEDUCED (partial; scope: MINIMAL observed clear EOF2012/reuse20C4 bit0 paths;
+;   selector1 with selected word zero, selector0A with previous2E/range predicate false,
+;   selector5 plain accumulation and extra-read bytes not42/27; inherited partial
+;   reader/refill/append scopes; nonaliasing prefix/scratch/table/stack) Clear
+;   bytes2088/2087. On all38 observed entries EOF2012.bit0=0 and reuse20C4.bit0=0: clear
+;   modulo16 accumulator1C58, width20C5 and selector20C3. While selector==0, context20C1
+;   equal00 or20 triggers +12D9 (counted-reader +12AE then conditional mask0817) and
+;   replacement of context; otherwise +15E3.A.bit0 chooses selector1; observed false +15DA
+;   excludes30..39, context27 clears context and selects5, other observed bytes select0A.
+;   Once selector!=0, iterate: if context!=0, partial +1627 appends it to20C6+width,
+;   increments width, updates sum mod16. Save context to20C2; +12AE supplies fresh
+;   context. Unless selector==5, mask fresh context through0817. Selector0A tests
+;   previous-byte2E AND range30..39 mask; observed false then returns via15D5 (one
+;   appended byte). Selector1 calls15F9: CMA/RAR/JNC repeats iff original
+;   returnedA.bit0==1; observed false selects word[1C38+2*accumulator], copies it to1C59
+;   and subtracts0 via complete1A40; ORA L/JZ returns iff selected word==0 (18/18).
+;   Selector5 does not apply mask: context!=1A, context!=27 and context!=5E repeat on
+;   observed arms; context27 consumes one more masked read via12D9; observed returned
+;   byte!=42 and!=27 returns15AB. Other selector/special/error/EOF-entry/reuse
+;   alternatives remain RAW. The prefix is a distinct publication from the retained
+;   following context: nine selector1 prefixes, nine selector0A one-byte prefixes and one
+;   selector5 seven-byte prefix per overlay caller. Incoming general registers are
+;   overwritten before meaningful use on these paths; input dependence is durable
+;   reader/context state. No direct BDOS call; buffer refill is delegated to existing
+;   partial reader/build contracts; guest-only packet does not establish all host effects.
+; Hypothesis: none beyond the low-level operational description
+; Completeness: bounds=provisional; control_flow=partial; contract=partial
+; Evidence: evidence.json#seeds/PLI.COM+1376;
+;   ../minimal-baseline/pass-5/structural.json#PLI.COM+1376
+; Procedure pseudo (operational; byte/word arithmetic wraps):
+;   scope EOF.bit0=0,reuse.bit0=0: word[2087]=0; width=0; sum=0; selector=0; while selector==0 {
+;   if context in {00,20}: context=read_mask12D9(); else if predicate15E3(context).bit0:
+;   selector=1; else if predicate15DA(context).bit0: unresolved RAW arm; else if context==27 {
+;   context=0; selector=5; } else selector=0A; }; loop { if context!=0:
+;   append1627(context,width,sum); previous=context; context=read12AE(); if selector!=5:
+;   context=mask0817(context); if selector==0A { if previous==2E && predicate15DA(context).bit0:
+;   unresolved RAW arm; RET15D5; }; if selector==1 { if predicate15F9(context).bit0: continue;
+;   selected=word[1C38+2*sum]; word[1C59]=selected; if selected==0: RET14B5; unresolved RAW arm;
+;   }; if selector==5 { if context==1A: unresolved RAW arm; if context==27 {
+;   context=read_mask12D9(); if context in {42,27}: unresolved RAW arm; RET15AB; }; if
+;   context==5E: unresolved RAW arm; continue; }; unresolved RAW dispatch; }
+; @end-procedure-v1 PLI.COM+1376
+; SECTION [1376,1385) UNDERSTOOD
+; @block-pseudo 1376
+; pseudo:
+; | clear2088/2087; RAR/JNC proceeds iff EOF2012.bit0 clear (38); set-bit RAW arm
+PLI_1376: LXI H,2088H ; HL = 2088H (literal address/value) ; +1376 runtime=1476H OBSERVED
+PLI_1379: MVI M,00H ; byte[HL] = 00H; flags preserved ; +1379 runtime=1479H OBSERVED
+PLI_137B: DCX H ; HL=u16(HL-1); flags preserved ; +137B runtime=147BH OBSERVED
+PLI_137C: MVI M,00H ; byte[HL] = 00H; flags preserved ; +137C runtime=147CH OBSERVED
+PLI_137E: LDA 2012H ; A = byte[reader_eof_flags (2012H)]; flags preserved ; +137E runtime=147EH OBSERVED
+PLI_1381: RAR ; A=(old_CY<<7)|(old_A>>1); CY=old_A.bit0; NZPA preserved ; +1381 runtime=1481H OBSERVED
+PLI_1382: JNC 1488H ; if CY=0: PC=1488H; flags preserved ; +1382 runtime=1482H OBSERVED
+; SECTION [1385,1388) RAW
+PLI_1385: DB 0CDH,013H,006H ; +1385 runtime=1485H RAW
+; SECTION [1388,1398) UNDERSTOOD
+; @block-pseudo 1388
+; pseudo:
+; | clear accumulator1C58 and width20C5; JNC resets selector iff reuse20C4.bit0 clear (38)
+PLI_1388: LXI H,1C58H ; HL = prefix_accumulator (1C58H) (literal address/value) ; +1388 runtime=1488H OBSERVED
+PLI_138B: MVI M,00H ; byte[HL] = 00H; flags preserved ; +138B runtime=148BH OBSERVED
+PLI_138D: LXI H,20C5H ; HL = pattern_width (20C5H) (literal address/value) ; +138D runtime=148DH OBSERVED
+PLI_1390: MVI M,00H ; byte[HL] = 00H; flags preserved ; +1390 runtime=1490H OBSERVED
+PLI_1392: DCX H ; HL=u16(HL-1); flags preserved ; +1392 runtime=1492H OBSERVED
+PLI_1393: MOV A,M ; A = byte[HL]; flags preserved ; +1393 runtime=1493H OBSERVED
+PLI_1394: RAR ; A=(old_CY<<7)|(old_A>>1); CY=old_A.bit0; NZPA preserved ; +1394 runtime=1494H OBSERVED
+PLI_1395: JNC 14A0H ; if CY=0: PC=14A0H; flags preserved ; +1395 runtime=1495H OBSERVED
+; SECTION [1398,13A0) RAW
+PLI_1398: DB 021H,0C4H,020H,036H,000H,0C3H,0A5H,014H ; +1398 runtime=1498H RAW
+; SECTION [13A0,13E4) UNDERSTOOD
+; @block-pseudo 13A0
+; pseudo:
+; | selector20C3=0
+PLI_13A0: LXI H,20C3H ; HL = pattern_selector (20C3H) (literal address/value) ; +13A0 runtime=14A0H OBSERVED
+PLI_13A3: MVI M,00H ; byte[HL] = 00H; flags preserved ; +13A3 runtime=14A3H OBSERVED
+; @block-pseudo 13A5
+; pseudo:
+; | nonzero selector starts acquisition loop; zero tests context
+PLI_13A5: LDA 20C3H ; A = byte[pattern_selector (20C3H)]; flags preserved ; +13A5 runtime=14A5H OBSERVED
+PLI_13A8: CPI 00H ; flags = unsigned byte comparison A-00H; A unchanged ; +13A8 runtime=14A8H OBSERVED
+PLI_13AA: JNZ 1509H ; if Z=0: PC=1509H; flags preserved ; +13AA runtime=14AAH OBSERVED
+; @block-pseudo 13AD
+; pseudo:
+; | FF/00 equality masks(context20)==OR==(context00); RAR/JNC classifies iff neither equality true
+PLI_13AD: LDA 20C1H ; A = byte[pattern_context (20C1H)]; flags preserved ; +13AD runtime=14ADH OBSERVED
+PLI_13B0: SUI 20H ; A=u8(A-20H); arithmetic flags including CY=borrow ; +13B0 runtime=14B0H OBSERVED
+PLI_13B2: SUI 01H ; A=u8(A-01H); arithmetic flags including CY=borrow ; +13B2 runtime=14B2H OBSERVED
+PLI_13B4: SBB A ; A=CY?FFH:00H; self-subtraction cancels old A; CY is retained Boolean borrow ; +13B4 runtime=14B4H OBSERVED
+PLI_13B5: PUSH PSW ; push A/packed flags below SP; flags unchanged ; +13B5 runtime=14B5H OBSERVED
+PLI_13B6: LDA 20C1H ; A = byte[pattern_context (20C1H)]; flags preserved ; +13B6 runtime=14B6H OBSERVED
+PLI_13B9: SUI 00H ; A=u8(A-00H); arithmetic flags including CY=borrow ; +13B9 runtime=14B9H OBSERVED
+PLI_13BB: SUI 01H ; A=u8(A-01H); arithmetic flags including CY=borrow ; +13BB runtime=14BBH OBSERVED
+PLI_13BD: SBB A ; A=CY?FFH:00H; self-subtraction cancels old A; CY is retained Boolean borrow ; +13BD runtime=14BDH OBSERVED
+PLI_13BE: POP B ; pop B pair, low byte then high; SP+=2; flags unchanged ; +13BE runtime=14BEH OBSERVED
+PLI_13BF: MOV C,B ; C = B; flags preserved ; +13BF runtime=14BFH OBSERVED
+PLI_13C0: ORA C ; A=A  | C; logical flags, CY=0 ; +13C0 runtime=14C0H OBSERVED
+PLI_13C1: RAR ; A=(old_CY<<7)|(old_A>>1); CY=old_A.bit0; NZPA preserved ; +13C1 runtime=14C1H OBSERVED
+PLI_13C2: JNC 14CEH ; OR equality masks00/20 thenRAR; JNC classifies iff context neither00 nor20 ; +13C2 runtime=14C2H OBSERVED
+; @block-pseudo 13C5
+; pseudo:
+; | +12D9 reads counted buffer then conditional mask; store context and retry
+PLI_13C5: CALL 13D9H ; push following PC; invoke PLI.COM+12D9; established partial contract at declared scope ; +13C5 runtime=14C5H OBSERVED
+PLI_13C8: STA 20C1H ; byte[pattern_context (20C1H)] = A; flags preserved ; +13C8 runtime=14C8H OBSERVED
+PLI_13CB: JMP 1506H ; if always: PC=1506H; flags preserved ; +13CB runtime=14CBH OBSERVED
+; @block-pseudo 13CE
+; pseudo:
+; | +15E3: A.bit0 tests41..5A OR3F; set selects1
+PLI_13CE: CALL 16E3H ; push following PC; invoke PLI.COM+15E3; established complete contract at declared scope ; +13CE runtime=14CEH OBSERVED
+PLI_13D1: RAR ; A=(old_CY<<7)|(old_A>>1); CY=old_A.bit0; NZPA preserved ; +13D1 runtime=14D1H OBSERVED
+PLI_13D2: JNC 14DDH ; if CY=0: PC=14DDH; flags preserved ; +13D2 runtime=14D2H OBSERVED
+PLI_13D5: LXI H,20C3H ; HL = pattern_selector (20C3H) (literal address/value) ; +13D5 runtime=14D5H OBSERVED
+PLI_13D8: MVI M,01H ; byte[HL] = 01H; flags preserved ; +13D8 runtime=14D8H OBSERVED
+PLI_13DA: JMP 1506H ; if always: PC=1506H; flags preserved ; +13DA runtime=14DAH OBSERVED
+; @block-pseudo 13DD
+; pseudo:
+; | +15DA: A.bit0 tests30..39; true alternative RAW; observed false goes to27 comparison
+PLI_13DD: CALL 16DAH ; push following PC; invoke PLI.COM+15DA; established complete contract at declared scope ; +13DD runtime=14DDH OBSERVED
+PLI_13E0: RAR ; A=(old_CY<<7)|(old_A>>1); CY=old_A.bit0; NZPA preserved ; +13E0 runtime=14E0H OBSERVED
+PLI_13E1: JNC 14ECH ; if CY=0: PC=14ECH; flags preserved ; +13E1 runtime=14E1H OBSERVED
+; SECTION [13E4,13EC) RAW
+PLI_13E4: DB 021H,0C3H,020H,036H,002H,0C3H,006H,015H ; +13E4 runtime=14E4H RAW
+; SECTION [13EC,144D) UNDERSTOOD
+; @block-pseudo 13EC
+; pseudo:
+; | context27 -> context0,selector5; otherwise selector0A
+PLI_13EC: LDA 20C1H ; A = byte[pattern_context (20C1H)]; flags preserved ; +13EC runtime=14ECH OBSERVED
+PLI_13EF: CPI 27H ; flags = unsigned byte comparison A-27H; A unchanged ; +13EF runtime=14EFH OBSERVED
+PLI_13F1: JNZ 1501H ; if Z=0: PC=1501H; flags preserved ; +13F1 runtime=14F1H OBSERVED
+PLI_13F4: LXI H,20C1H ; HL = pattern_context (20C1H) (literal address/value) ; +13F4 runtime=14F4H OBSERVED
+PLI_13F7: MVI M,00H ; byte[HL] = 00H; flags preserved ; +13F7 runtime=14F7H OBSERVED
+PLI_13F9: LXI H,20C3H ; HL = pattern_selector (20C3H) (literal address/value) ; +13F9 runtime=14F9H OBSERVED
+PLI_13FC: MVI M,05H ; byte[HL] = 05H; flags preserved ; +13FC runtime=14FCH OBSERVED
+PLI_13FE: JMP 1506H ; if always: PC=1506H; flags preserved ; +13FE runtime=14FEH OBSERVED
+PLI_1401: LXI H,20C3H ; HL = pattern_selector (20C3H) (literal address/value) ; +1401 runtime=1501H OBSERVED
+PLI_1404: MVI M,0AH ; byte[HL] = 0AH; flags preserved ; +1404 runtime=1504H OBSERVED
+; @block-pseudo 1406
+; pseudo:
+; | retry selector loop
+PLI_1406: JMP 14A5H ; if always: PC=14A5H; flags preserved ; +1406 runtime=1506H OBSERVED
+; @block-pseudo 1409
+; pseudo:
+; | context0 skips append; otherwise +1627 appends context and advances width/mod16 sum
+PLI_1409: LDA 20C1H ; A = byte[pattern_context (20C1H)]; flags preserved ; +1409 runtime=1509H OBSERVED
+PLI_140C: CPI 00H ; flags = unsigned byte comparison A-00H; A unchanged ; +140C runtime=150CH OBSERVED
+PLI_140E: JZ 1514H ; if Z=1: PC=1514H; flags preserved ; +140E runtime=150EH OBSERVED
+PLI_1411: CALL 1727H ; push following PC; invoke PLI.COM+1627; established partial contract at declared scope ; +1411 runtime=1511H OBSERVED
+; @block-pseudo 1414
+; pseudo:
+; | save context at20C2; +12AE returns next counted byte; store context20C1
+PLI_1414: LDA 20C1H ; A = byte[pattern_context (20C1H)]; flags preserved ; +1414 runtime=1514H OBSERVED
+PLI_1417: STA 20C2H ; previous byte20C2=context immediately before next reader call; distinct from appended prefix ; +1417 runtime=1517H OBSERVED
+PLI_141A: CALL 13AEH ; push following PC; invoke PLI.COM+12AE; established partial contract at declared scope ; +141A runtime=151AH OBSERVED
+PLI_141D: STA 20C1H ; context20C1=fresh counted-reader byte, then optionally numeric masked by0817 ; +141D runtime=151DH OBSERVED
+PLI_1420: LDA 20C3H ; A = byte[pattern_selector (20C3H)]; flags preserved ; +1420 runtime=1520H OBSERVED
+PLI_1423: CPI 05H ; flags = unsigned byte comparison A-05H; A unchanged ; +1423 runtime=1523H OBSERVED
+PLI_1425: JZ 1532H ; if Z=1: PC=1532H; flags preserved ; +1425 runtime=1525H OBSERVED
+; @block-pseudo 1428
+; pseudo:
+; | selector!=5: apply0817 numeric mask; replace context20C1
+PLI_1428: LHLD 20C1H ; HL = little_endian_word[pattern_context (20C1H)]; low byte then high byte, flags preserved ; +1428 runtime=1528H OBSERVED
+PLI_142B: MOV C,L ; C = L; flags preserved ; +142B runtime=152BH OBSERVED
+PLI_142C: CALL 0917H ; push following PC; invoke PLI.COM+0817; established complete contract at declared scope ; +142C runtime=152CH OBSERVED
+PLI_142F: STA 20C1H ; byte[pattern_context (20C1H)] = A; flags preserved ; +142F runtime=152FH OBSERVED
+; @block-pseudo 1432
+; pseudo:
+; | selector0A tests previous2E AND new context30..39 via saved FF/00 mask; observedfalse skips RAW alternative
+PLI_1432: LDA 20C3H ; A = byte[pattern_selector (20C3H)]; flags preserved ; +1432 runtime=1532H OBSERVED
+PLI_1435: CPI 0AH ; flags = unsigned byte comparison A-0AH; A unchanged ; +1435 runtime=1535H OBSERVED
+PLI_1437: JNZ 1552H ; if Z=0: PC=1552H; flags preserved ; +1437 runtime=1537H OBSERVED
+PLI_143A: LDA 20C2H ; A = byte[pattern_previous_byte (20C2H)]; flags preserved ; +143A runtime=153AH OBSERVED
+PLI_143D: SUI 2EH ; A=u8(A-2EH); arithmetic flags including CY=borrow ; +143D runtime=153DH OBSERVED
+PLI_143F: SUI 01H ; A=u8(A-01H); arithmetic flags including CY=borrow ; +143F runtime=153FH OBSERVED
+PLI_1441: SBB A ; A=CY?FFH:00H; self-subtraction cancels old A; CY is retained Boolean borrow ; +1441 runtime=1541H OBSERVED
+PLI_1442: PUSH PSW ; push A/packed flags below SP; flags unchanged ; +1442 runtime=1542H OBSERVED
+PLI_1443: CALL 16DAH ; push following PC; invoke PLI.COM+15DA; established complete contract at declared scope ; +1443 runtime=1543H OBSERVED
+PLI_1446: POP B ; pop B pair, low byte then high; SP+=2; flags unchanged ; +1446 runtime=1546H OBSERVED
+PLI_1447: MOV C,B ; C = B; flags preserved ; +1447 runtime=1547H OBSERVED
+PLI_1448: ANA C ; A=A & C; logical flags, CY=0 ; +1448 runtime=1548H OBSERVED
+PLI_1449: RAR ; A=(old_CY<<7)|(old_A>>1); CY=old_A.bit0; NZPA preserved ; +1449 runtime=1549H OBSERVED
+PLI_144A: JNC 1552H ; JNC skips RAW arm iff NOT(previous==2E AND current range30..39); packet saved mask leaf has opaque scope gap ; +144A runtime=154AH OBSERVED
+; SECTION [144D,1452) RAW
+PLI_144D: DB 021H,0C3H,020H,036H,003H ; +144D runtime=154DH RAW
+; SECTION [1452,147F) UNDERSTOOD
+; @block-pseudo 1452
+; pseudo:
+; | selector1 ->15F9; otherwise dispatch4/3/2/5
+PLI_1452: LDA 20C3H ; A = byte[pattern_selector (20C3H)]; flags preserved ; +1452 runtime=1552H OBSERVED
+PLI_1455: CPI 01H ; flags = unsigned byte comparison A-01H; A unchanged ; +1455 runtime=1555H OBSERVED
+PLI_1457: JNZ 15B9H ; if Z=0: PC=15B9H; flags preserved ; +1457 runtime=1557H OBSERVED
+; @block-pseudo 145A
+; pseudo:
+; | CMA/RAR/JNC repeats iff ORIGINAL15F9.A.bit0 set (78); clear bit selects word probe (18)
+PLI_145A: CALL 16F9H ; push following PC; invoke PLI.COM+15F9; established partial contract at declared scope ; +145A runtime=155AH OBSERVED
+PLI_145D: CMA ; A=~A & FFH; flags preserved ; +145D runtime=155DH OBSERVED
+PLI_145E: RAR ; A=(old_CY<<7)|(old_A>>1); CY=old_A.bit0; NZPA preserved ; +145E runtime=155EH OBSERVED
+PLI_145F: JNC 15B6H ; CMA/RAR/JNC repeats iff original15F9.A.bit0 set; helper returnedCY is not this test ; +145F runtime=155FH OBSERVED
+; @block-pseudo 1462
+; pseudo:
+; | copy word[1C38+2*mod16 sum] to1C59;1A40 subtracts0; ORA L/Z tests full word; all18 zero
+PLI_1462: LHLD 1C58H ; HL = little_endian_word[prefix_accumulator (1C58H)]; low byte then high byte, flags preserved ; +1462 runtime=1562H OBSERVED
+PLI_1465: MVI H,00H ; H = 00H; flags preserved ; +1465 runtime=1565H OBSERVED
+PLI_1467: LXI B,1C38H ; BC = prefix_pointer_table (1C38H) (literal address/value) ; +1467 runtime=1567H OBSERVED
+PLI_146A: DAD H ; HL=u16(HL+HL); only CY changes (word overflow) ; +146A runtime=156AH OBSERVED
+PLI_146B: DAD B ; HL=u16(HL+BC); only CY changes (word overflow) ; +146B runtime=156BH OBSERVED
+PLI_146C: MOV E,M ; E = byte[HL]; flags preserved ; +146C runtime=156CH OBSERVED
+PLI_146D: INX H ; HL=u16(HL+1); flags preserved ; +146D runtime=156DH OBSERVED
+PLI_146E: MOV D,M ; D = byte[HL]; flags preserved ; +146E runtime=156EH OBSERVED
+PLI_146F: XCHG ; swap HL and DE; flags preserved ; +146F runtime=156FH OBSERVED
+PLI_1470: SHLD 1C59H ; little_endian_word[selected_prefix_word (1C59H)] = HL; low byte then high byte ; +1470 runtime=1570H OBSERVED
+PLI_1473: MVI A,00H ; A = 00H; flags preserved ; +1473 runtime=1573H OBSERVED
+PLI_1475: LXI D,1C59H ; DE = selected_prefix_word (1C59H) (literal address/value) ; +1475 runtime=1575H OBSERVED
+PLI_1478: CALL 1B40H ; push following PC; invoke PLI.COM+1A40; established complete contract at declared scope ; +1478 runtime=1578H OBSERVED
+PLI_147B: ORA L ; A=A  | L; logical flags, CY=0 ; +147B runtime=157BH OBSERVED
+PLI_147C: JZ 15B5H ; A=high selected word after1A40; ORA L/Z tests full word zero;18 taken ; +147C runtime=157CH OBSERVED
+; SECTION [147F,14B5) RAW
+PLI_147F: DB 0CDH,0E1H,013H,01FH ; +147F runtime=157FH RAW
 PLI_1483: DB 0D2H,0A8H,015H,02AH,059H,01CH,07EH,032H,0C3H,020H,02AH,059H,01CH,023H,07EH,03CH ; +1483 runtime=1583H RAW
 PLI_1493: DB 06FH,0E5H,02AH,059H,01CH,023H,044H,04DH,011H,0C5H,020H,0E1H,00AH,012H,003H,013H ; +1493 runtime=1593H RAW
 PLI_14A3: DB 02DH,0C2H,09FH,015H,0C9H,02AH,05BH,01CH,05EH,023H,056H,0EBH,022H,059H,01CH,0C3H ; +14A3 runtime=15A3H RAW
-PLI_14B3: DB 073H,015H,0C9H,0C3H,0D6H,016H,03AH,0C3H,020H,0FEH,004H,0C2H,0F1H,015H,0CDH,0DAH ; +14B3 runtime=15B3H RAW
+PLI_14B3: DB 073H,015H ; +14B3 runtime=15B3H RAW
+; SECTION [14B5,14C1) UNDERSTOOD
+; @block-pseudo 14B5
+; pseudo:
+; | RET A0; separate prefix/width/selector versus following context publications
+PLI_14B5: RET ; consume original hardware return word at entry SP; SP=entry_SP+2; flags preserved ; +14B5 runtime=15B5H OBSERVED
+; @block-pseudo 14B6
+; pseudo:
+; | repeat acquisition loop
+PLI_14B6: JMP 16D6H ; if always: PC=16D6H; flags preserved ; +14B6 runtime=15B6H OBSERVED
+; @block-pseudo 14B9
+; pseudo:
+; | selector4 arm RAW; observed selector!=4 advances
+PLI_14B9: LDA 20C3H ; A = byte[pattern_selector (20C3H)]; flags preserved ; +14B9 runtime=15B9H OBSERVED
+PLI_14BC: CPI 04H ; flags = unsigned byte comparison A-04H; A unchanged ; +14BC runtime=15BCH OBSERVED
+PLI_14BE: JNZ 15F1H ; if Z=0: PC=15F1H; flags preserved ; +14BE runtime=15BEH OBSERVED
+; SECTION [14C1,14F1) RAW
+PLI_14C1: DB 0CDH,0DAH ; +14C1 runtime=15C1H RAW
 PLI_14C3: DB 016H,02FH,01FH,0D2H,0EEH,015H,02AH,0C2H,020H,04DH,0CDH,016H,017H,0F5H,03AH,0C1H ; +14C3 runtime=15C3H RAW
 PLI_14D3: DB 020H,0D6H,02BH,0D6H,001H,09FH,0F5H,03AH,0C1H,020H,0D6H,02DH,0D6H,001H,09FH,0C1H ; +14D3 runtime=15D3H RAW
-PLI_14E3: DB 048H,0B1H,0C1H,048H,0A1H,02FH,01FH,0D2H,0EEH,015H,0C9H,0C3H,0D6H,016H,03AH,0C3H ; +14E3 runtime=15E3H RAW
-PLI_14F3: DB 020H,0FEH,003H,0C2H,018H,016H,02AH,0C1H,020H,04DH,0CDH,016H,017H,01FH,0D2H,00CH ; +14F3 runtime=15F3H RAW
+PLI_14E3: DB 048H,0B1H,0C1H,048H,0A1H,02FH,01FH,0D2H,0EEH,015H,0C9H,0C3H,0D6H,016H ; +14E3 runtime=15E3H RAW
+; SECTION [14F1,14F9) UNDERSTOOD
+; @block-pseudo 14F1
+; pseudo:
+; | selector3 arm RAW; observed selector!=3 advances
+PLI_14F1: LDA 20C3H ; A = byte[pattern_selector (20C3H)]; flags preserved ; +14F1 runtime=15F1H OBSERVED
+PLI_14F4: CPI 03H ; flags = unsigned byte comparison A-03H; A unchanged ; +14F4 runtime=15F4H OBSERVED
+PLI_14F6: JNZ 1618H ; if Z=0: PC=1618H; flags preserved ; +14F6 runtime=15F6H OBSERVED
+; SECTION [14F9,1518) RAW
+PLI_14F9: DB 02AH,0C1H,020H,04DH,0CDH,016H,017H,01FH,0D2H,00CH ; +14F9 runtime=15F9H RAW
 PLI_1503: DB 016H,021H,0C3H,020H,036H,004H,0C3H,015H,016H,0CDH,0DAH,016H,02FH,01FH,0D2H,015H ; +1503 runtime=1603H RAW
-PLI_1513: DB 016H,0C9H,0C3H,0D6H,016H,03AH,0C3H,020H,0FEH,002H,0C2H,04FH,016H,03AH,0C1H,020H ; +1513 runtime=1613H RAW
+PLI_1513: DB 016H,0C9H,0C3H,0D6H,016H ; +1513 runtime=1613H RAW
+; SECTION [1518,1520) UNDERSTOOD
+; @block-pseudo 1518
+; pseudo:
+; | selector2 arm RAW; observed selector!=2 advances
+PLI_1518: LDA 20C3H ; A = byte[pattern_selector (20C3H)]; flags preserved ; +1518 runtime=1618H OBSERVED
+PLI_151B: CPI 02H ; flags = unsigned byte comparison A-02H; A unchanged ; +151B runtime=161BH OBSERVED
+PLI_151D: JNZ 164FH ; if Z=0: PC=164FH; flags preserved ; +151D runtime=161DH OBSERVED
+; SECTION [1520,154F) RAW
+PLI_1520: DB 03AH,0C1H,020H ; +1520 runtime=1620H RAW
 PLI_1523: DB 0FEH,02EH,0C2H,030H,016H,021H,0C3H,020H,036H,003H,0C3H,04CH,016H,02AH,0C1H,020H ; +1523 runtime=1623H RAW
 PLI_1533: DB 04DH,0CDH,016H,017H,01FH,0D2H,043H,016H,021H,0C3H,020H,036H,004H,0C3H,04CH,016H ; +1533 runtime=1633H RAW
-PLI_1543: DB 0CDH,0DAH,016H,02FH,01FH,0D2H,04CH,016H,0C9H,0C3H,0D6H,016H,03AH,0C3H,020H,0FEH ; +1543 runtime=1643H RAW
-PLI_1553: DB 005H,0C2H,0D5H,016H,03AH,0C1H,020H,0FEH,01AH,0C2H,065H,016H,001H,0C3H,002H,0CDH ; +1553 runtime=1653H RAW
-PLI_1563: DB 0F2H,005H,03AH,0C1H,020H,0FEH,027H,0C2H,0AFH,016H,0CDH,0D9H,013H,032H,0C1H,020H ; +1563 runtime=1663H RAW
-PLI_1573: DB 0FEH,042H,0C2H,0A3H,016H,0CDH,03EH,014H,0CDH,0D9H,013H,032H,0C1H,020H,0D6H,031H ; +1573 runtime=1673H RAW
+PLI_1543: DB 0CDH,0DAH,016H,02FH,01FH,0D2H,04CH,016H,0C9H,0C3H,0D6H,016H ; +1543 runtime=1643H RAW
+; SECTION [154F,155F) UNDERSTOOD
+; @block-pseudo 154F
+; pseudo:
+; | selector!=5 returns15D5 A0A; selector5 dispatches fresh context
+PLI_154F: LDA 20C3H ; A = byte[pattern_selector (20C3H)]; flags preserved ; +154F runtime=164FH OBSERVED
+PLI_1552: CPI 05H ; flags = unsigned byte comparison A-05H; A unchanged ; +1552 runtime=1652H OBSERVED
+PLI_1554: JNZ 16D5H ; if Z=0: PC=16D5H; flags preserved ; +1554 runtime=1654H OBSERVED
+; @block-pseudo 1557
+; pseudo:
+; | selector5 context1A arm RAW; observed mismatch
+PLI_1557: LDA 20C1H ; A = byte[pattern_context (20C1H)]; flags preserved ; +1557 runtime=1657H OBSERVED
+PLI_155A: CPI 1AH ; flags = unsigned byte comparison A-1AH; A unchanged ; +155A runtime=165AH OBSERVED
+PLI_155C: JNZ 1665H ; if Z=0: PC=1665H; flags preserved ; +155C runtime=165CH OBSERVED
+; SECTION [155F,1565) RAW
+PLI_155F: DB 001H,0C3H,002H,0CDH ; +155F runtime=165FH RAW
+PLI_1563: DB 0F2H,005H ; +1563 runtime=1663H RAW
+; SECTION [1565,1578) UNDERSTOOD
+; @block-pseudo 1565
+; pseudo:
+; | context27 consumes another read via12D9; otherwise test5E
+PLI_1565: LDA 20C1H ; A = byte[pattern_context (20C1H)]; flags preserved ; +1565 runtime=1665H OBSERVED
+PLI_1568: CPI 27H ; flags = unsigned byte comparison A-27H; A unchanged ; +1568 runtime=1668H OBSERVED
+PLI_156A: JNZ 16AFH ; if Z=0: PC=16AFH; flags preserved ; +156A runtime=166AH OBSERVED
+; @block-pseudo 156D
+; pseudo:
+; | masked extra read ->context; byte42 arm RAW; observed mismatch
+PLI_156D: CALL 13D9H ; push following PC; invoke PLI.COM+12D9; established partial contract at declared scope ; +156D runtime=166DH OBSERVED
+PLI_1570: STA 20C1H ; byte[pattern_context (20C1H)] = A; flags preserved ; +1570 runtime=1670H OBSERVED
+PLI_1573: CPI 42H ; flags = unsigned byte comparison A-42H; A unchanged ; +1573 runtime=1673H OBSERVED
+PLI_1575: JNZ 16A3H ; if Z=0: PC=16A3H; flags preserved ; +1575 runtime=1675H OBSERVED
+; SECTION [1578,15A3) RAW
+PLI_1578: DB 0CDH,03EH,014H,0CDH,0D9H,013H,032H,0C1H,020H,0D6H,031H ; +1578 runtime=1678H RAW
 PLI_1583: DB 032H,048H,021H,0FEH,005H,0D2H,09AH,016H,03AH,048H,021H,0C6H,006H,032H,0C3H,020H ; +1583 runtime=1683H RAW
 PLI_1593: DB 0CDH,0D9H,013H,032H,0C1H,020H,0C9H,021H,0C3H,020H,036H,006H,0C9H,0C3H,0ACH,016H ; +1593 runtime=1693H RAW
-PLI_15A3: DB 03AH,0C1H,020H,0FEH,027H,0CAH,0ACH,016H,0C9H,0C3H,0D2H,016H,03AH,0C1H,020H,0FEH ; +15A3 runtime=16A3H RAW
-PLI_15B3: DB 05EH,0C2H,0D2H,016H,0CDH,0AEH,013H,032H,0C1H,020H,0FEH,05EH,0CAH,0D2H,016H,03AH ; +15B3 runtime=16B3H RAW
-PLI_15C3: DB 0C1H,020H,0E6H,01FH,032H,0C1H,020H,0FEH,000H,0C2H,0D2H,016H,0CDH,027H,017H,0C3H ; +15C3 runtime=16C3H RAW
-PLI_15D3: DB 0D6H,016H,0C9H,0C3H,009H,015H,0C9H,03AH,0C1H,020H,0D6H,030H,0D6H,00AH,09FH,0C9H ; +15D3 runtime=16D3H RAW
-PLI_15E3: DB 03AH,0C1H,020H,0D6H,041H,0FEH,01AH,0D2H,0F0H,016H,03EH,001H,0C9H,03AH,0C1H,020H ; +15E3 runtime=16E3H RAW
-PLI_15F3: DB 0D6H,03FH,0D6H,001H,09FH,0C9H,0CDH,0E3H,016H,01FH,0D2H,003H,017H,03EH,001H,0C9H ; +15F3 runtime=16F3H RAW
-PLI_1603: DB 0CDH,0DAH,016H,01FH,0D2H,00DH,017H,03EH,001H,0C9H,03AH,0C1H,020H,0D6H,05FH,0D6H ; +1603 runtime=1703H RAW
-PLI_1613: DB 001H,09FH,0C9H,021H,049H,021H,071H,02AH,049H,021H,04DH,0CDH,017H,009H,0D6H,045H ; +1613 runtime=1713H RAW
-PLI_1623: DB 0D6H,001H,09FH,0C9H,03EH,07FH,021H,0C5H,020H,0BEH,0DAH,050H,017H,02AH,0C5H,020H ; +1623 runtime=1723H RAW
-PLI_1633: DB 026H,000H,001H,0C6H,020H,009H,03AH,0C1H,020H,077H,00BH,00AH,03CH,060H,069H,077H ; +1633 runtime=1733H RAW
-PLI_1643: DB 03AH,0C1H,020H,021H,058H,01CH,086H,0E6H,00FH,077H,0C3H,06DH,017H,001H,0BCH,002H ; +1643 runtime=1743H RAW
+; SECTION [15A3,15AC) UNDERSTOOD
+; @block-pseudo 15A3
+; pseudo:
+; | context27 continuation RAW; observed mismatch returns15AB
+PLI_15A3: LDA 20C1H ; A = byte[pattern_context (20C1H)]; flags preserved ; +15A3 runtime=16A3H OBSERVED
+PLI_15A6: CPI 27H ; flags = unsigned byte comparison A-27H; A unchanged ; +15A6 runtime=16A6H OBSERVED
+PLI_15A8: JZ 16ACH ; if Z=1: PC=16ACH; flags preserved ; +15A8 runtime=16A8H OBSERVED
+PLI_15AB: RET ; consume original hardware return word at entry SP; SP=entry_SP+2; flags preserved ; +15AB runtime=16ABH OBSERVED
+; SECTION [15AC,15AF) RAW
+PLI_15AC: DB 0C3H,0D2H,016H ; +15AC runtime=16ACH RAW
+; SECTION [15AF,15B7) UNDERSTOOD
+; @block-pseudo 15AF
+; pseudo:
+; | context5E arm RAW; observed mismatch repeats
+PLI_15AF: LDA 20C1H ; A = byte[pattern_context (20C1H)]; flags preserved ; +15AF runtime=16AFH OBSERVED
+PLI_15B2: CPI 5EH ; flags = unsigned byte comparison A-5EH; A unchanged ; +15B2 runtime=16B2H OBSERVED
+PLI_15B4: JNZ 16D2H ; if Z=0: PC=16D2H; flags preserved ; +15B4 runtime=16B4H OBSERVED
+; SECTION [15B7,15D2) RAW
+PLI_15B7: DB 0CDH,0AEH,013H,032H,0C1H,020H,0FEH,05EH,0CAH,0D2H,016H,03AH ; +15B7 runtime=16B7H RAW
+PLI_15C3: DB 0C1H,020H,0E6H,01FH,032H,0C1H,020H,0FEH,000H,0C2H,0D2H,016H,0CDH,027H,017H ; +15C3 runtime=16C3H RAW
+; SECTION [15D2,15D9) UNDERSTOOD
+PLI_15D2: JMP 16D6H ; if always: PC=16D6H; flags preserved ; +15D2 runtime=16D2H OBSERVED
+; @block-pseudo 15D5
+; pseudo:
+; | RET A0A; flags from last selectorCPI05
+PLI_15D5: RET ; RET A0A; flags from selectorCPI05; context separately retains following byte ; +15D5 runtime=16D5H OBSERVED
+; @block-pseudo 15D6
+; pseudo:
+; | repeat at1409
+PLI_15D6: JMP 1509H ; if always: PC=1509H; flags preserved ; +15D6 runtime=16D6H OBSERVED
+; SECTION [15D9,15DA) RAW
+PLI_15D9: DB 0C9H ; +15D9 runtime=16D9H RAW
+
+; @procedure-v1 PLI.COM+15DA
+; ProcedureHypothesis: wrapped byte interval Boolean
+; Entry: PLI_15DA = PLI.COM+15DA @ 16DAH; SHA-256
+;   c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80
+; Extent: HYPOTHESIS [15DA,15E3) file offsets; overlapping entries: none established
+; Callers: OBSERVED PLI.COM+13DD (MINIMAL=20); PLI.COM+1443 (MINIMAL=18); PLI.COM+1603
+;   (MINIMAL=18)
+; Returns: OBSERVED/DEDUCED ordinary hardware CALL word; original slot unchanged, SP after
+;   RET=entry_SP+2; PLI.COM+15E2
+; Inputs: DEDUCED byte[20C1]
+; Outputs: DEDUCED A=FF/00 range mask; CY Boolean; other flags from SBB A
+; Clobbers: DEDUCED A,flags; BC,DE,HL preserved; no guest memory writes
+; Memory: DEDUCED pattern_context=20C1H (retained current byte; repeatedly replaced by
+;   reader-derived values); F=entry_SP; zero-byte reserved local frame; temporary saves/CALL
+;   words below F; original return word at F.
+; Direct callees: OBSERVED none
+; Coverage: OBSERVED MINIMAL: 56 CALLs; 9/9 bytes represented as instructions; Corrected matched
+;   hardware returns; no recursion, no reserved local frame; below-entry saves/CALL words
+;   only.
+; Unresolved: No unresolved local algorithm at declared scope; input/table producers and storage
+;   ownership remain general provenance questions.
+; Contract: DEDUCED (complete; scope: DEDUCED local operation at nonaliasing
+;   scratch/table/return-stack scope; bytes and addresses wrap at their machine widths; no
+;   source-language meaning) Read context20C1; SUI30 gives wrapped difference; SUI0A
+;   borrows iff this difference<0A. SBB A returns FF iff context in30..39, else00. CY
+;   matches the Boolean borrow; NZPA describe final self-SBB. BC,DE,HL preserved; no guest
+;   memory writes.
+; Hypothesis: none beyond the low-level operational description
+; Completeness: bounds=stable; control_flow=complete; contract=complete
+; Evidence: evidence.json#seeds/PLI.COM+15DA;
+;   ../minimal-baseline/pass-5/structural.json#PLI.COM+15DA
+; Procedure pseudo (operational; byte/word arithmetic wraps):
+;   A=(u8(byte[20C1]-30)<0A)?FF:00; CY=(A==FF); RET
+; @end-procedure-v1 PLI.COM+15DA
+; SECTION [15DA,15E3) UNDERSTOOD
+; @block-pseudo 15DA
+; pseudo:
+; | wrapped(context-30)<0A -> FF; otherwise00; CY retained by self-SBB
+PLI_15DA: LDA 20C1H ; A = byte[pattern_context (20C1H)]; flags preserved ; +15DA runtime=16DAH OBSERVED
+PLI_15DD: SUI 30H ; A=u8(A-30H); arithmetic flags including CY=borrow ; +15DD runtime=16DDH OBSERVED
+PLI_15DF: SUI 0AH ; A=u8(A-0AH); arithmetic flags including CY=borrow ; +15DF runtime=16DFH OBSERVED
+PLI_15E1: SBB A ; A=CY?FFH:00H; self-subtraction cancels old A; CY is retained Boolean borrow ; +15E1 runtime=16E1H OBSERVED
+PLI_15E2: RET ; consume original hardware return word at entry SP; SP=entry_SP+2; flags preserved ; +15E2 runtime=16E2H OBSERVED
+
+; @procedure-v1 PLI.COM+15E3
+; ProcedureHypothesis: byte range or equality Boolean with mixed true encoding
+; Entry: PLI_15E3 = PLI.COM+15E3 @ 16E3H; SHA-256
+;   c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80
+; Extent: HYPOTHESIS [15E3,15F9) file offsets; overlapping entries: none established
+; Callers: OBSERVED PLI.COM+13CE (MINIMAL=38); PLI.COM+15F9 (MINIMAL=96)
+; Returns: OBSERVED/DEDUCED ordinary hardware CALL word; original slot unchanged, SP after
+;   RET=entry_SP+2; PLI.COM+15EF; PLI.COM+15F8
+; Inputs: DEDUCED byte[20C1]
+; Outputs: DEDUCED A=01 on41..5A, FF on3F,00 otherwise; flags CPI or SBB by path
+; Clobbers: DEDUCED A,flags; BC,DE,HL preserved; no guest memory writes
+; Memory: DEDUCED pattern_context=20C1H (retained current byte; repeatedly replaced by
+;   reader-derived values); F=entry_SP; zero-byte reserved local frame; temporary saves/CALL
+;   words below F; original return word at F.
+; Direct callees: OBSERVED none
+; Coverage: OBSERVED MINIMAL: 134 CALLs; 22/22 bytes represented as instructions; Corrected
+;   matched hardware returns; no recursion, no reserved local frame; below-entry
+;   saves/CALL words only.
+; Unresolved: No unresolved local algorithm at declared scope; input/table producers and storage
+;   ownership remain general provenance questions.
+; Contract: DEDUCED (complete; scope: DEDUCED local operation at nonaliasing
+;   scratch/table/return-stack scope; bytes and addresses wrap at their machine widths; no
+;   source-language meaning) SUI41/CPI1A: if wrapped(context-41)<1A, return A=01 with
+;   flags from CPI. Otherwise SUI3F/SUI1/SBB A returns FF iff context==3F, else00. True
+;   therefore has representations01 andFF; caller must test A.bit0, not returned CY.
+;   BC,DE,HL preserved; no writes.
+; Hypothesis: none beyond the low-level operational description
+; Completeness: bounds=stable; control_flow=complete; contract=complete
+; Evidence: evidence.json#seeds/PLI.COM+15E3;
+;   ../minimal-baseline/pass-5/structural.json#PLI.COM+15E3
+; Procedure pseudo (operational; byte/word arithmetic wraps):
+;   x=byte[20C1]; if u8(x-41)<1A: A=01; else: A=(x==3F)?FF:00; RET
+; @end-procedure-v1 PLI.COM+15E3
+; SECTION [15E3,15F9) UNDERSTOOD
+; @block-pseudo 15E3
+; pseudo:
+; | JNC iff wrapped(context-41)>=1A; other arm returns01
+PLI_15E3: LDA 20C1H ; A = byte[pattern_context (20C1H)]; flags preserved ; +15E3 runtime=16E3H OBSERVED
+PLI_15E6: SUI 41H ; A=u8(A-41H); arithmetic flags including CY=borrow ; +15E6 runtime=16E6H OBSERVED
+PLI_15E8: CPI 1AH ; flags = unsigned byte comparison A-1AH; A unchanged ; +15E8 runtime=16E8H OBSERVED
+PLI_15EA: JNC 16F0H ; if CY=0: PC=16F0H; flags preserved ; +15EA runtime=16EAH OBSERVED
+PLI_15ED: MVI A,01H ; A = 01H; flags preserved ; +15ED runtime=16EDH OBSERVED
+PLI_15EF: RET ; consume original hardware return word at entry SP; SP=entry_SP+2; flags preserved ; +15EF runtime=16EFH OBSERVED
+; @block-pseudo 15F0
+; pseudo:
+; | equality context==3F gives FF via SUI1 borrow; otherwise00
+PLI_15F0: LDA 20C1H ; A = byte[pattern_context (20C1H)]; flags preserved ; +15F0 runtime=16F0H OBSERVED
+PLI_15F3: SUI 3FH ; A=u8(A-3FH); arithmetic flags including CY=borrow ; +15F3 runtime=16F3H OBSERVED
+PLI_15F5: SUI 01H ; A=u8(A-01H); arithmetic flags including CY=borrow ; +15F5 runtime=16F5H OBSERVED
+PLI_15F7: SBB A ; A=CY?FFH:00H; self-subtraction cancels old A; CY is retained Boolean borrow ; +15F7 runtime=16F7H OBSERVED
+PLI_15F8: RET ; consume original hardware return word at entry SP; SP=entry_SP+2; flags preserved ; +15F8 runtime=16F8H OBSERVED
+
+; @procedure-v1 PLI.COM+15F9
+; ProcedureHypothesis: scoped combined context-byte predicate
+; Entry: PLI_15F9 = PLI.COM+15F9 @ 16F9H; SHA-256
+;   c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80
+; Extent: HYPOTHESIS [15F9,1616) file offsets; overlapping entries: none established
+; Callers: OBSERVED PLI.COM+145A (MINIMAL=96)
+; Returns: OBSERVED/DEDUCED ordinary hardware CALL word; original slot unchanged, SP after
+;   RET=entry_SP+2; PLI.COM+1602; PLI.COM+1615
+; Inputs: DEDUCED byte[20C1]
+; Outputs: DEDUCED A=01 or FF/00 at observed scope; flags from last CPI/RAR or SBB; BC/DE/HL
+;   preserved
+; Clobbers: DEDUCED A,flags; BC,DE,HL preserved; Only stack writes (CALL/PUSH PSW)
+; Memory: DEDUCED pattern_context=20C1H (retained current byte; repeatedly replaced by
+;   reader-derived values); F=entry_SP; zero-byte reserved local frame; temporary saves/CALL
+;   words below F; original return word at F.
+; Direct callees: OBSERVED PLI.COM+15E3 @16E3H; PLI.COM+15DA @16DAH
+; Coverage: OBSERVED MINIMAL: 96 CALLs; 26/29 bytes represented as instructions; Corrected matched
+;   hardware returns; no recursion, no reserved local frame; below-entry saves/CALL words
+;   only.
+; Unresolved: unobserved branch: +15DA-true arm +160A..+160C remains RAW; static return01 is not
+;   dynamic completeness.
+; Contract: DEDUCED (partial; scope: observed +15E3 true-return paths or +15E3-false/+15DA-false
+;   fallback; +15DA-true RAW return arm excluded; context and CALL stack nonaliasing) Call
+;   +15E3 and test A.bit0 via RAR/JNC: set bit returns01. Clear bit calls +15DA and tests
+;   its A.bit0; clear then returns FF iff context==5F else00 via SUI5F/SUI1/SBB A. The
+;   +15DA-true return arm remains STATIC / UNOBSERVED (+160A MVI A,01; +160C RET) and RAW.
+;   All96 observed calls use the other arms. BC,DE,HL preserved; nested CALL stack only.
+; Hypothesis: none beyond the low-level operational description
+; Completeness: bounds=provisional; control_flow=partial; contract=partial
+; Evidence: evidence.json#seeds/PLI.COM+15F9;
+;   ../minimal-baseline/pass-5/structural.json#PLI.COM+15F9
+; Procedure pseudo (operational; byte/word arithmetic wraps):
+;   if predicate15E3().bit0: RET01; if predicate15DA().bit0: STATIC / UNOBSERVED RAW return01;
+;   A=(byte[20C1]==5F)?FF:00; RET
+; @end-procedure-v1 PLI.COM+15F9
+; SECTION [15F9,160A) UNDERSTOOD
+; @block-pseudo 15F9
+; pseudo:
+; | +15E3.A.bit0 set -> return01; JNC calls +15DA on clear bit
+PLI_15F9: CALL 16E3H ; push following PC; invoke PLI.COM+15E3; established complete contract at declared scope ; +15F9 runtime=16F9H OBSERVED
+PLI_15FC: RAR ; A=(old_CY<<7)|(old_A>>1); CY=old_A.bit0; NZPA preserved ; +15FC runtime=16FCH OBSERVED
+PLI_15FD: JNC 1703H ; if CY=0: PC=1703H; flags preserved ; +15FD runtime=16FDH OBSERVED
+PLI_1600: MVI A,01H ; A = 01H; flags preserved ; +1600 runtime=1700H OBSERVED
+PLI_1602: RET ; consume original hardware return word at entry SP; SP=entry_SP+2; flags preserved ; +1602 runtime=1702H OBSERVED
+; @block-pseudo 1603
+; pseudo:
+; | +15DA.A.bit0 clear -> test context5F; set-bit RAW arm STATIC / UNOBSERVED
+PLI_1603: CALL 16DAH ; push following PC; invoke PLI.COM+15DA; established complete contract at declared scope ; +1603 runtime=1703H OBSERVED
+PLI_1606: RAR ; A=(old_CY<<7)|(old_A>>1); CY=old_A.bit0; NZPA preserved ; +1606 runtime=1706H OBSERVED
+PLI_1607: JNC 170DH ; if CY=0: PC=170DH; flags preserved ; +1607 runtime=1707H OBSERVED
+; SECTION [160A,160D) RAW
+PLI_160A: DB 03EH,001H,0C9H ; +160A runtime=170AH RAW
+; SECTION [160D,1616) UNDERSTOOD
+; @block-pseudo 160D
+; pseudo:
+; | return FF iff context==5F, else00
+PLI_160D: LDA 20C1H ; A = byte[pattern_context (20C1H)]; flags preserved ; +160D runtime=170DH OBSERVED
+PLI_1610: SUI 5FH ; A=u8(A-5FH); arithmetic flags including CY=borrow ; +1610 runtime=1710H OBSERVED
+PLI_1612: SUI 01H ; A=u8(A-01H); arithmetic flags including CY=borrow ; +1612 runtime=1712H OBSERVED
+PLI_1614: SBB A ; A=CY?FFH:00H; self-subtraction cancels old A; CY is retained Boolean borrow ; +1614 runtime=1714H OBSERVED
+PLI_1615: RET ; consume original hardware return word at entry SP; SP=entry_SP+2; flags preserved ; +1615 runtime=1715H OBSERVED
+; SECTION [1616,1627) RAW
+PLI_1616: DB 021H,049H,021H,071H,02AH,049H,021H,04DH,0CDH,017H,009H,0D6H,045H ; +1616 runtime=1716H RAW
+PLI_1623: DB 0D6H,001H,09FH,0C9H ; +1623 runtime=1723H RAW
+
+; @procedure-v1 PLI.COM+1627
+; ProcedureHypothesis: scoped byte-prefix append and modulo16 accumulation
+; Entry: PLI_1627 = PLI.COM+1627 @ 1727H; SHA-256
+;   c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80
+; Extent: HYPOTHESIS [1627,166E) file offsets; overlapping entries: none established
+; Callers: OBSERVED PLI.COM+1411 (MINIMAL=128)
+; Returns: OBSERVED/DEDUCED ordinary hardware CALL word; original slot unchanged, SP after
+;   RET=entry_SP+2; PLI.COM+166D
+; Inputs: DEDUCED context20C1, width20C5, accumulator1C58; writable prefix20C6+width
+; Outputs: DEDUCED appended byte; incremented width; updated accumulator; A=accumulator; BC=20C5;
+;   HL=1C58; DE preserved; flags ANI0F
+; Clobbers: DEDUCED A,BC,HL,flags; prefix/width/accumulator; DE unchanged; no stack writes beyond
+;   caller CALL
+; Memory: DEDUCED pattern_context=20C1H (retained current byte; repeatedly replaced by
+;   reader-derived values); pattern_width=20C5H (prefix byte count appended by +1627);
+;   pattern_input_bytes=20C6H (prefix bytes; current observed widths1..9, normal append
+;   guard permits offsets0..127); prefix_accumulator=1C58H (sum of appended bytes modulo16);
+;   F=entry_SP; zero-byte reserved local frame; temporary saves/CALL words below F; original
+;   return word at F.
+; Direct callees: OBSERVED none
+; Coverage: OBSERVED MINIMAL: 128 CALLs; 42/71 bytes represented as instructions; Corrected
+;   matched hardware returns; no recursion, no reserved local frame; below-entry
+;   saves/CALL words only.
+; Unresolved: unobserved branch: width>127 handling +1650..+166C remains RAW; arbitrary capacity
+;   behavior unresolved.
+; Contract: DEDUCED (partial; scope: normal append with width20C5<=127; writable prefix20C6+width
+;   and count/accumulator controls nonaliasing with input/stack; overflow arm excluded)
+;   CMP unsigned7F with width20C5: JC routes to unobserved +1650 overflow handling when
+;   width>127. On all128 observed calls width<=127: byte[20C6+width]=context20C1,
+;   width=u8(width+1), accumulator1C58=(context+old_accumulator)&0F. Read context again
+;   for addition. BC=20C5, HL=1C58, A=new accumulator, DE preserved; final flags from
+;   ANI0F; byte area and scratch controls nonaliasing.
+; Hypothesis: none beyond the low-level operational description
+; Completeness: bounds=provisional; control_flow=partial; contract=partial
+; Evidence: evidence.json#seeds/PLI.COM+1627;
+;   ../minimal-baseline/pass-5/structural.json#PLI.COM+1627
+; Procedure pseudo (operational; byte/word arithmetic wraps):
+;   if byte[20C5]>127: unresolved RAW overflow arm; i=byte[20C5]; byte[20C6+i]=byte[20C1];
+;   byte[20C5]++; byte[1C58]=(byte[20C1]+byte[1C58])&0F; RET
+; @end-procedure-v1 PLI.COM+1627
+; SECTION [1627,1650) UNDERSTOOD
+; @block-pseudo 1627
+; pseudo:
+; | JC iff unsigned width>127; overflow arm RAW
+PLI_1627: MVI A,7FH ; A = 7FH; flags preserved ; +1627 runtime=1727H OBSERVED
+PLI_1629: LXI H,20C5H ; HL = pattern_width (20C5H) (literal address/value) ; +1629 runtime=1729H OBSERVED
+PLI_162C: CMP M ; flags = unsigned byte comparison A-byte[HL]; A unchanged ; +162C runtime=172CH OBSERVED
+PLI_162D: JC 1750H ; if CY=1: PC=1750H; flags preserved ; +162D runtime=172DH OBSERVED
+; @block-pseudo 1630
+; pseudo:
+; | store current context to20C6+width; increment width
+PLI_1630: LHLD 20C5H ; HL = little_endian_word[pattern_width (20C5H)]; low byte then high byte, flags preserved ; +1630 runtime=1730H OBSERVED
+PLI_1633: MVI H,00H ; H = 00H; flags preserved ; +1633 runtime=1733H OBSERVED
+PLI_1635: LXI B,20C6H ; BC = pattern_input_bytes (20C6H) (literal address/value) ; +1635 runtime=1735H OBSERVED
+PLI_1638: DAD B ; HL=u16(HL+BC); only CY changes (word overflow) ; +1638 runtime=1738H OBSERVED
+PLI_1639: LDA 20C1H ; A = byte[pattern_context (20C1H)]; flags preserved ; +1639 runtime=1739H OBSERVED
+PLI_163C: MOV M,A ; byte[HL] = A; flags preserved ; +163C runtime=173CH OBSERVED
+PLI_163D: DCX B ; BC=u16(BC-1); flags preserved ; +163D runtime=173DH OBSERVED
+PLI_163E: LDAX B ; A=byte[BC]; flags preserved ; +163E runtime=173EH OBSERVED
+PLI_163F: INR A ; A=u8(A+1); NZPA updated, CY preserved ; +163F runtime=173FH OBSERVED
+PLI_1640: MOV H,B ; H = B; flags preserved ; +1640 runtime=1740H OBSERVED
+PLI_1641: MOV L,C ; L = C; flags preserved ; +1641 runtime=1741H OBSERVED
+PLI_1642: MOV M,A ; byte[HL] = A; flags preserved ; +1642 runtime=1742H OBSERVED
+; @block-pseudo 1643
+; pseudo:
+; | accumulator=(context+accumulator)&0F; return flags from ANI
+PLI_1643: LDA 20C1H ; A = byte[pattern_context (20C1H)]; flags preserved ; +1643 runtime=1743H OBSERVED
+PLI_1646: LXI H,1C58H ; HL = prefix_accumulator (1C58H) (literal address/value) ; +1646 runtime=1746H OBSERVED
+PLI_1649: ADD M ; A=u8(A+byte[HL]); arithmetic flags including CY=addition carry ; +1649 runtime=1749H OBSERVED
+PLI_164A: ANI 0FH ; A=A  & 0FH; logical flags, CY=0 ; +164A runtime=174AH OBSERVED
+PLI_164C: MOV M,A ; byte[HL] = A; flags preserved ; +164C runtime=174CH OBSERVED
+PLI_164D: JMP 176DH ; if always: PC=176DH; flags preserved ; +164D runtime=174DH OBSERVED
+; SECTION [1650,166D) RAW
+PLI_1650: DB 001H,0BCH,002H ; +1650 runtime=1750H RAW
 PLI_1653: DB 0CDH,0A6H,00DH,021H,0C5H,020H,036H,000H,0E5H,02AH,0C5H,020H,026H,000H,0C1H,003H ; +1653 runtime=1753H RAW
-PLI_1663: DB 009H,03AH,0C1H,020H,077H,021H,0C4H,020H,036H,000H,0C9H,021H,0C1H,020H,036H,000H ; +1663 runtime=1763H RAW
+PLI_1663: DB 009H,03AH,0C1H,020H,077H,021H,0C4H,020H,036H,000H ; +1663 runtime=1763H RAW
+; SECTION [166D,166E) UNDERSTOOD
+; @block-pseudo 166D
+; pseudo:
+; | RET observed normal append scope
+PLI_166D: RET ; consume original hardware return word at entry SP; SP=entry_SP+2; flags preserved ; +166D runtime=176DH OBSERVED
+; SECTION [166E,19BB) RAW
+PLI_166E: DB 021H,0C1H,020H,036H,000H ; +166E runtime=176EH RAW
 PLI_1673: DB 021H,0C3H,020H,036H,000H,021H,008H,020H,036H,000H,021H,0C4H,020H,036H,000H,021H ; +1673 runtime=1773H RAW
 PLI_1683: DB 087H,020H,036H,000H,0C9H,021H,04FH,021H,036H,000H,021H,008H,020H,036H,000H,023H ; +1683 runtime=1783H RAW
 PLI_1693: DB 036H,000H,03AH,006H,01FH,032H,007H,01FH,021H,04BH,021H,036H,001H,023H,036H,000H ; +1693 runtime=1793H RAW
@@ -2142,7 +2819,21 @@ PLI_1F47: DB 020H,020H,020H,020H,045H,052H,052H,04FH,052H,028H,053H,029H,020H,04
 PLI_1F57: DB 050H,041H,053H,053H,020H,020H,024H,01AH,01AH,01AH,01AH,01AH,01AH,01AH,01AH,01AH ; +1F57 runtime=2057H RAW
 PLI_1F67: DB 01AH,01AH,01AH,01AH,01AH,01AH,01AH,01AH,01AH,01AH,01AH,01AH,01AH,01AH,01AH,01AH ; +1F67 runtime=2067H RAW
 PLI_1F77: DB 01AH,01AH,01AH,01AH,01AH,01AH,01AH,01AH,01AH ; +1F77 runtime=2077H RAW
-
-; Prior RAW row labels retained as coordinates inside newly represented instructions.
 PLI_0B20: EQU 00C20H ; +0B20 runtime=0C20H coordinate-only label
+PLI_1383: EQU 01483H ; +1383 runtime=1483H coordinate-only label
+PLI_13B3: EQU 014B3H ; +13B3 runtime=14B3H coordinate-only label
+PLI_13C3: EQU 014C3H ; +13C3 runtime=14C3H coordinate-only label
+PLI_13D3: EQU 014D3H ; +13D3 runtime=14D3H coordinate-only label
+PLI_13E3: EQU 014E3H ; +13E3 runtime=14E3H coordinate-only label
+PLI_13F3: EQU 014F3H ; +13F3 runtime=14F3H coordinate-only label
+PLI_1403: EQU 01503H ; +1403 runtime=1503H coordinate-only label
+PLI_1413: EQU 01513H ; +1413 runtime=1513H coordinate-only label
+PLI_1433: EQU 01533H ; +1433 runtime=1533H coordinate-only label
+PLI_1453: EQU 01553H ; +1453 runtime=1553H coordinate-only label
+PLI_1463: EQU 01563H ; +1463 runtime=1563H coordinate-only label
+PLI_14F3: EQU 015F3H ; +14F3 runtime=15F3H coordinate-only label
+PLI_1553: EQU 01653H ; +1553 runtime=1653H coordinate-only label
+PLI_15B3: EQU 016B3H ; +15B3 runtime=16B3H coordinate-only label
+PLI_15D3: EQU 016D3H ; +15D3 runtime=16D3H coordinate-only label
+PLI_1613: EQU 01713H ; +1613 runtime=1713H coordinate-only label
     END

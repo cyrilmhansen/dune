@@ -102,8 +102,9 @@ class MinimalPassFiveTests(unittest.TestCase):
         rows=[json.loads(s) for s in (ROOT/'research/minimal-baseline/instructions.jsonl').read_text().splitlines()]
         current=calculate(manifest,rows)
         self.assertEqual(current,json.loads((ROOT/'research/minimal-baseline/dynamic-progress.json').read_text()))
-        self.assertEqual(current['total']['occurrences_by_status']['UNDERSTOOD'],178825)
-        self.assertEqual(next(i for i in current['per_image'] if i['image']=='PLI1.OVL')['occurrences_by_status']['UNDERSTOOD'],17366)
+        historical=json.loads((PASS/'dynamic-progress.json').read_text())
+        self.assertEqual(historical['total']['occurrences_by_status']['UNDERSTOOD'],178825)
+        self.assertEqual(next(i for i in historical['per_image'] if i['image']=='PLI1.OVL')['occurrences_by_status']['UNDERSTOOD'],17366)
         caller=self.catalog['PLI0.OVL+24BC']
         self.assertEqual(caller['completeness'],{'bounds':'provisional','control_flow':'partial','contract':'partial'})
         self.assertIn('commit_window1E0B',caller['pseudocode'])

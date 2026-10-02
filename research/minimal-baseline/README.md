@@ -1,27 +1,32 @@
-# MINIMAL baseline: current through pass 4
+# MINIMAL baseline: current through pass 6
 
-The [pass-4 report](pass-4/README.md) is the current decompilation result.
-The [V1 annotation review](../annotated-assembly/CONVENTIONS.md) now exposes
-independent procedure completeness and readable local decompilation without
-changing these coverage/status totals.
+The [pass-6 report](pass-6/README.md) is the current decompilation result,
+following the [pass-5 structural/packet experiment](pass-5/README.md).
+[V1 annotation conventions](../annotated-assembly/CONVENTIONS.md) keep byte
+status independent of procedure bounds, control flow and contract completeness.
 
-MINIMAL still executes **21,012 image bytes**: **17,766 RAW, 304 DECODED,
-1,523 STRUCTURED, 1,419 UNDERSTOOD**. Pass 4 raises understood CALL entries
-**36→44**, with 10 STRUCTURED and 337 unresolved CALL entries, plus eleven separate
-unresolved PCHL entries (402 callable coordinates total). All 94,720 image bytes
-remain exact.
+MINIMAL still executes **21,012 image bytes**: **16,135 RAW, 304 DECODED,
+1,852 STRUCTURED, 2,721 UNDERSTOOD**. There are **63 UNDERSTOOD**, 12 STRUCTURED
+and 316 unresolved CALL entries (including three DECODED), plus eleven separate
+PCHL entries. The 391 CALL/RST coordinates and all **94,720 historical bytes**
+remain exact. Current classifications and intersections are in
+[coverage.json](coverage.json), [instructions.jsonl](instructions.jsonl) and
+[inventory.json](inventory.json).
 
-Current intersections/classifications are in [coverage.json](coverage.json),
-[instructions.jsonl](instructions.jsonl), and [inventory.json](inventory.json).
-Pass 4 adds eight V1 hypotheses for record-field equality, length scanning,
-counted-window/tail-copy operations, PLI1 mapped-byte access and console routing.
-It integrates the PLI0 helpers into +24BC, which remains STRUCTURED and partial.
-The [current dynamic metric](dynamic-progress.json) records 439,998 historical
-instruction occurrences: 161,033 (36.5986%) now execute inside UNDERSTOOD bytes.
-PLI1 improves from 0.5248% to 3.2676% dynamically UNDERSTOOD but remains 95.5429%
-RAW. The 1,857 modeled host BDOS RETs are outside the image-backed denominator.
-Another MINIMAL pass remains justified. The report selects five targets using
-structural and dynamic evidence; FIZZBUZ decompilation has not begun.
+Pass 6 establishes scoped counted-prefix acquisition at resident +1376,
+recursive mapped-position processing at PLI1+7C1B, reverse attribute-balance
+scanning at +7B7A, packed bits3..5 extraction at +7B64 and mapped-slot/cache
+publication at +7BA2, with their necessary immediate helpers. +784E and +7D53
+substitute the new contracts while retaining provisional/partial/partial
+completeness; +7D53 stays STRUCTURED. +7BBF and its packed-word helpers remain
+partial/opaque. Four ignored evidence packets supported the complex targets.
+
+The [current dynamic metric](dynamic-progress.json) records **439,998** historical
+instruction occurrences: **195,878 (44.5179%)** execute UNDERSTOOD bytes.
+PLI1 is **50.5819% UNDERSTOOD** and **42.6216% RAW**. The 1,857 modeled host
+instructions are outside that denominator. Another MINIMAL helper pass is
+recommended before new fixtures or FIZZBUZ-minus-MINIMAL; no FIZZBUZ decompilation
+or new compiler capture was performed.
 
 The following is the **historical V0 record at 6c77397**. Its status tables and
 priorities describe that snapshot; later snapshots are in
