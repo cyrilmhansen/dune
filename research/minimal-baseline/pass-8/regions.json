@@ -1,0 +1,1883 @@
+[
+  {
+    "entry": "PLI1.OVL+4468",
+    "invocations_checked": 2,
+    "own_coordinates": 93,
+    "own_occurrences": 463,
+    "members": [
+      {
+        "call_step": 257266,
+        "original_return_slot": 65461,
+        "original_return_pop_step": 257272,
+        "continuation_register": "DE",
+        "continuation_writer_step": 257277,
+        "relocated_return_slot": 65463,
+        "consumed_caller_bytes": 2,
+        "software_ret_step": 257585,
+        "final_SP_minus_preCALL": 2,
+        "argument_pop_steps": [
+          257273
+        ],
+        "arguments": [
+          {
+            "address": 65463,
+            "value": 8390,
+            "pop_step": 257273,
+            "pop_coordinate": "PLI1.OVL+4470",
+            "producer": "PLI1.OVL+469A",
+            "producer_step": 257261,
+            "byte_writers": [
+              {
+                "step": 257261,
+                "coordinate": "PLI1.OVL+469A",
+                "instruction": "PUSH B",
+                "address": 65463,
+                "value": 198
+              },
+              {
+                "step": 257261,
+                "coordinate": "PLI1.OVL+469A",
+                "instruction": "PUSH B",
+                "address": 65464,
+                "value": 32
+              }
+            ]
+          }
+        ],
+        "carrier_writes": [
+          [
+            257277,
+            "PUSH D",
+            65464,
+            104
+          ],
+          [
+            257277,
+            "PUSH D",
+            65463,
+            166
+          ]
+        ],
+        "caller": "PLI1.OVL+46A3"
+      },
+      {
+        "call_step": 264679,
+        "original_return_slot": 65482,
+        "original_return_pop_step": 264685,
+        "continuation_register": "DE",
+        "continuation_writer_step": 264690,
+        "relocated_return_slot": 65484,
+        "consumed_caller_bytes": 2,
+        "software_ret_step": 265027,
+        "final_SP_minus_preCALL": 2,
+        "argument_pop_steps": [
+          264686
+        ],
+        "arguments": [
+          {
+            "address": 65484,
+            "value": 43336,
+            "pop_step": 264686,
+            "pop_coordinate": "PLI1.OVL+4470",
+            "producer": "PLI1.OVL+474D",
+            "producer_step": 264674,
+            "byte_writers": [
+              {
+                "step": 264674,
+                "coordinate": "PLI1.OVL+474D",
+                "instruction": "PUSH B",
+                "address": 65484,
+                "value": 72
+              },
+              {
+                "step": 264674,
+                "coordinate": "PLI1.OVL+474D",
+                "instruction": "PUSH B",
+                "address": 65485,
+                "value": 169
+              }
+            ]
+          }
+        ],
+        "carrier_writes": [
+          [
+            264690,
+            "PUSH D",
+            65485,
+            105
+          ],
+          [
+            264690,
+            "PUSH D",
+            65484,
+            89
+          ]
+        ],
+        "caller": "PLI1.OVL+4756"
+      }
+    ],
+    "extent": [
+      17512,
+      17707
+    ],
+    "represented_bytes": 173,
+    "byte_status": "STRUCTURED",
+    "completeness": {
+      "bounds": "provisional",
+      "control_flow": "partial",
+      "contract": "partial"
+    },
+    "scope": "own low-level operation; opaque callees explicitly delegated",
+    "unresolved": [
+      "Two count-seven invocations. Allocator +4394 normal path is now understood; allocator failure and linked-tail helper contracts +422F/+4281/+428E remain unresolved. +44E7..+44FC remains RAW."
+    ]
+  },
+  {
+    "entry": "PLI1.OVL+6708",
+    "invocations_checked": 2,
+    "own_coordinates": 87,
+    "own_occurrences": 3976,
+    "members": [
+      {
+        "call_step": 259545,
+        "original_return_slot": 65476,
+        "original_return_pop_step": 259551,
+        "continuation_register": "DE",
+        "continuation_writer_step": 259567,
+        "relocated_return_slot": 65484,
+        "consumed_caller_bytes": 8,
+        "software_ret_step": 263249,
+        "final_SP_minus_preCALL": 8,
+        "argument_pop_steps": [
+          259552,
+          259557,
+          259560,
+          259565
+        ],
+        "arguments": [
+          {
+            "address": 65478,
+            "value": 64464,
+            "pop_step": 259552,
+            "pop_coordinate": "PLI1.OVL+6710",
+            "producer": "PLI1.OVL+2973",
+            "producer_step": 259535,
+            "byte_writers": [
+              {
+                "step": 259535,
+                "coordinate": "PLI1.OVL+2973",
+                "instruction": "PUSH H",
+                "address": 65478,
+                "value": 208
+              },
+              {
+                "step": 259535,
+                "coordinate": "PLI1.OVL+2973",
+                "instruction": "PUSH H",
+                "address": 65479,
+                "value": 251
+              }
+            ]
+          },
+          {
+            "address": 65480,
+            "value": 64256,
+            "pop_step": 259557,
+            "pop_coordinate": "PLI1.OVL+6715",
+            "producer": "PLI1.OVL+296B",
+            "producer_step": 259531,
+            "byte_writers": [
+              {
+                "step": 259531,
+                "coordinate": "PLI1.OVL+296B",
+                "instruction": "PUSH B",
+                "address": 65480,
+                "value": 0
+              },
+              {
+                "step": 259531,
+                "coordinate": "PLI1.OVL+296B",
+                "instruction": "PUSH B",
+                "address": 65481,
+                "value": 251
+              }
+            ]
+          },
+          {
+            "address": 65482,
+            "value": 64454,
+            "pop_step": 259560,
+            "pop_coordinate": "PLI1.OVL+6718",
+            "producer": "PLI1.OVL+2968",
+            "producer_step": 259529,
+            "byte_writers": [
+              {
+                "step": 259529,
+                "coordinate": "PLI1.OVL+2968",
+                "instruction": "PUSH B",
+                "address": 65482,
+                "value": 198
+              },
+              {
+                "step": 259529,
+                "coordinate": "PLI1.OVL+2968",
+                "instruction": "PUSH B",
+                "address": 65483,
+                "value": 251
+              }
+            ]
+          },
+          {
+            "address": 65484,
+            "value": 43,
+            "pop_step": 259565,
+            "pop_coordinate": "PLI1.OVL+671D",
+            "producer": "PLI1.OVL+295A",
+            "producer_step": 259520,
+            "byte_writers": [
+              {
+                "step": 259520,
+                "coordinate": "PLI1.OVL+295A",
+                "instruction": "PUSH H",
+                "address": 65484,
+                "value": 43
+              },
+              {
+                "step": 259520,
+                "coordinate": "PLI1.OVL+295A",
+                "instruction": "PUSH H",
+                "address": 65485,
+                "value": 0
+              }
+            ]
+          }
+        ],
+        "carrier_writes": [
+          [
+            259567,
+            "PUSH D",
+            65485,
+            75
+          ],
+          [
+            259567,
+            "PUSH D",
+            65484,
+            136
+          ]
+        ],
+        "caller": "PLI1.OVL+2985",
+        "source": 64464,
+        "initial_selector": 0,
+        "final_selector": 32,
+        "initial_cursor": 64454,
+        "source_count": 7,
+        "extra_byte": 43,
+        "output_count": 150,
+        "source_reads": 7,
+        "padding": 143,
+        "output_bytes": [
+          77,
+          73,
+          78,
+          73,
+          77,
+          65,
+          76,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32
+        ],
+        "control_aliases": [
+          {
+            "offset": 146,
+            "address": 43482,
+            "value": 32,
+            "step": 263157
+          },
+          {
+            "offset": 147,
+            "address": 43483,
+            "value": 32,
+            "step": 263181
+          },
+          {
+            "offset": 148,
+            "address": 43484,
+            "value": 32,
+            "step": 263205
+          },
+          {
+            "offset": 149,
+            "address": 43485,
+            "value": 32,
+            "step": 263229
+          }
+        ],
+        "limit_history": [
+          {
+            "offset": 0,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 1,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 2,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 3,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 4,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 5,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 6,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 7,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 8,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 9,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 10,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 11,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 12,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 13,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 14,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 15,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 16,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 17,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 18,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 19,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 20,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 21,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 22,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 23,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 24,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 25,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 26,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 27,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 28,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 29,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 30,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 31,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 32,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 33,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 34,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 35,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 36,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 37,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 38,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 39,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 40,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 41,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 42,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 43,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 44,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 45,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 46,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 47,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 48,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 49,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 50,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 51,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 52,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 53,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 54,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 55,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 56,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 57,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 58,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 59,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 60,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 61,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 62,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 63,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 64,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 65,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 66,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 67,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 68,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 69,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 70,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 71,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 72,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 73,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 74,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 75,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 76,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 77,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 78,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 79,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 80,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 81,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 82,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 83,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 84,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 85,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 86,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 87,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 88,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 89,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 90,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 91,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 92,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 93,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 94,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 95,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 96,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 97,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 98,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 99,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 100,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 101,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 102,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 103,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 104,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 105,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 106,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 107,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 108,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 109,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 110,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 111,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 112,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 113,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 114,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 115,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 116,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 117,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 118,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 119,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 120,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 121,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 122,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 123,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 124,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 125,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 126,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 127,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 128,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 129,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 130,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 131,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 132,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 133,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 134,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 135,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 136,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 137,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 138,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 139,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 140,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 141,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 142,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 143,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 144,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 145,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 146,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 147,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 148,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 149,
+            "selector": 0,
+            "address": 42539,
+            "limit": 254
+          },
+          {
+            "offset": 150,
+            "selector": 32,
+            "address": 42571,
+            "limit": 0
+          }
+        ],
+        "returned_A": 255,
+        "returned_flags": {
+          "sign": false,
+          "zero": true,
+          "auxiliary_carry": true,
+          "parity": true,
+          "carry": false
+        }
+      },
+      {
+        "call_step": 263336,
+        "original_return_slot": 65478,
+        "original_return_pop_step": 263342,
+        "continuation_register": "DE",
+        "continuation_writer_step": 263358,
+        "relocated_return_slot": 65486,
+        "consumed_caller_bytes": 8,
+        "software_ret_step": 263608,
+        "final_SP_minus_preCALL": 8,
+        "argument_pop_steps": [
+          263343,
+          263348,
+          263351,
+          263356
+        ],
+        "arguments": [
+          {
+            "address": 65480,
+            "value": 64464,
+            "pop_step": 263343,
+            "pop_coordinate": "PLI1.OVL+6710",
+            "producer": "PLI1.OVL+2AA8",
+            "producer_step": 263329,
+            "byte_writers": [
+              {
+                "step": 263329,
+                "coordinate": "PLI1.OVL+2AA8",
+                "instruction": "PUSH H",
+                "address": 65480,
+                "value": 208
+              },
+              {
+                "step": 263329,
+                "coordinate": "PLI1.OVL+2AA8",
+                "instruction": "PUSH H",
+                "address": 65481,
+                "value": 251
+              }
+            ]
+          },
+          {
+            "address": 65482,
+            "value": 50690,
+            "pop_step": 263348,
+            "pop_coordinate": "PLI1.OVL+6715",
+            "producer": "PLI1.OVL+2AA0",
+            "producer_step": 263325,
+            "byte_writers": [
+              {
+                "step": 263325,
+                "coordinate": "PLI1.OVL+2AA0",
+                "instruction": "PUSH H",
+                "address": 65482,
+                "value": 2
+              },
+              {
+                "step": 263325,
+                "coordinate": "PLI1.OVL+2AA0",
+                "instruction": "PUSH H",
+                "address": 65483,
+                "value": 198
+              }
+            ]
+          },
+          {
+            "address": 65484,
+            "value": 64454,
+            "pop_step": 263351,
+            "pop_coordinate": "PLI1.OVL+6718",
+            "producer": "PLI1.OVL+2A9C",
+            "producer_step": 263323,
+            "byte_writers": [
+              {
+                "step": 263323,
+                "coordinate": "PLI1.OVL+2A9C",
+                "instruction": "PUSH B",
+                "address": 65484,
+                "value": 198
+              },
+              {
+                "step": 263323,
+                "coordinate": "PLI1.OVL+2A9C",
+                "instruction": "PUSH B",
+                "address": 65485,
+                "value": 251
+              }
+            ]
+          },
+          {
+            "address": 65486,
+            "value": 43,
+            "pop_step": 263356,
+            "pop_coordinate": "PLI1.OVL+671D",
+            "producer": "PLI1.OVL+2A8E",
+            "producer_step": 263314,
+            "byte_writers": [
+              {
+                "step": 263314,
+                "coordinate": "PLI1.OVL+2A8E",
+                "instruction": "PUSH H",
+                "address": 65486,
+                "value": 43
+              },
+              {
+                "step": 263314,
+                "coordinate": "PLI1.OVL+2A8E",
+                "instruction": "PUSH H",
+                "address": 65487,
+                "value": 0
+              }
+            ]
+          }
+        ],
+        "carrier_writes": [
+          [
+            263358,
+            "PUSH D",
+            65487,
+            76
+          ],
+          [
+            263358,
+            "PUSH D",
+            65486,
+            183
+          ]
+        ],
+        "caller": "PLI1.OVL+2AB4",
+        "source": 64464,
+        "initial_selector": 2,
+        "final_selector": 2,
+        "initial_cursor": 64454,
+        "source_count": 7,
+        "extra_byte": 43,
+        "output_count": 7,
+        "source_reads": 7,
+        "padding": 0,
+        "output_bytes": [
+          77,
+          73,
+          78,
+          73,
+          77,
+          65,
+          76
+        ],
+        "control_aliases": [],
+        "limit_history": [
+          {
+            "offset": 0,
+            "selector": 2,
+            "address": 42541,
+            "limit": 7
+          },
+          {
+            "offset": 1,
+            "selector": 2,
+            "address": 42541,
+            "limit": 7
+          },
+          {
+            "offset": 2,
+            "selector": 2,
+            "address": 42541,
+            "limit": 7
+          },
+          {
+            "offset": 3,
+            "selector": 2,
+            "address": 42541,
+            "limit": 7
+          },
+          {
+            "offset": 4,
+            "selector": 2,
+            "address": 42541,
+            "limit": 7
+          },
+          {
+            "offset": 5,
+            "selector": 2,
+            "address": 42541,
+            "limit": 7
+          },
+          {
+            "offset": 6,
+            "selector": 2,
+            "address": 42541,
+            "limit": 7
+          },
+          {
+            "offset": 7,
+            "selector": 2,
+            "address": 42541,
+            "limit": 7
+          }
+        ],
+        "returned_A": 255,
+        "returned_flags": {
+          "sign": false,
+          "zero": true,
+          "auxiliary_carry": true,
+          "parity": true,
+          "carry": false
+        }
+      }
+    ],
+    "extent": [
+      26376,
+      26555
+    ],
+    "represented_bytes": 166,
+    "byte_status": "UNDERSTOOD",
+    "completeness": {
+      "bounds": "provisional",
+      "control_flow": "partial",
+      "contract": "partial"
+    },
+    "scope": "two observed correlated executions of mask28/E05/flag22false copy-padding arm; actual buffer/control overlap retained; original/source/table/stack memory as witnessed; no claim of stable selector/limit or arbitrary termination",
+    "unresolved": [
+      "unobserved path: gate failure/other savedE and flag22true prefix; branch target67BE escapes observed path extent6708..67BB, full bounds remain unresolved.",
+      "alias/precondition and termination concern: fresh mutable selector/count/source/output counters may be overwritten by output; first observed alias-induced limit change is established, not generalized as a buffer capacity.",
+      "unknown producer/general provenance: flag/limit bytes atA628/A62B and alternate-path cached word/byte roles."
+    ]
+  },
+  {
+    "entry": "PLI1.OVL+43D5",
+    "invocations_checked": 1,
+    "own_coordinates": 89,
+    "own_occurrences": 89,
+    "members": [
+      {
+        "call_step": 218051,
+        "original_return_slot": 65526,
+        "original_return_pop_step": 218057,
+        "continuation_register": "DE",
+        "continuation_writer_step": 218060,
+        "relocated_return_slot": 65528,
+        "consumed_caller_bytes": 2,
+        "software_ret_step": 218245,
+        "final_SP_minus_preCALL": 2,
+        "argument_pop_steps": [
+          218058
+        ],
+        "arguments": [
+          {
+            "address": 65528,
+            "value": 42800,
+            "pop_step": 218058,
+            "pop_coordinate": "PLI1.OVL+43DD",
+            "producer": "PLI1.OVL+4BB5",
+            "producer_step": 218048,
+            "byte_writers": [
+              {
+                "step": 218048,
+                "coordinate": "PLI1.OVL+4BB5",
+                "instruction": "PUSH B",
+                "address": 65528,
+                "value": 48
+              },
+              {
+                "step": 218048,
+                "coordinate": "PLI1.OVL+4BB5",
+                "instruction": "PUSH B",
+                "address": 65529,
+                "value": 167
+              }
+            ]
+          }
+        ],
+        "carrier_writes": [
+          [
+            218060,
+            "PUSH D",
+            65529,
+            109
+          ],
+          [
+            218060,
+            "PUSH D",
+            65528,
+            189
+          ]
+        ],
+        "caller": "PLI1.OVL+4BBA",
+        "argument_low": 48,
+        "ignored_high": 167,
+        "input_C": 2,
+        "input_E": 0,
+        "new_pointer": 64471,
+        "head_slot": 43179,
+        "old_head": 64481,
+        "old_word": 0,
+        "delta": 2,
+        "new_old_word": 2,
+        "flags": {
+          "sign": false,
+          "zero": true,
+          "auxiliary_carry": false,
+          "parity": true,
+          "carry": false
+        }
+      }
+    ],
+    "extent": [
+      17365,
+      17512
+    ],
+    "represented_bytes": 147,
+    "byte_status": "UNDERSTOOD",
+    "completeness": {
+      "bounds": "stable",
+      "control_flow": "complete",
+      "contract": "partial"
+    },
+    "scope": "one observed call: caller word.low30, savedC2/E0, allocator4394 normal and429D selector30 scopes; selected head/new block/scratch/table/stack nonaliasing; future helper/input paths excluded",
+    "unresolved": [
+      "partial helper contract:4394 allocation failure and429D alternative selector dispatch remain outside declared scope.",
+      "unknown producer/general provenance and alias/precondition: current head table/index and possible pointer/field overlap; no heap or list ownership inferred."
+    ]
+  },
+  {
+    "entry": "PLI1.OVL+4B69",
+    "invocations_checked": 1,
+    "own_coordinates": 52,
+    "own_occurrences": 2088,
+    "members": [
+      {
+        "top_before": 64480,
+        "initial_pointer": 64481,
+        "zeroed_words": 128,
+        "created_pointer": 64471,
+        "old_head": 64481,
+        "word_before_parent_subtract": 2,
+        "word_after": 0,
+        "caller_carrier_word": 42800,
+        "call_step": 215972
+      }
+    ],
+    "extent": [
+      19305,
+      19413
+    ],
+    "represented_bytes": 105,
+    "byte_status": "UNDERSTOOD",
+    "completeness": {
+      "bounds": "provisional",
+      "control_flow": "partial",
+      "contract": "partial"
+    },
+    "scope": "observedq>=AE7A initializerpath;43D5 allocator-normal/selector30 contract; selected controls/table/head/newblock/stack nonaliasing; raw floor-failure/partialcallee paths excluded",
+    "unresolved": [
+      "unobserved path: +4B7A..4B7C floor-failure arm remainsRAW, so enclosing bounds/control flow remainprovisional/partial.",
+      "partial helper contract:43D5/4394 alternative orfailure paths; onlynormalfixed30/C2/E0 scope substituted.",
+      "unknown producer/general provenance andalias/precondition: initialrecord_top/headword/global table consumers; no compiler ownership orsource types."
+    ]
+  },
+  {
+    "entry": "PLI1.OVL+28AA",
+    "invocations_checked": 1,
+    "own_coordinates": 351,
+    "own_occurrences": 351,
+    "members": [
+      {
+        "own_coordinates": 351,
+        "own_occurrences": 351,
+        "first_call": 259545,
+        "saved_2185_A": 0,
+        "first_return_A": 255,
+        "first_JNC_taken": true,
+        "second_call": 263336,
+        "second_return_A": 255,
+        "second_JC_taken": true,
+        "local_callee_occurrences": 19,
+        "call_step": 259419
+      }
+    ],
+    "extent": [
+      10410,
+      11347
+    ],
+    "represented_bytes": 684,
+    "byte_status": "STRUCTURED",
+    "completeness": {
+      "bounds": "provisional",
+      "control_flow": "partial",
+      "contract": "partial"
+    },
+    "scope": "structuralcorrelated351-instructionMINIMAL path pluslocalargument/copy/Boolean refinementsat6708 observedscope; no fullbodysemantic interpretation oropaquehelper substitution",
+    "unresolved": [
+      "missing helper/partial helper contract:2185 returnalgorithm,46ED,4738,666E,7AF0,7B13,7B49,2355; prioritizeactualhelpercontracts beforefullbodyorfixtures.",
+      "unobserved path:253 enclosingbytes remainRAW; selectedownpathalone doesnotcompletecontrolflow/bounds.",
+      "unknown producer/general provenance andalias/precondition: tables/pointerfields outside two proven copiercalls; no ownershipfromoldcontextcounts."
+    ]
+  },
+  {
+    "entry": "PLI1.OVL+419F",
+    "invocations_checked": 2,
+    "own_coordinates": 5,
+    "own_occurrences": 10,
+    "members": [
+      {
+        "pointer": 64471,
+        "offset": 2,
+        "address": 64473,
+        "returned_A": 48,
+        "call_step": 218136
+      },
+      {
+        "pointer": 64487,
+        "offset": 2,
+        "address": 64489,
+        "returned_A": 64,
+        "call_step": 240621
+      }
+    ],
+    "extent": [
+      16799,
+      16806
+    ],
+    "represented_bytes": 7,
+    "byte_status": "UNDERSTOOD",
+    "completeness": {
+      "bounds": "stable",
+      "control_flow": "complete",
+      "contract": "complete"
+    },
+    "scope": "documented byte/word/address wrapping; selected scratch/stack/read slots nonaliasing; no source-language type or ownership meaning",
+    "unresolved": [
+      "No unresolved local operation at declared scope; broader producers/alias relations remain general provenance questions."
+    ]
+  },
+  {
+    "entry": "PLI1.OVL+41A6",
+    "invocations_checked": 2,
+    "own_coordinates": 5,
+    "own_occurrences": 10,
+    "members": [
+      {
+        "pointer": 64471,
+        "offset": 3,
+        "address": 64474,
+        "returned_A": 76,
+        "call_step": 218143
+      },
+      {
+        "pointer": 64437,
+        "offset": 3,
+        "address": 64440,
+        "returned_A": 41,
+        "call_step": 265112
+      }
+    ],
+    "extent": [
+      16806,
+      16815
+    ],
+    "represented_bytes": 9,
+    "byte_status": "UNDERSTOOD",
+    "completeness": {
+      "bounds": "stable",
+      "control_flow": "complete",
+      "contract": "complete"
+    },
+    "scope": "documented byte/word/address wrapping; selected scratch/stack/read slots nonaliasing; no source-language type or ownership meaning",
+    "unresolved": [
+      "No unresolved local operation at declared scope; broader producers/alias relations remain general provenance questions."
+    ]
+  },
+  {
+    "entry": "PLI1.OVL+429D",
+    "invocations_checked": 1,
+    "own_coordinates": 31,
+    "own_occurrences": 31,
+    "members": [
+      {
+        "pointer": 64471,
+        "field2": 48,
+        "field3": 76,
+        "field4": 2,
+        "returned_A": 2,
+        "flags": {
+          "sign": false,
+          "zero": true,
+          "auxiliary_carry": true,
+          "parity": true,
+          "carry": false
+        },
+        "call_step": 218135
+      }
+    ],
+    "extent": [
+      17053,
+      17198
+    ],
+    "represented_bytes": 78,
+    "byte_status": "UNDERSTOOD",
+    "completeness": {
+      "bounds": "provisional",
+      "control_flow": "partial",
+      "contract": "partial"
+    },
+    "scope": "working field+2=30; adjacent fields/scratch/return stack nonaliasing; complete419F/41A6 field readers; alternative dispatch paths excluded",
+    "unresolved": [
+      "unobserved path: other field selector arms and escaping branch432E; full bounds/dispatch contract remain provisional/partial.",
+      "general provenance: meanings/producers of field bytes and helper return2 remain unassigned."
+    ]
+  }
+]

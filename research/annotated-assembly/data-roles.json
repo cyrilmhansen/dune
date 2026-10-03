@@ -1940,6 +1940,306 @@
       "width": 2,
       "role": "mapped word cached before low-byte emission; high byte freshly read by7E56",
       "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI1.OVL:selector_field2_cache",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "name": "selector_field2_cache",
+      "runtime_address": 43251,
+      "width": 1,
+      "role": "working pointer+2 byte cached for numeric dispatch",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI1.OVL:selector_field3_cache",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "name": "selector_field3_cache",
+      "runtime_address": 43252,
+      "width": 1,
+      "role": "working pointer+3 byte cached; unused in observed selector30 arm",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI1.OVL:selector_field4_cache",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "name": "selector_field4_cache",
+      "runtime_address": 43253,
+      "width": 1,
+      "role": "working pointer+4 byte cached; unused in observed selector30 arm",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI1.OVL:copy_extra_byte",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "name": "copy_extra_byte",
+      "runtime_address": 43482,
+      "width": 1,
+      "role": "low caller word3 cached; overwritten20 by first observed output overlap",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI1.OVL:copy_initial_cursor",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "name": "copy_initial_cursor",
+      "runtime_address": 43483,
+      "width": 2,
+      "role": "caller word2; initially publishedA863, later overwritten2020 by first output overlap",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI1.OVL:copy_selector",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "name": "copy_selector",
+      "runtime_address": 43485,
+      "width": 1,
+      "role": "low caller word1; reread for limit table; overwritten20 at destination offset149",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI1.OVL:copy_source_pointer",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "name": "copy_source_pointer",
+      "runtime_address": 43486,
+      "width": 2,
+      "role": "full caller word0; dereferenced only below saved source count",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI1.OVL:copy_source_count",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "name": "copy_source_count",
+      "runtime_address": 43488,
+      "width": 1,
+      "role": "saved inputC byte; read afresh for source/padding and final borrow",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI1.OVL:copy_saved_E",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "name": "copy_saved_E",
+      "runtime_address": 43489,
+      "width": 1,
+      "role": "saved inputE; compared with05",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI1.OVL:copy_written_count",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "name": "copy_written_count",
+      "runtime_address": 43490,
+      "width": 1,
+      "role": "destination offset/number written; increments after each output store",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI1.OVL:copy_source_offset",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "name": "copy_source_offset",
+      "runtime_address": 43491,
+      "width": 1,
+      "role": "source offset; increments even on padding",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI1.OVL:copy_byte_cache",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "name": "copy_byte_cache",
+      "runtime_address": 43492,
+      "width": 1,
+      "role": "source or20 padding byte before store",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI1.OVL:copy_flag_table",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "name": "copy_flag_table",
+      "runtime_address": 42536,
+      "width": null,
+      "role": "byte[A628+selector] flags tested with28/22 masks; capacity unknown",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI1.OVL:copy_limit_table",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "name": "copy_limit_table",
+      "runtime_address": 42539,
+      "width": null,
+      "role": "byte[A62B+fresh selector] supplies fresh unsigned stopping limit; observed FE/7 then00",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI1.OVL:copy_work_pointer",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "name": "copy_work_pointer",
+      "runtime_address": 43107,
+      "width": 2,
+      "role": "input caller word2 published before copy/pad; distinct scoped use of same storage as construction cursor",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI1.OVL:short_argument_byte",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "name": "short_argument_byte",
+      "runtime_address": 43255,
+      "width": 1,
+      "role": "low caller word cached thenpublished to newblock+2",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI1.OVL:short_saved_C",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "name": "short_saved_C",
+      "runtime_address": 43256,
+      "width": 1,
+      "role": "inputC cached thenpublished tofield+4",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI1.OVL:short_saved_E",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "name": "short_saved_E",
+      "runtime_address": 43257,
+      "width": 1,
+      "role": "inputE cached thenpublished tofield+5",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI1.OVL:short_delta",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "name": "short_delta",
+      "runtime_address": 43258,
+      "width": 1,
+      "role": "429D returned byte addedto old headword+2; observed2",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI1.OVL:short_original_word",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "name": "short_original_word",
+      "runtime_address": 43259,
+      "width": 2,
+      "role": "old headword+2 saved before increment; copied to newblock+6",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI1.OVL:head_slot_index",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "name": "head_slot_index",
+      "runtime_address": 43243,
+      "width": 1,
+      "role": "byte index selecting wordatA8AB+2*i",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI1.OVL:head_slot_table",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "name": "head_slot_table",
+      "runtime_address": 43179,
+      "width": null,
+      "role": "word slots selected by byteA8EB; only observed index0 reviewed, no whole capacity",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI1.OVL:reset_initial_pointer",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "name": "reset_initial_pointer",
+      "runtime_address": 43105,
+      "width": 2,
+      "role": "record_top+1 savedbeforefloor comparison andcopies",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI1.OVL:reset_pointer_copy",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "name": "reset_pointer_copy",
+      "runtime_address": 43241,
+      "width": 2,
+      "role": "copyof initialpointer onnormalreset path",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI1.OVL:reset_created_pointer",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "name": "reset_created_pointer",
+      "runtime_address": 43115,
+      "width": 2,
+      "role": "newp returnedthroughA863 by43D5 andsavedseparately fromheadslot",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI1.OVL:reset_pointer_neighbor",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "name": "reset_pointer_neighbor",
+      "runtime_address": 43117,
+      "width": 2,
+      "role": "secondinitialpointer copy; widerrole unknown",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI1.OVL:reset_word_index",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "name": "reset_word_index",
+      "runtime_address": 43307,
+      "width": 1,
+      "role": "indexover128zeroedwords; returns128",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI1.OVL:orchestration_context_byte",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "name": "orchestration_context_byte",
+      "runtime_address": 42548,
+      "width": 1,
+      "role": "lowbyteusedtoindexpointer/flag tables andpassedasselector2; neighborhigh discardedorcarriedunused",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI1.OVL:orchestration_word_table",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "name": "orchestration_word_table",
+      "runtime_address": 42555,
+      "width": null,
+      "role": "word[A63B+2*byte[A634]] suppliedas6708 initialcursor; capacityunknown",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI1.OVL:orchestration_cached_byte",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "name": "orchestration_cached_byte",
+      "runtime_address": 42594,
+      "width": 1,
+      "role": "2B cachedandpushedwithadjacentbyte asword;6708 keepslowbyte",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
     }
   ]
 }

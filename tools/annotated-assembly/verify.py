@@ -137,10 +137,10 @@ def check_source(image, source, assembly, seeds):
 
 
 def check_software_return(seed, images, originals):
-    """The reviewed PLI1 argument-consuming return; preserve byte/slot checks."""
+    """Reviewed cleanup family; preserve exact bytes and original/copy ancestry."""
     proof = seed['software_return_sample']
     call, writer, ret, relation = (proof[k] for k in ('call', 'writer', 'ret', 'relation'))
-    for witness in (call, writer, ret):
+    for witness in (call, writer, ret, *proof.get('prefix', [])):
         origin = witness['origin']
         require(origin is not None, f'{seed["id"]}: software proof lacks image origin')
         name, offset = origin['image']['name'], origin['offset']
@@ -153,9 +153,10 @@ def check_software_return(seed, images, originals):
             seed['start_offset'] <= writer['origin']['offset'] < seed['end_offset'] and writer['bytes'] == 'D5' and
             ret['origin']['image']['name'] == seed['image'] and ret['origin']['offset'] in seed['observed_return_offsets'] and ret['bytes'] == 'C9',
             f'{seed["id"]}: software entry/writer/exit mismatch')
-    # This optional proof admits only the established two-byte stack argument ABI.
-    require(proof['stack_argument_bytes'] == 2 and ret['sp_before'] == call['sp_after'] + 2 and
-            ret['pc_after'] == call['pc'] + 3 and ret['sp_after'] == call['sp_after'] + 4,
+    count = proof['stack_argument_bytes']
+    require(count > 0 and count % 2 == 0 and
+            ret['sp_before'] == (call['sp_after'] + count) & 65535 and
+            ret['pc_after'] == call['pc'] + 3 and ret['sp_after'] == (call['sp_after'] + count + 2) & 65535,
             f'{seed["id"]}: software return argument/target mismatch')
     writes = {w['address']: w['new_value'] for w in writer['writes']}
     reads = {r['address']: r['value'] for r in ret['reads']}
@@ -171,6 +172,13 @@ def check_software_return(seed, images, originals):
         fact = relation[field]
         require(fact['step'] == writer['step_index'] and fact['pc'] == writer['pc'] and fact['origin'] == writer['origin'] and
                 fact['value'] == writes[address], f'{seed["id"]}: software latest-writer fact mismatch')
+    if count != 2 or proof.get('prefix'):
+        require(bool(proof.get('prefix')), f'{seed["id"]}: new cleanup count lacks POP/PUSH ancestry')
+        from software_continuation import prove
+        try:
+            prove(proof)
+        except ValueError as error:
+            require(False, f'{seed["id"]}: {error}')
 
 
 def check_evidence(evidence, images, originals):

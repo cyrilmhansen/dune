@@ -1,0 +1,306 @@
+{
+  "PLI1.OVL+6708": {
+    "invocations": 2,
+    "callers": {
+      "PLI1.OVL+2985": 1,
+      "PLI1.OVL+2AB4": 1
+    },
+    "returns": {
+      "PLI1.OVL+67BA": 2
+    },
+    "own_coordinates": 87,
+    "own_occurrences": 3976,
+    "sp_deltas": {
+      "0": 10,
+      "2": 2,
+      "4": 10,
+      "6": 6,
+      "8": 3942,
+      "10": 6
+    },
+    "candidate_extent": [
+      26376,
+      26555
+    ],
+    "classification": "DIRECT software-return audit",
+    "reserved_frame_bytes": 0,
+    "recursive_children": 0,
+    "software_continuations": 2,
+    "bounds_confidence": "provisional",
+    "basis": "Exact CALL entry, local branches, terminal original-slot returns and independently called adjacent boundaries; no RoutineCandidate/context extent authority.",
+    "external_incoming_transfers": [
+      {
+        "kind": "call",
+        "source": "PLI1.OVL+2985",
+        "target": "PLI1.OVL+6708",
+        "runtime_target": 35080,
+        "count": 1
+      },
+      {
+        "kind": "call",
+        "source": "PLI1.OVL+2AB4",
+        "target": "PLI1.OVL+6708",
+        "runtime_target": 35080,
+        "count": 1
+      }
+    ],
+    "alternate_observed_entry": false,
+    "return_kind": "software",
+    "consumed_caller_bytes": 8,
+    "bounds_basis": "Observed entry/terminal return and local branches; escaping raw alternate tails explicitly excluded for6708/429D; no context min/max orRoutineCandidate ownership."
+  },
+  "PLI1.OVL+43D5": {
+    "invocations": 1,
+    "callers": {
+      "PLI1.OVL+4BBA": 1
+    },
+    "returns": {
+      "PLI1.OVL+4467": 1
+    },
+    "own_coordinates": 89,
+    "own_occurrences": 89,
+    "sp_deltas": {
+      "0": 18,
+      "2": 68,
+      "4": 3
+    },
+    "candidate_extent": [
+      17365,
+      17512
+    ],
+    "classification": "DIRECT software-return audit",
+    "reserved_frame_bytes": 0,
+    "recursive_children": 0,
+    "software_continuations": 1,
+    "bounds_confidence": "stable",
+    "basis": "Exact CALL entry, local branches, terminal original-slot returns and independently called adjacent boundaries; no RoutineCandidate/context extent authority.",
+    "external_incoming_transfers": [
+      {
+        "kind": "call",
+        "source": "PLI1.OVL+4BBA",
+        "target": "PLI1.OVL+43D5",
+        "runtime_target": 26069,
+        "count": 1
+      }
+    ],
+    "alternate_observed_entry": false,
+    "return_kind": "software",
+    "consumed_caller_bytes": 2,
+    "bounds_basis": "Observed entry/terminal return and local branches; escaping raw alternate tails explicitly excluded for6708/429D; no context min/max orRoutineCandidate ownership."
+  },
+  "PLI1.OVL+4B69": {
+    "invocations": 1,
+    "callers": {
+      "PLI1.OVL+0108": 1
+    },
+    "returns": {
+      "PLI1.OVL+4BD4": 1
+    },
+    "own_coordinates": 52,
+    "own_occurrences": 2088,
+    "sp_deltas": {
+      "0": 2082,
+      "-2": 4,
+      "-4": 1,
+      "2": 1
+    },
+    "candidate_extent": [
+      19305,
+      19413
+    ],
+    "classification": "SMALL / DIRECT",
+    "reserved_frame_bytes": 0,
+    "recursive_children": 0,
+    "software_continuations": 0,
+    "bounds_confidence": "provisional",
+    "basis": "Exact CALL entry, local branches, terminal original-slot returns and independently called adjacent boundaries; no RoutineCandidate/context extent authority.",
+    "external_incoming_transfers": [
+      {
+        "kind": "call",
+        "source": "PLI1.OVL+0108",
+        "target": "PLI1.OVL+4B69",
+        "runtime_target": 28009,
+        "count": 1
+      }
+    ],
+    "alternate_observed_entry": false,
+    "return_kind": "hardware",
+    "consumed_caller_bytes": 0,
+    "bounds_basis": "Observed entry/terminal return and local branches; escaping raw alternate tails explicitly excluded for6708/429D; no context min/max orRoutineCandidate ownership."
+  },
+  "PLI1.OVL+28AA": {
+    "invocations": 1,
+    "callers": {
+      "PLI1.OVL+2C55": 1
+    },
+    "returns": {
+      "PLI1.OVL+2C52": 1
+    },
+    "own_coordinates": 351,
+    "own_occurrences": 351,
+    "sp_deltas": {
+      "0": 253,
+      "-2": 57,
+      "-4": 11,
+      "-6": 6,
+      "-8": 11,
+      "-10": 11,
+      "-12": 1,
+      "2": 1
+    },
+    "candidate_extent": [
+      10410,
+      11347
+    ],
+    "classification": "STRUCTURED partial body",
+    "reserved_frame_bytes": 0,
+    "recursive_children": 0,
+    "software_continuations": 0,
+    "bounds_confidence": "provisional",
+    "basis": "Exact CALL entry, local branches, terminal original-slot returns and independently called adjacent boundaries; no RoutineCandidate/context extent authority.",
+    "external_incoming_transfers": [
+      {
+        "kind": "call",
+        "source": "PLI1.OVL+2C55",
+        "target": "PLI1.OVL+28AA",
+        "runtime_target": 19114,
+        "count": 1
+      }
+    ],
+    "alternate_observed_entry": false,
+    "return_kind": "hardware",
+    "consumed_caller_bytes": 0,
+    "bounds_basis": "Observed entry/terminal return and local branches; escaping raw alternate tails explicitly excluded for6708/429D; no context min/max orRoutineCandidate ownership."
+  },
+  "PLI1.OVL+419F": {
+    "invocations": 2,
+    "callers": {
+      "PLI1.OVL+429D": 1,
+      "PLI1.OVL+58CA": 1
+    },
+    "returns": {
+      "PLI1.OVL+41A5": 2
+    },
+    "own_coordinates": 5,
+    "own_occurrences": 10,
+    "sp_deltas": {
+      "0": 8,
+      "2": 2
+    },
+    "candidate_extent": [
+      16799,
+      16806
+    ],
+    "classification": "SMALL / DIRECT",
+    "reserved_frame_bytes": 0,
+    "recursive_children": 0,
+    "software_continuations": 0,
+    "bounds_confidence": "stable",
+    "basis": "Exact CALL entry, local branches, terminal original-slot returns and independently called adjacent boundaries; no RoutineCandidate/context extent authority.",
+    "external_incoming_transfers": [
+      {
+        "kind": "call",
+        "source": "PLI1.OVL+429D",
+        "target": "PLI1.OVL+419F",
+        "runtime_target": 25503,
+        "count": 1
+      },
+      {
+        "kind": "call",
+        "source": "PLI1.OVL+58CA",
+        "target": "PLI1.OVL+419F",
+        "runtime_target": 25503,
+        "count": 1
+      }
+    ],
+    "alternate_observed_entry": false,
+    "return_kind": "hardware",
+    "consumed_caller_bytes": 0,
+    "bounds_basis": "Observed entry/terminal return and local branches; escaping raw alternate tails explicitly excluded for6708/429D; no context min/max orRoutineCandidate ownership."
+  },
+  "PLI1.OVL+41A6": {
+    "invocations": 2,
+    "callers": {
+      "PLI1.OVL+42A3": 1,
+      "PLI1.OVL+667E": 1
+    },
+    "returns": {
+      "PLI1.OVL+41AE": 2
+    },
+    "own_coordinates": 5,
+    "own_occurrences": 10,
+    "sp_deltas": {
+      "0": 8,
+      "2": 2
+    },
+    "candidate_extent": [
+      16806,
+      16815
+    ],
+    "classification": "SMALL / DIRECT",
+    "reserved_frame_bytes": 0,
+    "recursive_children": 0,
+    "software_continuations": 0,
+    "bounds_confidence": "stable",
+    "basis": "Exact CALL entry, local branches, terminal original-slot returns and independently called adjacent boundaries; no RoutineCandidate/context extent authority.",
+    "external_incoming_transfers": [
+      {
+        "kind": "call",
+        "source": "PLI1.OVL+42A3",
+        "target": "PLI1.OVL+41A6",
+        "runtime_target": 25510,
+        "count": 1
+      },
+      {
+        "kind": "call",
+        "source": "PLI1.OVL+667E",
+        "target": "PLI1.OVL+41A6",
+        "runtime_target": 25510,
+        "count": 1
+      }
+    ],
+    "alternate_observed_entry": false,
+    "return_kind": "hardware",
+    "consumed_caller_bytes": 0,
+    "bounds_basis": "Observed entry/terminal return and local branches; escaping raw alternate tails explicitly excluded for6708/429D; no context min/max orRoutineCandidate ownership."
+  },
+  "PLI1.OVL+429D": {
+    "invocations": 1,
+    "callers": {
+      "PLI1.OVL+4409": 1
+    },
+    "returns": {
+      "PLI1.OVL+432D": 1
+    },
+    "own_coordinates": 31,
+    "own_occurrences": 31,
+    "sp_deltas": {
+      "-2": 2,
+      "0": 28,
+      "2": 1
+    },
+    "candidate_extent": [
+      17053,
+      17198
+    ],
+    "classification": "SMALL / DIRECT",
+    "reserved_frame_bytes": 0,
+    "recursive_children": 0,
+    "software_continuations": 0,
+    "bounds_confidence": "provisional",
+    "basis": "Exact CALL entry, local branches, terminal original-slot returns and independently called adjacent boundaries; no RoutineCandidate/context extent authority.",
+    "external_incoming_transfers": [
+      {
+        "kind": "call",
+        "source": "PLI1.OVL+4409",
+        "target": "PLI1.OVL+429D",
+        "runtime_target": 25757,
+        "count": 1
+      }
+    ],
+    "alternate_observed_entry": false,
+    "return_kind": "hardware",
+    "consumed_caller_bytes": 0,
+    "bounds_basis": "Observed entry/terminal return and local branches; escaping raw alternate tails explicitly excluded for6708/429D; no context min/max orRoutineCandidate ownership."
+  }
+}

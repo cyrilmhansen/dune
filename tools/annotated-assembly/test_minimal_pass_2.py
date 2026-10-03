@@ -179,11 +179,11 @@ class MinimalPassTwoTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "hardware return"):
             validate(r)
 
-    def test_unprocessed_paths_and_neighbor_entries_stay_raw(self):
+    def test_unprocessed_paths_stay_raw_and_neighbor_keeps_distinct_identity(self):
         points = {
             "PLI2.OVL": [0x1E75, 0x1E80, 0x1EA4, 0x1F53],
             "PLI.COM": [0xD09, 0xD3F, 0xDA2, 0xDC7, 0xE13, 0xE41, 0x5B9, 0x5F8],
-            "PLI1.OVL": [0x43B8, 0x43D5, 0x83A0],
+            "PLI1.OVL": [0x43B8, 0x83A0],
         }
         for name, offsets in points.items():
             sections = next(
@@ -198,6 +198,13 @@ class MinimalPassTwoTests(unittest.TestCase):
                     ),
                     "RAW",
                 )
+        # Pass 8 independently establishes the neighboring software-return
+        # callee; it must never become fallthrough ownership of +4394.
+        self.assertEqual(self.by_entry['PLI1.OVL+4394']['bounds'][1],0x43D5)
+        catalog={p['id']:p for p in json.loads((ROOT/'research/annotated-assembly/procedures.json').read_text())['procedures']}
+        self.assertEqual(catalog['PLI1.OVL+4394']['end_offset'],0x43D5)
+        self.assertEqual(catalog['PLI1.OVL+43D5']['start_offset'],0x43D5)
+        self.assertEqual(catalog['PLI1.OVL+43D5']['returns']['consumed_caller_bytes'],2)
 
 
 if __name__ == "__main__":

@@ -1,36 +1,32 @@
-# MINIMAL baseline: current through pass 7
+# MINIMAL baseline: current through pass 8
 
-The [pass-7 report](pass-7/README.md) is the current decompilation result,
-following [pass 6](pass-6/README.md). [V1 annotation conventions](../annotated-assembly/CONVENTIONS.md)
-keep byte status independent of procedure bounds, control flow and contract
-completeness.
+The [pass-8 report](pass-8/README.md) is the current result, following
+[pass 7](pass-7/README.md). [V1 conventions](../annotated-assembly/CONVENTIONS.md)
+keep byte status independent of procedure completeness.
 
-MINIMAL still executes **21,012 image bytes**: **16,035 RAW, 304 DECODED,
-1,523 STRUCTURED, 3,150 UNDERSTOOD**. There are **72 UNDERSTOOD**, 10 STRUCTURED
-and 309 unresolved CALL entries (including three DECODED), plus eleven separate
+MINIMAL still executes **21,012 image bytes**: **14,839 RAW, 304 DECODED,
+2,207 STRUCTURED, 3,662 UNDERSTOOD**. There are **78 UNDERSTOOD**, 11 STRUCTURED
+and 302 unresolved CALL entries (including three DECODED), plus eleven separate
 PCHL entries. The 391 CALL/RST coordinates and all **94,720 historical bytes**
-remain exact. Current classifications and intersections are in
-[coverage.json](coverage.json), [instructions.jsonl](instructions.jsonl) and
-[inventory.json](inventory.json).
+remain exact. Live details are [coverage.json](coverage.json),
+[instructions.jsonl](instructions.jsonl) and [inventory.json](inventory.json).
 
-Pass 7 establishes mapped-word lookup, indirect word AND/add, register word AND,
-second auxiliary byte lookup, and scoped low/high word emission. +7BBF now has a
-complete bounded top-bit-transition/left-shift contract and UNDERSTOOD bytes.
-+7C1B retains partial scope; +7D53 gains UNDERSTOOD bytes at its still-partial
-scope. Seven new helpers use direct evidence; three complex parents use ignored
-V0.1 packets. No packet infrastructure was changed.
+Pass 8 proves the copied-continuation family independently for +4468, +6708 and
++43D5. Four caller words versus one word affect cleanup byte count, but argument
+layouts and operations stay distinct. +6708's scoped byte-copy/padding operation
+includes the first call's output/control overlap that changes its next limit.
++43D5's scoped block/old-word operation enables +4B69's understood normal reset
+path. +28AA is STRUCTURED with precise callee/argument/saved-PSW ownership, while
+most body semantics remain partial. No packet infrastructure was changed; a
+small bounded nested-software-return join is now justified for a separate ticket.
 
-The [current dynamic metric](dynamic-progress.json) records **439,998** historical
-instruction occurrences: **199,700 (45.3866%)** execute UNDERSTOOD bytes.
-PLI1 is **59.4962% UNDERSTOOD** and **39.3143% RAW**. The 1,857 modeled host
-instructions are outside that denominator.
-
-Secondary structural reconnaissance leaves +28AA/+4B69 RAW: their ordinary outer
-returns enclose software calls that consume caller words and relocate copied
-continuations. Corrected own footprints are 351/2,088 occurrences, rather than
-interpreting the old context counts4,315/2,171 as exclusive ownership. Another
-helper/continuation pass (+6708/+43D5 first) is recommended before larger semantic
-work, fixtures or FIZZBUZ-minus-MINIMAL. No new compiler capture was performed.
+The [dynamic metric](dynamic-progress.json) records **439,998** historical
+instruction occurrences: **205,904 (46.7966%)** execute UNDERSTOOD bytes.
+PLI1 is **73.9662% dynamically UNDERSTOOD**. The 1,857 modeled host instructions
+are outside that denominator. Next work differs: finish partial failure/helper
+scope for +4B69; add justified continuation-aware packet support before broad
++28AA reasoning, then prioritize its remaining opaque helpers. New fixtures and
+FIZZBUZ-minus-MINIMAL remain premature. No compiler capture was rerun.
 
 The following is the **historical V0 record at 6c77397**. Its status tables and
 priorities describe that snapshot; later snapshots are in
