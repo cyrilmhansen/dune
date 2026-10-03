@@ -102,9 +102,11 @@ class MinimalPassEightTests(unittest.TestCase):
         rows=[json.loads(s) for s in (ROOT/'research/minimal-baseline/instructions.jsonl').read_text().splitlines()]
         dynamic=calculate(manifest,rows)
         self.assertEqual(dynamic,json.loads((ROOT/'research/minimal-baseline/dynamic-progress.json').read_text()))
-        self.assertEqual(dynamic,json.loads((PASS/'dynamic-progress.json').read_text()))
-        self.assertEqual(dynamic['total']['occurrences_by_status']['UNDERSTOOD'],205904)
-        self.assertEqual(next(i for i in dynamic['per_image'] if i['image']=='PLI1.OVL')['occurrences_by_status']['UNDERSTOOD'],31713)
+        # Pass-8 progress is a historical snapshot; later semantic passes may
+        # improve the live manifest without changing that capture or report.
+        historical=json.loads((PASS/'dynamic-progress.json').read_text())
+        self.assertEqual(historical['total']['occurrences_by_status']['UNDERSTOOD'],205904)
+        self.assertEqual(next(i for i in historical['per_image'] if i['image']=='PLI1.OVL')['occurrences_by_status']['UNDERSTOOD'],31713)
 
 
 if __name__=='__main__':

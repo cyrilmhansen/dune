@@ -1,0 +1,1667 @@
+{
+  "PLI1.OVL+2185": {
+    "classification": "SMALL / DIRECT",
+    "candidate_extent": [
+      8581,
+      8621
+    ],
+    "invocations": 1,
+    "callers": [
+      {
+        "coordinate": "PLI1.OVL+2953",
+        "counts_by_run": {
+          "MINIMAL": 1
+        }
+      }
+    ],
+    "own_coordinates": 16,
+    "own_occurrences": 16,
+    "represented_bytes": 34,
+    "original_slot_returns": [
+      {
+        "call_step": 259479,
+        "return_step": 259517,
+        "return_coordinate": "PLI1.OVL+21AC",
+        "original_slot": 65486
+      }
+    ],
+    "direct_callees": [
+      {
+        "callsite_offset": 8602,
+        "coordinate": "PLI1.OVL+213C",
+        "runtime_address": 17212
+      }
+    ],
+    "conditional_outcomes": [
+      {
+        "coordinate": "PLI1.OVL+2190",
+        "taken": true,
+        "count": 1
+      },
+      {
+        "coordinate": "PLI1.OVL+219E",
+        "taken": true,
+        "count": 1
+      }
+    ],
+    "incoming_entries": [
+      {
+        "kind": "call",
+        "source": "PLI1.OVL+2953",
+        "target": "PLI1.OVL+2185",
+        "runtime_target": 17285,
+        "count": 1
+      }
+    ],
+    "alternate_entries": [],
+    "recursion": false,
+    "reserved_frame_bytes": 0,
+    "stack_scope": "original outer hardware slot; transient below-entry CALL/saves; software child isolation where applicable",
+    "unresolved": [
+      "partial helper contract:213C equality arms; unobserved path: early01 exits and C31 fallback outcome."
+    ],
+    "boundary_basis": "Exact CALLs/local branches/terminal original-slot returns, neighboring callable entries and unchanged historical bytes; not context min/max or RoutineCandidate ownership."
+  },
+  "PLI1.OVL+46ED": {
+    "classification": "PACKET CANDIDATE",
+    "candidate_extent": [
+      18157,
+      18232
+    ],
+    "invocations": 2,
+    "callers": [
+      {
+        "coordinate": "PLI1.OVL+2B26",
+        "counts_by_run": {
+          "MINIMAL": 1
+        }
+      },
+      {
+        "coordinate": "PLI1.OVL+4740",
+        "counts_by_run": {
+          "MINIMAL": 1
+        }
+      }
+    ],
+    "own_coordinates": 31,
+    "own_occurrences": 74,
+    "represented_bytes": 73,
+    "original_slot_returns": [
+      {
+        "call_step": 263646,
+        "return_step": 264136,
+        "return_coordinate": "PLI1.OVL+4737",
+        "original_slot": 65486
+      },
+      {
+        "call_step": 264162,
+        "return_step": 264652,
+        "return_coordinate": "PLI1.OVL+4737",
+        "original_slot": 65484
+      }
+    ],
+    "direct_callees": [
+      {
+        "callsite_offset": 18168,
+        "coordinate": "PLI1.OVL+452B",
+        "runtime_address": 26411
+      },
+      {
+        "callsite_offset": 18171,
+        "coordinate": "PLI1.OVL+422F",
+        "runtime_address": 25647
+      },
+      {
+        "callsite_offset": 18174,
+        "coordinate": "PLI1.OVL+4275",
+        "runtime_address": 25717
+      },
+      {
+        "callsite_offset": 18181,
+        "coordinate": "PLI1.OVL+428E",
+        "runtime_address": 25742
+      },
+      {
+        "callsite_offset": 18187,
+        "coordinate": "PLI1.OVL+4281",
+        "runtime_address": 25729
+      },
+      {
+        "callsite_offset": 18201,
+        "coordinate": "PLI1.OVL+4584",
+        "runtime_address": 26500
+      },
+      {
+        "callsite_offset": 18204,
+        "coordinate": "PLI1.OVL+4281",
+        "runtime_address": 25729
+      },
+      {
+        "callsite_offset": 18225,
+        "coordinate": "PLI1.OVL+428E",
+        "runtime_address": 25742
+      }
+    ],
+    "conditional_outcomes": [
+      {
+        "coordinate": "PLI1.OVL+4702",
+        "taken": false,
+        "count": 2
+      },
+      {
+        "coordinate": "PLI1.OVL+4702",
+        "taken": true,
+        "count": 2
+      },
+      {
+        "coordinate": "PLI1.OVL+470F",
+        "taken": false,
+        "count": 2
+      },
+      {
+        "coordinate": "PLI1.OVL+470F",
+        "taken": true,
+        "count": 2
+      },
+      {
+        "coordinate": "PLI1.OVL+4720",
+        "taken": true,
+        "count": 2
+      },
+      {
+        "coordinate": "PLI1.OVL+472D",
+        "taken": true,
+        "count": 2
+      }
+    ],
+    "incoming_entries": [
+      {
+        "kind": "call",
+        "source": "PLI1.OVL+2B26",
+        "target": "PLI1.OVL+46ED",
+        "runtime_target": 26861,
+        "count": 1
+      },
+      {
+        "kind": "call",
+        "source": "PLI1.OVL+4740",
+        "target": "PLI1.OVL+46ED",
+        "runtime_target": 26861,
+        "count": 1
+      }
+    ],
+    "alternate_entries": [],
+    "recursion": false,
+    "reserved_frame_bytes": 0,
+    "stack_scope": "original outer hardware slot; transient below-entry CALL/saves; software child isolation where applicable",
+    "unresolved": [
+      "missing helpers:452B,422F,4275,428E,4584; no inferred list ownership.",
+      "unobserved paths:4723 and4730 RET bytes; arbitrary traversaltermination andalias/preconditions unresolved."
+    ],
+    "boundary_basis": "Exact CALLs/local branches/terminal original-slot returns, neighboring callable entries and unchanged historical bytes; not context min/max or RoutineCandidate ownership."
+  },
+  "PLI1.OVL+4738": {
+    "classification": "PACKET CANDIDATE",
+    "candidate_extent": [
+      18232,
+      18317
+    ],
+    "invocations": 1,
+    "callers": [
+      {
+        "coordinate": "PLI1.OVL+2B3F",
+        "counts_by_run": {
+          "MINIMAL": 1
+        }
+      }
+    ],
+    "own_coordinates": 47,
+    "own_occurrences": 47,
+    "represented_bytes": 85,
+    "original_slot_returns": [
+      {
+        "call_step": 264157,
+        "return_step": 265070,
+        "return_coordinate": "PLI1.OVL+478C",
+        "original_slot": 65486
+      }
+    ],
+    "direct_callees": [
+      {
+        "callsite_offset": 18240,
+        "coordinate": "PLI1.OVL+46ED",
+        "runtime_address": 26861
+      },
+      {
+        "callsite_offset": 18243,
+        "coordinate": "PLI1.OVL+4281",
+        "runtime_address": 25729
+      },
+      {
+        "callsite_offset": 18262,
+        "coordinate": "PLI1.OVL+4468",
+        "runtime_address": 26216
+      },
+      {
+        "callsite_offset": 18288,
+        "coordinate": "PLI.COM+1A1D",
+        "runtime_address": 6941
+      }
+    ],
+    "conditional_outcomes": [
+      {
+        "coordinate": "PLI1.OVL+4747",
+        "taken": false,
+        "count": 1
+      }
+    ],
+    "incoming_entries": [
+      {
+        "kind": "call",
+        "source": "PLI1.OVL+2B3F",
+        "target": "PLI1.OVL+4738",
+        "runtime_target": 26936,
+        "count": 1
+      }
+    ],
+    "alternate_entries": [],
+    "recursion": false,
+    "reserved_frame_bytes": 0,
+    "stack_scope": "original outer hardware slot; transient below-entry CALL/saves; software child isolation where applicable",
+    "unresolved": [
+      "partial helper contracts:46ED fiveopaque algorithms and4468 allocator/linkpaths; unobservedearlypointer-nonzero return; alias/precondition andgeneral provenance."
+    ],
+    "boundary_basis": "Exact CALLs/local branches/terminal original-slot returns, neighboring callable entries and unchanged historical bytes; not context min/max or RoutineCandidate ownership."
+  },
+  "PLI1.OVL+666E": {
+    "classification": "PACKET CANDIDATE",
+    "candidate_extent": [
+      26222,
+      26310
+    ],
+    "invocations": 1,
+    "callers": [
+      {
+        "coordinate": "PLI1.OVL+2B7B",
+        "counts_by_run": {
+          "MINIMAL": 1
+        }
+      }
+    ],
+    "own_coordinates": 26,
+    "own_occurrences": 26,
+    "represented_bytes": 54,
+    "original_slot_returns": [
+      {
+        "call_step": 265101,
+        "return_step": 269056,
+        "return_coordinate": "PLI1.OVL+66C5",
+        "original_slot": 65486
+      }
+    ],
+    "direct_callees": [
+      {
+        "callsite_offset": 26238,
+        "coordinate": "PLI1.OVL+41A6",
+        "runtime_address": 25510
+      },
+      {
+        "callsite_offset": 26258,
+        "coordinate": "PLI.COM+119E",
+        "runtime_address": 4766
+      },
+      {
+        "callsite_offset": 26261,
+        "coordinate": "PLI1.OVL+66FA",
+        "runtime_address": 35066
+      },
+      {
+        "callsite_offset": 26266,
+        "coordinate": "PLI.COM+1207",
+        "runtime_address": 4871
+      },
+      {
+        "callsite_offset": 26269,
+        "coordinate": "PLI1.OVL+66C6",
+        "runtime_address": 35014
+      }
+    ],
+    "conditional_outcomes": [
+      {
+        "coordinate": "PLI1.OVL+668B",
+        "taken": false,
+        "count": 1
+      }
+    ],
+    "incoming_entries": [
+      {
+        "kind": "call",
+        "source": "PLI1.OVL+2B7B",
+        "target": "PLI1.OVL+666E",
+        "runtime_target": 34926,
+        "count": 1
+      }
+    ],
+    "alternate_entries": [],
+    "recursion": false,
+    "reserved_frame_bytes": 0,
+    "stack_scope": "original outer hardware slot; transient below-entry CALL/saves; software child isolation where applicable",
+    "unresolved": [
+      "missing helper:84BB behind66FA andresident1207; partialresident1140/119E; unobservedselector11/otherselector paths.",
+      "alias/precondition andgeneral provenance: cached word,working pointer andoutputbuffers; no compiler-semantic meaning."
+    ],
+    "boundary_basis": "Exact CALLs/local branches/terminal original-slot returns, neighboring callable entries and unchanged historical bytes; not context min/max or RoutineCandidate ownership."
+  },
+  "PLI1.OVL+7AF0": {
+    "classification": "SMALL / DIRECT",
+    "candidate_extent": [
+      31472,
+      31507
+    ],
+    "invocations": 26,
+    "callers": [
+      {
+        "coordinate": "PLI1.OVL+1BDC",
+        "counts_by_run": {
+          "MINIMAL": 1
+        }
+      },
+      {
+        "coordinate": "PLI1.OVL+24E6",
+        "counts_by_run": {
+          "MINIMAL": 8
+        }
+      },
+      {
+        "coordinate": "PLI1.OVL+2BB6",
+        "counts_by_run": {
+          "MINIMAL": 1
+        }
+      },
+      {
+        "coordinate": "PLI1.OVL+7EA0",
+        "counts_by_run": {
+          "MINIMAL": 16
+        }
+      }
+    ],
+    "own_coordinates": 23,
+    "own_occurrences": 598,
+    "represented_bytes": 35,
+    "original_slot_returns": [
+      {
+        "call_step": 231789,
+        "return_step": 231812,
+        "return_coordinate": "PLI1.OVL+7B12",
+        "original_slot": 65522
+      },
+      {
+        "call_step": 240763,
+        "return_step": 240786,
+        "return_coordinate": "PLI1.OVL+7B12",
+        "original_slot": 65513
+      },
+      {
+        "call_step": 240971,
+        "return_step": 240994,
+        "return_coordinate": "PLI1.OVL+7B12",
+        "original_slot": 65515
+      },
+      {
+        "call_step": 241174,
+        "return_step": 241197,
+        "return_coordinate": "PLI1.OVL+7B12",
+        "original_slot": 65515
+      },
+      {
+        "call_step": 241382,
+        "return_step": 241405,
+        "return_coordinate": "PLI1.OVL+7B12",
+        "original_slot": 65517
+      },
+      {
+        "call_step": 242601,
+        "return_step": 242624,
+        "return_coordinate": "PLI1.OVL+7B12",
+        "original_slot": 65504
+      },
+      {
+        "call_step": 247148,
+        "return_step": 247171,
+        "return_coordinate": "PLI1.OVL+7B12",
+        "original_slot": 65496
+      },
+      {
+        "call_step": 247287,
+        "return_step": 247310,
+        "return_coordinate": "PLI1.OVL+7B12",
+        "original_slot": 65493
+      },
+      {
+        "call_step": 247512,
+        "return_step": 247535,
+        "return_coordinate": "PLI1.OVL+7B12",
+        "original_slot": 65495
+      },
+      {
+        "call_step": 247696,
+        "return_step": 247719,
+        "return_coordinate": "PLI1.OVL+7B12",
+        "original_slot": 65497
+      },
+      {
+        "call_step": 247921,
+        "return_step": 247944,
+        "return_coordinate": "PLI1.OVL+7B12",
+        "original_slot": 65499
+      },
+      {
+        "call_step": 248560,
+        "return_step": 248583,
+        "return_coordinate": "PLI1.OVL+7B12",
+        "original_slot": 65492
+      },
+      {
+        "call_step": 248699,
+        "return_step": 248722,
+        "return_coordinate": "PLI1.OVL+7B12",
+        "original_slot": 65489
+      },
+      {
+        "call_step": 248924,
+        "return_step": 248947,
+        "return_coordinate": "PLI1.OVL+7B12",
+        "original_slot": 65491
+      },
+      {
+        "call_step": 249100,
+        "return_step": 249123,
+        "return_coordinate": "PLI1.OVL+7B12",
+        "original_slot": 65494
+      },
+      {
+        "call_step": 249233,
+        "return_step": 249256,
+        "return_coordinate": "PLI1.OVL+7B12",
+        "original_slot": 65492
+      },
+      {
+        "call_step": 249457,
+        "return_step": 249480,
+        "return_coordinate": "PLI1.OVL+7B12",
+        "original_slot": 65500
+      },
+      {
+        "call_step": 257807,
+        "return_step": 257830,
+        "return_coordinate": "PLI1.OVL+7B12",
+        "original_slot": 65460
+      },
+      {
+        "call_step": 258015,
+        "return_step": 258038,
+        "return_coordinate": "PLI1.OVL+7B12",
+        "original_slot": 65462
+      },
+      {
+        "call_step": 258531,
+        "return_step": 258554,
+        "return_coordinate": "PLI1.OVL+7B12",
+        "original_slot": 65462
+      },
+      {
+        "call_step": 258739,
+        "return_step": 258762,
+        "return_coordinate": "PLI1.OVL+7B12",
+        "original_slot": 65464
+      },
+      {
+        "call_step": 269159,
+        "return_step": 269182,
+        "return_coordinate": "PLI1.OVL+7B12",
+        "original_slot": 65486
+      },
+      {
+        "call_step": 269632,
+        "return_step": 269655,
+        "return_coordinate": "PLI1.OVL+7B12",
+        "original_slot": 65489
+      },
+      {
+        "call_step": 269840,
+        "return_step": 269863,
+        "return_coordinate": "PLI1.OVL+7B12",
+        "original_slot": 65491
+      },
+      {
+        "call_step": 271570,
+        "return_step": 271593,
+        "return_coordinate": "PLI1.OVL+7B12",
+        "original_slot": 65498
+      },
+      {
+        "call_step": 282778,
+        "return_step": 282801,
+        "return_coordinate": "PLI1.OVL+7B12",
+        "original_slot": 65522
+      }
+    ],
+    "direct_callees": [],
+    "conditional_outcomes": [],
+    "incoming_entries": [
+      {
+        "kind": "call",
+        "source": "PLI1.OVL+1BDC",
+        "target": "PLI1.OVL+7AF0",
+        "runtime_target": 40176,
+        "count": 1
+      },
+      {
+        "kind": "call",
+        "source": "PLI1.OVL+24E6",
+        "target": "PLI1.OVL+7AF0",
+        "runtime_target": 40176,
+        "count": 8
+      },
+      {
+        "kind": "call",
+        "source": "PLI1.OVL+2BB6",
+        "target": "PLI1.OVL+7AF0",
+        "runtime_target": 40176,
+        "count": 1
+      },
+      {
+        "kind": "call",
+        "source": "PLI1.OVL+7EA0",
+        "target": "PLI1.OVL+7AF0",
+        "runtime_target": 40176,
+        "count": 16
+      }
+    ],
+    "alternate_entries": [],
+    "recursion": false,
+    "reserved_frame_bytes": 0,
+    "stack_scope": "original outer hardware slot; transient below-entry CALL/saves; software child isolation where applicable",
+    "unresolved": [
+      "No unresolved local operation at declared scope; broader producers/alias relations remain general provenance questions."
+    ],
+    "boundary_basis": "Exact CALLs/local branches/terminal original-slot returns, neighboring callable entries and unchanged historical bytes; not context min/max or RoutineCandidate ownership."
+  },
+  "PLI1.OVL+7B13": {
+    "classification": "SMALL / DIRECT",
+    "candidate_extent": [
+      31507,
+      31534
+    ],
+    "invocations": 22,
+    "callers": [
+      {
+        "coordinate": "PLI1.OVL+23E4",
+        "counts_by_run": {
+          "MINIMAL": 8
+        }
+      },
+      {
+        "coordinate": "PLI1.OVL+2BC7",
+        "counts_by_run": {
+          "MINIMAL": 1
+        }
+      },
+      {
+        "coordinate": "PLI1.OVL+2C1C",
+        "counts_by_run": {
+          "MINIMAL": 1
+        }
+      },
+      {
+        "coordinate": "PLI1.OVL+808D",
+        "counts_by_run": {
+          "MINIMAL": 12
+        }
+      }
+    ],
+    "own_coordinates": 15,
+    "own_occurrences": 330,
+    "represented_bytes": 27,
+    "original_slot_returns": [
+      {
+        "call_step": 231875,
+        "return_step": 231890,
+        "return_coordinate": "PLI1.OVL+7B2D",
+        "original_slot": 65524
+      },
+      {
+        "call_step": 240849,
+        "return_step": 240864,
+        "return_coordinate": "PLI1.OVL+7B2D",
+        "original_slot": 65515
+      },
+      {
+        "call_step": 241007,
+        "return_step": 241022,
+        "return_coordinate": "PLI1.OVL+7B2D",
+        "original_slot": 65513
+      },
+      {
+        "call_step": 241260,
+        "return_step": 241275,
+        "return_coordinate": "PLI1.OVL+7B2D",
+        "original_slot": 65517
+      },
+      {
+        "call_step": 241418,
+        "return_step": 241433,
+        "return_coordinate": "PLI1.OVL+7B2D",
+        "original_slot": 65515
+      },
+      {
+        "call_step": 247373,
+        "return_step": 247388,
+        "return_coordinate": "PLI1.OVL+7B2D",
+        "original_slot": 65495
+      },
+      {
+        "call_step": 247548,
+        "return_step": 247563,
+        "return_coordinate": "PLI1.OVL+7B2D",
+        "original_slot": 65493
+      },
+      {
+        "call_step": 247782,
+        "return_step": 247797,
+        "return_coordinate": "PLI1.OVL+7B2D",
+        "original_slot": 65499
+      },
+      {
+        "call_step": 247957,
+        "return_step": 247972,
+        "return_coordinate": "PLI1.OVL+7B2D",
+        "original_slot": 65497
+      },
+      {
+        "call_step": 248785,
+        "return_step": 248800,
+        "return_coordinate": "PLI1.OVL+7B2D",
+        "original_slot": 65491
+      },
+      {
+        "call_step": 248960,
+        "return_step": 248975,
+        "return_coordinate": "PLI1.OVL+7B2D",
+        "original_slot": 65489
+      },
+      {
+        "call_step": 249319,
+        "return_step": 249334,
+        "return_coordinate": "PLI1.OVL+7B2D",
+        "original_slot": 65494
+      },
+      {
+        "call_step": 257893,
+        "return_step": 257908,
+        "return_coordinate": "PLI1.OVL+7B2D",
+        "original_slot": 65462
+      },
+      {
+        "call_step": 258051,
+        "return_step": 258066,
+        "return_coordinate": "PLI1.OVL+7B2D",
+        "original_slot": 65460
+      },
+      {
+        "call_step": 258617,
+        "return_step": 258632,
+        "return_coordinate": "PLI1.OVL+7B2D",
+        "original_slot": 65464
+      },
+      {
+        "call_step": 258775,
+        "return_step": 258790,
+        "return_coordinate": "PLI1.OVL+7B2D",
+        "original_slot": 65462
+      },
+      {
+        "call_step": 269190,
+        "return_step": 269205,
+        "return_coordinate": "PLI1.OVL+7B2D",
+        "original_slot": 65486
+      },
+      {
+        "call_step": 269365,
+        "return_step": 269380,
+        "return_coordinate": "PLI1.OVL+7B2D",
+        "original_slot": 65486
+      },
+      {
+        "call_step": 269718,
+        "return_step": 269733,
+        "return_coordinate": "PLI1.OVL+7B2D",
+        "original_slot": 65491
+      },
+      {
+        "call_step": 269876,
+        "return_step": 269891,
+        "return_coordinate": "PLI1.OVL+7B2D",
+        "original_slot": 65489
+      },
+      {
+        "call_step": 271656,
+        "return_step": 271671,
+        "return_coordinate": "PLI1.OVL+7B2D",
+        "original_slot": 65500
+      },
+      {
+        "call_step": 282864,
+        "return_step": 282879,
+        "return_coordinate": "PLI1.OVL+7B2D",
+        "original_slot": 65524
+      }
+    ],
+    "direct_callees": [],
+    "conditional_outcomes": [],
+    "incoming_entries": [
+      {
+        "kind": "call",
+        "source": "PLI1.OVL+23E4",
+        "target": "PLI1.OVL+7B13",
+        "runtime_target": 40211,
+        "count": 8
+      },
+      {
+        "kind": "call",
+        "source": "PLI1.OVL+2BC7",
+        "target": "PLI1.OVL+7B13",
+        "runtime_target": 40211,
+        "count": 1
+      },
+      {
+        "kind": "call",
+        "source": "PLI1.OVL+2C1C",
+        "target": "PLI1.OVL+7B13",
+        "runtime_target": 40211,
+        "count": 1
+      },
+      {
+        "kind": "call",
+        "source": "PLI1.OVL+808D",
+        "target": "PLI1.OVL+7B13",
+        "runtime_target": 40211,
+        "count": 12
+      }
+    ],
+    "alternate_entries": [],
+    "recursion": false,
+    "reserved_frame_bytes": 0,
+    "stack_scope": "original outer hardware slot; transient below-entry CALL/saves; software child isolation where applicable",
+    "unresolved": [
+      "No unresolved local operation at declared scope; broader producers/alias relations remain general provenance questions."
+    ],
+    "boundary_basis": "Exact CALLs/local branches/terminal original-slot returns, neighboring callable entries and unchanged historical bytes; not context min/max or RoutineCandidate ownership."
+  },
+  "PLI1.OVL+7B49": {
+    "classification": "SMALL / DIRECT",
+    "candidate_extent": [
+      31561,
+      31588
+    ],
+    "invocations": 38,
+    "callers": [
+      {
+        "coordinate": "PLI1.OVL+2406",
+        "counts_by_run": {
+          "MINIMAL": 8
+        }
+      },
+      {
+        "coordinate": "PLI1.OVL+2BE9",
+        "counts_by_run": {
+          "MINIMAL": 1
+        }
+      },
+      {
+        "coordinate": "PLI1.OVL+2C3E",
+        "counts_by_run": {
+          "MINIMAL": 1
+        }
+      },
+      {
+        "coordinate": "PLI1.OVL+7EB2",
+        "counts_by_run": {
+          "MINIMAL": 16
+        }
+      },
+      {
+        "coordinate": "PLI1.OVL+80AD",
+        "counts_by_run": {
+          "MINIMAL": 12
+        }
+      }
+    ],
+    "own_coordinates": 15,
+    "own_occurrences": 570,
+    "represented_bytes": 27,
+    "original_slot_returns": [
+      {
+        "call_step": 231835,
+        "return_step": 231850,
+        "return_coordinate": "PLI1.OVL+7B63",
+        "original_slot": 65522
+      },
+      {
+        "call_step": 231945,
+        "return_step": 231960,
+        "return_coordinate": "PLI1.OVL+7B63",
+        "original_slot": 65524
+      },
+      {
+        "call_step": 240809,
+        "return_step": 240824,
+        "return_coordinate": "PLI1.OVL+7B63",
+        "original_slot": 65513
+      },
+      {
+        "call_step": 240919,
+        "return_step": 240934,
+        "return_coordinate": "PLI1.OVL+7B63",
+        "original_slot": 65515
+      },
+      {
+        "call_step": 241053,
+        "return_step": 241068,
+        "return_coordinate": "PLI1.OVL+7B63",
+        "original_slot": 65513
+      },
+      {
+        "call_step": 241220,
+        "return_step": 241235,
+        "return_coordinate": "PLI1.OVL+7B63",
+        "original_slot": 65515
+      },
+      {
+        "call_step": 241330,
+        "return_step": 241345,
+        "return_coordinate": "PLI1.OVL+7B63",
+        "original_slot": 65517
+      },
+      {
+        "call_step": 241464,
+        "return_step": 241479,
+        "return_coordinate": "PLI1.OVL+7B63",
+        "original_slot": 65515
+      },
+      {
+        "call_step": 242647,
+        "return_step": 242662,
+        "return_coordinate": "PLI1.OVL+7B63",
+        "original_slot": 65504
+      },
+      {
+        "call_step": 247194,
+        "return_step": 247209,
+        "return_coordinate": "PLI1.OVL+7B63",
+        "original_slot": 65496
+      },
+      {
+        "call_step": 247333,
+        "return_step": 247348,
+        "return_coordinate": "PLI1.OVL+7B63",
+        "original_slot": 65493
+      },
+      {
+        "call_step": 247443,
+        "return_step": 247458,
+        "return_coordinate": "PLI1.OVL+7B63",
+        "original_slot": 65495
+      },
+      {
+        "call_step": 247594,
+        "return_step": 247609,
+        "return_coordinate": "PLI1.OVL+7B63",
+        "original_slot": 65493
+      },
+      {
+        "call_step": 247742,
+        "return_step": 247757,
+        "return_coordinate": "PLI1.OVL+7B63",
+        "original_slot": 65497
+      },
+      {
+        "call_step": 247852,
+        "return_step": 247867,
+        "return_coordinate": "PLI1.OVL+7B63",
+        "original_slot": 65499
+      },
+      {
+        "call_step": 248003,
+        "return_step": 248018,
+        "return_coordinate": "PLI1.OVL+7B63",
+        "original_slot": 65497
+      },
+      {
+        "call_step": 248606,
+        "return_step": 248621,
+        "return_coordinate": "PLI1.OVL+7B63",
+        "original_slot": 65492
+      },
+      {
+        "call_step": 248745,
+        "return_step": 248760,
+        "return_coordinate": "PLI1.OVL+7B63",
+        "original_slot": 65489
+      },
+      {
+        "call_step": 248855,
+        "return_step": 248870,
+        "return_coordinate": "PLI1.OVL+7B63",
+        "original_slot": 65491
+      },
+      {
+        "call_step": 249006,
+        "return_step": 249021,
+        "return_coordinate": "PLI1.OVL+7B63",
+        "original_slot": 65489
+      },
+      {
+        "call_step": 249146,
+        "return_step": 249161,
+        "return_coordinate": "PLI1.OVL+7B63",
+        "original_slot": 65494
+      },
+      {
+        "call_step": 249279,
+        "return_step": 249294,
+        "return_coordinate": "PLI1.OVL+7B63",
+        "original_slot": 65492
+      },
+      {
+        "call_step": 249389,
+        "return_step": 249404,
+        "return_coordinate": "PLI1.OVL+7B63",
+        "original_slot": 65494
+      },
+      {
+        "call_step": 257853,
+        "return_step": 257868,
+        "return_coordinate": "PLI1.OVL+7B63",
+        "original_slot": 65460
+      },
+      {
+        "call_step": 257963,
+        "return_step": 257978,
+        "return_coordinate": "PLI1.OVL+7B63",
+        "original_slot": 65462
+      },
+      {
+        "call_step": 258097,
+        "return_step": 258112,
+        "return_coordinate": "PLI1.OVL+7B63",
+        "original_slot": 65460
+      },
+      {
+        "call_step": 258577,
+        "return_step": 258592,
+        "return_coordinate": "PLI1.OVL+7B63",
+        "original_slot": 65462
+      },
+      {
+        "call_step": 258687,
+        "return_step": 258702,
+        "return_coordinate": "PLI1.OVL+7B63",
+        "original_slot": 65464
+      },
+      {
+        "call_step": 258821,
+        "return_step": 258836,
+        "return_coordinate": "PLI1.OVL+7B63",
+        "original_slot": 65462
+      },
+      {
+        "call_step": 269236,
+        "return_step": 269251,
+        "return_coordinate": "PLI1.OVL+7B63",
+        "original_slot": 65486
+      },
+      {
+        "call_step": 269411,
+        "return_step": 269426,
+        "return_coordinate": "PLI1.OVL+7B63",
+        "original_slot": 65486
+      },
+      {
+        "call_step": 269678,
+        "return_step": 269693,
+        "return_coordinate": "PLI1.OVL+7B63",
+        "original_slot": 65489
+      },
+      {
+        "call_step": 269788,
+        "return_step": 269803,
+        "return_coordinate": "PLI1.OVL+7B63",
+        "original_slot": 65491
+      },
+      {
+        "call_step": 269922,
+        "return_step": 269937,
+        "return_coordinate": "PLI1.OVL+7B63",
+        "original_slot": 65489
+      },
+      {
+        "call_step": 271616,
+        "return_step": 271631,
+        "return_coordinate": "PLI1.OVL+7B63",
+        "original_slot": 65498
+      },
+      {
+        "call_step": 271726,
+        "return_step": 271741,
+        "return_coordinate": "PLI1.OVL+7B63",
+        "original_slot": 65500
+      },
+      {
+        "call_step": 282824,
+        "return_step": 282839,
+        "return_coordinate": "PLI1.OVL+7B63",
+        "original_slot": 65522
+      },
+      {
+        "call_step": 282934,
+        "return_step": 282949,
+        "return_coordinate": "PLI1.OVL+7B63",
+        "original_slot": 65524
+      }
+    ],
+    "direct_callees": [],
+    "conditional_outcomes": [],
+    "incoming_entries": [
+      {
+        "kind": "call",
+        "source": "PLI1.OVL+2406",
+        "target": "PLI1.OVL+7B49",
+        "runtime_target": 40265,
+        "count": 8
+      },
+      {
+        "kind": "call",
+        "source": "PLI1.OVL+2BE9",
+        "target": "PLI1.OVL+7B49",
+        "runtime_target": 40265,
+        "count": 1
+      },
+      {
+        "kind": "call",
+        "source": "PLI1.OVL+2C3E",
+        "target": "PLI1.OVL+7B49",
+        "runtime_target": 40265,
+        "count": 1
+      },
+      {
+        "kind": "call",
+        "source": "PLI1.OVL+7EB2",
+        "target": "PLI1.OVL+7B49",
+        "runtime_target": 40265,
+        "count": 16
+      },
+      {
+        "kind": "call",
+        "source": "PLI1.OVL+80AD",
+        "target": "PLI1.OVL+7B49",
+        "runtime_target": 40265,
+        "count": 12
+      }
+    ],
+    "alternate_entries": [],
+    "recursion": false,
+    "reserved_frame_bytes": 0,
+    "stack_scope": "original outer hardware slot; transient below-entry CALL/saves; software child isolation where applicable",
+    "unresolved": [
+      "No unresolved local operation at declared scope; broader producers/alias relations remain general provenance questions."
+    ],
+    "boundary_basis": "Exact CALLs/local branches/terminal original-slot returns, neighboring callable entries and unchanged historical bytes; not context min/max or RoutineCandidate ownership."
+  },
+  "PLI1.OVL+2355": {
+    "classification": "PACKET CANDIDATE",
+    "candidate_extent": [
+      9045,
+      9113
+    ],
+    "invocations": 5,
+    "callers": [
+      {
+        "coordinate": "PLI1.OVL+239C",
+        "counts_by_run": {
+          "MINIMAL": 3
+        }
+      },
+      {
+        "coordinate": "PLI1.OVL+2BF8",
+        "counts_by_run": {
+          "MINIMAL": 1
+        }
+      },
+      {
+        "coordinate": "PLI1.OVL+2C45",
+        "counts_by_run": {
+          "MINIMAL": 1
+        }
+      }
+    ],
+    "own_coordinates": 30,
+    "own_occurrences": 124,
+    "represented_bytes": 62,
+    "original_slot_returns": [
+      {
+        "call_step": 240640,
+        "return_step": 240695,
+        "return_coordinate": "PLI1.OVL+236C",
+        "original_slot": 65518
+      },
+      {
+        "call_step": 257634,
+        "return_step": 257739,
+        "return_coordinate": "PLI1.OVL+2398",
+        "original_slot": 65465
+      },
+      {
+        "call_step": 258358,
+        "return_step": 258463,
+        "return_coordinate": "PLI1.OVL+2398",
+        "original_slot": 65467
+      },
+      {
+        "call_step": 269257,
+        "return_step": 269333,
+        "return_coordinate": "PLI1.OVL+2398",
+        "original_slot": 65486
+      },
+      {
+        "call_step": 269429,
+        "return_step": 269505,
+        "return_coordinate": "PLI1.OVL+2398",
+        "original_slot": 65486
+      }
+    ],
+    "direct_callees": [
+      {
+        "callsite_offset": 9059,
+        "coordinate": "PLI1.OVL+21AD",
+        "runtime_address": 17325
+      },
+      {
+        "callsite_offset": 9109,
+        "coordinate": "PLI1.OVL+230E",
+        "runtime_address": 17678
+      }
+    ],
+    "conditional_outcomes": [
+      {
+        "coordinate": "PLI1.OVL+2367",
+        "taken": false,
+        "count": 1
+      },
+      {
+        "coordinate": "PLI1.OVL+2367",
+        "taken": true,
+        "count": 4
+      },
+      {
+        "coordinate": "PLI1.OVL+2379",
+        "taken": true,
+        "count": 4
+      },
+      {
+        "coordinate": "PLI1.OVL+238B",
+        "taken": true,
+        "count": 4
+      }
+    ],
+    "incoming_entries": [
+      {
+        "kind": "call",
+        "source": "PLI1.OVL+239C",
+        "target": "PLI1.OVL+2355",
+        "runtime_target": 17749,
+        "count": 3
+      },
+      {
+        "kind": "call",
+        "source": "PLI1.OVL+2BF8",
+        "target": "PLI1.OVL+2355",
+        "runtime_target": 17749,
+        "count": 1
+      },
+      {
+        "kind": "call",
+        "source": "PLI1.OVL+2C45",
+        "target": "PLI1.OVL+2355",
+        "runtime_target": 17749,
+        "count": 1
+      }
+    ],
+    "alternate_entries": [],
+    "recursion": false,
+    "reserved_frame_bytes": 0,
+    "stack_scope": "original outer hardware slot; transient below-entry CALL/saves; software child isolation where applicable",
+    "unresolved": [
+      "partial helper contract:21AD/230E; missing helper22CB forv05 path; unobserved06/07 literal result arms."
+    ],
+    "boundary_basis": "Exact CALLs/local branches/terminal original-slot returns, neighboring callable entries and unchanged historical bytes; not context min/max or RoutineCandidate ownership."
+  },
+  "PLI1.OVL+213C": {
+    "classification": "SMALL / DIRECT",
+    "candidate_extent": [
+      8508,
+      8581
+    ],
+    "invocations": 2,
+    "callers": [
+      {
+        "coordinate": "PLI1.OVL+219A",
+        "counts_by_run": {
+          "MINIMAL": 1
+        }
+      },
+      {
+        "coordinate": "PLI1.OVL+21D0",
+        "counts_by_run": {
+          "MINIMAL": 1
+        }
+      }
+    ],
+    "own_coordinates": 22,
+    "own_occurrences": 44,
+    "represented_bytes": 55,
+    "original_slot_returns": [
+      {
+        "call_step": 240668,
+        "return_step": 240690,
+        "return_coordinate": "PLI1.OVL+2184",
+        "original_slot": 65514
+      },
+      {
+        "call_step": 259488,
+        "return_step": 259510,
+        "return_coordinate": "PLI1.OVL+2184",
+        "original_slot": 65484
+      }
+    ],
+    "direct_callees": [],
+    "conditional_outcomes": [
+      {
+        "coordinate": "PLI1.OVL+2145",
+        "taken": true,
+        "count": 2
+      },
+      {
+        "coordinate": "PLI1.OVL+2150",
+        "taken": true,
+        "count": 2
+      },
+      {
+        "coordinate": "PLI1.OVL+215B",
+        "taken": true,
+        "count": 2
+      },
+      {
+        "coordinate": "PLI1.OVL+2166",
+        "taken": true,
+        "count": 2
+      },
+      {
+        "coordinate": "PLI1.OVL+2171",
+        "taken": true,
+        "count": 2
+      },
+      {
+        "coordinate": "PLI1.OVL+217C",
+        "taken": true,
+        "count": 2
+      }
+    ],
+    "incoming_entries": [
+      {
+        "kind": "call",
+        "source": "PLI1.OVL+219A",
+        "target": "PLI1.OVL+213C",
+        "runtime_target": 17212,
+        "count": 1
+      },
+      {
+        "kind": "call",
+        "source": "PLI1.OVL+21D0",
+        "target": "PLI1.OVL+213C",
+        "runtime_target": 17212,
+        "count": 1
+      }
+    ],
+    "alternate_entries": [],
+    "recursion": false,
+    "reserved_frame_bytes": 0,
+    "stack_scope": "original outer hardware slot; transient below-entry CALL/saves; software child isolation where applicable",
+    "unresolved": [
+      "unobserved path: six MVI01/RET equality arms remain RAW; wider input coverage absent."
+    ],
+    "boundary_basis": "Exact CALLs/local branches/terminal original-slot returns, neighboring callable entries and unchanged historical bytes; not context min/max or RoutineCandidate ownership."
+  },
+  "PLI1.OVL+21AD": {
+    "classification": "SMALL / DIRECT",
+    "candidate_extent": [
+      8621,
+      8660
+    ],
+    "invocations": 6,
+    "callers": [
+      {
+        "coordinate": "PLI1.OVL+2363",
+        "counts_by_run": {
+          "MINIMAL": 5
+        }
+      },
+      {
+        "coordinate": "PLI1.OVL+2F29",
+        "counts_by_run": {
+          "MINIMAL": 1
+        }
+      }
+    ],
+    "own_coordinates": 23,
+    "own_occurrences": 116,
+    "represented_bytes": 39,
+    "original_slot_returns": [
+      {
+        "call_step": 240648,
+        "return_step": 240691,
+        "return_coordinate": "PLI1.OVL+21D3",
+        "original_slot": 65516
+      },
+      {
+        "call_step": 257642,
+        "return_step": 257661,
+        "return_coordinate": "PLI1.OVL+21CB",
+        "original_slot": 65463
+      },
+      {
+        "call_step": 258366,
+        "return_step": 258385,
+        "return_coordinate": "PLI1.OVL+21CB",
+        "original_slot": 65465
+      },
+      {
+        "call_step": 269265,
+        "return_step": 269284,
+        "return_coordinate": "PLI1.OVL+21CB",
+        "original_slot": 65484
+      },
+      {
+        "call_step": 269437,
+        "return_step": 269456,
+        "return_coordinate": "PLI1.OVL+21CB",
+        "original_slot": 65484
+      },
+      {
+        "call_step": 269533,
+        "return_step": 269552,
+        "return_coordinate": "PLI1.OVL+21CB",
+        "original_slot": 65490
+      }
+    ],
+    "direct_callees": [
+      {
+        "callsite_offset": 8656,
+        "coordinate": "PLI1.OVL+213C",
+        "runtime_address": 17212
+      }
+    ],
+    "conditional_outcomes": [
+      {
+        "coordinate": "PLI1.OVL+21C6",
+        "taken": false,
+        "count": 5
+      },
+      {
+        "coordinate": "PLI1.OVL+21C6",
+        "taken": true,
+        "count": 1
+      }
+    ],
+    "incoming_entries": [
+      {
+        "kind": "call",
+        "source": "PLI1.OVL+2363",
+        "target": "PLI1.OVL+21AD",
+        "runtime_target": 17325,
+        "count": 5
+      },
+      {
+        "kind": "call",
+        "source": "PLI1.OVL+2F29",
+        "target": "PLI1.OVL+21AD",
+        "runtime_target": 17325,
+        "count": 1
+      }
+    ],
+    "alternate_entries": [],
+    "recursion": false,
+    "reserved_frame_bytes": 0,
+    "stack_scope": "original outer hardware slot; transient below-entry CALL/saves; software child isolation where applicable",
+    "unresolved": [
+      "partial helper contract:213C unexecuted equality arms; combined true arm is01, notFF."
+    ],
+    "boundary_basis": "Exact CALLs/local branches/terminal original-slot returns, neighboring callable entries and unchanged historical bytes; not context min/max or RoutineCandidate ownership."
+  },
+  "PLI1.OVL+230E": {
+    "classification": "SMALL / DIRECT",
+    "candidate_extent": [
+      8974,
+      9038
+    ],
+    "invocations": 4,
+    "callers": [
+      {
+        "coordinate": "PLI1.OVL+2395",
+        "counts_by_run": {
+          "MINIMAL": 4
+        }
+      }
+    ],
+    "own_coordinates": 35,
+    "own_occurrences": 124,
+    "represented_bytes": 61,
+    "original_slot_returns": [
+      {
+        "call_step": 257680,
+        "return_step": 257738,
+        "return_coordinate": "PLI1.OVL+234D",
+        "original_slot": 65463
+      },
+      {
+        "call_step": 258404,
+        "return_step": 258462,
+        "return_coordinate": "PLI1.OVL+234D",
+        "original_slot": 65465
+      },
+      {
+        "call_step": 269303,
+        "return_step": 269332,
+        "return_coordinate": "PLI1.OVL+2343",
+        "original_slot": 65484
+      },
+      {
+        "call_step": 269475,
+        "return_step": 269504,
+        "return_coordinate": "PLI1.OVL+2343",
+        "original_slot": 65484
+      }
+    ],
+    "direct_callees": [
+      {
+        "callsite_offset": 9032,
+        "coordinate": "PLI1.OVL+22CB",
+        "runtime_address": 17611
+      }
+    ],
+    "conditional_outcomes": [
+      {
+        "coordinate": "PLI1.OVL+232C",
+        "taken": true,
+        "count": 4
+      },
+      {
+        "coordinate": "PLI1.OVL+233E",
+        "taken": false,
+        "count": 2
+      },
+      {
+        "coordinate": "PLI1.OVL+233E",
+        "taken": true,
+        "count": 2
+      }
+    ],
+    "incoming_entries": [
+      {
+        "kind": "call",
+        "source": "PLI1.OVL+2395",
+        "target": "PLI1.OVL+230E",
+        "runtime_target": 17678,
+        "count": 4
+      }
+    ],
+    "alternate_entries": [],
+    "recursion": false,
+    "reserved_frame_bytes": 0,
+    "stack_scope": "original outer hardware slot; transient below-entry CALL/saves; software child isolation where applicable",
+    "unresolved": [
+      "missing helper:22CB; unobserved path:24/25 zero-result arm."
+    ],
+    "boundary_basis": "Exact CALLs/local branches/terminal original-slot returns, neighboring callable entries and unchanged historical bytes; not context min/max or RoutineCandidate ownership."
+  },
+  "PLI1.OVL+66FA": {
+    "classification": "SMALL / DIRECT",
+    "candidate_extent": [
+      26362,
+      26376
+    ],
+    "invocations": 1,
+    "callers": [
+      {
+        "coordinate": "PLI1.OVL+6695",
+        "counts_by_run": {
+          "MINIMAL": 1
+        }
+      }
+    ],
+    "own_coordinates": 6,
+    "own_occurrences": 6,
+    "represented_bytes": 14,
+    "original_slot_returns": [
+      {
+        "call_step": 265434,
+        "return_step": 265451,
+        "return_coordinate": "PLI1.OVL+6707",
+        "original_slot": 65484
+      }
+    ],
+    "direct_callees": [
+      {
+        "callsite_offset": 26372,
+        "coordinate": "PLI1.OVL+82BB",
+        "runtime_address": 42171
+      }
+    ],
+    "conditional_outcomes": [],
+    "incoming_entries": [
+      {
+        "kind": "call",
+        "source": "PLI1.OVL+6695",
+        "target": "PLI1.OVL+66FA",
+        "runtime_target": 35066,
+        "count": 1
+      }
+    ],
+    "alternate_entries": [],
+    "recursion": false,
+    "reserved_frame_bytes": 0,
+    "stack_scope": "original outer hardware slot; transient below-entry CALL/saves; software child isolation where applicable",
+    "unresolved": [
+      "missing helper:84BB; do not interpret same-valued field/cache words as an established subtraction."
+    ],
+    "boundary_basis": "Exact CALLs/local branches/terminal original-slot returns, neighboring callable entries and unchanged historical bytes; not context min/max or RoutineCandidate ownership."
+  },
+  "PLI1.OVL+66C6": {
+    "classification": "PACKET CANDIDATE",
+    "candidate_extent": [
+      26310,
+      26362
+    ],
+    "invocations": 1,
+    "callers": [
+      {
+        "coordinate": "PLI1.OVL+669D",
+        "counts_by_run": {
+          "MINIMAL": 1
+        }
+      }
+    ],
+    "own_coordinates": 23,
+    "own_occurrences": 130,
+    "represented_bytes": 52,
+    "original_slot_returns": [
+      {
+        "call_step": 266266,
+        "return_step": 269054,
+        "return_coordinate": "PLI1.OVL+66F9",
+        "original_slot": 65484
+      }
+    ],
+    "direct_callees": [
+      {
+        "callsite_offset": 26336,
+        "coordinate": "PLI.COM+1140",
+        "runtime_address": 4672
+      },
+      {
+        "callsite_offset": 26351,
+        "coordinate": "PLI.COM+119E",
+        "runtime_address": 4766
+      }
+    ],
+    "conditional_outcomes": [
+      {
+        "coordinate": "PLI1.OVL+66CB",
+        "taken": false,
+        "count": 1
+      },
+      {
+        "coordinate": "PLI1.OVL+66DB",
+        "taken": false,
+        "count": 7
+      },
+      {
+        "coordinate": "PLI1.OVL+66DB",
+        "taken": true,
+        "count": 1
+      },
+      {
+        "coordinate": "PLI1.OVL+66F6",
+        "taken": true,
+        "count": 7
+      }
+    ],
+    "incoming_entries": [
+      {
+        "kind": "call",
+        "source": "PLI1.OVL+669D",
+        "target": "PLI1.OVL+66C6",
+        "runtime_target": 35014,
+        "count": 1
+      }
+    ],
+    "alternate_entries": [],
+    "recursion": false,
+    "reserved_frame_bytes": 0,
+    "stack_scope": "original outer hardware slot; transient below-entry CALL/saves; software child isolation where applicable",
+    "unresolved": [
+      "partial helper contracts:resident1140/119E; unobservedzero-count andindex-wrap paths; alias/precondition forcount/index/buffer stability."
+    ],
+    "boundary_basis": "Exact CALLs/local branches/terminal original-slot returns, neighboring callable entries and unchanged historical bytes; not context min/max or RoutineCandidate ownership."
+  }
+}

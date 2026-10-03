@@ -1,0 +1,279 @@
+[
+  {
+    "entry": "PLI1.OVL+2185",
+    "extent": [
+      8581,
+      8621
+    ],
+    "represented_bytes": 34,
+    "byte_status": "UNDERSTOOD",
+    "completeness": {
+      "bounds": "provisional",
+      "control_flow": "partial",
+      "contract": "partial"
+    },
+    "contract_scope": "C=28 observed non-nibble10 /213C-false /C!=31 fallback; caller scratch and stack nonaliasing",
+    "unresolved": [
+      "partial helper contract:213C equality arms; unobserved path: early01 exits and C31 fallback outcome."
+    ]
+  },
+  {
+    "entry": "PLI1.OVL+46ED",
+    "extent": [
+      18157,
+      18232
+    ],
+    "represented_bytes": 73,
+    "byte_status": "STRUCTURED",
+    "completeness": {
+      "bounds": "provisional",
+      "control_flow": "partial",
+      "contract": "partial"
+    },
+    "contract_scope": "represented two correlatedC28 traversals; helper algorithms delegated; RAWearlyRETslots excluded",
+    "unresolved": [
+      "missing helpers:452B,422F,4275,428E,4584; no inferred list ownership.",
+      "unobserved paths:4723 and4730 RET bytes; arbitrary traversaltermination andalias/preconditions unresolved."
+    ]
+  },
+  {
+    "entry": "PLI1.OVL+4738",
+    "extent": [
+      18232,
+      18317
+    ],
+    "represented_bytes": 85,
+    "byte_status": "STRUCTURED",
+    "completeness": {
+      "bounds": "stable",
+      "control_flow": "complete",
+      "contract": "partial"
+    },
+    "contract_scope": "one C28/46ED-null-pointer/4468-normal construction path; nonaliasing pointer/header/cache/stack; inherited46ED/4468 partial scopes",
+    "unresolved": [
+      "partial helper contracts:46ED fiveopaque algorithms and4468 allocator/linkpaths; unobservedearlypointer-nonzero return; alias/precondition andgeneral provenance."
+    ]
+  },
+  {
+    "entry": "PLI1.OVL+666E",
+    "extent": [
+      26222,
+      26310
+    ],
+    "represented_bytes": 54,
+    "byte_status": "STRUCTURED",
+    "completeness": {
+      "bounds": "provisional",
+      "control_flow": "partial",
+      "contract": "partial"
+    },
+    "contract_scope": "one fieldmask9 /BCFBB5/DE0 invocation andpartialresident/helper scopes; alternativeRAWarmexcluded",
+    "unresolved": [
+      "missing helper:84BB behind66FA andresident1207; partialresident1140/119E; unobservedselector11/otherselector paths.",
+      "alias/precondition andgeneral provenance: cached word,working pointer andoutputbuffers; no compiler-semantic meaning."
+    ]
+  },
+  {
+    "entry": "PLI1.OVL+7AF0",
+    "extent": [
+      31472,
+      31507
+    ],
+    "represented_bytes": 35,
+    "byte_status": "UNDERSTOOD",
+    "completeness": {
+      "bounds": "stable",
+      "control_flow": "complete",
+      "contract": "complete"
+    },
+    "contract_scope": "documented byte/word/address wrapping; selected scratch/stack/read slots nonaliasing; no source-language type or ownership meaning",
+    "unresolved": [
+      "No unresolved local operation at declared scope; broader producers/alias relations remain general provenance questions."
+    ]
+  },
+  {
+    "entry": "PLI1.OVL+7B13",
+    "extent": [
+      31507,
+      31534
+    ],
+    "represented_bytes": 27,
+    "byte_status": "UNDERSTOOD",
+    "completeness": {
+      "bounds": "stable",
+      "control_flow": "complete",
+      "contract": "complete"
+    },
+    "contract_scope": "documented byte/word/address wrapping; selected scratch/stack/read slots nonaliasing; no source-language type or ownership meaning",
+    "unresolved": [
+      "No unresolved local operation at declared scope; broader producers/alias relations remain general provenance questions."
+    ]
+  },
+  {
+    "entry": "PLI1.OVL+7B49",
+    "extent": [
+      31561,
+      31588
+    ],
+    "represented_bytes": 27,
+    "byte_status": "UNDERSTOOD",
+    "completeness": {
+      "bounds": "stable",
+      "control_flow": "complete",
+      "contract": "complete"
+    },
+    "contract_scope": "documented byte/word/address wrapping; selected scratch/stack/read slots nonaliasing; no source-language type or ownership meaning",
+    "unresolved": [
+      "No unresolved local operation at declared scope; broader producers/alias relations remain general provenance questions."
+    ]
+  },
+  {
+    "entry": "PLI1.OVL+2355",
+    "extent": [
+      9045,
+      9113
+    ],
+    "represented_bytes": 62,
+    "byte_status": "UNDERSTOOD",
+    "completeness": {
+      "bounds": "provisional",
+      "control_flow": "partial",
+      "contract": "partial"
+    },
+    "contract_scope": "five correlated MINIMAL invocations; represented dispatcher and stated partial +21AD/230E scopes",
+    "unresolved": [
+      "partial helper contract:21AD/230E; missing helper22CB forv05 path; unobserved06/07 literal result arms."
+    ]
+  },
+  {
+    "entry": "PLI1.OVL+213C",
+    "extent": [
+      8508,
+      8581
+    ],
+    "represented_bytes": 55,
+    "byte_status": "UNDERSTOOD",
+    "completeness": {
+      "bounds": "provisional",
+      "control_flow": "partial",
+      "contract": "partial"
+    },
+    "contract_scope": "observed no-match path (C=40 and C=28); equality-arm decoding is STATIC / UNOBSERVED",
+    "unresolved": [
+      "unobserved path: six MVI01/RET equality arms remain RAW; wider input coverage absent."
+    ]
+  },
+  {
+    "entry": "PLI1.OVL+21AD",
+    "extent": [
+      8621,
+      8660
+    ],
+    "represented_bytes": 39,
+    "byte_status": "UNDERSTOOD",
+    "completeness": {
+      "bounds": "stable",
+      "control_flow": "complete",
+      "contract": "partial"
+    },
+    "contract_scope": "represented local graph;213C only at its observed no-match scope; scratch/stack nonaliasing",
+    "unresolved": [
+      "partial helper contract:213C unexecuted equality arms; combined true arm is01, notFF."
+    ]
+  },
+  {
+    "entry": "PLI1.OVL+230E",
+    "extent": [
+      8974,
+      9038
+    ],
+    "represented_bytes": 61,
+    "byte_status": "UNDERSTOOD",
+    "completeness": {
+      "bounds": "provisional",
+      "control_flow": "partial",
+      "contract": "partial"
+    },
+    "contract_scope": "two observed v28 returns andtwo v05 delegated returns; RAW24/25 result arm excluded",
+    "unresolved": [
+      "missing helper:22CB; unobserved path:24/25 zero-result arm."
+    ]
+  },
+  {
+    "entry": "PLI1.OVL+66FA",
+    "extent": [
+      26362,
+      26376
+    ],
+    "represented_bytes": 14,
+    "byte_status": "STRUCTURED",
+    "completeness": {
+      "bounds": "stable",
+      "control_flow": "complete",
+      "contract": "partial"
+    },
+    "contract_scope": "one observed ordinarycall; address preparation only,84BBalgorithm unavailable",
+    "unresolved": [
+      "missing helper:84BB; do not interpret same-valued field/cache words as an established subtraction."
+    ]
+  },
+  {
+    "entry": "PLI1.OVL+66C6",
+    "extent": [
+      26310,
+      26362
+    ],
+    "represented_bytes": 52,
+    "byte_status": "UNDERSTOOD",
+    "completeness": {
+      "bounds": "stable",
+      "control_flow": "complete",
+      "contract": "partial"
+    },
+    "contract_scope": "one count7 nonaliasing stable-buffer/index invocation; resident1140/119E remainpartial",
+    "unresolved": [
+      "partial helper contracts:resident1140/119E; unobservedzero-count andindex-wrap paths; alias/precondition forcount/index/buffer stability."
+    ]
+  },
+  {
+    "entry": "PLI1.OVL+28AA",
+    "extent": [
+      10410,
+      11347
+    ],
+    "represented_bytes": 684,
+    "byte_status": "STRUCTURED",
+    "completeness": {
+      "bounds": "provisional",
+      "control_flow": "partial",
+      "contract": "partial"
+    },
+    "contract_scope": "One correlated 351-instruction MINIMAL path; two +6708 copy/padding scopes; scoped +2185/+46ED/+4738/+666E/+2355; observed scratch/table/stack alias conditions. Excludes 253 RAW bytes and unresolved helper algorithms.",
+    "unresolved": [
+      "missing helper algorithms:46ED delegates452B/422F/4275/428E/4584;666E delegates84BB/resident1207;2355 alternatev05 uses22CB; existingpartial +6708/4468/1140/119E remainexplicit.",
+      "unobserved path:253enclosingRAWbytes; everyownconditionalhasoneobservedoutcome; bounds/control/contract remainprovisional/partial/partial.",
+      "alias/precondition/unknown producer/general provenance: indexedstate/tablecontents,buffercontroloverlap andindirectpointers; savedPSWpreservation isprovedlocallyatobserved scope, notgeneralfull memory preservation."
+    ]
+  },
+  {
+    "entry": "PLI1.OVL+4B69",
+    "extent": [
+      19305,
+      19413
+    ],
+    "represented_bytes": 105,
+    "byte_status": "UNDERSTOOD",
+    "completeness": {
+      "bounds": "provisional",
+      "control_flow": "partial",
+      "contract": "partial"
+    },
+    "contract_scope": "observedq>=AE7A initializerpath;43D5 allocator-normal/selector30 contract; selected controls/table/head/newblock/stack nonaliasing; raw floor-failure/partialcallee paths excluded",
+    "unresolved": [
+      "unobserved path: +4B7A..4B7C floor-failure arm remainsRAW, so enclosing bounds/control flow remainprovisional/partial.",
+      "partial helper contract:43D5/4394 alternative orfailure paths; onlynormalfixed30/C2/E0 scope substituted.",
+      "unknown producer/general provenance andalias/precondition: initialrecord_top/headword/global table consumers; no compiler ownership orsource types.",
+      "pass9 partial-helper review: all3 allocatorcalls takep>=AE7A; onlyone429D invocation hasselector30. STATIC / UNOBSERVED allocator43B8..43BD preparesBC637A andcallsopaque PLI.COM+04F2 (runtime05F2); itsreturn/diagnostic/recovery behavior isnotestablished. No MINIMAL failure ornon30 dispatch evidence; existing normal scope unchanged."
+    ]
+  }
+]
