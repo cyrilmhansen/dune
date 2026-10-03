@@ -103,16 +103,20 @@ class MinimalPassSixTests(unittest.TestCase):
         partial={'bounds':'provisional','control_flow':'partial','contract':'partial'}
         for key in ('PLI.COM+1376','PLI1.OVL+7C1B','PLI1.OVL+784E','PLI1.OVL+7D53'):
             self.assertEqual(self.catalog[key]['completeness'],partial)
-        self.assertEqual(self.catalog['PLI1.OVL+7D53']['byte_status_at_entry'],'STRUCTURED')
-        self.assertEqual(self.catalog['PLI1.OVL+7BBF']['completeness']['contract'],'partial')
-        self.assertIn('+82E1',self.catalog['PLI1.OVL+7BBF']['contract'])
+        historical={r['entry']:r for r in json.loads((PASS/'regions.json').read_text())}
+        caller_history=next(r for r in json.loads((PASS.parent/'pass-5/regions.json').read_text()) if r['entry']=='PLI1.OVL+7D53')
+        self.assertEqual(caller_history['byte_status'],'STRUCTURED')
+        transitions=json.loads((PASS/'progress.json').read_text())['status_transitions']
+        self.assertTrue(all(t['after']=='STRUCTURED' for t in transitions if t['before']=='STRUCTURED'))
+        self.assertEqual(historical['PLI1.OVL+7BBF']['completeness']['contract'],'partial')
+        self.assertIn('+82E1',' '.join(historical['PLI1.OVL+7BBF']['unresolved']))
         m=json.loads((ROOT/'research/annotated-assembly/manifest.json').read_text())
         rows=[json.loads(s) for s in (ROOT/'research/minimal-baseline/instructions.jsonl').read_text().splitlines()]
         current=calculate(m,rows)
         self.assertEqual(current,json.loads((ROOT/'research/minimal-baseline/dynamic-progress.json').read_text()))
-        self.assertEqual(current,json.loads((PASS/'dynamic-progress.json').read_text()))
-        self.assertEqual(current['total']['occurrences_by_status']['UNDERSTOOD'],195878)
-        self.assertEqual(next(i for i in current['per_image'] if i['image']=='PLI1.OVL')['occurrences_by_status']['UNDERSTOOD'],21687)
+        historical_dynamic=json.loads((PASS/'dynamic-progress.json').read_text())
+        self.assertEqual(historical_dynamic['total']['occurrences_by_status']['UNDERSTOOD'],195878)
+        self.assertEqual(next(i for i in historical_dynamic['per_image'] if i['image']=='PLI1.OVL')['occurrences_by_status']['UNDERSTOOD'],21687)
 
 
 if __name__=='__main__':

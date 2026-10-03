@@ -1878,7 +1878,7 @@
       "name": "packed_loop_counter",
       "runtime_address": 44620,
       "width": 1,
-      "role": "byte counter initialized15, decremented on equal-word repeat",
+      "role": "starts15; decremented after same-top-bit shifts; returned/published value16-total_shifts",
       "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
     },
     {
@@ -1888,7 +1888,57 @@
       "name": "packed_loop_word",
       "runtime_address": 44621,
       "width": 2,
-      "role": "opaque word result mutated by helper-derived writes",
+      "role": "mapped input word then repeatedly doubled/left-shifted modulo65536 atAE4D/4E",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI1.OVL:mapped_word_position",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "name": "mapped_word_position",
+      "runtime_address": 44600,
+      "width": 1,
+      "role": "saved position for double-indexed word lookup",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI1.OVL:mapped_word_table",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "name": "mapped_word_table",
+      "runtime_address": 43849,
+      "width": null,
+      "role": "little-endian words at base+2*position_map index; capacity/producer unknown",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI1.OVL:second_auxiliary_position",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "name": "second_auxiliary_position",
+      "runtime_address": 44603,
+      "width": 1,
+      "role": "saved position for second auxiliary byte read",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI1.OVL:second_auxiliary_byte_table",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "name": "second_auxiliary_byte_table",
+      "runtime_address": 44445,
+      "width": null,
+      "role": "byte[AD9D+position_map[C]] read by7ABF; distinct numeric base, capacity/producers unknown",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI1.OVL:mapped_emit_word",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "name": "mapped_emit_word",
+      "runtime_address": 44626,
+      "width": 2,
+      "role": "mapped word cached before low-byte emission; high byte freshly read by7E56",
       "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
     }
   ]

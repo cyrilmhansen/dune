@@ -48114,10 +48114,10 @@
       "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
       "start_offset": 32083,
       "end_offset": 32326,
-      "description": "mapped-range traversal with scoped emission and opaque dispatch",
-      "inputs_and_effects": "If end[AE35]==begin[AE34], ordinary RET +7D5D (12 calls). Otherwise RAR tests mapped_work_gate[AA1A].bit0; set bit selects RET +7D65 (2 calls). Seven work calls save end in cursor[AE4F]; observed flag202B.bit0=0 and byte2011=0 select backward loop. Predecrement cursor with byte wrap, compare against u8(begin-1), and stop backward traversal on equality. Otherwise +7A4D(C=cursor) maps AA1F then AAB4; observed A<F7 invokes partial recursive +7C1B(C=cursor), caches returned A atAE50, then balance scan +7B7A(C=cursor) and replaces cursor by its returned A before repeating. Reset cursor=begin for forward loop. Exit when unsigned u8(end-1)<cursor. Each of16 forward iterations maps current cursor, caches A atAE50 and delegates byte emission to scoped resident +0EF6(C=A). On observed mapped bytes<F7, packed-attribute +7B64(C=cached byte) replacesAE50; values<3 invoke +7E46 and, if freshly read AE50==2, +7E56. Values>=3 invoke +7AA9(C=cursor) intoAE51; fresh AE50==3 additionally invokes +7ABF(C=cursor) and emits its A. Fresh AE50!=6 emits AE51; fresh AE50<5 skips the RAW additional arm. Finally call mapped-table publication +7BA2(C=current cursor), increment the freshly read cursor byte, and loop unless it wraps to0. Work exit copies freshly read begin to end and RET +7E45. Bounds/cursor/cache values are reloaded around opaque calls; no general preservation is inferred from observed equality. Helper algorithms and six RAW bytes block fuller semantics; no record/tree/PL/I meaning assigned. Pass6 substitutions: +7C1B caches auxiliary byte before default recursive processing; counts children with low3 attributes, calls +7B7A to replace decremented cursor, and has partial0A/17/special arms. +7B7A balances u8(count+low3 attributes-1) while decrementing cursor until zero; the parent then predecrements returned cursor again. +7B64 saves mapped byteAE47 and returns (byte[1B4B+mapped_byte]>>3)&7 with table read and scratch write. +7AA9 returns byte[AD08+position_map[cursor]] intoAE51. +7BA2 publishes previousAE33 into mapped_byte_table[position_map[cursor]], then rereads that map entry and setsAE33 to it; later +7A4D reads can see the mutated table. +7ABF/+7E46/+7E56 and partial +7BBF inside +7C1B remain explicit blockers; caller stays STRUCTURED/provisional/partial/partial. OBSERVED selected packet chronology links +7B2E writes atAD0C/AD08 (steps254597/252476) to later +7AA9 reads at255113/255699 within invocation251128. These auxiliary effects are separate from +7BA2 mapped-byte publications; no general host provenance is asserted.",
+      "description": "scoped reverse processing, attribute-dispatched emission and mapped-table recycling",
+      "inputs_and_effects": "If endAE35==beginAE34 return7D5D (12); gateAA1A.bit0 set returns7D65 (2). Seven work calls set cursor=end; clear202B.bit0 and zero2011 select reverse path. Predecrement cursor modulo256, stop at u8(begin-1). Otherwise map through AA1F/AAB4; on witnessed mapped<F7 call partial7C1B: mapped0A now uses complete bounded word/top-bit scan7BBF and auxiliary publication; mapped17 writes child result; default returns initially cached auxiliary byte after attribute-counted children. Cache returnedA atAE50; independent7B7A balance scan replaces cursor, then outer predecrement repeats. Forward reset cursor=begin; exit when unsigned u8(end-1)<fresh cursor. Sixteen iterations map and emit current mapped byte through partial0EF6. Fresh AE50<F7 invokes7B64, storing bits3..5 of byte[1B4B+mapped] as attributeAE50. Attribute<3 calls7E46: select word[AB49+2*position_map[cursor]], publish it low/high toAE52/53, emit low byte. Fresh attribute==2 calls7E56, independently reading cached word and emitting high byte; seven observed pairs. Attribute>=3 reads primary auxiliary byte[AD08+position_map[cursor]] intoAE51; fresh attribute==3 reads distinct second auxiliary byte[AD9D+position_map[cursor]] via7ABF and emits it (one). Fresh attribute!=6 emits AE51 (nine); attribute<5 skips six RAW additional-arm bytes. Finally7BA2 publishes previousAE33 to mapped AAB4 slot selected by position_map[cursor], rereads map index and stores it intoAE33; increment freshly read cursor and loop unless byte wrap. Work exit publishes end=fresh begin. Parent direct emission arguments26 and low/high wrapper arguments14 give40 distinct emitter calls in these subtrees; no returned-A/flag/emission/cache/table channels merged. Own control and result flow is understood only at this partial scope: recursive RAW paths, emitter error/flush, shortcuts, mapped/attribute alternatives and cursor wrap prevent completion. No source-language/table ownership interpretation.",
       "downstream_helpers_runtime": "PLI1.OVL+7A4D@9C4D, PLI1.OVL+7C1B@9E1B, PLI1.OVL+7B7A@9D7A, PLI1.OVL+7A4D@9C4D, PLI.COM+0EF6@0FF6, PLI1.OVL+7B64@9D64, PLI1.OVL+7E46@A046, PLI1.OVL+7E56@A056, PLI1.OVL+7AA9@9CA9, PLI1.OVL+7ABF@9CBF, PLI.COM+0EF6@0FF6, PLI.COM+0EF6@0FF6, PLI1.OVL+7BA2@9DA2",
-      "unresolved": "partial helper path: resident +0EF6 error/flush effects outside established success scope. / unobserved branch: shortcut flags202B/2011, mapped bytes>=F7, transformed bytes!=2/<3 or>=5, equality6 and cursor-wrap return outcomes unobserved; RAW +7E2B..+7E30 remains unprocessed. / unresolved producer/general provenance: cache/bound effects across opaque calls and record ownership remain unresolved; do not assume preserved bounds or termination. / missing helper algorithm: +7ABF/+7E46/+7E56; partial recursive7C1B path through7BBF delegates7A79/82E1/82BB/82C9. Prefer these helpers before fixtures.",
+      "unresolved": "partial helper contract: recursive7C1B mapped1E/21 and17/non0A predecessor RAW paths, arbitrary recursive/skip termination and alias preconditions remain excluded. / partial helper contract: resident0EF6 error/flush paths remain outside established success scope; not reopened in this pass. / unobserved path: shortcuts202B/2011, mapped>=F7, attributes0/1/5/6/7, equality6, cursor-wrap return; RAW7E2B..7E30 not decoded or promoted. / unknown producer/general provenance and alias/precondition: initial maps/word/byte/attribute tables, cursor controls and possible overlaps beyond selected scope; no inferred array capacities or ownership.",
       "instructions": [
         {
           "offset": 32083,
@@ -49716,11 +49716,11 @@
       },
       "behavioral_contract": {
         "classification": "DEDUCED",
-        "description": "If end[AE35]==begin[AE34], ordinary RET +7D5D (12 calls). Otherwise RAR tests mapped_work_gate[AA1A].bit0; set bit selects RET +7D65 (2 calls). Seven work calls save end in cursor[AE4F]; observed flag202B.bit0=0 and byte2011=0 select backward loop. Predecrement cursor with byte wrap, compare against u8(begin-1), and stop backward traversal on equality. Otherwise +7A4D(C=cursor) maps AA1F then AAB4; observed A<F7 invokes partial recursive +7C1B(C=cursor), caches returned A atAE50, then balance scan +7B7A(C=cursor) and replaces cursor by its returned A before repeating. Reset cursor=begin for forward loop. Exit when unsigned u8(end-1)<cursor. Each of16 forward iterations maps current cursor, caches A atAE50 and delegates byte emission to scoped resident +0EF6(C=A). On observed mapped bytes<F7, packed-attribute +7B64(C=cached byte) replacesAE50; values<3 invoke +7E46 and, if freshly read AE50==2, +7E56. Values>=3 invoke +7AA9(C=cursor) intoAE51; fresh AE50==3 additionally invokes +7ABF(C=cursor) and emits its A. Fresh AE50!=6 emits AE51; fresh AE50<5 skips the RAW additional arm. Finally call mapped-table publication +7BA2(C=current cursor), increment the freshly read cursor byte, and loop unless it wraps to0. Work exit copies freshly read begin to end and RET +7E45. Bounds/cursor/cache values are reloaded around opaque calls; no general preservation is inferred from observed equality. Helper algorithms and six RAW bytes block fuller semantics; no record/tree/PL/I meaning assigned. Pass6 substitutions: +7C1B caches auxiliary byte before default recursive processing; counts children with low3 attributes, calls +7B7A to replace decremented cursor, and has partial0A/17/special arms. +7B7A balances u8(count+low3 attributes-1) while decrementing cursor until zero; the parent then predecrements returned cursor again. +7B64 saves mapped byteAE47 and returns (byte[1B4B+mapped_byte]>>3)&7 with table read and scratch write. +7AA9 returns byte[AD08+position_map[cursor]] intoAE51. +7BA2 publishes previousAE33 into mapped_byte_table[position_map[cursor]], then rereads that map entry and setsAE33 to it; later +7A4D reads can see the mutated table. +7ABF/+7E46/+7E56 and partial +7BBF inside +7C1B remain explicit blockers; caller stays STRUCTURED/provisional/partial/partial. OBSERVED selected packet chronology links +7B2E writes atAD0C/AD08 (steps254597/252476) to later +7AA9 reads at255113/255699 within invocation251128. These auxiliary effects are separate from +7BA2 mapped-byte publications; no general host provenance is asserted.",
-        "pseudocode": "if byte[AE35]==byte[AE34]: RET7D5D; if byte[AA1A].bit0: RET7D65; cursor=byte[AE35]; observed flags202B.bit0==0 && byte[2011]==0: loop { cursor=u8(cursor-1); if cursor==u8(byte[AE34]-1): break; a=map7A4D(C=cursor); scope a<F7: byte[AE50]=partial_recursive7C1B(C=cursor).A; cursor=balance_scan7B7A(C=cursor).A; }; cursor=byte[AE34]; while cursor<=u8(byte[AE35]-1) { a=map7A4D(C=cursor); byte[AE50]=a; emit0EF6(C=a) [partial]; scope fresh byte[AE50]<F7: byte[AE50]=bits3to5_7B64(C=byte[AE50]).A; if byte[AE50]<3 { opaque7E46(); if fresh byte[AE50]==2: opaque7E56(); } else { byte[AE51]=auxiliary_read7AA9(C=cursor).A; if fresh byte[AE50]==3: emit0EF6(C=opaque7ABF(C=cursor).A); if fresh byte[AE50]!=6: emit0EF6(C=byte[AE51]); scope fresh byte[AE50]<5 skips RAW; }; publish_oldAE33_then_map_index7BA2(C=fresh cursor); byte[AE4F]++; if cursor==0: break; }; byte[AE35]=fresh byte[AE34]; RET7E45",
-        "scope_and_limits": "observed MINIMAL local operation; mapped lookup +7A4D complete, resident emission +0EF6 partial, other helpers opaque; no general helper preservation/termination claim",
-        "basis": "21 corrected concrete MINIMAL invocations checked",
-        "report_ref": "../minimal-baseline/pass-6/README.md#caller-refinements"
+        "description": "If endAE35==beginAE34 return7D5D (12); gateAA1A.bit0 set returns7D65 (2). Seven work calls set cursor=end; clear202B.bit0 and zero2011 select reverse path. Predecrement cursor modulo256, stop at u8(begin-1). Otherwise map through AA1F/AAB4; on witnessed mapped<F7 call partial7C1B: mapped0A now uses complete bounded word/top-bit scan7BBF and auxiliary publication; mapped17 writes child result; default returns initially cached auxiliary byte after attribute-counted children. Cache returnedA atAE50; independent7B7A balance scan replaces cursor, then outer predecrement repeats. Forward reset cursor=begin; exit when unsigned u8(end-1)<fresh cursor. Sixteen iterations map and emit current mapped byte through partial0EF6. Fresh AE50<F7 invokes7B64, storing bits3..5 of byte[1B4B+mapped] as attributeAE50. Attribute<3 calls7E46: select word[AB49+2*position_map[cursor]], publish it low/high toAE52/53, emit low byte. Fresh attribute==2 calls7E56, independently reading cached word and emitting high byte; seven observed pairs. Attribute>=3 reads primary auxiliary byte[AD08+position_map[cursor]] intoAE51; fresh attribute==3 reads distinct second auxiliary byte[AD9D+position_map[cursor]] via7ABF and emits it (one). Fresh attribute!=6 emits AE51 (nine); attribute<5 skips six RAW additional-arm bytes. Finally7BA2 publishes previousAE33 to mapped AAB4 slot selected by position_map[cursor], rereads map index and stores it intoAE33; increment freshly read cursor and loop unless byte wrap. Work exit publishes end=fresh begin. Parent direct emission arguments26 and low/high wrapper arguments14 give40 distinct emitter calls in these subtrees; no returned-A/flag/emission/cache/table channels merged. Own control and result flow is understood only at this partial scope: recursive RAW paths, emitter error/flush, shortcuts, mapped/attribute alternatives and cursor wrap prevent completion. No source-language/table ownership interpretation.",
+        "pseudocode": "if byte[AE35]==byte[AE34]: RET7D5D; if byte[AA1A].bit0: RET7D65; cursor=byte[AE35]; observed flags202B.bit0==0 && byte[2011]==0: loop { cursor=u8(cursor-1); if cursor==u8(byte[AE34]-1): break; a=map7A4D(C=cursor); scope a<F7: byte[AE50]=partial_recursive7C1B(C=cursor).A; cursor=balance_scan7B7A(C=cursor).A; }; cursor=byte[AE34]; while cursor<=u8(byte[AE35]-1) { a=map7A4D(C=cursor); byte[AE50]=a; emit0EF6(C=a) [partial]; scope fresh byte[AE50]<F7: byte[AE50]=bits3to5_7B64(C=byte[AE50]).A; if byte[AE50]<3 { w=word[AB49+2*position_map[fresh_cursor]]; word[AE52]=w; emit0EF6(C=w.low) [partial]; if fresh byte[AE50]==2: emit0EF6(C=word[AE52].high) [partial fresh read]; } else { byte[AE51]=auxiliary_read7AA9(C=cursor).A; if fresh byte[AE50]==3: emit0EF6(C=byte[AD9D+position_map[fresh_cursor]]); if fresh byte[AE50]!=6: emit0EF6(C=byte[AE51]); scope fresh byte[AE50]<5 skips RAW; }; publish_oldAE33_then_map_index7BA2(C=fresh cursor); byte[AE4F]++; if cursor==0: break; }; byte[AE35]=fresh byte[AE34]; RET7E45",
+        "scope_and_limits": "observed MINIMAL empty/gate returns and seven work paths: shortcuts clear, mapped bytes<F7, transformed attributes2/3/4; complete selected helpers, recursive7C1B partial scope and0EF6 success scope; controls/table/scratch/stack nonaliasing; RAW alternatives and arbitrary termination excluded",
+        "basis": "21 corrected MINIMAL invocations; selected witness/packet contract checks",
+        "report_ref": "../minimal-baseline/pass-7/README.md"
       }
     },
     {
@@ -51931,9 +51931,9 @@
       "start_offset": 31771,
       "end_offset": 32083,
       "description": "scoped recursive mapped-position processing with five-byte frame",
-      "inputs_and_effects": "Reserve five bytes using PUSH H/PUSH H/MOV B,C/PUSH B/INX SP; F=entrySP-5. F+0=input position (later mutable cursor), F+1=default low3 attribute countdown, F+2=child returned byte, F+3=mapped byte, F+4=default cached auxiliary byte. PUSH H initially writes inherited HL bytes into F+1..4; these are not initialized semantic locals. Map F+0 via +7A4D into F+3. If mapped byte==0A, call partial +7BBF(C=F+0) and return its A. Otherwise equality masks for1E and21 are ORed; +7C53 JNC selects +7CB7 iff neither equality is true (13/13 observed); special arm RAW. If mapped byte==17, map u8(F+0-1); observed0A selects one recursive call at that preceding position, saves returnedA inF+2, publishes it via +7B2E to AD08+position_map[original F+0], and returns saved childA. Alternative preceding-map path remains RAW. Default: F+4=auxiliary7AA9(F+0); F+1=attributes7A63(F+0). While F+1>0 (CMP0,count/JNC exits exactly at zero), decrement F+0, recurse there, save childA inF+2, call complete +7B7A at that same decremented position, replace F+0 with its stopping cursor, decrement F+1. Return saved F+4, not last childA. Five default children plus two mapped17 children preserve exact order; default child count equals initial low3 attributes at nonaliasing frame scope. INX SP/POP H/POP H deallocate frame: final HL combines F+3 low and F+4 high, not preserved entryHL. Default return NZPA describe final CMP0,0; BC=mapped byte when count0 and0 after positive-count work; DE follows last helper. Other path NZPA follow helper outputs; final frame DAD produces CY0. No tree ownership inferred.",
+      "inputs_and_effects": "Reserve five bytes using PUSH H/PUSH H/MOV B,C/PUSH B/INX SP; F=entrySP-5. F+0=input position (later mutable cursor), F+1=default low3 attribute countdown, F+2=child returned byte, F+3=mapped byte, F+4=default cached auxiliary byte. PUSH H initially writes inherited HL bytes into F+1..4; these are not initialized semantic locals. Map F+0 via +7A4D into F+3. If mapped byte==0A, call complete scoped +7BBF(C=F+0): load word[AB49+2*position_map[F+0]], double scratchAE4D until top-bit transition or16 shifts, publish16-shifts to AD08+position_map[F+0], and return this counter A. Otherwise equality masks for1E and21 are ORed; +7C53 JNC selects +7CB7 iff neither equality is true (13/13 observed); special arm RAW. If mapped byte==17, map u8(F+0-1); observed0A selects one recursive call at that preceding position, saves returnedA inF+2, publishes it via +7B2E to AD08+position_map[original F+0], and returns saved childA. Alternative preceding-map path remains RAW. Default: F+4=auxiliary7AA9(F+0); F+1=attributes7A63(F+0). While F+1>0 (CMP0,count/JNC exits exactly at zero), decrement F+0, recurse there, save childA inF+2, call complete +7B7A at that same decremented position, replace F+0 with its stopping cursor, decrement F+1. Return saved F+4, not last childA. Five default children plus two mapped17 children preserve exact order; default child count equals initial low3 attributes at nonaliasing frame scope. INX SP/POP H/POP H deallocate frame: final HL combines F+3 low and F+4 high, not preserved entryHL. Default return NZPA describe final CMP0,0; BC=mapped byte when count0 and0 after positive-count work; DE follows last helper. Other path NZPA follow helper outputs; final frame DAD produces CY0. No tree ownership inferred.",
       "downstream_helpers_runtime": "PLI1.OVL+7A4D@9C4D, PLI1.OVL+7BBF@9DBF, PLI1.OVL+7A4D@9C4D, PLI1.OVL+7C1B@9E1B, PLI1.OVL+7B2E@9D2E, PLI1.OVL+7AA9@9CA9, PLI1.OVL+7A63@9C63, PLI1.OVL+7C1B@9E1B, PLI1.OVL+7B7A@9D7A",
-      "unresolved": "partial helper scope: +7BBF mapped0A operation still delegates +7A79/+82E1/+82BB/+82C9; observed effects are not a general contract. / unobserved branch: mapped1E/21 arm +7C56..+7CB6 and mapped17 predecessor!=0A +7CD0..+7CDB remain RAW. / arbitrary termination concern: recursion and +7B7A wrapping scan need valid table/frame/stack preconditions; no global tree or finite-depth theorem. / general provenance need: position-map/attribute/auxiliary producers and full alias scope.",
+      "unresolved": "unobserved branch: mapped1E/21 arm +7C56..+7CB6 and mapped17 predecessor!=0A +7CD0..+7CDB remain RAW. / arbitrary termination concern: recursion and +7B7A wrapping scan need valid table/frame/stack preconditions; no global tree or finite-depth theorem. / general provenance need: position-map/attribute/auxiliary producers and full alias scope.",
       "instructions": [
         {
           "offset": 31771,
@@ -53832,11 +53832,11 @@
       },
       "behavioral_contract": {
         "classification": "DEDUCED",
-        "description": "Reserve five bytes using PUSH H/PUSH H/MOV B,C/PUSH B/INX SP; F=entrySP-5. F+0=input position (later mutable cursor), F+1=default low3 attribute countdown, F+2=child returned byte, F+3=mapped byte, F+4=default cached auxiliary byte. PUSH H initially writes inherited HL bytes into F+1..4; these are not initialized semantic locals. Map F+0 via +7A4D into F+3. If mapped byte==0A, call partial +7BBF(C=F+0) and return its A. Otherwise equality masks for1E and21 are ORed; +7C53 JNC selects +7CB7 iff neither equality is true (13/13 observed); special arm RAW. If mapped byte==17, map u8(F+0-1); observed0A selects one recursive call at that preceding position, saves returnedA inF+2, publishes it via +7B2E to AD08+position_map[original F+0], and returns saved childA. Alternative preceding-map path remains RAW. Default: F+4=auxiliary7AA9(F+0); F+1=attributes7A63(F+0). While F+1>0 (CMP0,count/JNC exits exactly at zero), decrement F+0, recurse there, save childA inF+2, call complete +7B7A at that same decremented position, replace F+0 with its stopping cursor, decrement F+1. Return saved F+4, not last childA. Five default children plus two mapped17 children preserve exact order; default child count equals initial low3 attributes at nonaliasing frame scope. INX SP/POP H/POP H deallocate frame: final HL combines F+3 low and F+4 high, not preserved entryHL. Default return NZPA describe final CMP0,0; BC=mapped byte when count0 and0 after positive-count work; DE follows last helper. Other path NZPA follow helper outputs; final frame DAD produces CY0. No tree ownership inferred.",
-        "pseudocode": "F=entrySP-5; F[0]=C; F[3]=map7A4D(F[0]); if F[3]==0A: RET partial7BBF(F[0]); if F[3] in {1E,21}: unresolved RAW arm; if F[3]==17 { if map7A4D(u8(F[0]-1))!=0A: unresolved RAW arm; F[2]=recurse(u8(F[0]-1)); write7B2E(C=F[0],E=F[2]); RET F[2]; }; F[4]=auxiliary7AA9(F[0]); F[1]=attributes7A63(F[0]); while F[1]!=0 { F[0]--; F[2]=recurse(F[0]); F[0]=reverse7B7A(F[0]); F[1]--; }; RET F[4]; deallocate5 with finalHL=F[3]+256*F[4]",
-        "scope_and_limits": "MINIMAL mapped0A at partial7BBF scope; mapped17 with preceding mapped byte0A; default mapped bytes excluding1E/21/17/0A; child frames/table/indirect writes nonaliasing with parent locals/return stack; RAW alternatives and arbitrary recursion/scan termination excluded",
-        "basis": "16 corrected concrete invocations with ordinary-slot proof; packet interface for complex targets",
-        "report_ref": "../minimal-baseline/pass-6/README.md#caller-refinements"
+        "description": "Reserve five bytes using PUSH H/PUSH H/MOV B,C/PUSH B/INX SP; F=entrySP-5. F+0=input position (later mutable cursor), F+1=default low3 attribute countdown, F+2=child returned byte, F+3=mapped byte, F+4=default cached auxiliary byte. PUSH H initially writes inherited HL bytes into F+1..4; these are not initialized semantic locals. Map F+0 via +7A4D into F+3. If mapped byte==0A, call complete scoped +7BBF(C=F+0): load word[AB49+2*position_map[F+0]], double scratchAE4D until top-bit transition or16 shifts, publish16-shifts to AD08+position_map[F+0], and return this counter A. Otherwise equality masks for1E and21 are ORed; +7C53 JNC selects +7CB7 iff neither equality is true (13/13 observed); special arm RAW. If mapped byte==17, map u8(F+0-1); observed0A selects one recursive call at that preceding position, saves returnedA inF+2, publishes it via +7B2E to AD08+position_map[original F+0], and returns saved childA. Alternative preceding-map path remains RAW. Default: F+4=auxiliary7AA9(F+0); F+1=attributes7A63(F+0). While F+1>0 (CMP0,count/JNC exits exactly at zero), decrement F+0, recurse there, save childA inF+2, call complete +7B7A at that same decremented position, replace F+0 with its stopping cursor, decrement F+1. Return saved F+4, not last childA. Five default children plus two mapped17 children preserve exact order; default child count equals initial low3 attributes at nonaliasing frame scope. INX SP/POP H/POP H deallocate frame: final HL combines F+3 low and F+4 high, not preserved entryHL. Default return NZPA describe final CMP0,0; BC=mapped byte when count0 and0 after positive-count work; DE follows last helper. Other path NZPA follow helper outputs; final frame DAD produces CY0. No tree ownership inferred.",
+        "pseudocode": "F=entrySP-5; F[0]=C; F[3]=map7A4D(F[0]); if F[3]==0A: RET bounded_topbit_scan7BBF(F[0]): publish16-shifts at auxiliary mapped slot, return counter; if F[3] in {1E,21}: unresolved RAW arm; if F[3]==17 { if map7A4D(u8(F[0]-1))!=0A: unresolved RAW arm; F[2]=recurse(u8(F[0]-1)); write7B2E(C=F[0],E=F[2]); RET F[2]; }; F[4]=auxiliary7AA9(F[0]); F[1]=attributes7A63(F[0]); while F[1]!=0 { F[0]--; F[2]=recurse(F[0]); F[0]=reverse7B7A(F[0]); F[1]--; }; RET F[4]; deallocate5 with finalHL=F[3]+256*F[4]",
+        "scope_and_limits": "MINIMAL mapped0A at complete bounded7BBF scope; mapped17 with preceding mapped byte0A; default mapped bytes excluding1E/21/17/0A; child frames/table/indirect writes nonaliasing with parent locals/return stack; RAW alternatives and arbitrary recursion/scan termination excluded",
+        "basis": "16 corrected MINIMAL invocations; selected witness/packet contract checks",
+        "report_ref": "../minimal-baseline/pass-7/README.md"
       }
     },
     {
@@ -55952,10 +55952,10 @@
       "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
       "start_offset": 31679,
       "end_offset": 31771,
-      "description": "scoped packed-word loop and auxiliary publication",
-      "inputs_and_effects": "Save positionAE4B=C, set counterAE4C=0F; opaque +7A79(C) returns HL stored atAE4D/4E. Each loop saves FF/00 mask(counter!=0), sets DE=8000 and HL=&AE4D, calls opaque +82E1, saves returnedHL, sets HL=DE-1 and DE=DE-1, calls opaque +82BB. XCHG/DCX then writes returned word through a helper-derived address low/high; +82C9(HL=8000) supplies another opaque word. Restore savedHL intoDE; complete resident +1A2C subtracts this DE from fresh HL. ORA L tests full subtraction result (A is high result); SUI1/SBB A gives FF iff word difference==0. POP B/MOV C,B/ANA C/RAR/JNC stops iff saved mask.bit0 clear OR difference nonzero. On recorded stack-preserved paths this means counter==0 OR unequal words; otherwise counter-- and repeat. Final +7B2E writes current counter to auxiliary table selected by saved position; return A=counter. Counters end1,0A,1 with15,6,15 comparisons. Opaque packed-word algorithms and their general memory/register guarantees prevent a complete contract.",
+      "description": "bounded left-shift scan until top-bit transition, then auxiliary publication",
+      "inputs_and_effects": "Save input position atAE4B, counterAE4C=15; load word[AB49+2*position_map[position]] intoAE4D/4E via7A79. Each iteration saves mask(counter!=0) and old_top=word[AE4D]&8000. The returned high-byte pointer from82E1 is decremented toAE4D in bothHL/DE;82BB reads the SAME scratch word twice, returning u16(2*word) andDE=AE4E. XCHG/DCX publishes doubled word low/high back toAE4D/4E.82C9 extracts new_top=doubled&8000. Restore old_top from stack; complete1A2C computes new_top-old_top. ORA L/SUI1/SBB A yields FF iff full difference is zero; AND restored counter-nonzero mask, RAR/JNC exits iff counter==0 OR old_top!=new_top. Otherwise decrement counter and repeat. The shift occurs before the counter test, so at most16 shifts, counter=16-shift_count; counter-zero exit still performs the sixteenth shift. Three observed runs: initial0001/0252/0001, shift counts15/6/15, final8000/9480/8000, counters1/10/1. Final7B2E writes counter toAD08+fresh position_map[saved position]; returnA=counter, BC=fresh index, HL=auxiliary address, DE=counter+256*(final shifted word.low), CY0. NZPA retain final ANA of equality/counter masks; Z1/S0/P1, auxiliary carry depends on operands. Position, input word-table slot and saved stack values remain intact at scope; shifted scratch publication and auxiliary publication are separate. No word-table capacity or source-language meaning inferred.",
       "downstream_helpers_runtime": "PLI1.OVL+7A79@9C79, PLI1.OVL+82E1@A4E1, PLI1.OVL+82BB@A4BB, PLI1.OVL+82C9@A4C9, PLI.COM+1A2C@1B2C, PLI1.OVL+7B2E@9D2E",
-      "unresolved": "missing helper algorithm: +7A79/+82E1/+82BB/+82C9; prefer existing helper analysis before fixtures. / missing alias/precondition: general survival of saved mask/word across opaque helpers; observed survival checked only in three invocations.",
+      "unresolved": "unobserved path outcome: counter-zero exit never selected in three captures; exact observed instructions/contracts still establish its bounded operation without new byte promotion. / alias/precondition and general provenance: arbitrary table/stack/scratch overlap, input word/table producers and capacity remain outside declared scope; no source-language ownership meaning.",
       "instructions": [
         {
           "offset": 31679,
@@ -56828,11 +56828,11 @@
       },
       "behavioral_contract": {
         "classification": "DEDUCED",
-        "description": "Save positionAE4B=C, set counterAE4C=0F; opaque +7A79(C) returns HL stored atAE4D/4E. Each loop saves FF/00 mask(counter!=0), sets DE=8000 and HL=&AE4D, calls opaque +82E1, saves returnedHL, sets HL=DE-1 and DE=DE-1, calls opaque +82BB. XCHG/DCX then writes returned word through a helper-derived address low/high; +82C9(HL=8000) supplies another opaque word. Restore savedHL intoDE; complete resident +1A2C subtracts this DE from fresh HL. ORA L tests full subtraction result (A is high result); SUI1/SBB A gives FF iff word difference==0. POP B/MOV C,B/ANA C/RAR/JNC stops iff saved mask.bit0 clear OR difference nonzero. On recorded stack-preserved paths this means counter==0 OR unequal words; otherwise counter-- and repeat. Final +7B2E writes current counter to auxiliary table selected by saved position; return A=counter. Counters end1,0A,1 with15,6,15 comparisons. Opaque packed-word algorithms and their general memory/register guarantees prevent a complete contract.",
-        "pseudocode": "byte[AE4B]=C; byte[AE4C]=15; word[AE4D]=opaque7A79(C).HL; loop { save mask(counter!=0); opaque82E1(DE=8000,HL=&AE4D); save HL; HL=DE-1; DE--; opaque82BB(); swapHL_DE(); HL--; byte[HL]=E; byte[HL+1]=D; opaque82C9(HL=8000); DE=pop_saved_HL(); delta=subtract1A2C(HL,DE).HL; restored=pop_saved_mask(); if !(restored.bit0 && delta==0): break; byte[AE4C]--; }; write7B2E(C=byte[AE4B],E=byte[AE4C]); RET A=byte[AE4C]",
-        "scope_and_limits": "observed three +7C1B mapped-byte0A invocations; opaque +7A79/+82E1/+82BB/+82C9 effects explicitly delegated; saved stack byte survival is observed, not a general preservation contract",
-        "basis": "3 corrected concrete invocations with ordinary-slot proof; packet interface for complex targets",
-        "report_ref": "../minimal-baseline/pass-6/regions.json#PLI1.OVL+7BBF"
+        "description": "Save input position atAE4B, counterAE4C=15; load word[AB49+2*position_map[position]] intoAE4D/4E via7A79. Each iteration saves mask(counter!=0) and old_top=word[AE4D]&8000. The returned high-byte pointer from82E1 is decremented toAE4D in bothHL/DE;82BB reads the SAME scratch word twice, returning u16(2*word) andDE=AE4E. XCHG/DCX publishes doubled word low/high back toAE4D/4E.82C9 extracts new_top=doubled&8000. Restore old_top from stack; complete1A2C computes new_top-old_top. ORA L/SUI1/SBB A yields FF iff full difference is zero; AND restored counter-nonzero mask, RAR/JNC exits iff counter==0 OR old_top!=new_top. Otherwise decrement counter and repeat. The shift occurs before the counter test, so at most16 shifts, counter=16-shift_count; counter-zero exit still performs the sixteenth shift. Three observed runs: initial0001/0252/0001, shift counts15/6/15, final8000/9480/8000, counters1/10/1. Final7B2E writes counter toAD08+fresh position_map[saved position]; returnA=counter, BC=fresh index, HL=auxiliary address, DE=counter+256*(final shifted word.low), CY0. NZPA retain final ANA of equality/counter masks; Z1/S0/P1, auxiliary carry depends on operands. Position, input word-table slot and saved stack values remain intact at scope; shifted scratch publication and auxiliary publication are separate. No word-table capacity or source-language meaning inferred.",
+        "pseudocode": "byte[AE4B]=C; byte[AE4C]=15; word[AE4D]=word[AB49+2*byte[AA1F+C]]; loop { positive=(byte[AE4C]!=0); old_top=word[AE4D]&8000; word[AE4D]=u16(2*word[AE4D]); new_top=word[AE4D]&8000; if !(positive && new_top==old_top): break; byte[AE4C]--; }; i=byte[AA1F+byte[AE4B]]; byte[AD08+i]=byte[AE4C]; RET A=byte[AE4C]",
+        "scope_and_limits": "nonaliasing scratchAE38/AE43..AE4E, selected table bytes and original/temporary return-stack slots; complete +7A79/+82E1/+82BB/+82C9/+1A2C/+7B2E contracts; no concurrent mutation",
+        "basis": "3 corrected MINIMAL invocations; selected witness/packet contract checks",
+        "report_ref": "../minimal-baseline/pass-7/README.md"
       }
     },
     {
@@ -59896,6 +59896,2419 @@
         "scope_and_limits": "DEDUCED local operation at nonaliasing scratch/table/return-stack scope; bytes and addresses wrap at their machine widths; no source-language meaning",
         "basis": "146 corrected concrete invocations with ordinary-slot proof; packet interface for complex targets",
         "report_ref": "../minimal-baseline/pass-6/regions.json#PLI.COM+0817"
+      }
+    },
+    {
+      "id": "PLI1.OVL+7A79",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "start_offset": 31353,
+      "end_offset": 31379,
+      "description": "load a word through the position map",
+      "inputs_and_effects": "Save input C toAE38; LHLD also reads adjacentAE39, then MVI H,0 discards it. j=byte[AA1F+unsigned(C)]; load low/high word at AB49+2*j intoDE, then XCHG returns this word inHL. BC=j, DE=AB4A+2*j, A and NZPA preserved, CY0 from final DAD B. Only scratchAE38 is written; table capacity and word meanings unknown.",
+      "downstream_helpers_runtime": "",
+      "unresolved": "No unresolved local operation at declared scope; broader storage producers/capacity/alias relationships remain general provenance questions.",
+      "instructions": [
+        {
+          "offset": 31353,
+          "bytes": "2138AE",
+          "decoded": "LXI H,AE38H",
+          "runtime_pc": 40057,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 11,
+              "first_step": 241959,
+              "last_step": 270697
+            }
+          ]
+        },
+        {
+          "offset": 31356,
+          "bytes": "71",
+          "decoded": "MOV M,C",
+          "runtime_pc": 40060,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 11,
+              "first_step": 241960,
+              "last_step": 270698
+            }
+          ]
+        },
+        {
+          "offset": 31357,
+          "bytes": "2A38AE",
+          "decoded": "LHLD AE38H",
+          "runtime_pc": 40061,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 11,
+              "first_step": 241961,
+              "last_step": 270699
+            }
+          ]
+        },
+        {
+          "offset": 31360,
+          "bytes": "2600",
+          "decoded": "MVI H,00H",
+          "runtime_pc": 40064,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 11,
+              "first_step": 241962,
+              "last_step": 270700
+            }
+          ]
+        },
+        {
+          "offset": 31362,
+          "bytes": "011FAA",
+          "decoded": "LXI B,AA1FH",
+          "runtime_pc": 40066,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 11,
+              "first_step": 241963,
+              "last_step": 270701
+            }
+          ]
+        },
+        {
+          "offset": 31365,
+          "bytes": "09",
+          "decoded": "DAD B",
+          "runtime_pc": 40069,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 11,
+              "first_step": 241964,
+              "last_step": 270702
+            }
+          ]
+        },
+        {
+          "offset": 31366,
+          "bytes": "4E",
+          "decoded": "MOV C,M",
+          "runtime_pc": 40070,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 11,
+              "first_step": 241965,
+              "last_step": 270703
+            }
+          ]
+        },
+        {
+          "offset": 31367,
+          "bytes": "0600",
+          "decoded": "MVI B,00H",
+          "runtime_pc": 40071,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 11,
+              "first_step": 241966,
+              "last_step": 270704
+            }
+          ]
+        },
+        {
+          "offset": 31369,
+          "bytes": "2149AB",
+          "decoded": "LXI H,AB49H",
+          "runtime_pc": 40073,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 11,
+              "first_step": 241967,
+              "last_step": 270705
+            }
+          ]
+        },
+        {
+          "offset": 31372,
+          "bytes": "09",
+          "decoded": "DAD B",
+          "runtime_pc": 40076,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 11,
+              "first_step": 241968,
+              "last_step": 270706
+            }
+          ]
+        },
+        {
+          "offset": 31373,
+          "bytes": "09",
+          "decoded": "DAD B",
+          "runtime_pc": 40077,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 11,
+              "first_step": 241969,
+              "last_step": 270707
+            }
+          ]
+        },
+        {
+          "offset": 31374,
+          "bytes": "5E",
+          "decoded": "MOV E,M",
+          "runtime_pc": 40078,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 11,
+              "first_step": 241970,
+              "last_step": 270708
+            }
+          ]
+        },
+        {
+          "offset": 31375,
+          "bytes": "23",
+          "decoded": "INX H",
+          "runtime_pc": 40079,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 11,
+              "first_step": 241971,
+              "last_step": 270709
+            }
+          ]
+        },
+        {
+          "offset": 31376,
+          "bytes": "56",
+          "decoded": "MOV D,M",
+          "runtime_pc": 40080,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 11,
+              "first_step": 241972,
+              "last_step": 270710
+            }
+          ]
+        },
+        {
+          "offset": 31377,
+          "bytes": "EB",
+          "decoded": "XCHG",
+          "runtime_pc": 40081,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 11,
+              "first_step": 241973,
+              "last_step": 270711
+            }
+          ]
+        },
+        {
+          "offset": 31378,
+          "bytes": "C9",
+          "decoded": "RET",
+          "runtime_pc": 40082,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 11,
+              "first_step": 241974,
+              "last_step": 270712
+            }
+          ]
+        }
+      ],
+      "observed_callers": [
+        {
+          "run": "MINIMAL",
+          "image": "PLI1.OVL",
+          "offset": 12947,
+          "bytes": "CD799C",
+          "execution_count": 1,
+          "first_step": 259318
+        },
+        {
+          "run": "MINIMAL",
+          "image": "PLI1.OVL",
+          "offset": 31692,
+          "bytes": "CD799C",
+          "execution_count": 3,
+          "first_step": 251392
+        },
+        {
+          "run": "MINIMAL",
+          "image": "PLI1.OVL",
+          "offset": 32330,
+          "bytes": "CD799C",
+          "execution_count": 7,
+          "first_step": 241958
+        }
+      ],
+      "observed_return_offsets": [
+        31378
+      ],
+      "matched_return_sample": {
+        "relation": "OBSERVED corrected hardware-frame return with original concrete slot bytes",
+        "call": {
+          "step_index": 241958,
+          "pc": 41034,
+          "pc_after": 40057,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI1.OVL",
+              "identity": "0:0:PLI1.OVL"
+            },
+            "offset": 32330
+          },
+          "target_origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI1.OVL",
+              "identity": "0:0:PLI1.OVL"
+            },
+            "offset": 31353
+          },
+          "runtime_pc": 41034,
+          "bytes": "CD799C",
+          "disassembly": "CALL 9C79H",
+          "source": "memory",
+          "before": {
+            "a": 2,
+            "b": 27,
+            "c": 0,
+            "d": 251,
+            "e": 0,
+            "h": 2,
+            "l": 0,
+            "sp": 65515,
+            "pc": 41034,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": true
+            }
+          },
+          "after": {
+            "a": 2,
+            "b": 27,
+            "c": 0,
+            "d": 251,
+            "e": 0,
+            "h": 2,
+            "l": 0,
+            "sp": 65513,
+            "pc": 40057,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": true
+            }
+          },
+          "sp_before": 65515,
+          "sp_after": 65513,
+          "call_return_address": 41037,
+          "reads": [],
+          "writes": [
+            {
+              "address": 65514,
+              "old_value": null,
+              "new_value": 160
+            },
+            {
+              "address": 65513,
+              "old_value": null,
+              "new_value": 77
+            }
+          ],
+          "control": {
+            "kind": "call",
+            "target": 40057,
+            "taken": true
+          }
+        },
+        "ret": {
+          "step_index": 241974,
+          "pc": 40082,
+          "pc_after": 41037,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI1.OVL",
+              "identity": "0:0:PLI1.OVL"
+            },
+            "offset": 31378
+          },
+          "target_origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI1.OVL",
+              "identity": "0:0:PLI1.OVL"
+            },
+            "offset": 32333
+          },
+          "runtime_pc": 40082,
+          "bytes": "C9",
+          "disassembly": "RET",
+          "source": "memory",
+          "before": {
+            "a": 2,
+            "b": 0,
+            "c": 0,
+            "d": 171,
+            "e": 74,
+            "h": 251,
+            "l": 231,
+            "sp": 65513,
+            "pc": 40082,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 2,
+            "b": 0,
+            "c": 0,
+            "d": 171,
+            "e": 74,
+            "h": 251,
+            "l": 231,
+            "sp": 65515,
+            "pc": 41037,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "sp_before": 65513,
+          "sp_after": 65515,
+          "call_return_address": null,
+          "reads": [
+            {
+              "address": 65513,
+              "value": 77
+            },
+            {
+              "address": 65514,
+              "value": 160
+            }
+          ],
+          "writes": [],
+          "control": {
+            "kind": "return",
+            "target": 41037,
+            "taken": true
+          }
+        }
+      },
+      "behavioral_contract": {
+        "classification": "DEDUCED",
+        "description": "Save input C toAE38; LHLD also reads adjacentAE39, then MVI H,0 discards it. j=byte[AA1F+unsigned(C)]; load low/high word at AB49+2*j intoDE, then XCHG returns this word inHL. BC=j, DE=AB4A+2*j, A and NZPA preserved, CY0 from final DAD B. Only scratchAE38 is written; table capacity and word meanings unknown.",
+        "pseudocode": "byte[AE38]=C; j=byte[AA1F+C]; HL=word[AB49+2*j]; DE=AB4A+2*j; BC=j; RET",
+        "scope_and_limits": "exact local operation with 16-bit address/word and 8-bit value wrapping; nonaliasing named scratch/table/return stack; no source-language meaning",
+        "basis": "11 corrected MINIMAL invocations; selected witness/packet contract checks",
+        "report_ref": "../minimal-baseline/pass-7/README.md"
+      }
+    },
+    {
+      "id": "PLI1.OVL+82E1",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "start_offset": 33505,
+      "end_offset": 33514,
+      "description": "indirect little-endian word AND register mask",
+      "inputs_and_effects": "Input HL points to word, DE is mask. XCHG puts pointer inDE and mask inHL. Read low atpointer, AND L; increment DE; read high, AND H. Return HL=word[inputHL]&inputDE, DE=inputHL+1, A=high result; BC preserved. CY0/NZPA from high ANA H; zero flag describes high result byte, not full word. No guest memory writes.",
+      "downstream_helpers_runtime": "",
+      "unresolved": "No unresolved local operation at declared scope; broader storage producers/capacity/alias relationships remain general provenance questions.",
+      "instructions": [
+        {
+          "offset": 33505,
+          "bytes": "EB",
+          "decoded": "XCHG",
+          "runtime_pc": 42209,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 36,
+              "first_step": 251418,
+              "last_step": 254491
+            }
+          ]
+        },
+        {
+          "offset": 33506,
+          "bytes": "1A",
+          "decoded": "LDAX D",
+          "runtime_pc": 42210,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 36,
+              "first_step": 251419,
+              "last_step": 254492
+            }
+          ]
+        },
+        {
+          "offset": 33507,
+          "bytes": "A5",
+          "decoded": "ANA L",
+          "runtime_pc": 42211,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 36,
+              "first_step": 251420,
+              "last_step": 254493
+            }
+          ]
+        },
+        {
+          "offset": 33508,
+          "bytes": "6F",
+          "decoded": "MOV L,A",
+          "runtime_pc": 42212,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 36,
+              "first_step": 251421,
+              "last_step": 254494
+            }
+          ]
+        },
+        {
+          "offset": 33509,
+          "bytes": "13",
+          "decoded": "INX D",
+          "runtime_pc": 42213,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 36,
+              "first_step": 251422,
+              "last_step": 254495
+            }
+          ]
+        },
+        {
+          "offset": 33510,
+          "bytes": "1A",
+          "decoded": "LDAX D",
+          "runtime_pc": 42214,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 36,
+              "first_step": 251423,
+              "last_step": 254496
+            }
+          ]
+        },
+        {
+          "offset": 33511,
+          "bytes": "A4",
+          "decoded": "ANA H",
+          "runtime_pc": 42215,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 36,
+              "first_step": 251424,
+              "last_step": 254497
+            }
+          ]
+        },
+        {
+          "offset": 33512,
+          "bytes": "67",
+          "decoded": "MOV H,A",
+          "runtime_pc": 42216,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 36,
+              "first_step": 251425,
+              "last_step": 254498
+            }
+          ]
+        },
+        {
+          "offset": 33513,
+          "bytes": "C9",
+          "decoded": "RET",
+          "runtime_pc": 42217,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 36,
+              "first_step": 251426,
+              "last_step": 254499
+            }
+          ]
+        }
+      ],
+      "observed_callers": [
+        {
+          "run": "MINIMAL",
+          "image": "PLI1.OVL",
+          "offset": 31712,
+          "bytes": "CDE1A4",
+          "execution_count": 36,
+          "first_step": 251417
+        }
+      ],
+      "observed_return_offsets": [
+        33513
+      ],
+      "matched_return_sample": {
+        "relation": "OBSERVED corrected hardware-frame return with original concrete slot bytes",
+        "call": {
+          "step_index": 251417,
+          "pc": 40416,
+          "pc_after": 42209,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI1.OVL",
+              "identity": "0:0:PLI1.OVL"
+            },
+            "offset": 31712
+          },
+          "target_origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI1.OVL",
+              "identity": "0:0:PLI1.OVL"
+            },
+            "offset": 33505
+          },
+          "runtime_pc": 40416,
+          "bytes": "CDE1A4",
+          "disassembly": "CALL A4E1H",
+          "source": "memory",
+          "before": {
+            "a": 255,
+            "b": 0,
+            "c": 1,
+            "d": 128,
+            "e": 0,
+            "h": 174,
+            "l": 77,
+            "sp": 65471,
+            "pc": 40416,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": true
+            }
+          },
+          "after": {
+            "a": 255,
+            "b": 0,
+            "c": 1,
+            "d": 128,
+            "e": 0,
+            "h": 174,
+            "l": 77,
+            "sp": 65469,
+            "pc": 42209,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": true
+            }
+          },
+          "sp_before": 65471,
+          "sp_after": 65469,
+          "call_return_address": 40419,
+          "reads": [],
+          "writes": [
+            {
+              "address": 65470,
+              "old_value": null,
+              "new_value": 157
+            },
+            {
+              "address": 65469,
+              "old_value": null,
+              "new_value": 227
+            }
+          ],
+          "control": {
+            "kind": "call",
+            "target": 42209,
+            "taken": true
+          }
+        },
+        "ret": {
+          "step_index": 251426,
+          "pc": 42217,
+          "pc_after": 40419,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI1.OVL",
+              "identity": "0:0:PLI1.OVL"
+            },
+            "offset": 33513
+          },
+          "target_origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI1.OVL",
+              "identity": "0:0:PLI1.OVL"
+            },
+            "offset": 31715
+          },
+          "runtime_pc": 42217,
+          "bytes": "C9",
+          "disassembly": "RET",
+          "source": "memory",
+          "before": {
+            "a": 0,
+            "b": 0,
+            "c": 1,
+            "d": 174,
+            "e": 78,
+            "h": 0,
+            "l": 0,
+            "sp": 65469,
+            "pc": 42217,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 0,
+            "b": 0,
+            "c": 1,
+            "d": 174,
+            "e": 78,
+            "h": 0,
+            "l": 0,
+            "sp": 65471,
+            "pc": 40419,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "sp_before": 65469,
+          "sp_after": 65471,
+          "call_return_address": null,
+          "reads": [
+            {
+              "address": 65469,
+              "value": 227
+            },
+            {
+              "address": 65470,
+              "value": 157
+            }
+          ],
+          "writes": [],
+          "control": {
+            "kind": "return",
+            "target": 40419,
+            "taken": true
+          }
+        }
+      },
+      "behavioral_contract": {
+        "classification": "DEDUCED",
+        "description": "Input HL points to word, DE is mask. XCHG puts pointer inDE and mask inHL. Read low atpointer, AND L; increment DE; read high, AND H. Return HL=word[inputHL]&inputDE, DE=inputHL+1, A=high result; BC preserved. CY0/NZPA from high ANA H; zero flag describes high result byte, not full word. No guest memory writes.",
+        "pseudocode": "ptr=inputHL; mask=inputDE; HL=word[ptr]&mask; DE=u16(ptr+1); A=HL.high; RET",
+        "scope_and_limits": "exact local operation with 16-bit address/word and 8-bit value wrapping; nonaliasing named scratch/table/return stack; no source-language meaning",
+        "basis": "36 corrected MINIMAL invocations; selected witness/packet contract checks",
+        "report_ref": "../minimal-baseline/pass-7/README.md"
+      }
+    },
+    {
+      "id": "PLI1.OVL+82BB",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "start_offset": 33467,
+      "end_offset": 33478,
+      "description": "add two indirectly loaded little-endian words",
+      "inputs_and_effects": "Capture word[inputHL] low/high intoC/B first. Load byte[inputDE], ADD C (low addition), storeL; incrementDE; load high, ADC B with low carry, storeH. HL=u16(word[inputHL]+word[inputDE]); BC=first word; DE=inputDE+1; A=high sum; CY=full-word overflow, other flags from high ADC only (not full-word Z). The two pointers may be equal: then both reads address the same word and result doubles it. No guest memory writes.",
+      "downstream_helpers_runtime": "",
+      "unresolved": "No unresolved local operation at declared scope; broader storage producers/capacity/alias relationships remain general provenance questions.",
+      "instructions": [
+        {
+          "offset": 33467,
+          "bytes": "4E",
+          "decoded": "MOV C,M",
+          "runtime_pc": 42171,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 37,
+              "first_step": 251433,
+              "last_step": 265440
+            }
+          ]
+        },
+        {
+          "offset": 33468,
+          "bytes": "23",
+          "decoded": "INX H",
+          "runtime_pc": 42172,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 37,
+              "first_step": 251434,
+              "last_step": 265441
+            }
+          ]
+        },
+        {
+          "offset": 33469,
+          "bytes": "46",
+          "decoded": "MOV B,M",
+          "runtime_pc": 42173,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 37,
+              "first_step": 251435,
+              "last_step": 265442
+            }
+          ]
+        },
+        {
+          "offset": 33470,
+          "bytes": "1A",
+          "decoded": "LDAX D",
+          "runtime_pc": 42174,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 37,
+              "first_step": 251436,
+              "last_step": 265443
+            }
+          ]
+        },
+        {
+          "offset": 33471,
+          "bytes": "81",
+          "decoded": "ADD C",
+          "runtime_pc": 42175,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 37,
+              "first_step": 251437,
+              "last_step": 265444
+            }
+          ]
+        },
+        {
+          "offset": 33472,
+          "bytes": "6F",
+          "decoded": "MOV L,A",
+          "runtime_pc": 42176,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 37,
+              "first_step": 251438,
+              "last_step": 265445
+            }
+          ]
+        },
+        {
+          "offset": 33473,
+          "bytes": "13",
+          "decoded": "INX D",
+          "runtime_pc": 42177,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 37,
+              "first_step": 251439,
+              "last_step": 265446
+            }
+          ]
+        },
+        {
+          "offset": 33474,
+          "bytes": "1A",
+          "decoded": "LDAX D",
+          "runtime_pc": 42178,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 37,
+              "first_step": 251440,
+              "last_step": 265447
+            }
+          ]
+        },
+        {
+          "offset": 33475,
+          "bytes": "88",
+          "decoded": "ADC B",
+          "runtime_pc": 42179,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 37,
+              "first_step": 251441,
+              "last_step": 265448
+            }
+          ]
+        },
+        {
+          "offset": 33476,
+          "bytes": "67",
+          "decoded": "MOV H,A",
+          "runtime_pc": 42180,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 37,
+              "first_step": 251442,
+              "last_step": 265449
+            }
+          ]
+        },
+        {
+          "offset": 33477,
+          "bytes": "C9",
+          "decoded": "RET",
+          "runtime_pc": 42181,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 37,
+              "first_step": 251443,
+              "last_step": 265450
+            }
+          ]
+        }
+      ],
+      "observed_callers": [
+        {
+          "run": "MINIMAL",
+          "image": "PLI1.OVL",
+          "offset": 26372,
+          "bytes": "CDBBA4",
+          "execution_count": 1,
+          "first_step": 265439
+        },
+        {
+          "run": "MINIMAL",
+          "image": "PLI1.OVL",
+          "offset": 31720,
+          "bytes": "CDBBA4",
+          "execution_count": 36,
+          "first_step": 251432
+        }
+      ],
+      "observed_return_offsets": [
+        33477
+      ],
+      "matched_return_sample": {
+        "relation": "OBSERVED corrected hardware-frame return with original concrete slot bytes",
+        "call": {
+          "step_index": 251432,
+          "pc": 40424,
+          "pc_after": 42171,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI1.OVL",
+              "identity": "0:0:PLI1.OVL"
+            },
+            "offset": 31720
+          },
+          "target_origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI1.OVL",
+              "identity": "0:0:PLI1.OVL"
+            },
+            "offset": 33467
+          },
+          "runtime_pc": 40424,
+          "bytes": "CDBBA4",
+          "disassembly": "CALL A4BBH",
+          "source": "memory",
+          "before": {
+            "a": 0,
+            "b": 0,
+            "c": 1,
+            "d": 174,
+            "e": 77,
+            "h": 174,
+            "l": 77,
+            "sp": 65469,
+            "pc": 40424,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 0,
+            "b": 0,
+            "c": 1,
+            "d": 174,
+            "e": 77,
+            "h": 174,
+            "l": 77,
+            "sp": 65467,
+            "pc": 42171,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "sp_before": 65469,
+          "sp_after": 65467,
+          "call_return_address": 40427,
+          "reads": [],
+          "writes": [
+            {
+              "address": 65468,
+              "old_value": null,
+              "new_value": 157
+            },
+            {
+              "address": 65467,
+              "old_value": null,
+              "new_value": 235
+            }
+          ],
+          "control": {
+            "kind": "call",
+            "target": 42171,
+            "taken": true
+          }
+        },
+        "ret": {
+          "step_index": 251443,
+          "pc": 42181,
+          "pc_after": 40427,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI1.OVL",
+              "identity": "0:0:PLI1.OVL"
+            },
+            "offset": 33477
+          },
+          "target_origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI1.OVL",
+              "identity": "0:0:PLI1.OVL"
+            },
+            "offset": 31723
+          },
+          "runtime_pc": 42181,
+          "bytes": "C9",
+          "disassembly": "RET",
+          "source": "memory",
+          "before": {
+            "a": 0,
+            "b": 0,
+            "c": 1,
+            "d": 174,
+            "e": 78,
+            "h": 0,
+            "l": 2,
+            "sp": 65467,
+            "pc": 42181,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 0,
+            "b": 0,
+            "c": 1,
+            "d": 174,
+            "e": 78,
+            "h": 0,
+            "l": 2,
+            "sp": 65469,
+            "pc": 40427,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "sp_before": 65467,
+          "sp_after": 65469,
+          "call_return_address": null,
+          "reads": [
+            {
+              "address": 65467,
+              "value": 235
+            },
+            {
+              "address": 65468,
+              "value": 157
+            }
+          ],
+          "writes": [],
+          "control": {
+            "kind": "return",
+            "target": 40427,
+            "taken": true
+          }
+        }
+      },
+      "behavioral_contract": {
+        "classification": "DEDUCED",
+        "description": "Capture word[inputHL] low/high intoC/B first. Load byte[inputDE], ADD C (low addition), storeL; incrementDE; load high, ADC B with low carry, storeH. HL=u16(word[inputHL]+word[inputDE]); BC=first word; DE=inputDE+1; A=high sum; CY=full-word overflow, other flags from high ADC only (not full-word Z). The two pointers may be equal: then both reads address the same word and result doubles it. No guest memory writes.",
+        "pseudocode": "left=word[inputHL]; right=word[inputDE]; BC=left; HL=u16(left+right); DE=u16(inputDE+1); A=HL.high; CY=(left+right>FFFF); RET",
+        "scope_and_limits": "exact local operation with 16-bit address/word and 8-bit value wrapping; nonaliasing named scratch/table/return stack; no source-language meaning",
+        "basis": "37 corrected MINIMAL invocations; selected witness/packet contract checks",
+        "report_ref": "../minimal-baseline/pass-7/README.md"
+      }
+    },
+    {
+      "id": "PLI1.OVL+82C9",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "start_offset": 33481,
+      "end_offset": 33488,
+      "description": "register word AND transform",
+      "inputs_and_effects": "AND E withL thenD withH; return HL=inputDE & inputHL, A=high masked byte. BC and DE preserved; CY0 and NZPA from high ANA H, not a full-word zero flag. No guest memory writes; no data-memory reads beyond the hardware RET slot.",
+      "downstream_helpers_runtime": "",
+      "unresolved": "No unresolved local operation at declared scope; broader storage producers/capacity/alias relationships remain general provenance questions.",
+      "instructions": [
+        {
+          "offset": 33481,
+          "bytes": "7B",
+          "decoded": "MOV A,E",
+          "runtime_pc": 42185,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 36,
+              "first_step": 251451,
+              "last_step": 254524
+            }
+          ]
+        },
+        {
+          "offset": 33482,
+          "bytes": "A5",
+          "decoded": "ANA L",
+          "runtime_pc": 42186,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 36,
+              "first_step": 251452,
+              "last_step": 254525
+            }
+          ]
+        },
+        {
+          "offset": 33483,
+          "bytes": "6F",
+          "decoded": "MOV L,A",
+          "runtime_pc": 42187,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 36,
+              "first_step": 251453,
+              "last_step": 254526
+            }
+          ]
+        },
+        {
+          "offset": 33484,
+          "bytes": "7A",
+          "decoded": "MOV A,D",
+          "runtime_pc": 42188,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 36,
+              "first_step": 251454,
+              "last_step": 254527
+            }
+          ]
+        },
+        {
+          "offset": 33485,
+          "bytes": "A4",
+          "decoded": "ANA H",
+          "runtime_pc": 42189,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 36,
+              "first_step": 251455,
+              "last_step": 254528
+            }
+          ]
+        },
+        {
+          "offset": 33486,
+          "bytes": "67",
+          "decoded": "MOV H,A",
+          "runtime_pc": 42190,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 36,
+              "first_step": 251456,
+              "last_step": 254529
+            }
+          ]
+        },
+        {
+          "offset": 33487,
+          "bytes": "C9",
+          "decoded": "RET",
+          "runtime_pc": 42191,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 36,
+              "first_step": 251457,
+              "last_step": 254530
+            }
+          ]
+        }
+      ],
+      "observed_callers": [
+        {
+          "run": "MINIMAL",
+          "image": "PLI1.OVL",
+          "offset": 31731,
+          "bytes": "CDC9A4",
+          "execution_count": 36,
+          "first_step": 251450
+        }
+      ],
+      "observed_return_offsets": [
+        33487
+      ],
+      "matched_return_sample": {
+        "relation": "OBSERVED corrected hardware-frame return with original concrete slot bytes",
+        "call": {
+          "step_index": 251450,
+          "pc": 40435,
+          "pc_after": 42185,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI1.OVL",
+              "identity": "0:0:PLI1.OVL"
+            },
+            "offset": 31731
+          },
+          "target_origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI1.OVL",
+              "identity": "0:0:PLI1.OVL"
+            },
+            "offset": 33481
+          },
+          "runtime_pc": 40435,
+          "bytes": "CDC9A4",
+          "disassembly": "CALL A4C9H",
+          "source": "memory",
+          "before": {
+            "a": 0,
+            "b": 0,
+            "c": 1,
+            "d": 0,
+            "e": 2,
+            "h": 128,
+            "l": 0,
+            "sp": 65469,
+            "pc": 40435,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 0,
+            "b": 0,
+            "c": 1,
+            "d": 0,
+            "e": 2,
+            "h": 128,
+            "l": 0,
+            "sp": 65467,
+            "pc": 42185,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "sp_before": 65469,
+          "sp_after": 65467,
+          "call_return_address": 40438,
+          "reads": [],
+          "writes": [
+            {
+              "address": 65468,
+              "old_value": null,
+              "new_value": 157
+            },
+            {
+              "address": 65467,
+              "old_value": null,
+              "new_value": 246
+            }
+          ],
+          "control": {
+            "kind": "call",
+            "target": 42185,
+            "taken": true
+          }
+        },
+        "ret": {
+          "step_index": 251457,
+          "pc": 42191,
+          "pc_after": 40438,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI1.OVL",
+              "identity": "0:0:PLI1.OVL"
+            },
+            "offset": 33487
+          },
+          "target_origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI1.OVL",
+              "identity": "0:0:PLI1.OVL"
+            },
+            "offset": 31734
+          },
+          "runtime_pc": 42191,
+          "bytes": "C9",
+          "disassembly": "RET",
+          "source": "memory",
+          "before": {
+            "a": 0,
+            "b": 0,
+            "c": 1,
+            "d": 0,
+            "e": 2,
+            "h": 0,
+            "l": 0,
+            "sp": 65467,
+            "pc": 42191,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 0,
+            "b": 0,
+            "c": 1,
+            "d": 0,
+            "e": 2,
+            "h": 0,
+            "l": 0,
+            "sp": 65469,
+            "pc": 40438,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "sp_before": 65467,
+          "sp_after": 65469,
+          "call_return_address": null,
+          "reads": [
+            {
+              "address": 65467,
+              "value": 246
+            },
+            {
+              "address": 65468,
+              "value": 157
+            }
+          ],
+          "writes": [],
+          "control": {
+            "kind": "return",
+            "target": 40438,
+            "taken": true
+          }
+        }
+      },
+      "behavioral_contract": {
+        "classification": "DEDUCED",
+        "description": "AND E withL thenD withH; return HL=inputDE & inputHL, A=high masked byte. BC and DE preserved; CY0 and NZPA from high ANA H, not a full-word zero flag. No guest memory writes; no data-memory reads beyond the hardware RET slot.",
+        "pseudocode": "HL=inputDE & inputHL; A=HL.high; RET",
+        "scope_and_limits": "exact local operation with 16-bit address/word and 8-bit value wrapping; nonaliasing named scratch/table/return stack; no source-language meaning",
+        "basis": "36 corrected MINIMAL invocations; selected witness/packet contract checks",
+        "report_ref": "../minimal-baseline/pass-7/README.md"
+      }
+    },
+    {
+      "id": "PLI1.OVL+7ABF",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "start_offset": 31423,
+      "end_offset": 31445,
+      "description": "read second auxiliary byte through position map",
+      "inputs_and_effects": "Save input C atAE3B, read j=byte[AA1F+unsigned(C)] and return byte[AD9D+j]. BC=j, HL=AD9D+j, DE/NZPA preserved, CY0 from DAD B. Only AE3B is written. Returned A is data; flags are not recomputed for the byte. This AD9D table is distinct from mapped AAB4, primary auxiliary AD08 and packed attributes1B4B; no capacity/disjoint-array inference.",
+      "downstream_helpers_runtime": "",
+      "unresolved": "No unresolved local operation at declared scope; broader storage producers/capacity/alias relationships remain general provenance questions.",
+      "instructions": [
+        {
+          "offset": 31423,
+          "bytes": "213BAE",
+          "decoded": "LXI H,AE3BH",
+          "runtime_pc": 40127,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 14,
+              "first_step": 231930,
+              "last_step": 282919
+            }
+          ]
+        },
+        {
+          "offset": 31426,
+          "bytes": "71",
+          "decoded": "MOV M,C",
+          "runtime_pc": 40130,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 14,
+              "first_step": 231931,
+              "last_step": 282920
+            }
+          ]
+        },
+        {
+          "offset": 31427,
+          "bytes": "2A3BAE",
+          "decoded": "LHLD AE3BH",
+          "runtime_pc": 40131,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 14,
+              "first_step": 231932,
+              "last_step": 282921
+            }
+          ]
+        },
+        {
+          "offset": 31430,
+          "bytes": "2600",
+          "decoded": "MVI H,00H",
+          "runtime_pc": 40134,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 14,
+              "first_step": 231933,
+              "last_step": 282922
+            }
+          ]
+        },
+        {
+          "offset": 31432,
+          "bytes": "011FAA",
+          "decoded": "LXI B,AA1FH",
+          "runtime_pc": 40136,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 14,
+              "first_step": 231934,
+              "last_step": 282923
+            }
+          ]
+        },
+        {
+          "offset": 31435,
+          "bytes": "09",
+          "decoded": "DAD B",
+          "runtime_pc": 40139,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 14,
+              "first_step": 231935,
+              "last_step": 282924
+            }
+          ]
+        },
+        {
+          "offset": 31436,
+          "bytes": "4E",
+          "decoded": "MOV C,M",
+          "runtime_pc": 40140,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 14,
+              "first_step": 231936,
+              "last_step": 282925
+            }
+          ]
+        },
+        {
+          "offset": 31437,
+          "bytes": "0600",
+          "decoded": "MVI B,00H",
+          "runtime_pc": 40141,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 14,
+              "first_step": 231937,
+              "last_step": 282926
+            }
+          ]
+        },
+        {
+          "offset": 31439,
+          "bytes": "219DAD",
+          "decoded": "LXI H,AD9DH",
+          "runtime_pc": 40143,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 14,
+              "first_step": 231938,
+              "last_step": 282927
+            }
+          ]
+        },
+        {
+          "offset": 31442,
+          "bytes": "09",
+          "decoded": "DAD B",
+          "runtime_pc": 40146,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 14,
+              "first_step": 231939,
+              "last_step": 282928
+            }
+          ]
+        },
+        {
+          "offset": 31443,
+          "bytes": "7E",
+          "decoded": "MOV A,M",
+          "runtime_pc": 40147,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 14,
+              "first_step": 231940,
+              "last_step": 282929
+            }
+          ]
+        },
+        {
+          "offset": 31444,
+          "bytes": "C9",
+          "decoded": "RET",
+          "runtime_pc": 40148,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 14,
+              "first_step": 231941,
+              "last_step": 282930
+            }
+          ]
+        }
+      ],
+      "observed_callers": [
+        {
+          "run": "MINIMAL",
+          "image": "PLI1.OVL",
+          "offset": 12937,
+          "bytes": "CDBF9C",
+          "execution_count": 1,
+          "first_step": 259302
+        },
+        {
+          "run": "MINIMAL",
+          "image": "PLI1.OVL",
+          "offset": 32269,
+          "bytes": "CDBF9C",
+          "execution_count": 1,
+          "first_step": 255843
+        },
+        {
+          "run": "MINIMAL",
+          "image": "PLI1.OVL",
+          "offset": 32933,
+          "bytes": "CDBF9C",
+          "execution_count": 12,
+          "first_step": 231929
+        }
+      ],
+      "observed_return_offsets": [
+        31444
+      ],
+      "matched_return_sample": {
+        "relation": "OBSERVED corrected hardware-frame return with original concrete slot bytes",
+        "call": {
+          "step_index": 231929,
+          "pc": 41637,
+          "pc_after": 40127,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI1.OVL",
+              "identity": "0:0:PLI1.OVL"
+            },
+            "offset": 32933
+          },
+          "target_origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI1.OVL",
+              "identity": "0:0:PLI1.OVL"
+            },
+            "offset": 31423
+          },
+          "runtime_pc": 41637,
+          "bytes": "CDBF9C",
+          "disassembly": "CALL 9CBFH",
+          "source": "memory",
+          "before": {
+            "a": 255,
+            "b": 0,
+            "c": 255,
+            "d": 0,
+            "e": 0,
+            "h": 173,
+            "l": 8,
+            "sp": 65526,
+            "pc": 41637,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 255,
+            "b": 0,
+            "c": 255,
+            "d": 0,
+            "e": 0,
+            "h": 173,
+            "l": 8,
+            "sp": 65524,
+            "pc": 40127,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "sp_before": 65526,
+          "sp_after": 65524,
+          "call_return_address": 41640,
+          "reads": [],
+          "writes": [
+            {
+              "address": 65525,
+              "old_value": null,
+              "new_value": 162
+            },
+            {
+              "address": 65524,
+              "old_value": null,
+              "new_value": 168
+            }
+          ],
+          "control": {
+            "kind": "call",
+            "target": 40127,
+            "taken": true
+          }
+        },
+        "ret": {
+          "step_index": 231941,
+          "pc": 40148,
+          "pc_after": 41640,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI1.OVL",
+              "identity": "0:0:PLI1.OVL"
+            },
+            "offset": 31444
+          },
+          "target_origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI1.OVL",
+              "identity": "0:0:PLI1.OVL"
+            },
+            "offset": 32936
+          },
+          "runtime_pc": 40148,
+          "bytes": "C9",
+          "disassembly": "RET",
+          "source": "memory",
+          "before": {
+            "a": 0,
+            "b": 0,
+            "c": 107,
+            "d": 0,
+            "e": 0,
+            "h": 174,
+            "l": 8,
+            "sp": 65524,
+            "pc": 40148,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 0,
+            "b": 0,
+            "c": 107,
+            "d": 0,
+            "e": 0,
+            "h": 174,
+            "l": 8,
+            "sp": 65526,
+            "pc": 41640,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "sp_before": 65524,
+          "sp_after": 65526,
+          "call_return_address": null,
+          "reads": [
+            {
+              "address": 65524,
+              "value": 168
+            },
+            {
+              "address": 65525,
+              "value": 162
+            }
+          ],
+          "writes": [],
+          "control": {
+            "kind": "return",
+            "target": 41640,
+            "taken": true
+          }
+        }
+      },
+      "behavioral_contract": {
+        "classification": "DEDUCED",
+        "description": "Save input C atAE3B, read j=byte[AA1F+unsigned(C)] and return byte[AD9D+j]. BC=j, HL=AD9D+j, DE/NZPA preserved, CY0 from DAD B. Only AE3B is written. Returned A is data; flags are not recomputed for the byte. This AD9D table is distinct from mapped AAB4, primary auxiliary AD08 and packed attributes1B4B; no capacity/disjoint-array inference.",
+        "pseudocode": "byte[AE3B]=C; j=byte[AA1F+C]; A=byte[AD9D+j]; BC=j; HL=AD9D+j; RET",
+        "scope_and_limits": "exact local operation with 16-bit address/word and 8-bit value wrapping; nonaliasing named scratch/table/return stack; no source-language meaning",
+        "basis": "14 corrected MINIMAL invocations; selected witness/packet contract checks",
+        "report_ref": "../minimal-baseline/pass-7/README.md"
+      }
+    },
+    {
+      "id": "PLI1.OVL+7E46",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "start_offset": 32326,
+      "end_offset": 32342,
+      "description": "cache mapped word and emit its low byte",
+      "inputs_and_effects": "Read cursor word atAE4F (H also fetches neighboring cacheAE50); pass only low cursor byteC to complete7A79. Publish returned mapped word low/high toAE52/53 before emission. Set C=returned word.low and call resident0EF6 at its established partial success scope. Wrapper returns exactly emitter registers/flags; A is not independently a selected word result. Own writes only AE52/53 and CALL stack; mapping scratchAE38 and buffer/index/scratch effects belong to callees. No own cursor, mapped-table or auxiliary-table mutation. General emitter error/flush paths remain partial.",
+      "downstream_helpers_runtime": "PLI1.OVL+7A79@9C79, PLI.COM+0EF6@0FF6",
+      "unresolved": "partial helper contract: resident +0EF6 error/flush paths remain outside its established success scope.",
+      "instructions": [
+        {
+          "offset": 32326,
+          "bytes": "2A4FAE",
+          "decoded": "LHLD AE4FH",
+          "runtime_pc": 41030,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 7,
+              "first_step": 241956,
+              "last_step": 270694
+            }
+          ]
+        },
+        {
+          "offset": 32329,
+          "bytes": "4D",
+          "decoded": "MOV C,L",
+          "runtime_pc": 41033,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 7,
+              "first_step": 241957,
+              "last_step": 270695
+            }
+          ]
+        },
+        {
+          "offset": 32330,
+          "bytes": "CD799C",
+          "decoded": "CALL 9C79H",
+          "runtime_pc": 41034,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 7,
+              "first_step": 241958,
+              "last_step": 270696
+            }
+          ]
+        },
+        {
+          "offset": 32333,
+          "bytes": "2252AE",
+          "decoded": "SHLD AE52H",
+          "runtime_pc": 41037,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 7,
+              "first_step": 241975,
+              "last_step": 270713
+            }
+          ]
+        },
+        {
+          "offset": 32336,
+          "bytes": "7D",
+          "decoded": "MOV A,L",
+          "runtime_pc": 41040,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 7,
+              "first_step": 241976,
+              "last_step": 270714
+            }
+          ]
+        },
+        {
+          "offset": 32337,
+          "bytes": "4F",
+          "decoded": "MOV C,A",
+          "runtime_pc": 41041,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 7,
+              "first_step": 241977,
+              "last_step": 270715
+            }
+          ]
+        },
+        {
+          "offset": 32338,
+          "bytes": "CDF60F",
+          "decoded": "CALL 0FF6H",
+          "runtime_pc": 41042,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 7,
+              "first_step": 241978,
+              "last_step": 270716
+            }
+          ]
+        },
+        {
+          "offset": 32341,
+          "bytes": "C9",
+          "decoded": "RET",
+          "runtime_pc": 41045,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 7,
+              "first_step": 241993,
+              "last_step": 270731
+            }
+          ]
+        }
+      ],
+      "observed_callers": [
+        {
+          "run": "MINIMAL",
+          "image": "PLI1.OVL",
+          "offset": 32230,
+          "bytes": "CD46A0",
+          "execution_count": 7,
+          "first_step": 241955
+        }
+      ],
+      "observed_return_offsets": [
+        32341
+      ],
+      "matched_return_sample": {
+        "relation": "OBSERVED corrected hardware-frame return with original concrete slot bytes",
+        "call": {
+          "step_index": 241955,
+          "pc": 40934,
+          "pc_after": 41030,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI1.OVL",
+              "identity": "0:0:PLI1.OVL"
+            },
+            "offset": 32230
+          },
+          "target_origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI1.OVL",
+              "identity": "0:0:PLI1.OVL"
+            },
+            "offset": 32326
+          },
+          "runtime_pc": 40934,
+          "bytes": "CD46A0",
+          "disassembly": "CALL A046H",
+          "source": "memory",
+          "before": {
+            "a": 2,
+            "b": 27,
+            "c": 75,
+            "d": 251,
+            "e": 0,
+            "h": 27,
+            "l": 81,
+            "sp": 65517,
+            "pc": 40934,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": true
+            }
+          },
+          "after": {
+            "a": 2,
+            "b": 27,
+            "c": 75,
+            "d": 251,
+            "e": 0,
+            "h": 27,
+            "l": 81,
+            "sp": 65515,
+            "pc": 41030,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": true
+            }
+          },
+          "sp_before": 65517,
+          "sp_after": 65515,
+          "call_return_address": 40937,
+          "reads": [],
+          "writes": [
+            {
+              "address": 65516,
+              "old_value": null,
+              "new_value": 159
+            },
+            {
+              "address": 65515,
+              "old_value": null,
+              "new_value": 233
+            }
+          ],
+          "control": {
+            "kind": "call",
+            "target": 41030,
+            "taken": true
+          }
+        },
+        "ret": {
+          "step_index": 241993,
+          "pc": 41045,
+          "pc_after": 40937,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI1.OVL",
+              "identity": "0:0:PLI1.OVL"
+            },
+            "offset": 32341
+          },
+          "target_origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI1.OVL",
+              "identity": "0:0:PLI1.OVL"
+            },
+            "offset": 32233
+          },
+          "runtime_pc": 41045,
+          "bytes": "C9",
+          "disassembly": "RET",
+          "source": "memory",
+          "before": {
+            "a": 10,
+            "b": 29,
+            "c": 140,
+            "d": 171,
+            "e": 74,
+            "h": 29,
+            "l": 149,
+            "sp": 65515,
+            "pc": 41045,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": false,
+              "carry": true
+            }
+          },
+          "after": {
+            "a": 10,
+            "b": 29,
+            "c": 140,
+            "d": 171,
+            "e": 74,
+            "h": 29,
+            "l": 149,
+            "sp": 65517,
+            "pc": 40937,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": false,
+              "carry": true
+            }
+          },
+          "sp_before": 65515,
+          "sp_after": 65517,
+          "call_return_address": null,
+          "reads": [
+            {
+              "address": 65515,
+              "value": 233
+            },
+            {
+              "address": 65516,
+              "value": 159
+            }
+          ],
+          "writes": [],
+          "control": {
+            "kind": "return",
+            "target": 40937,
+            "taken": true
+          }
+        }
+      },
+      "behavioral_contract": {
+        "classification": "DEDUCED",
+        "description": "Read cursor word atAE4F (H also fetches neighboring cacheAE50); pass only low cursor byteC to complete7A79. Publish returned mapped word low/high toAE52/53 before emission. Set C=returned word.low and call resident0EF6 at its established partial success scope. Wrapper returns exactly emitter registers/flags; A is not independently a selected word result. Own writes only AE52/53 and CALL stack; mapping scratchAE38 and buffer/index/scratch effects belong to callees. No own cursor, mapped-table or auxiliary-table mutation. General emitter error/flush paths remain partial.",
+        "pseudocode": "C=byte[AE4F]; w=word[AB49+2*byte[AA1F+C]]; word[AE52]=w; emit0EF6(C=w.low) [partial success]; RET emitter_state",
+        "scope_and_limits": "own word-copy/low-byte-emission operation at complete7A79 scope and existing partial0EF6 success/nonaliasing scope; error/flush alternatives delegated",
+        "basis": "7 corrected MINIMAL invocations; selected witness/packet contract checks",
+        "report_ref": "../minimal-baseline/pass-7/README.md"
+      }
+    },
+    {
+      "id": "PLI1.OVL+7E56",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "start_offset": 32342,
+      "end_offset": 32351,
+      "description": "emit fresh cached mapped-word high byte",
+      "inputs_and_effects": "LHLD AE52 reads both cached word bytes even though low byte is unused. Set C=H, the freshly read high byte, and call existing partial0EF6. Return emitter-derived registers/flags; own body writes only nested CALL stack, no mapped/auxiliary/cursor/cache writes. Word cache is read independently of the earlier7E46 register result. Error/flush scope stays partial.",
+      "downstream_helpers_runtime": "PLI.COM+0EF6@0FF6",
+      "unresolved": "partial helper contract: resident +0EF6 error/flush paths remain outside its established success scope.",
+      "instructions": [
+        {
+          "offset": 32342,
+          "bytes": "2A52AE",
+          "decoded": "LHLD AE52H",
+          "runtime_pc": 41046,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 7,
+              "first_step": 241998,
+              "last_step": 270736
+            }
+          ]
+        },
+        {
+          "offset": 32345,
+          "bytes": "7C",
+          "decoded": "MOV A,H",
+          "runtime_pc": 41049,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 7,
+              "first_step": 241999,
+              "last_step": 270737
+            }
+          ]
+        },
+        {
+          "offset": 32346,
+          "bytes": "4F",
+          "decoded": "MOV C,A",
+          "runtime_pc": 41050,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 7,
+              "first_step": 242000,
+              "last_step": 270738
+            }
+          ]
+        },
+        {
+          "offset": 32347,
+          "bytes": "CDF60F",
+          "decoded": "CALL 0FF6H",
+          "runtime_pc": 41051,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 7,
+              "first_step": 242001,
+              "last_step": 270739
+            }
+          ]
+        },
+        {
+          "offset": 32350,
+          "bytes": "C9",
+          "decoded": "RET",
+          "runtime_pc": 41054,
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 7,
+              "first_step": 242016,
+              "last_step": 270754
+            }
+          ]
+        }
+      ],
+      "observed_callers": [
+        {
+          "run": "MINIMAL",
+          "image": "PLI1.OVL",
+          "offset": 32241,
+          "bytes": "CD56A0",
+          "execution_count": 7,
+          "first_step": 241997
+        }
+      ],
+      "observed_return_offsets": [
+        32350
+      ],
+      "matched_return_sample": {
+        "relation": "OBSERVED corrected hardware-frame return with original concrete slot bytes",
+        "call": {
+          "step_index": 241997,
+          "pc": 40945,
+          "pc_after": 41046,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI1.OVL",
+              "identity": "0:0:PLI1.OVL"
+            },
+            "offset": 32241
+          },
+          "target_origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI1.OVL",
+              "identity": "0:0:PLI1.OVL"
+            },
+            "offset": 32342
+          },
+          "runtime_pc": 40945,
+          "bytes": "CD56A0",
+          "disassembly": "CALL A056H",
+          "source": "memory",
+          "before": {
+            "a": 2,
+            "b": 29,
+            "c": 140,
+            "d": 171,
+            "e": 74,
+            "h": 29,
+            "l": 149,
+            "sp": 65517,
+            "pc": 40945,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 2,
+            "b": 29,
+            "c": 140,
+            "d": 171,
+            "e": 74,
+            "h": 29,
+            "l": 149,
+            "sp": 65515,
+            "pc": 41046,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "sp_before": 65517,
+          "sp_after": 65515,
+          "call_return_address": 40948,
+          "reads": [],
+          "writes": [
+            {
+              "address": 65516,
+              "old_value": null,
+              "new_value": 159
+            },
+            {
+              "address": 65515,
+              "old_value": null,
+              "new_value": 244
+            }
+          ],
+          "control": {
+            "kind": "call",
+            "target": 41046,
+            "taken": true
+          }
+        },
+        "ret": {
+          "step_index": 242016,
+          "pc": 41054,
+          "pc_after": 40948,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI1.OVL",
+              "identity": "0:0:PLI1.OVL"
+            },
+            "offset": 32350
+          },
+          "target_origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI1.OVL",
+              "identity": "0:0:PLI1.OVL"
+            },
+            "offset": 32244
+          },
+          "runtime_pc": 41054,
+          "bytes": "C9",
+          "disassembly": "RET",
+          "source": "memory",
+          "before": {
+            "a": 11,
+            "b": 29,
+            "c": 140,
+            "d": 171,
+            "e": 74,
+            "h": 29,
+            "l": 150,
+            "sp": 65515,
+            "pc": 41054,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": true
+            }
+          },
+          "after": {
+            "a": 11,
+            "b": 29,
+            "c": 140,
+            "d": 171,
+            "e": 74,
+            "h": 29,
+            "l": 150,
+            "sp": 65517,
+            "pc": 40948,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": true
+            }
+          },
+          "sp_before": 65515,
+          "sp_after": 65517,
+          "call_return_address": null,
+          "reads": [
+            {
+              "address": 65515,
+              "value": 244
+            },
+            {
+              "address": 65516,
+              "value": 159
+            }
+          ],
+          "writes": [],
+          "control": {
+            "kind": "return",
+            "target": 40948,
+            "taken": true
+          }
+        }
+      },
+      "behavioral_contract": {
+        "classification": "DEDUCED",
+        "description": "LHLD AE52 reads both cached word bytes even though low byte is unused. Set C=H, the freshly read high byte, and call existing partial0EF6. Return emitter-derived registers/flags; own body writes only nested CALL stack, no mapped/auxiliary/cursor/cache writes. Word cache is read independently of the earlier7E46 register result. Error/flush scope stays partial.",
+        "pseudocode": "w=word[AE52]; emit0EF6(C=w.high) [partial success]; RET emitter_state",
+        "scope_and_limits": "own high-byte-emission operation at existing partial0EF6 success/nonaliasing scope; cached word read fresh; error/flush alternatives delegated",
+        "basis": "7 corrected MINIMAL invocations; selected witness/packet contract checks",
+        "report_ref": "../minimal-baseline/pass-7/README.md"
       }
     }
   ]

@@ -2942,10 +2942,71 @@ PLI1_7A74: DAD B ; HL=u16(HL+BC); only CY changes (word overflow) ; +7A74 runtim
 PLI1_7A75: MVI A,07H ; A = 07H; flags preserved ; +7A75 runtime=9C75H OBSERVED
 PLI1_7A77: ANA M ; A=A & byte[HL]; logical flags, CY=0 ; +7A77 runtime=9C77H OBSERVED
 PLI1_7A78: RET ; consume original hardware return word at entry SP; SP=entry_SP+2; flags preserved ; +7A78 runtime=9C78H OBSERVED
-; SECTION [7A79,7AA9) RAW
-PLI1_7A79: DB 021H,038H,0AEH,071H,02AH,038H,0AEH ; +7A79 runtime=9C79H RAW
-PLI1_7A80: DB 026H,000H,001H,01FH,0AAH,009H,04EH,006H,000H,021H,049H,0ABH,009H,009H,05EH,023H ; +7A80 runtime=9C80H RAW
-PLI1_7A90: DB 056H,0EBH,0C9H,021H,039H,0AEH,071H,02AH,039H,0AEH,026H,000H,001H,01FH,0AAH,009H ; +7A90 runtime=9C90H RAW
+
+; @procedure-v1 PLI1.OVL+7A79
+; ProcedureHypothesis: load a word through the position map
+; Entry: PLI1_7A79 = PLI1.OVL+7A79 @ 9C79H; SHA-256
+;   1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564
+; Extent: HYPOTHESIS [7A79,7A93) file offsets; overlapping entries: none established
+; Callers: OBSERVED PLI1.OVL+3293 (MINIMAL=1); PLI1.OVL+7BCC (MINIMAL=3); PLI1.OVL+7E4A
+;   (MINIMAL=7)
+; Returns: OBSERVED/DEDUCED ordinary hardware CALL word; original slot unchanged, SP after
+;   RET=entry_SP+2; PLI1.OVL+7A92
+; Inputs: DEDUCED C=position, A/NZPA preserved input state; readable position map and selected
+;   little-endian word
+; Outputs: DEDUCED HL=selected word; BC=map index; DE=word high-byte address; A/NZPA preserved;
+;   CY0
+; Clobbers: DEDUCED BC,DE,HL,CY; AE38; A and NZPA preserved; no stack writes beyond caller CALL
+; Memory: DEDUCED mapped_word_position=AE38H (saved position for double-indexed word lookup);
+;   position_map=AA1FH (first-stage byte mapping indexed by unsigned C);
+;   mapped_word_table=AB49H (little-endian words at base+2*position_map index;
+;   capacity/producer unknown); F=entry_SP; zero-byte reserved local frame; temporary
+;   saves/CALL words below F; original return word at F.
+; Direct callees: OBSERVED none
+; Coverage: OBSERVED MINIMAL: 11 CALLs; 26/26 bytes represented as instructions; Corrected matched
+;   hardware returns; no recursion, no reserved local frame; below-entry saves/CALL words
+;   only.
+; Unresolved: No unresolved local operation at declared scope; broader storage
+;   producers/capacity/alias relationships remain general provenance questions.
+; Contract: DEDUCED (complete; scope: exact local operation with 16-bit address/word and 8-bit
+;   value wrapping; nonaliasing named scratch/table/return stack; no source-language
+;   meaning) Save input C toAE38; LHLD also reads adjacentAE39, then MVI H,0 discards it.
+;   j=byte[AA1F+unsigned(C)]; load low/high word at AB49+2*j intoDE, then XCHG returns
+;   this word inHL. BC=j, DE=AB4A+2*j, A and NZPA preserved, CY0 from final DAD B. Only
+;   scratchAE38 is written; table capacity and word meanings unknown.
+; Hypothesis: none beyond the low-level operational description
+; Completeness: bounds=stable; control_flow=complete; contract=complete
+; Evidence: evidence.json#seeds/PLI1.OVL+7A79;
+;   ../minimal-baseline/pass-7/structural.json#PLI1.OVL+7A79;
+;   ../minimal-baseline/pass-7/README.md
+; Procedure pseudo (operational; byte/word arithmetic wraps):
+;   byte[AE38]=C; j=byte[AA1F+C]; HL=word[AB49+2*j]; DE=AB4A+2*j; BC=j; RET
+; @end-procedure-v1 PLI1.OVL+7A79
+; SECTION [7A79,7A93) UNDERSTOOD
+; @block-pseudo 7A79
+; pseudo:
+; | save positionAE38; zero-extend low byte after adjacent read; j=position_map[AA1F+C]
+PLI1_7A79: LXI H,0AE38H ; HL = mapped_word_position (AE38H) (literal address/value) ; +7A79 runtime=9C79H OBSERVED
+PLI1_7A7C: MOV M,C ; byte[HL] = C; flags preserved ; +7A7C runtime=9C7CH OBSERVED
+PLI1_7A7D: LHLD 0AE38H ; HL = little_endian_word[mapped_word_position (AE38H)]; low byte then high byte, flags preserved ; +7A7D runtime=9C7DH OBSERVED
+PLI1_7A80: MVI H,00H ; H = 00H; flags preserved ; +7A80 runtime=9C80H OBSERVED
+PLI1_7A82: LXI B,0AA1FH ; BC = position_map (AA1FH) (literal address/value) ; +7A82 runtime=9C82H OBSERVED
+PLI1_7A85: DAD B ; HL=u16(HL+BC); only CY changes (word overflow) ; +7A85 runtime=9C85H OBSERVED
+PLI1_7A86: MOV C,M ; C = byte[HL]; flags preserved ; +7A86 runtime=9C86H OBSERVED
+PLI1_7A87: MVI B,00H ; B = 00H; flags preserved ; +7A87 runtime=9C87H OBSERVED
+; @block-pseudo 7A89
+; pseudo:
+; | word_address=AB49+2*j; read low then high; HL=word, DE=word_address+1; RET
+PLI1_7A89: LXI H,0AB49H ; HL = mapped_word_table (AB49H) (literal address/value) ; +7A89 runtime=9C89H OBSERVED
+PLI1_7A8C: DAD B ; HL=u16(HL+BC); only CY changes (word overflow) ; +7A8C runtime=9C8CH OBSERVED
+PLI1_7A8D: DAD B ; HL=u16(HL+BC); only CY changes (word overflow) ; +7A8D runtime=9C8DH OBSERVED
+PLI1_7A8E: MOV E,M ; E = byte[HL]; flags preserved ; +7A8E runtime=9C8EH OBSERVED
+PLI1_7A8F: INX H ; HL=u16(HL+1); flags preserved ; +7A8F runtime=9C8FH OBSERVED
+PLI1_7A90: MOV D,M ; D = byte[HL]; flags preserved ; +7A90 runtime=9C90H OBSERVED
+PLI1_7A91: XCHG ; swap HL and DE; flags preserved ; +7A91 runtime=9C91H OBSERVED
+PLI1_7A92: RET ; consume original hardware return word at entry SP; SP=entry_SP+2; flags preserved ; +7A92 runtime=9C92H OBSERVED
+; SECTION [7A93,7AA9) RAW
+PLI1_7A93: DB 021H,039H,0AEH,071H,02AH,039H,0AEH,026H,000H,001H,01FH,0AAH,009H ; +7A93 runtime=9C93H RAW
 PLI1_7AA0: DB 04EH,006H,000H,021H,073H,0ACH,009H,07EH,0C9H ; +7AA0 runtime=9CA0H RAW
 
 ; @procedure-v1 PLI1.OVL+7AA9
@@ -3002,10 +3063,65 @@ PLI1_7AB9: LXI H,0AD08H ; HL = auxiliary_mapped_table (AD08H) (literal address/v
 PLI1_7ABC: DAD B ; HL=u16(HL+BC); only CY changes (word overflow) ; +7ABC runtime=9CBCH OBSERVED
 PLI1_7ABD: MOV A,M ; A = byte[HL]; flags preserved ; +7ABD runtime=9CBDH OBSERVED
 PLI1_7ABE: RET ; consume original hardware return word at entry SP; SP=entry_SP+2; flags preserved ; +7ABE runtime=9CBEH OBSERVED
-; SECTION [7ABF,7AD5) RAW
-PLI1_7ABF: DB 021H ; +7ABF runtime=9CBFH RAW
-PLI1_7AC0: DB 03BH,0AEH,071H,02AH,03BH,0AEH,026H,000H,001H,01FH,0AAH,009H,04EH,006H,000H,021H ; +7AC0 runtime=9CC0H RAW
-PLI1_7AD0: DB 09DH,0ADH,009H,07EH,0C9H ; +7AD0 runtime=9CD0H RAW
+
+; @procedure-v1 PLI1.OVL+7ABF
+; ProcedureHypothesis: read second auxiliary byte through position map
+; Entry: PLI1_7ABF = PLI1.OVL+7ABF @ 9CBFH; SHA-256
+;   1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564
+; Extent: HYPOTHESIS [7ABF,7AD5) file offsets; overlapping entries: none established
+; Callers: OBSERVED PLI1.OVL+3289 (MINIMAL=1); PLI1.OVL+7E0D (MINIMAL=1); PLI1.OVL+80A5
+;   (MINIMAL=12)
+; Returns: OBSERVED/DEDUCED ordinary hardware CALL word; original slot unchanged, SP after
+;   RET=entry_SP+2; PLI1.OVL+7AD4
+; Inputs: DEDUCED C=position; readable position map and selected second auxiliary byte; DE/NZPA
+;   preserved
+; Outputs: DEDUCED A=selected second auxiliary byte; BC=j; HL=AD9D+j; DE/NZPA preserved; CY0
+; Clobbers: DEDUCED A,BC,HL,CY; AE3B; DE/NZPA preserved; no stack writes beyond caller CALL
+; Memory: DEDUCED second_auxiliary_position=AE3BH (saved position for second auxiliary byte read);
+;   position_map=AA1FH (first-stage byte mapping indexed by unsigned C);
+;   second_auxiliary_byte_table=AD9DH (byte[AD9D+position_map[C]] read by7ABF; distinct
+;   numeric base, capacity/producers unknown); F=entry_SP; zero-byte reserved local frame;
+;   temporary saves/CALL words below F; original return word at F.
+; Direct callees: OBSERVED none
+; Coverage: OBSERVED MINIMAL: 14 CALLs; 22/22 bytes represented as instructions; Corrected matched
+;   hardware returns; no recursion, no reserved local frame; below-entry saves/CALL words
+;   only.
+; Unresolved: No unresolved local operation at declared scope; broader storage
+;   producers/capacity/alias relationships remain general provenance questions.
+; Contract: DEDUCED (complete; scope: exact local operation with 16-bit address/word and 8-bit
+;   value wrapping; nonaliasing named scratch/table/return stack; no source-language
+;   meaning) Save input C atAE3B, read j=byte[AA1F+unsigned(C)] and return byte[AD9D+j].
+;   BC=j, HL=AD9D+j, DE/NZPA preserved, CY0 from DAD B. Only AE3B is written. Returned A
+;   is data; flags are not recomputed for the byte. This AD9D table is distinct from
+;   mapped AAB4, primary auxiliary AD08 and packed attributes1B4B; no
+;   capacity/disjoint-array inference.
+; Hypothesis: none beyond the low-level operational description
+; Completeness: bounds=stable; control_flow=complete; contract=complete
+; Evidence: evidence.json#seeds/PLI1.OVL+7ABF;
+;   ../minimal-baseline/pass-7/structural.json#PLI1.OVL+7ABF;
+;   ../minimal-baseline/pass-7/README.md
+; Procedure pseudo (operational; byte/word arithmetic wraps):
+;   byte[AE3B]=C; j=byte[AA1F+C]; A=byte[AD9D+j]; BC=j; HL=AD9D+j; RET
+; @end-procedure-v1 PLI1.OVL+7ABF
+; SECTION [7ABF,7AD5) UNDERSTOOD
+; @block-pseudo 7ABF
+; pseudo:
+; | save positionAE3B; zero-extend after reading adjacentAE3C; j=position_map[AA1F+C]
+PLI1_7ABF: LXI H,0AE3BH ; HL = second_auxiliary_position (AE3BH) (literal address/value) ; +7ABF runtime=9CBFH OBSERVED
+PLI1_7AC2: MOV M,C ; byte[HL] = C; flags preserved ; +7AC2 runtime=9CC2H OBSERVED
+PLI1_7AC3: LHLD 0AE3BH ; HL = little_endian_word[second_auxiliary_position (AE3BH)]; low byte then high byte, flags preserved ; +7AC3 runtime=9CC3H OBSERVED
+PLI1_7AC6: MVI H,00H ; H = 00H; flags preserved ; +7AC6 runtime=9CC6H OBSERVED
+PLI1_7AC8: LXI B,0AA1FH ; BC = position_map (AA1FH) (literal address/value) ; +7AC8 runtime=9CC8H OBSERVED
+PLI1_7ACB: DAD B ; HL=u16(HL+BC); only CY changes (word overflow) ; +7ACB runtime=9CCBH OBSERVED
+PLI1_7ACC: MOV C,M ; C = byte[HL]; flags preserved ; +7ACC runtime=9CCCH OBSERVED
+PLI1_7ACD: MVI B,00H ; B = 00H; flags preserved ; +7ACD runtime=9CCDH OBSERVED
+; @block-pseudo 7ACF
+; pseudo:
+; | read byte[AD9D+j]; no returned-byte flag calculation; RET
+PLI1_7ACF: LXI H,0AD9DH ; HL = second_auxiliary_byte_table (AD9DH) (literal address/value) ; +7ACF runtime=9CCFH OBSERVED
+PLI1_7AD2: DAD B ; HL=u16(HL+BC); only CY changes (word overflow) ; +7AD2 runtime=9CD2H OBSERVED
+PLI1_7AD3: MOV A,M ; A = byte[HL]; flags preserved ; +7AD3 runtime=9CD3H OBSERVED
+PLI1_7AD4: RET ; consume original hardware return word at entry SP; SP=entry_SP+2; flags preserved ; +7AD4 runtime=9CD4H OBSERVED
 
 ; @procedure-v1 PLI1.OVL+7AD5
 ; ProcedureHypothesis: write mapped byte at position-selected slot
@@ -3358,75 +3474,90 @@ PLI1_7BBB: STA 0AE33H ; AE33=fresh map index; A retained independently as return
 PLI1_7BBE: RET ; consume original hardware return word at entry SP; SP=entry_SP+2; flags preserved ; +7BBE runtime=9DBEH OBSERVED
 
 ; @procedure-v1 PLI1.OVL+7BBF
-; ProcedureHypothesis: scoped packed-word loop and auxiliary publication
+; ProcedureHypothesis: bounded left-shift scan until top-bit transition, then auxiliary publication
 ; Entry: PLI1_7BBF = PLI1.OVL+7BBF @ 9DBFH; SHA-256
 ;   1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564
 ; Extent: HYPOTHESIS [7BBF,7C1B) file offsets; overlapping entries: none established
 ; Callers: OBSERVED PLI1.OVL+7C37 (MINIMAL=3)
 ; Returns: OBSERVED/DEDUCED ordinary hardware CALL word; original slot unchanged, SP after
 ;   RET=entry_SP+2; PLI1.OVL+7C1A
-; Inputs: DEDUCED C=position; opaque helper state and tables; scratchAE4B..AE4E
-; Outputs: DEDUCED A=final counter; auxiliary mapped publication via +7B2E; packed-word writes use
-;   helper-derived pointers; registers/flags inherited from opaque operations and final
-;   writer
-; Clobbers: DEDUCED A,BC,DE,HL,flags; scratchAE4B..4E, indirect word writes, transient saves;
-;   opaque helper effects remain explicit
+; Inputs: DEDUCED C=position; readable position_map and selected wordAB49+2*j; writable
+;   scratch/selected auxiliary byte; stack/table/scratch nonaliasing
+; Outputs: DEDUCED shifted wordAE4D; counterAE4C=16-shifts in0..15, shifts1..16; auxiliary
+;   selected byte=counter; A=counter, BC=fresh map index, HL=AD08+index,
+;   DE=counter+256*final_word.low; CY0, NZPA final mask ANA
+; Clobbers: DEDUCED A,BC,DE,HL,flags; AE38,AE43/44,AE4B..4E, selected auxiliary byte, transient
+;   saved mask/word and CALL stack; original return slot unchanged
 ; Memory: DEDUCED packed_loop_position=AE4BH (saved input position for final auxiliary write);
-;   packed_loop_counter=AE4CH (byte counter initialized15, decremented on equal-word
-;   repeat); packed_loop_word=AE4DH (opaque word result mutated by helper-derived writes);
-;   auxiliary_mapped_table=AD08H (position-map-indexed auxiliary bytes; +7AA9 reads, +7B2E
-;   writes; capacity unknown); position_map=AA1FH (first-stage byte mapping indexed by
-;   unsigned C); F=entry_SP; zero-byte reserved local frame; temporary saves/CALL words
-;   below F; original return word at F.
+;   packed_loop_counter=AE4CH (starts15; decremented after same-top-bit shifts;
+;   returned/published value16-total_shifts); packed_loop_word=AE4DH (mapped input word then
+;   repeatedly doubled/left-shifted modulo65536 atAE4D/4E); auxiliary_mapped_table=AD08H
+;   (position-map-indexed auxiliary bytes; +7AA9 reads, +7B2E writes; capacity unknown);
+;   position_map=AA1FH (first-stage byte mapping indexed by unsigned C);
+;   mapped_word_position=AE38H (saved position for double-indexed word lookup);
+;   mapped_word_table=AB49H (little-endian words at base+2*position_map index;
+;   capacity/producer unknown); auxiliary_write_position=AE43H (saved byte position for
+;   indirect table publication); auxiliary_write_value=AE44H (saved E byte for indirect
+;   table publication); F=entry_SP; zero-byte reserved local frame; temporary saves/CALL
+;   words below F; original return word at F.
 ; Direct callees: OBSERVED PLI1.OVL+7A79 @9C79H; PLI1.OVL+82E1 @A4E1H; PLI1.OVL+82BB @A4BBH;
 ;   PLI1.OVL+82C9 @A4C9H; PLI.COM+1A2C @1B2CH; PLI1.OVL+7B2E @9D2EH
 ; Coverage: OBSERVED MINIMAL: 3 CALLs; 92/92 bytes represented as instructions; Corrected matched
 ;   hardware returns; no recursion, no reserved local frame; below-entry saves/CALL words
 ;   only.
-; Unresolved: missing helper algorithm: +7A79/+82E1/+82BB/+82C9; prefer existing helper analysis
-;   before fixtures. / missing alias/precondition: general survival of saved mask/word
-;   across opaque helpers; observed survival checked only in three invocations.
-; Contract: DEDUCED (partial; scope: observed three +7C1B mapped-byte0A invocations; opaque
-;   +7A79/+82E1/+82BB/+82C9 effects explicitly delegated; saved stack byte survival is
-;   observed, not a general preservation contract) Save positionAE4B=C, set
-;   counterAE4C=0F; opaque +7A79(C) returns HL stored atAE4D/4E. Each loop saves FF/00
-;   mask(counter!=0), sets DE=8000 and HL=&AE4D, calls opaque +82E1, saves returnedHL,
-;   sets HL=DE-1 and DE=DE-1, calls opaque +82BB. XCHG/DCX then writes returned word
-;   through a helper-derived address low/high; +82C9(HL=8000) supplies another opaque
-;   word. Restore savedHL intoDE; complete resident +1A2C subtracts this DE from fresh HL.
-;   ORA L tests full subtraction result (A is high result); SUI1/SBB A gives FF iff word
-;   difference==0. POP B/MOV C,B/ANA C/RAR/JNC stops iff saved mask.bit0 clear OR
-;   difference nonzero. On recorded stack-preserved paths this means counter==0 OR unequal
-;   words; otherwise counter-- and repeat. Final +7B2E writes current counter to auxiliary
-;   table selected by saved position; return A=counter. Counters end1,0A,1 with15,6,15
-;   comparisons. Opaque packed-word algorithms and their general memory/register
-;   guarantees prevent a complete contract.
+; Unresolved: unobserved path outcome: counter-zero exit never selected in three captures; exact
+;   observed instructions/contracts still establish its bounded operation without new
+;   byte promotion. / alias/precondition and general provenance: arbitrary
+;   table/stack/scratch overlap, input word/table producers and capacity remain outside
+;   declared scope; no source-language ownership meaning.
+; Contract: DEDUCED (complete; scope: nonaliasing scratchAE38/AE43..AE4E, selected table bytes and
+;   original/temporary return-stack slots; complete +7A79/+82E1/+82BB/+82C9/+1A2C/+7B2E
+;   contracts; no concurrent mutation) Save input position atAE4B, counterAE4C=15; load
+;   word[AB49+2*position_map[position]] intoAE4D/4E via7A79. Each iteration saves
+;   mask(counter!=0) and old_top=word[AE4D]&8000. The returned high-byte pointer from82E1
+;   is decremented toAE4D in bothHL/DE;82BB reads the SAME scratch word twice, returning
+;   u16(2*word) andDE=AE4E. XCHG/DCX publishes doubled word low/high back toAE4D/4E.82C9
+;   extracts new_top=doubled&8000. Restore old_top from stack; complete1A2C computes
+;   new_top-old_top. ORA L/SUI1/SBB A yields FF iff full difference is zero; AND restored
+;   counter-nonzero mask, RAR/JNC exits iff counter==0 OR old_top!=new_top. Otherwise
+;   decrement counter and repeat. The shift occurs before the counter test, so at most16
+;   shifts, counter=16-shift_count; counter-zero exit still performs the sixteenth shift.
+;   Three observed runs: initial0001/0252/0001, shift counts15/6/15, final8000/9480/8000,
+;   counters1/10/1. Final7B2E writes counter toAD08+fresh position_map[saved position];
+;   returnA=counter, BC=fresh index, HL=auxiliary address, DE=counter+256*(final shifted
+;   word.low), CY0. NZPA retain final ANA of equality/counter masks; Z1/S0/P1, auxiliary
+;   carry depends on operands. Position, input word-table slot and saved stack values
+;   remain intact at scope; shifted scratch publication and auxiliary publication are
+;   separate. No word-table capacity or source-language meaning inferred.
 ; Hypothesis: none beyond the low-level operational description
-; Completeness: bounds=stable; control_flow=complete; contract=partial
+; Completeness: bounds=stable; control_flow=complete; contract=complete
 ; Evidence: evidence.json#seeds/PLI1.OVL+7BBF;
-;   ../minimal-baseline/pass-5/structural.json#PLI1.OVL+7BBF
+;   ../minimal-baseline/pass-5/structural.json#PLI1.OVL+7BBF;
+;   ../minimal-baseline/pass-7/README.md
 ; Procedure pseudo (operational; byte/word arithmetic wraps):
-;   byte[AE4B]=C; byte[AE4C]=15; word[AE4D]=opaque7A79(C).HL; loop { save mask(counter!=0);
-;   opaque82E1(DE=8000,HL=&AE4D); save HL; HL=DE-1; DE--; opaque82BB(); swapHL_DE(); HL--;
-;   byte[HL]=E; byte[HL+1]=D; opaque82C9(HL=8000); DE=pop_saved_HL();
-;   delta=subtract1A2C(HL,DE).HL; restored=pop_saved_mask(); if !(restored.bit0 && delta==0):
-;   break; byte[AE4C]--; }; write7B2E(C=byte[AE4B],E=byte[AE4C]); RET A=byte[AE4C]
+;   byte[AE4B]=C; byte[AE4C]=15; word[AE4D]=word[AB49+2*byte[AA1F+C]]; loop {
+;   positive=(byte[AE4C]!=0); old_top=word[AE4D]&8000; word[AE4D]=u16(2*word[AE4D]);
+;   new_top=word[AE4D]&8000; if !(positive && new_top==old_top): break; byte[AE4C]--; };
+;   i=byte[AA1F+byte[AE4B]]; byte[AD08+i]=byte[AE4C]; RET A=byte[AE4C]
 ; @end-procedure-v1 PLI1.OVL+7BBF
-; SECTION [7BBF,7C1B) STRUCTURED
+; SECTION [7BBF,7C1B) UNDERSTOOD
 ; @block-pseudo 7BBF
 ; pseudo:
-; | save positionAE4B; counterAE4C=15; wordAE4D=opaque7A79(C).HL
+; | save position; counter15; load mapped wordAB49+2*position_map[position]
 PLI1_7BBF: LXI H,0AE4BH ; HL = packed_loop_position (AE4BH) (literal address/value) ; +7BBF runtime=9DBFH OBSERVED
 PLI1_7BC2: MOV M,C ; byte[HL] = C; flags preserved ; +7BC2 runtime=9DC2H OBSERVED
 PLI1_7BC3: LXI H,0AE4CH ; HL = packed_loop_counter (AE4CH) (literal address/value) ; +7BC3 runtime=9DC3H OBSERVED
 PLI1_7BC6: MVI M,0FH ; byte[HL] = 0FH; flags preserved ; +7BC6 runtime=9DC6H OBSERVED
 PLI1_7BC8: LHLD 0AE4BH ; HL = little_endian_word[packed_loop_position (AE4BH)]; low byte then high byte, flags preserved ; +7BC8 runtime=9DC8H OBSERVED
 PLI1_7BCB: MOV C,L ; C = L; flags preserved ; +7BCB runtime=9DCBH OBSERVED
-PLI1_7BCC: CALL 9C79H ; push following PC; invoke PLI1.OVL+7A79; opaque algorithm/effects remain delegated ; +7BCC runtime=9DCCH OBSERVED
+PLI1_7BCC: CALL 9C79H ; complete7A79 loads mapped word atAB49+2*j; A/NZPA preserved, DE=word high address ; +7BCC runtime=9DCCH OBSERVED
+; @block-pseudo 7BCF
+; pseudo:
+; | publish selected word toAE4D/4E
 PLI1_7BCF: SHLD 0AE4DH ; little_endian_word[packed_loop_word (AE4DH)] = HL; low byte then high byte ; +7BCF runtime=9DCFH OBSERVED
 ; @block-pseudo 7BD2
 ; pseudo:
-; | save FF/00 counter-nonzero mask; call opaque82E1 withDE8000 andHL=&AE4D
+; | positive=-[counter!=0] via SUB/SBB; save PSW A byte;82E1 returns old_top andDE=AE4E
 PLI1_7BD2: MVI A,00H ; A = 00H; flags preserved ; +7BD2 runtime=9DD2H OBSERVED
 PLI1_7BD4: LXI H,0AE4CH ; HL = packed_loop_counter (AE4CH) (literal address/value) ; +7BD4 runtime=9DD4H OBSERVED
 PLI1_7BD7: SUB M ; A=u8(A-byte[HL]); arithmetic flags including CY=borrow ; +7BD7 runtime=9DD7H OBSERVED
@@ -3434,59 +3565,61 @@ PLI1_7BD8: SBB A ; A=CY?FFH:00H; self-subtraction cancels old A; CY is retained 
 PLI1_7BD9: LXI D,8000H ; DE = 8000H (literal address/value) ; +7BD9 runtime=9DD9H OBSERVED
 PLI1_7BDC: LXI H,0AE4DH ; HL = packed_loop_word (AE4DH) (literal address/value) ; +7BDC runtime=9DDCH OBSERVED
 PLI1_7BDF: PUSH PSW ; push A/packed flags below SP; flags unchanged ; +7BDF runtime=9DDFH OBSERVED
-PLI1_7BE0: CALL 0A4E1H ; push following PC; invoke PLI1.OVL+82E1; opaque algorithm/effects remain delegated ; +7BE0 runtime=9DE0H OBSERVED
+PLI1_7BE0: CALL 0A4E1H ; HL=word[AE4D]&8000; DE=AE4E; BC preserved and no memory writes ; +7BE0 runtime=9DE0H OBSERVED
 ; @block-pseudo 7BE3
 ; pseudo:
-; | save returnedHL; HL=DE-1; DE--; call opaque82BB
+; | save old_top; both word pointers=AE4D;82BB doubles same scratch word
 PLI1_7BE3: PUSH H ; push H register pair below SP; flags unchanged ; +7BE3 runtime=9DE3H OBSERVED
 PLI1_7BE4: MOV H,D ; H = D; flags preserved ; +7BE4 runtime=9DE4H OBSERVED
 PLI1_7BE5: MOV L,E ; L = E; flags preserved ; +7BE5 runtime=9DE5H OBSERVED
 PLI1_7BE6: DCX H ; HL=u16(HL-1); flags preserved ; +7BE6 runtime=9DE6H OBSERVED
 PLI1_7BE7: DCX D ; DE=u16(DE-1); flags preserved ; +7BE7 runtime=9DE7H OBSERVED
-PLI1_7BE8: CALL 0A4BBH ; push following PC; invoke PLI1.OVL+82BB; opaque algorithm/effects remain delegated ; +7BE8 runtime=9DE8H OBSERVED
+PLI1_7BE8: CALL 0A4BBH ; HL and DE bothAE4D: read same scratch word twice; HL=u16(2*word), DE=AE4E ; +7BE8 runtime=9DE8H OBSERVED
 ; @block-pseudo 7BEB
 ; pseudo:
-; | store returned word through helper-derived pointer after XCHG/DCX; call opaque82C9(HL8000)
+; | XCHG/DCX proves destinationAE4D; publish doubled low/high;82C9 gives new_top=word&8000
 PLI1_7BEB: XCHG ; swap HL and DE; flags preserved ; +7BEB runtime=9DEBH OBSERVED
 PLI1_7BEC: DCX H ; HL=u16(HL-1); flags preserved ; +7BEC runtime=9DECH OBSERVED
-PLI1_7BED: MOV M,E ; byte[HL] = E; flags preserved ; +7BED runtime=9DEDH OBSERVED
+PLI1_7BED: MOV M,E ; shifted wordAE4D.low=E after XCHG/DCX establishes exact destination ; +7BED runtime=9DEDH OBSERVED
 PLI1_7BEE: INX H ; HL=u16(HL+1); flags preserved ; +7BEE runtime=9DEEH OBSERVED
-PLI1_7BEF: MOV M,D ; byte[HL] = D; flags preserved ; +7BEF runtime=9DEFH OBSERVED
+PLI1_7BEF: MOV M,D ; shifted wordAE4E.high=D; low/high publication precedes new-top-bit comparison ; +7BEF runtime=9DEFH OBSERVED
 PLI1_7BF0: LXI H,8000H ; HL = 8000H (literal address/value) ; +7BF0 runtime=9DF0H OBSERVED
-PLI1_7BF3: CALL 0A4C9H ; push following PC; invoke PLI1.OVL+82C9; opaque algorithm/effects remain delegated ; +7BF3 runtime=9DF3H OBSERVED
+PLI1_7BF3: CALL 0A4C9H ; HL=doubled word &8000; BC/DE preserved; no writes ; +7BF3 runtime=9DF3H OBSERVED
 ; @block-pseudo 7BF6
 ; pseudo:
-; | restore priorHL asDE; resident1A2C subtracts currentHL-DE
+; | restore old_top asDE;1A2C subtracts new_top-old_top
 PLI1_7BF6: POP D ; pop D pair, low byte then high; SP+=2; flags unchanged ; +7BF6 runtime=9DF6H OBSERVED
 PLI1_7BF7: CALL 1B2CH ; push following PC; invoke PLI.COM+1A2C; established complete contract at declared scope ; +7BF7 runtime=9DF7H OBSERVED
 ; @block-pseudo 7BFA
 ; pseudo:
-; | ORA L tests full word difference; equality FF/00 mask AND restored saved mask
-; | RAR/JNC exits iff combined.bit0==0; recorded saved mask means counter!=0;33 repeats,3 exits
+; | ORA L gives full difference; SUI1/SBB equality mask; AND restored positive; RAR/JNC exits iff counter0 OR top bit changed
 PLI1_7BFA: ORA L ; A=A  | L; logical flags, CY=0 ; +7BFA runtime=9DFAH OBSERVED
 PLI1_7BFB: SUI 01H ; A=u8(A-01H); arithmetic flags including CY=borrow ; +7BFB runtime=9DFBH OBSERVED
 PLI1_7BFD: SBB A ; A=CY?FFH:00H; self-subtraction cancels old A; CY is retained Boolean borrow ; +7BFD runtime=9DFDH OBSERVED
-PLI1_7BFE: POP B ; pop B pair, low byte then high; SP+=2; flags unchanged ; +7BFE runtime=9DFEH OBSERVED
+PLI1_7BFE: POP B ; restore saved counter-nonzero mask inB; pure word helpers preserve its stack bytes at nonaliasing scope ; +7BFE runtime=9DFEH OBSERVED
 PLI1_7BFF: MOV C,B ; C = B; flags preserved ; +7BFF runtime=9DFFH OBSERVED
 PLI1_7C00: ANA C ; A=A & C; logical flags, CY=0 ; +7C00 runtime=9E00H OBSERVED
 PLI1_7C01: RAR ; A=(old_CY<<7)|(old_A>>1); CY=old_A.bit0; NZPA preserved ; +7C01 runtime=9E01H OBSERVED
-PLI1_7C02: JNC 9E0CH ; if CY=0: PC=9E0CH; flags preserved ; +7C02 runtime=9E02H OBSERVED
+PLI1_7C02: JNC 9E0CH ; JNC exits iff counter==0 OR old_top!=new_top;33 repeat,3 exits; original positive/equality masks audited ; +7C02 runtime=9E02H OBSERVED
 ; @block-pseudo 7C05
 ; pseudo:
-; | counter--; repeat
+; | counter--; repeat; shift count at most16 because counter0 is tested after shift
 PLI1_7C05: LXI H,0AE4CH ; HL = packed_loop_counter (AE4CH) (literal address/value) ; +7C05 runtime=9E05H OBSERVED
 PLI1_7C08: DCR M ; byte[HL]=u8(byte[HL]-1); NZPA updated, CY preserved ; +7C08 runtime=9E08H OBSERVED
 PLI1_7C09: JMP 9DD2H ; if always: PC=9DD2H; flags preserved ; +7C09 runtime=9E09H OBSERVED
 ; @block-pseudo 7C0C
 ; pseudo:
-; | write counter to AD08+position_map[saved position] via7B2E; return counterA
+; | fresh map index selects AD08+j; publish counter via7B2E; DE combines counter with adjacent shifted-word low byte
 PLI1_7C0C: LHLD 0AE4BH ; HL = little_endian_word[packed_loop_position (AE4BH)]; low byte then high byte, flags preserved ; +7C0C runtime=9E0CH OBSERVED
 PLI1_7C0F: MOV C,L ; C = L; flags preserved ; +7C0F runtime=9E0FH OBSERVED
-PLI1_7C10: LHLD 0AE4CH ; HL = little_endian_word[packed_loop_counter (AE4CH)]; low byte then high byte, flags preserved ; +7C10 runtime=9E10H OBSERVED
+PLI1_7C10: LHLD 0AE4CH ; L=counterAE4C; H=shifted word.low atAE4D; XCHG passes E=counter, D=that neighboring byte ; +7C10 runtime=9E10H OBSERVED
 PLI1_7C13: XCHG ; swap HL and DE; flags preserved ; +7C13 runtime=9E13H OBSERVED
-PLI1_7C14: CALL 9D2EH ; push following PC; invoke PLI1.OVL+7B2E; established complete contract at declared scope ; +7C14 runtime=9E14H OBSERVED
+PLI1_7C14: CALL 9D2EH ; complete7B2E publishes counter to AD08+fresh position_map[saved position]; leaves shifted word/position intact ; +7C14 runtime=9E14H OBSERVED
+; @block-pseudo 7C17
+; pseudo:
+; | return counterA; flags final mask ANA except CY0 from writer DAD
 PLI1_7C17: LDA 0AE4CH ; A = byte[packed_loop_counter (AE4CH)]; flags preserved ; +7C17 runtime=9E17H OBSERVED
-PLI1_7C1A: RET ; consume original hardware return word at entry SP; SP=entry_SP+2; flags preserved ; +7C1A runtime=9E1AH OBSERVED
+PLI1_7C1A: RET ; RET A=counter; BC=fresh index, HL=auxiliary byte address, DE=counter+256*shifted.low; NZPA finalANA, CY0 ; +7C1A runtime=9E1AH OBSERVED
 
 ; @procedure-v1 PLI1.OVL+7C1B
 ; ProcedureHypothesis: scoped recursive mapped-position processing with five-byte frame
@@ -3498,13 +3631,14 @@ PLI1_7C1A: RET ; consume original hardware return word at entry SP; SP=entry_SP+
 ; Returns: OBSERVED/DEDUCED ordinary hardware CALL word; original slot unchanged, SP after
 ;   RET=entry_SP+2; PLI1.OVL+7C3D; PLI1.OVL+7D00; PLI1.OVL+7D52
 ; Inputs: DEDUCED C=position; readable mapped/position/packed-attribute/auxiliary tables;
-;   nonaliasing five-byte local frame and stack; partial +7BBF scope on mapped0A
-; Outputs: DEDUCED A=+7BBF result on0A, saved childA on17, cached initial auxiliary byte on
-;   default; HL=frameF3+256*F4; CY0 at observed returns; default NZPA from CMP0,0,
+;   nonaliasing five-byte local frame and stack; complete scoped +7BBF operation on mapped0A
+; Outputs: DEDUCED A=16-minus-topbit-scan-shifts on0A, saved childA on17, cached initial auxiliary
+;   byte on default; HL=frameF3+256*F4; CY0 at observed returns; default NZPA from CMP0,0,
 ;   BC=mapped byte for count0 or0 after children; other BC/DE/NZPA helper-derived;
 ;   auxiliary mutations on17 and0A; no claim of general helper purity
 ; Clobbers: DEDUCED A,BC,DE,HL,flags; five frame bytes, transient saves,
-;   mapper/attribute/auxiliary/skip scratch; +7BBF helper-derived mutations remain partial
+;   mapper/attribute/auxiliary/skip scratch; +7BBF selected word scratch, counter and
+;   auxiliary publication now established
 ; Memory: DEDUCED position_map=AA1FH (first-stage byte mapping indexed by unsigned C);
 ;   mapped_byte_table=AAB4H (second-stage byte table indexed by mapped j; type meaning
 ;   unknown); packed_attribute_table=1B4BH (byte-indexed fixed table; low3 bits read by
@@ -3516,6 +3650,10 @@ PLI1_7C1A: RET ; consume original hardware return word at entry SP; SP=entry_SP+
 ;   auxiliary_write_value=AE44H (saved E byte for indirect table publication);
 ;   reverse_skip_cursor=AE48H (byte cursor stepped backward until balance zero);
 ;   reverse_skip_balance=AE49H (wrapping byte balance: +low3 attribute-1 each scan);
+;   mapped_word_table=AB49H (little-endian words at base+2*position_map index;
+;   capacity/producer unknown); packed_loop_word=AE4DH (mapped input word then repeatedly
+;   doubled/left-shifted modulo65536 atAE4D/4E); packed_loop_counter=AE4CH (starts15;
+;   decremented after same-top-bit shifts; returned/published value16-total_shifts);
 ;   F=entrySP-5; F0=current position, F1=countdown, F2=child result, F3=mapped byte,
 ;   F4=cached auxiliary; hardware return atF+5; transient saves belowF.
 ; Direct callees: OBSERVED PLI1.OVL+7A4D @9C4DH; PLI1.OVL+7BBF @9DBFH; PLI1.OVL+7A4D @9C4DH;
@@ -3524,14 +3662,12 @@ PLI1_7C1A: RET ; consume original hardware return word at entry SP; SP=entry_SP+
 ; Coverage: OBSERVED MINIMAL: 16 CALLs; 203/312 bytes represented as instructions; 16 invocations
 ;   including7 recursive children;9 external calls;3 mapped0A,2 mapped17,11 default
 ;   returns. Initial PUSH bytes retained separately from later local assignments.
-; Unresolved: partial helper scope: +7BBF mapped0A operation still delegates
-;   +7A79/+82E1/+82BB/+82C9; observed effects are not a general contract. / unobserved
-;   branch: mapped1E/21 arm +7C56..+7CB6 and mapped17 predecessor!=0A +7CD0..+7CDB
-;   remain RAW. / arbitrary termination concern: recursion and +7B7A wrapping scan need
-;   valid table/frame/stack preconditions; no global tree or finite-depth theorem. /
-;   general provenance need: position-map/attribute/auxiliary producers and full alias
-;   scope.
-; Contract: DEDUCED (partial; scope: MINIMAL mapped0A at partial7BBF scope; mapped17 with
+; Unresolved: unobserved branch: mapped1E/21 arm +7C56..+7CB6 and mapped17 predecessor!=0A
+;   +7CD0..+7CDB remain RAW. / arbitrary termination concern: recursion and +7B7A
+;   wrapping scan need valid table/frame/stack preconditions; no global tree or
+;   finite-depth theorem. / general provenance need: position-map/attribute/auxiliary
+;   producers and full alias scope.
+; Contract: DEDUCED (partial; scope: MINIMAL mapped0A at complete bounded7BBF scope; mapped17 with
 ;   preceding mapped byte0A; default mapped bytes excluding1E/21/17/0A; child
 ;   frames/table/indirect writes nonaliasing with parent locals/return stack; RAW
 ;   alternatives and arbitrary recursion/scan termination excluded) Reserve five bytes
@@ -3539,12 +3675,14 @@ PLI1_7C1A: RET ; consume original hardware return word at entry SP; SP=entry_SP+
 ;   mutable cursor), F+1=default low3 attribute countdown, F+2=child returned byte,
 ;   F+3=mapped byte, F+4=default cached auxiliary byte. PUSH H initially writes inherited
 ;   HL bytes into F+1..4; these are not initialized semantic locals. Map F+0 via +7A4D
-;   into F+3. If mapped byte==0A, call partial +7BBF(C=F+0) and return its A. Otherwise
-;   equality masks for1E and21 are ORed; +7C53 JNC selects +7CB7 iff neither equality is
-;   true (13/13 observed); special arm RAW. If mapped byte==17, map u8(F+0-1); observed0A
-;   selects one recursive call at that preceding position, saves returnedA inF+2,
-;   publishes it via +7B2E to AD08+position_map[original F+0], and returns saved childA.
-;   Alternative preceding-map path remains RAW. Default: F+4=auxiliary7AA9(F+0);
+;   into F+3. If mapped byte==0A, call complete scoped +7BBF(C=F+0): load
+;   word[AB49+2*position_map[F+0]], double scratchAE4D until top-bit transition or16
+;   shifts, publish16-shifts to AD08+position_map[F+0], and return this counter A.
+;   Otherwise equality masks for1E and21 are ORed; +7C53 JNC selects +7CB7 iff neither
+;   equality is true (13/13 observed); special arm RAW. If mapped byte==17, map u8(F+0-1);
+;   observed0A selects one recursive call at that preceding position, saves returnedA
+;   inF+2, publishes it via +7B2E to AD08+position_map[original F+0], and returns saved
+;   childA. Alternative preceding-map path remains RAW. Default: F+4=auxiliary7AA9(F+0);
 ;   F+1=attributes7A63(F+0). While F+1>0 (CMP0,count/JNC exits exactly at zero), decrement
 ;   F+0, recurse there, save childA inF+2, call complete +7B7A at that same decremented
 ;   position, replace F+0 with its stopping cursor, decrement F+1. Return saved F+4, not
@@ -3557,13 +3695,15 @@ PLI1_7C1A: RET ; consume original hardware return word at entry SP; SP=entry_SP+
 ; Hypothesis: none beyond the low-level operational description
 ; Completeness: bounds=provisional; control_flow=partial; contract=partial
 ; Evidence: evidence.json#seeds/PLI1.OVL+7C1B;
-;   ../minimal-baseline/pass-5/structural.json#PLI1.OVL+7C1B
+;   ../minimal-baseline/pass-5/structural.json#PLI1.OVL+7C1B;
+;   ../minimal-baseline/pass-7/README.md
 ; Procedure pseudo (operational; byte/word arithmetic wraps):
-;   F=entrySP-5; F[0]=C; F[3]=map7A4D(F[0]); if F[3]==0A: RET partial7BBF(F[0]); if F[3] in
-;   {1E,21}: unresolved RAW arm; if F[3]==17 { if map7A4D(u8(F[0]-1))!=0A: unresolved RAW arm;
-;   F[2]=recurse(u8(F[0]-1)); write7B2E(C=F[0],E=F[2]); RET F[2]; }; F[4]=auxiliary7AA9(F[0]);
-;   F[1]=attributes7A63(F[0]); while F[1]!=0 { F[0]--; F[2]=recurse(F[0]); F[0]=reverse7B7A(F[0]);
-;   F[1]--; }; RET F[4]; deallocate5 with finalHL=F[3]+256*F[4]
+;   F=entrySP-5; F[0]=C; F[3]=map7A4D(F[0]); if F[3]==0A: RET bounded_topbit_scan7BBF(F[0]):
+;   publish16-shifts at auxiliary mapped slot, return counter; if F[3] in {1E,21}: unresolved RAW
+;   arm; if F[3]==17 { if map7A4D(u8(F[0]-1))!=0A: unresolved RAW arm; F[2]=recurse(u8(F[0]-1));
+;   write7B2E(C=F[0],E=F[2]); RET F[2]; }; F[4]=auxiliary7AA9(F[0]); F[1]=attributes7A63(F[0]);
+;   while F[1]!=0 { F[0]--; F[2]=recurse(F[0]); F[0]=reverse7B7A(F[0]); F[1]--; }; RET F[4];
+;   deallocate5 with finalHL=F[3]+256*F[4]
 ; @end-procedure-v1 PLI1.OVL+7C1B
 ; SECTION [7C1B,7C56) UNDERSTOOD
 ; @block-pseudo 7C1B
@@ -3588,11 +3728,12 @@ PLI1_7C2D: CPI 0AH ; flags = unsigned byte comparison A-0AH; A unchanged ; +7C2D
 PLI1_7C2F: JNZ 9E3EH ; if Z=0: PC=9E3EH; flags preserved ; +7C2F runtime=9E2FH OBSERVED
 ; @block-pseudo 7C32
 ; pseudo:
-; | mapped0A: partial7BBF(C=F0); return itsA
+; | mapped0A: complete7BBF loads selected word and performs bounded top-bit scan
+; | publish16-shifts to AD08+position_map[F0], return same counterA; other recursive/RAW paths stay partial
 PLI1_7C32: LXI H,0000H ; HL = 0000H (literal address/value) ; +7C32 runtime=9E32H OBSERVED
 PLI1_7C35: DAD SP ; HL=u16(HL+SP); only CY changes (word overflow) ; +7C35 runtime=9E35H OBSERVED
 PLI1_7C36: MOV C,M ; C = byte[HL]; flags preserved ; +7C36 runtime=9E36H OBSERVED
-PLI1_7C37: CALL 9DBFH ; push following PC; invoke PLI1.OVL+7BBF; established partial contract at declared scope ; +7C37 runtime=9E37H OBSERVED
+PLI1_7C37: CALL 9DBFH ; complete7BBF: mapped wordAB49+2*j left-shifted until top-bit transition or16; publish/return16-shifts to auxiliary slot ; +7C37 runtime=9E37H OBSERVED
 PLI1_7C3A: INX SP ; SP=u16(SP+1); flags preserved ; +7C3A runtime=9E3AH OBSERVED
 PLI1_7C3B: POP H ; pop H pair, low byte then high; SP+=2; flags unchanged ; +7C3B runtime=9E3BH OBSERVED
 PLI1_7C3C: POP H ; pop H pair, low byte then high; SP+=2; flags unchanged ; +7C3C runtime=9E3CH OBSERVED
@@ -3746,7 +3887,7 @@ PLI1_7D51: POP H ; pop H pair, low byte then high; SP+=2; flags unchanged ; +7D5
 PLI1_7D52: RET ; RET A=F4; finalPOP H yields L=F3,H=F4; CY0 from frame DAD; NZPA last helper/DCR ; +7D52 runtime=9F52H OBSERVED
 
 ; @procedure-v1 PLI1.OVL+7D53
-; ProcedureHypothesis: mapped-range traversal with scoped emission and opaque dispatch
+; ProcedureHypothesis: scoped reverse processing, attribute-dispatched emission and mapped-table recycling
 ; Entry: PLI1_7D53 = PLI1.OVL+7D53 @ 9F53H; SHA-256
 ;   1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564
 ; Extent: HYPOTHESIS [7D53,7E46) file offsets; overlapping entries: none established
@@ -3757,11 +3898,14 @@ PLI1_7D52: RET ; RET A=F4; finalPOP H yields L=F3,H=F4; CY0 from frame DAD; NZPA
 ; Inputs: DEDUCED byte begin/end/gate at AE34/AE35/AA1A, flags202B/2011, position_map AA1F,
 ;   mapped_byte_table AAB4; helper arguments/results and resident emission state at declared
 ;   callee scopes
-; Outputs: DEDUCED Early returns leave local work untouched. Seven work paths publish cursor/cache
-;   changes and end=begin; emitted C bytes use partial +0EF6 channel separately from cache
-;   stores. Registers/flags follow return path and delegated effects.
-; Clobbers: DEDUCED A,BC,DE,HL,flags; cursor/cache/end and transient stack; all delegated helper
-;   memory/host effects remain scoped or opaque
+; Outputs: DEDUCED Early-return state as before; work emits mapped bytes, low/high mapped words,
+;   primary auxiliary bytes and selected second auxiliary byte through scoped0EF6;
+;   end=fresh begin; distinct word-cacheAE52, byte cachesAE50/51, auxiliary reverse writes,
+;   mapped recycle updates and AE33 replacement. Registers/flags retain exact
+;   return-path/callee scope; no single Boolean or data A result inferred.
+; Clobbers: DEDUCED A,BC,DE,HL,flags; end/cursor/byte caches/word cache, named
+;   mapping/attribute/word/auxiliary scratch, mapped and auxiliary publications, transient
+;   stack; partial emitter buffer/index/scratch/host effects
 ; Memory: DEDUCED mapped_range_begin=AE34H (byte lower endpoint read by +7D53; zeroed by
 ;   initializer); mapped_range_end=AE35H (byte endpoint/read-write work control of +7D53;
 ;   zeroed by initializer); mapped_work_gate=AA1AH (bit0 later gates +7D53; cleared by
@@ -3777,9 +3921,17 @@ PLI1_7D52: RET ; RET A=F4; finalPOP H yields L=F3,H=F4; CY0 from frame DAD; NZPA
 ;   auxiliary_mapped_table=AD08H (position-map-indexed auxiliary bytes; +7AA9 reads, +7B2E
 ;   writes; capacity unknown); mapped_init_index=AE33H (byte counter during +8273
 ;   initialization, reset to zero; +7BA2 uses same storage as previous mapped-slot
-;   publication value then replaces it with current position-map index); F=entry_SP;
-;   zero-byte reserved local frame; temporary saves/CALL words below F; original return word
-;   at F.
+;   publication value then replaces it with current position-map index);
+;   mapped_word_table=AB49H (little-endian words at base+2*position_map index;
+;   capacity/producer unknown); mapped_word_position=AE38H (saved position for
+;   double-indexed word lookup); mapped_emit_word=AE52H (mapped word cached before low-byte
+;   emission; high byte freshly read by7E56); second_auxiliary_byte_table=AD9DH
+;   (byte[AD9D+position_map[C]] read by7ABF; distinct numeric base, capacity/producers
+;   unknown); second_auxiliary_position=AE3BH (saved position for second auxiliary byte
+;   read); packed_loop_word=AE4DH (mapped input word then repeatedly doubled/left-shifted
+;   modulo65536 atAE4D/4E); packed_loop_counter=AE4CH (starts15; decremented after
+;   same-top-bit shifts; returned/published value16-total_shifts); F=entry_SP; zero-byte
+;   reserved local frame; temporary saves/CALL words below F; original return word at F.
 ; Direct callees: OBSERVED PLI1.OVL+7A4D @9C4DH; PLI1.OVL+7C1B @9E1BH; PLI1.OVL+7B7A @9D7AH;
 ;   PLI1.OVL+7A4D @9C4DH; PLI.COM+0EF6 @0FF6H; PLI1.OVL+7B64 @9D64H; PLI1.OVL+7E46
 ;   @A046H; PLI1.OVL+7E56 @A056H; PLI1.OVL+7AA9 @9CA9H; PLI1.OVL+7ABF @9CBFH;
@@ -3787,67 +3939,64 @@ PLI1_7D52: RET ; RET A=F4; finalPOP H yields L=F3,H=F4; CY0 from frame DAD; NZPA
 ; Coverage: OBSERVED MINIMAL: 21 CALLs; 237/243 bytes represented as instructions; 21 ordinary
 ;   returns:12 empty,2 gate-bit set,7 work; 9 reverse helper selections and16 forward
 ;   mapped/emission iterations;12 correlated packet path classes; no recursion.
-; Unresolved: partial helper path: resident +0EF6 error/flush effects outside established success
-;   scope. / unobserved branch: shortcut flags202B/2011, mapped bytes>=F7, transformed
-;   bytes!=2/<3 or>=5, equality6 and cursor-wrap return outcomes unobserved; RAW
-;   +7E2B..+7E30 remains unprocessed. / unresolved producer/general provenance:
-;   cache/bound effects across opaque calls and record ownership remain unresolved; do
-;   not assume preserved bounds or termination. / missing helper algorithm:
-;   +7ABF/+7E46/+7E56; partial recursive7C1B path through7BBF
-;   delegates7A79/82E1/82BB/82C9. Prefer these helpers before fixtures.
-; Contract: DEDUCED (partial; scope: observed MINIMAL local operation; mapped lookup +7A4D
-;   complete, resident emission +0EF6 partial, other helpers opaque; no general helper
-;   preservation/termination claim) If end[AE35]==begin[AE34], ordinary RET +7D5D (12
-;   calls). Otherwise RAR tests mapped_work_gate[AA1A].bit0; set bit selects RET +7D65 (2
-;   calls). Seven work calls save end in cursor[AE4F]; observed flag202B.bit0=0 and
-;   byte2011=0 select backward loop. Predecrement cursor with byte wrap, compare against
-;   u8(begin-1), and stop backward traversal on equality. Otherwise +7A4D(C=cursor) maps
-;   AA1F then AAB4; observed A<F7 invokes partial recursive +7C1B(C=cursor), caches
-;   returned A atAE50, then balance scan +7B7A(C=cursor) and replaces cursor by its
-;   returned A before repeating. Reset cursor=begin for forward loop. Exit when unsigned
-;   u8(end-1)<cursor. Each of16 forward iterations maps current cursor, caches A atAE50
-;   and delegates byte emission to scoped resident +0EF6(C=A). On observed mapped
-;   bytes<F7, packed-attribute +7B64(C=cached byte) replacesAE50; values<3 invoke +7E46
-;   and, if freshly read AE50==2, +7E56. Values>=3 invoke +7AA9(C=cursor) intoAE51; fresh
-;   AE50==3 additionally invokes +7ABF(C=cursor) and emits its A. Fresh AE50!=6 emits
-;   AE51; fresh AE50<5 skips the RAW additional arm. Finally call mapped-table publication
-;   +7BA2(C=current cursor), increment the freshly read cursor byte, and loop unless it
-;   wraps to0. Work exit copies freshly read begin to end and RET +7E45.
-;   Bounds/cursor/cache values are reloaded around opaque calls; no general preservation
-;   is inferred from observed equality. Helper algorithms and six RAW bytes block fuller
-;   semantics; no record/tree/PL/I meaning assigned. Pass6 substitutions: +7C1B caches
-;   auxiliary byte before default recursive processing; counts children with low3
-;   attributes, calls +7B7A to replace decremented cursor, and has partial0A/17/special
-;   arms. +7B7A balances u8(count+low3 attributes-1) while decrementing cursor until zero;
-;   the parent then predecrements returned cursor again. +7B64 saves mapped byteAE47 and
-;   returns (byte[1B4B+mapped_byte]>>3)&7 with table read and scratch write. +7AA9 returns
-;   byte[AD08+position_map[cursor]] intoAE51. +7BA2 publishes previousAE33 into
-;   mapped_byte_table[position_map[cursor]], then rereads that map entry and setsAE33 to
-;   it; later +7A4D reads can see the mutated table. +7ABF/+7E46/+7E56 and partial +7BBF
-;   inside +7C1B remain explicit blockers; caller stays
-;   STRUCTURED/provisional/partial/partial. OBSERVED selected packet chronology links
-;   +7B2E writes atAD0C/AD08 (steps254597/252476) to later +7AA9 reads at255113/255699
-;   within invocation251128. These auxiliary effects are separate from +7BA2 mapped-byte
-;   publications; no general host provenance is asserted.
+; Unresolved: partial helper contract: recursive7C1B mapped1E/21 and17/non0A predecessor RAW
+;   paths, arbitrary recursive/skip termination and alias preconditions remain excluded.
+;   / partial helper contract: resident0EF6 error/flush paths remain outside established
+;   success scope; not reopened in this pass. / unobserved path: shortcuts202B/2011,
+;   mapped>=F7, attributes0/1/5/6/7, equality6, cursor-wrap return; RAW7E2B..7E30 not
+;   decoded or promoted. / unknown producer/general provenance and alias/precondition:
+;   initial maps/word/byte/attribute tables, cursor controls and possible overlaps
+;   beyond selected scope; no inferred array capacities or ownership.
+; Contract: DEDUCED (partial; scope: observed MINIMAL empty/gate returns and seven work paths:
+;   shortcuts clear, mapped bytes<F7, transformed attributes2/3/4; complete selected
+;   helpers, recursive7C1B partial scope and0EF6 success scope;
+;   controls/table/scratch/stack nonaliasing; RAW alternatives and arbitrary termination
+;   excluded) If endAE35==beginAE34 return7D5D (12); gateAA1A.bit0 set returns7D65 (2).
+;   Seven work calls set cursor=end; clear202B.bit0 and zero2011 select reverse path.
+;   Predecrement cursor modulo256, stop at u8(begin-1). Otherwise map through AA1F/AAB4;
+;   on witnessed mapped<F7 call partial7C1B: mapped0A now uses complete bounded
+;   word/top-bit scan7BBF and auxiliary publication; mapped17 writes child result; default
+;   returns initially cached auxiliary byte after attribute-counted children. Cache
+;   returnedA atAE50; independent7B7A balance scan replaces cursor, then outer
+;   predecrement repeats. Forward reset cursor=begin; exit when unsigned u8(end-1)<fresh
+;   cursor. Sixteen iterations map and emit current mapped byte through partial0EF6. Fresh
+;   AE50<F7 invokes7B64, storing bits3..5 of byte[1B4B+mapped] as attributeAE50.
+;   Attribute<3 calls7E46: select word[AB49+2*position_map[cursor]], publish it low/high
+;   toAE52/53, emit low byte. Fresh attribute==2 calls7E56, independently reading cached
+;   word and emitting high byte; seven observed pairs. Attribute>=3 reads primary
+;   auxiliary byte[AD08+position_map[cursor]] intoAE51; fresh attribute==3 reads distinct
+;   second auxiliary byte[AD9D+position_map[cursor]] via7ABF and emits it (one). Fresh
+;   attribute!=6 emits AE51 (nine); attribute<5 skips six RAW additional-arm bytes.
+;   Finally7BA2 publishes previousAE33 to mapped AAB4 slot selected by
+;   position_map[cursor], rereads map index and stores it intoAE33; increment freshly read
+;   cursor and loop unless byte wrap. Work exit publishes end=fresh begin. Parent direct
+;   emission arguments26 and low/high wrapper arguments14 give40 distinct emitter calls in
+;   these subtrees; no returned-A/flag/emission/cache/table channels merged. Own control
+;   and result flow is understood only at this partial scope: recursive RAW paths, emitter
+;   error/flush, shortcuts, mapped/attribute alternatives and cursor wrap prevent
+;   completion. No source-language/table ownership interpretation.
 ; Hypothesis: none beyond the low-level operational description
 ; Completeness: bounds=provisional; control_flow=partial; contract=partial
 ; Evidence: evidence.json#seeds/PLI1.OVL+7D53;
 ;   ../minimal-baseline/pass-5/structural.json#PLI1.OVL+7D53;
-;   ../minimal-baseline/pass-6/README.md (selected helper substitutions)
+;   ../minimal-baseline/pass-6/README.md (selected helper substitutions);
+;   ../minimal-baseline/pass-7/README.md
 ; Procedure pseudo (operational; byte/word arithmetic wraps):
 ;   if byte[AE35]==byte[AE34]: RET7D5D; if byte[AA1A].bit0: RET7D65; cursor=byte[AE35]; observed
 ;   flags202B.bit0==0 && byte[2011]==0: loop { cursor=u8(cursor-1); if cursor==u8(byte[AE34]-1):
 ;   break; a=map7A4D(C=cursor); scope a<F7: byte[AE50]=partial_recursive7C1B(C=cursor).A;
 ;   cursor=balance_scan7B7A(C=cursor).A; }; cursor=byte[AE34]; while cursor<=u8(byte[AE35]-1) {
 ;   a=map7A4D(C=cursor); byte[AE50]=a; emit0EF6(C=a) [partial]; scope fresh byte[AE50]<F7:
-;   byte[AE50]=bits3to5_7B64(C=byte[AE50]).A; if byte[AE50]<3 { opaque7E46(); if fresh
-;   byte[AE50]==2: opaque7E56(); } else { byte[AE51]=auxiliary_read7AA9(C=cursor).A; if fresh
-;   byte[AE50]==3: emit0EF6(C=opaque7ABF(C=cursor).A); if fresh byte[AE50]!=6:
+;   byte[AE50]=bits3to5_7B64(C=byte[AE50]).A; if byte[AE50]<3 {
+;   w=word[AB49+2*position_map[fresh_cursor]]; word[AE52]=w; emit0EF6(C=w.low) [partial]; if fresh
+;   byte[AE50]==2: emit0EF6(C=word[AE52].high) [partial fresh read]; } else {
+;   byte[AE51]=auxiliary_read7AA9(C=cursor).A; if fresh byte[AE50]==3:
+;   emit0EF6(C=byte[AD9D+position_map[fresh_cursor]]); if fresh byte[AE50]!=6:
 ;   emit0EF6(C=byte[AE51]); scope fresh byte[AE50]<5 skips RAW; };
 ;   publish_oldAE33_then_map_index7BA2(C=fresh cursor); byte[AE4F]++; if cursor==0: break; };
 ;   byte[AE35]=fresh byte[AE34]; RET7E45
 ; @end-procedure-v1 PLI1.OVL+7D53
-; SECTION [7D53,7E2B) STRUCTURED
+; SECTION [7D53,7E2B) UNDERSTOOD
 ; @block-pseudo 7D53
 ; pseudo:
 ; | compare end[AE35] with begin[AE34]; equal returns immediately
@@ -3904,10 +4053,10 @@ PLI1_7D94: CPI 0F7H ; flags = unsigned byte comparison A-F7H; A unchanged ; +7D9
 PLI1_7D96: JNC 9FADH ; if CY=0: PC=9FADH; flags preserved ; +7D96 runtime=9F96H OBSERVED
 ; @block-pseudo 7D99
 ; pseudo:
-; | partial7C1B(C=cursor): cached auxiliary return on default, child result on17, partial7BBF result on0A
+; | partial recursive7C1B; mapped0A counter/top-bit operation now complete via7BBF, special RAW paths remain excluded
 PLI1_7D99: LHLD 0AE4FH ; L=byte[mapped_work_cursor (AE4FH)]; H=neighbor byte[AE50H], discarded/unused by the subsequent byte argument/index ; +7D99 runtime=9F99H OBSERVED
 PLI1_7D9C: MOV C,L ; C = L; flags preserved ; +7D9C runtime=9F9CH OBSERVED
-PLI1_7D9D: CALL 9E1BH ; invoke partial recursive7C1B at cursor; cached auxiliary/default or child17 or partial7BBF result ; +7D9D runtime=9F9DH OBSERVED
+PLI1_7D9D: CALL 9E1BH ; partial7C1B; mapped0A now complete bounded7BBF scan publishes16-shifts into auxiliary table ; +7D9D runtime=9F9DH OBSERVED
 ; @block-pseudo 7DA0
 ; pseudo:
 ; | cache returnedA atAE50; +7B7A(C=fresh cursor) performs wrapping attribute-balance reverse scan
@@ -3965,8 +4114,8 @@ PLI1_7DE1: CPI 03H ; flags = unsigned byte comparison A-03H; A unchanged ; +7DE1
 PLI1_7DE3: JNC 9FF7H ; JNC selects transformed-byte>=3 path; return from +7B64 is data, compared here ; +7DE3 runtime=9FE3H OBSERVED
 ; @block-pseudo 7DE6
 ; pseudo:
-; | for transformed byte<3: opaque +7E46
-PLI1_7DE6: CALL 0A046H ; push following PC; invoke PLI1.OVL+7E46; opaque algorithm/effects remain delegated ; +7DE6 runtime=9FE6H OBSERVED
+; | 7E46: w=word[AB49+2*position_map[fresh cursor]]; publish w toAE52/53, then emit low byte through partial0EF6
+PLI1_7DE6: CALL 0A046H ; partial7E46: cache mapped word atAE52/53, emit low byte; mapped word tableAB49 distinct from byte tables ; +7DE6 runtime=9FE6H OBSERVED
 ; @block-pseudo 7DE9
 ; pseudo:
 ; | fresh AE50 compared with2; JNZ skips +7E56 iff not2
@@ -3975,8 +4124,8 @@ PLI1_7DEC: CPI 02H ; flags = unsigned byte comparison A-02H; A unchanged ; +7DEC
 PLI1_7DEE: JNZ 9FF4H ; if Z=0: PC=9FF4H; flags preserved ; +7DEE runtime=9FEEH OBSERVED
 ; @block-pseudo 7DF1
 ; pseudo:
-; | opaque +7E56 on witnessed fresh byte2
-PLI1_7DF1: CALL 0A056H ; push following PC; invoke PLI1.OVL+7E56; opaque algorithm/effects remain delegated ; +7DF1 runtime=9FF1H OBSERVED
+; | fresh attribute2:7E56 reads cached wordAE52 again and emits high byte through partial0EF6
+PLI1_7DF1: CALL 0A056H ; partial7E56: fresh wordAE52 read; emit high byte only; incoming/returnedA is not an independent result ; +7DF1 runtime=9FF1H OBSERVED
 PLI1_7DF4: JMP 0A031H ; if always: PC=A031H; flags preserved ; +7DF4 runtime=9FF4H OBSERVED
 ; @block-pseudo 7DF7
 ; pseudo:
@@ -3993,10 +4142,11 @@ PLI1_7E04: CPI 03H ; flags = unsigned byte comparison A-03H; A unchanged ; +7E04
 PLI1_7E06: JNZ 0A014H ; if Z=0: PC=A014H; flags preserved ; +7E06 runtime=A006H OBSERVED
 ; @block-pseudo 7E09
 ; pseudo:
-; | fresh byte3: opaque +7ABF(C=cursor)
+; | fresh attribute3:7ABF reads byte[AD9D+position_map[cursor]]; distinct second auxiliary table
+; | emit returned byte next; its incoming NZPA were preserved, not flags computed from returned data
 PLI1_7E09: LHLD 0AE4FH ; L=byte[mapped_work_cursor (AE4FH)]; H=neighbor byte[AE50H], discarded/unused by the subsequent byte argument/index ; +7E09 runtime=A009H OBSERVED
 PLI1_7E0C: MOV C,L ; C = L; flags preserved ; +7E0C runtime=A00CH OBSERVED
-PLI1_7E0D: CALL 9CBFH ; push following PC; invoke PLI1.OVL+7ABF; opaque algorithm/effects remain delegated ; +7E0D runtime=A00DH OBSERVED
+PLI1_7E0D: CALL 9CBFH ; complete7ABF: A=byte[AD9D+position_map[C]], scratchAE3B=C, DE/NZPA preserved,CY0 ; +7E0D runtime=A00DH OBSERVED
 ; @block-pseudo 7E10
 ; pseudo:
 ; | C=returned A; emit through partial +0EF6
@@ -4023,7 +4173,7 @@ PLI1_7E28: JC 0A031H ; if CY=1: PC=A031H; flags preserved ; +7E28 runtime=A028H 
 ; SECTION [7E2B,7E31) RAW
 PLI1_7E2B: DB 0CDH,046H,0A0H,0CDH,056H ; +7E2B runtime=A02BH RAW
 PLI1_7E30: DB 0A0H ; +7E30 runtime=A030H RAW
-; SECTION [7E31,7E46) STRUCTURED
+; SECTION [7E31,7E46) UNDERSTOOD
 ; @block-pseudo 7E31
 ; pseudo:
 ; | +7BA2 writes previousAE33 to AAB4+position_map[fresh cursor] via7AD5
@@ -4043,9 +4193,124 @@ PLI1_7E3C: JNZ 9FB6H ; if Z=0: PC=9FB6H; flags preserved ; +7E3C runtime=A03CH O
 PLI1_7E3F: LDA 0AE34H ; A = byte[mapped_range_begin (AE34H)]; flags preserved ; +7E3F runtime=A03FH OBSERVED
 PLI1_7E42: STA 0AE35H ; mapped_range_end[AE35] = fresh mapped_range_begin[AE34]; separate work-completion publication ; +7E42 runtime=A042H OBSERVED
 PLI1_7E45: RET ; consume original hardware return word at entry SP; SP=entry_SP+2; flags preserved ; +7E45 runtime=A045H OBSERVED
-; SECTION [7E46,8273) RAW
-PLI1_7E46: DB 02AH,04FH,0AEH,04DH,0CDH,079H,09CH,022H,052H,0AEH ; +7E46 runtime=A046H RAW
-PLI1_7E50: DB 07DH,04FH,0CDH,0F6H,00FH,0C9H,02AH,052H,0AEH,07CH,04FH,0CDH,0F6H,00FH,0C9H,021H ; +7E50 runtime=A050H RAW
+
+; @procedure-v1 PLI1.OVL+7E46
+; ProcedureHypothesis: cache mapped word and emit its low byte
+; Entry: PLI1_7E46 = PLI1.OVL+7E46 @ A046H; SHA-256
+;   1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564
+; Extent: HYPOTHESIS [7E46,7E56) file offsets; overlapping entries: none established
+; Callers: OBSERVED PLI1.OVL+7DE6 (MINIMAL=7)
+; Returns: OBSERVED/DEDUCED ordinary hardware CALL word; original slot unchanged, SP after
+;   RET=entry_SP+2; PLI1.OVL+7E55
+; Inputs: DEDUCED cursorAE4F; neighborAE50 also read byLHLD but not passed as position; position
+;   map/word table; inherited partial0EF6 success/nonaliasing scope
+; Outputs: DEDUCED cached mapped wordAE52/53; low word byte emitted as C; registers/flags
+;   emitter-derived
+; Clobbers: DEDUCED A,BC,DE,HL,flags; AE52/53, mapper scratchAE38, nested CALL stack; emitter
+;   buffer/index/scratch and host effects inherit partial scope
+; Memory: DEDUCED mapped_work_cursor=AE4FH (byte cursor decremented/replaced/backward and
+;   incremented/forward); mapped_work_cache=AE50H (mapped then helper-transformed byte;
+;   reloaded after calls); position_map=AA1FH (first-stage byte mapping indexed by unsigned
+;   C); mapped_word_table=AB49H (little-endian words at base+2*position_map index;
+;   capacity/producer unknown); mapped_word_position=AE38H (saved position for
+;   double-indexed word lookup); mapped_emit_word=AE52H (mapped word cached before low-byte
+;   emission; high byte freshly read by7E56); F=entry_SP; zero-byte reserved local frame;
+;   temporary saves/CALL words below F; original return word at F.
+; Direct callees: OBSERVED PLI1.OVL+7A79 @9C79H; PLI.COM+0EF6 @0FF6H
+; Coverage: OBSERVED MINIMAL: 7 CALLs; 16/16 bytes represented as instructions; Corrected matched
+;   hardware returns; no recursion, no reserved local frame; below-entry saves/CALL words
+;   only.
+; Unresolved: partial helper contract: resident +0EF6 error/flush paths remain outside its
+;   established success scope.
+; Contract: DEDUCED (partial; scope: own word-copy/low-byte-emission operation at complete7A79
+;   scope and existing partial0EF6 success/nonaliasing scope; error/flush alternatives
+;   delegated) Read cursor word atAE4F (H also fetches neighboring cacheAE50); pass only
+;   low cursor byteC to complete7A79. Publish returned mapped word low/high toAE52/53
+;   before emission. Set C=returned word.low and call resident0EF6 at its established
+;   partial success scope. Wrapper returns exactly emitter registers/flags; A is not
+;   independently a selected word result. Own writes only AE52/53 and CALL stack; mapping
+;   scratchAE38 and buffer/index/scratch effects belong to callees. No own cursor,
+;   mapped-table or auxiliary-table mutation. General emitter error/flush paths remain
+;   partial.
+; Hypothesis: none beyond the low-level operational description
+; Completeness: bounds=stable; control_flow=complete; contract=partial
+; Evidence: evidence.json#seeds/PLI1.OVL+7E46;
+;   ../minimal-baseline/pass-7/structural.json#PLI1.OVL+7E46;
+;   ../minimal-baseline/pass-7/README.md
+; Procedure pseudo (operational; byte/word arithmetic wraps):
+;   C=byte[AE4F]; w=word[AB49+2*byte[AA1F+C]]; word[AE52]=w; emit0EF6(C=w.low) [partial success];
+;   RET emitter_state
+; @end-procedure-v1 PLI1.OVL+7E46
+; SECTION [7E46,7E56) UNDERSTOOD
+; @block-pseudo 7E46
+; pseudo:
+; | read cursorAE4F/neighborAE50; complete7A79 selects mapped wordAB49+2*j
+PLI1_7E46: LHLD 0AE4FH ; HL = little_endian_word[mapped_work_cursor (AE4FH)]; low byte then high byte, flags preserved ; +7E46 runtime=A046H OBSERVED
+PLI1_7E49: MOV C,L ; C = L; flags preserved ; +7E49 runtime=A049H OBSERVED
+PLI1_7E4A: CALL 9C79H ; push following PC; invoke PLI1.OVL+7A79; established complete contract at declared scope ; +7E4A runtime=A04AH OBSERVED
+; @block-pseudo 7E4D
+; pseudo:
+; | publish wordAE52 low/high before emission; C=word.low
+PLI1_7E4D: SHLD 0AE52H ; little_endian_word[mapped_emit_word (AE52H)] = HL; low byte then high byte ; +7E4D runtime=A04DH OBSERVED
+PLI1_7E50: MOV A,L ; A = L; flags preserved ; +7E50 runtime=A050H OBSERVED
+PLI1_7E51: MOV C,A ; C = A; flags preserved ; +7E51 runtime=A051H OBSERVED
+; @block-pseudo 7E52
+; pseudo:
+; | emit low byte through partial0EF6; return its register/flag state
+PLI1_7E52: CALL 0FF6H ; push following PC; invoke PLI.COM+0EF6; established partial contract at declared scope ; +7E52 runtime=A052H OBSERVED
+PLI1_7E55: RET ; consume original hardware return word at entry SP; SP=entry_SP+2; flags preserved ; +7E55 runtime=A055H OBSERVED
+
+; @procedure-v1 PLI1.OVL+7E56
+; ProcedureHypothesis: emit fresh cached mapped-word high byte
+; Entry: PLI1_7E56 = PLI1.OVL+7E56 @ A056H; SHA-256
+;   1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564
+; Extent: HYPOTHESIS [7E56,7E5F) file offsets; overlapping entries: none established
+; Callers: OBSERVED PLI1.OVL+7DF1 (MINIMAL=7)
+; Returns: OBSERVED/DEDUCED ordinary hardware CALL word; original slot unchanged, SP after
+;   RET=entry_SP+2; PLI1.OVL+7E5E
+; Inputs: DEDUCED readable mapped_emit_wordAE52/53; inherited partial0EF6 success/nonaliasing
+;   scope
+; Outputs: DEDUCED fresh cached high-byte emission C; registers/flags emitter-derived
+; Clobbers: DEDUCED A,BC,DE,HL,flags; nested CALL stack and emitter buffer/index/scratch/host
+;   effects; own body has no other writes
+; Memory: DEDUCED mapped_emit_word=AE52H (mapped word cached before low-byte emission; high byte
+;   freshly read by7E56); F=entry_SP; zero-byte reserved local frame; temporary saves/CALL
+;   words below F; original return word at F.
+; Direct callees: OBSERVED PLI.COM+0EF6 @0FF6H
+; Coverage: OBSERVED MINIMAL: 7 CALLs; 9/9 bytes represented as instructions; Corrected matched
+;   hardware returns; no recursion, no reserved local frame; below-entry saves/CALL words
+;   only.
+; Unresolved: partial helper contract: resident +0EF6 error/flush paths remain outside its
+;   established success scope.
+; Contract: DEDUCED (partial; scope: own high-byte-emission operation at existing partial0EF6
+;   success/nonaliasing scope; cached word read fresh; error/flush alternatives delegated)
+;   LHLD AE52 reads both cached word bytes even though low byte is unused. Set C=H, the
+;   freshly read high byte, and call existing partial0EF6. Return emitter-derived
+;   registers/flags; own body writes only nested CALL stack, no
+;   mapped/auxiliary/cursor/cache writes. Word cache is read independently of the
+;   earlier7E46 register result. Error/flush scope stays partial.
+; Hypothesis: none beyond the low-level operational description
+; Completeness: bounds=stable; control_flow=complete; contract=partial
+; Evidence: evidence.json#seeds/PLI1.OVL+7E56;
+;   ../minimal-baseline/pass-7/structural.json#PLI1.OVL+7E56;
+;   ../minimal-baseline/pass-7/README.md
+; Procedure pseudo (operational; byte/word arithmetic wraps):
+;   w=word[AE52]; emit0EF6(C=w.high) [partial success]; RET emitter_state
+; @end-procedure-v1 PLI1.OVL+7E56
+; SECTION [7E56,7E5F) UNDERSTOOD
+; @block-pseudo 7E56
+; pseudo:
+; | read both wordAE52 bytes; C=fresh high byte (low read still occurs)
+PLI1_7E56: LHLD 0AE52H ; HL = little_endian_word[mapped_emit_word (AE52H)]; low byte then high byte, flags preserved ; +7E56 runtime=A056H OBSERVED
+PLI1_7E59: MOV A,H ; A = H; flags preserved ; +7E59 runtime=A059H OBSERVED
+PLI1_7E5A: MOV C,A ; C = A; flags preserved ; +7E5A runtime=A05AH OBSERVED
+; @block-pseudo 7E5B
+; pseudo:
+; | emit high byte through partial0EF6; return emitter state
+PLI1_7E5B: CALL 0FF6H ; push following PC; invoke PLI.COM+0EF6; established partial contract at declared scope ; +7E5B runtime=A05BH OBSERVED
+PLI1_7E5E: RET ; consume original hardware return word at entry SP; SP=entry_SP+2; flags preserved ; +7E5E runtime=A05EH OBSERVED
+; SECTION [7E5F,8273) RAW
+PLI1_7E5F: DB 021H ; +7E5F runtime=A05FH RAW
 PLI1_7E60: DB 056H,0AEH,072H,02BH,073H,02BH,071H,03EH,094H,021H,035H,0AEH,0BEH,0D2H,073H,0A0H ; +7E60 runtime=A060H RAW
 PLI1_7E70: DB 0CDH,046H,09CH,02AH,035H,0AEH,026H,000H,001H,01FH,0AAH,009H,03AH,033H,0AEH,077H ; +7E70 runtime=A070H RAW
 PLI1_7E80: DB 02AH,033H,0AEH,026H,000H,001H,0B4H,0AAH,009H,07EH,032H,033H,0AEH,02AH,035H,0AEH ; +7E80 runtime=A080H RAW
@@ -4202,12 +4467,165 @@ PLI1_82A2: STA 0AE35H ; byte[mapped_range_end (AE35H)] = A; flags preserved ; +8
 PLI1_82A5: STA 0AE34H ; byte[mapped_range_begin (AE34H)] = A; flags preserved ; +82A5 runtime=A4A5H OBSERVED
 PLI1_82A8: STA 0AE33H ; byte[mapped_init_index (AE33H)] = A; flags preserved ; +82A8 runtime=A4A8H OBSERVED
 PLI1_82AB: RET ; ordinary RET: A=0, BC=AAB4, HL=AA1C, DE preserved; flags retain CMP94H versus95H ; +82AB runtime=A4ABH OBSERVED
-; SECTION [82AC,8396) RAW
+; SECTION [82AC,82BB) RAW
 PLI1_82AC: DB 0EBH,05FH,016H,000H ; +82AC runtime=A4ACH RAW
-PLI1_82B0: DB 0EBH,01AH,08DH,06FH,013H,01AH,08CH,067H,0C9H,069H,060H,04EH,023H,046H,01AH,081H ; +82B0 runtime=A4B0H RAW
-PLI1_82C0: DB 06FH,013H,01AH,088H,067H,0C9H,05FH,016H,000H,07BH,0A5H,06FH,07AH,0A4H,067H,0C9H ; +82C0 runtime=A4C0H RAW
+PLI1_82B0: DB 0EBH,01AH,08DH,06FH,013H,01AH,08CH,067H,0C9H,069H,060H ; +82B0 runtime=A4B0H RAW
+
+; @procedure-v1 PLI1.OVL+82BB
+; ProcedureHypothesis: add two indirectly loaded little-endian words
+; Entry: PLI1_82BB = PLI1.OVL+82BB @ A4BBH; SHA-256
+;   1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564
+; Extent: HYPOTHESIS [82BB,82C6) file offsets; overlapping entries: none established
+; Callers: OBSERVED PLI1.OVL+6704 (MINIMAL=1); PLI1.OVL+7BE8 (MINIMAL=36)
+; Returns: OBSERVED/DEDUCED ordinary hardware CALL word; original slot unchanged, SP after
+;   RET=entry_SP+2; PLI1.OVL+82C5
+; Inputs: DEDUCED HL and DE point to readable words; no incoming carry dependence (ADD replaces
+;   it)
+; Outputs: DEDUCED HL=sum; BC=first word; DE=second pointer+1; A=high sum; CY=word overflow; NZPA
+;   high ADC
+; Clobbers: DEDUCED A,BC,DE,HL,flags; No guest memory writes
+; Memory: DEDUCED F=entry_SP; zero-byte frame; hardware return at F; transient saves below F.
+; Direct callees: OBSERVED none
+; Coverage: OBSERVED MINIMAL: 37 CALLs; 11/11 bytes represented as instructions; Corrected matched
+;   hardware returns; no recursion, no reserved local frame; below-entry saves/CALL words
+;   only.
+; Unresolved: No unresolved local operation at declared scope; broader storage
+;   producers/capacity/alias relationships remain general provenance questions.
+; Contract: DEDUCED (complete; scope: exact local operation with 16-bit address/word and 8-bit
+;   value wrapping; nonaliasing named scratch/table/return stack; no source-language
+;   meaning) Capture word[inputHL] low/high intoC/B first. Load byte[inputDE], ADD C (low
+;   addition), storeL; incrementDE; load high, ADC B with low carry, storeH.
+;   HL=u16(word[inputHL]+word[inputDE]); BC=first word; DE=inputDE+1; A=high sum;
+;   CY=full-word overflow, other flags from high ADC only (not full-word Z). The two
+;   pointers may be equal: then both reads address the same word and result doubles it. No
+;   guest memory writes.
+; Hypothesis: none beyond the low-level operational description
+; Completeness: bounds=stable; control_flow=complete; contract=complete
+; Evidence: evidence.json#seeds/PLI1.OVL+82BB;
+;   ../minimal-baseline/pass-7/structural.json#PLI1.OVL+82BB;
+;   ../minimal-baseline/pass-7/README.md
+; Procedure pseudo (operational; byte/word arithmetic wraps):
+;   left=word[inputHL]; right=word[inputDE]; BC=left; HL=u16(left+right); DE=u16(inputDE+1);
+;   A=HL.high; CY=(left+right>FFFF); RET
+; @end-procedure-v1 PLI1.OVL+82BB
+; SECTION [82BB,82C6) UNDERSTOOD
+; @block-pseudo 82BB
+; pseudo:
+; | read first low/high word intoBC before changing L/H
+PLI1_82BB: MOV C,M ; C = byte[HL]; flags preserved ; +82BB runtime=A4BBH OBSERVED
+PLI1_82BC: INX H ; HL=u16(HL+1); flags preserved ; +82BC runtime=A4BCH OBSERVED
+PLI1_82BD: MOV B,M ; B = byte[HL]; flags preserved ; +82BD runtime=A4BDH OBSERVED
+; @block-pseudo 82BE
+; pseudo:
+; | read second low/high word throughDE; ADD low, ADC high; DE++; return word sum
+PLI1_82BE: LDAX D ; A=byte[DE]; flags preserved ; +82BE runtime=A4BEH OBSERVED
+PLI1_82BF: ADD C ; A=u8(A+C); arithmetic flags including CY=addition carry ; +82BF runtime=A4BFH OBSERVED
+PLI1_82C0: MOV L,A ; L = A; flags preserved ; +82C0 runtime=A4C0H OBSERVED
+PLI1_82C1: INX D ; DE=u16(DE+1); flags preserved ; +82C1 runtime=A4C1H OBSERVED
+PLI1_82C2: LDAX D ; A=byte[DE]; flags preserved ; +82C2 runtime=A4C2H OBSERVED
+PLI1_82C3: ADC B ; A=u8(A+B+old_CY); arithmetic flags from high-byte addition when used in word sum ; +82C3 runtime=A4C3H OBSERVED
+PLI1_82C4: MOV H,A ; H = A; flags preserved ; +82C4 runtime=A4C4H OBSERVED
+PLI1_82C5: RET ; consume original hardware return word at entry SP; SP=entry_SP+2; flags preserved ; +82C5 runtime=A4C5H OBSERVED
+; SECTION [82C6,82C9) RAW
+PLI1_82C6: DB 05FH,016H,000H ; +82C6 runtime=A4C6H RAW
+
+; @procedure-v1 PLI1.OVL+82C9
+; ProcedureHypothesis: register word AND transform
+; Entry: PLI1_82C9 = PLI1.OVL+82C9 @ A4C9H; SHA-256
+;   1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564
+; Extent: HYPOTHESIS [82C9,82D0) file offsets; overlapping entries: none established
+; Callers: OBSERVED PLI1.OVL+7BF3 (MINIMAL=36)
+; Returns: OBSERVED/DEDUCED ordinary hardware CALL word; original slot unchanged, SP after
+;   RET=entry_SP+2; PLI1.OVL+82CF
+; Inputs: DEDUCED DE and HL are word operands; BC preserved
+; Outputs: DEDUCED HL=word AND; A=high result; BC/DE preserved; CY0; NZPA from high ANA
+; Clobbers: DEDUCED A,HL,flags; BC,DE preserved; No guest memory writes
+; Memory: DEDUCED F=entry_SP; zero-byte frame; hardware return at F; transient saves below F.
+; Direct callees: OBSERVED none
+; Coverage: OBSERVED MINIMAL: 36 CALLs; 7/7 bytes represented as instructions; Corrected matched
+;   hardware returns; no recursion, no reserved local frame; below-entry saves/CALL words
+;   only.
+; Unresolved: No unresolved local operation at declared scope; broader storage
+;   producers/capacity/alias relationships remain general provenance questions.
+; Contract: DEDUCED (complete; scope: exact local operation with 16-bit address/word and 8-bit
+;   value wrapping; nonaliasing named scratch/table/return stack; no source-language
+;   meaning) AND E withL thenD withH; return HL=inputDE & inputHL, A=high masked byte. BC
+;   and DE preserved; CY0 and NZPA from high ANA H, not a full-word zero flag. No guest
+;   memory writes; no data-memory reads beyond the hardware RET slot.
+; Hypothesis: none beyond the low-level operational description
+; Completeness: bounds=stable; control_flow=complete; contract=complete
+; Evidence: evidence.json#seeds/PLI1.OVL+82C9;
+;   ../minimal-baseline/pass-7/structural.json#PLI1.OVL+82C9;
+;   ../minimal-baseline/pass-7/README.md
+; Procedure pseudo (operational; byte/word arithmetic wraps):
+;   HL=inputDE & inputHL; A=HL.high; RET
+; @end-procedure-v1 PLI1.OVL+82C9
+; SECTION [82C9,82D0) UNDERSTOOD
+; @block-pseudo 82C9
+; pseudo:
+; | low result=E &L; high result=D &H; HL=word AND; flags from high result
+PLI1_82C9: MOV A,E ; A = E; flags preserved ; +82C9 runtime=A4C9H OBSERVED
+PLI1_82CA: ANA L ; A=A & L; logical flags, CY=0 ; +82CA runtime=A4CAH OBSERVED
+PLI1_82CB: MOV L,A ; L = A; flags preserved ; +82CB runtime=A4CBH OBSERVED
+PLI1_82CC: MOV A,D ; A = D; flags preserved ; +82CC runtime=A4CCH OBSERVED
+PLI1_82CD: ANA H ; A=A & H; logical flags, CY=0 ; +82CD runtime=A4CDH OBSERVED
+PLI1_82CE: MOV H,A ; H = A; flags preserved ; +82CE runtime=A4CEH OBSERVED
+PLI1_82CF: RET ; consume original hardware return word at entry SP; SP=entry_SP+2; flags preserved ; +82CF runtime=A4CFH OBSERVED
+; SECTION [82D0,82E1) RAW
 PLI1_82D0: DB 069H,060H,04EH,023H,046H,01AH,0A1H,06FH,013H,01AH,0A0H,067H,0C9H,0EBH,05FH,016H ; +82D0 runtime=A4D0H RAW
-PLI1_82E0: DB 000H,0EBH,01AH,0A5H,06FH,013H,01AH,0A4H,067H,0C9H,044H,04DH,021H,000H,000H,03EH ; +82E0 runtime=A4E0H RAW
+PLI1_82E0: DB 000H ; +82E0 runtime=A4E0H RAW
+
+; @procedure-v1 PLI1.OVL+82E1
+; ProcedureHypothesis: indirect little-endian word AND register mask
+; Entry: PLI1_82E1 = PLI1.OVL+82E1 @ A4E1H; SHA-256
+;   1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564
+; Extent: HYPOTHESIS [82E1,82EA) file offsets; overlapping entries: none established
+; Callers: OBSERVED PLI1.OVL+7BE0 (MINIMAL=36)
+; Returns: OBSERVED/DEDUCED ordinary hardware CALL word; original slot unchanged, SP after
+;   RET=entry_SP+2; PLI1.OVL+82E9
+; Inputs: DEDUCED HL=word pointer; DE=16-bit mask; BC preserved
+; Outputs: DEDUCED HL=masked word; DE=pointer+1; A=high masked byte; CY0; NZPA high ANA
+; Clobbers: DEDUCED A,DE,HL,flags; BC preserved; No guest memory writes
+; Memory: DEDUCED F=entry_SP; zero-byte frame; hardware return at F; transient saves below F.
+; Direct callees: OBSERVED none
+; Coverage: OBSERVED MINIMAL: 36 CALLs; 9/9 bytes represented as instructions; Corrected matched
+;   hardware returns; no recursion, no reserved local frame; below-entry saves/CALL words
+;   only.
+; Unresolved: No unresolved local operation at declared scope; broader storage
+;   producers/capacity/alias relationships remain general provenance questions.
+; Contract: DEDUCED (complete; scope: exact local operation with 16-bit address/word and 8-bit
+;   value wrapping; nonaliasing named scratch/table/return stack; no source-language
+;   meaning) Input HL points to word, DE is mask. XCHG puts pointer inDE and mask inHL.
+;   Read low atpointer, AND L; increment DE; read high, AND H. Return
+;   HL=word[inputHL]&inputDE, DE=inputHL+1, A=high result; BC preserved. CY0/NZPA from
+;   high ANA H; zero flag describes high result byte, not full word. No guest memory
+;   writes.
+; Hypothesis: none beyond the low-level operational description
+; Completeness: bounds=stable; control_flow=complete; contract=complete
+; Evidence: evidence.json#seeds/PLI1.OVL+82E1;
+;   ../minimal-baseline/pass-7/structural.json#PLI1.OVL+82E1;
+;   ../minimal-baseline/pass-7/README.md
+; Procedure pseudo (operational; byte/word arithmetic wraps):
+;   ptr=inputHL; mask=inputDE; HL=word[ptr]&mask; DE=u16(ptr+1); A=HL.high; RET
+; @end-procedure-v1 PLI1.OVL+82E1
+; SECTION [82E1,82EA) UNDERSTOOD
+; @block-pseudo 82E1
+; pseudo:
+; | swap pointer and mask; read/AND low byte; pointer++
+PLI1_82E1: XCHG ; swap HL and DE; flags preserved ; +82E1 runtime=A4E1H OBSERVED
+PLI1_82E2: LDAX D ; A=byte[DE]; flags preserved ; +82E2 runtime=A4E2H OBSERVED
+PLI1_82E3: ANA L ; A=A & L; logical flags, CY=0 ; +82E3 runtime=A4E3H OBSERVED
+PLI1_82E4: MOV L,A ; L = A; flags preserved ; +82E4 runtime=A4E4H OBSERVED
+PLI1_82E5: INX D ; DE=u16(DE+1); flags preserved ; +82E5 runtime=A4E5H OBSERVED
+; @block-pseudo 82E6
+; pseudo:
+; | read/AND high byte; return masked word and high-byte pointer; flags from high ANA
+PLI1_82E6: LDAX D ; A=byte[DE]; flags preserved ; +82E6 runtime=A4E6H OBSERVED
+PLI1_82E7: ANA H ; A=A & H; logical flags, CY=0 ; +82E7 runtime=A4E7H OBSERVED
+PLI1_82E8: MOV H,A ; H = A; flags preserved ; +82E8 runtime=A4E8H OBSERVED
+PLI1_82E9: RET ; consume original hardware return word at entry SP; SP=entry_SP+2; flags preserved ; +82E9 runtime=A4E9H OBSERVED
+; SECTION [82EA,8396) RAW
+PLI1_82EA: DB 044H,04DH,021H,000H,000H,03EH ; +82EA runtime=A4EAH RAW
 PLI1_82F0: DB 010H,0F5H,029H,0EBH,097H,029H,0EBH,08DH,091H,06FH,07CH,098H,067H,013H,0D2H,003H ; +82F0 runtime=A4F0H RAW
 PLI1_8300: DB 0A5H,009H,01BH,0F1H,03DH,0C2H,0F1H,0A4H,0C9H,05EH,023H,056H,0EBH,029H,0E5H,029H ; +8300 runtime=A500H RAW
 PLI1_8310: DB 029H,0C1H,009H,0C9H,044H,04DH,021H,000H,000H,03EH,010H,029H,0EBH,029H,0EBH,0D2H ; +8310 runtime=A510H RAW
@@ -4349,6 +4767,8 @@ PLI1_79D0: EQU 09BD0H ; +79D0 runtime=9BD0H coordinate-only label
 PLI1_7A00: EQU 09C00H ; +7A00 runtime=9C00H coordinate-only label
 PLI1_7A10: EQU 09C10H ; +7A10 runtime=9C10H coordinate-only label
 PLI1_7A70: EQU 09C70H ; +7A70 runtime=9C70H coordinate-only label
+PLI1_7AC0: EQU 09CC0H ; +7AC0 runtime=9CC0H coordinate-only label
+PLI1_7AD0: EQU 09CD0H ; +7AD0 runtime=9CD0H coordinate-only label
 PLI1_7B30: EQU 09D30H ; +7B30 runtime=9D30H coordinate-only label
 PLI1_7B80: EQU 09D80H ; +7B80 runtime=9D80H coordinate-only label
 PLI1_7BA0: EQU 09DA0H ; +7BA0 runtime=9DA0H coordinate-only label

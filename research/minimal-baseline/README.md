@@ -1,32 +1,36 @@
-# MINIMAL baseline: current through pass 6
+# MINIMAL baseline: current through pass 7
 
-The [pass-6 report](pass-6/README.md) is the current decompilation result,
-following the [pass-5 structural/packet experiment](pass-5/README.md).
-[V1 annotation conventions](../annotated-assembly/CONVENTIONS.md) keep byte
-status independent of procedure bounds, control flow and contract completeness.
+The [pass-7 report](pass-7/README.md) is the current decompilation result,
+following [pass 6](pass-6/README.md). [V1 annotation conventions](../annotated-assembly/CONVENTIONS.md)
+keep byte status independent of procedure bounds, control flow and contract
+completeness.
 
-MINIMAL still executes **21,012 image bytes**: **16,135 RAW, 304 DECODED,
-1,852 STRUCTURED, 2,721 UNDERSTOOD**. There are **63 UNDERSTOOD**, 12 STRUCTURED
-and 316 unresolved CALL entries (including three DECODED), plus eleven separate
+MINIMAL still executes **21,012 image bytes**: **16,035 RAW, 304 DECODED,
+1,523 STRUCTURED, 3,150 UNDERSTOOD**. There are **72 UNDERSTOOD**, 10 STRUCTURED
+and 309 unresolved CALL entries (including three DECODED), plus eleven separate
 PCHL entries. The 391 CALL/RST coordinates and all **94,720 historical bytes**
 remain exact. Current classifications and intersections are in
 [coverage.json](coverage.json), [instructions.jsonl](instructions.jsonl) and
 [inventory.json](inventory.json).
 
-Pass 6 establishes scoped counted-prefix acquisition at resident +1376,
-recursive mapped-position processing at PLI1+7C1B, reverse attribute-balance
-scanning at +7B7A, packed bits3..5 extraction at +7B64 and mapped-slot/cache
-publication at +7BA2, with their necessary immediate helpers. +784E and +7D53
-substitute the new contracts while retaining provisional/partial/partial
-completeness; +7D53 stays STRUCTURED. +7BBF and its packed-word helpers remain
-partial/opaque. Four ignored evidence packets supported the complex targets.
+Pass 7 establishes mapped-word lookup, indirect word AND/add, register word AND,
+second auxiliary byte lookup, and scoped low/high word emission. +7BBF now has a
+complete bounded top-bit-transition/left-shift contract and UNDERSTOOD bytes.
++7C1B retains partial scope; +7D53 gains UNDERSTOOD bytes at its still-partial
+scope. Seven new helpers use direct evidence; three complex parents use ignored
+V0.1 packets. No packet infrastructure was changed.
 
 The [current dynamic metric](dynamic-progress.json) records **439,998** historical
-instruction occurrences: **195,878 (44.5179%)** execute UNDERSTOOD bytes.
-PLI1 is **50.5819% UNDERSTOOD** and **42.6216% RAW**. The 1,857 modeled host
-instructions are outside that denominator. Another MINIMAL helper pass is
-recommended before new fixtures or FIZZBUZ-minus-MINIMAL; no FIZZBUZ decompilation
-or new compiler capture was performed.
+instruction occurrences: **199,700 (45.3866%)** execute UNDERSTOOD bytes.
+PLI1 is **59.4962% UNDERSTOOD** and **39.3143% RAW**. The 1,857 modeled host
+instructions are outside that denominator.
+
+Secondary structural reconnaissance leaves +28AA/+4B69 RAW: their ordinary outer
+returns enclose software calls that consume caller words and relocate copied
+continuations. Corrected own footprints are 351/2,088 occurrences, rather than
+interpreting the old context counts4,315/2,171 as exclusive ownership. Another
+helper/continuation pass (+6708/+43D5 first) is recommended before larger semantic
+work, fixtures or FIZZBUZ-minus-MINIMAL. No new compiler capture was performed.
 
 The following is the **historical V0 record at 6c77397**. Its status tables and
 priorities describe that snapshot; later snapshots are in

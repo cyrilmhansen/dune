@@ -1,0 +1,411 @@
+{
+  "PLI1.OVL+7A79": {
+    "invocations": 11,
+    "callers": {
+      "PLI1.OVL+7E4A": 7,
+      "PLI1.OVL+7BCC": 3,
+      "PLI1.OVL+3293": 1
+    },
+    "returns": {
+      "PLI1.OVL+7A92": 11
+    },
+    "own_coordinates": 16,
+    "own_occurrences": 176,
+    "sp_deltas": {
+      "0": 165,
+      "2": 11
+    },
+    "callees": [],
+    "branches": [
+      [
+        "PLI1.OVL+7A92",
+        "return",
+        "PLI1.OVL+7E4D",
+        true,
+        7
+      ],
+      [
+        "PLI1.OVL+7A92",
+        "return",
+        "PLI1.OVL+7BCF",
+        true,
+        3
+      ],
+      [
+        "PLI1.OVL+7A92",
+        "return",
+        "PLI1.OVL+3296",
+        true,
+        1
+      ]
+    ],
+    "candidate_extent": [
+      31353,
+      31379
+    ],
+    "classification": "SMALL / DIRECT",
+    "reserved_frame_bytes": 0,
+    "recursive_children": 0,
+    "software_continuations": 0,
+    "bounds_confidence": "stable",
+    "basis": "Exact CALL entry, local branches, terminal original-slot returns and independently called adjacent boundaries; no RoutineCandidate/context extent authority.",
+    "external_incoming_transfers": [
+      {
+        "kind": "call",
+        "source": "PLI1.OVL+3293",
+        "target": "PLI1.OVL+7A79",
+        "runtime_target": 40057,
+        "count": 1
+      },
+      {
+        "kind": "call",
+        "source": "PLI1.OVL+7BCC",
+        "target": "PLI1.OVL+7A79",
+        "runtime_target": 40057,
+        "count": 3
+      },
+      {
+        "kind": "call",
+        "source": "PLI1.OVL+7E4A",
+        "target": "PLI1.OVL+7A79",
+        "runtime_target": 40057,
+        "count": 7
+      }
+    ],
+    "alternate_observed_entry": false
+  },
+  "PLI1.OVL+82E1": {
+    "invocations": 36,
+    "callers": {
+      "PLI1.OVL+7BE0": 36
+    },
+    "returns": {
+      "PLI1.OVL+82E9": 36
+    },
+    "own_coordinates": 9,
+    "own_occurrences": 324,
+    "sp_deltas": {
+      "0": 288,
+      "2": 36
+    },
+    "callees": [],
+    "branches": [
+      [
+        "PLI1.OVL+82E9",
+        "return",
+        "PLI1.OVL+7BE3",
+        true,
+        36
+      ]
+    ],
+    "candidate_extent": [
+      33505,
+      33514
+    ],
+    "classification": "SMALL / DIRECT",
+    "reserved_frame_bytes": 0,
+    "recursive_children": 0,
+    "software_continuations": 0,
+    "bounds_confidence": "stable",
+    "basis": "Exact CALL entry, local branches, terminal original-slot returns and independently called adjacent boundaries; no RoutineCandidate/context extent authority.",
+    "external_incoming_transfers": [
+      {
+        "kind": "call",
+        "source": "PLI1.OVL+7BE0",
+        "target": "PLI1.OVL+82E1",
+        "runtime_target": 42209,
+        "count": 36
+      }
+    ],
+    "alternate_observed_entry": false
+  },
+  "PLI1.OVL+82BB": {
+    "invocations": 37,
+    "callers": {
+      "PLI1.OVL+7BE8": 36,
+      "PLI1.OVL+6704": 1
+    },
+    "returns": {
+      "PLI1.OVL+82C5": 37
+    },
+    "own_coordinates": 11,
+    "own_occurrences": 407,
+    "sp_deltas": {
+      "0": 370,
+      "2": 37
+    },
+    "callees": [],
+    "branches": [
+      [
+        "PLI1.OVL+82C5",
+        "return",
+        "PLI1.OVL+7BEB",
+        true,
+        36
+      ],
+      [
+        "PLI1.OVL+82C5",
+        "return",
+        "PLI1.OVL+6707",
+        true,
+        1
+      ]
+    ],
+    "candidate_extent": [
+      33467,
+      33478
+    ],
+    "classification": "SMALL / DIRECT",
+    "reserved_frame_bytes": 0,
+    "recursive_children": 0,
+    "software_continuations": 0,
+    "bounds_confidence": "stable",
+    "basis": "Exact CALL entry, local branches, terminal original-slot returns and independently called adjacent boundaries; no RoutineCandidate/context extent authority.",
+    "external_incoming_transfers": [
+      {
+        "kind": "call",
+        "source": "PLI1.OVL+6704",
+        "target": "PLI1.OVL+82BB",
+        "runtime_target": 42171,
+        "count": 1
+      },
+      {
+        "kind": "call",
+        "source": "PLI1.OVL+7BE8",
+        "target": "PLI1.OVL+82BB",
+        "runtime_target": 42171,
+        "count": 36
+      }
+    ],
+    "alternate_observed_entry": false
+  },
+  "PLI1.OVL+82C9": {
+    "invocations": 36,
+    "callers": {
+      "PLI1.OVL+7BF3": 36
+    },
+    "returns": {
+      "PLI1.OVL+82CF": 36
+    },
+    "own_coordinates": 7,
+    "own_occurrences": 252,
+    "sp_deltas": {
+      "0": 216,
+      "2": 36
+    },
+    "callees": [],
+    "branches": [
+      [
+        "PLI1.OVL+82CF",
+        "return",
+        "PLI1.OVL+7BF6",
+        true,
+        36
+      ]
+    ],
+    "candidate_extent": [
+      33481,
+      33488
+    ],
+    "classification": "SMALL / DIRECT",
+    "reserved_frame_bytes": 0,
+    "recursive_children": 0,
+    "software_continuations": 0,
+    "bounds_confidence": "stable",
+    "basis": "Exact CALL entry, local branches, terminal original-slot returns and independently called adjacent boundaries; no RoutineCandidate/context extent authority.",
+    "external_incoming_transfers": [
+      {
+        "kind": "call",
+        "source": "PLI1.OVL+7BF3",
+        "target": "PLI1.OVL+82C9",
+        "runtime_target": 42185,
+        "count": 36
+      }
+    ],
+    "alternate_observed_entry": false
+  },
+  "PLI1.OVL+7ABF": {
+    "invocations": 14,
+    "callers": {
+      "PLI1.OVL+80A5": 12,
+      "PLI1.OVL+7E0D": 1,
+      "PLI1.OVL+3289": 1
+    },
+    "returns": {
+      "PLI1.OVL+7AD4": 14
+    },
+    "own_coordinates": 12,
+    "own_occurrences": 168,
+    "sp_deltas": {
+      "0": 154,
+      "2": 14
+    },
+    "callees": [],
+    "branches": [
+      [
+        "PLI1.OVL+7AD4",
+        "return",
+        "PLI1.OVL+80A8",
+        true,
+        12
+      ],
+      [
+        "PLI1.OVL+7AD4",
+        "return",
+        "PLI1.OVL+7E10",
+        true,
+        1
+      ],
+      [
+        "PLI1.OVL+7AD4",
+        "return",
+        "PLI1.OVL+328C",
+        true,
+        1
+      ]
+    ],
+    "candidate_extent": [
+      31423,
+      31445
+    ],
+    "classification": "SMALL / DIRECT",
+    "reserved_frame_bytes": 0,
+    "recursive_children": 0,
+    "software_continuations": 0,
+    "bounds_confidence": "stable",
+    "basis": "Exact CALL entry, local branches, terminal original-slot returns and independently called adjacent boundaries; no RoutineCandidate/context extent authority.",
+    "external_incoming_transfers": [
+      {
+        "kind": "call",
+        "source": "PLI1.OVL+3289",
+        "target": "PLI1.OVL+7ABF",
+        "runtime_target": 40127,
+        "count": 1
+      },
+      {
+        "kind": "call",
+        "source": "PLI1.OVL+7E0D",
+        "target": "PLI1.OVL+7ABF",
+        "runtime_target": 40127,
+        "count": 1
+      },
+      {
+        "kind": "call",
+        "source": "PLI1.OVL+80A5",
+        "target": "PLI1.OVL+7ABF",
+        "runtime_target": 40127,
+        "count": 12
+      }
+    ],
+    "alternate_observed_entry": false
+  },
+  "PLI1.OVL+7E46": {
+    "invocations": 7,
+    "callers": {
+      "PLI1.OVL+7DE6": 7
+    },
+    "returns": {
+      "PLI1.OVL+7E55": 7
+    },
+    "own_coordinates": 8,
+    "own_occurrences": 56,
+    "sp_deltas": {
+      "0": 35,
+      "-2": 14,
+      "2": 7
+    },
+    "callees": [
+      [
+        "PLI1.OVL+7E4A",
+        "PLI1.OVL+7A79",
+        7
+      ],
+      [
+        "PLI1.OVL+7E52",
+        "PLI.COM+0EF6",
+        7
+      ]
+    ],
+    "branches": [
+      [
+        "PLI1.OVL+7E55",
+        "return",
+        "PLI1.OVL+7DE9",
+        true,
+        7
+      ]
+    ],
+    "candidate_extent": [
+      32326,
+      32342
+    ],
+    "classification": "SMALL / DIRECT",
+    "reserved_frame_bytes": 0,
+    "recursive_children": 0,
+    "software_continuations": 0,
+    "bounds_confidence": "stable",
+    "basis": "Exact CALL entry, local branches, terminal original-slot returns and independently called adjacent boundaries; no RoutineCandidate/context extent authority.",
+    "external_incoming_transfers": [
+      {
+        "kind": "call",
+        "source": "PLI1.OVL+7DE6",
+        "target": "PLI1.OVL+7E46",
+        "runtime_target": 41030,
+        "count": 7
+      }
+    ],
+    "alternate_observed_entry": false
+  },
+  "PLI1.OVL+7E56": {
+    "invocations": 7,
+    "callers": {
+      "PLI1.OVL+7DF1": 7
+    },
+    "returns": {
+      "PLI1.OVL+7E5E": 7
+    },
+    "own_coordinates": 5,
+    "own_occurrences": 35,
+    "sp_deltas": {
+      "0": 21,
+      "-2": 7,
+      "2": 7
+    },
+    "callees": [
+      [
+        "PLI1.OVL+7E5B",
+        "PLI.COM+0EF6",
+        7
+      ]
+    ],
+    "branches": [
+      [
+        "PLI1.OVL+7E5E",
+        "return",
+        "PLI1.OVL+7DF4",
+        true,
+        7
+      ]
+    ],
+    "candidate_extent": [
+      32342,
+      32351
+    ],
+    "classification": "SMALL / DIRECT",
+    "reserved_frame_bytes": 0,
+    "recursive_children": 0,
+    "software_continuations": 0,
+    "bounds_confidence": "stable",
+    "basis": "Exact CALL entry, local branches, terminal original-slot returns and independently called adjacent boundaries; no RoutineCandidate/context extent authority.",
+    "external_incoming_transfers": [
+      {
+        "kind": "call",
+        "source": "PLI1.OVL+7DF1",
+        "target": "PLI1.OVL+7E56",
+        "runtime_target": 41046,
+        "count": 7
+      }
+    ],
+    "alternate_observed_entry": false
+  }
+}

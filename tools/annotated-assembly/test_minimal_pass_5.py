@@ -83,15 +83,16 @@ class MinimalPassFiveTests(unittest.TestCase):
         second=[v for v in p['local_dependencies']['branches'].values() if v['coordinate']=='PLI1.OVL+78B8']
         self.assertEqual(sum(v['taken'] for v in second),18)
 
-    def test_emission_orchestration_stays_structured_and_partial(self):
+    def test_historical_emission_orchestration_is_structured_and_partial(self):
         p=self.packets['PLI1.OVL+7D53'];returns=Counter(p['steps'][str(i['return_step'])]['coordinate'] for i in p['invocations'])
         self.assertEqual(returns,{'PLI1.OVL+7D5D':12,'PLI1.OVL+7D65':2,'PLI1.OVL+7E45':7})
         caller=self.catalog[p['entry']]
-        self.assertEqual(caller['byte_status_at_entry'],'STRUCTURED')
+        historical=next(r for r in json.loads((PASS/'regions.json').read_text()) if r['entry']==p['entry'])
+        self.assertEqual(historical['byte_status'],'STRUCTURED')
         self.assertEqual(caller['completeness'],{'bounds':'provisional','control_flow':'partial','contract':'partial'})
         self.assertEqual(sum(validate_packet_member(p,i)['forward_iterations'] for i in p['invocations']),16)
         self.assertEqual(sum(len(validate_packet_member(p,i)['emission_C_bytes']) for i in p['invocations']),26)
-        self.assertTrue(any(c['contract_presentation']['kind']=='MISSING / OPAQUE' for c in p['calls'].values()))
+        self.assertTrue(any(c['contract_presentation']['kind']=='PARTIAL' for c in p['calls'].values()))
 
     def test_new_progress_and_caller_scope(self):
         after=self.progress['coverage_after']

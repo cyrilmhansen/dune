@@ -1,0 +1,84 @@
+{
+  "basis": "Explicit staged contract substitutions from commit8dfba28; exact helper/parent witness and packet checks, not semantic guesses",
+  "refinements": [
+    {
+      "helper": "PLI1.OVL+7A79",
+      "caller": "PLI1.OVL+7BBF",
+      "before": "byte[AE4B]=C; byte[AE4C]=15; word[AE4D]=opaque7A79(C).HL; loop { save mask(counter!=0); opaque82E1(DE=8000,HL=&AE4D); save HL; HL=DE-1; DE--; opaque82BB(); swapHL_DE(); HL--; byte[HL]=E; byte[HL+1]=D; opaque82C9(HL=8000); DE=pop_saved_HL(); delta=subtract1A2C(HL,DE).HL; restored=pop_saved_mask(); if !(restored.bit0 && delta==0): break; byte[AE4C]--; }; write7B2E(C=byte[AE4B],E=byte[AE4C]); RET A=byte[AE4C]",
+      "after": "byte[AE4B]=C; byte[AE4C]=15; word[AE4D]=word[AB49+2*position_map[C]]; loop { save mask(counter!=0); opaque82E1(DE=8000,HL=&AE4D); save HL; HL=DE-1; DE--; opaque82BB(); swapHL_DE(); HL--; byte[HL]=E; byte[HL+1]=D; opaque82C9(HL=8000); DE=pop_saved_HL(); delta=subtract1A2C(HL,DE).HL; restored=pop_saved_mask(); if !(restored.bit0 && delta==0): break; byte[AE4C]--; }; write7B2E(C=byte[AE4B],E=byte[AE4C]); RET A=byte[AE4C]",
+      "established_scope": "exact local operation with 16-bit address/word and 8-bit value wrapping; nonaliasing named scratch/table/return stack; no source-language meaning"
+    },
+    {
+      "helper": "PLI1.OVL+82E1",
+      "caller": "PLI1.OVL+7BBF",
+      "before": "byte[AE4B]=C; byte[AE4C]=15; word[AE4D]=word[AB49+2*position_map[C]]; loop { save mask(counter!=0); opaque82E1(DE=8000,HL=&AE4D); save HL; HL=DE-1; DE--; opaque82BB(); swapHL_DE(); HL--; byte[HL]=E; byte[HL+1]=D; opaque82C9(HL=8000); DE=pop_saved_HL(); delta=subtract1A2C(HL,DE).HL; restored=pop_saved_mask(); if !(restored.bit0 && delta==0): break; byte[AE4C]--; }; write7B2E(C=byte[AE4B],E=byte[AE4C]); RET A=byte[AE4C]",
+      "after": "byte[AE4B]=C; byte[AE4C]=15; word[AE4D]=word[AB49+2*position_map[C]]; loop { save mask(counter!=0); HL=word[AE4D]&8000; DE=AE4E; save HL; HL=DE-1; DE--; opaque82BB(); swapHL_DE(); HL--; byte[HL]=E; byte[HL+1]=D; opaque82C9(HL=8000); DE=pop_saved_HL(); delta=subtract1A2C(HL,DE).HL; restored=pop_saved_mask(); if !(restored.bit0 && delta==0): break; byte[AE4C]--; }; write7B2E(C=byte[AE4B],E=byte[AE4C]); RET A=byte[AE4C]",
+      "established_scope": "exact local operation with 16-bit address/word and 8-bit value wrapping; nonaliasing named scratch/table/return stack; no source-language meaning"
+    },
+    {
+      "helper": "PLI1.OVL+82BB",
+      "caller": "PLI1.OVL+7BBF",
+      "before": "byte[AE4B]=C; byte[AE4C]=15; word[AE4D]=word[AB49+2*position_map[C]]; loop { save mask(counter!=0); HL=word[AE4D]&8000; DE=AE4E; save HL; HL=DE-1; DE--; opaque82BB(); swapHL_DE(); HL--; byte[HL]=E; byte[HL+1]=D; opaque82C9(HL=8000); DE=pop_saved_HL(); delta=subtract1A2C(HL,DE).HL; restored=pop_saved_mask(); if !(restored.bit0 && delta==0): break; byte[AE4C]--; }; write7B2E(C=byte[AE4B],E=byte[AE4C]); RET A=byte[AE4C]",
+      "after": "byte[AE4B]=C; byte[AE4C]=15; word[AE4D]=word[AB49+2*position_map[C]]; loop { save mask(counter!=0); HL=word[AE4D]&8000; DE=AE4E; save HL; HL=DE-1; DE--; HL=u16(2*word[AE4D]); DE=AE4E; swapHL_DE(); HL--; byte[HL]=E; byte[HL+1]=D; opaque82C9(HL=8000); DE=pop_saved_HL(); delta=subtract1A2C(HL,DE).HL; restored=pop_saved_mask(); if !(restored.bit0 && delta==0): break; byte[AE4C]--; }; write7B2E(C=byte[AE4B],E=byte[AE4C]); RET A=byte[AE4C]",
+      "established_scope": "exact local operation with 16-bit address/word and 8-bit value wrapping; nonaliasing named scratch/table/return stack; no source-language meaning"
+    },
+    {
+      "helper": "PLI1.OVL+82C9",
+      "caller": "PLI1.OVL+7BBF",
+      "before": "byte[AE4B]=C; byte[AE4C]=15; word[AE4D]=word[AB49+2*position_map[C]]; loop { save mask(counter!=0); HL=word[AE4D]&8000; DE=AE4E; save HL; HL=DE-1; DE--; HL=u16(2*word[AE4D]); DE=AE4E; swapHL_DE(); HL--; byte[HL]=E; byte[HL+1]=D; opaque82C9(HL=8000); DE=pop_saved_HL(); delta=subtract1A2C(HL,DE).HL; restored=pop_saved_mask(); if !(restored.bit0 && delta==0): break; byte[AE4C]--; }; write7B2E(C=byte[AE4B],E=byte[AE4C]); RET A=byte[AE4C]",
+      "after": "byte[AE4B]=C; byte[AE4C]=15; word[AE4D]=word[AB49+2*position_map[C]]; loop { save mask(counter!=0); HL=word[AE4D]&8000; DE=AE4E; save HL; HL=DE-1; DE--; HL=u16(2*word[AE4D]); DE=AE4E; swapHL_DE(); HL--; byte[HL]=E; byte[HL+1]=D; HL=DE &8000; DE=pop_saved_HL(); delta=subtract1A2C(HL,DE).HL; restored=pop_saved_mask(); if !(restored.bit0 && delta==0): break; byte[AE4C]--; }; write7B2E(C=byte[AE4B],E=byte[AE4C]); RET A=byte[AE4C]",
+      "established_scope": "exact local operation with 16-bit address/word and 8-bit value wrapping; nonaliasing named scratch/table/return stack; no source-language meaning"
+    },
+    {
+      "caller": "PLI1.OVL+7BBF",
+      "baseline_contract": "Save positionAE4B=C, set counterAE4C=0F; opaque +7A79(C) returns HL stored atAE4D/4E. Each loop saves FF/00 mask(counter!=0), sets DE=8000 and HL=&AE4D, calls opaque +82E1, saves returnedHL, sets HL=DE-1 and DE=DE-1, calls opaque +82BB. XCHG/DCX then writes returned word through a helper-derived address low/high; +82C9(HL=8000) supplies another opaque word. Restore savedHL intoDE; complete resident +1A2C subtracts this DE from fresh HL. ORA L tests full subtraction result (A is high result); SUI1/SBB A gives FF iff word difference==0. POP B/MOV C,B/ANA C/RAR/JNC stops iff saved mask.bit0 clear OR difference nonzero. On recorded stack-preserved paths this means counter==0 OR unequal words; otherwise counter-- and repeat. Final +7B2E writes current counter to auxiliary table selected by saved position; return A=counter. Counters end1,0A,1 with15,6,15 comparisons. Opaque packed-word algorithms and their general memory/register guarantees prevent a complete contract.",
+      "refined_contract": "Save input position atAE4B, counterAE4C=15; load word[AB49+2*position_map[position]] intoAE4D/4E via7A79. Each iteration saves mask(counter!=0) and old_top=word[AE4D]&8000. The returned high-byte pointer from82E1 is decremented toAE4D in bothHL/DE;82BB reads the SAME scratch word twice, returning u16(2*word) andDE=AE4E. XCHG/DCX publishes doubled word low/high back toAE4D/4E.82C9 extracts new_top=doubled&8000. Restore old_top from stack; complete1A2C computes new_top-old_top. ORA L/SUI1/SBB A yields FF iff full difference is zero; AND restored counter-nonzero mask, RAR/JNC exits iff counter==0 OR old_top!=new_top. Otherwise decrement counter and repeat. The shift occurs before the counter test, so at most16 shifts, counter=16-shift_count; counter-zero exit still performs the sixteenth shift. Three observed runs: initial0001/0252/0001, shift counts15/6/15, final8000/9480/8000, counters1/10/1. Final7B2E writes counter toAD08+fresh position_map[saved position]; returnA=counter, BC=fresh index, HL=auxiliary address, DE=counter+256*(final shifted word.low), CY0. NZPA retain final ANA of equality/counter masks; Z1/S0/P1, auxiliary carry depends on operands. Position, input word-table slot and saved stack values remain intact at scope; shifted scratch publication and auxiliary publication are separate. No word-table capacity or source-language meaning inferred.",
+      "baseline_completeness": {
+        "bounds": "stable",
+        "control_flow": "complete",
+        "contract": "partial"
+      },
+      "refined_completeness": {
+        "bounds": "stable",
+        "control_flow": "complete",
+        "contract": "complete"
+      },
+      "baseline_byte_status": "STRUCTURED",
+      "refined_byte_status": "UNDERSTOOD"
+    },
+    {
+      "caller": "PLI1.OVL+7C1B",
+      "baseline_contract": "Reserve five bytes using PUSH H/PUSH H/MOV B,C/PUSH B/INX SP; F=entrySP-5. F+0=input position (later mutable cursor), F+1=default low3 attribute countdown, F+2=child returned byte, F+3=mapped byte, F+4=default cached auxiliary byte. PUSH H initially writes inherited HL bytes into F+1..4; these are not initialized semantic locals. Map F+0 via +7A4D into F+3. If mapped byte==0A, call partial +7BBF(C=F+0) and return its A. Otherwise equality masks for1E and21 are ORed; +7C53 JNC selects +7CB7 iff neither equality is true (13/13 observed); special arm RAW. If mapped byte==17, map u8(F+0-1); observed0A selects one recursive call at that preceding position, saves returnedA inF+2, publishes it via +7B2E to AD08+position_map[original F+0], and returns saved childA. Alternative preceding-map path remains RAW. Default: F+4=auxiliary7AA9(F+0); F+1=attributes7A63(F+0). While F+1>0 (CMP0,count/JNC exits exactly at zero), decrement F+0, recurse there, save childA inF+2, call complete +7B7A at that same decremented position, replace F+0 with its stopping cursor, decrement F+1. Return saved F+4, not last childA. Five default children plus two mapped17 children preserve exact order; default child count equals initial low3 attributes at nonaliasing frame scope. INX SP/POP H/POP H deallocate frame: final HL combines F+3 low and F+4 high, not preserved entryHL. Default return NZPA describe final CMP0,0; BC=mapped byte when count0 and0 after positive-count work; DE follows last helper. Other path NZPA follow helper outputs; final frame DAD produces CY0. No tree ownership inferred.",
+      "refined_contract": "Reserve five bytes using PUSH H/PUSH H/MOV B,C/PUSH B/INX SP; F=entrySP-5. F+0=input position (later mutable cursor), F+1=default low3 attribute countdown, F+2=child returned byte, F+3=mapped byte, F+4=default cached auxiliary byte. PUSH H initially writes inherited HL bytes into F+1..4; these are not initialized semantic locals. Map F+0 via +7A4D into F+3. If mapped byte==0A, call complete scoped +7BBF(C=F+0): load word[AB49+2*position_map[F+0]], double scratchAE4D until top-bit transition or16 shifts, publish16-shifts to AD08+position_map[F+0], and return this counter A. Otherwise equality masks for1E and21 are ORed; +7C53 JNC selects +7CB7 iff neither equality is true (13/13 observed); special arm RAW. If mapped byte==17, map u8(F+0-1); observed0A selects one recursive call at that preceding position, saves returnedA inF+2, publishes it via +7B2E to AD08+position_map[original F+0], and returns saved childA. Alternative preceding-map path remains RAW. Default: F+4=auxiliary7AA9(F+0); F+1=attributes7A63(F+0). While F+1>0 (CMP0,count/JNC exits exactly at zero), decrement F+0, recurse there, save childA inF+2, call complete +7B7A at that same decremented position, replace F+0 with its stopping cursor, decrement F+1. Return saved F+4, not last childA. Five default children plus two mapped17 children preserve exact order; default child count equals initial low3 attributes at nonaliasing frame scope. INX SP/POP H/POP H deallocate frame: final HL combines F+3 low and F+4 high, not preserved entryHL. Default return NZPA describe final CMP0,0; BC=mapped byte when count0 and0 after positive-count work; DE follows last helper. Other path NZPA follow helper outputs; final frame DAD produces CY0. No tree ownership inferred.",
+      "baseline_completeness": {
+        "bounds": "provisional",
+        "control_flow": "partial",
+        "contract": "partial"
+      },
+      "refined_completeness": {
+        "bounds": "provisional",
+        "control_flow": "partial",
+        "contract": "partial"
+      },
+      "baseline_byte_status": "UNDERSTOOD",
+      "refined_byte_status": "UNDERSTOOD"
+    },
+    {
+      "caller": "PLI1.OVL+7D53",
+      "baseline_contract": "If end[AE35]==begin[AE34], ordinary RET +7D5D (12 calls). Otherwise RAR tests mapped_work_gate[AA1A].bit0; set bit selects RET +7D65 (2 calls). Seven work calls save end in cursor[AE4F]; observed flag202B.bit0=0 and byte2011=0 select backward loop. Predecrement cursor with byte wrap, compare against u8(begin-1), and stop backward traversal on equality. Otherwise +7A4D(C=cursor) maps AA1F then AAB4; observed A<F7 invokes partial recursive +7C1B(C=cursor), caches returned A atAE50, then balance scan +7B7A(C=cursor) and replaces cursor by its returned A before repeating. Reset cursor=begin for forward loop. Exit when unsigned u8(end-1)<cursor. Each of16 forward iterations maps current cursor, caches A atAE50 and delegates byte emission to scoped resident +0EF6(C=A). On observed mapped bytes<F7, packed-attribute +7B64(C=cached byte) replacesAE50; values<3 invoke +7E46 and, if freshly read AE50==2, +7E56. Values>=3 invoke +7AA9(C=cursor) intoAE51; fresh AE50==3 additionally invokes +7ABF(C=cursor) and emits its A. Fresh AE50!=6 emits AE51; fresh AE50<5 skips the RAW additional arm. Finally call mapped-table publication +7BA2(C=current cursor), increment the freshly read cursor byte, and loop unless it wraps to0. Work exit copies freshly read begin to end and RET +7E45. Bounds/cursor/cache values are reloaded around opaque calls; no general preservation is inferred from observed equality. Helper algorithms and six RAW bytes block fuller semantics; no record/tree/PL/I meaning assigned. Pass6 substitutions: +7C1B caches auxiliary byte before default recursive processing; counts children with low3 attributes, calls +7B7A to replace decremented cursor, and has partial0A/17/special arms. +7B7A balances u8(count+low3 attributes-1) while decrementing cursor until zero; the parent then predecrements returned cursor again. +7B64 saves mapped byteAE47 and returns (byte[1B4B+mapped_byte]>>3)&7 with table read and scratch write. +7AA9 returns byte[AD08+position_map[cursor]] intoAE51. +7BA2 publishes previousAE33 into mapped_byte_table[position_map[cursor]], then rereads that map entry and setsAE33 to it; later +7A4D reads can see the mutated table. +7ABF/+7E46/+7E56 and partial +7BBF inside +7C1B remain explicit blockers; caller stays STRUCTURED/provisional/partial/partial. OBSERVED selected packet chronology links +7B2E writes atAD0C/AD08 (steps254597/252476) to later +7AA9 reads at255113/255699 within invocation251128. These auxiliary effects are separate from +7BA2 mapped-byte publications; no general host provenance is asserted.",
+      "refined_contract": "If endAE35==beginAE34 return7D5D (12); gateAA1A.bit0 set returns7D65 (2). Seven work calls set cursor=end; clear202B.bit0 and zero2011 select reverse path. Predecrement cursor modulo256, stop at u8(begin-1). Otherwise map through AA1F/AAB4; on witnessed mapped<F7 call partial7C1B: mapped0A now uses complete bounded word/top-bit scan7BBF and auxiliary publication; mapped17 writes child result; default returns initially cached auxiliary byte after attribute-counted children. Cache returnedA atAE50; independent7B7A balance scan replaces cursor, then outer predecrement repeats. Forward reset cursor=begin; exit when unsigned u8(end-1)<fresh cursor. Sixteen iterations map and emit current mapped byte through partial0EF6. Fresh AE50<F7 invokes7B64, storing bits3..5 of byte[1B4B+mapped] as attributeAE50. Attribute<3 calls7E46: select word[AB49+2*position_map[cursor]], publish it low/high toAE52/53, emit low byte. Fresh attribute==2 calls7E56, independently reading cached word and emitting high byte; seven observed pairs. Attribute>=3 reads primary auxiliary byte[AD08+position_map[cursor]] intoAE51; fresh attribute==3 reads distinct second auxiliary byte[AD9D+position_map[cursor]] via7ABF and emits it (one). Fresh attribute!=6 emits AE51 (nine); attribute<5 skips six RAW additional-arm bytes. Finally7BA2 publishes previousAE33 to mapped AAB4 slot selected by position_map[cursor], rereads map index and stores it intoAE33; increment freshly read cursor and loop unless byte wrap. Work exit publishes end=fresh begin. Parent direct emission arguments26 and low/high wrapper arguments14 give40 distinct emitter calls in these subtrees; no returned-A/flag/emission/cache/table channels merged. Own control and result flow is understood only at this partial scope: recursive RAW paths, emitter error/flush, shortcuts, mapped/attribute alternatives and cursor wrap prevent completion. No source-language/table ownership interpretation.",
+      "baseline_completeness": {
+        "bounds": "provisional",
+        "control_flow": "partial",
+        "contract": "partial"
+      },
+      "refined_completeness": {
+        "bounds": "provisional",
+        "control_flow": "partial",
+        "contract": "partial"
+      },
+      "baseline_byte_status": "STRUCTURED",
+      "refined_byte_status": "UNDERSTOOD"
+    }
+  ]
+}
