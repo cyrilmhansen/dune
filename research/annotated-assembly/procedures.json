@@ -4006,7 +4006,7 @@
         "description": "MINIMAL: two count-seven payload copies, tags 05/28; software argument-cleanup returns; other branch remains RAW"
       },
       "unresolved_paths": [
-        "Two count-seven invocations. Allocator +4394 normal path is now understood; allocator failure and linked-tail helper contracts +422F/+4281/+428E remain unresolved. +44E7..+44FC remains RAW."
+        "Allocator4394 failure andopaque83A0 word/link update remainoutsidecompletecontract; 22 RAW bytes at44E7..44FC remainunobserved. Selected422F/4281/428E contracts are nowestablished andcanbesubstituted atdeclaredscope; softwarecleanup convention unchanged."
       ],
       "inputs": "C=count, E=tag, word[entry_SP+2]=source pointer",
       "outputs": "record fields/copy/list effects on witnessed paths; software return consumes argument; outputs depend on list helpers",
@@ -4081,7 +4081,8 @@
       "pseudocode": "ret=POP(); source=POP(); PUSH(ret); allocate record; tag/zero fields; copy payload backwards; traverse/update links; RET relocated word",
       "evidence_refs": [
         "evidence.json#seeds/PLI1.OVL+4468",
-        "../minimal-baseline/pass-1/regions.json#PLI1.OVL+4468"
+        "../minimal-baseline/pass-1/regions.json#PLI1.OVL+4468",
+        "../minimal-baseline/pass-10/README.md (selected-helper substitution only; existing software-return proof unchanged)"
       ],
       "blocks": [
         {
@@ -4194,7 +4195,7 @@
         "44D8": "A = byte[DE]",
         "44D9": "byte[HL] = A",
         "44DA": "if always: PC -> PLI1.OVL+44B4; flags preserved",
-        "44DD": "push following PC; invoke PLI1.OVL+422F; result effects belong to callee",
+        "44DD": "complete422F selectsword[A761+2*byte[A760]] intoA863; currentchecksumcache suppliedbycaller",
         "44E0": "push following PC; invoke PLI1.OVL+4281; result effects belong to callee",
         "44E3": "A = (old_CY<<7) | (old_A>>1); CY=old_A bit0; NZPA preserved",
         "44E4": "if CY=1: PC -> PLI1.OVL+44FD; flags preserved",
@@ -4205,7 +4206,7 @@
         "4506": "push following PC; invoke PLI1.OVL+83A0; result effects belong to callee",
         "4509": "A = A | L; logical byte flags, CY=0",
         "450A": "if Z=1: PC -> PLI1.OVL+4513; flags preserved",
-        "450D": "push following PC; invoke PLI1.OVL+428E; result effects belong to callee",
+        "450D": "complete428E followsworkingpointer word+8; preservesA/NZPA; no ownership ortermination inference",
         "4510": "if always: PC -> PLI1.OVL+44FD; flags preserved",
         "4513": "HL = little_endian_word[record_top (1C36H)]",
         "4516": "HL = (HL + 1) & FFFF; flags preserved",
@@ -4232,7 +4233,7 @@
       "start_offset": 18232,
       "end_offset": 18317,
       "length": 85,
-      "byte_status_at_entry": "STRUCTURED",
+      "byte_status_at_entry": "UNDERSTOOD",
       "description": "constructor wrapper followed by word-field repair",
       "completeness": {
         "bounds": "stable",
@@ -4247,10 +4248,10 @@
         "description": "MINIMAL: one normal repair; predicate early-return edge unobserved"
       },
       "unresolved_paths": [
-        "partial helper contracts:46ED fiveopaque algorithms and4468 allocator/linkpaths; unobservedearlypointer-nonzero return; alias/precondition andgeneral provenance."
+        "partial helper contracts:4584 alternativepaths and4468 allocator/83A0 link-update scope; unobservedearlypointer-nonzero return; alias/precondition andproducerprovenance."
       ],
       "inputs": "C=tag/input; auxiliary state consumed by +46ED/+4281",
-      "outputs": "observed scope: A863=FBB5; word[FBE3]=7 andword[FBBB]=0 aredistinctpublications; A0/BC6/DE0/HLFBBC; NZPAhighADC andCYfinalDAD",
+      "outputs": "observed scope: A863=FBB5; word[FBE3]=7 andword[FBBB]=0 aredistinctpublications; A0/BC6/DE0/HLFBBC; NZPAhigh ADC andCYfinalDAD",
       "clobbers": "A,BC,DE,HL,flags",
       "memory_state": [
         "record_top=1C36H (downward reservation boundary)",
@@ -4308,14 +4309,15 @@
         }
       ],
       "overlapping_entries": [],
-      "contract_scope": "one C28/46ED-null-pointer/4468-normal construction path; nonaliasing pointer/header/cache/stack; inherited46ED/4468 partial scopes",
-      "contract": "Save C atA916; independently call partial +46ED withsavedC. Complete4281 then testsword[A863]; RAR/JC 4747 returns early iffpointer!=0. ObservedC28 traversal returnspointer0, so pushsourcewordA948 andcallpartial +4468(C=byte[A947], E=savedC). V0.2 proves2-bytecleanup andresume4759; copied continuationisnotdata/resultslot. SetA863=h=word[A8AB]; saveold=word[h+2] atA917; complete +1A1D addsunsignedcount byte[A947] tothatword; publishsumlow/high backtoh+2. Thenp=word[1C36]+1, A863=p; publishsavedoldword toword[p+6]. ObservedhFBE1, old0, count7, sum7, pFBB5, savedold0. ReturnBC6, DEold0, HLp+7; A=highsum0; NZPA fromhighADC; CY fromfinalDAD6 (0 observed). Partial46ED/4468 andallocator/linkeffectsremainexplicit.",
+      "contract_scope": "one C28/scoped +46ED-null/4468-normal construction path; nonaliasing pointer/header/cache/stack; inherited4584 and4468 partial scopes",
+      "contract": "Save C atA916; independently call partial +46ED withsavedC. Complete4281 then testsword[A863]; RAR/JC 4747 returns early iffpointer!=0. ObservedC28 traversal returnspointer0, so pushsourcewordA948 andcallpartial +4468(C=byte[A947], E=savedC). V0.2 proves2-bytecleanup andresume4759; copied continuationisnotdata/resultslot. SetA863=h=word[A8AB]; saveold=word[h+2] atA917; complete +1A1D addsunsignedcount byte[A947] tothatword; publishsumlow/high backtoh+2. Thenp=word[1C36]+1, A863=p; publishsaved oldword toword[p+6]. ObservedhFBE1, old0, count7, sum7, pFBB5, saved old0. ReturnBC6, DEold0, HLp+7; A=highsum0; NZPA fromhigh ADC; CY fromfinalDAD6 (0 observed). Partial4468 andallocator/linkeffectsremainexplicit. Pass10 replaces the prior opaque +46ED operation with sum-indexed +8 traversal and matching payload/field filtering. ObservedC28 yieldsnull becausepayload matches butfield05 differs. Constructor only runs afterthatnullresult; saved old, updated head word andnew p+6 publication remain separate. The4468 softwareboundary is reused unchanged.",
       "semantic_hypothesis": "constructor/field-repair wrapper",
       "pseudocode": "byte[A916]=C; partial +46ED(C); if word[A863]!=0: RET; PUSH sourceA948; partial +4468(C=byte[A947],E=byte[A916]) consumes2bytes; h=word[A8AB]; old=word[h+2]; word[A917]=old; word[h+2]=u16(old+byte[A947]); p=word[1C36]+1; word[A863]=p; word[p+6]=old; RET",
       "evidence_refs": [
         "evidence.json#seeds/PLI1.OVL+4738",
         "../minimal-baseline/pass-1/regions.json#PLI1.OVL+4738",
-        "../minimal-baseline/pass-9/README.md"
+        "../minimal-baseline/pass-9/README.md",
+        "../minimal-baseline/pass-10/README.md"
       ],
       "blocks": [
         {
@@ -4348,7 +4350,7 @@
         "473B": "byte[repair_tag (A916H)] = C",
         "473C": "L = byte[repair_tag (A916H)]; H = byte[repair_saved_word (A917H)]",
         "473F": "C = L",
-        "4740": "push following PC; invoke PLI1.OVL+46ED; result effects belong to callee",
+        "4740": "push following PC; invoke PLI1.OVL+46ED; established partial contract at declared scope",
         "4743": "complete +4281 returns FF iffword[A863]!=0; returned A.bit0 controls nextRAR/JC",
         "4746": "A = (old_CY<<7) | (old_A>>1); CY=old_A bit0; NZPA preserved",
         "4747": "JC earlyRET iffworking pointer nonzero; observed pointer0 selectsconstructor arm",
@@ -14740,8 +14742,8 @@
       "start_offset": 10410,
       "end_offset": 11347,
       "length": 937,
-      "byte_status_at_entry": "STRUCTURED",
-      "description": "partial correlated byte/pointer orchestration with proven copier boundaries",
+      "byte_status_at_entry": "UNDERSTOOD",
+      "description": "scoped sum-indexed lookup, construction, bit processing and mapped publication orchestration",
       "completeness": {
         "bounds": "provisional",
         "control_flow": "partial",
@@ -14755,9 +14757,9 @@
         "description": "Corrected matched hardware returns; no recursion, no reserved local frame; below-entry saves/CALL words only."
       },
       "unresolved_paths": [
-        "missing helper algorithms:46ED delegates452B/422F/4275/428E/4584;666E delegates84BB/resident1207;2355 alternatev05 uses22CB; existingpartial +6708/4468/1140/119E remainexplicit.",
-        "unobserved path:253enclosingRAWbytes; everyownconditionalhasoneobservedoutcome; bounds/control/contract remainprovisional/partial/partial.",
-        "alias/precondition/unknown producer/general provenance: indexedstate/tablecontents,buffercontroloverlap andindirectpointers; savedPSWpreservation isprovedlocallyatobserved scope, notgeneralfull memory preservation."
+        "partial helper paths:4584 mismatch/floor/zero-count advancement;4468 allocator and83A0 link-update scope;1140/119E outputflush/error; existing6708 overlap/alternativecases.",
+        "unobserved path:253 enclosingRAWbytes andsingle-outcome ownbranches; provisional bounds/partialCFG/partialcontract unchanged.",
+        "unknown producer/alias/precondition/generalprovenance: initialsum-slot/reference/table/pointer fields andoutputconsumer; no tree/record ownership orPL/I semantics claimed."
       ],
       "inputs": "incomingC bit0 gate; indexA634; indexedbytesA628/A62B/A62E andword tableA63B; working pointer/buffer; helper/tables/stack preconditions retained",
       "outputs": "observedown selectedA62A becomes28; fieldsFBB8/9/A=29/7/0; pointerwordA63F=FBB5; mappedwordAB4D=FBB5; AC75/AC73=28, AD0A/AD08=7, AD9F/AD9D=0, AAB6=02 andAAB4=14; distincthelperresident channels; A660=1/A661=2; finalA14/BC0/DE 2B14/HLAAB4/CY0; originalouterSP restored",
@@ -14918,14 +14920,15 @@
         }
       ],
       "overlapping_entries": [],
-      "contract_scope": "One correlated 351-instruction MINIMAL path; two +6708 copy/padding scopes; scoped +2185/+46ED/+4738/+666E/+2355; observed scratch/table/stack alias conditions. Excludes 253 RAW bytes and unresolved helper algorithms.",
-      "contract": "Save incoming C at A65F. With i=unsigned byte[A634], read v=byte[A628+i]; compute exact 0B/0C/0D equality masks and the unsigned 0A>=v guard. Load p=word[A63B+2*i] into A863. The observed i=2/v=05 path takes each skip guard and caches 2B at A662. Partial +2185(C=byte[A628]=28) returns 00; save its PSW separately below four later caller argument words. The first +6708 receives C=byte[p]-0A=7, E=v=05 and arguments in consumption order p+10, selector low 0, selected cursor p, cached 2B. Proven cleanup consumes eight bytes; caller POP B at +2988 recovers saved +2185.A. ANA/RAR/JNC takes the branch iff NOT(saved_A.bit0 AND copy_A.bit0): observed 00 AND FF gives clear CY and JNC taken. Reload selected v into A661; reject the 02/03/04 cases, match 05, test base byte[A628] against 28/2A and write 28 to byte[A628+i]. The second +6708 receives C=7, E=saved 05 and selector low i=2. Its returned FF makes RAR/JC +2AB8 taken, independent of returned CY=0. The selected-byte 15/25/24 equality OR, AND saved incoming C.bit0, is clear and selects +2B17. Set A661=0. Partial +46ED(C=selected byte 28) ends with A863=0; complete resident +1A40 and ORA L confirm that null pointer. Partial +4738(C=28) executes its scoped constructor and two-word repair, yielding p=FBB5. Publish byte[p+3]=29, byte[p+4]=byte[A62B+i]=7 and byte[p+5]=byte[A62E+i]=0. Partial +666E(BC=p,DE=0) caches those input words, selects field low5=9 and delegates resident processing. The caller ignores returned A and reloads A863, then publishes the pointer to word[A63B+2*i]. Complete +7B7A(C=byte[AE32]=1) returns stopping position 0; cache it at A660. With i!=1, complete +7AF0 publishes the pointer to the mapped word table. Complete +7B13/+7B2E/+7B49 publish selected bytes 28/7/0 to distinct AC73/AD08/AD9D tables through position_map. With A661=0, partial +2355(i) returns 01 at its selected-byte-28 scope; caller INR forms 02 for +7AD5 publication to AAB4+position_map[0]. Increment the cached position to 1; publish the same selected control and auxiliary bytes at that separately mapped slot. A second +2355(i) returns 01, and ADI 13 forms 14 for +7AD5 publication. RET +2C52 consumes the original outer hardware slot. The delegated +46ED/+666E algorithms, resident effects and unexecuted enclosing paths prevent a complete procedure contract.",
+      "contract_scope": "one correlated351-instruction MINIMAL path: allrepresented guard/copy/sum-indexed lookup/normalconstruction/field-word addition/scopedbitprocessing/mappedpublication operations; inheritedpartial +4584/4468/writer paths and253RAWbytes excluded; statednonaliasing observedmemoryconditions",
+      "contract": "Save incoming C at A65F. With i=unsigned byte[A634], read v=byte[A628+i]; compute exact 0B/0C/0D equality masks and the unsigned 0A>=v guard. Load p=word[A63B+2*i] into A863. The observed i=2/v=05 path takes each skip guard and caches 2B at A662. Partial +2185(C=byte[A628]=28) returns 00; save its PSW separately below four later caller argument words. The first +6708 receives C=byte[p]-0A=7, E=v=05 and arguments in consumption order p+10, selector low 0, selected cursor p, cached 2B. Proven cleanup consumes eight bytes; caller POP B at +2988 recovers saved +2185.A. ANA/RAR/JNC takes the branch iff NOT(saved_A.bit0 AND copy_A.bit0): observed 00 AND FF gives clear CY and JNC taken. Reload selected v into A661; reject the 02/03/04 cases, match 05, test base byte[A628] against 28/2A and write 28 to byte[A628+i]. The second +6708 receives C=7, E=saved 05 and selector low i=2. Its returned FF makes RAR/JC +2AB8 taken, independent of returned CY=0. The selected-byte 15/25/24 equality OR, AND saved incoming C.bit0, is clear and selects +2B17. Set A661=0. Scoped +46ED computes sum7, selects FBE1 from the A761 word slots, follows its+8 successor to FBC6 below referenceFBE1, matches the seven payload bytes but rejects field05 against28, follows successor0, and ends with A863=0; complete resident +1A40 and ORA L confirm that null pointer. Partial +4738(C=28) executes its scoped constructor and two-word repair, yielding p=FBB5. Publish byte[p+3]=29, byte[p+4]=byte[A62B+i]=7 and byte[p+5]=byte[A62E+i]=0. Scoped +666E(BC=p,DE=0) caches those input words, selects field low5=9, processes seven setup bits, adds word[p+6] to cachedDE through actual+82BB, passes the sum to resident+1207 for prefix10 and low/high word bytes, then processes seven zero-bit/payload-byte frames through +66C6. The caller ignores returned A and reloads A863, then publishes the pointer to word[A63B+2*i]. Complete +7B7A(C=byte[AE32]=1) returns stopping position 0; cache it at A660. With i!=1, complete +7AF0 publishes the pointer to the mapped word table. Complete +7B13/+7B2E/+7B49 publish selected bytes 28/7/0 to distinct AC73/AD08/AD9D tables through position_map. With A661=0, partial +2355(i) returns 01 at its selected-byte-28 scope; caller INR forms 02 for +7AD5 publication to AAB4+position_map[0]. Increment the cached position to 1; publish the same selected control and auxiliary bytes at that separately mapped slot. A second +2355(i) returns 01, and ADI 13 forms 14 for +7AD5 publication. RET +2C52 consumes the original outer hardware slot. The observed operation is now coherent at the stated lookup/construction/processing/publication scope. +4584 alternative traversal, +4468 allocator/+83A0 link effects, resident writer flush/error behavior and 253 unexecuted enclosing bytes still prevent a complete procedure contract.",
       "semantic_hypothesis": null,
-      "pseudocode": "i=byte[A634]; byte[A65F]=entry_C; follow the exact guard cascade; p=word[A63B+2*i]; word[A863]=p; byte[A662]=2B; saved=partial_2185(byte[A628]).A; PUSH PSW(saved); partial_6708(count=byte[p]-0A,E=byte[A628+i],args=[p+10,selector_low0,p,2B]); resume +2988: JNC iff !(saved.bit0 && copy_A.bit0); saved_v=byte[A628+i]; at the observed v=5/base=28-or-2A scope: byte[A628+i]=28; partial_6708(count=7,E=saved_v,args=[p+10,selector_low_i,p,2B]); resume +2AB7: JC iff copy_A.bit0; on the observed compound-guard skip: byte[A661]=0; partial_46ED(selected_byte); when A863==0: partial_4738(selected_byte); p=word[A863]; byte[p+3]=29; byte[p+4]=byte[A62B+i]; byte[p+5]=byte[A62E+i]; partial_666E(BC=p,DE=0); word[A63B+2*i]=word[A863]; pos=complete_7B7A(byte[AE32]).A; byte[A660]=pos; complete_7AF0(pos,word[A863]); publish selected bytes through 7B13/7B2E/7B49 at pos then pos+1; publish partial_2355(i).A+1 then partial_2355(i).A+13 through 7AD5; RET",
+      "pseudocode": "i=byte[A634]; byte[A65F]=entry_C; follow the exact guard cascade; p=word[A63B+2*i]; word[A863]=p; byte[A662]=2B; saved=partial_2185(byte[A628]).A; PUSH PSW(saved); partial_6708(count=byte[p]-0A,E=byte[A628+i],args=[p+10,selector_low0,p,2B]); resume +2988: JNC iff !(saved.bit0 && copy_A.bit0); saved_v=byte[A628+i]; at the observed v=5/base=28-or-2A scope: byte[A628+i]=28; partial_6708(count=7,E=saved_v,args=[p+10,selector_low_i,p,2B]); resume +2AB7: JC iff copy_A.bit0; on the observed compound-guard skip: byte[A661]=0; scoped_46ED(sum_indexed_lookup_and_payload_field_match); when A863==0: partial_4738(selected_byte); p=word[A863]; byte[p+3]=29; byte[p+4]=byte[A62B+i]; byte[p+5]=byte[A62E+i]; scoped_666E(BC=p,DE=0: setup7bits; field6+cache_word; word_protocol18bits; payload_frames9bits_each); word[A63B+2*i]=word[A863]; pos=complete_7B7A(byte[AE32]).A; byte[A660]=pos; complete_7AF0(pos,word[A863]); publish selected bytes through 7B13/7B2E/7B49 at pos then pos+1; publish partial_2355(i).A+1 then partial_2355(i).A+13 through 7AD5; RET",
       "evidence_refs": [
         "evidence.json#seeds/PLI1.OVL+28AA",
         "../minimal-baseline/pass-8/structural.json#PLI1.OVL+28AA",
-        "../minimal-baseline/pass-9/README.md"
+        "../minimal-baseline/pass-9/README.md",
+        "../minimal-baseline/pass-10/README.md"
       ],
       "blocks": [
         {
@@ -15033,7 +15036,7 @@
         {
           "offset": 11031,
           "pseudocode": [
-            "zeroA661; partial +46ED(selected byte) withpointertraversal/bufferdelegationexplicit"
+            "zeroA661;46ED sum &7F selects word slot, skips p>=reference, matchespayload andcomparesfield; observed fieldmismatchendsnull"
           ]
         },
         {
@@ -15045,19 +15048,19 @@
         {
           "offset": 11061,
           "pseudocode": [
-            "pointer zeroobserved: partial +4738 constructsandrepairstwowordpublications"
+            "null lookup result: scoped +4738 constructor anddistincthead/newword repairs"
           ]
         },
         {
           "offset": 11074,
           "pseudocode": [
-            "p+3=29; p+4=byte[A62B+index]; p+5=byte[A62E+index]; partial +666E(BC=p,DE0)"
+            "publishfields29/7/0;666E requestedbitcounts7+18+63 atpartial writer/no-flush scope"
           ]
         },
         {
           "offset": 11134,
           "pseudocode": [
-            "publishworking pointertoselectedword table; reverse-skipfrombyteAE32 via7B7A"
+            "reloadA863 preservedatobservedbit pipeline scope, notreturned A; publishpointer andreverse-skipindex"
           ]
         },
         {
@@ -15099,7 +15102,7 @@
         {
           "offset": 11252,
           "pseudocode": [
-            "2355(index) returns 01 onobserved selected28scope"
+            "2355 selected28 returns1; selected05 path nowknown22CB2+INR+INR=4 but notthis invocation"
           ]
         },
         {
@@ -15129,7 +15132,7 @@
         {
           "offset": 11329,
           "pseudocode": [
-            "2355(index) again returns 01; do notmergeitsreadwithpreviousinvocation"
+            "repeat selected28 dispatcher independently; retain its correlated call result"
           ]
         },
         {
@@ -15358,7 +15361,7 @@
         "2B21": "BC = indexed_state_bytes (A628H) (literal address/value)",
         "2B24": "HL=u16(HL+BC); only CY changes (word overflow)",
         "2B25": "C = byte[HL]; flags preserved",
-        "2B26": "push following PC; invoke PLI1.OVL+46ED; established partial contract at declared scope",
+        "2B26": "scoped +46ED sum-indexed payload/field lookup; observed field05!=C28 thenpointer0",
         "2B29": "A = 00H; flags preserved",
         "2B2B": "DE = copy_work_pointer (A863H) (literal address/value)",
         "2B2E": "push following PC; invoke PLI.COM+1A40; established complete contract at declared scope",
@@ -15400,7 +15403,7 @@
         "2B76": "B = H; flags preserved",
         "2B77": "C = L; flags preserved",
         "2B78": "DE = 0000H (literal address/value)",
-        "2B7B": "partial +666E receivesworking pointerinBC andzeroDE; caller laterreloadsA863 andignoresreturned A",
+        "2B7B": "scoped +666E field09 bit pipeline; word[p+6]+DE usesactual82BB; caller ignoresreturned A",
         "2B7E": "HL = little_endian_word[orchestration_context_byte (A634H)]; low byte then high byte, flags preserved",
         "2B81": "H = 00H; flags preserved",
         "2B83": "BC = orchestration_word_table (A63BH) (literal address/value)",
@@ -16185,7 +16188,7 @@
         "description": "Corrected original-slot returns; no recursion; zero reserved frame; below-entry CALL/save traffic."
       },
       "unresolved_paths": [
-        "missing helper:22CB; unobserved path:24/25 zero-result arm."
+        "partial helper path:22CB literal15/16/19 returns unobserved; own24/25 zero-result arm RAW; alias/precondition andindexed-byte provenance."
       ],
       "inputs": "C=index; selected byteA628+C readable; A64C writable",
       "outputs": "v28: A1/BC=A628/HL=selected slot/DE preserved/flagsCPI28; v05: fallback A+2, other outputs delegated",
@@ -16224,13 +16227,14 @@
       ],
       "overlapping_entries": [],
       "contract_scope": "two observed v28 returns andtwo v05 delegated returns; RAW24/25 result arm excluded",
-      "contract": "Save C=index atA64C; read v=byte[A628+unsigned(index)]. SUI 24/SUI1/SBB A and SUI 25/SUI1/SBB A form equality masks; OR/RAR/JNC 232C skips the unobserved zero-result arm iff v is neither24 nor25. Next CPI 28/JNZ 233E returns 01 on observed v28, flags remain CPI 28. Other observed v05 delegates opaque +22CB with C=saved index, then increments returned A twice modulo256; CY remains delegated and NZPA comes from second INR. STATIC / UNOBSERVED v24/25 arm returns 00. No complete fallback algorithm asserted.",
+      "contract": "Save C=index atA64C; read v=byte[A628+unsigned(index)]. SUI 24/SUI1/SBB A and SUI 25/SUI1/SBB A form equality masks; OR/RAR/JNC 232C skips the unobserved zero-result arm iff v is neither24 nor25. Next CPI 28/JNZ 233E returns 01 on observed v28, flags remain CPI 28. Other observed v05 delegates opaque +22CB with C=saved index, then increments returned A twice modulo256; CY remains delegated and NZPA comes from second INR. STATIC / UNOBSERVED v24/25 arm returns 00. No complete fallback algorithm asserted. At bothselected05 calls,22CB defaultsA2 withCY1 fromCPI19; INR twice givesA4 andNZPA fromthe secondINR whileCY stays1. ReturnedA isarithmetic onaliteral byte, not a Boolean mask. Unexecuted24/25 resultarm remainsSTATIC / UNOBSERVED.",
       "semantic_hypothesis": null,
       "pseudocode": "byte[A64C]=C; v=byte[A628+C]; if v not in{24,25}: if v==28: A=1; RET; else A=u8(opaque +22CB(C).A+2); RET; STATIC / UNOBSERVED v24/25: A=0",
       "evidence_refs": [
         "evidence.json#seeds/PLI1.OVL+230E",
         "../minimal-baseline/pass-9/structural.json#PLI1.OVL+230E",
-        "../minimal-baseline/pass-9/README.md"
+        "../minimal-baseline/pass-9/README.md",
+        "../minimal-baseline/pass-10/README.md"
       ],
       "blocks": [
         {
@@ -16284,7 +16288,7 @@
         "2343": "consume original hardware return word at entry SP; SP=entry_SP+2; flags preserved",
         "2344": "HL = little_endian_word[selected_result_index (A64CH)]; low byte then high byte, flags preserved",
         "2347": "C = L; flags preserved",
-        "2348": "push following PC; invoke PLI1.OVL+22CB; opaque algorithm/effects remain delegated",
+        "2348": "partial +22CB: observedselected05 returns literal2 withCY1 fromCPI19; notBoolean normalized",
         "234B": "A=u8(A+1); NZPA updated, CY preserved",
         "234C": "A=u8(A+1); NZPA updated, CY preserved",
         "234D": "consume original hardware return word at entry SP; SP=entry_SP+2; flags preserved"
@@ -16314,7 +16318,7 @@
         "description": "Corrected original-slot returns; no recursion; zero reserved frame; below-entry CALL/save traffic."
       },
       "unresolved_paths": [
-        "partial helper contract:21AD/230E; missing helper22CB forv05 path; unobserved06/07 literal result arms."
+        "partial helper contracts:21AD/213C and230E/22CB unobserved literalarms; own31/2A resultassignments RAW; indexed-byte/alias provenance."
       ],
       "inputs": "C=index; selectedA628 byte; A64D andnestedpredicate/result scratch writable",
       "outputs": "A result05 ordelegated230E atobserved scope; flags from helperRAR or delegatedhelper; wider registers scoped",
@@ -16374,13 +16378,14 @@
       ],
       "overlapping_entries": [],
       "contract_scope": "five correlated MINIMAL invocations; represented dispatcher and stated partial +21AD/230E scopes",
-      "contract": "Save input C=index atA64D, load selected byte atA628+index intoC, invoke partial +21AD. RAR/JC 2367 enters further selection iff helper A.bit0=1; clear bit returns 05 preserving post-RAR flags. On set-bit path reread selected byte: JNZ 2379 skips31 arm iff v!=31; JNZ 238B skips2A arm iff v!=2A; remaining path delegates230E(saved index), returning its A/flags. STATIC / UNOBSERVED literal31/2A arms return06/07 respectively. Observed results: index0/v40 returns 05; index0/v05 returns delegated04 twice; index2/v28 returns 01 twice, supplying +28AA publications02 and14 after caller arithmetic.",
+      "contract": "Save input C=index atA64D, load selected byte atA628+index intoC, invoke partial +21AD. RAR/JC 2367 enters further selection iff helper A.bit0=1; clear bit returns 05 preserving post-RAR flags. On set-bit path reread selected byte: JNZ 2379 skips31 arm iff v!=31; JNZ 238B skips2A arm iff v!=2A; remaining path delegates230E(saved index), returning its A/flags. STATIC / UNOBSERVED literal31/2A arms return06/07 respectively. Observed results: index0/v40 returns 05; index0/v05 returns delegated04 twice; index2/v28 returns 01 twice, supplying +28AA publications02 and14 after caller arithmetic. Pass10 substitutes22CB behind230E: selected05 yields literal2 then+2=4, CY1 fromCPI19. Selected28 stillreturns1 via230E. No Boolean/status/source-type claim andno new behavior asserted for31/2A or22CB literalalternatives.",
       "semantic_hypothesis": null,
       "pseudocode": "byte[A64D]=index; r=partial +21AD(byte[A628+index]).A; if r.bit0==0: A=5; RET; v=byte[A628+index]; if v!=31 and v!=2A: RET partial +230E(index); STATIC / UNOBSERVED v31/v2A: A=6/7",
       "evidence_refs": [
         "evidence.json#seeds/PLI1.OVL+2355",
         "../minimal-baseline/pass-9/structural.json#PLI1.OVL+2355",
-        "../minimal-baseline/pass-9/README.md"
+        "../minimal-baseline/pass-9/README.md",
+        "../minimal-baseline/pass-10/README.md"
       ],
       "blocks": [
         {
@@ -16456,8 +16461,8 @@
       "start_offset": 18157,
       "end_offset": 18232,
       "length": 75,
-      "byte_status_at_entry": "STRUCTURED",
-      "description": "partial buffer/state traversal orchestration with exact pointer predicates",
+      "byte_status_at_entry": "UNDERSTOOD",
+      "description": "sum-indexed pointer traversal and scoped payload/field matching",
       "completeness": {
         "bounds": "provisional",
         "control_flow": "partial",
@@ -16471,22 +16476,28 @@
         "description": "Corrected original-slot returns; no recursion; zero reserved frame; below-entry CALL/save traffic."
       },
       "unresolved_paths": [
-        "missing helpers:452B,422F,4275,428E,4584; no inferred list ownership.",
-        "unobserved paths:4723 and4730 RET bytes; arbitrary traversaltermination andalias/preconditions unresolved."
+        "partial helper path:4584 mismatch/length/zero-count/address-floor advancement unobserved; ownRAWRET4723/4730.",
+        "alias/precondition andtermination concern: arbitrarysuccessor chains andmatchingfields; producerprovenance ofsum slots/reference/payloads."
       ],
-      "inputs": "C=comparisonbyte; A947/A948bufferstate; A863pointer; opaque helper preconditions unresolved",
-      "outputs": "own outputA915=input C; observednested effects endA863=0; otherregisters/flags delegated",
+      "inputs": "C=comparison byte; A947/A948bufferstate; A863pointer; opaque helper preconditions unresolved",
+      "outputs": "A915=inputC; observedA863=0, A0/BC8/DEA864/HL0; NZPA fromfinal4281 Boolean0 andCY0 afterRAR; table/bufferunchanged byrepresentedcallee scopes",
       "clobbers": "A,BC,DE,HL,flags andexplicitopaque helpers; A915; below-entryCALLstack",
       "memory_state": [
         "current_record=A863H (record pointer used by reviewed construction/repair)",
+        "saved_record_head=A8ABH (word restored by repair wrapper)",
         "repair_payload_count=A947H (count read for repair/constructor)",
         "repair_payload_source=A948H (pushed source address)",
+        "link_heads=A761H (128 word slots accessed by this routine; no ownership implied; +422F selects word[A761+2*byte[A760]] after +452B masks the sum to7F; no linked ownership claim.)",
         "traversal_comparison_byte=A915H (saved byte compared with workingpointer+2 after delegated buffer tests)",
-        "F=entry_SP; zero-byte reserved local frame; temporary saves/CALL words below F; original return word at F."
+        "buffer_sum_index=A760H (wrapping byte sum masked7F on return; selects word slot via422F)",
+        "F=entry_SP; zero reserved local frame; original hardware return atF; transient CALL/save words belowF."
       ],
       "data_role_ids": [
         "PLI1.OVL:traversal_comparison_byte",
         "PLI1.OVL:current_record",
+        "PLI1.OVL:saved_record_head",
+        "PLI1.OVL:buffer_sum_index",
+        "PLI1.OVL:link_heads",
         "PLI1.OVL:repair_payload_count",
         "PLI1.OVL:repair_payload_source"
       ],
@@ -16554,14 +16565,15 @@
         }
       ],
       "overlapping_entries": [],
-      "contract_scope": "represented two correlatedC28 traversals; helper algorithms delegated; RAWearlyRETslots excluded",
-      "contract": "Independently called from2B26 and4740 (two ordinary original-slot returns). Save C atA915; opaque +452B receives BC=A948 and DE=word[A947] (only low byte has established count role); opaque +422F follows. Repeatedly call4275 and, while its returned A.bit0 is set, call428E. Once clear, repeatedly test current pointer via complete +4281: JNC 470F returns iff word[A863]==0. Otherwise call4584 withbufferBC=A948/DE=word[A947], then4281 again; JC 4720 enters field comparison iff pointer!=0. Atp+2 compare byte[A915] andbyte[p+2]; JNZ 472D calls428E and repeats pointer test. EqualityRET4723 andpost4584 nullRET4723 are STATIC / UNOBSERVED. Both observed paths reject field05 versus saved28 and end with A863=0000. The internal452B/422F/4275/428E/4584 algorithms remain opaque; equal endstates do not define preservation.",
+      "contract_scope": "two correlatedC28/sum7/nonaliasing positive-count matching traversals; inherited4584 observedpayload-match scope; no general chain termination; unexecuted earlyRETarms excluded",
+      "contract": "Save requested field byte C atA915. Complete452B computes seven-bit sum of E bytes at input bufferA948 (DE loadedfrom word[A947], onlyE used); complete +422F selects pointer from word[A761+2*sum] intoA863. Firstloop:4275 returnsFF iffworking pointer>=word[A8AB]; RAR/JNC 4702 exits iffworking pointer<reference, else428E replacespointer withword[p+8] and repeats. Then4281 testsnull; JNC 470F returns iffpointerzero. Otherwise4584 comparespositive-count payload descending atits declaredmatching scope (STATIC alternativeadvancement/floor paths excluded). Re-testnull; nonzero pointer reaches comparison byte[p+2] againstsavedC. Mismatch428E followsnext+8 word and repeatsnull/payloadtest; field-equalityRET4730 andpost4584 nullRET4723 remainSTATIC / UNOBSERVED. BothC28 paths: sum7 selectsFBE1, referenceFBE1; firstfollow yieldsFBC6<reference; payloadsevenbytes matches butfield05!=28; follow+8 yields0; finalnullRET. No list/treeownership orarbitrarytermination is inferred.",
       "semantic_hypothesis": null,
-      "pseudocode": "byte[A915]=C; opaque +452B(BC=A948,DE=word[A947]); opaque +422F(); while opaque +4275().A.bit0: opaque +428E(); while word[A863]!=0: opaque +4584(BC=A948,DE=word[A947]); if word[A863]==0: STATIC / UNOBSERVED RET 4723; p=word[A863]; if byte[p+2]==byte[A915]: STATIC / UNOBSERVED RET 4730; opaque +428E(); RET 4737",
+      "pseudocode": "byte[A915]=C; sum=complete +452B(BC=A948,E=byte[A947]); complete +422F(); while word[A863]>=word[A8AB]: complete +428E(); loop: if word[A863]==0: RET 4737; partial +4584(BC=A948,E=byte[A947]); if word[A863]==0: STATIC / UNOBSERVED RET 4723; if byte[word[A863]+2]==byte[A915]: STATIC / UNOBSERVED RET 4730; complete +428E(); goto loop",
       "evidence_refs": [
         "evidence.json#seeds/PLI1.OVL+46ED",
         "../minimal-baseline/pass-9/structural.json#PLI1.OVL+46ED",
-        "../minimal-baseline/pass-9/README.md"
+        "../minimal-baseline/pass-9/README.md",
+        "../minimal-baseline/pass-10/README.md"
       ],
       "blocks": [
         {
@@ -16625,12 +16637,12 @@
         "46F1": "HL = little_endian_word[repair_payload_count (A947H)]; low byte then high byte, flags preserved",
         "46F4": "swap HL and DE; flags preserved",
         "46F5": "BC = repair_payload_source (A948H) (literal address/value)",
-        "46F8": "push following PC; invoke PLI1.OVL+452B; opaque algorithm/effects remain delegated",
-        "46FB": "push following PC; invoke PLI1.OVL+422F; opaque algorithm/effects remain delegated",
-        "46FE": "push following PC; invoke PLI1.OVL+4275; opaque algorithm/effects remain delegated",
+        "46F8": "complete +452B: BC=A948 source; E=lowA947 count; D ignored; descending sum&7F",
+        "46FB": "complete +422F: A863=word[A761+2*byte[A760]]",
+        "46FE": "complete +4275: A=FF iffworking pointer>=word[A8AB]; flags different fromA",
         "4701": "A=(old_CY<<7)|(old_A>>1); CY=old_A.bit0; NZPA preserved",
-        "4702": "if CY=0: PC=690BH; flags preserved",
-        "4705": "push following PC; invoke PLI1.OVL+428E; opaque algorithm/effects remain delegated",
+        "4702": "RAR fedhelperA.bit0; JNC iff p<reference; does nottestoriginalhelpercarry directly",
+        "4705": "complete +428E replacespointer withword[p+8]; no ownershiporunconditionaltermination inferred",
         "4708": "if always: PC=68FEH; flags preserved",
         "470B": "push following PC; invoke PLI1.OVL+4281; established complete contract at declared scope",
         "470E": "A=(old_CY<<7)|(old_A>>1); CY=old_A.bit0; NZPA preserved",
@@ -16638,7 +16650,7 @@
         "4712": "HL = little_endian_word[repair_payload_count (A947H)]; low byte then high byte, flags preserved",
         "4715": "swap HL and DE; flags preserved",
         "4716": "BC = repair_payload_source (A948H) (literal address/value)",
-        "4719": "push following PC; invoke PLI1.OVL+4584; opaque algorithm/effects remain delegated",
+        "4719": "partial +4584 comparespositivecountpayload descending; witnessed allsevenbytes match",
         "471C": "push following PC; invoke PLI1.OVL+4281; established complete contract at declared scope",
         "471F": "A=(old_CY<<7)|(old_A>>1); CY=old_A.bit0; NZPA preserved",
         "4720": "if CY=1: PC=6924H; flags preserved",
@@ -16648,7 +16660,7 @@
         "4729": "A = byte[traversal_comparison_byte (A915H)]; flags preserved",
         "472C": "flags = unsigned byte comparison A-byte[HL]; A unchanged",
         "472D": "if Z=0: PC=6931H; flags preserved",
-        "4731": "push following PC; invoke PLI1.OVL+428E; opaque algorithm/effects remain delegated",
+        "4731": "complete +428E mismatchfieldprogression followsword[p+8]",
         "4734": "if always: PC=690BH; flags preserved",
         "4737": "consume original hardware return word at entry SP; SP=entry_SP+2; flags preserved"
       }
@@ -16662,7 +16674,7 @@
       "start_offset": 26222,
       "end_offset": 26310,
       "length": 88,
-      "byte_status_at_entry": "STRUCTURED",
+      "byte_status_at_entry": "UNDERSTOOD",
       "description": "partial field-selected processing orchestration",
       "completeness": {
         "bounds": "provisional",
@@ -16677,21 +16689,21 @@
         "description": "Corrected original-slot returns; no recursion; zero reserved frame; below-entry CALL/save traffic."
       },
       "unresolved_paths": [
-        "missing helper:84BB behind66FA andresident1207; partialresident1140/119E; unobservedselector11/otherselector paths.",
-        "alias/precondition andgeneral provenance: cached word,working pointer andoutputbuffers; no compiler-semantic meaning."
+        "partial helper contracts:resident +1140/119E flush/error and66C6 zero/wrap/count-alias paths; no resident +1207 nonzero-word invocation.",
+        "unobserved path:selector11/otherselectors RAW; alias/precondition andproducerprovenance ofpointer fields/cache/outputstream."
       ],
-      "inputs": "BC=working pointer; DE=cacheword; pointerfieldsA863 andbufferA947/A948; resident/helper preconditionspartial",
-      "outputs": "own cachedBC/DE andfieldmask; returned registers from66C6 atobserved scope; globalresident effectsdelegated",
+      "inputs": "BC=working pointer; DE=cacheword; pointer fieldsA863 andbufferA947/A948; resident/helper preconditionspartial",
+      "outputs": "ownBC/DE caches andfieldmask9; observedA863FBB5 preserved; word sum0 passed toresident +1207; sevenpayloadframes; A6/BC1D0A/DEA908/HLA9D9, finalCMP6-7 flags through66C6; output buffer/index effects scoped",
       "clobbers": "A,BC,DE,HL,flags; A9D4..D9/A863 andpartialresident/calleepublications; nestedCALLstack",
       "memory_state": [
         "current_record=A863H (record pointer used by reviewed construction/repair)",
         "repair_payload_count=A947H (count read for repair/constructor)",
         "repair_payload_source=A948H (pushed source address)",
-        "processing_cached_word=A9D6H (saved DE supplied byaddress to84BB; operation unresolved)",
+        "processing_cached_word=A9D6H (saved DE word atA9D6/7; complete+66FA supplies its address to actualPLI1+82BB for addition toworkingfield word[p+6])",
         "processing_buffer_index=A9D9H (wrapping byte index passed throughbuffer traversal; final7 observed)",
         "processing_cached_pointer=A9D4H (inputBC word cached thenpublished toworkingpointerA863)",
         "processing_field_low5=A9D8H (workingpointer+3 masked1F usedfor09/11 branchselection)",
-        "F=entry_SP; zero-byte reserved local frame; temporary saves/CALL words below F; original return word at F."
+        "F=entry_SP; zero reserved local frame; original hardware return atF; transient CALL/save words belowF."
       ],
       "data_role_ids": [
         "PLI1.OVL:processing_cached_pointer",
@@ -16745,44 +16757,45 @@
         }
       ],
       "overlapping_entries": [],
-      "contract_scope": "one fieldmask9 /BCFBB5/DE0 invocation andpartialresident/helper scopes; alternativeRAWarmexcluded",
-      "contract": "Save BC word atA9D4/5 andDE word atA9D6/7; publish savedBC toworking pointerA863. Complete41A6 readsbyte[p+3]; ANI 1F caches low5 bits atA9D8. CPI 09/JNZ 668B skips normal arm iffvalue!=9. ObservedpFBB5, DE0, field29 ->9: callpartial +119E(C96,E7); partial +66FA forms p+6/cacheword addresses and delegates84BB, returningHL0; copyHL toBC and invokeopaque resident1207; partial +66C6 traverses sevenbuffer bytes viaresident1140/119E; JMP66A0 reachesownRET66C5. Own caches/pointer writes aredistinct fromchildresidentbuffer/channel effects. ReturnedA6 is ignored by28AA, which reloadsA863; observed pointerremainsFBB5, but preservationoutside declaredpath isunproved. STATIC / UNOBSERVED alternative selector11 arm and its PLI.COM+1229 call remain RAW.",
+      "contract_scope": "one field29/selector9/pFBB5/cachedDE0/count7, nonaliasing no-flush pipeline;1140/119E/1207/66C6 partial success scopes; RAWalternatefieldcases excluded",
+      "contract": "Cache inputBC atA9D4/5 andDE atA9D6/7; setA863=inputBC. Complete41A6 readsfield+3; ANI 1F/cacheA9D8 selects09 onobserved29. Partialresident +119E(C96,E7) processessevenMSB-firstsetupbits. Complete66FA forms sum=word[p+6]+cachedDE viaactual82BB; MOVB,H/MOVC,L passes sumtoresident +1207. Its scopedthree119E calls processprefix10, low byteeightbits andhigh byteeightbits. Thenpartial +66C6 rereadscountA947 andprocesseseachbufferbyte through1140(C0) plus119E(byte,E8). Atobservedcount7/no-flush scope, orderedrequestedbitcounts7+18+7*9=88. Owncaches, operandwords, residentword cache20BD, outputbitbuffer/indices andpayload buffer remain distinct. +28AA ignoresreturned A6 andreloadsA863, which ispreserved atthis nonaliasingnormal scope. STATIC / UNOBSERVED: selector11 andothermaskcases remainRAW; residentflush/error paths remainpartial. This is anoperationalbit-writer pipeline, not a compiler/source-language interpretation.",
       "semantic_hypothesis": null,
-      "pseudocode": "word[A9D4]=BC; word[A9D6]=DE; word[A863]=word[A9D4]; byte[A9D8]=byte[word[A863]+3]&1F; scope value9: partial +119E(C96,E7); partial +66FA(); BC=returned HL; opaque resident1207(BC); partial +66C6(); RET; otherselectors STATIC / UNOBSERVED",
+      "pseudocode": "word[A9D4]=BC; word[A9D6]=DE; word[A863]=BC; selector=byte[BC+3]&1F; byte[A9D8]=selector; scope selector9: partial +119E(C96,E7); sum=complete +66FA(); partial +1207(BC=sum); partial +66C6(); RET; otherselectors STATIC / UNOBSERVED",
       "evidence_refs": [
         "evidence.json#seeds/PLI1.OVL+666E",
         "../minimal-baseline/pass-9/structural.json#PLI1.OVL+666E",
-        "../minimal-baseline/pass-9/README.md"
+        "../minimal-baseline/pass-9/README.md",
+        "../minimal-baseline/pass-10/README.md"
       ],
       "blocks": [
         {
           "offset": 26222,
           "pseudocode": [
-            "cacheBC/DE separately; setworking pointer fromsavedBC; readfield+3 via41A6"
+            "cacheBC/DE separately; setworking pointer; readandmaskfield+3"
           ]
         },
         {
           "offset": 26241,
           "pseudocode": [
-            "mask1F/cacheA9D8; JNZ 668B iffmaskedfield!=9"
+            "CPI 09/JNZ iffselector!=9; observedselector9"
           ]
         },
         {
           "offset": 26254,
           "pseudocode": [
-            "partial +119E receivesC96,E7"
+            "119E(C96,E7): sevenMSB-firstsetupbits atpartial writerscope"
           ]
         },
         {
           "offset": 26261,
           "pseudocode": [
-            "partial +66FA ->HL; MOVB,H/MOVC,L passesreturned word toopaque +1207"
+            "66FA/82BB addsfield word+cacheword; copyreturnedHL toBC; resident +1207 processes prefix10 thenlow/high bytes"
           ]
         },
         {
           "offset": 26269,
           "pseudocode": [
-            "partial +66C6 processesbuffer throughresident channels; JMP66C5 thenownRET"
+            "66C6 performs orderedzero-bit+byte frames; caller reloadsA863 andignoresreturned A"
           ]
         }
       ],
@@ -16806,10 +16819,10 @@
         "668E": "E = 07H; flags preserved",
         "6690": "C = 96H; flags preserved",
         "6692": "push following PC; invoke PLI.COM+119E; established partial contract at declared scope",
-        "6695": "push following PC; invoke PLI1.OVL+66FA; established partial contract at declared scope",
+        "6695": "complete +66FA/actual82BB: HL=word[p+6]+cachedDE; flagsword addition",
         "6698": "B = H; flags preserved",
         "6699": "C = L; flags preserved",
-        "669A": "push following PC; invoke PLI.COM+1207; opaque algorithm/effects remain delegated",
+        "669A": "scopedresident +1207 consumesBC=sum; orderedwriter args80/2, low/8, high/8",
         "669D": "push following PC; invoke PLI1.OVL+66C6; established partial contract at declared scope",
         "66A0": "if always: PC=88C5H; flags preserved",
         "66C5": "consume original hardware return word at entry SP; SP=entry_SP+2; flags preserved"
@@ -17198,12 +17211,12 @@
       "start_offset": 26362,
       "end_offset": 26376,
       "length": 14,
-      "byte_status_at_entry": "STRUCTURED",
-      "description": "prepare two word addresses for opaque helper",
+      "byte_status_at_entry": "UNDERSTOOD",
+      "description": "add working-field word at offset six to cached input word",
       "completeness": {
         "bounds": "stable",
         "control_flow": "complete",
-        "contract": "partial"
+        "contract": "complete"
       },
       "observed_paths": {
         "invocations_by_run": {
@@ -17213,15 +17226,15 @@
         "description": "Corrected original-slot returns; no recursion; zero reserved frame; below-entry CALL/save traffic."
       },
       "unresolved_paths": [
-        "missing helper:84BB; do not interpret same-valued field/cache words as an established subtraction."
+        "general provenance: producers/meaning of field word andcachedDE; no localalgorithm gap atdeclaredscope. Fileoffset84BB isnotanobservedcallee."
       ],
-      "inputs": "working pointerA863 andcached wordA9D6; 84BBpreconditionsunknown",
-      "outputs": "delegated84BB outputs; observedHL0; original hardwareSP restored",
-      "clobbers": "BC,DE,HL,CY andopaque +84BB effects",
+      "inputs": "readableA863 pointer, field wordp+6 andcachedA9D6 word; operand/return-stack nonaliasing; word/addresswrapping",
+      "outputs": "HL=sum; BC=field word; DE=A9D7; A=highsum; CY=word overflow; NZPA high ADC",
+      "clobbers": "A,BC,DE,HL,flags; nested CALL stack only; no data memory writes",
       "memory_state": [
         "current_record=A863H (record pointer used by reviewed construction/repair)",
-        "processing_cached_word=A9D6H (saved DE supplied byaddress to84BB; operation unresolved)",
-        "F=entry_SP; zero-byte reserved local frame; temporary saves/CALL words below F; original return word at F."
+        "processing_cached_word=A9D6H (saved DE word atA9D6/7; complete+66FA supplies its address to actualPLI1+82BB for addition toworkingfield word[p+6])",
+        "F=entry_SP; zero reserved local frame; original hardware return atF; transient CALL/save words belowF."
       ],
       "data_role_ids": [
         "PLI1.OVL:current_record",
@@ -17250,20 +17263,21 @@
         }
       ],
       "overlapping_entries": [],
-      "contract_scope": "one observed ordinarycall; address preparation only,84BBalgorithm unavailable",
-      "contract": "BC=6; HL=u16(word[A863]+6); DE=A9D6; invoke opaque +84BB. Return its outputs/flags unchanged onoriginal hardwareCALLslot. Observed pointerFBB5 givesfieldaddressFBBB, cached word0 atA9D6; returned HL0. No arithmetic meaning is inferred from that zero value.",
+      "contract_scope": "complete +82BB operation composed withpointer+6 preparation; operand/cache/return-stack nonaliasing; no source-language word meaning",
+      "contract": "BC=6; HL=u16(word[A863]+6); DE=&A9D6. The exact CALL target is PLI1+82BB (runtimeA4BB withverifiedloadbase2200), not fileoffset84BB. Reuse complete +82BB: capture field word=word[p+6] andcached word=word[A9D6], return HL=u16(field word+cached word), BC=field word, DE=A9D7, A=highsum, CY=word overflow, NZPA fromhigh ADC only. Only nested CALL stack written; A863 andoperands unchanged. Observedbothwords0 gives0 by addition, not equality-based inference or subtraction. Requested+84BB hasno MINIMAL CALL/instruction entry andisnotpromoted.",
       "semantic_hypothesis": null,
-      "pseudocode": "BC=6; HL=word[A863]+6; DE=A9D6; opaque +84BB(HL,DE); RET",
+      "pseudocode": "HL=u16(word[A863]+6); DE=&A9D6; complete +82BB(); HL=u16(word[p+6]+word[A9D6]); RET",
       "evidence_refs": [
         "evidence.json#seeds/PLI1.OVL+66FA",
         "../minimal-baseline/pass-9/structural.json#PLI1.OVL+66FA",
-        "../minimal-baseline/pass-9/README.md"
+        "../minimal-baseline/pass-9/README.md",
+        "../minimal-baseline/pass-10/README.md"
       ],
       "blocks": [
         {
           "offset": 26362,
           "pseudocode": [
-            "formpointer+6 andcachewordaddressA9D6; delegate84BB; RET"
+            "p=word[A863]; addressp+6 andcacheA9D6; complete +82BB adds the two words; RET"
           ]
         }
       ],
@@ -17272,7 +17286,7 @@
         "66FD": "HL = little_endian_word[current_record (A863H)]; low byte then high byte, flags preserved",
         "6700": "HL=u16(HL+BC); only CY changes (word overflow)",
         "6701": "DE = processing_cached_word (A9D6H) (literal address/value)",
-        "6704": "push following PC; invoke PLI1.OVL+82BB; established complete contract at declared scope",
+        "6704": "exacttargetPLI1+82BB @A4BB (loadbase2200); addword[p+6]+word[A9D6]; do notsubstitute file84BB",
         "6707": "consume original hardware return word at entry SP; SP=entry_SP+2; flags preserved"
       }
     },
@@ -17409,6 +17423,902 @@
         "66F5": "byte[HL]=u8(byte[HL]+1); NZPA updated, CY preserved",
         "66F6": "if Z=0: PC=88D3H; flags preserved",
         "66F9": "consume original hardware return word at entry SP; SP=entry_SP+2; flags preserved"
+      }
+    },
+    {
+      "id": "PLI1.OVL+452B",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "stable_label": "PLI1_452B",
+      "runtime_entry": 26411,
+      "start_offset": 17707,
+      "end_offset": 17762,
+      "length": 55,
+      "byte_status_at_entry": "UNDERSTOOD",
+      "description": "descending buffer sum masked to seven bits",
+      "completeness": {
+        "bounds": "stable",
+        "control_flow": "complete",
+        "contract": "complete"
+      },
+      "observed_paths": {
+        "invocations_by_run": {
+          "MINIMAL": 6
+        },
+        "represented_bytes": 55,
+        "description": "Corrected original-slot returns; no recursion; zero reserved frame; below-entry CALL/save traffic."
+      },
+      "unresolved_paths": [
+        "No unresolved local operation at declared scope; broader producers/alias relations remain general provenance questions."
+      ],
+      "inputs": "BC=source address; E=byte count; source range readable, disjoint from A760/A901..A903 and return stack; D ignored",
+      "outputs": "A=A760=seven-bit sum; A903=0; A901/2=input BC; HL=A903; DE preserved; BC=0 for E>0 else input BC; CY0/NZPA/AC from ANI 7F",
+      "clobbers": "A,BC,HL,flags; A760/A901/A902/A903; no body stack writes; DE unchanged",
+      "memory_state": [
+        "buffer_sum_source=A901H (saved BC source pointer for descending byte reads)",
+        "buffer_sum_remaining=A903H (low input E count decremented before each byte read)",
+        "buffer_sum_index=A760H (wrapping byte sum masked7F on return; selects word slot via422F)",
+        "F=entry_SP; zero-byte reserved local frame; temporary saves/CALL words below F; original return word at F."
+      ],
+      "data_role_ids": [
+        "PLI1.OVL:buffer_sum_source",
+        "PLI1.OVL:buffer_sum_remaining",
+        "PLI1.OVL:buffer_sum_index"
+      ],
+      "callers": [
+        {
+          "coordinate": "PLI1.OVL+4569",
+          "counts_by_run": {
+            "MINIMAL": 3
+          }
+        },
+        {
+          "coordinate": "PLI1.OVL+46F8",
+          "counts_by_run": {
+            "MINIMAL": 2
+          }
+        },
+        {
+          "coordinate": "PLI1.OVL+48F8",
+          "counts_by_run": {
+            "MINIMAL": 1
+          }
+        }
+      ],
+      "returns": {
+        "convention": "ordinary hardware CALL word; original slot unchanged, SP after RET=entry_SP+2",
+        "observed_file_offsets": [
+          17761
+        ],
+        "sites_description": "PLI1.OVL+4561"
+      },
+      "direct_callees": [],
+      "overlapping_entries": [],
+      "contract_scope": "documented byte/word/address wrapping; selected scratch/stack/read slots nonaliasing; no source-language type or ownership meaning",
+      "contract": "Save BC source pointer at A901/2 and E remaining count at A903; D is not used. Clear A760. At each iteration CMP 0-remaining sets CY iff remaining>0; JNC +453E exits iff remaining==0. Decrement remaining, read source[remaining], add it to A760 modulo256, and repeat. Return and republish A760&7F. At nonaliasing source/scratch/return-stack scope this is sum of E bytes, visited in descending index order, modulo128. DE preserved; HL=A903; BC=0 if any iteration ran, otherwise input BC; CY=0 and NZPA/AC from final ANI 7F. Six observed E=7 calls read FBF1..FBF7, 20C6..20CC or A948..A94E and return07. No source writes; A947 and A948 are not written in their demonstrated buffer use.",
+      "semantic_hypothesis": null,
+      "pseudocode": "word[A901]=BC; byte[A903]=E; byte[A760]=0; while byte[A903]>0: byte[A903]--; byte[A760]=u8(byte[A760]+byte[u16(word[A901]+byte[A903])]); A=byte[A760]&7F; byte[A760]=A; RET",
+      "evidence_refs": [
+        "evidence.json#seeds/PLI1.OVL+452B",
+        "../minimal-baseline/pass-10/structural.json#PLI1.OVL+452B",
+        "../minimal-baseline/pass-10/README.md"
+      ],
+      "blocks": [
+        {
+          "offset": 17707,
+          "pseudocode": [
+            "cache source BC and low count E separately; clear byte sum A760"
+          ]
+        },
+        {
+          "offset": 17720,
+          "pseudocode": [
+            "CMP 0,remaining; JNC +453E iff remaining==0"
+          ]
+        },
+        {
+          "offset": 17729,
+          "pseudocode": [
+            "remaining--; BC=zero_extend(remaining); add byte[source+remaining] to wrapping sum"
+          ]
+        },
+        {
+          "offset": 17753,
+          "pseudocode": [
+            "mask sum with7F, publish same masked value and return"
+          ]
+        }
+      ],
+      "local_comments": {
+        "452B": "HL = buffer_sum_remaining (A903H) (literal address/value)",
+        "452E": "byte[HL] = E; flags preserved",
+        "452F": "HL=u16(HL-1); flags preserved",
+        "4530": "byte[HL] = B; flags preserved",
+        "4531": "HL=u16(HL-1); flags preserved",
+        "4532": "byte[HL] = C; flags preserved",
+        "4533": "HL = buffer_sum_index (A760H) (literal address/value)",
+        "4536": "byte[HL] = 00H; flags preserved",
+        "4538": "A = 00H; flags preserved",
+        "453A": "HL = buffer_sum_remaining (A903H) (literal address/value)",
+        "453D": "flags = unsigned byte comparison A-byte[HL]; A unchanged",
+        "453E": "if CY=0: PC=6759H; flags preserved",
+        "4541": "A = byte[buffer_sum_remaining (A903H)]; flags preserved",
+        "4544": "A=u8(A-1); NZPA updated, CY preserved",
+        "4545": "byte[buffer_sum_remaining (A903H)] = A; flags preserved",
+        "4548": "C = A; flags preserved",
+        "4549": "B = 00H; flags preserved",
+        "454B": "HL = little_endian_word[buffer_sum_source (A901H)]; low byte then high byte, flags preserved",
+        "454E": "HL=u16(HL+BC); only CY changes (word overflow)",
+        "454F": "A = byte[buffer_sum_index (A760H)]; flags preserved",
+        "4552": "A=u8(A+byte[HL]); arithmetic flags including CY=addition carry",
+        "4553": "byte[buffer_sum_index (A760H)] = A; flags preserved",
+        "4556": "if always: PC=6738H; flags preserved",
+        "4559": "A = byte[buffer_sum_index (A760H)]; flags preserved",
+        "455C": "A=A  & 7FH; logical flags, CY=0",
+        "455E": "byte[buffer_sum_index (A760H)] = A; flags preserved",
+        "4561": "consume original hardware return word at entry SP; SP=entry_SP+2; flags preserved"
+      }
+    },
+    {
+      "id": "PLI1.OVL+422F",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "stable_label": "PLI1_422F",
+      "runtime_entry": 25647,
+      "start_offset": 16943,
+      "end_offset": 16961,
+      "length": 18,
+      "byte_status_at_entry": "UNDERSTOOD",
+      "description": "select working pointer through sum-indexed word slot",
+      "completeness": {
+        "bounds": "stable",
+        "control_flow": "complete",
+        "contract": "complete"
+      },
+      "observed_paths": {
+        "invocations_by_run": {
+          "MINIMAL": 7
+        },
+        "represented_bytes": 18,
+        "description": "Corrected original-slot returns; no recursion; zero reserved frame; below-entry CALL/save traffic."
+      },
+      "unresolved_paths": [
+        "No unresolved local operation at declared scope; broader producers/alias relations remain general provenance questions."
+      ],
+      "inputs": "A760 index byte; readable selected word at A761+2*j; A863 writable; nonaliasing return stack",
+      "outputs": "HL=A863=selected word; BC=A761; DE=slot+1; A/NZPA preserved; CY0",
+      "clobbers": "BC,DE,HL,CY; A863/4; A preserved; NZPA unchanged; no body stack writes",
+      "memory_state": [
+        "current_record=A863H (record pointer used by reviewed construction/repair)",
+        "link_heads=A761H (128 word slots accessed by this routine; no ownership implied; +422F selects word[A761+2*byte[A760]] after +452B masks the sum to7F; no linked ownership claim.)",
+        "buffer_sum_index=A760H (wrapping byte sum masked7F on return; selects word slot via422F)",
+        "F=entry_SP; zero reserved local frame; original hardware return atF; transient CALL/save words belowF."
+      ],
+      "data_role_ids": [
+        "PLI1.OVL:buffer_sum_index",
+        "PLI1.OVL:link_heads",
+        "PLI1.OVL:current_record"
+      ],
+      "callers": [
+        {
+          "coordinate": "PLI1.OVL+44DD",
+          "counts_by_run": {
+            "MINIMAL": 2
+          }
+        },
+        {
+          "coordinate": "PLI1.OVL+45F3",
+          "counts_by_run": {
+            "MINIMAL": 2
+          }
+        },
+        {
+          "coordinate": "PLI1.OVL+4658",
+          "counts_by_run": {
+            "MINIMAL": 1
+          }
+        },
+        {
+          "coordinate": "PLI1.OVL+46FB",
+          "counts_by_run": {
+            "MINIMAL": 2
+          }
+        }
+      ],
+      "returns": {
+        "convention": "ordinary hardware CALL word; original slot unchanged, SP after RET=entry_SP+2",
+        "observed_file_offsets": [
+          16960
+        ],
+        "sites_description": "PLI1.OVL+4240"
+      },
+      "direct_callees": [],
+      "overlapping_entries": [],
+      "contract_scope": "documented byte/word/address wrapping; selected scratch/stack/read slots nonaliasing; no source-language type or ownership meaning",
+      "contract": "Read byte[A760] via LHLD then discard adjacent high byte. Set BC=A761; HL=A761+2*unsigned(byte[A760]); read selected little-endian word into DE and XCHG; publish that word to A863. Return HL=selected word, DE=selected high-byte address, BC=A761; A and NZPA unchanged; CY0 from final DAD B because even a full byte index cannot overflow this fixed base. Only A863/4 written. This reads the selected slot, not A8AB; no table capacity/ownership is inferred.",
+      "semantic_hypothesis": null,
+      "pseudocode": "j=byte[A760]; slot=A761+2*j; p=word[slot]; word[A863]=p; HL=p; DE=slot+1; BC=A761; RET",
+      "evidence_refs": [
+        "evidence.json#seeds/PLI1.OVL+422F",
+        "../minimal-baseline/pass-10/structural.json#PLI1.OVL+422F",
+        "../minimal-baseline/pass-10/README.md"
+      ],
+      "blocks": [
+        {
+          "offset": 16943,
+          "pseudocode": [
+            "zero-extend A760 byte; double index and add A761; read low/high word"
+          ]
+        },
+        {
+          "offset": 16956,
+          "pseudocode": [
+            "publish selected pointer to A863; return with selected word in HL"
+          ]
+        }
+      ],
+      "local_comments": {
+        "422F": "HL = little_endian_word[buffer_sum_index (A760H)]; low byte then high byte, flags preserved",
+        "4232": "H = 00H; flags preserved",
+        "4234": "BC = sum_selected_words (A761H) (literal address/value)",
+        "4237": "HL=u16(HL+HL); only CY changes (word overflow)",
+        "4238": "HL=u16(HL+BC); only CY changes (word overflow)",
+        "4239": "E = byte[HL]; flags preserved",
+        "423A": "HL=u16(HL+1); flags preserved",
+        "423B": "D = byte[HL]; flags preserved",
+        "423C": "swap HL and DE; flags preserved",
+        "423D": "little_endian_word[current_record (A863H)] = HL; low byte then high byte",
+        "4240": "consume original hardware return word at entry SP; SP=entry_SP+2; flags preserved"
+      }
+    },
+    {
+      "id": "PLI1.OVL+4275",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "stable_label": "PLI1_4275",
+      "runtime_entry": 25717,
+      "start_offset": 17013,
+      "end_offset": 17025,
+      "length": 12,
+      "byte_status_at_entry": "UNDERSTOOD",
+      "description": "unsigned working-pointer versus reference-word predicate",
+      "completeness": {
+        "bounds": "stable",
+        "control_flow": "complete",
+        "contract": "complete"
+      },
+      "observed_paths": {
+        "invocations_by_run": {
+          "MINIMAL": 6
+        },
+        "represented_bytes": 12,
+        "description": "Corrected original-slot returns; no recursion; zero reserved frame; below-entry CALL/save traffic."
+      },
+      "unresolved_paths": [
+        "No unresolved local operation at declared scope; broader producers/alias relations remain general provenance questions."
+      ],
+      "inputs": "readable words A863 and A8AB; return stack disjoint from both; no source-language pointer ownership assumption",
+      "outputs": "A=FF iff p>=reference else00; CY=(p<reference); BC=reference; DE=A864; HL=p-reference; NZPA self-SBB before CMA",
+      "clobbers": "A,BC,DE,HL,flags; nested CALL stack only; no data memory writes",
+      "memory_state": [
+        "current_record=A863H (record pointer used by reviewed construction/repair)",
+        "saved_record_head=A8ABH (word restored by repair wrapper)",
+        "F=entry_SP; zero-byte reserved local frame; temporary saves/CALL words below F; original return word at F."
+      ],
+      "data_role_ids": [
+        "PLI1.OVL:current_record",
+        "PLI1.OVL:saved_record_head"
+      ],
+      "callers": [
+        {
+          "coordinate": "PLI1.OVL+465B",
+          "counts_by_run": {
+            "MINIMAL": 2
+          }
+        },
+        {
+          "coordinate": "PLI1.OVL+46FE",
+          "counts_by_run": {
+            "MINIMAL": 4
+          }
+        }
+      ],
+      "returns": {
+        "convention": "ordinary hardware CALL word; original slot unchanged, SP after RET=entry_SP+2",
+        "observed_file_offsets": [
+          17024
+        ],
+        "sites_description": "PLI1.OVL+4280"
+      },
+      "direct_callees": [
+        {
+          "callsite_offset": 17019,
+          "coordinate": "PLI.COM+1A33",
+          "runtime_address": 6963
+        }
+      ],
+      "overlapping_entries": [],
+      "contract_scope": "documented byte/word/address wrapping; selected scratch/stack/read slots nonaliasing; no source-language type or ownership meaning",
+      "contract": "Complete resident +1A33 receives BC=&A8AB, DE=&A863 and computes HL=word[A863]-word[A8AB] modulo65536, CY=unsigned borrow. SBB A produces FF on borrow, then CMA complements A while preserving flags. Therefore A=FF iff working pointer>=reference, else00. CY still says working pointer<reference; Z/S/P still describe the pre-CMA self-SBB byte, not returned A. Return BC=reference word, DE=A864, HL=difference; no data memory writes, nested CALL stack only. Caller RAR then JNC tests returned A.bit0 clear, hence selects p<reference, not helper CY directly.",
+      "semantic_hypothesis": null,
+      "pseudocode": "HL=u16(word[A863]-word[A8AB]); borrow=(word[A863]<word[A8AB]); A=borrow?00:FF; RET with self-SBB flags and carry=borrow",
+      "evidence_refs": [
+        "evidence.json#seeds/PLI1.OVL+4275",
+        "../minimal-baseline/pass-10/structural.json#PLI1.OVL+4275",
+        "../minimal-baseline/pass-10/README.md"
+      ],
+      "blocks": [
+        {
+          "offset": 17013,
+          "pseudocode": [
+            "1A33: p-reference, carry=borrow; SBB A masks borrow; CMA inverts value only"
+          ]
+        },
+        {
+          "offset": 17023,
+          "pseudocode": [
+            "return A.bit0=!borrow while returned CY=borrow; caller must audit its own RAR polarity"
+          ]
+        }
+      ],
+      "local_comments": {
+        "4275": "BC = saved_record_head (A8ABH) (literal address/value)",
+        "4278": "DE = current_record (A863H) (literal address/value)",
+        "427B": "complete +1A33: word[A863]-word[A8AB]; CY isunsignedborrow",
+        "427E": "A=CY?FF:00; flagsfromself-SBB",
+        "427F": "CMA invertsvalueonly: returned A=FF iff p>=reference; returned CY still p<reference",
+        "4280": "consume original hardware return word at entry SP; SP=entry_SP+2; flags preserved"
+      }
+    },
+    {
+      "id": "PLI1.OVL+428E",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "stable_label": "PLI1_428E",
+      "runtime_entry": 25742,
+      "start_offset": 17038,
+      "end_offset": 17053,
+      "length": 15,
+      "byte_status_at_entry": "UNDERSTOOD",
+      "description": "follow working-pointer word at offset eight",
+      "completeness": {
+        "bounds": "stable",
+        "control_flow": "complete",
+        "contract": "complete"
+      },
+      "observed_paths": {
+        "invocations_by_run": {
+          "MINIMAL": 6
+        },
+        "represented_bytes": 15,
+        "description": "Corrected original-slot returns; no recursion; zero reserved frame; below-entry CALL/save traffic."
+      },
+      "unresolved_paths": [
+        "No unresolved local operation at declared scope; broader producers/alias relations remain general provenance questions."
+      ],
+      "inputs": "A863 readable/writable; selected p+8 word readable; data/cache/return-stack alias conditions",
+      "outputs": "HL=A863=q; DE=p+9; BC8; A preserved; NZPA unchanged; CY=overflow(p+8)",
+      "clobbers": "BC,DE,HL,CY; A863/4; A and NZPA unchanged; no body stack writes",
+      "memory_state": [
+        "current_record=A863H (record pointer used by reviewed construction/repair)",
+        "F=entry_SP; zero-byte reserved local frame; temporary saves/CALL words below F; original return word at F."
+      ],
+      "data_role_ids": [
+        "PLI1.OVL:current_record"
+      ],
+      "callers": [
+        {
+          "coordinate": "PLI1.OVL+450D",
+          "counts_by_run": {
+            "MINIMAL": 1
+          }
+        },
+        {
+          "coordinate": "PLI1.OVL+4662",
+          "counts_by_run": {
+            "MINIMAL": 1
+          }
+        },
+        {
+          "coordinate": "PLI1.OVL+4705",
+          "counts_by_run": {
+            "MINIMAL": 2
+          }
+        },
+        {
+          "coordinate": "PLI1.OVL+4731",
+          "counts_by_run": {
+            "MINIMAL": 2
+          }
+        }
+      ],
+      "returns": {
+        "convention": "ordinary hardware CALL word; original slot unchanged, SP after RET=entry_SP+2",
+        "observed_file_offsets": [
+          17052
+        ],
+        "sites_description": "PLI1.OVL+429C"
+      },
+      "direct_callees": [],
+      "overlapping_entries": [],
+      "contract_scope": "documented byte/word/address wrapping; selected scratch/stack/read slots nonaliasing; no source-language type or ownership meaning",
+      "contract": "Load p=word[A863]; BC=8; read word[u16(p+8)] low/high, XCHG it into HL and write A863/4. Return HL=new pointer q, DE=u16(p+9), BC=8, A and NZPA preserved; CY from p+8 address DAD, not from q. No null guard: readable selected address is a precondition; zero p is not specially treated. Only A863/4 written. The storage relation is a successor word at+8, not a claim of list/tree ownership or global termination.",
+      "semantic_hypothesis": null,
+      "pseudocode": "p=word[A863]; q=word[u16(p+8)]; word[A863]=q; HL=q; DE=u16(p+9); BC=8; RET",
+      "evidence_refs": [
+        "evidence.json#seeds/PLI1.OVL+428E",
+        "../minimal-baseline/pass-10/structural.json#PLI1.OVL+428E",
+        "../minimal-baseline/pass-10/README.md"
+      ],
+      "blocks": [
+        {
+          "offset": 17038,
+          "pseudocode": [
+            "load old p; form p+8; read successor low/high"
+          ]
+        },
+        {
+          "offset": 17048,
+          "pseudocode": [
+            "XCHG/publish q at A863; pointer update distinct from flags/address arithmetic"
+          ]
+        }
+      ],
+      "local_comments": {
+        "428E": "BC = 0008H (literal address/value)",
+        "4291": "HL = little_endian_word[current_record (A863H)]; low byte then high byte, flags preserved",
+        "4294": "HL=u16(HL+BC); only CY changes (word overflow)",
+        "4295": "E = byte[HL]; flags preserved",
+        "4296": "HL=u16(HL+1); flags preserved",
+        "4297": "D = byte[HL]; flags preserved",
+        "4298": "swap HL and DE; flags preserved",
+        "4299": "little_endian_word[current_record (A863H)] = HL; low byte then high byte",
+        "429C": "consume original hardware return word at entry SP; SP=entry_SP+2; flags preserved"
+      }
+    },
+    {
+      "id": "PLI1.OVL+4584",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "stable_label": "PLI1_4584",
+      "runtime_entry": 26500,
+      "start_offset": 17796,
+      "end_offset": 17904,
+      "length": 108,
+      "byte_status_at_entry": "UNDERSTOOD",
+      "description": "scoped descending payload equality comparison with static advancement paths",
+      "completeness": {
+        "bounds": "provisional",
+        "control_flow": "partial",
+        "contract": "partial"
+      },
+      "observed_paths": {
+        "invocations_by_run": {
+          "MINIMAL": 4
+        },
+        "represented_bytes": 96,
+        "description": "Corrected original-slot returns; no recursion; zero reserved frame; below-entry CALL/save traffic."
+      },
+      "unresolved_paths": [
+        "unobserved paths:12 RAW bytes at45E1..45E5 and45E9..45EF; mismatch/zero-count/floor exits have no dynamic state.",
+        "alias/precondition and termination: arbitrary successor chains, lengths and storage aliases unproved."
+      ],
+      "inputs": "BC=source; E=byte count; A863=working pointer; 1C36=address limit; matching positive-count nonaliasing payload/scratch/return-stack scope",
+      "outputs": "matching scope: A0/BC10/DE=input source/HL=p+10; A908=0; A863 unchanged; CY0/Z1/S0/P1 from CPI remaining0; AC from that CPI",
+      "clobbers": "A,BC,DE,HL,flags; A905/6/7/8; nested CALL/PUSH/POP stack; pointer advancement only STATIC / UNOBSERVED paths",
+      "memory_state": [
+        "record_top=1C36H (downward reservation boundary)",
+        "current_record=A863H (record pointer used by reviewed construction/repair)",
+        "payload_compare_source=A905H (saved source BC for descending equality reads)",
+        "payload_compare_count=A907H (saved low E count compared against header minus10)",
+        "payload_compare_remaining=A908H (decremented payload comparison index; zero on matching return)",
+        "F=entry_SP; zero-byte reserved local frame; temporary saves/CALL words below F; original return word at F."
+      ],
+      "data_role_ids": [
+        "PLI1.OVL:payload_compare_source",
+        "PLI1.OVL:payload_compare_count",
+        "PLI1.OVL:payload_compare_remaining",
+        "PLI1.OVL:record_top",
+        "PLI1.OVL:current_record"
+      ],
+      "callers": [
+        {
+          "coordinate": "PLI1.OVL+45FD",
+          "counts_by_run": {
+            "MINIMAL": 2
+          }
+        },
+        {
+          "coordinate": "PLI1.OVL+4719",
+          "counts_by_run": {
+            "MINIMAL": 2
+          }
+        }
+      ],
+      "returns": {
+        "convention": "ordinary hardware CALL word; original slot unchanged, SP after RET=entry_SP+2",
+        "observed_file_offsets": [
+          17885
+        ],
+        "sites_description": "PLI1.OVL+45DD"
+      },
+      "direct_callees": [
+        {
+          "callsite_offset": 17810,
+          "coordinate": "PLI.COM+1A33",
+          "runtime_address": 6963
+        }
+      ],
+      "overlapping_entries": [],
+      "contract_scope": "four correlated p>top/header17/count7/equal-payload paths; disjoint source/payload/scratch/return stack; static advance/floor exits excluded",
+      "contract": "Save input BC source at A905/6 and low E count at A907; D ignored. Resident1A33 computes word[1C36]-word[A863]; JNC +4595 skips comparison iff working pointer p<=record_top unsigned. The witnessed p>top path computes u8(byte[p]-10), compares with saved count, then compares source[k] against byte[p+10+k] for k=n-1 down to0. All four n7 cases have header17 and equal seven-byte payloads. Return at45DD leaves A863=p, A=0, BC=10, DE=input source, HL=p+10, flags from final CPI remaining,0. No buffer/pointer writes on that matching path, only A905..A908 scratch. STATIC / UNOBSERVED: length inequality or initial zero count reaches45E9 CALL428E and retries from458C; a byte mismatch clears remaining at45E1 and takes that same advance path; p<=top returns at45EF without forcing pointer to zero. No arbitrary success/termination theorem and no Boolean result mask is asserted.",
+      "semantic_hypothesis": null,
+      "pseudocode": "word[A905]=BC; byte[A907]=E; scope p>word[1C36] and u8(byte[p]-10)==E>0: byte[A908]=E; decrement k before each comparison; compare source[k] with byte[p+10+k]; all equal through k0 => RET 45DD with pointer unchanged; STATIC / UNOBSERVED: mismatch/length/zero-count advance via428E; p<=top => RET 45EF",
+      "evidence_refs": [
+        "evidence.json#seeds/PLI1.OVL+4584",
+        "../minimal-baseline/pass-10/structural.json#PLI1.OVL+4584",
+        "../minimal-baseline/pass-10/README.md"
+      ],
+      "blocks": [
+        {
+          "offset": 17796,
+          "pseudocode": [
+            "cache source and low E count; 1A33 compares record_top-p"
+          ]
+        },
+        {
+          "offset": 17813,
+          "pseudocode": [
+            "JNC iff p<=record_top; observed fallthrough p>top"
+          ]
+        },
+        {
+          "offset": 17816,
+          "pseudocode": [
+            "u8(header-10) compared with count; JNZ iff unequal (advance arm unobserved)"
+          ]
+        },
+        {
+          "offset": 17831,
+          "pseudocode": [
+            "initialize remaining count"
+          ]
+        },
+        {
+          "offset": 17837,
+          "pseudocode": [
+            "CPI remaining,0; JZ iffzero (advance arm unobserved)"
+          ]
+        },
+        {
+          "offset": 17845,
+          "pseudocode": [
+            "remaining--; compare byte[source+k] with byte[p+10+k]; JNZ iff mismatch"
+          ]
+        },
+        {
+          "offset": 17877,
+          "pseudocode": [
+            "CPI remaining,0; JNZ iff more bytes; remaining0 equal => RET 45DD"
+          ]
+        },
+        {
+          "offset": 17886,
+          "pseudocode": [
+            "represented loop jumps return to remaining-count test"
+          ]
+        }
+      ],
+      "local_comments": {
+        "4584": "HL = payload_compare_count (A907H) (literal address/value)",
+        "4587": "byte[HL] = E; flags preserved",
+        "4588": "HL=u16(HL-1); flags preserved",
+        "4589": "byte[HL] = B; flags preserved",
+        "458A": "HL=u16(HL-1); flags preserved",
+        "458B": "byte[HL] = C; flags preserved",
+        "458C": "DE = record_top (1C36H) (literal address/value)",
+        "458F": "BC = current_record (A863H) (literal address/value)",
+        "4592": "push following PC; invoke PLI.COM+1A33; established complete contract at declared scope",
+        "4595": "if CY=0: PC=67EFH; flags preserved",
+        "4598": "HL = little_endian_word[current_record (A863H)]; low byte then high byte, flags preserved",
+        "459B": "A = byte[HL]; flags preserved",
+        "459C": "A=u8(A-1); NZPA updated, CY preserved",
+        "459D": "A=u8(A-1); NZPA updated, CY preserved",
+        "459E": "A=u8(A-08H); arithmetic flags including CY=borrow",
+        "45A0": "HL = payload_compare_count (A907H) (literal address/value)",
+        "45A3": "flags = unsigned byte comparison A-byte[HL]; A unchanged",
+        "45A4": "if Z=0: PC=67E9H; flags preserved",
+        "45A7": "A = byte[payload_compare_count (A907H)]; flags preserved",
+        "45AA": "byte[payload_compare_remaining (A908H)] = A; flags preserved",
+        "45AD": "A = byte[payload_compare_remaining (A908H)]; flags preserved",
+        "45B0": "flags = unsigned byte comparison A-00H; A unchanged",
+        "45B2": "if Z=1: PC=67E9H; flags preserved",
+        "45B5": "HL = payload_compare_remaining (A908H) (literal address/value)",
+        "45B8": "byte[HL]=u8(byte[HL]-1); NZPA updated, CY preserved",
+        "45B9": "C = byte[HL]; flags preserved",
+        "45BA": "B = 00H; flags preserved",
+        "45BC": "HL = little_endian_word[payload_compare_source (A905H)]; low byte then high byte, flags preserved",
+        "45BF": "HL=u16(HL+BC); only CY changes (word overflow)",
+        "45C0": "push H register pair below SP; flags unchanged",
+        "45C1": "HL = little_endian_word[payload_compare_remaining (A908H)]; low byte then high byte, flags preserved",
+        "45C4": "H = 00H; flags preserved",
+        "45C6": "BC = 000AH (literal address/value)",
+        "45C9": "HL=u16(HL+BC); only CY changes (word overflow)",
+        "45CA": "swap HL and DE; flags preserved",
+        "45CB": "HL = little_endian_word[current_record (A863H)]; low byte then high byte, flags preserved",
+        "45CE": "HL=u16(HL+DE); only CY changes (word overflow)",
+        "45CF": "pop D pair, low byte then high; SP+=2; flags unchanged",
+        "45D0": "A=byte[DE]; flags preserved",
+        "45D1": "flags = unsigned byte comparison A-byte[HL]; A unchanged",
+        "45D2": "if Z=0: PC=67E1H; flags preserved",
+        "45D5": "A = byte[payload_compare_remaining (A908H)]; flags preserved",
+        "45D8": "flags = unsigned byte comparison A-00H; A unchanged",
+        "45DA": "if Z=0: PC=67DEH; flags preserved",
+        "45DD": "consume original hardware return word at entry SP; SP=entry_SP+2; flags preserved",
+        "45DE": "if always: PC=67E6H; flags preserved",
+        "45E6": "if always: PC=67ADH; flags preserved"
+      }
+    },
+    {
+      "id": "PLI1.OVL+22CB",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "stable_label": "PLI1_22CB",
+      "runtime_entry": 17611,
+      "start_offset": 8907,
+      "end_offset": 8968,
+      "length": 61,
+      "byte_status_at_entry": "UNDERSTOOD",
+      "description": "selected-byte literal result with observed default two",
+      "completeness": {
+        "bounds": "provisional",
+        "control_flow": "partial",
+        "contract": "partial"
+      },
+      "observed_paths": {
+        "invocations_by_run": {
+          "MINIMAL": 2
+        },
+        "represented_bytes": 52,
+        "description": "Corrected original-slot returns; no recursion; zero reserved frame; below-entry CALL/save traffic."
+      },
+      "unresolved_paths": [
+        "unobserved paths: three MVI/RET literal arms remain RAW; no caller alternatives inferred from them."
+      ],
+      "inputs": "C=index; A628+index readable; A64B writable; selected slot/cache/return stack nonaliasing",
+      "outputs": "observed: A2/BC=A628/HL=A628/DE preserved; CY1/Z0/S1/P0 from CPI 19; no returned-mask interpretation",
+      "clobbers": "A,BC,HL,flags; A64B; DE unchanged; no body stack writes",
+      "memory_state": [
+        "indexed_state_bytes=A628H (bytes accessed atA628+unsigned context/index; capacity and producers unknown)",
+        "literal_result_index=A64BH (saved index used by15/16/19 result selector)",
+        "F=entry_SP; zero-byte reserved local frame; temporary saves/CALL words below F; original return word at F."
+      ],
+      "data_role_ids": [
+        "PLI1.OVL:literal_result_index",
+        "PLI1.OVL:indexed_state_bytes"
+      ],
+      "callers": [
+        {
+          "coordinate": "PLI1.OVL+2348",
+          "counts_by_run": {
+            "MINIMAL": 2
+          }
+        }
+      ],
+      "returns": {
+        "convention": "ordinary hardware CALL word; original slot unchanged, SP after RET=entry_SP+2",
+        "observed_file_offsets": [
+          8967
+        ],
+        "sites_description": "PLI1.OVL+2307"
+      },
+      "direct_callees": [],
+      "overlapping_entries": [],
+      "contract_scope": "two observed index0/selected05 default-result paths; unexecuted literal-return arms STATIC / UNOBSERVED",
+      "contract": "Save input index C at A64B. At each comparison reload byte[A628+unsigned(saved index)] and compare15,16,19 in order. Both observed index0/selected05 invocations take all JNZ branches and return literal A=02, with flags still CPI 19 on05: CY1/Z0/S1/P0, not flags for returned02. BC=A628, HL=A628+index, DE preserved; only A64B written. STATIC / UNOBSERVED: literal15 arm returns02 with CPI 15 flags, literal16 returns00, literal19 returns01. These are selected literal result bytes; data/status meaning beyond this operation is unknown. +230E two INR transform02->03->04 and preserve borrowed CY1, not a Boolean normalization.",
+      "semantic_hypothesis": null,
+      "pseudocode": "byte[A64B]=C; v=byte[A628+unsigned(C)]; observed v05: fail15/16/19 tests; A=2; RET with CPI 19 flags; STATIC / UNOBSERVED matches15/16/19 return2/0/1",
+      "evidence_refs": [
+        "evidence.json#seeds/PLI1.OVL+22CB",
+        "../minimal-baseline/pass-10/structural.json#PLI1.OVL+22CB",
+        "../minimal-baseline/pass-10/README.md"
+      ],
+      "blocks": [
+        {
+          "offset": 8907,
+          "pseudocode": [
+            "save index; selected byte vs15; JNZ iff inequality"
+          ]
+        },
+        {
+          "offset": 8929,
+          "pseudocode": [
+            "reload selected byte vs16; JNZ iff inequality"
+          ]
+        },
+        {
+          "offset": 8947,
+          "pseudocode": [
+            "reload selected byte vs19; JNZ iff inequality"
+          ]
+        },
+        {
+          "offset": 8965,
+          "pseudocode": [
+            "default literal02; flags still last CPI 19, not recomputed from A"
+          ]
+        }
+      ],
+      "local_comments": {
+        "22CB": "HL = literal_result_index (A64BH) (literal address/value)",
+        "22CE": "byte[HL] = C; flags preserved",
+        "22CF": "HL = little_endian_word[literal_result_index (A64BH)]; low byte then high byte, flags preserved",
+        "22D2": "H = 00H; flags preserved",
+        "22D4": "BC = indexed_state_bytes (A628H) (literal address/value)",
+        "22D7": "HL=u16(HL+BC); only CY changes (word overflow)",
+        "22D8": "A = byte[HL]; flags preserved",
+        "22D9": "flags = unsigned byte comparison A-15H; A unchanged",
+        "22DB": "if Z=0: PC=44E1H; flags preserved",
+        "22E1": "HL = little_endian_word[literal_result_index (A64BH)]; low byte then high byte, flags preserved",
+        "22E4": "H = 00H; flags preserved",
+        "22E6": "BC = indexed_state_bytes (A628H) (literal address/value)",
+        "22E9": "HL=u16(HL+BC); only CY changes (word overflow)",
+        "22EA": "A = byte[HL]; flags preserved",
+        "22EB": "flags = unsigned byte comparison A-16H; A unchanged",
+        "22ED": "if Z=0: PC=44F3H; flags preserved",
+        "22F3": "HL = little_endian_word[literal_result_index (A64BH)]; low byte then high byte, flags preserved",
+        "22F6": "H = 00H; flags preserved",
+        "22F8": "BC = indexed_state_bytes (A628H) (literal address/value)",
+        "22FB": "HL=u16(HL+BC); only CY changes (word overflow)",
+        "22FC": "A = byte[HL]; flags preserved",
+        "22FD": "flags = unsigned byte comparison A-19H; A unchanged",
+        "22FF": "if Z=0: PC=4505H; flags preserved",
+        "2305": "A = 02H; flags preserved",
+        "2307": "consume original hardware return word at entry SP; SP=entry_SP+2; flags preserved"
+      }
+    },
+    {
+      "id": "PLI.COM+1207",
+      "image": "PLI.COM",
+      "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+      "stable_label": "PLI_1207",
+      "runtime_entry": 4871,
+      "start_offset": 4615,
+      "end_offset": 4649,
+      "length": 34,
+      "byte_status_at_entry": "UNDERSTOOD",
+      "description": "resident word-cache and ordered bit-writer calls",
+      "completeness": {
+        "bounds": "stable",
+        "control_flow": "complete",
+        "contract": "partial"
+      },
+      "observed_paths": {
+        "invocations_by_run": {
+          "MINIMAL": 2
+        },
+        "represented_bytes": 34,
+        "description": "Corrected original-slot returns; no recursion; zero reserved frame; below-entry CALL/save traffic."
+      },
+      "unresolved_paths": [
+        "partial helper contracts:1140/119E flush/error paths; no nonzero input-word invocation in MINIMAL.",
+        "unknown producer/general provenance: output position and stream consumers; no PLI1-specific interpretation."
+      ],
+      "inputs": "BC=word to pass through cached low/high writer calls; writable20BD/BE; partial +119E/1140 success scope and output/cache/return-stack nonaliasing",
+      "outputs": "cached word20BD/BE; three ordered119E calls; observed A0/HL20B8/BC1D0A/E08, D incoming high preserved at observed scope; flags final writer comparison; buffer/cursor effects delegated",
+      "clobbers": "A,BC,DE,HL,flags;20BD/BE own cache and partial +119E/1140 output/scratch/stack effects",
+      "memory_state": [
+        "rel_record_buffer=1D0AH (bit-writer record destination)",
+        "rel_byte_index=1D8AH (current REL output byte)",
+        "rel_bit_index=1D8BH (bits accumulated modulo eight)",
+        "rel_input_bit=20B6H (saved bit-writer C)",
+        "serialized_value=20B7H (rotated serialization value)",
+        "bits_remaining=20B8H (serializer count)",
+        "word_writer_cache=20BDH (input BC word savedlow/high; reread separately beforebyte writer calls)",
+        "F=entry_SP; zero reserved local frame; original hardware return atF; transient CALL/save words belowF."
+      ],
+      "data_role_ids": [
+        "PLI.COM:word_writer_cache",
+        "PLI.COM:serialized_value",
+        "PLI.COM:bits_remaining",
+        "PLI.COM:rel_input_bit",
+        "PLI.COM:rel_record_buffer",
+        "PLI.COM:rel_byte_index",
+        "PLI.COM:rel_bit_index"
+      ],
+      "callers": [
+        {
+          "coordinate": "PLI1.OVL+669A",
+          "counts_by_run": {
+            "MINIMAL": 1
+          }
+        },
+        {
+          "coordinate": "PLI2.OVL+766E",
+          "counts_by_run": {
+            "MINIMAL": 1
+          }
+        }
+      ],
+      "returns": {
+        "convention": "ordinary hardware CALL word; original slot unchanged, SP after RET=entry_SP+2",
+        "observed_file_offsets": [
+          4648
+        ],
+        "sites_description": "PLI.COM+1228"
+      },
+      "direct_callees": [
+        {
+          "callsite_offset": 4625,
+          "coordinate": "PLI.COM+119E",
+          "runtime_address": 4766
+        },
+        {
+          "callsite_offset": 4635,
+          "coordinate": "PLI.COM+119E",
+          "runtime_address": 4766
+        },
+        {
+          "callsite_offset": 4645,
+          "coordinate": "PLI.COM+119E",
+          "runtime_address": 4766
+        }
+      ],
+      "overlapping_entries": [],
+      "contract_scope": "two observed BC0 no-flush executions with per-invocation output cursors; declared119E/1140 partial scope; cache/writer scratch/return stack nonaliasing",
+      "contract": "Save input BC low/high at20BD/20BE. Invoke partial +119E(C80,E2), reload cached word and invoke119E(C=low,E8), reload again and invoke119E(C=high,E8). Thus at declared writer/cache-preservation scope the ordered writer arguments encode two prefix bits10, low byte MSB-first, then high byte MSB-first:18 bit-writer operations. Both observed BC0 invocations (PLI1 andPLI2 callers) have distinct output cursor states but the same ordered parameters. Guest subtree effects update20B6/7/8, REL buffer1D0A and indices1D8A/B; own writes20BD/BE are distinct. No input PLI1 buffer/pointer dependence. Return A0, HL20B8 from last119E; observed BC1D0A/E08/D input-high retained; flags last zero-remaining comparison. General output flush/error behavior remains partial through1140/119E; cache is reread between calls, so do not infer preservation merely from equal zeros.",
+      "semantic_hypothesis": null,
+      "pseudocode": "word[20BD]=BC; partial +119E(C=80,E=2); partial +119E(C=byte[20BD],E=8); partial +119E(C=byte[20BE],E=8); RET on original hardware word",
+      "evidence_refs": [
+        "evidence.json#seeds/PLI.COM+1207",
+        "../minimal-baseline/pass-10/structural.json#PLI.COM+1207",
+        "../minimal-baseline/pass-10/README.md"
+      ],
+      "blocks": [
+        {
+          "offset": 4615,
+          "pseudocode": [
+            "save BC low/high;119E receives C80/E2 for prefix"
+          ]
+        },
+        {
+          "offset": 4628,
+          "pseudocode": [
+            "reload cache;119E receives low byte/E8"
+          ]
+        },
+        {
+          "offset": 4638,
+          "pseudocode": [
+            "reload cache again;119E receives high byte/E8"
+          ]
+        },
+        {
+          "offset": 4648,
+          "pseudocode": [
+            "RET ordinary original slot; flags/results from final119E call"
+          ]
+        }
+      ],
+      "local_comments": {
+        "1207": "HL = 20BEH (literal address/value)",
+        "120A": "byte[HL] = B; flags preserved",
+        "120B": "HL=u16(HL-1); flags preserved",
+        "120C": "byte[HL] = C; flags preserved",
+        "120D": "E = 02H; flags preserved",
+        "120F": "C = 80H; flags preserved",
+        "1211": "push following PC; invoke PLI.COM+119E; established partial contract at declared scope",
+        "1214": "HL = little_endian_word[word_writer_cache (20BDH)]; low byte then high byte, flags preserved",
+        "1217": "A = L; flags preserved",
+        "1218": "C = A; flags preserved",
+        "1219": "E = 08H; flags preserved",
+        "121B": "push following PC; invoke PLI.COM+119E; established partial contract at declared scope",
+        "121E": "HL = little_endian_word[word_writer_cache (20BDH)]; low byte then high byte, flags preserved",
+        "1221": "A = H; flags preserved",
+        "1222": "C = A; flags preserved",
+        "1223": "E = 08H; flags preserved",
+        "1225": "push following PC; invoke PLI.COM+119E; established partial contract at declared scope",
+        "1228": "consume original hardware return word at entry SP; SP=entry_SP+2; flags preserved"
       }
     }
   ]

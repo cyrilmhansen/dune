@@ -203,7 +203,8 @@ class MinimalPassNineTests(unittest.TestCase):
     def test_partial_boundaries_secondary_gaps_and_live_progress(self):
         for key in ('28AA','4B69'):
             self.assertEqual(self.catalog['PLI1.OVL+'+key]['completeness'], {'bounds':'provisional','control_flow':'partial','contract':'partial'})
-        self.assertEqual(self.catalog['PLI1.OVL+28AA']['byte_status_at_entry'], 'STRUCTURED')
+        historical = json.loads((ROOT/'research/minimal-baseline/pass-9/regions.json').read_text())
+        self.assertEqual(next(p for p in historical if p['entry']=='PLI1.OVL+28AA')['byte_status'], 'STRUCTURED')
         for r in self.small['PLI1.OVL+4394']:
             self.assertTrue(at(r['own_witnesses'],0x43B5)[0]['control']['taken'])
         self.assertEqual(len(self.small['PLI1.OVL+429D']),1)

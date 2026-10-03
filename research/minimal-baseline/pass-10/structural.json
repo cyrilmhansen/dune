@@ -1,0 +1,646 @@
+{
+  "PLI1.OVL+452B": {
+    "classification": "PACKET CANDIDATE",
+    "extent": [
+      17707,
+      17762
+    ],
+    "calls": 6,
+    "own_coordinates": 27,
+    "own_occurrences": 726,
+    "represented_bytes": 55,
+    "caller_counts": [
+      {
+        "coordinate": "PLI1.OVL+4569",
+        "counts_by_run": {
+          "MINIMAL": 3
+        }
+      },
+      {
+        "coordinate": "PLI1.OVL+46F8",
+        "counts_by_run": {
+          "MINIMAL": 2
+        }
+      },
+      {
+        "coordinate": "PLI1.OVL+48F8",
+        "counts_by_run": {
+          "MINIMAL": 1
+        }
+      }
+    ],
+    "ordinary_return_relations": [
+      {
+        "call_step": 227810,
+        "return_step": 227931,
+        "original_return_slot": 65522,
+        "return_coordinate": "PLI1.OVL+4561"
+      },
+      {
+        "call_step": 228098,
+        "return_step": 228219,
+        "original_return_slot": 65524,
+        "return_coordinate": "PLI1.OVL+4561"
+      },
+      {
+        "call_step": 257024,
+        "return_step": 257145,
+        "original_return_slot": 65461,
+        "return_coordinate": "PLI1.OVL+4561"
+      },
+      {
+        "call_step": 263652,
+        "return_step": 263773,
+        "original_return_slot": 65484,
+        "return_coordinate": "PLI1.OVL+4561"
+      },
+      {
+        "call_step": 264168,
+        "return_step": 264289,
+        "original_return_slot": 65482,
+        "return_coordinate": "PLI1.OVL+4561"
+      },
+      {
+        "call_step": 281663,
+        "return_step": 281784,
+        "original_return_slot": 65508,
+        "return_coordinate": "PLI1.OVL+4561"
+      }
+    ],
+    "incoming_transfers": [
+      {
+        "kind": "call",
+        "source": "PLI1.OVL+4569",
+        "target": "PLI1.OVL+452B",
+        "runtime_target": 26411,
+        "count": 3
+      },
+      {
+        "kind": "call",
+        "source": "PLI1.OVL+46F8",
+        "target": "PLI1.OVL+452B",
+        "runtime_target": 26411,
+        "count": 2
+      },
+      {
+        "kind": "call",
+        "source": "PLI1.OVL+48F8",
+        "target": "PLI1.OVL+452B",
+        "runtime_target": 26411,
+        "count": 1
+      }
+    ],
+    "alternate_entries": [],
+    "direct_callees": [],
+    "recursive": false,
+    "reserved_frame_bytes": 0,
+    "bound_basis": "Exact CALL entry, corrected original-slot returns, local branches and callable neighboring boundaries; no context min/max or RoutineCandidate extent authority.",
+    "unresolved": [
+      "No unresolved local operation at declared scope; broader producers/alias relations remain general provenance questions."
+    ]
+  },
+  "PLI1.OVL+422F": {
+    "classification": "SMALL / DIRECT",
+    "extent": [
+      16943,
+      16961
+    ],
+    "calls": 7,
+    "own_coordinates": 11,
+    "own_occurrences": 77,
+    "represented_bytes": 18,
+    "caller_counts": [
+      {
+        "coordinate": "PLI1.OVL+44DD",
+        "counts_by_run": {
+          "MINIMAL": 2
+        }
+      },
+      {
+        "coordinate": "PLI1.OVL+45F3",
+        "counts_by_run": {
+          "MINIMAL": 2
+        }
+      },
+      {
+        "coordinate": "PLI1.OVL+4658",
+        "counts_by_run": {
+          "MINIMAL": 1
+        }
+      },
+      {
+        "coordinate": "PLI1.OVL+46FB",
+        "counts_by_run": {
+          "MINIMAL": 2
+        }
+      }
+    ],
+    "ordinary_return_relations": [
+      {
+        "call_step": 228221,
+        "return_step": 228232,
+        "original_return_slot": 65526,
+        "return_coordinate": "PLI1.OVL+4240"
+      },
+      {
+        "call_step": 257147,
+        "return_step": 257158,
+        "original_return_slot": 65463,
+        "return_coordinate": "PLI1.OVL+4240"
+      },
+      {
+        "call_step": 257522,
+        "return_step": 257533,
+        "original_return_slot": 65461,
+        "return_coordinate": "PLI1.OVL+4240"
+      },
+      {
+        "call_step": 263774,
+        "return_step": 263785,
+        "original_return_slot": 65484,
+        "return_coordinate": "PLI1.OVL+4240"
+      },
+      {
+        "call_step": 264290,
+        "return_step": 264301,
+        "original_return_slot": 65482,
+        "return_coordinate": "PLI1.OVL+4240"
+      },
+      {
+        "call_step": 264935,
+        "return_step": 264946,
+        "original_return_slot": 65482,
+        "return_coordinate": "PLI1.OVL+4240"
+      },
+      {
+        "call_step": 281786,
+        "return_step": 281797,
+        "original_return_slot": 65510,
+        "return_coordinate": "PLI1.OVL+4240"
+      }
+    ],
+    "incoming_transfers": [
+      {
+        "kind": "call",
+        "source": "PLI1.OVL+44DD",
+        "target": "PLI1.OVL+422F",
+        "runtime_target": 25647,
+        "count": 2
+      },
+      {
+        "kind": "call",
+        "source": "PLI1.OVL+45F3",
+        "target": "PLI1.OVL+422F",
+        "runtime_target": 25647,
+        "count": 2
+      },
+      {
+        "kind": "call",
+        "source": "PLI1.OVL+4658",
+        "target": "PLI1.OVL+422F",
+        "runtime_target": 25647,
+        "count": 1
+      },
+      {
+        "kind": "call",
+        "source": "PLI1.OVL+46FB",
+        "target": "PLI1.OVL+422F",
+        "runtime_target": 25647,
+        "count": 2
+      }
+    ],
+    "alternate_entries": [],
+    "direct_callees": [],
+    "recursive": false,
+    "reserved_frame_bytes": 0,
+    "bound_basis": "Exact CALL entry, corrected original-slot returns, local branches and callable neighboring boundaries; no context min/max or RoutineCandidate extent authority.",
+    "unresolved": [
+      "No unresolved local operation at declared scope; broader producers/alias relations remain general provenance questions."
+    ]
+  },
+  "PLI1.OVL+4275": {
+    "classification": "SMALL / DIRECT",
+    "extent": [
+      17013,
+      17025
+    ],
+    "calls": 6,
+    "own_coordinates": 6,
+    "own_occurrences": 36,
+    "represented_bytes": 12,
+    "caller_counts": [
+      {
+        "coordinate": "PLI1.OVL+465B",
+        "counts_by_run": {
+          "MINIMAL": 2
+        }
+      },
+      {
+        "coordinate": "PLI1.OVL+46FE",
+        "counts_by_run": {
+          "MINIMAL": 4
+        }
+      }
+    ],
+    "ordinary_return_relations": [
+      {
+        "call_step": 257159,
+        "return_step": 257178,
+        "original_return_slot": 65463,
+        "return_coordinate": "PLI1.OVL+4280"
+      },
+      {
+        "call_step": 257192,
+        "return_step": 257211,
+        "original_return_slot": 65463,
+        "return_coordinate": "PLI1.OVL+4280"
+      },
+      {
+        "call_step": 263786,
+        "return_step": 263805,
+        "original_return_slot": 65484,
+        "return_coordinate": "PLI1.OVL+4280"
+      },
+      {
+        "call_step": 263819,
+        "return_step": 263838,
+        "original_return_slot": 65484,
+        "return_coordinate": "PLI1.OVL+4280"
+      },
+      {
+        "call_step": 264302,
+        "return_step": 264321,
+        "original_return_slot": 65482,
+        "return_coordinate": "PLI1.OVL+4280"
+      },
+      {
+        "call_step": 264335,
+        "return_step": 264354,
+        "original_return_slot": 65482,
+        "return_coordinate": "PLI1.OVL+4280"
+      }
+    ],
+    "incoming_transfers": [
+      {
+        "kind": "call",
+        "source": "PLI1.OVL+465B",
+        "target": "PLI1.OVL+4275",
+        "runtime_target": 25717,
+        "count": 2
+      },
+      {
+        "kind": "call",
+        "source": "PLI1.OVL+46FE",
+        "target": "PLI1.OVL+4275",
+        "runtime_target": 25717,
+        "count": 4
+      }
+    ],
+    "alternate_entries": [],
+    "direct_callees": [
+      {
+        "callsite_offset": 17019,
+        "coordinate": "PLI.COM+1A33",
+        "runtime_address": 6963
+      }
+    ],
+    "recursive": false,
+    "reserved_frame_bytes": 0,
+    "bound_basis": "Exact CALL entry, corrected original-slot returns, local branches and callable neighboring boundaries; no context min/max or RoutineCandidate extent authority.",
+    "unresolved": [
+      "No unresolved local operation at declared scope; broader producers/alias relations remain general provenance questions."
+    ]
+  },
+  "PLI1.OVL+428E": {
+    "classification": "SMALL / DIRECT",
+    "extent": [
+      17038,
+      17053
+    ],
+    "calls": 6,
+    "own_coordinates": 9,
+    "own_occurrences": 54,
+    "represented_bytes": 15,
+    "caller_counts": [
+      {
+        "coordinate": "PLI1.OVL+450D",
+        "counts_by_run": {
+          "MINIMAL": 1
+        }
+      },
+      {
+        "coordinate": "PLI1.OVL+4662",
+        "counts_by_run": {
+          "MINIMAL": 1
+        }
+      },
+      {
+        "coordinate": "PLI1.OVL+4705",
+        "counts_by_run": {
+          "MINIMAL": 2
+        }
+      },
+      {
+        "coordinate": "PLI1.OVL+4731",
+        "counts_by_run": {
+          "MINIMAL": 2
+        }
+      }
+    ],
+    "ordinary_return_relations": [
+      {
+        "call_step": 257181,
+        "return_step": 257190,
+        "original_return_slot": 65463,
+        "return_coordinate": "PLI1.OVL+429C"
+      },
+      {
+        "call_step": 263808,
+        "return_step": 263817,
+        "original_return_slot": 65484,
+        "return_coordinate": "PLI1.OVL+429C"
+      },
+      {
+        "call_step": 264105,
+        "return_step": 264114,
+        "original_return_slot": 65484,
+        "return_coordinate": "PLI1.OVL+429C"
+      },
+      {
+        "call_step": 264324,
+        "return_step": 264333,
+        "original_return_slot": 65482,
+        "return_coordinate": "PLI1.OVL+429C"
+      },
+      {
+        "call_step": 264621,
+        "return_step": 264630,
+        "original_return_slot": 65482,
+        "return_coordinate": "PLI1.OVL+429C"
+      },
+      {
+        "call_step": 264985,
+        "return_step": 264994,
+        "original_return_slot": 65482,
+        "return_coordinate": "PLI1.OVL+429C"
+      }
+    ],
+    "incoming_transfers": [
+      {
+        "kind": "call",
+        "source": "PLI1.OVL+450D",
+        "target": "PLI1.OVL+428E",
+        "runtime_target": 25742,
+        "count": 1
+      },
+      {
+        "kind": "call",
+        "source": "PLI1.OVL+4662",
+        "target": "PLI1.OVL+428E",
+        "runtime_target": 25742,
+        "count": 1
+      },
+      {
+        "kind": "call",
+        "source": "PLI1.OVL+4705",
+        "target": "PLI1.OVL+428E",
+        "runtime_target": 25742,
+        "count": 2
+      },
+      {
+        "kind": "call",
+        "source": "PLI1.OVL+4731",
+        "target": "PLI1.OVL+428E",
+        "runtime_target": 25742,
+        "count": 2
+      }
+    ],
+    "alternate_entries": [],
+    "direct_callees": [],
+    "recursive": false,
+    "reserved_frame_bytes": 0,
+    "bound_basis": "Exact CALL entry, corrected original-slot returns, local branches and callable neighboring boundaries; no context min/max or RoutineCandidate extent authority.",
+    "unresolved": [
+      "No unresolved local operation at declared scope; broader producers/alias relations remain general provenance questions."
+    ]
+  },
+  "PLI1.OVL+4584": {
+    "classification": "PACKET CANDIDATE",
+    "extent": [
+      17796,
+      17904
+    ],
+    "calls": 4,
+    "own_coordinates": 47,
+    "own_occurrences": 804,
+    "represented_bytes": 96,
+    "caller_counts": [
+      {
+        "coordinate": "PLI1.OVL+45FD",
+        "counts_by_run": {
+          "MINIMAL": 2
+        }
+      },
+      {
+        "coordinate": "PLI1.OVL+4719",
+        "counts_by_run": {
+          "MINIMAL": 2
+        }
+      }
+    ],
+    "ordinary_return_relations": [
+      {
+        "call_step": 228236,
+        "return_step": 228450,
+        "original_return_slot": 65526,
+        "return_coordinate": "PLI1.OVL+45DD"
+      },
+      {
+        "call_step": 263864,
+        "return_step": 264078,
+        "original_return_slot": 65484,
+        "return_coordinate": "PLI1.OVL+45DD"
+      },
+      {
+        "call_step": 264380,
+        "return_step": 264594,
+        "original_return_slot": 65482,
+        "return_coordinate": "PLI1.OVL+45DD"
+      },
+      {
+        "call_step": 281801,
+        "return_step": 282015,
+        "original_return_slot": 65510,
+        "return_coordinate": "PLI1.OVL+45DD"
+      }
+    ],
+    "incoming_transfers": [
+      {
+        "kind": "call",
+        "source": "PLI1.OVL+45FD",
+        "target": "PLI1.OVL+4584",
+        "runtime_target": 26500,
+        "count": 2
+      },
+      {
+        "kind": "call",
+        "source": "PLI1.OVL+4719",
+        "target": "PLI1.OVL+4584",
+        "runtime_target": 26500,
+        "count": 2
+      }
+    ],
+    "alternate_entries": [],
+    "direct_callees": [
+      {
+        "callsite_offset": 17810,
+        "coordinate": "PLI.COM+1A33",
+        "runtime_address": 6963
+      }
+    ],
+    "recursive": false,
+    "reserved_frame_bytes": 0,
+    "bound_basis": "Exact CALL entry, corrected original-slot returns, local branches and callable neighboring boundaries; no context min/max or RoutineCandidate extent authority.",
+    "unresolved": [
+      "unobserved paths:12 RAW bytes at45E1..45E5 and45E9..45EF; mismatch/zero-count/floor exits have no dynamic state.",
+      "alias/precondition and termination: arbitrary successor chains, lengths and storage aliases unproved."
+    ]
+  },
+  "PLI1.OVL+22CB": {
+    "classification": "SMALL / DIRECT",
+    "extent": [
+      8907,
+      8968
+    ],
+    "calls": 2,
+    "own_coordinates": 25,
+    "own_occurrences": 50,
+    "represented_bytes": 52,
+    "caller_counts": [
+      {
+        "coordinate": "PLI1.OVL+2348",
+        "counts_by_run": {
+          "MINIMAL": 2
+        }
+      }
+    ],
+    "ordinary_return_relations": [
+      {
+        "call_step": 257710,
+        "return_step": 257735,
+        "original_return_slot": 65461,
+        "return_coordinate": "PLI1.OVL+2307"
+      },
+      {
+        "call_step": 258434,
+        "return_step": 258459,
+        "original_return_slot": 65463,
+        "return_coordinate": "PLI1.OVL+2307"
+      }
+    ],
+    "incoming_transfers": [
+      {
+        "kind": "call",
+        "source": "PLI1.OVL+2348",
+        "target": "PLI1.OVL+22CB",
+        "runtime_target": 17611,
+        "count": 2
+      }
+    ],
+    "alternate_entries": [],
+    "direct_callees": [],
+    "recursive": false,
+    "reserved_frame_bytes": 0,
+    "bound_basis": "Exact CALL entry, corrected original-slot returns, local branches and callable neighboring boundaries; no context min/max or RoutineCandidate extent authority.",
+    "unresolved": [
+      "unobserved paths: three MVI/RET literal arms remain RAW; no caller alternatives inferred from them."
+    ]
+  },
+  "PLI.COM+1207": {
+    "classification": "PACKET CANDIDATE",
+    "extent": [
+      4615,
+      4649
+    ],
+    "calls": 2,
+    "own_coordinates": 18,
+    "own_occurrences": 36,
+    "represented_bytes": 34,
+    "caller_counts": [
+      {
+        "coordinate": "PLI1.OVL+669A",
+        "counts_by_run": {
+          "MINIMAL": 1
+        }
+      },
+      {
+        "coordinate": "PLI2.OVL+766E",
+        "counts_by_run": {
+          "MINIMAL": 1
+        }
+      }
+    ],
+    "ordinary_return_relations": [
+      {
+        "call_step": 265454,
+        "return_step": 266265,
+        "original_return_slot": 65484,
+        "return_coordinate": "PLI.COM+1228"
+      },
+      {
+        "call_step": 371849,
+        "return_step": 372665,
+        "original_return_slot": 65436,
+        "return_coordinate": "PLI.COM+1228"
+      }
+    ],
+    "incoming_transfers": [
+      {
+        "kind": "call",
+        "source": "PLI1.OVL+669A",
+        "target": "PLI.COM+1207",
+        "runtime_target": 4871,
+        "count": 1
+      },
+      {
+        "kind": "call",
+        "source": "PLI2.OVL+766E",
+        "target": "PLI.COM+1207",
+        "runtime_target": 4871,
+        "count": 1
+      }
+    ],
+    "alternate_entries": [],
+    "direct_callees": [
+      {
+        "callsite_offset": 4625,
+        "coordinate": "PLI.COM+119E",
+        "runtime_address": 4766
+      },
+      {
+        "callsite_offset": 4635,
+        "coordinate": "PLI.COM+119E",
+        "runtime_address": 4766
+      },
+      {
+        "callsite_offset": 4645,
+        "coordinate": "PLI.COM+119E",
+        "runtime_address": 4766
+      }
+    ],
+    "recursive": false,
+    "reserved_frame_bytes": 0,
+    "bound_basis": "Exact CALL entry, corrected original-slot returns, local branches and callable neighboring boundaries; no context min/max or RoutineCandidate extent authority.",
+    "unresolved": [
+      "partial helper contracts:1140/119E flush/error paths; no nonzero input-word invocation in MINIMAL.",
+      "unknown producer/general provenance: output position and stream consumers; no PLI1-specific interpretation."
+    ]
+  },
+  "PLI1.OVL+84BB": {
+    "classification": "STRUCTURE ONLY",
+    "calls": 0,
+    "observed_instruction_coordinates": 0,
+    "extent": null,
+    "reason": "Requested anchor has no MINIMAL CALL/instruction. Actual66FA call operandA4BB maps viaverifiedloadbase2200 toPLI1+82BB, an existing complete word-add contract; no84BB hypothesis orbytepromotion."
+  }
+}

@@ -93,7 +93,8 @@ class MinimalPassEightTests(unittest.TestCase):
         partial={'bounds':'provisional','control_flow':'partial','contract':'partial'}
         for k in ('PLI1.OVL+6708','PLI1.OVL+4B69','PLI1.OVL+28AA'):
             self.assertEqual(self.catalog[k]['completeness'],partial)
-        self.assertEqual(self.catalog['PLI1.OVL+28AA']['byte_status_at_entry'],'STRUCTURED')
+        historical=json.loads((PASS/'regions.json').read_text())
+        self.assertEqual(next(p for p in historical if p['entry']=='PLI1.OVL+28AA')['byte_status'],'STRUCTURED')
         self.assertEqual(self.catalog['PLI1.OVL+43D5']['completeness'],{'bounds':'stable','control_flow':'complete','contract':'partial'})
 
     def test_progress_is_live_consistent_and_historical_bytes_unchanged(self):

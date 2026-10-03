@@ -1498,7 +1498,7 @@
       "name": "link_heads",
       "runtime_address": 42849,
       "width": 256,
-      "role": "128 word slots accessed by this routine; no ownership implied",
+      "role": "128 word slots accessed by this routine; no ownership implied; +422F selects word[A761+2*byte[A760]] after +452B masks the sum to7F; no linked ownership claim.",
       "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
     },
     {
@@ -2388,7 +2388,7 @@
       "name": "processing_cached_word",
       "runtime_address": 43478,
       "width": 2,
-      "role": "saved DE supplied byaddress to84BB; operation unresolved",
+      "role": "saved DE word atA9D6/7; complete+66FA supplies its address to actualPLI1+82BB for addition toworkingfield word[p+6]",
       "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
     },
     {
@@ -2449,6 +2449,86 @@
       "runtime_address": 42593,
       "width": 1,
       "role": "savedselectedbyte, thenzero/result+1publicationcache",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI1.OVL:buffer_sum_source",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "name": "buffer_sum_source",
+      "runtime_address": 43265,
+      "width": 2,
+      "role": "saved BC source pointer for descending byte reads",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI1.OVL:buffer_sum_remaining",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "name": "buffer_sum_remaining",
+      "runtime_address": 43267,
+      "width": 1,
+      "role": "low input E count decremented before each byte read",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI1.OVL:buffer_sum_index",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "name": "buffer_sum_index",
+      "runtime_address": 42848,
+      "width": 1,
+      "role": "wrapping byte sum masked7F on return; selects word slot via422F",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI1.OVL:payload_compare_source",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "name": "payload_compare_source",
+      "runtime_address": 43269,
+      "width": 2,
+      "role": "saved source BC for descending equality reads",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI1.OVL:payload_compare_count",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "name": "payload_compare_count",
+      "runtime_address": 43271,
+      "width": 1,
+      "role": "saved low E count compared against header minus10",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI1.OVL:payload_compare_remaining",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "name": "payload_compare_remaining",
+      "runtime_address": 43272,
+      "width": 1,
+      "role": "decremented payload comparison index; zero on matching return",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI1.OVL:literal_result_index",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "name": "literal_result_index",
+      "runtime_address": 42571,
+      "width": 1,
+      "role": "saved index used by15/16/19 result selector",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI.COM:word_writer_cache",
+      "image": "PLI.COM",
+      "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+      "name": "word_writer_cache",
+      "runtime_address": 8381,
+      "width": 2,
+      "role": "input BC word savedlow/high; reread separately beforebyte writer calls",
       "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
     }
   ]

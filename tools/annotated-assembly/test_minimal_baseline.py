@@ -77,7 +77,7 @@ class MinimalBaselineTests(unittest.TestCase):
                 c["executed_status_bytes"]["UNDERSTOOD"]
                 for c in self.coverage["coverage_after"]
             ),
-            4054,
+            5246,
         )
 
     def test_inventory_target_counts_and_hardware_returns(self):
@@ -97,7 +97,7 @@ class MinimalBaselineTests(unittest.TestCase):
         self.assertEqual(len(self.inventory["software_continuations"]), 16)
         self.assertEqual(
             self.inventory["classification_counts"],
-            {"UNDERSTOOD": 87, "STRUCTURED": 14, "unresolved": 290},
+            {"UNDERSTOOD": 99, "STRUCTURED": 9, "unresolved": 283},
         )
         for e in entries:
             self.assertEqual(sum(e["callers"].values()), e["invocations"])

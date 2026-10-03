@@ -1429,14 +1429,96 @@ PLI_11BB: DCR A ; A = (A - 1) & FF; NZPA updated, CY preserved ; +11BB runtime=1
 PLI_11BC: STA 20B8H ; byte[bits_remaining (20B8H)] = A ; +11BC runtime=12BCH OBSERVED
 PLI_11BF: JMP 12A4H ; if always: PC -> PLI.COM+11A4; flags preserved ; +11BF runtime=12BFH OBSERVED
 PLI_11C2: RET ; PC = word[SP]; SP += 2; use the convention in procedure header ; +11C2 runtime=12C2H OBSERVED
-; SECTION [11C3,12AE) RAW
+; SECTION [11C3,1207) RAW
 PLI_11C3: DB 021H,0BAH,020H,070H,02BH,071H,01EH,002H,00EH,000H,0CDH,09EH,012H,02AH,0B9H,020H ; +11C3 runtime=12C3H RAW
 PLI_11D3: DB 07DH,04FH,01EH,008H,0CDH,09EH,012H,02AH,0B9H,020H,07CH,04FH,01EH,008H,0CDH,09EH ; +11D3 runtime=12D3H RAW
 PLI_11E3: DB 012H,0C9H,021H,0BCH,020H,070H,02BH,071H,01EH,002H,00EH,040H,0CDH,09EH,012H,02AH ; +11E3 runtime=12E3H RAW
 PLI_11F3: DB 0BBH,020H,07DH,04FH,01EH,008H,0CDH,09EH,012H,02AH,0BBH,020H,07CH,04FH,01EH,008H ; +11F3 runtime=12F3H RAW
-PLI_1203: DB 0CDH,09EH,012H,0C9H,021H,0BEH,020H,070H,02BH,071H,01EH,002H,00EH,080H,0CDH,09EH ; +1203 runtime=1303H RAW
-PLI_1213: DB 012H,02AH,0BDH,020H,07DH,04FH,01EH,008H,0CDH,09EH,012H,02AH,0BDH,020H,07CH,04FH ; +1213 runtime=1313H RAW
-PLI_1223: DB 01EH,008H,0CDH,09EH,012H,0C9H,021H,0C0H,020H,070H,02BH,071H,01EH,002H,00EH,0C0H ; +1223 runtime=1323H RAW
+PLI_1203: DB 0CDH,09EH,012H,0C9H ; +1203 runtime=1303H RAW
+
+; @procedure-v1 PLI.COM+1207
+; ProcedureHypothesis: resident word-cache and ordered bit-writer calls
+; Entry: PLI_1207 = PLI.COM+1207 @ 1307H; SHA-256
+;   c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80
+; Extent: HYPOTHESIS [1207,1229) file offsets; overlapping entries: none established
+; Callers: OBSERVED PLI1.OVL+669A (MINIMAL=1); PLI2.OVL+766E (MINIMAL=1)
+; Returns: OBSERVED/DEDUCED ordinary hardware CALL word; original slot unchanged, SP after
+;   RET=entry_SP+2; PLI.COM+1228
+; Inputs: DEDUCED BC=word to pass through cached low/high writer calls; writable20BD/BE; partial
+;   +119E/1140 success scope and output/cache/return-stack nonaliasing
+; Outputs: DEDUCED cached word20BD/BE; three ordered119E calls; observed A0/HL20B8/BC1D0A/E08, D
+;   incoming high preserved at observed scope; flags final writer comparison; buffer/cursor
+;   effects delegated
+; Clobbers: DEDUCED A,BC,DE,HL,flags;20BD/BE own cache and partial +119E/1140 output/scratch/stack
+;   effects
+; Memory: DEDUCED rel_record_buffer=1D0AH (bit-writer record destination); rel_byte_index=1D8AH
+;   (current REL output byte); rel_bit_index=1D8BH (bits accumulated modulo eight);
+;   rel_input_bit=20B6H (saved bit-writer C); serialized_value=20B7H (rotated serialization
+;   value); bits_remaining=20B8H (serializer count); word_writer_cache=20BDH (input BC word
+;   savedlow/high; reread separately beforebyte writer calls); F=entry_SP; zero reserved
+;   local frame; original hardware return atF; transient CALL/save words belowF.
+; Direct callees: OBSERVED PLI.COM+119E @129EH; PLI.COM+119E @129EH; PLI.COM+119E @129EH
+; Coverage: OBSERVED MINIMAL: 2 CALLs; 34/34 bytes represented as instructions; Corrected
+;   original-slot returns; no recursion; zero reserved frame; below-entry CALL/save
+;   traffic.
+; Unresolved: partial helper contracts:1140/119E flush/error paths; no nonzero input-word
+;   invocation in MINIMAL. / unknown producer/general provenance: output position and
+;   stream consumers; no PLI1-specific interpretation.
+; Contract: DEDUCED (partial; scope: two observed BC0 no-flush executions with per-invocation
+;   output cursors; declared119E/1140 partial scope; cache/writer scratch/return stack
+;   nonaliasing) Save input BC low/high at20BD/20BE. Invoke partial +119E(C80,E2), reload
+;   cached word and invoke119E(C=low,E8), reload again and invoke119E(C=high,E8). Thus at
+;   declared writer/cache-preservation scope the ordered writer arguments encode two
+;   prefix bits10, low byte MSB-first, then high byte MSB-first:18 bit-writer operations.
+;   Both observed BC0 invocations (PLI1 andPLI2 callers) have distinct output cursor
+;   states but the same ordered parameters. Guest subtree effects update20B6/7/8, REL
+;   buffer1D0A and indices1D8A/B; own writes20BD/BE are distinct. No input PLI1
+;   buffer/pointer dependence. Return A0, HL20B8 from last119E; observed BC1D0A/E08/D
+;   input-high retained; flags last zero-remaining comparison. General output flush/error
+;   behavior remains partial through1140/119E; cache is reread between calls, so do not
+;   infer preservation merely from equal zeros.
+; Hypothesis: none beyond the low-level operational description
+; Completeness: bounds=stable; control_flow=complete; contract=partial
+; Evidence: evidence.json#seeds/PLI.COM+1207;
+;   ../minimal-baseline/pass-10/structural.json#PLI.COM+1207;
+;   ../minimal-baseline/pass-10/README.md
+; Procedure pseudo (operational; byte/word arithmetic wraps):
+;   word[20BD]=BC; partial +119E(C=80,E=2); partial +119E(C=byte[20BD],E=8); partial
+;   +119E(C=byte[20BE],E=8); RET on original hardware word
+; @end-procedure-v1 PLI.COM+1207
+; SECTION [1207,1229) UNDERSTOOD
+; @block-pseudo 1207
+; pseudo:
+; | save BC low/high;119E receives C80/E2 for prefix
+PLI_1207: LXI H,20BEH ; HL = 20BEH (literal address/value) ; +1207 runtime=1307H OBSERVED
+PLI_120A: MOV M,B ; byte[HL] = B; flags preserved ; +120A runtime=130AH OBSERVED
+PLI_120B: DCX H ; HL=u16(HL-1); flags preserved ; +120B runtime=130BH OBSERVED
+PLI_120C: MOV M,C ; byte[HL] = C; flags preserved ; +120C runtime=130CH OBSERVED
+PLI_120D: MVI E,02H ; E = 02H; flags preserved ; +120D runtime=130DH OBSERVED
+PLI_120F: MVI C,80H ; C = 80H; flags preserved ; +120F runtime=130FH OBSERVED
+PLI_1211: CALL 129EH ; push following PC; invoke PLI.COM+119E; established partial contract at declared scope ; +1211 runtime=1311H OBSERVED
+; @block-pseudo 1214
+; pseudo:
+; | reload cache;119E receives low byte/E8
+PLI_1214: LHLD 20BDH ; HL = little_endian_word[word_writer_cache (20BDH)]; low byte then high byte, flags preserved ; +1214 runtime=1314H OBSERVED
+PLI_1217: MOV A,L ; A = L; flags preserved ; +1217 runtime=1317H OBSERVED
+PLI_1218: MOV C,A ; C = A; flags preserved ; +1218 runtime=1318H OBSERVED
+PLI_1219: MVI E,08H ; E = 08H; flags preserved ; +1219 runtime=1319H OBSERVED
+PLI_121B: CALL 129EH ; push following PC; invoke PLI.COM+119E; established partial contract at declared scope ; +121B runtime=131BH OBSERVED
+; @block-pseudo 121E
+; pseudo:
+; | reload cache again;119E receives high byte/E8
+PLI_121E: LHLD 20BDH ; HL = little_endian_word[word_writer_cache (20BDH)]; low byte then high byte, flags preserved ; +121E runtime=131EH OBSERVED
+PLI_1221: MOV A,H ; A = H; flags preserved ; +1221 runtime=1321H OBSERVED
+PLI_1222: MOV C,A ; C = A; flags preserved ; +1222 runtime=1322H OBSERVED
+PLI_1223: MVI E,08H ; E = 08H; flags preserved ; +1223 runtime=1323H OBSERVED
+PLI_1225: CALL 129EH ; push following PC; invoke PLI.COM+119E; established partial contract at declared scope ; +1225 runtime=1325H OBSERVED
+; @block-pseudo 1228
+; pseudo:
+; | RET ordinary original slot; flags/results from final119E call
+PLI_1228: RET ; consume original hardware return word at entry SP; SP=entry_SP+2; flags preserved ; +1228 runtime=1328H OBSERVED
+; SECTION [1229,12AE) RAW
+PLI_1229: DB 021H,0C0H,020H,070H,02BH,071H,01EH,002H,00EH,0C0H ; +1229 runtime=1329H RAW
 PLI_1233: DB 0CDH,09EH,012H,02AH,0BFH,020H,07DH,04FH,01EH,008H,0CDH,09EH,012H,02AH,0BFH,020H ; +1233 runtime=1333H RAW
 PLI_1243: DB 07CH,04FH,01EH,008H,0CDH,09EH,012H,0C9H,03AH,029H,020H,01FH,0D2H,053H,013H,0C9H ; +1243 runtime=1343H RAW
 PLI_1253: DB 03AH,005H,01DH,01FH,0D2H,071H,013H,03AH,08BH,01DH,0FEH,000H,0CAH,06AH,013H,00EH ; +1253 runtime=1353H RAW
@@ -2820,6 +2902,7 @@ PLI_1F57: DB 050H,041H,053H,053H,020H,020H,024H,01AH,01AH,01AH,01AH,01AH,01AH,01
 PLI_1F67: DB 01AH,01AH,01AH,01AH,01AH,01AH,01AH,01AH,01AH,01AH,01AH,01AH,01AH,01AH,01AH,01AH ; +1F67 runtime=2067H RAW
 PLI_1F77: DB 01AH,01AH,01AH,01AH,01AH,01AH,01AH,01AH,01AH ; +1F77 runtime=2077H RAW
 PLI_0B20: EQU 00C20H ; +0B20 runtime=0C20H coordinate-only label
+PLI_1213: EQU 01313H ; +1213 runtime=1313H coordinate-only label
 PLI_1383: EQU 01483H ; +1383 runtime=1483H coordinate-only label
 PLI_13B3: EQU 014B3H ; +13B3 runtime=14B3H coordinate-only label
 PLI_13C3: EQU 014C3H ; +13C3 runtime=14C3H coordinate-only label
