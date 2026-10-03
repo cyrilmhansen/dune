@@ -2530,6 +2530,126 @@
       "width": 2,
       "role": "input BC word savedlow/high; reread separately beforebyte writer calls",
       "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI1.OVL:control_read_position",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "name": "control_read_position",
+      "runtime_address": 44601,
+      "width": 1,
+      "role": "saved input C for mapped control-byte reader; adjacentAE3A discarded",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI1.OVL:publication_byte",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "name": "publication_byte",
+      "runtime_address": 44628,
+      "width": 1,
+      "role": "saved C for mapped-byte publication",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI1.OVL:publication_word",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "name": "publication_word",
+      "runtime_address": 44629,
+      "width": 2,
+      "role": "saved DE for mapped-word publication",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI1.OVL:attribute_gate_input",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "name": "attribute_gate_input",
+      "runtime_address": 44631,
+      "width": 1,
+      "role": "saved byte index for direct fixed-attribute high-bit gate",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI1.OVL:composition_input_byte",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "name": "composition_input_byte",
+      "runtime_address": 44650,
+      "width": 1,
+      "role": "saved input byte for threshold decision andpost-processor direct emission",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI1.OVL:composition_saved_byte",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "name": "composition_saved_byte",
+      "runtime_address": 44651,
+      "width": 1,
+      "role": "saved input byte reused across8048 then7EC0",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI1.OVL:minimum_left_byte",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "name": "minimum_left_byte",
+      "runtime_address": 42574,
+      "width": 1,
+      "role": "saved C comparison operand",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI1.OVL:minimum_right_byte",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "name": "minimum_right_byte",
+      "runtime_address": 42575,
+      "width": 1,
+      "role": "saved E comparison operand andobserved returnedvalue",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI1.OVL:state_publish_index",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "name": "state_publish_index",
+      "runtime_address": 42578,
+      "width": 1,
+      "role": "saved input index for threeindexed sourcebyte publications",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI1.OVL:state_adapt_index",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "name": "state_adapt_index",
+      "runtime_address": 42579,
+      "width": 1,
+      "role": "saved input index forselected-state adaptation/pointerpublication",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI1.OVL:state_limiter_byte",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "name": "state_limiter_byte",
+      "runtime_address": 42562,
+      "width": 1,
+      "role": "lowbyte supplied asC to23A0 forselector15 clamp",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI1.OVL:selector_request_byte",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "name": "selector_request_byte",
+      "runtime_address": 42415,
+      "width": 1,
+      "role": "saved requestedbyte forentry-selector equality beforeconditional784E",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
     }
   ]
 }

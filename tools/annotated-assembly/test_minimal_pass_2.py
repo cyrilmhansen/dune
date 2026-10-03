@@ -183,7 +183,7 @@ class MinimalPassTwoTests(unittest.TestCase):
         points = {
             "PLI2.OVL": [0x1E75, 0x1E80, 0x1EA4, 0x1F53],
             "PLI.COM": [0xD09, 0xD3F, 0xDA2, 0xDC7, 0xE13, 0xE41, 0x5B9, 0x5F8],
-            "PLI1.OVL": [0x43B8, 0x83A0],
+            "PLI1.OVL": [0x43B8],
         }
         for name, offsets in points.items():
             sections = next(
@@ -205,6 +205,11 @@ class MinimalPassTwoTests(unittest.TestCase):
         self.assertEqual(catalog['PLI1.OVL+4394']['end_offset'],0x43D5)
         self.assertEqual(catalog['PLI1.OVL+43D5']['start_offset'],0x43D5)
         self.assertEqual(catalog['PLI1.OVL+43D5']['returns']['consumed_caller_bytes'],2)
+        # Pass 11 independently establishes the neighboring subtraction family;
+        # it must not be absorbed into the already-understood +8396 operation.
+        self.assertEqual(catalog['PLI1.OVL+8396']['end_offset'],0x83A0)
+        self.assertEqual(catalog['PLI1.OVL+83A0']['start_offset'],0x83A0)
+        self.assertEqual(catalog['PLI1.OVL+83A3']['start_offset'],0x83A3)
 
 
 if __name__ == "__main__":

@@ -182,7 +182,8 @@ class MinimalPassTenTests(unittest.TestCase):
         rows=[json.loads(s) for s in (ROOT/'research/minimal-baseline/instructions.jsonl').read_text().splitlines()]
         dynamic=calculate(manifest,rows)
         self.assertEqual(dynamic,load(ROOT/'research/minimal-baseline/dynamic-progress.json'))
-        self.assertEqual(dynamic['total']['occurrences_by_status']['UNDERSTOOD'],210243)
+        historical=load(ROOT/'research/minimal-baseline/pass-10/dynamic-progress.json')
+        self.assertEqual(historical['total']['occurrences_by_status']['UNDERSTOOD'],210243)
         self.assertEqual(sum(i['length'] for i in manifest['images']),94720)
 
 
