@@ -11,6 +11,7 @@ from collections import Counter
 from pathlib import Path
 
 from check_minimal_pass_2 import at, coord, load, pair, require, word
+from software_continuation import prove
 
 BOUNDS = {
     "PLI.COM+0AF5": (0xAF5, 0xB2A),
@@ -23,9 +24,13 @@ BOUNDS = {
 }
 
 
-def gather(capture, bounds=None, *, include_nested_returns=False):
+def gather(capture, bounds=None, *, include_nested_returns=False, software_callees=None):
+    # Opt-in, established POP-D cleanup family only. Bounds/context never assign
+    # ownership; a corrected consumer plus prove() must close each child window.
+    software_callees = software_callees or {}
     records = {key: [] for key in (BOUNDS if bounds is None else bounds)}
     active, returns, matched = {}, {}, {}
+    software_active = {}
     last = None
     index = load(capture / "event-witnesses.json")
     for chunk in index["chunks"]:
@@ -35,8 +40,14 @@ def gather(capture, bounds=None, *, include_nested_returns=False):
                 last = w = event["witness"]
                 for r in active.values():
                     r["witnesses"].append(w)
+                for r in software_active.values():
+                    r["witnesses"].append(w)
                 if w["control"]["kind"] == "call" and w["control"]["taken"]:
                     key = coord(w.get("target_origin"))
+                    if key in software_callees and active:
+                        require(key not in records, "Software outer returns are outside the packet profile")
+                        software_active[w["step_index"]] = {
+                            "entry_key": key, "call": w, "witnesses": []}
                     if key in records:
                         active[w["step_index"]] = {
                             "entry_key": key, "call": w, "witnesses": []
@@ -52,7 +63,33 @@ def gather(capture, bounds=None, *, include_nested_returns=False):
                     r = active.pop(step)
                     r.update(entry=r["witnesses"][0], ret=last, relation=event)
                     records[r["entry_key"]].append(r)
+            elif event["type"] == "software_continuation_return" and software_active:
+                require(last is not None and last["step_index"] == event["step_index"],
+                        "Software return event lacks its instruction witness")
+                candidates = []
+                for step, child in software_active.items():
+                    # Return PC only narrows candidates. It never proves identity.
+                    if child["call"]["call_return_address"] != event["return_address"]:
+                        continue
+                    prefix = [w for w in child["witnesses"]
+                              if w["step_index"] <= event["low_byte_writer"]["step"]]
+                    proof = {"call": child["call"], "prefix": prefix, "ret": last,
+                             "relation": event,
+                             "stack_argument_bytes": software_callees[child["entry_key"]]}
+                    try:
+                        relation = prove(proof)
+                    except ValueError:
+                        continue  # Remains unresolved; extraction fails below.
+                    candidates.append((step, proof, relation))
+                require(len(candidates) <= 1, "Ambiguous software continuation ancestry")
+                if candidates:
+                    step, proof, relation = candidates[0]
+                    software_active.pop(step)
+                    returns[step] = last["step_index"]
+                    matched[step] = {"ret": last, "relation": event,
+                                     "software_proof": proof, "software_relation": relation}
     require(not active, "Selected CALL lacks a corrected matched return")
+    require(not software_active, "Software child lacks a proven writer/slot/RET relation")
     for rs in records.values():
         for r in rs:
             own, skip = [], -1

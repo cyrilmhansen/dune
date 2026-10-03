@@ -1,4 +1,4 @@
-# Procedure Evidence Packet V0 / V0.1 experiment
+# Procedure Evidence Packet V0 / V0.1 / V0.2 experiment
 
 Task: `PROCEDURE_EVIDENCE_PACKET_V0`. Starting commit: `6679adb`.
 Selected entry: **PLI0.OVL+24BC**, image SHA-256
@@ -7,9 +7,10 @@ runtime entry `46BC`. This experiment mechanically joins existing MINIMAL
 observations and accumulated knowledge for a fresh, independent decompilation
 session. It does not interpret or improve the procedure's semantics.
 
-Current extractor: **V0.1**, infrastructure task `PROCEDURE_EVIDENCE_PACKET_V0_1`,
-starting at `b8c6b47`. The original V0 results below are historical; the V0.1
-report at the end records the bounded additions and current limitations.
+Current extractor: **V0.2**, infrastructure task
+`PROCEDURE_EVIDENCE_PACKET_V0_2_SOFTWARE_CONTINUATIONS`, starting at `bd2defd`.
+The V0 and V0.1 results below are historical; the V0.2 report at the end records
+the bounded software-child extension and remaining profile restrictions.
 
 ## Reproduce
 
@@ -305,3 +306,125 @@ this infrastructure regression does not establish that claim.
 
 Current regenerated artifacts remain ignored under `_build/evidence-packet`;
 reuse artifacts are under its `reuse` subdirectory. No task temporary files remain.
+
+## V0.2 software-continuation report
+
+Task: `PROCEDURE_EVIDENCE_PACKET_V0_2_SOFTWARE_CONTINUATIONS`; infrastructure
+baseline `bd2defd`. No semantic decompilation, annotation, contract, completeness,
+data role, byte status or MINIMAL progress change accompanies this extension.
+
+### Bounded support and proof authority
+
+The packet now isolates nested children in the already-established POP-D cleanup
+family. `software_profile()` reads the five pass-8 proof instances, validates them
+with the unchanged `software_continuation.prove()`, and checks their consumed-byte
+counts against the catalog. This explicitly authorizes +4468 (2), +6708 (8) and
++43D5 (2); it does not discover argument counts or new ABI families.
+
+The shared pass-3 gatherer has an optional `software_callees` profile. Its default
+ordinary-only behavior remains unchanged. With the packet's explicit profile,
+it joins corrected software-return events to candidate CALLs only after the
+existing proof succeeds. Return-address equality merely narrows candidates.
+The original CALL slot, unique POP D, ordered caller-word reads, DE ancestry,
+copied PUSH D writer, relocated slot equation, corrected latest writers and
+actual RET consumer establish the relation. Failed or ambiguous relations leave
+extraction unresolved; no context or same-value fallback supplies ownership.
+
+Each direct child call now has a `return_convention` independent of its semantic
+`contract_presentation`. Ordinary calls retain `hardware_return_proof`;
+software children instead retain `software_return_proof`, containing exact
+instruction/access/state witnesses and the corrected consumer event. The compact
+projection supplies CALL/POP/argument/PUSH/RET step references, target/resume
+coordinates, original/copied slots, DE, consumed bytes and final SP delta.
+`observed_evidence` labels the concrete proof OBSERVED; `deduced_evidence` labels
+the stack equations DEDUCED: S = pre-CALL SP, E = S-2, copy slot = E+N,
+final SP = S+N (modulo 65536). No argument meanings are derived.
+
+Child instruction windows are excluded through their proven software RET.
+The next parent-local instruction is the resumed continuation. Child subtree
+memory effects remain separate, and proof-prefix instructions have a callee
+scope rather than a parent-local scope. All joined instruction bytes still pass
+historical-image/canonical verification. Contracts and their scope remain the
+only authority for preservation across calls; consumed caller-word addresses
+are explicitly killed even under a memory-preservation clause. Equal bytes do
+not carry a parent definition across a child.
+
+Markdown shows SOFTWARE CLEANUP RETURN, consumed bytes, copied slot, final SP
+delta and resumed coordinate beside the independently PARTIAL semantic contract.
+Ordinary calls visibly show ORDINARY HARDWARE RETURN. Full proofs stay in JSON.
+
+### Acceptance results and reproduction
+
+```sh
+python3 tools/annotated-assembly/procedure_evidence_packet.py \
+  --images /path/to/DISK1 --entry PLI1.OVL+28AA \
+  --frame-bytes 0 --class-slots --output _build/evidence-packet-v0.2
+python3 tools/annotated-assembly/procedure_evidence_packet.py \
+  --images /path/to/DISK1 --entry PLI1.OVL+4B69 \
+  --frame-bytes 0 --class-slots --output _build/evidence-packet-v0.2
+```
+
+- +4468's two calls are checked through ordinary parent packets +4693/+4738.
+  Its copied slot is E+2 and final SP delta is +2.
+- +28AA excludes both +6708 windows and resumes at +2988/+2AB7. Each copy slot
+  is E+8 and final SP delta is +8. Exactly 351 coordinates/occurrences remain
+  local. +2988 POP B reads the earlier +2956 saved PSW, whose addresses remain
+  disjoint from all eight argument bytes. +2ABF stays caller-owned. The outer
+  RET retains the original outer hardware slot.
+- +4B69 excludes +43D5 and resumes at +4BBD. Its child copy slot is E+2 and
+  final SP delta is +2. All 2,088 local occurrences at 52 coordinates, including
+  128 loop backedges, remain local; the outer hardware return remains intact.
+
+The full packet suite now has 23 tests. The new tests check all five observed
+calls and 55 corrupt/unsupported variants through both packet projection and
+the actual stream join: wrong writer, argument address, DE clobber, relocated
+slot, same-valued wrong original word, latest-writer identity, RET read, duplicate
+POP D, other return register, PCHL and wrong declared consumption. Consumed-word
+preservation rejection and unsupported software outer profiles are also checked.
+Existing +24BC dependency/polarity, recursive ownership, scope and deterministic
+regressions remain passing.
+
+### Size and complexity
+
+Before V0.2 the ordinary-only gatherer rejects both new parent targets at their
+software children, so no comparable V0.1 packet sizes exist for them. Current
+compact JSON / UTF-8 Markdown artifacts remain ignored under `_build`.
+
+| Packet | JSON bytes | Markdown bytes | Generation seconds, one sample |
+|---|---:|---:|---:|
+| PLI1+28AA | 2,072,161 | 36,440 | 7.262 |
+| PLI1+4B69 | 2,248,603 | 10,764 | 7.776 |
+| PLI0+24BC regression | 13,600,351 | 53,240 | 7.748 |
+
+Timing includes serialization/rendering and ran alongside validation; it is not
+a controlled performance comparison. Physical LOC includes comments/blank lines.
+
+| Component | bd2defd | V0.2 |
+|---|---:|---:|
+| Packet generator + local dependency module | 1,171 | 1,236 |
+| Shared pass-3 gather/check module | 292 | 329 |
+| Combined generator/projection modules | 1,463 | 1,565 |
+| Existing software proof module | 61 | 61 |
+| Packet tests | 385 | 521 |
+
+The extension adds 102 production lines across the generator/projection modules,
+reusing the existing proof unchanged. There is no second recognizer, generic ABI
+engine, new static decoder or new ownership authority.
+
+### Validation, limitations and readiness
+
+Project tests, all MINIMAL baseline/pass-1–8 tests (78), packet tests (23), V1
+annotation tests (9), verifier tests (11), the full historical byte verifier and
+`git diff --check` pass. All **94,720 historical bytes remain exact**. Annotation
+and progress files are unchanged, including the 3,662 executed UNDERSTOOD bytes
+and 205,904 UNDERSTOOD instruction occurrences. Task test temporary directories
+are automatically removed.
+
+V0.2 is ready as the bounded evidence interface for +28AA semantic work with its
+current accumulated extent and explicit zero-frame profile. This ticket performs
+only infrastructure reuse, and makes no claim about decompilation stability.
+Semantic helper gaps remain visible. Software outer packets, other continuation
+registers, PCHL, arbitrary POP/count inference, stack switching and unsupported
+families remain outside the profile. Existing canonical-block/count, ordinary
+outer-return and explicit-frame restrictions still apply. Expanding those
+restrictions requires a separate justified infrastructure change.

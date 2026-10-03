@@ -10,9 +10,42 @@ from check_minimal_pass_2 import coord, require
 from check_minimal_pass_3 import gather, validate as validate_pass_3
 from minimal_baseline import digest, load, ranges, status_at
 from evidence_packet_local import call_contract, dependency_chain, derive_local, navigation_effects, preserved_address, validate_local
+from software_continuation import prove
 
 ROOT = Path(__file__).resolve().parents[2]
 TARGET = "PLI0.OVL+24BC"
+CONTINUATIONS = ROOT / "research/minimal-baseline/pass-8/continuations.json"
+
+
+def software_profile(catalog):
+    """Authorize only the established family, with its declared byte counts."""
+    profile = {}
+    for instance in load(CONTINUATIONS)['instances']:
+        relation = prove(instance['proof'])
+        key, count = instance['entry'], relation['consumed_caller_bytes']
+        require(catalog[key]['returns']['consumed_caller_bytes'] == count
+                and profile.get(key, count) == count, 'Software profile/catalog mismatch')
+        profile[key] = count
+    return profile
+
+
+def child_return(call, nested, resumed):
+    """Project the authoritative proof; never substitute equal-valued words."""
+    require(resumed['pc'] == nested['ret']['pc_after'], 'Child resume coordinate mismatch')
+    if 'software_proof' not in nested:
+        verify_return(call, nested['ret'], nested['relation'])
+        return {'kind': 'ORDINARY HARDWARE RETURN', 'resumed_coordinate': coord(resumed['origin'])}
+    proof = nested['software_proof']
+    require(proof['call'] == call and proof['ret'] == nested['ret']
+            and proof['relation'] == nested['relation'], 'Software proof boundary mismatch')
+    relation = prove(proof)
+    require(relation == nested['software_relation'], 'Software proof projection mismatch')
+    return dict(relation, kind='SOFTWARE CLEANUP RETURN', target_coordinate=coord(call['target_origin']),
+                resumed_coordinate=coord(resumed['origin']),
+                observed_evidence={'status': 'OBSERVED', 'source': 'software_return_proof: exact instructions/accesses/states and corrected latest-writer/RET event'},
+                deduced_evidence={'status': 'DEDUCED', 'equations': 'S=preCALL SP; E=S-2; copied slot=E+N; final SP=S+N (mod 65536)',
+                                  'consumed_caller_bytes': relation['consumed_caller_bytes'],
+                                  'final_SP_minus_preCALL': relation['final_SP_minus_preCALL']})
 
 
 def stable(origin, images):
@@ -123,6 +156,8 @@ def build(capture, images_dir, entry=TARGET, frame_bytes=18, class_slots=(9, 10)
     catalog = {p["id"]: p for p in load(annotation / "procedures.json")["procedures"]}
     require(entry in catalog, "Entry must cite an existing ProcedureHypothesis")
     procedure = catalog[entry]
+    software_callees = software_profile(catalog)
+    require(entry not in software_callees, 'Software outer returns are outside the packet profile')
     all_roles = load(annotation / "data-roles.json")["roles"]
     selected_roles = [r for r in all_roles
                       if r["id"] in procedure["data_role_ids"]]
@@ -134,7 +169,7 @@ def build(capture, images_dir, entry=TARGET, frame_bytes=18, class_slots=(9, 10)
     facts = {coord({"image": i["image"], "offset": i["offset"]}): i
              for i in canonical["instructions"]}
     records = sorted(gather(capture, {entry: (procedure["start_offset"], procedure["end_offset"])},
-                            include_nested_returns=True)[entry],
+                            include_nested_returns=True, software_callees=software_callees)[entry],
                      key=lambda r: r["call"]["step_index"])
     require(len(records) == procedure["observed_paths"]["invocations_by_run"]["MINIMAL"],
             "Invocation count disagrees with catalog")
@@ -251,7 +286,7 @@ def build(capture, images_dir, entry=TARGET, frame_bytes=18, class_slots=(9, 10)
         writers = {}  # Retain only explicitly supported caller storage across calls.
         writer_calls = {}
         prior = None
-        for w in ws:
+        for position, w in enumerate(ws):
             step = add_step(w, n, frame, "local")
             local_steps.append(step)
             block = block_for[w["origin"]["offset"]]
@@ -290,7 +325,9 @@ def build(capture, images_dir, entry=TARGET, frame_bytes=18, class_slots=(9, 10)
                     "predicate_producer_evidence": "DEDUCED from immediate 8080 instruction flag effects"})
             if control["kind"] == "call" and control.get("taken", True):
                 nested = r["nested_returns"][step]
-                verify_return(w, nested["ret"], nested["relation"])
+                return_convention = child_return(w, nested, ws[position + 1])
+                for witness in nested.get('software_proof', {}).get('prefix', []):
+                    add_step(witness, n, frame, 'callee-continuation-proof')
                 target = coord(w.get("target_origin"))
                 require(target in facts, "Callee target lacks an observed stable coordinate")
                 return_step = add_step(nested["ret"], n, frame, "callee-return-boundary")
@@ -305,7 +342,7 @@ def build(capture, images_dir, entry=TARGET, frame_bytes=18, class_slots=(9, 10)
                 calls[str(step)] = {"invocation": n, "callsite": coord(w["origin"]),
                                     "target": target, "pre_call_state_step": step,
                                     "post_return_state_step": return_step,
-                                    "hardware_return_proof": nested["relation"],
+                                    "return_convention": return_convention,
                                     "contract_ref": f"research/annotated-assembly/procedures.json#id={target}" if target in catalog else None,
                                     "callee_completeness": catalog[target]["completeness"] if target in catalog else None,
                                     "contract_presentation": call_contract(catalog.get(target), entry, target, nested["memory_witnesses"], catalog),
@@ -314,6 +351,8 @@ def build(capture, images_dir, entry=TARGET, frame_bytes=18, class_slots=(9, 10)
                                     "callee_memory_effects": {"scope": "callee subtree, including descendants; separate from parent-local blocks",
                                                              "guest_instruction_accesses": effects,
                                                              "host_effects": "not joined in V0"}}
+                proof_key = 'software_return_proof' if 'software_proof' in nested else 'hardware_return_proof'
+                calls[str(step)][proof_key] = nested.get('software_proof', nested['relation'])
                 nested_steps.append(step)
                 block["observed"]["calls"].append(step)
                 call_samples[(coord(w["origin"]), target)].append(step)
@@ -423,11 +462,13 @@ def build(capture, images_dir, entry=TARGET, frame_bytes=18, class_slots=(9, 10)
                  "Overwritten memory values are null in source witnesses.",
                  "Unobserved paths have no concrete states or outcome counts; accumulated unresolved paths remain in the catalog entry."])
     gaps.append(f"{sum(len(v) for v in unresolved_reads.values())} parent-local read accesses have no joined earlier local writer under supported call preservation; producer identity outside that projection is unresolved.")
-    sources = [Path(__file__), Path(__file__).with_name("evidence_packet_local.py")]
+    sources = [Path(__file__), Path(__file__).with_name("evidence_packet_local.py"),
+               Path(__file__).with_name("check_minimal_pass_3.py"),
+               Path(__file__).with_name("software_continuation.py"), CONTINUATIONS]
     sources += [annotation / n for n in ("manifest.json", "procedures.json", "data-roles.json")]
     sources += [capture / n for n in ("event-witnesses.json", "canonical-code-blocks.json", "dynamic-blocks.json", "run-summary.json")]
     sources += [capture / "event-witnesses/chunks" / f"{c['id']:06d}.json" for c in index["chunks"]]
-    packet = {"experiment": "PROCEDURE_EVIDENCE_PACKET_V0_1", "baseline_commit": "b8c6b47",
+    packet = {"experiment": "PROCEDURE_EVIDENCE_PACKET_V0_2_SOFTWARE_CONTINUATIONS", "baseline_commit": "bd2defd",
               "run_id": index["run_id"], "entry": entry,
               "identity_rule": "Instruction keys abbreviate exact image SHA-256 + file offset resolved in instructions. Derived block/class IDs are packet-local presentation only.",
               "reference_guide": "steps is keyed by chronological step. State references use before for entries/pre-call/predicates and after for exits/post-return. A CALL block exits before callee execution; its joined call provides the post-return state. Reads/writes are ordered byte accesses; raw numeric addresses and values are always retained. Calls and invocations are keyed/referenced by CALL step. Unobserved transfer coordinates assert no decoded instruction entry.",
@@ -487,9 +528,19 @@ def validate_packet(packet, canonical, dynamic, records, catalog):
             require(s["before"] == w["before"] and s["after"] == w["after"], "Call boundary state mismatch")
         for call_step, nested in r["nested_returns"].items():
             call = packet["calls"][str(call_step)]
+            ws = r['own_witnesses']
+            index = next(i for i, w in enumerate(ws) if w['step_index'] == call_step)
+            expected = child_return(ws[index], nested, ws[index + 1])
+            proof_key = 'software_return_proof' if 'software_proof' in nested else 'hardware_return_proof'
             require(call["pre_call_state_step"] == call_step
                     and call["post_return_state_step"] == nested["ret"]["step_index"]
-                    and call["hardware_return_proof"] == nested["relation"], "Call return join mismatch")
+                    and call['return_convention'] == expected
+                    and call[proof_key] == nested.get('software_proof', nested['relation']), "Call return join mismatch")
+            if proof_key == 'software_return_proof':
+                require('hardware_return_proof' not in call, 'Software return mislabeled hardware')
+                require(prove(call[proof_key]) == nested['software_relation'], 'Software proof mismatch')
+                require(not any(call_step < s <= nested['ret']['step_index']
+                                for s in invocation['local_steps']), 'Software child leaked into parent')
             effects = call["callee_memory_effects"]["guest_instruction_accesses"]
             require(len(effects) == len(nested["memory_witnesses"]), "Callee memory count mismatch")
             for e, w in zip(effects, nested["memory_witnesses"]):
@@ -553,7 +604,7 @@ def validate_packet(packet, canonical, dynamic, records, catalog):
 def render(packet):
     checks = packet["quality_checks"]
     p = packet["accumulated_knowledge"]["procedure"]
-    lines = [f"# Procedure evidence packet V0.1: {packet['entry']}", "",
+    lines = [f"# Procedure evidence packet V0.2: {packet['entry']}", "",
              f"Run: `{packet['run_id']}`. Infrastructure baseline: `{packet['baseline_commit']}`.", "",
              f"OBSERVED: {checks['invocations']} invocations; {checks['recursive_children']} recursive children; "
              f"{checks['local_instruction_occurrences']} local instructions; {checks['derived_blocks']} blocks.", "",
@@ -592,6 +643,16 @@ def render(packet):
         lines += [f"- **{c['callsite']} → {c['target']} ×{c['invocation_count']}: {policy['kind']}**. "
                   f"Algorithmic contract: {policy['algorithmic_contract']}. Scope: {policy['scope'] or 'unavailable'}. "
                   f"Scope statuses: {[(g['status'], len(g['call_steps'])) for g in c['scope_status_groups']]}. Calls `{c['representative_call_steps']}`."]
+        for step in c['call_steps']:
+            relation = packet['calls'][str(step)]['return_convention']
+            if relation['kind'] == 'SOFTWARE CLEANUP RETURN':
+                lines.append(f"  - Call {step}: return **SOFTWARE CLEANUP RETURN**; caller bytes consumed: "
+                             f"{relation['consumed_caller_bytes']}; copied continuation slot: "
+                             f"{relation['relocated_return_slot']:04X}; final SP delta: "
+                             f"+{relation['final_SP_minus_preCALL']}; resume: {relation['resumed_coordinate']}. "
+                             "Exact writer/read proof remains in JSON.")
+        if all(packet['calls'][str(s)]['return_convention']['kind'] == 'ORDINARY HARDWARE RETURN' for s in c['call_steps']):
+            lines.append('  - Return: ORDINARY HARDWARE RETURN; original CALL slot proof in JSON.')
         for g in c['observed_effect_groups'] if policy['kind'] == 'MISSING / OPAQUE' else []:
             addresses = ','.join(f"{a:04X}" for a in g['write_addresses']) or 'none'
             lines.append(f"  - OBSERVED guest write addresses: {addresses}; caller-frame offsets written: "
@@ -637,7 +698,7 @@ def render(packet):
     lines += ['- ' + g for g in packet['evidence_gaps']['facts']]
     lines += ['- ' + g for g in p['unresolved_paths']]
     lines += ["", "STATIC / UNOBSERVED supplement deferred: RAW holes have no retained decoded instruction stream; "
-              "V0.1 does not decode them or invent outcomes. Unobserved ranges: "
+              "V0.2 does not decode them or invent outcomes. Unobserved ranges: "
               f"`{packet['evidence_gaps']['unobserved_extent_byte_ranges']}`.", "", "## Blocks", ""]
     for b in packet['blocks']:
         extent, obs = b['stable_instruction_range'], b['observed']

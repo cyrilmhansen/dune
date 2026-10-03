@@ -58,11 +58,15 @@ def call_contract(contract, entry, target, memory_witnesses, catalog):
 
 def preserved_address(call, address, frame, frame_bytes, steps):
     policy = call['contract_presentation']
+    start = steps[str(call['pre_call_state_step'])]['before']['sp']
+    convention = call.get('return_convention', {})
+    if convention.get('kind') == 'SOFTWARE CLEANUP RETURN' and \
+            (address - start) & 65535 < convention['consumed_caller_bytes']:
+        return False  # Consumed caller words cease to be persistent parent locals.
     if any(q['address'] == address for e in call['callee_memory_effects']['guest_instruction_accesses'] for q in e['writes']):
         return False  # Even a same-value write replaces the caller definition.
     if policy['all_memory_preserved']:
         return True
-    start = steps[str(call['pre_call_state_step'])]['before']['sp']
     # Restrict the nested-stack clause to known caller locals/saves/return word.
     span = (frame + frame_bytes + 2 - start) & 65535
     return policy['caller_storage_preserved'] and span < 32768 and (address - start) & 65535 < span

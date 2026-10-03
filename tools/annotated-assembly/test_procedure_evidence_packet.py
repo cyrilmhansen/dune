@@ -12,8 +12,9 @@ from pathlib import Path
 
 from check_minimal_pass_3 import gather
 from minimal_baseline import load
-from procedure_evidence_packet import ROOT, TARGET, build, render, role_matches, validate_packet
+from procedure_evidence_packet import ROOT, TARGET, CONTINUATIONS, build, child_return, render, role_matches, validate_packet
 from evidence_packet_local import call_contract, dependency_chain, derive_local, preserved_address
+from software_continuation import prove
 
 
 class ProjectionTests(unittest.TestCase):
@@ -119,6 +120,141 @@ class ProjectionTests(unittest.TestCase):
         returned = packet['local_dependencies']['nodes']['2:returned:c']
         self.assertEqual(returned['inputs'], [])
         self.assertEqual(returned['contract']['algorithmic_contract'], 'unavailable')
+
+
+class SoftwareContinuationPacketTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.packets = {key: build(CAPTURE, IMAGES, key, 0, ()) for key in
+                       ('PLI1.OVL+28AA', 'PLI1.OVL+4B69', 'PLI1.OVL+4693', 'PLI1.OVL+4738')}
+        cls.instances = load(CONTINUATIONS)['instances']
+
+    def test_all_three_families_keep_exact_cleanup_equations(self):
+        seen = Counter()
+        for p in self.packets.values():
+            for c in p['calls'].values():
+                if 'software_return_proof' not in c:
+                    self.assertEqual(c['return_convention']['kind'], 'ORDINARY HARDWARE RETURN')
+                    continue
+                proof, r = c['software_return_proof'], c['return_convention']
+                n = {'PLI1.OVL+4468': 2, 'PLI1.OVL+6708': 8, 'PLI1.OVL+43D5': 2}[c['target']]
+                seen[c['target']] += 1
+                self.assertNotIn('hardware_return_proof', c)
+                self.assertEqual(r['consumed_caller_bytes'], n)
+                self.assertEqual(r['relocated_return_slot'], (r['original_return_slot'] + n) & 65535)
+                self.assertEqual(r['final_SP_minus_preCALL'], n)
+                self.assertEqual(proof['ret']['sp_after'], (proof['call']['sp_before'] + n) & 65535)
+                self.assertEqual(prove(proof), {k: r[k] for k in prove(proof)})
+                self.assertEqual(c['contract_presentation']['kind'], 'PARTIAL')
+        self.assertEqual(seen, {'PLI1.OVL+4468': 2, 'PLI1.OVL+6708': 2, 'PLI1.OVL+43D5': 1})
+
+    def test_28aa_child_windows_psw_and_outer_return(self):
+        p = self.packets['PLI1.OVL+28AA']; iv = p['invocations'][0]
+        self.assertEqual(p['quality_checks']['local_instruction_occurrences'], 351)
+        children = [c for c in p['calls'].values() if c['target'] == 'PLI1.OVL+6708']
+        self.assertEqual([c['return_convention']['resumed_coordinate'] for c in children],
+                         ['PLI1.OVL+2988', 'PLI1.OVL+2AB7'])
+        for c in children:
+            r = c['return_convention']; index = iv['local_steps'].index(r['call_step'])
+            resumed = p['steps'][str(iv['local_steps'][index + 1])]
+            self.assertEqual(resumed['coordinate'], r['resumed_coordinate'])
+            self.assertFalse(any(r['call_step'] < s <= r['software_ret_step'] for s in iv['local_steps']))
+            effects = c['callee_memory_effects']['guest_instruction_accesses']
+            self.assertTrue(effects)
+            self.assertTrue(all(r['call_step'] < e['step'] <= r['software_ret_step'] for e in effects))
+        local = [p['steps'][str(s)] for s in iv['local_steps']]
+        save = next(s for s in local if s['coordinate'] == 'PLI1.OVL+2956')
+        pop = next(s for s in local if s['coordinate'] == 'PLI1.OVL+2988')
+        self.assertEqual(p['instructions'][pop['coordinate']]['decoded'], 'POP B')
+        self.assertEqual({q['address']: q['value'] for q in pop['reads']},
+                         {q['address']: q['new_value'] for q in save['writes']})
+        proof = children[0]['software_return_proof']; argument_steps = children[0]['return_convention']['argument_pop_steps']
+        arguments = {q['address'] for w in proof['prefix'] if w['step_index'] in argument_steps for q in w['reads']}
+        self.assertEqual(len(arguments), 8)
+        self.assertFalse(arguments & {q['address'] for q in pop['reads']})
+        self.assertIn('PLI1.OVL+2ABF', [s['coordinate'] for s in local])
+        self.check_outer(p)
+
+    def check_outer(self, p):
+        iv = p['invocations'][0]
+        call, ret = [p['steps'][str(iv[k])] for k in ('call_step', 'return_step')]
+        self.assertEqual(ret['before']['sp'], call['after']['sp'])
+        self.assertEqual(ret['after']['sp'], call['before']['sp'])
+        self.assertEqual(iv['hardware_return_proof']['frame']['call_step'], iv['call_step'])
+        self.assertEqual({q['address']: q['value'] for q in ret['reads']},
+                         {q['address']: q['new_value'] for q in call['writes']})
+
+    def test_4b69_loop_child_and_outer_return(self):
+        p = self.packets['PLI1.OVL+4B69']; iv = p['invocations'][0]
+        self.assertEqual(p['quality_checks']['local_instruction_occurrences'], 2088)
+        c = next(c for c in p['calls'].values() if c['target'] == 'PLI1.OVL+43D5')
+        r = c['return_convention']; index = iv['local_steps'].index(r['call_step'])
+        self.assertEqual(p['steps'][str(iv['local_steps'][index + 1])]['coordinate'], 'PLI1.OVL+4BBD')
+        self.assertFalse(any(r['call_step'] < s <= r['software_ret_step'] for s in iv['local_steps']))
+        self.assertEqual(sum(p['steps'][str(s)]['coordinate'] == 'PLI1.OVL+4BB0' for s in iv['local_steps']), 128)
+        self.check_outer(p)
+
+    def test_consumed_words_cannot_survive_even_a_preservation_clause(self):
+        p = self.packets['PLI1.OVL+28AA']
+        c = copy.deepcopy(next(c for c in p['calls'].values() if c['target'] == 'PLI1.OVL+6708'))
+        c['contract_presentation']['all_memory_preserved'] = True
+        c['callee_memory_effects']['guest_instruction_accesses'] = []
+        start = p['steps'][str(c['pre_call_state_step'])]['before']['sp']
+        for a in range(start, start + 8):
+            self.assertFalse(preserved_address(c, a, 0, 0, p['steps']))
+        self.assertTrue(preserved_address(c, start + 8, 0, 0, p['steps']))
+        self.assertEqual(c['contract_presentation']['preserved_state'], [])
+
+    def test_corrupt_proofs_fail_in_packet_projection_and_stream_join(self):
+        def corrupt(proof, case):
+            pop = next(w for w in proof['prefix'] if w['disassembly'] == 'POP D')
+            arg = next(w for w in proof['prefix'] if w['disassembly'] == 'POP B')
+            event = proof['relation']
+            if case == 'writer':
+                event['low_byte_writer']['step'] = event['high_byte_writer']['step'] = arg['step_index']
+            elif case == 'argument': arg['reads'][0]['address'] += 2
+            elif case == 'DE': arg['disassembly'] = 'INX D'
+            elif case == 'slot': event['stack_slot'] += 2
+            elif case == 'same value wrong word': pop['reads'][0]['address'] += 2
+            elif case == 'consumer writer': event['low_byte_writer']['pc'] += 1
+            elif case == 'consumer read': proof['ret']['reads'][0]['address'] += 2
+            elif case == 'nonunique POP': arg['disassembly'] = 'POP D'
+            elif case == 'other register': pop['disassembly'] = 'POP H'
+            elif case == 'PCHL': proof['ret']['disassembly'] = 'PCHL'
+            elif case == 'declared count': proof['stack_argument_bytes'] += 2
+        for instance in self.instances:
+            for case in ('writer', 'argument', 'DE', 'slot', 'same value wrong word',
+                         'consumer writer', 'consumer read', 'nonunique POP',
+                         'other register', 'PCHL', 'declared count'):
+                with self.subTest(entry=instance['entry'], case=case):
+                    proof = copy.deepcopy(instance['proof']); corrupt(proof, case)
+                    nested = {'ret': proof['ret'], 'relation': proof['relation'],
+                              'software_proof': proof, 'software_relation': instance['relation']}
+                    resumed = {'pc': proof['ret']['pc_after'], 'origin': proof['call']['origin']}
+                    with self.assertRaises(ValueError): child_return(proof['call'], nested, resumed)
+                    # Exercise gather's actual opt-in joining path, not just prove().
+                    parent = copy.deepcopy(proof['call']); parent['step_index'] -= 1
+                    parent['target_origin'] = {'image': {'name': 'P'}, 'offset': 0}
+                    ret = copy.deepcopy(proof['ret']); ret['step_index'] += 1
+                    events = [{'type': 'instruction', 'witness': w} for w in
+                              [parent, proof['call'], *proof['prefix'], proof['ret']]]
+                    events += [proof['relation'], {'type': 'instruction', 'witness': ret},
+                               {'type': 'hardware_frame_return', 'step_index': ret['step_index'],
+                                'frame': {'call_step': parent['step_index']}}]
+                    with tempfile.TemporaryDirectory(prefix='atlas-software-packet-test-', dir='/tmp') as temp:
+                        capture = Path(temp); chunks = capture / 'event-witnesses/chunks'; chunks.mkdir(parents=True)
+                        (capture / 'event-witnesses.json').write_text(json.dumps({'chunks': [{'id': 0}]}))
+                        (chunks / '000000.json').write_text(json.dumps({'events': events}))
+                        with self.assertRaisesRegex(ValueError, 'Software child lacks'):
+                            gather(capture, {'P+0000': (0, 1)}, include_nested_returns=True,
+                                   software_callees={instance['entry']: proof['stack_argument_bytes']})
+
+    def test_unsupported_outer_profile_and_resume_mismatch(self):
+        with self.assertRaisesRegex(ValueError, 'Software outer returns'):
+            build(CAPTURE, IMAGES, 'PLI1.OVL+6708', 0, ())
+        instance = self.instances[0]; proof = instance['proof']
+        with self.assertRaisesRegex(ValueError, 'resume coordinate'):
+            child_return(proof['call'], {'ret': proof['ret']}, {'pc': proof['ret']['pc_after'] + 1})
 
 
 class ExistingMinimalPacketTests(unittest.TestCase):
