@@ -1,0 +1,822 @@
+{
+  "baseline_commit": "217228d7d722af74048d6f1c2d922aee0251b993",
+  "capture_run_id": "FIZZBUZ:a7a657b3c9c758be44a16c4c76a2986744f01de34d773d2b9597d4758eff0f49",
+  "capture_path": "_build/evidence-packet-cross-run/fizzbuz-capture",
+  "REL": {
+    "name": "FIZZBUZ.REL",
+    "size": 768,
+    "sha256": "68ec16931d4dae7a8f0831a29c9ae8b9ca139279f5104bb34e299644a8b2a203"
+  },
+  "procedures": [
+    {
+      "entry": "PLI1.OVL+7C1B",
+      "invocations": 96,
+      "callers": {
+        "PLI1.OVL+7C5D": 1,
+        "PLI1.OVL+7C71": 1,
+        "PLI1.OVL+7CE3": 17,
+        "PLI1.OVL+7D2D": 42,
+        "PLI1.OVL+7D9D": 35
+      },
+      "recursive_calls": 61,
+      "own_coordinates": 186,
+      "own_occurrences": 6180,
+      "observed_byte_union": 312,
+      "MINIMAL_represented_bytes": 203,
+      "accumulated_observed_byte_union": 312,
+      "FIZZBUZ_new_offsets": [
+        31830,
+        31831,
+        31832,
+        31833,
+        31834,
+        31835,
+        31836,
+        31837,
+        31838,
+        31839,
+        31840,
+        31841,
+        31842,
+        31843,
+        31844,
+        31845,
+        31846,
+        31847,
+        31848,
+        31849,
+        31850,
+        31851,
+        31852,
+        31853,
+        31854,
+        31855,
+        31856,
+        31857,
+        31858,
+        31859,
+        31860,
+        31861,
+        31862,
+        31863,
+        31864,
+        31865,
+        31866,
+        31867,
+        31868,
+        31869,
+        31870,
+        31871,
+        31872,
+        31873,
+        31874,
+        31875,
+        31876,
+        31877,
+        31878,
+        31879,
+        31880,
+        31881,
+        31882,
+        31883,
+        31884,
+        31885,
+        31886,
+        31887,
+        31888,
+        31889,
+        31890,
+        31891,
+        31892,
+        31893,
+        31894,
+        31895,
+        31896,
+        31897,
+        31898,
+        31899,
+        31900,
+        31901,
+        31902,
+        31903,
+        31904,
+        31905,
+        31906,
+        31907,
+        31908,
+        31909,
+        31910,
+        31911,
+        31912,
+        31913,
+        31914,
+        31915,
+        31916,
+        31917,
+        31918,
+        31919,
+        31920,
+        31921,
+        31922,
+        31923,
+        31924,
+        31925,
+        31926,
+        31952,
+        31953,
+        31954,
+        31955,
+        31956,
+        31957,
+        31958,
+        31959,
+        31960,
+        31961,
+        31962,
+        31963
+      ],
+      "observed_returns": [
+        31805,
+        31926,
+        31963,
+        32000,
+        32082
+      ],
+      "matched_calls": [
+        {
+          "call_step": 336040,
+          "return_step": 336149
+        },
+        {
+          "call_step": 343300,
+          "return_step": 343409
+        },
+        {
+          "call_step": 343486,
+          "return_step": 343595
+        },
+        {
+          "call_step": 353355,
+          "return_step": 353464
+        },
+        {
+          "call_step": 361995,
+          "return_step": 363092
+        },
+        {
+          "call_step": 361922,
+          "return_step": 363124
+        },
+        {
+          "call_step": 363229,
+          "return_step": 363338
+        },
+        {
+          "call_step": 361813,
+          "return_step": 363405
+        },
+        {
+          "call_step": 375351,
+          "return_step": 376244
+        },
+        {
+          "call_step": 375278,
+          "return_step": 376276
+        },
+        {
+          "call_step": 376381,
+          "return_step": 376468
+        },
+        {
+          "call_step": 375169,
+          "return_step": 376573
+        },
+        {
+          "call_step": 375060,
+          "return_step": 376792
+        },
+        {
+          "call_step": 377059,
+          "return_step": 377168
+        },
+        {
+          "call_step": 383260,
+          "return_step": 383369
+        },
+        {
+          "call_step": 403666,
+          "return_step": 404831
+        },
+        {
+          "call_step": 403593,
+          "return_step": 404863
+        },
+        {
+          "call_step": 405150,
+          "return_step": 406043
+        },
+        {
+          "call_step": 405077,
+          "return_step": 406075
+        },
+        {
+          "call_step": 406180,
+          "return_step": 406267
+        },
+        {
+          "call_step": 404968,
+          "return_step": 406372
+        },
+        {
+          "call_step": 403484,
+          "return_step": 406591
+        },
+        {
+          "call_step": 403375,
+          "return_step": 406924
+        },
+        {
+          "call_step": 416012,
+          "return_step": 416121
+        },
+        {
+          "call_step": 424818,
+          "return_step": 425915
+        },
+        {
+          "call_step": 424745,
+          "return_step": 425947
+        },
+        {
+          "call_step": 424636,
+          "return_step": 426052
+        },
+        {
+          "call_step": 426314,
+          "return_step": 426799
+        },
+        {
+          "call_step": 426939,
+          "return_step": 428036
+        },
+        {
+          "call_step": 426866,
+          "return_step": 428068
+        },
+        {
+          "call_step": 426205,
+          "return_step": 428173
+        },
+        {
+          "call_step": 444187,
+          "return_step": 444296
+        },
+        {
+          "call_step": 444078,
+          "return_step": 444363
+        },
+        {
+          "call_step": 443969,
+          "return_step": 444468
+        },
+        {
+          "call_step": 445771,
+          "return_step": 445880
+        },
+        {
+          "call_step": 453016,
+          "return_step": 453125
+        },
+        {
+          "call_step": 473312,
+          "return_step": 474477
+        },
+        {
+          "call_step": 473239,
+          "return_step": 474509
+        },
+        {
+          "call_step": 474796,
+          "return_step": 475825
+        },
+        {
+          "call_step": 474723,
+          "return_step": 475857
+        },
+        {
+          "call_step": 475962,
+          "return_step": 476049
+        },
+        {
+          "call_step": 474614,
+          "return_step": 476154
+        },
+        {
+          "call_step": 473130,
+          "return_step": 476373
+        },
+        {
+          "call_step": 473021,
+          "return_step": 476706
+        },
+        {
+          "call_step": 485410,
+          "return_step": 485519
+        },
+        {
+          "call_step": 494216,
+          "return_step": 495313
+        },
+        {
+          "call_step": 494143,
+          "return_step": 495345
+        },
+        {
+          "call_step": 494034,
+          "return_step": 495450
+        },
+        {
+          "call_step": 495712,
+          "return_step": 496197
+        },
+        {
+          "call_step": 496337,
+          "return_step": 497434
+        },
+        {
+          "call_step": 496264,
+          "return_step": 497466
+        },
+        {
+          "call_step": 495603,
+          "return_step": 497571
+        },
+        {
+          "call_step": 510985,
+          "return_step": 511094
+        },
+        {
+          "call_step": 510876,
+          "return_step": 511161
+        },
+        {
+          "call_step": 510767,
+          "return_step": 511266
+        },
+        {
+          "call_step": 512569,
+          "return_step": 512678
+        },
+        {
+          "call_step": 519814,
+          "return_step": 519923
+        },
+        {
+          "call_step": 540110,
+          "return_step": 541275
+        },
+        {
+          "call_step": 540037,
+          "return_step": 541307
+        },
+        {
+          "call_step": 541594,
+          "return_step": 542555
+        },
+        {
+          "call_step": 541521,
+          "return_step": 542587
+        },
+        {
+          "call_step": 542692,
+          "return_step": 542779
+        },
+        {
+          "call_step": 541412,
+          "return_step": 542884
+        },
+        {
+          "call_step": 539928,
+          "return_step": 543103
+        },
+        {
+          "call_step": 539819,
+          "return_step": 543436
+        },
+        {
+          "call_step": 552060,
+          "return_step": 552169
+        },
+        {
+          "call_step": 560866,
+          "return_step": 561963
+        },
+        {
+          "call_step": 560793,
+          "return_step": 561995
+        },
+        {
+          "call_step": 560684,
+          "return_step": 562100
+        },
+        {
+          "call_step": 562362,
+          "return_step": 562847
+        },
+        {
+          "call_step": 562987,
+          "return_step": 564084
+        },
+        {
+          "call_step": 562914,
+          "return_step": 564116
+        },
+        {
+          "call_step": 562253,
+          "return_step": 564221
+        },
+        {
+          "call_step": 577630,
+          "return_step": 577739
+        },
+        {
+          "call_step": 577521,
+          "return_step": 577806
+        },
+        {
+          "call_step": 577412,
+          "return_step": 577911
+        },
+        {
+          "call_step": 579214,
+          "return_step": 579323
+        },
+        {
+          "call_step": 590129,
+          "return_step": 590238
+        },
+        {
+          "call_step": 598936,
+          "return_step": 600033
+        },
+        {
+          "call_step": 598863,
+          "return_step": 600065
+        },
+        {
+          "call_step": 598754,
+          "return_step": 600170
+        },
+        {
+          "call_step": 600432,
+          "return_step": 600917
+        },
+        {
+          "call_step": 601057,
+          "return_step": 602154
+        },
+        {
+          "call_step": 600984,
+          "return_step": 602186
+        },
+        {
+          "call_step": 600323,
+          "return_step": 602291
+        },
+        {
+          "call_step": 608347,
+          "return_step": 608434
+        },
+        {
+          "call_step": 608238,
+          "return_step": 608539
+        },
+        {
+          "call_step": 608129,
+          "return_step": 608682
+        },
+        {
+          "call_step": 610239,
+          "return_step": 610348
+        },
+        {
+          "call_step": 618361,
+          "return_step": 619458
+        },
+        {
+          "call_step": 618288,
+          "return_step": 619490
+        },
+        {
+          "call_step": 619581,
+          "return_step": 619668
+        },
+        {
+          "call_step": 618240,
+          "return_step": 619722
+        },
+        {
+          "call_step": 619941,
+          "return_step": 620050
+        },
+        {
+          "call_step": 618131,
+          "return_step": 620117
+        },
+        {
+          "call_step": 632403,
+          "return_step": 632512
+        }
+      ],
+      "software_relations": []
+    },
+    {
+      "entry": "PLI1.OVL+4738",
+      "invocations": 3,
+      "callers": {
+        "PLI1.OVL+2B3F": 3
+      },
+      "recursive_calls": 0,
+      "own_coordinates": 47,
+      "own_occurrences": 141,
+      "observed_byte_union": 85,
+      "MINIMAL_represented_bytes": 85,
+      "accumulated_observed_byte_union": 85,
+      "FIZZBUZ_new_offsets": [],
+      "observed_returns": [
+        18316
+      ],
+      "matched_calls": [
+        {
+          "call_step": 437730,
+          "return_step": 438644
+        },
+        {
+          "call_step": 506364,
+          "return_step": 507026
+        },
+        {
+          "call_step": 573014,
+          "return_step": 573676
+        }
+      ],
+      "software_relations": []
+    },
+    {
+      "entry": "PLI1.OVL+4468",
+      "invocations": 11,
+      "callers": {
+        "PLI1.OVL+46A3": 8,
+        "PLI1.OVL+4756": 3
+      },
+      "recursive_calls": 0,
+      "own_coordinates": 104,
+      "own_occurrences": 1607,
+      "observed_byte_union": 189,
+      "MINIMAL_represented_bytes": 173,
+      "accumulated_observed_byte_union": 195,
+      "FIZZBUZ_new_offsets": [
+        17639,
+        17640,
+        17641,
+        17642,
+        17643,
+        17644,
+        17645,
+        17646,
+        17647,
+        17648,
+        17649,
+        17650,
+        17651,
+        17652,
+        17653,
+        17654,
+        17655,
+        17656,
+        17657,
+        17658,
+        17659,
+        17660
+      ],
+      "observed_returns": [
+        17706
+      ],
+      "matched_calls": [
+        {
+          "call_step": 357427,
+          "return_step": 357599
+        },
+        {
+          "call_step": 364891,
+          "return_step": 365085
+        },
+        {
+          "call_step": 396824,
+          "return_step": 396996
+        },
+        {
+          "call_step": 430788,
+          "return_step": 431114
+        },
+        {
+          "call_step": 438260,
+          "return_step": 438601
+        },
+        {
+          "call_step": 461318,
+          "return_step": 461490
+        },
+        {
+          "call_step": 499818,
+          "return_step": 500056
+        },
+        {
+          "call_step": 506730,
+          "return_step": 506983
+        },
+        {
+          "call_step": 528116,
+          "return_step": 528288
+        },
+        {
+          "call_step": 566468,
+          "return_step": 566706
+        },
+        {
+          "call_step": 573380,
+          "return_step": 573633
+        }
+      ],
+      "software_relations": [
+        {
+          "call_step": 357427,
+          "original_return_slot": 65456,
+          "original_return_pop_step": 357433,
+          "continuation_register": "DE",
+          "continuation_writer_step": 357438,
+          "relocated_return_slot": 65458,
+          "consumed_caller_bytes": 2,
+          "software_ret_step": 357599,
+          "final_SP_minus_preCALL": 2,
+          "argument_pop_steps": [
+            357434
+          ]
+        },
+        {
+          "call_step": 364891,
+          "original_return_slot": 65454,
+          "original_return_pop_step": 364897,
+          "continuation_register": "DE",
+          "continuation_writer_step": 364902,
+          "relocated_return_slot": 65456,
+          "consumed_caller_bytes": 2,
+          "software_ret_step": 365085,
+          "final_SP_minus_preCALL": 2,
+          "argument_pop_steps": [
+            364898
+          ]
+        },
+        {
+          "call_step": 396824,
+          "original_return_slot": 65446,
+          "original_return_pop_step": 396830,
+          "continuation_register": "DE",
+          "continuation_writer_step": 396835,
+          "relocated_return_slot": 65448,
+          "consumed_caller_bytes": 2,
+          "software_ret_step": 396996,
+          "final_SP_minus_preCALL": 2,
+          "argument_pop_steps": [
+            396831
+          ]
+        },
+        {
+          "call_step": 430788,
+          "original_return_slot": 65430,
+          "original_return_pop_step": 430794,
+          "continuation_register": "DE",
+          "continuation_writer_step": 430799,
+          "relocated_return_slot": 65432,
+          "consumed_caller_bytes": 2,
+          "software_ret_step": 431114,
+          "final_SP_minus_preCALL": 2,
+          "argument_pop_steps": [
+            430795
+          ]
+        },
+        {
+          "call_step": 438260,
+          "original_return_slot": 65451,
+          "original_return_pop_step": 438266,
+          "continuation_register": "DE",
+          "continuation_writer_step": 438271,
+          "relocated_return_slot": 65453,
+          "consumed_caller_bytes": 2,
+          "software_ret_step": 438601,
+          "final_SP_minus_preCALL": 2,
+          "argument_pop_steps": [
+            438267
+          ]
+        },
+        {
+          "call_step": 461318,
+          "original_return_slot": 65383,
+          "original_return_pop_step": 461324,
+          "continuation_register": "DE",
+          "continuation_writer_step": 461329,
+          "relocated_return_slot": 65385,
+          "consumed_caller_bytes": 2,
+          "software_ret_step": 461490,
+          "final_SP_minus_preCALL": 2,
+          "argument_pop_steps": [
+            461325
+          ]
+        },
+        {
+          "call_step": 499818,
+          "original_return_slot": 65426,
+          "original_return_pop_step": 499824,
+          "continuation_register": "DE",
+          "continuation_writer_step": 499829,
+          "relocated_return_slot": 65428,
+          "consumed_caller_bytes": 2,
+          "software_ret_step": 500056,
+          "final_SP_minus_preCALL": 2,
+          "argument_pop_steps": [
+            499825
+          ]
+        },
+        {
+          "call_step": 506730,
+          "original_return_slot": 65447,
+          "original_return_pop_step": 506736,
+          "continuation_register": "DE",
+          "continuation_writer_step": 506741,
+          "relocated_return_slot": 65449,
+          "consumed_caller_bytes": 2,
+          "software_ret_step": 506983,
+          "final_SP_minus_preCALL": 2,
+          "argument_pop_steps": [
+            506737
+          ]
+        },
+        {
+          "call_step": 528116,
+          "original_return_slot": 65379,
+          "original_return_pop_step": 528122,
+          "continuation_register": "DE",
+          "continuation_writer_step": 528127,
+          "relocated_return_slot": 65381,
+          "consumed_caller_bytes": 2,
+          "software_ret_step": 528288,
+          "final_SP_minus_preCALL": 2,
+          "argument_pop_steps": [
+            528123
+          ]
+        },
+        {
+          "call_step": 566468,
+          "original_return_slot": 65422,
+          "original_return_pop_step": 566474,
+          "continuation_register": "DE",
+          "continuation_writer_step": 566479,
+          "relocated_return_slot": 65424,
+          "consumed_caller_bytes": 2,
+          "software_ret_step": 566706,
+          "final_SP_minus_preCALL": 2,
+          "argument_pop_steps": [
+            566475
+          ]
+        },
+        {
+          "call_step": 573380,
+          "original_return_slot": 65443,
+          "original_return_pop_step": 573386,
+          "continuation_register": "DE",
+          "continuation_writer_step": 573391,
+          "relocated_return_slot": 65445,
+          "consumed_caller_bytes": 2,
+          "software_ret_step": 573633,
+          "final_SP_minus_preCALL": 2,
+          "argument_pop_steps": [
+            573387
+          ]
+        }
+      ]
+    },
+    {
+      "entry": "PLI1.OVL+4693",
+      "invocations": 8,
+      "callers": {
+        "PLI1.OVL+46BD": 8
+      },
+      "own_coordinates": 10,
+      "own_occurrences": 80,
+      "observed_byte_union": 20,
+      "accumulated_observed_byte_union": 20,
+      "scope": "Ordinary parent envelope required: selected empty-bucket child is called at +46A3; +4738 children are nonempty. No semantic expansion."
+    }
+  ],
+  "method": "Exact CALL plus corrected original-slot ordinary return or unchanged POP-D proof at cataloged N; nested children excluded; no context ownership."
+}

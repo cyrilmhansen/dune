@@ -1,0 +1,1596 @@
+{
+  "run_id": "FIZZBUZ:a7a657b3c9c758be44a16c4c76a2986744f01de34d773d2b9597d4758eff0f49",
+  "members": [
+    {
+      "call_step": 376381,
+      "caller": "PLI1.OVL+7D2D",
+      "F": 65467,
+      "input": {
+        "a": 2,
+        "b": 0,
+        "c": 2,
+        "d": 0,
+        "e": 4,
+        "h": 255,
+        "l": 194,
+        "sp": 65472,
+        "pc": 40475,
+        "flags": {
+          "sign": false,
+          "zero": false,
+          "auxiliary_carry": true,
+          "parity": false,
+          "carry": false
+        }
+      },
+      "mapped": 23,
+      "path": "predecessor_fallback",
+      "predecessor": 5,
+      "return_step": 376468,
+      "returned": {
+        "a": 15,
+        "b": 0,
+        "c": 2,
+        "d": 0,
+        "e": 4,
+        "h": 255,
+        "l": 23,
+        "sp": 65474,
+        "pc": 40752,
+        "flags": {
+          "sign": true,
+          "zero": false,
+          "auxiliary_carry": false,
+          "parity": false,
+          "carry": false
+        }
+      },
+      "calls": [
+        {
+          "call_step": 376390,
+          "callsite": "PLI1.OVL+7C25",
+          "target": "PLI1.OVL+7A4D",
+          "C": 2,
+          "E": 4,
+          "returned_A": 23,
+          "returned_flags": {
+            "sign": false,
+            "zero": false,
+            "auxiliary_carry": true,
+            "parity": false,
+            "carry": false
+          },
+          "publication_and_cache_writes": []
+        },
+        {
+          "call_step": 376434,
+          "callsite": "PLI1.OVL+7CC8",
+          "target": "PLI1.OVL+7A4D",
+          "C": 1,
+          "E": 4,
+          "returned_A": 5,
+          "returned_flags": {
+            "sign": false,
+            "zero": false,
+            "auxiliary_carry": true,
+            "parity": false,
+            "carry": false
+          },
+          "publication_and_cache_writes": []
+        },
+        {
+          "call_step": 376452,
+          "callsite": "PLI1.OVL+7CD5",
+          "target": "PLI1.OVL+7AA9",
+          "C": 2,
+          "E": 4,
+          "returned_A": 15,
+          "returned_flags": {
+            "sign": true,
+            "zero": false,
+            "auxiliary_carry": false,
+            "parity": false,
+            "carry": false
+          },
+          "publication_and_cache_writes": [
+            {
+              "step": 376454,
+              "address": 44602,
+              "value": 2
+            }
+          ]
+        }
+      ],
+      "local_branches": [
+        {
+          "step": 376407,
+          "coordinate": "PLI1.OVL+7C2F",
+          "taken": true,
+          "flags": {
+            "sign": false,
+            "zero": false,
+            "auxiliary_carry": false,
+            "parity": false,
+            "carry": false
+          }
+        },
+        {
+          "step": 376423,
+          "coordinate": "PLI1.OVL+7C53",
+          "taken": true,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": false,
+            "parity": true,
+            "carry": false
+          }
+        },
+        {
+          "step": 376428,
+          "coordinate": "PLI1.OVL+7CBE",
+          "taken": false,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        },
+        {
+          "step": 376448,
+          "coordinate": "PLI1.OVL+7CCD",
+          "taken": false,
+          "flags": {
+            "sign": true,
+            "zero": false,
+            "auxiliary_carry": false,
+            "parity": false,
+            "carry": true
+          }
+        }
+      ],
+      "target_local_writes": [
+        {
+          "step": 376452,
+          "coordinate": "PLI1.OVL+7CD5",
+          "writes": [
+            {
+              "address": 65466,
+              "old_value": null,
+              "new_value": 158,
+              "width": 1,
+              "joined_roles": [],
+              "deduced_frame_relation": {
+                "F": 65467,
+                "offset": -1,
+                "expression": "F-1",
+                "evidence": "DEDUCED",
+                "address": 65466
+              }
+            },
+            {
+              "address": 65465,
+              "old_value": null,
+              "new_value": 216,
+              "width": 1,
+              "joined_roles": [],
+              "deduced_frame_relation": {
+                "F": 65467,
+                "offset": -2,
+                "expression": "F-2",
+                "evidence": "DEDUCED",
+                "address": 65465
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "call_step": 406180,
+      "caller": "PLI1.OVL+7D2D",
+      "F": 65449,
+      "input": {
+        "a": 1,
+        "b": 0,
+        "c": 1,
+        "d": 0,
+        "e": 4,
+        "h": 255,
+        "l": 176,
+        "sp": 65454,
+        "pc": 40475,
+        "flags": {
+          "sign": false,
+          "zero": false,
+          "auxiliary_carry": true,
+          "parity": false,
+          "carry": false
+        }
+      },
+      "mapped": 23,
+      "path": "predecessor_fallback",
+      "predecessor": 5,
+      "return_step": 406267,
+      "returned": {
+        "a": 15,
+        "b": 0,
+        "c": 4,
+        "d": 0,
+        "e": 4,
+        "h": 255,
+        "l": 23,
+        "sp": 65456,
+        "pc": 40752,
+        "flags": {
+          "sign": true,
+          "zero": false,
+          "auxiliary_carry": false,
+          "parity": false,
+          "carry": false
+        }
+      },
+      "calls": [
+        {
+          "call_step": 406189,
+          "callsite": "PLI1.OVL+7C25",
+          "target": "PLI1.OVL+7A4D",
+          "C": 1,
+          "E": 4,
+          "returned_A": 23,
+          "returned_flags": {
+            "sign": false,
+            "zero": false,
+            "auxiliary_carry": true,
+            "parity": false,
+            "carry": false
+          },
+          "publication_and_cache_writes": []
+        },
+        {
+          "call_step": 406233,
+          "callsite": "PLI1.OVL+7CC8",
+          "target": "PLI1.OVL+7A4D",
+          "C": 0,
+          "E": 4,
+          "returned_A": 5,
+          "returned_flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          },
+          "publication_and_cache_writes": []
+        },
+        {
+          "call_step": 406251,
+          "callsite": "PLI1.OVL+7CD5",
+          "target": "PLI1.OVL+7AA9",
+          "C": 1,
+          "E": 4,
+          "returned_A": 15,
+          "returned_flags": {
+            "sign": true,
+            "zero": false,
+            "auxiliary_carry": false,
+            "parity": false,
+            "carry": false
+          },
+          "publication_and_cache_writes": [
+            {
+              "step": 406253,
+              "address": 44602,
+              "value": 1
+            }
+          ]
+        }
+      ],
+      "local_branches": [
+        {
+          "step": 406206,
+          "coordinate": "PLI1.OVL+7C2F",
+          "taken": true,
+          "flags": {
+            "sign": false,
+            "zero": false,
+            "auxiliary_carry": false,
+            "parity": false,
+            "carry": false
+          }
+        },
+        {
+          "step": 406222,
+          "coordinate": "PLI1.OVL+7C53",
+          "taken": true,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": false,
+            "parity": true,
+            "carry": false
+          }
+        },
+        {
+          "step": 406227,
+          "coordinate": "PLI1.OVL+7CBE",
+          "taken": false,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        },
+        {
+          "step": 406247,
+          "coordinate": "PLI1.OVL+7CCD",
+          "taken": false,
+          "flags": {
+            "sign": true,
+            "zero": false,
+            "auxiliary_carry": false,
+            "parity": false,
+            "carry": true
+          }
+        }
+      ],
+      "target_local_writes": [
+        {
+          "step": 406251,
+          "coordinate": "PLI1.OVL+7CD5",
+          "writes": [
+            {
+              "address": 65448,
+              "old_value": null,
+              "new_value": 158,
+              "width": 1,
+              "joined_roles": [],
+              "deduced_frame_relation": {
+                "F": 65449,
+                "offset": -1,
+                "expression": "F-1",
+                "evidence": "DEDUCED",
+                "address": 65448
+              }
+            },
+            {
+              "address": 65447,
+              "old_value": null,
+              "new_value": 216,
+              "width": 1,
+              "joined_roles": [],
+              "deduced_frame_relation": {
+                "F": 65449,
+                "offset": -2,
+                "expression": "F-2",
+                "evidence": "DEDUCED",
+                "address": 65447
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "call_step": 475962,
+      "caller": "PLI1.OVL+7D2D",
+      "F": 65445,
+      "input": {
+        "a": 1,
+        "b": 0,
+        "c": 1,
+        "d": 0,
+        "e": 2,
+        "h": 255,
+        "l": 172,
+        "sp": 65450,
+        "pc": 40475,
+        "flags": {
+          "sign": false,
+          "zero": false,
+          "auxiliary_carry": true,
+          "parity": false,
+          "carry": false
+        }
+      },
+      "mapped": 23,
+      "path": "predecessor_fallback",
+      "predecessor": 5,
+      "return_step": 476049,
+      "returned": {
+        "a": 15,
+        "b": 0,
+        "c": 7,
+        "d": 0,
+        "e": 2,
+        "h": 255,
+        "l": 23,
+        "sp": 65452,
+        "pc": 40752,
+        "flags": {
+          "sign": true,
+          "zero": false,
+          "auxiliary_carry": false,
+          "parity": false,
+          "carry": false
+        }
+      },
+      "calls": [
+        {
+          "call_step": 475971,
+          "callsite": "PLI1.OVL+7C25",
+          "target": "PLI1.OVL+7A4D",
+          "C": 1,
+          "E": 2,
+          "returned_A": 23,
+          "returned_flags": {
+            "sign": false,
+            "zero": false,
+            "auxiliary_carry": true,
+            "parity": false,
+            "carry": false
+          },
+          "publication_and_cache_writes": []
+        },
+        {
+          "call_step": 476015,
+          "callsite": "PLI1.OVL+7CC8",
+          "target": "PLI1.OVL+7A4D",
+          "C": 0,
+          "E": 2,
+          "returned_A": 5,
+          "returned_flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          },
+          "publication_and_cache_writes": []
+        },
+        {
+          "call_step": 476033,
+          "callsite": "PLI1.OVL+7CD5",
+          "target": "PLI1.OVL+7AA9",
+          "C": 1,
+          "E": 2,
+          "returned_A": 15,
+          "returned_flags": {
+            "sign": true,
+            "zero": false,
+            "auxiliary_carry": false,
+            "parity": false,
+            "carry": false
+          },
+          "publication_and_cache_writes": [
+            {
+              "step": 476035,
+              "address": 44602,
+              "value": 1
+            }
+          ]
+        }
+      ],
+      "local_branches": [
+        {
+          "step": 475988,
+          "coordinate": "PLI1.OVL+7C2F",
+          "taken": true,
+          "flags": {
+            "sign": false,
+            "zero": false,
+            "auxiliary_carry": false,
+            "parity": false,
+            "carry": false
+          }
+        },
+        {
+          "step": 476004,
+          "coordinate": "PLI1.OVL+7C53",
+          "taken": true,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": false,
+            "parity": true,
+            "carry": false
+          }
+        },
+        {
+          "step": 476009,
+          "coordinate": "PLI1.OVL+7CBE",
+          "taken": false,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        },
+        {
+          "step": 476029,
+          "coordinate": "PLI1.OVL+7CCD",
+          "taken": false,
+          "flags": {
+            "sign": true,
+            "zero": false,
+            "auxiliary_carry": false,
+            "parity": false,
+            "carry": true
+          }
+        }
+      ],
+      "target_local_writes": [
+        {
+          "step": 476033,
+          "coordinate": "PLI1.OVL+7CD5",
+          "writes": [
+            {
+              "address": 65444,
+              "old_value": null,
+              "new_value": 158,
+              "width": 1,
+              "joined_roles": [],
+              "deduced_frame_relation": {
+                "F": 65445,
+                "offset": -1,
+                "expression": "F-1",
+                "evidence": "DEDUCED",
+                "address": 65444
+              }
+            },
+            {
+              "address": 65443,
+              "old_value": null,
+              "new_value": 216,
+              "width": 1,
+              "joined_roles": [],
+              "deduced_frame_relation": {
+                "F": 65445,
+                "offset": -2,
+                "expression": "F-2",
+                "evidence": "DEDUCED",
+                "address": 65443
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "call_step": 542692,
+      "caller": "PLI1.OVL+7D2D",
+      "F": 65441,
+      "input": {
+        "a": 1,
+        "b": 0,
+        "c": 1,
+        "d": 0,
+        "e": 3,
+        "h": 255,
+        "l": 168,
+        "sp": 65446,
+        "pc": 40475,
+        "flags": {
+          "sign": false,
+          "zero": false,
+          "auxiliary_carry": true,
+          "parity": false,
+          "carry": false
+        }
+      },
+      "mapped": 23,
+      "path": "predecessor_fallback",
+      "predecessor": 5,
+      "return_step": 542779,
+      "returned": {
+        "a": 15,
+        "b": 0,
+        "c": 4,
+        "d": 0,
+        "e": 3,
+        "h": 255,
+        "l": 23,
+        "sp": 65448,
+        "pc": 40752,
+        "flags": {
+          "sign": true,
+          "zero": false,
+          "auxiliary_carry": false,
+          "parity": false,
+          "carry": false
+        }
+      },
+      "calls": [
+        {
+          "call_step": 542701,
+          "callsite": "PLI1.OVL+7C25",
+          "target": "PLI1.OVL+7A4D",
+          "C": 1,
+          "E": 3,
+          "returned_A": 23,
+          "returned_flags": {
+            "sign": false,
+            "zero": false,
+            "auxiliary_carry": true,
+            "parity": false,
+            "carry": false
+          },
+          "publication_and_cache_writes": []
+        },
+        {
+          "call_step": 542745,
+          "callsite": "PLI1.OVL+7CC8",
+          "target": "PLI1.OVL+7A4D",
+          "C": 0,
+          "E": 3,
+          "returned_A": 5,
+          "returned_flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          },
+          "publication_and_cache_writes": []
+        },
+        {
+          "call_step": 542763,
+          "callsite": "PLI1.OVL+7CD5",
+          "target": "PLI1.OVL+7AA9",
+          "C": 1,
+          "E": 3,
+          "returned_A": 15,
+          "returned_flags": {
+            "sign": true,
+            "zero": false,
+            "auxiliary_carry": false,
+            "parity": false,
+            "carry": false
+          },
+          "publication_and_cache_writes": [
+            {
+              "step": 542765,
+              "address": 44602,
+              "value": 1
+            }
+          ]
+        }
+      ],
+      "local_branches": [
+        {
+          "step": 542718,
+          "coordinate": "PLI1.OVL+7C2F",
+          "taken": true,
+          "flags": {
+            "sign": false,
+            "zero": false,
+            "auxiliary_carry": false,
+            "parity": false,
+            "carry": false
+          }
+        },
+        {
+          "step": 542734,
+          "coordinate": "PLI1.OVL+7C53",
+          "taken": true,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": false,
+            "parity": true,
+            "carry": false
+          }
+        },
+        {
+          "step": 542739,
+          "coordinate": "PLI1.OVL+7CBE",
+          "taken": false,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        },
+        {
+          "step": 542759,
+          "coordinate": "PLI1.OVL+7CCD",
+          "taken": false,
+          "flags": {
+            "sign": true,
+            "zero": false,
+            "auxiliary_carry": false,
+            "parity": false,
+            "carry": true
+          }
+        }
+      ],
+      "target_local_writes": [
+        {
+          "step": 542763,
+          "coordinate": "PLI1.OVL+7CD5",
+          "writes": [
+            {
+              "address": 65440,
+              "old_value": null,
+              "new_value": 158,
+              "width": 1,
+              "joined_roles": [],
+              "deduced_frame_relation": {
+                "F": 65441,
+                "offset": -1,
+                "expression": "F-1",
+                "evidence": "DEDUCED",
+                "address": 65440
+              }
+            },
+            {
+              "address": 65439,
+              "old_value": null,
+              "new_value": 216,
+              "width": 1,
+              "joined_roles": [],
+              "deduced_frame_relation": {
+                "F": 65441,
+                "offset": -2,
+                "expression": "F-2",
+                "evidence": "DEDUCED",
+                "address": 65439
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "call_step": 608347,
+      "caller": "PLI1.OVL+7D2D",
+      "F": 65431,
+      "input": {
+        "a": 1,
+        "b": 0,
+        "c": 1,
+        "d": 251,
+        "e": 0,
+        "h": 255,
+        "l": 158,
+        "sp": 65436,
+        "pc": 40475,
+        "flags": {
+          "sign": false,
+          "zero": false,
+          "auxiliary_carry": true,
+          "parity": false,
+          "carry": false
+        }
+      },
+      "mapped": 23,
+      "path": "predecessor_fallback",
+      "predecessor": 5,
+      "return_step": 608434,
+      "returned": {
+        "a": 15,
+        "b": 0,
+        "c": 7,
+        "d": 251,
+        "e": 0,
+        "h": 255,
+        "l": 23,
+        "sp": 65438,
+        "pc": 40752,
+        "flags": {
+          "sign": true,
+          "zero": false,
+          "auxiliary_carry": false,
+          "parity": false,
+          "carry": false
+        }
+      },
+      "calls": [
+        {
+          "call_step": 608356,
+          "callsite": "PLI1.OVL+7C25",
+          "target": "PLI1.OVL+7A4D",
+          "C": 1,
+          "E": 0,
+          "returned_A": 23,
+          "returned_flags": {
+            "sign": false,
+            "zero": false,
+            "auxiliary_carry": true,
+            "parity": false,
+            "carry": false
+          },
+          "publication_and_cache_writes": []
+        },
+        {
+          "call_step": 608400,
+          "callsite": "PLI1.OVL+7CC8",
+          "target": "PLI1.OVL+7A4D",
+          "C": 0,
+          "E": 0,
+          "returned_A": 5,
+          "returned_flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          },
+          "publication_and_cache_writes": []
+        },
+        {
+          "call_step": 608418,
+          "callsite": "PLI1.OVL+7CD5",
+          "target": "PLI1.OVL+7AA9",
+          "C": 1,
+          "E": 0,
+          "returned_A": 15,
+          "returned_flags": {
+            "sign": true,
+            "zero": false,
+            "auxiliary_carry": false,
+            "parity": false,
+            "carry": false
+          },
+          "publication_and_cache_writes": [
+            {
+              "step": 608420,
+              "address": 44602,
+              "value": 1
+            }
+          ]
+        }
+      ],
+      "local_branches": [
+        {
+          "step": 608373,
+          "coordinate": "PLI1.OVL+7C2F",
+          "taken": true,
+          "flags": {
+            "sign": false,
+            "zero": false,
+            "auxiliary_carry": false,
+            "parity": false,
+            "carry": false
+          }
+        },
+        {
+          "step": 608389,
+          "coordinate": "PLI1.OVL+7C53",
+          "taken": true,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": false,
+            "parity": true,
+            "carry": false
+          }
+        },
+        {
+          "step": 608394,
+          "coordinate": "PLI1.OVL+7CBE",
+          "taken": false,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        },
+        {
+          "step": 608414,
+          "coordinate": "PLI1.OVL+7CCD",
+          "taken": false,
+          "flags": {
+            "sign": true,
+            "zero": false,
+            "auxiliary_carry": false,
+            "parity": false,
+            "carry": true
+          }
+        }
+      ],
+      "target_local_writes": [
+        {
+          "step": 608418,
+          "coordinate": "PLI1.OVL+7CD5",
+          "writes": [
+            {
+              "address": 65430,
+              "old_value": null,
+              "new_value": 158,
+              "width": 1,
+              "joined_roles": [],
+              "deduced_frame_relation": {
+                "F": 65431,
+                "offset": -1,
+                "expression": "F-1",
+                "evidence": "DEDUCED",
+                "address": 65430
+              }
+            },
+            {
+              "address": 65429,
+              "old_value": null,
+              "new_value": 216,
+              "width": 1,
+              "joined_roles": [],
+              "deduced_frame_relation": {
+                "F": 65431,
+                "offset": -2,
+                "expression": "F-2",
+                "evidence": "DEDUCED",
+                "address": 65429
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "call_step": 618240,
+      "caller": "PLI1.OVL+7D2D",
+      "F": 65476,
+      "input": {
+        "a": 5,
+        "b": 0,
+        "c": 5,
+        "d": 251,
+        "e": 0,
+        "h": 255,
+        "l": 203,
+        "sp": 65481,
+        "pc": 40475,
+        "flags": {
+          "sign": false,
+          "zero": false,
+          "auxiliary_carry": true,
+          "parity": true,
+          "carry": false
+        }
+      },
+      "mapped": 30,
+      "path": "special",
+      "predecessor": null,
+      "return_step": 619722,
+      "returned": {
+        "a": 15,
+        "b": 0,
+        "c": 5,
+        "d": 0,
+        "e": 15,
+        "h": 15,
+        "l": 30,
+        "sp": 65483,
+        "pc": 40752,
+        "flags": {
+          "sign": true,
+          "zero": false,
+          "auxiliary_carry": true,
+          "parity": true,
+          "carry": false
+        }
+      },
+      "calls": [
+        {
+          "call_step": 618249,
+          "callsite": "PLI1.OVL+7C25",
+          "target": "PLI1.OVL+7A4D",
+          "C": 5,
+          "E": 0,
+          "returned_A": 30,
+          "returned_flags": {
+            "sign": false,
+            "zero": false,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          },
+          "publication_and_cache_writes": []
+        },
+        {
+          "call_step": 618288,
+          "callsite": "PLI1.OVL+7C5D",
+          "target": "PLI1.OVL+7C1B",
+          "C": 4,
+          "E": 0,
+          "returned_A": 1,
+          "returned_flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          },
+          "publication_and_cache_writes": [
+            {
+              "step": 619439,
+              "address": 44612,
+              "value": 1
+            },
+            {
+              "step": 619441,
+              "address": 44611,
+              "value": 3
+            },
+            {
+              "step": 619451,
+              "address": 44298,
+              "value": 1
+            },
+            {
+              "step": 619470,
+              "address": 44612,
+              "value": 1
+            },
+            {
+              "step": 619472,
+              "address": 44611,
+              "value": 4
+            },
+            {
+              "step": 619482,
+              "address": 44296,
+              "value": 1
+            }
+          ]
+        },
+        {
+          "call_step": 619499,
+          "callsite": "PLI1.OVL+7C6C",
+          "target": "PLI1.OVL+7B7A",
+          "C": 4,
+          "E": 1,
+          "returned_A": 3,
+          "returned_flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          },
+          "publication_and_cache_writes": []
+        },
+        {
+          "call_step": 619581,
+          "callsite": "PLI1.OVL+7C71",
+          "target": "PLI1.OVL+7C1B",
+          "C": 2,
+          "E": 1,
+          "returned_A": 15,
+          "returned_flags": {
+            "sign": true,
+            "zero": false,
+            "auxiliary_carry": false,
+            "parity": false,
+            "carry": false
+          },
+          "publication_and_cache_writes": [
+            {
+              "step": 619654,
+              "address": 44602,
+              "value": 2
+            }
+          ]
+        },
+        {
+          "call_step": 619700,
+          "callsite": "PLI1.OVL+7CAB",
+          "target": "PLI1.OVL+7B2E",
+          "C": 5,
+          "E": 15,
+          "returned_A": 15,
+          "returned_flags": {
+            "sign": true,
+            "zero": false,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          },
+          "publication_and_cache_writes": [
+            {
+              "step": 619702,
+              "address": 44612,
+              "value": 15
+            },
+            {
+              "step": 619704,
+              "address": 44611,
+              "value": 5
+            },
+            {
+              "step": 619714,
+              "address": 44301,
+              "value": 15
+            }
+          ]
+        }
+      ],
+      "local_branches": [
+        {
+          "step": 618266,
+          "coordinate": "PLI1.OVL+7C2F",
+          "taken": true,
+          "flags": {
+            "sign": false,
+            "zero": false,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        },
+        {
+          "step": 618282,
+          "coordinate": "PLI1.OVL+7C53",
+          "taken": false,
+          "flags": {
+            "sign": true,
+            "zero": false,
+            "auxiliary_carry": false,
+            "parity": true,
+            "carry": true
+          }
+        },
+        {
+          "step": 619678,
+          "coordinate": "PLI1.OVL+7C83",
+          "taken": false,
+          "flags": {
+            "sign": true,
+            "zero": false,
+            "auxiliary_carry": false,
+            "parity": false,
+            "carry": true
+          }
+        },
+        {
+          "step": 619690,
+          "coordinate": "PLI1.OVL+7C98",
+          "taken": false,
+          "flags": {
+            "sign": true,
+            "zero": false,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": true
+          }
+        }
+      ],
+      "target_local_writes": [
+        {
+          "step": 618288,
+          "coordinate": "PLI1.OVL+7C5D",
+          "writes": [
+            {
+              "address": 65475,
+              "old_value": null,
+              "new_value": 158,
+              "width": 1,
+              "joined_roles": [],
+              "deduced_frame_relation": {
+                "F": 65476,
+                "offset": -1,
+                "expression": "F-1",
+                "evidence": "DEDUCED",
+                "address": 65475
+              }
+            },
+            {
+              "address": 65474,
+              "old_value": null,
+              "new_value": 96,
+              "width": 1,
+              "joined_roles": [],
+              "deduced_frame_relation": {
+                "F": 65476,
+                "offset": -2,
+                "expression": "F-2",
+                "evidence": "DEDUCED",
+                "address": 65474
+              }
+            }
+          ]
+        },
+        {
+          "step": 619493,
+          "coordinate": "PLI1.OVL+7C64",
+          "writes": [
+            {
+              "address": 65478,
+              "old_value": null,
+              "new_value": 1,
+              "width": 1,
+              "joined_roles": [],
+              "deduced_frame_relation": {
+                "F": 65476,
+                "offset": 2,
+                "expression": "F+2",
+                "evidence": "DEDUCED",
+                "address": 65478
+              }
+            }
+          ]
+        },
+        {
+          "step": 619499,
+          "coordinate": "PLI1.OVL+7C6C",
+          "writes": [
+            {
+              "address": 65475,
+              "old_value": null,
+              "new_value": 158,
+              "width": 1,
+              "joined_roles": [],
+              "deduced_frame_relation": {
+                "F": 65476,
+                "offset": -1,
+                "expression": "F-1",
+                "evidence": "DEDUCED",
+                "address": 65475
+              }
+            },
+            {
+              "address": 65474,
+              "old_value": null,
+              "new_value": 111,
+              "width": 1,
+              "joined_roles": [],
+              "deduced_frame_relation": {
+                "F": 65476,
+                "offset": -2,
+                "expression": "F-2",
+                "evidence": "DEDUCED",
+                "address": 65474
+              }
+            }
+          ]
+        },
+        {
+          "step": 619581,
+          "coordinate": "PLI1.OVL+7C71",
+          "writes": [
+            {
+              "address": 65475,
+              "old_value": null,
+              "new_value": 158,
+              "width": 1,
+              "joined_roles": [],
+              "deduced_frame_relation": {
+                "F": 65476,
+                "offset": -1,
+                "expression": "F-1",
+                "evidence": "DEDUCED",
+                "address": 65475
+              }
+            },
+            {
+              "address": 65474,
+              "old_value": null,
+              "new_value": 116,
+              "width": 1,
+              "joined_roles": [],
+              "deduced_frame_relation": {
+                "F": 65476,
+                "offset": -2,
+                "expression": "F-2",
+                "evidence": "DEDUCED",
+                "address": 65474
+              }
+            }
+          ]
+        },
+        {
+          "step": 619671,
+          "coordinate": "PLI1.OVL+7C78",
+          "writes": [
+            {
+              "address": 65480,
+              "old_value": null,
+              "new_value": 15,
+              "width": 1,
+              "joined_roles": [],
+              "deduced_frame_relation": {
+                "F": 65476,
+                "offset": 4,
+                "expression": "F+4",
+                "evidence": "DEDUCED",
+                "address": 65480
+              }
+            }
+          ]
+        },
+        {
+          "step": 619684,
+          "coordinate": "PLI1.OVL+7C8F",
+          "writes": [
+            {
+              "address": 65478,
+              "old_value": null,
+              "new_value": 15,
+              "width": 1,
+              "joined_roles": [],
+              "deduced_frame_relation": {
+                "F": 65476,
+                "offset": 2,
+                "expression": "F+2",
+                "evidence": "DEDUCED",
+                "address": 65478
+              }
+            }
+          ]
+        },
+        {
+          "step": 619687,
+          "coordinate": "PLI1.OVL+7C94",
+          "writes": [
+            {
+              "address": 65478,
+              "old_value": 15,
+              "new_value": 16,
+              "width": 1,
+              "joined_roles": [],
+              "deduced_frame_relation": {
+                "F": 65476,
+                "offset": 2,
+                "expression": "F+2",
+                "evidence": "DEDUCED",
+                "address": 65478
+              }
+            }
+          ]
+        },
+        {
+          "step": 619693,
+          "coordinate": "PLI1.OVL+7C9F",
+          "writes": [
+            {
+              "address": 65478,
+              "old_value": null,
+              "new_value": 15,
+              "width": 1,
+              "joined_roles": [],
+              "deduced_frame_relation": {
+                "F": 65476,
+                "offset": 2,
+                "expression": "F+2",
+                "evidence": "DEDUCED",
+                "address": 65478
+              }
+            }
+          ]
+        },
+        {
+          "step": 619700,
+          "coordinate": "PLI1.OVL+7CAB",
+          "writes": [
+            {
+              "address": 65475,
+              "old_value": null,
+              "new_value": 158,
+              "width": 1,
+              "joined_roles": [],
+              "deduced_frame_relation": {
+                "F": 65476,
+                "offset": -1,
+                "expression": "F-1",
+                "evidence": "DEDUCED",
+                "address": 65475
+              }
+            },
+            {
+              "address": 65474,
+              "old_value": null,
+              "new_value": 174,
+              "width": 1,
+              "joined_roles": [],
+              "deduced_frame_relation": {
+                "F": 65476,
+                "offset": -2,
+                "expression": "F-2",
+                "evidence": "DEDUCED",
+                "address": 65474
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "call_step": 619581,
+      "caller": "PLI1.OVL+7C71",
+      "F": 65469,
+      "input": {
+        "a": 2,
+        "b": 0,
+        "c": 2,
+        "d": 0,
+        "e": 1,
+        "h": 174,
+        "l": 73,
+        "sp": 65474,
+        "pc": 40475,
+        "flags": {
+          "sign": false,
+          "zero": false,
+          "auxiliary_carry": true,
+          "parity": false,
+          "carry": false
+        }
+      },
+      "mapped": 23,
+      "path": "predecessor_fallback",
+      "predecessor": 5,
+      "return_step": 619668,
+      "returned": {
+        "a": 15,
+        "b": 0,
+        "c": 7,
+        "d": 0,
+        "e": 1,
+        "h": 174,
+        "l": 23,
+        "sp": 65476,
+        "pc": 40564,
+        "flags": {
+          "sign": true,
+          "zero": false,
+          "auxiliary_carry": false,
+          "parity": false,
+          "carry": false
+        }
+      },
+      "calls": [
+        {
+          "call_step": 619590,
+          "callsite": "PLI1.OVL+7C25",
+          "target": "PLI1.OVL+7A4D",
+          "C": 2,
+          "E": 1,
+          "returned_A": 23,
+          "returned_flags": {
+            "sign": false,
+            "zero": false,
+            "auxiliary_carry": true,
+            "parity": false,
+            "carry": false
+          },
+          "publication_and_cache_writes": []
+        },
+        {
+          "call_step": 619634,
+          "callsite": "PLI1.OVL+7CC8",
+          "target": "PLI1.OVL+7A4D",
+          "C": 1,
+          "E": 1,
+          "returned_A": 5,
+          "returned_flags": {
+            "sign": false,
+            "zero": false,
+            "auxiliary_carry": true,
+            "parity": false,
+            "carry": false
+          },
+          "publication_and_cache_writes": []
+        },
+        {
+          "call_step": 619652,
+          "callsite": "PLI1.OVL+7CD5",
+          "target": "PLI1.OVL+7AA9",
+          "C": 2,
+          "E": 1,
+          "returned_A": 15,
+          "returned_flags": {
+            "sign": true,
+            "zero": false,
+            "auxiliary_carry": false,
+            "parity": false,
+            "carry": false
+          },
+          "publication_and_cache_writes": [
+            {
+              "step": 619654,
+              "address": 44602,
+              "value": 2
+            }
+          ]
+        }
+      ],
+      "local_branches": [
+        {
+          "step": 619607,
+          "coordinate": "PLI1.OVL+7C2F",
+          "taken": true,
+          "flags": {
+            "sign": false,
+            "zero": false,
+            "auxiliary_carry": false,
+            "parity": false,
+            "carry": false
+          }
+        },
+        {
+          "step": 619623,
+          "coordinate": "PLI1.OVL+7C53",
+          "taken": true,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": false,
+            "parity": true,
+            "carry": false
+          }
+        },
+        {
+          "step": 619628,
+          "coordinate": "PLI1.OVL+7CBE",
+          "taken": false,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        },
+        {
+          "step": 619648,
+          "coordinate": "PLI1.OVL+7CCD",
+          "taken": false,
+          "flags": {
+            "sign": true,
+            "zero": false,
+            "auxiliary_carry": false,
+            "parity": false,
+            "carry": true
+          }
+        }
+      ],
+      "target_local_writes": [
+        {
+          "step": 619652,
+          "coordinate": "PLI1.OVL+7CD5",
+          "writes": [
+            {
+              "address": 65468,
+              "old_value": null,
+              "new_value": 158,
+              "width": 1,
+              "joined_roles": [],
+              "deduced_frame_relation": {
+                "F": 65469,
+                "offset": -1,
+                "expression": "F-1",
+                "evidence": "DEDUCED",
+                "address": 65468
+              }
+            },
+            {
+              "address": 65467,
+              "old_value": null,
+              "new_value": 216,
+              "width": 1,
+              "joined_roles": [],
+              "deduced_frame_relation": {
+                "F": 65469,
+                "offset": -2,
+                "expression": "F-2",
+                "evidence": "DEDUCED",
+                "address": 65467
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "rule": "Per-invocation actual states/calls/flags/writers; first-written frame bytes are not semantic initialized locals."
+}

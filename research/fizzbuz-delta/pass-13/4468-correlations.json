@@ -1,0 +1,1654 @@
+{
+  "run_id": "FIZZBUZ:a7a657b3c9c758be44a16c4c76a2986744f01de34d773d2b9597d4758eff0f49",
+  "members": [
+    {
+      "call_step": 357427,
+      "ordinary_parent": "PLI1.OVL+4693",
+      "empty": true,
+      "input": {
+        "a": 0,
+        "b": 32,
+        "c": 1,
+        "d": 2,
+        "e": 2,
+        "h": 168,
+        "l": 100,
+        "sp": 65456,
+        "pc": 26216,
+        "flags": {
+          "sign": false,
+          "zero": true,
+          "auxiliary_carry": true,
+          "parity": true,
+          "carry": false
+        }
+      },
+      "caller_argument": {
+        "address": 65458,
+        "value": 8390,
+        "pop_step": 357434
+      },
+      "proof_relation": {
+        "call_step": 357427,
+        "original_return_slot": 65456,
+        "original_return_pop_step": 357433,
+        "continuation_register": "DE",
+        "continuation_writer_step": 357438,
+        "relocated_return_slot": 65458,
+        "consumed_caller_bytes": 2,
+        "software_ret_step": 357599,
+        "final_SP_minus_preCALL": 2,
+        "argument_pop_steps": [
+          357434
+        ]
+      },
+      "resumed_coordinate": "PLI1.OVL+46A6",
+      "returned": {
+        "a": 0,
+        "b": 251,
+        "c": 180,
+        "d": 168,
+        "e": 100,
+        "h": 251,
+        "l": 180,
+        "sp": 65460,
+        "pc": 26790,
+        "flags": {
+          "sign": false,
+          "zero": true,
+          "auxiliary_carry": true,
+          "parity": true,
+          "carry": false
+        }
+      },
+      "index": 49,
+      "slot": 42947,
+      "path_writes": [
+        {
+          "step": 357585,
+          "offset": 17643,
+          "writes": [
+            {
+              "address": 65457,
+              "old_value": null,
+              "new_value": 251
+            },
+            {
+              "address": 65456,
+              "old_value": null,
+              "new_value": 180
+            }
+          ]
+        },
+        {
+          "step": 357592,
+          "offset": 17655,
+          "writes": [
+            {
+              "address": 42947,
+              "old_value": null,
+              "new_value": 180
+            }
+          ]
+        },
+        {
+          "step": 357594,
+          "offset": 17657,
+          "writes": [
+            {
+              "address": 42948,
+              "old_value": null,
+              "new_value": 251
+            }
+          ]
+        },
+        {
+          "step": 357598,
+          "offset": 17703,
+          "writes": [
+            {
+              "address": 43107,
+              "old_value": null,
+              "new_value": 180
+            },
+            {
+              "address": 43108,
+              "old_value": null,
+              "new_value": 251
+            }
+          ]
+        }
+      ],
+      "bucket_reads": [
+        {
+          "step": 357557,
+          "coordinate": "PLI1.OVL+4239",
+          "reads": [
+            {
+              "address": 42947,
+              "value": 0,
+              "width": 1,
+              "joined_roles": []
+            }
+          ]
+        },
+        {
+          "step": 357559,
+          "coordinate": "PLI1.OVL+423B",
+          "reads": [
+            {
+              "address": 42948,
+              "value": 0,
+              "width": 1,
+              "joined_roles": []
+            }
+          ]
+        }
+      ],
+      "branch": {
+        "step": 357582,
+        "taken": false,
+        "flags": {
+          "sign": false,
+          "zero": true,
+          "auxiliary_carry": true,
+          "parity": true,
+          "carry": false
+        }
+      },
+      "predicate_producer": {
+        "step": 357581,
+        "returned_helper_A": 0,
+        "flags": {
+          "sign": false,
+          "zero": true,
+          "auxiliary_carry": true,
+          "parity": true,
+          "carry": false
+        }
+      }
+    },
+    {
+      "call_step": 364891,
+      "ordinary_parent": "PLI1.OVL+4693",
+      "empty": true,
+      "input": {
+        "a": 0,
+        "b": 32,
+        "c": 2,
+        "d": 2,
+        "e": 2,
+        "h": 168,
+        "l": 100,
+        "sp": 65454,
+        "pc": 26216,
+        "flags": {
+          "sign": false,
+          "zero": true,
+          "auxiliary_carry": true,
+          "parity": true,
+          "carry": false
+        }
+      },
+      "caller_argument": {
+        "address": 65456,
+        "value": 8390,
+        "pop_step": 364898
+      },
+      "proof_relation": {
+        "call_step": 364891,
+        "original_return_slot": 65454,
+        "original_return_pop_step": 364897,
+        "continuation_register": "DE",
+        "continuation_writer_step": 364902,
+        "relocated_return_slot": 65456,
+        "consumed_caller_bytes": 2,
+        "software_ret_step": 365085,
+        "final_SP_minus_preCALL": 2,
+        "argument_pop_steps": [
+          364898
+        ]
+      },
+      "resumed_coordinate": "PLI1.OVL+46A6",
+      "returned": {
+        "a": 0,
+        "b": 251,
+        "c": 168,
+        "d": 168,
+        "e": 100,
+        "h": 251,
+        "l": 168,
+        "sp": 65458,
+        "pc": 26790,
+        "flags": {
+          "sign": false,
+          "zero": true,
+          "auxiliary_carry": true,
+          "parity": true,
+          "carry": false
+        }
+      },
+      "index": 102,
+      "slot": 43053,
+      "path_writes": [
+        {
+          "step": 365071,
+          "offset": 17643,
+          "writes": [
+            {
+              "address": 65455,
+              "old_value": null,
+              "new_value": 251
+            },
+            {
+              "address": 65454,
+              "old_value": null,
+              "new_value": 168
+            }
+          ]
+        },
+        {
+          "step": 365078,
+          "offset": 17655,
+          "writes": [
+            {
+              "address": 43053,
+              "old_value": null,
+              "new_value": 168
+            }
+          ]
+        },
+        {
+          "step": 365080,
+          "offset": 17657,
+          "writes": [
+            {
+              "address": 43054,
+              "old_value": null,
+              "new_value": 251
+            }
+          ]
+        },
+        {
+          "step": 365084,
+          "offset": 17703,
+          "writes": [
+            {
+              "address": 43107,
+              "old_value": null,
+              "new_value": 168
+            },
+            {
+              "address": 43108,
+              "old_value": null,
+              "new_value": 251
+            }
+          ]
+        }
+      ],
+      "bucket_reads": [
+        {
+          "step": 365043,
+          "coordinate": "PLI1.OVL+4239",
+          "reads": [
+            {
+              "address": 43053,
+              "value": 0,
+              "width": 1,
+              "joined_roles": []
+            }
+          ]
+        },
+        {
+          "step": 365045,
+          "coordinate": "PLI1.OVL+423B",
+          "reads": [
+            {
+              "address": 43054,
+              "value": 0,
+              "width": 1,
+              "joined_roles": []
+            }
+          ]
+        }
+      ],
+      "branch": {
+        "step": 365068,
+        "taken": false,
+        "flags": {
+          "sign": false,
+          "zero": true,
+          "auxiliary_carry": true,
+          "parity": true,
+          "carry": false
+        }
+      },
+      "predicate_producer": {
+        "step": 365067,
+        "returned_helper_A": 0,
+        "flags": {
+          "sign": false,
+          "zero": true,
+          "auxiliary_carry": true,
+          "parity": true,
+          "carry": false
+        }
+      }
+    },
+    {
+      "call_step": 396824,
+      "ordinary_parent": "PLI1.OVL+4693",
+      "empty": true,
+      "input": {
+        "a": 0,
+        "b": 32,
+        "c": 1,
+        "d": 2,
+        "e": 2,
+        "h": 168,
+        "l": 100,
+        "sp": 65446,
+        "pc": 26216,
+        "flags": {
+          "sign": false,
+          "zero": true,
+          "auxiliary_carry": true,
+          "parity": true,
+          "carry": false
+        }
+      },
+      "caller_argument": {
+        "address": 65448,
+        "value": 8390,
+        "pop_step": 396831
+      },
+      "proof_relation": {
+        "call_step": 396824,
+        "original_return_slot": 65446,
+        "original_return_pop_step": 396830,
+        "continuation_register": "DE",
+        "continuation_writer_step": 396835,
+        "relocated_return_slot": 65448,
+        "consumed_caller_bytes": 2,
+        "software_ret_step": 396996,
+        "final_SP_minus_preCALL": 2,
+        "argument_pop_steps": [
+          396831
+        ]
+      },
+      "resumed_coordinate": "PLI1.OVL+46A6",
+      "returned": {
+        "a": 0,
+        "b": 251,
+        "c": 157,
+        "d": 168,
+        "e": 100,
+        "h": 251,
+        "l": 157,
+        "sp": 65450,
+        "pc": 26790,
+        "flags": {
+          "sign": false,
+          "zero": true,
+          "auxiliary_carry": true,
+          "parity": true,
+          "carry": false
+        }
+      },
+      "index": 48,
+      "slot": 42945,
+      "path_writes": [
+        {
+          "step": 396982,
+          "offset": 17643,
+          "writes": [
+            {
+              "address": 65447,
+              "old_value": null,
+              "new_value": 251
+            },
+            {
+              "address": 65446,
+              "old_value": null,
+              "new_value": 157
+            }
+          ]
+        },
+        {
+          "step": 396989,
+          "offset": 17655,
+          "writes": [
+            {
+              "address": 42945,
+              "old_value": null,
+              "new_value": 157
+            }
+          ]
+        },
+        {
+          "step": 396991,
+          "offset": 17657,
+          "writes": [
+            {
+              "address": 42946,
+              "old_value": null,
+              "new_value": 251
+            }
+          ]
+        },
+        {
+          "step": 396995,
+          "offset": 17703,
+          "writes": [
+            {
+              "address": 43107,
+              "old_value": null,
+              "new_value": 157
+            },
+            {
+              "address": 43108,
+              "old_value": null,
+              "new_value": 251
+            }
+          ]
+        }
+      ],
+      "bucket_reads": [
+        {
+          "step": 396954,
+          "coordinate": "PLI1.OVL+4239",
+          "reads": [
+            {
+              "address": 42945,
+              "value": 0,
+              "width": 1,
+              "joined_roles": []
+            }
+          ]
+        },
+        {
+          "step": 396956,
+          "coordinate": "PLI1.OVL+423B",
+          "reads": [
+            {
+              "address": 42946,
+              "value": 0,
+              "width": 1,
+              "joined_roles": []
+            }
+          ]
+        }
+      ],
+      "branch": {
+        "step": 396979,
+        "taken": false,
+        "flags": {
+          "sign": false,
+          "zero": true,
+          "auxiliary_carry": true,
+          "parity": true,
+          "carry": false
+        }
+      },
+      "predicate_producer": {
+        "step": 396978,
+        "returned_helper_A": 0,
+        "flags": {
+          "sign": false,
+          "zero": true,
+          "auxiliary_carry": true,
+          "parity": true,
+          "carry": false
+        }
+      }
+    },
+    {
+      "call_step": 430788,
+      "ordinary_parent": "PLI1.OVL+4693",
+      "empty": true,
+      "input": {
+        "a": 0,
+        "b": 32,
+        "c": 8,
+        "d": 5,
+        "e": 5,
+        "h": 168,
+        "l": 100,
+        "sp": 65430,
+        "pc": 26216,
+        "flags": {
+          "sign": false,
+          "zero": true,
+          "auxiliary_carry": true,
+          "parity": true,
+          "carry": false
+        }
+      },
+      "caller_argument": {
+        "address": 65432,
+        "value": 8390,
+        "pop_step": 430795
+      },
+      "proof_relation": {
+        "call_step": 430788,
+        "original_return_slot": 65430,
+        "original_return_pop_step": 430794,
+        "continuation_register": "DE",
+        "continuation_writer_step": 430799,
+        "relocated_return_slot": 65432,
+        "consumed_caller_bytes": 2,
+        "software_ret_step": 431114,
+        "final_SP_minus_preCALL": 2,
+        "argument_pop_steps": [
+          430795
+        ]
+      },
+      "resumed_coordinate": "PLI1.OVL+46A6",
+      "returned": {
+        "a": 0,
+        "b": 251,
+        "c": 139,
+        "d": 168,
+        "e": 100,
+        "h": 251,
+        "l": 139,
+        "sp": 65434,
+        "pc": 26790,
+        "flags": {
+          "sign": false,
+          "zero": true,
+          "auxiliary_carry": true,
+          "parity": true,
+          "carry": false
+        }
+      },
+      "index": 14,
+      "slot": 42877,
+      "path_writes": [
+        {
+          "step": 431100,
+          "offset": 17643,
+          "writes": [
+            {
+              "address": 65431,
+              "old_value": null,
+              "new_value": 251
+            },
+            {
+              "address": 65430,
+              "old_value": null,
+              "new_value": 139
+            }
+          ]
+        },
+        {
+          "step": 431107,
+          "offset": 17655,
+          "writes": [
+            {
+              "address": 42877,
+              "old_value": null,
+              "new_value": 139
+            }
+          ]
+        },
+        {
+          "step": 431109,
+          "offset": 17657,
+          "writes": [
+            {
+              "address": 42878,
+              "old_value": null,
+              "new_value": 251
+            }
+          ]
+        },
+        {
+          "step": 431113,
+          "offset": 17703,
+          "writes": [
+            {
+              "address": 43107,
+              "old_value": null,
+              "new_value": 139
+            },
+            {
+              "address": 43108,
+              "old_value": null,
+              "new_value": 251
+            }
+          ]
+        }
+      ],
+      "bucket_reads": [
+        {
+          "step": 431072,
+          "coordinate": "PLI1.OVL+4239",
+          "reads": [
+            {
+              "address": 42877,
+              "value": 0,
+              "width": 1,
+              "joined_roles": []
+            }
+          ]
+        },
+        {
+          "step": 431074,
+          "coordinate": "PLI1.OVL+423B",
+          "reads": [
+            {
+              "address": 42878,
+              "value": 0,
+              "width": 1,
+              "joined_roles": []
+            }
+          ]
+        }
+      ],
+      "branch": {
+        "step": 431097,
+        "taken": false,
+        "flags": {
+          "sign": false,
+          "zero": true,
+          "auxiliary_carry": true,
+          "parity": true,
+          "carry": false
+        }
+      },
+      "predicate_producer": {
+        "step": 431096,
+        "returned_helper_A": 0,
+        "flags": {
+          "sign": false,
+          "zero": true,
+          "auxiliary_carry": true,
+          "parity": true,
+          "carry": false
+        }
+      }
+    },
+    {
+      "call_step": 461318,
+      "ordinary_parent": "PLI1.OVL+4693",
+      "empty": true,
+      "input": {
+        "a": 0,
+        "b": 32,
+        "c": 1,
+        "d": 2,
+        "e": 2,
+        "h": 168,
+        "l": 100,
+        "sp": 65383,
+        "pc": 26216,
+        "flags": {
+          "sign": false,
+          "zero": true,
+          "auxiliary_carry": true,
+          "parity": true,
+          "carry": false
+        }
+      },
+      "caller_argument": {
+        "address": 65385,
+        "value": 8390,
+        "pop_step": 461325
+      },
+      "proof_relation": {
+        "call_step": 461318,
+        "original_return_slot": 65383,
+        "original_return_pop_step": 461324,
+        "continuation_register": "DE",
+        "continuation_writer_step": 461329,
+        "relocated_return_slot": 65385,
+        "consumed_caller_bytes": 2,
+        "software_ret_step": 461490,
+        "final_SP_minus_preCALL": 2,
+        "argument_pop_steps": [
+          461325
+        ]
+      },
+      "resumed_coordinate": "PLI1.OVL+46A6",
+      "returned": {
+        "a": 0,
+        "b": 251,
+        "c": 110,
+        "d": 168,
+        "e": 100,
+        "h": 251,
+        "l": 110,
+        "sp": 65387,
+        "pc": 26790,
+        "flags": {
+          "sign": false,
+          "zero": true,
+          "auxiliary_carry": true,
+          "parity": true,
+          "carry": false
+        }
+      },
+      "index": 51,
+      "slot": 42951,
+      "path_writes": [
+        {
+          "step": 461476,
+          "offset": 17643,
+          "writes": [
+            {
+              "address": 65384,
+              "old_value": null,
+              "new_value": 251
+            },
+            {
+              "address": 65383,
+              "old_value": null,
+              "new_value": 110
+            }
+          ]
+        },
+        {
+          "step": 461483,
+          "offset": 17655,
+          "writes": [
+            {
+              "address": 42951,
+              "old_value": null,
+              "new_value": 110
+            }
+          ]
+        },
+        {
+          "step": 461485,
+          "offset": 17657,
+          "writes": [
+            {
+              "address": 42952,
+              "old_value": null,
+              "new_value": 251
+            }
+          ]
+        },
+        {
+          "step": 461489,
+          "offset": 17703,
+          "writes": [
+            {
+              "address": 43107,
+              "old_value": null,
+              "new_value": 110
+            },
+            {
+              "address": 43108,
+              "old_value": null,
+              "new_value": 251
+            }
+          ]
+        }
+      ],
+      "bucket_reads": [
+        {
+          "step": 461448,
+          "coordinate": "PLI1.OVL+4239",
+          "reads": [
+            {
+              "address": 42951,
+              "value": 0,
+              "width": 1,
+              "joined_roles": []
+            }
+          ]
+        },
+        {
+          "step": 461450,
+          "coordinate": "PLI1.OVL+423B",
+          "reads": [
+            {
+              "address": 42952,
+              "value": 0,
+              "width": 1,
+              "joined_roles": []
+            }
+          ]
+        }
+      ],
+      "branch": {
+        "step": 461473,
+        "taken": false,
+        "flags": {
+          "sign": false,
+          "zero": true,
+          "auxiliary_carry": true,
+          "parity": true,
+          "carry": false
+        }
+      },
+      "predicate_producer": {
+        "step": 461472,
+        "returned_helper_A": 0,
+        "flags": {
+          "sign": false,
+          "zero": true,
+          "auxiliary_carry": true,
+          "parity": true,
+          "carry": false
+        }
+      }
+    },
+    {
+      "call_step": 499818,
+      "ordinary_parent": "PLI1.OVL+4693",
+      "empty": true,
+      "input": {
+        "a": 0,
+        "b": 32,
+        "c": 4,
+        "d": 5,
+        "e": 5,
+        "h": 168,
+        "l": 100,
+        "sp": 65426,
+        "pc": 26216,
+        "flags": {
+          "sign": false,
+          "zero": true,
+          "auxiliary_carry": true,
+          "parity": true,
+          "carry": false
+        }
+      },
+      "caller_argument": {
+        "address": 65428,
+        "value": 8390,
+        "pop_step": 499825
+      },
+      "proof_relation": {
+        "call_step": 499818,
+        "original_return_slot": 65426,
+        "original_return_pop_step": 499824,
+        "continuation_register": "DE",
+        "continuation_writer_step": 499829,
+        "relocated_return_slot": 65428,
+        "consumed_caller_bytes": 2,
+        "software_ret_step": 500056,
+        "final_SP_minus_preCALL": 2,
+        "argument_pop_steps": [
+          499825
+        ]
+      },
+      "resumed_coordinate": "PLI1.OVL+46A6",
+      "returned": {
+        "a": 0,
+        "b": 251,
+        "c": 96,
+        "d": 168,
+        "e": 100,
+        "h": 251,
+        "l": 96,
+        "sp": 65430,
+        "pc": 26790,
+        "flags": {
+          "sign": false,
+          "zero": true,
+          "auxiliary_carry": true,
+          "parity": true,
+          "carry": false
+        }
+      },
+      "index": 67,
+      "slot": 42983,
+      "path_writes": [
+        {
+          "step": 500042,
+          "offset": 17643,
+          "writes": [
+            {
+              "address": 65427,
+              "old_value": null,
+              "new_value": 251
+            },
+            {
+              "address": 65426,
+              "old_value": null,
+              "new_value": 96
+            }
+          ]
+        },
+        {
+          "step": 500049,
+          "offset": 17655,
+          "writes": [
+            {
+              "address": 42983,
+              "old_value": null,
+              "new_value": 96
+            }
+          ]
+        },
+        {
+          "step": 500051,
+          "offset": 17657,
+          "writes": [
+            {
+              "address": 42984,
+              "old_value": null,
+              "new_value": 251
+            }
+          ]
+        },
+        {
+          "step": 500055,
+          "offset": 17703,
+          "writes": [
+            {
+              "address": 43107,
+              "old_value": null,
+              "new_value": 96
+            },
+            {
+              "address": 43108,
+              "old_value": null,
+              "new_value": 251
+            }
+          ]
+        }
+      ],
+      "bucket_reads": [
+        {
+          "step": 500014,
+          "coordinate": "PLI1.OVL+4239",
+          "reads": [
+            {
+              "address": 42983,
+              "value": 0,
+              "width": 1,
+              "joined_roles": []
+            }
+          ]
+        },
+        {
+          "step": 500016,
+          "coordinate": "PLI1.OVL+423B",
+          "reads": [
+            {
+              "address": 42984,
+              "value": 0,
+              "width": 1,
+              "joined_roles": []
+            }
+          ]
+        }
+      ],
+      "branch": {
+        "step": 500039,
+        "taken": false,
+        "flags": {
+          "sign": false,
+          "zero": true,
+          "auxiliary_carry": true,
+          "parity": true,
+          "carry": false
+        }
+      },
+      "predicate_producer": {
+        "step": 500038,
+        "returned_helper_A": 0,
+        "flags": {
+          "sign": false,
+          "zero": true,
+          "auxiliary_carry": true,
+          "parity": true,
+          "carry": false
+        }
+      }
+    },
+    {
+      "call_step": 528116,
+      "ordinary_parent": "PLI1.OVL+4693",
+      "empty": true,
+      "input": {
+        "a": 0,
+        "b": 32,
+        "c": 1,
+        "d": 2,
+        "e": 2,
+        "h": 168,
+        "l": 100,
+        "sp": 65379,
+        "pc": 26216,
+        "flags": {
+          "sign": false,
+          "zero": true,
+          "auxiliary_carry": true,
+          "parity": true,
+          "carry": false
+        }
+      },
+      "caller_argument": {
+        "address": 65381,
+        "value": 8390,
+        "pop_step": 528123
+      },
+      "proof_relation": {
+        "call_step": 528116,
+        "original_return_slot": 65379,
+        "original_return_pop_step": 528122,
+        "continuation_register": "DE",
+        "continuation_writer_step": 528127,
+        "relocated_return_slot": 65381,
+        "consumed_caller_bytes": 2,
+        "software_ret_step": 528288,
+        "final_SP_minus_preCALL": 2,
+        "argument_pop_steps": [
+          528123
+        ]
+      },
+      "resumed_coordinate": "PLI1.OVL+46A6",
+      "returned": {
+        "a": 0,
+        "b": 251,
+        "c": 71,
+        "d": 168,
+        "e": 100,
+        "h": 251,
+        "l": 71,
+        "sp": 65383,
+        "pc": 26790,
+        "flags": {
+          "sign": false,
+          "zero": true,
+          "auxiliary_carry": true,
+          "parity": true,
+          "carry": false
+        }
+      },
+      "index": 53,
+      "slot": 42955,
+      "path_writes": [
+        {
+          "step": 528274,
+          "offset": 17643,
+          "writes": [
+            {
+              "address": 65380,
+              "old_value": null,
+              "new_value": 251
+            },
+            {
+              "address": 65379,
+              "old_value": null,
+              "new_value": 71
+            }
+          ]
+        },
+        {
+          "step": 528281,
+          "offset": 17655,
+          "writes": [
+            {
+              "address": 42955,
+              "old_value": null,
+              "new_value": 71
+            }
+          ]
+        },
+        {
+          "step": 528283,
+          "offset": 17657,
+          "writes": [
+            {
+              "address": 42956,
+              "old_value": null,
+              "new_value": 251
+            }
+          ]
+        },
+        {
+          "step": 528287,
+          "offset": 17703,
+          "writes": [
+            {
+              "address": 43107,
+              "old_value": null,
+              "new_value": 71
+            },
+            {
+              "address": 43108,
+              "old_value": null,
+              "new_value": 251
+            }
+          ]
+        }
+      ],
+      "bucket_reads": [
+        {
+          "step": 528246,
+          "coordinate": "PLI1.OVL+4239",
+          "reads": [
+            {
+              "address": 42955,
+              "value": 0,
+              "width": 1,
+              "joined_roles": []
+            }
+          ]
+        },
+        {
+          "step": 528248,
+          "coordinate": "PLI1.OVL+423B",
+          "reads": [
+            {
+              "address": 42956,
+              "value": 0,
+              "width": 1,
+              "joined_roles": []
+            }
+          ]
+        }
+      ],
+      "branch": {
+        "step": 528271,
+        "taken": false,
+        "flags": {
+          "sign": false,
+          "zero": true,
+          "auxiliary_carry": true,
+          "parity": true,
+          "carry": false
+        }
+      },
+      "predicate_producer": {
+        "step": 528270,
+        "returned_helper_A": 0,
+        "flags": {
+          "sign": false,
+          "zero": true,
+          "auxiliary_carry": true,
+          "parity": true,
+          "carry": false
+        }
+      }
+    },
+    {
+      "call_step": 566468,
+      "ordinary_parent": "PLI1.OVL+4693",
+      "empty": true,
+      "input": {
+        "a": 0,
+        "b": 32,
+        "c": 4,
+        "d": 5,
+        "e": 5,
+        "h": 168,
+        "l": 100,
+        "sp": 65422,
+        "pc": 26216,
+        "flags": {
+          "sign": false,
+          "zero": true,
+          "auxiliary_carry": true,
+          "parity": true,
+          "carry": false
+        }
+      },
+      "caller_argument": {
+        "address": 65424,
+        "value": 8390,
+        "pop_step": 566475
+      },
+      "proof_relation": {
+        "call_step": 566468,
+        "original_return_slot": 65422,
+        "original_return_pop_step": 566474,
+        "continuation_register": "DE",
+        "continuation_writer_step": 566479,
+        "relocated_return_slot": 65424,
+        "consumed_caller_bytes": 2,
+        "software_ret_step": 566706,
+        "final_SP_minus_preCALL": 2,
+        "argument_pop_steps": [
+          566475
+        ]
+      },
+      "resumed_coordinate": "PLI1.OVL+46A6",
+      "returned": {
+        "a": 0,
+        "b": 251,
+        "c": 57,
+        "d": 168,
+        "e": 100,
+        "h": 251,
+        "l": 57,
+        "sp": 65426,
+        "pc": 26790,
+        "flags": {
+          "sign": false,
+          "zero": true,
+          "auxiliary_carry": true,
+          "parity": true,
+          "carry": false
+        }
+      },
+      "index": 75,
+      "slot": 42999,
+      "path_writes": [
+        {
+          "step": 566692,
+          "offset": 17643,
+          "writes": [
+            {
+              "address": 65423,
+              "old_value": null,
+              "new_value": 251
+            },
+            {
+              "address": 65422,
+              "old_value": null,
+              "new_value": 57
+            }
+          ]
+        },
+        {
+          "step": 566699,
+          "offset": 17655,
+          "writes": [
+            {
+              "address": 42999,
+              "old_value": null,
+              "new_value": 57
+            }
+          ]
+        },
+        {
+          "step": 566701,
+          "offset": 17657,
+          "writes": [
+            {
+              "address": 43000,
+              "old_value": null,
+              "new_value": 251
+            }
+          ]
+        },
+        {
+          "step": 566705,
+          "offset": 17703,
+          "writes": [
+            {
+              "address": 43107,
+              "old_value": null,
+              "new_value": 57
+            },
+            {
+              "address": 43108,
+              "old_value": null,
+              "new_value": 251
+            }
+          ]
+        }
+      ],
+      "bucket_reads": [
+        {
+          "step": 566664,
+          "coordinate": "PLI1.OVL+4239",
+          "reads": [
+            {
+              "address": 42999,
+              "value": 0,
+              "width": 1,
+              "joined_roles": []
+            }
+          ]
+        },
+        {
+          "step": 566666,
+          "coordinate": "PLI1.OVL+423B",
+          "reads": [
+            {
+              "address": 43000,
+              "value": 0,
+              "width": 1,
+              "joined_roles": []
+            }
+          ]
+        }
+      ],
+      "branch": {
+        "step": 566689,
+        "taken": false,
+        "flags": {
+          "sign": false,
+          "zero": true,
+          "auxiliary_carry": true,
+          "parity": true,
+          "carry": false
+        }
+      },
+      "predicate_producer": {
+        "step": 566688,
+        "returned_helper_A": 0,
+        "flags": {
+          "sign": false,
+          "zero": true,
+          "auxiliary_carry": true,
+          "parity": true,
+          "carry": false
+        }
+      }
+    },
+    {
+      "call_step": 438260,
+      "ordinary_parent": "PLI1.OVL+4738",
+      "empty": false,
+      "input": {
+        "a": 0,
+        "b": 169,
+        "c": 8,
+        "d": 0,
+        "e": 40,
+        "h": 168,
+        "l": 100,
+        "sp": 65451,
+        "pc": 26216,
+        "flags": {
+          "sign": false,
+          "zero": true,
+          "auxiliary_carry": true,
+          "parity": true,
+          "carry": false
+        }
+      },
+      "caller_argument": {
+        "address": 65453,
+        "value": 43336,
+        "pop_step": 438267
+      },
+      "proof_relation": {
+        "call_step": 438260,
+        "original_return_slot": 65451,
+        "original_return_pop_step": 438266,
+        "continuation_register": "DE",
+        "continuation_writer_step": 438271,
+        "relocated_return_slot": 65453,
+        "consumed_caller_bytes": 2,
+        "software_ret_step": 438601,
+        "final_SP_minus_preCALL": 2,
+        "argument_pop_steps": [
+          438267
+        ]
+      },
+      "resumed_coordinate": "PLI1.OVL+4759",
+      "returned": {
+        "a": 0,
+        "b": 251,
+        "c": 121,
+        "d": 251,
+        "e": 148,
+        "h": 251,
+        "l": 121,
+        "sp": 65455,
+        "pc": 26969,
+        "flags": {
+          "sign": false,
+          "zero": true,
+          "auxiliary_carry": false,
+          "parity": true,
+          "carry": false
+        }
+      },
+      "index": null,
+      "slot": null,
+      "path_writes": [
+        {
+          "step": 438600,
+          "offset": 17703,
+          "writes": [
+            {
+              "address": 43107,
+              "old_value": null,
+              "new_value": 121
+            },
+            {
+              "address": 43108,
+              "old_value": null,
+              "new_value": 251
+            }
+          ]
+        }
+      ],
+      "bucket_reads": [],
+      "branch": {
+        "step": 438569,
+        "taken": true,
+        "flags": {
+          "sign": true,
+          "zero": false,
+          "auxiliary_carry": false,
+          "parity": true,
+          "carry": true
+        }
+      },
+      "predicate_producer": {
+        "step": 438568,
+        "returned_helper_A": 255,
+        "flags": {
+          "sign": true,
+          "zero": false,
+          "auxiliary_carry": false,
+          "parity": true,
+          "carry": true
+        }
+      }
+    },
+    {
+      "call_step": 506730,
+      "ordinary_parent": "PLI1.OVL+4738",
+      "empty": false,
+      "input": {
+        "a": 0,
+        "b": 169,
+        "c": 4,
+        "d": 0,
+        "e": 40,
+        "h": 168,
+        "l": 100,
+        "sp": 65447,
+        "pc": 26216,
+        "flags": {
+          "sign": false,
+          "zero": true,
+          "auxiliary_carry": true,
+          "parity": true,
+          "carry": false
+        }
+      },
+      "caller_argument": {
+        "address": 65449,
+        "value": 43336,
+        "pop_step": 506737
+      },
+      "proof_relation": {
+        "call_step": 506730,
+        "original_return_slot": 65447,
+        "original_return_pop_step": 506736,
+        "continuation_register": "DE",
+        "continuation_writer_step": 506741,
+        "relocated_return_slot": 65449,
+        "consumed_caller_bytes": 2,
+        "software_ret_step": 506983,
+        "final_SP_minus_preCALL": 2,
+        "argument_pop_steps": [
+          506737
+        ]
+      },
+      "resumed_coordinate": "PLI1.OVL+4759",
+      "returned": {
+        "a": 0,
+        "b": 251,
+        "c": 82,
+        "d": 251,
+        "e": 105,
+        "h": 251,
+        "l": 82,
+        "sp": 65451,
+        "pc": 26969,
+        "flags": {
+          "sign": false,
+          "zero": true,
+          "auxiliary_carry": false,
+          "parity": true,
+          "carry": false
+        }
+      },
+      "index": null,
+      "slot": null,
+      "path_writes": [
+        {
+          "step": 506982,
+          "offset": 17703,
+          "writes": [
+            {
+              "address": 43107,
+              "old_value": null,
+              "new_value": 82
+            },
+            {
+              "address": 43108,
+              "old_value": null,
+              "new_value": 251
+            }
+          ]
+        }
+      ],
+      "bucket_reads": [],
+      "branch": {
+        "step": 506951,
+        "taken": true,
+        "flags": {
+          "sign": true,
+          "zero": false,
+          "auxiliary_carry": false,
+          "parity": true,
+          "carry": true
+        }
+      },
+      "predicate_producer": {
+        "step": 506950,
+        "returned_helper_A": 255,
+        "flags": {
+          "sign": true,
+          "zero": false,
+          "auxiliary_carry": false,
+          "parity": true,
+          "carry": true
+        }
+      }
+    },
+    {
+      "call_step": 573380,
+      "ordinary_parent": "PLI1.OVL+4738",
+      "empty": false,
+      "input": {
+        "a": 0,
+        "b": 169,
+        "c": 4,
+        "d": 8,
+        "e": 40,
+        "h": 168,
+        "l": 100,
+        "sp": 65443,
+        "pc": 26216,
+        "flags": {
+          "sign": false,
+          "zero": true,
+          "auxiliary_carry": true,
+          "parity": true,
+          "carry": false
+        }
+      },
+      "caller_argument": {
+        "address": 65445,
+        "value": 43336,
+        "pop_step": 573387
+      },
+      "proof_relation": {
+        "call_step": 573380,
+        "original_return_slot": 65443,
+        "original_return_pop_step": 573386,
+        "continuation_register": "DE",
+        "continuation_writer_step": 573391,
+        "relocated_return_slot": 65445,
+        "consumed_caller_bytes": 2,
+        "software_ret_step": 573633,
+        "final_SP_minus_preCALL": 2,
+        "argument_pop_steps": [
+          573387
+        ]
+      },
+      "resumed_coordinate": "PLI1.OVL+4759",
+      "returned": {
+        "a": 0,
+        "b": 251,
+        "c": 43,
+        "d": 251,
+        "e": 66,
+        "h": 251,
+        "l": 43,
+        "sp": 65447,
+        "pc": 26969,
+        "flags": {
+          "sign": false,
+          "zero": true,
+          "auxiliary_carry": false,
+          "parity": true,
+          "carry": false
+        }
+      },
+      "index": null,
+      "slot": null,
+      "path_writes": [
+        {
+          "step": 573632,
+          "offset": 17703,
+          "writes": [
+            {
+              "address": 43107,
+              "old_value": null,
+              "new_value": 43
+            },
+            {
+              "address": 43108,
+              "old_value": null,
+              "new_value": 251
+            }
+          ]
+        }
+      ],
+      "bucket_reads": [],
+      "branch": {
+        "step": 573601,
+        "taken": true,
+        "flags": {
+          "sign": true,
+          "zero": false,
+          "auxiliary_carry": false,
+          "parity": true,
+          "carry": true
+        }
+      },
+      "predicate_producer": {
+        "step": 573600,
+        "returned_helper_A": 255,
+        "flags": {
+          "sign": true,
+          "zero": false,
+          "auxiliary_carry": false,
+          "parity": true,
+          "carry": true
+        }
+      }
+    }
+  ],
+  "method": "Ordinary parent V0.2 software proofs/effects are authoritative; bounded structurally gathered child-local records supply branch states omitted by parent subtree-access presentation; effects matched by exact step/address/value."
+}

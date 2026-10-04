@@ -320,6 +320,10 @@ class RunSelectionTests(unittest.TestCase):
             result = original_load(path)
             if path.name == 'event-witnesses.json':
                 result['run_id'] = 'FIZZBUZ:' + 'c' * 64
+            if path.name == 'procedures.json':
+                # Missing-count fixture remains explicit after real FIZZBUZ metadata is added.
+                for procedure in result['procedures']:
+                    procedure['observed_paths']['invocations_by_run'].pop('FIZZBUZ', None)
             return result
         for target in ['PLI1.OVL+7C1B', 'PLI1.OVL+4468']:
             with patch('procedure_evidence_packet.load', side_effect=selected_metadata):

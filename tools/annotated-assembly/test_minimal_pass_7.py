@@ -82,8 +82,9 @@ class MinimalPassSevenTests(unittest.TestCase):
                 if c['channel']=='mapped-word-high':self.assertEqual(c['word'],pending.pop(0))
             self.assertFalse(pending)
         self.assertEqual(len(self.by['PLI1.OVL+7C1B']['members']),16)
-        for k in ('PLI1.OVL+7C1B','PLI1.OVL+7D53'):
+        for k in ('PLI1.OVL+7D53',):
             self.assertEqual(self.catalog[k]['completeness'],{'bounds':'provisional','control_flow':'partial','contract':'partial'})
+        self.assertEqual(self.catalog['PLI1.OVL+7C1B']['completeness'],dict(bounds='stable',control_flow='complete',contract='partial'))
         self.assertEqual(self.catalog['PLI1.OVL+7D53']['byte_status_at_entry'],'UNDERSTOOD')
 
     def test_software_boundaries_are_structural_only(self):

@@ -101,8 +101,10 @@ class MinimalPassSixTests(unittest.TestCase):
 
     def test_partial_scopes_and_current_progress(self):
         partial={'bounds':'provisional','control_flow':'partial','contract':'partial'}
-        for key in ('PLI.COM+1376','PLI1.OVL+7C1B','PLI1.OVL+784E','PLI1.OVL+7D53'):
+        for key in ('PLI.COM+1376','PLI1.OVL+784E','PLI1.OVL+7D53'):
             self.assertEqual(self.catalog[key]['completeness'],partial)
+        # FIZZBUZ pass13 closes the represented local graph; recursive scope stays partial.
+        self.assertEqual(self.catalog['PLI1.OVL+7C1B']['completeness'],dict(bounds='stable',control_flow='complete',contract='partial'))
         historical={r['entry']:r for r in json.loads((PASS/'regions.json').read_text())}
         caller_history=next(r for r in json.loads((PASS.parent/'pass-5/regions.json').read_text()) if r['entry']=='PLI1.OVL+7D53')
         self.assertEqual(caller_history['byte_status'],'STRUCTURED')

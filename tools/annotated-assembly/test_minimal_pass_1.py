@@ -156,10 +156,9 @@ class MinimalPassOneTests(unittest.TestCase):
                 self.originals,
             )
 
-    def test_unexercised_branches_remain_raw(self):
+    def test_unexercised_branches_and_FIZZBUZ_only_constructor_arm(self):
         points = {
             "PLI2.OVL": [0x203E, 0x2092, 0x20BB],
-            "PLI1.OVL": [0x44E7],
             "PLI.COM": [0x9D9, 0xA0D, 0xA44, 0xA67, 0xAB0],
         }
         for image, offsets in points.items():
@@ -175,6 +174,11 @@ class MinimalPassOneTests(unittest.TestCase):
                     ),
                     "RAW",
                 )
+
+        # This arm stayed unexecuted in MINIMAL; Pass13 adds exact FIZZBUZ evidence.
+        seed = next(s for s in self.evidence["seeds"] if s["id"] == "PLI1.OVL+4468")
+        instruction = next(i for i in seed["instructions"] if i["offset"] == 0x44E7)
+        self.assertEqual({r["run"]: r["execution_count"] for r in instruction["runs"]}, {"FIZZBUZ": 8})
 
 
 if __name__ == "__main__":
