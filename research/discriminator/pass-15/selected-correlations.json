@@ -1,0 +1,722 @@
+{
+  "run_id": "PICTURE:690dbdc67d1a01c466bb359e3c28dcfc2bfb3635455616355c779599b38bcec2",
+  "method": "Per-iteration V0.2 exact steps/addresses/call boundaries plus chronological table writer audit. No equality-only provenance; suppressed primary0 remains distinct from both emitted word zeros.",
+  "iterations": [
+    {
+      "parent_call_step": 326116,
+      "caller": "PLI1.OVL+7ED3",
+      "map_call_step": 326960,
+      "cursor": 1,
+      "mapped": 24,
+      "transform_call_step": 326995,
+      "attribute": 6,
+      "channels": [
+        {
+          "channel": "mapped-byte",
+          "byte": 24,
+          "call_step": 326975
+        },
+        {
+          "channel": "mapped-word-low",
+          "word": 0,
+          "byte": 0,
+          "wrapper_call_step": 327037
+        },
+        {
+          "channel": "mapped-word-high",
+          "word": 0,
+          "byte": 0,
+          "wrapper_call_step": 327076
+        }
+      ],
+      "recycle_call_step": 327098,
+      "recycle_old_index": 0,
+      "recycle_write": {
+        "address": 43701,
+        "old_value": null,
+        "new_value": 0
+      },
+      "fresh_map_read": {
+        "address": 43552,
+        "value": 1
+      },
+      "new_index_write": {
+        "address": 44595,
+        "old_value": null,
+        "new_value": 1
+      },
+      "table_read": {
+        "call_step": 326995,
+        "caller": "PLI1.OVL+7DDB",
+        "input_C": 24,
+        "read_step": 327002,
+        "table_address": 7011,
+        "read_byte": 49,
+        "initial_byte": 49,
+        "latest_writer": null,
+        "source": "INITIAL_IMAGE / no observed prior write",
+        "transform_step": 327007,
+        "transformed_attribute": 6,
+        "return_step": 327008,
+        "returned_attribute": 6,
+        "returned_flags": {
+          "sign": false,
+          "zero": false,
+          "auxiliary_carry": false,
+          "parity": true,
+          "carry": false
+        }
+      },
+      "AE50_write": {
+        "step": 327009,
+        "writes": [
+          {
+            "address": 44624,
+            "old_value": null,
+            "new_value": 6,
+            "width": 1,
+            "joined_roles": [
+              {
+                "role_id": "PLI1.OVL:mapped_work_cache",
+                "role": "mapped_work_cache",
+                "address": 44624,
+                "role_byte_offset": 0,
+                "join_evidence": "DEDUCED",
+                "role_evidence": "ACCUMULATED KNOWLEDGE",
+                "raw_address_retained": true
+              }
+            ]
+          }
+        ]
+      },
+      "primary_read": [
+        {
+          "step": 327025,
+          "address": 44297,
+          "value": 0,
+          "width": 1,
+          "joined_roles": []
+        }
+      ],
+      "AE51_write": {
+        "step": 327027,
+        "writes": [
+          {
+            "address": 44625,
+            "old_value": null,
+            "new_value": 0,
+            "width": 1,
+            "joined_roles": [
+              {
+                "role_id": "PLI1.OVL:mapped_work_secondary",
+                "role": "mapped_work_secondary",
+                "address": 44625,
+                "role_byte_offset": 0,
+                "join_evidence": "DEDUCED",
+                "role_evidence": "ACCUMULATED KNOWLEDGE",
+                "raw_address_retained": true
+              }
+            ]
+          }
+        ]
+      },
+      "suppression_CPI": {
+        "step": 327032,
+        "before": {
+          "a": 6,
+          "b": 0,
+          "c": 1,
+          "d": 0,
+          "e": 3,
+          "h": 173,
+          "l": 9,
+          "sp": 65500,
+          "pc": 40983,
+          "flags": {
+            "sign": false,
+            "zero": false,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "after": {
+          "a": 6,
+          "b": 0,
+          "c": 1,
+          "d": 0,
+          "e": 3,
+          "h": 173,
+          "l": 9,
+          "sp": 65500,
+          "pc": 40985,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        }
+      },
+      "suppression_JZ": {
+        "step": 327033,
+        "control": {
+          "kind": "jump",
+          "target": 40995,
+          "taken": true
+        },
+        "before_flags": {
+          "sign": false,
+          "zero": true,
+          "auxiliary_carry": true,
+          "parity": true,
+          "carry": false
+        }
+      },
+      "pair_CPI": {
+        "step": 327035,
+        "before_A": 6,
+        "after_flags": {
+          "sign": false,
+          "zero": false,
+          "auxiliary_carry": true,
+          "parity": false,
+          "carry": false
+        }
+      },
+      "pair_JC": {
+        "step": 327036,
+        "control": {
+          "kind": "jump",
+          "target": 41009,
+          "taken": false
+        }
+      },
+      "exact_direct_call_order": [
+        {
+          "step": 326960,
+          "site": "PLI1.OVL+7DC5",
+          "target": "PLI1.OVL+7A4D"
+        },
+        {
+          "step": 326975,
+          "site": "PLI1.OVL+7DCC",
+          "target": "PLI.COM+0EF6"
+        },
+        {
+          "step": 326995,
+          "site": "PLI1.OVL+7DDB",
+          "target": "PLI1.OVL+7B64"
+        },
+        {
+          "step": 327014,
+          "site": "PLI1.OVL+7DFB",
+          "target": "PLI1.OVL+7AA9"
+        },
+        {
+          "step": 327037,
+          "site": "PLI1.OVL+7E2B",
+          "target": "PLI1.OVL+7E46"
+        },
+        {
+          "step": 327076,
+          "site": "PLI1.OVL+7E2E",
+          "target": "PLI1.OVL+7E56"
+        },
+        {
+          "step": 327098,
+          "site": "PLI1.OVL+7E35",
+          "target": "PLI1.OVL+7BA2"
+        }
+      ],
+      "mapped_word_reads": [
+        {
+          "step": 327052,
+          "address": 43851,
+          "value": 0,
+          "width": 1,
+          "joined_roles": []
+        },
+        {
+          "step": 327054,
+          "address": 43852,
+          "value": 0,
+          "width": 1,
+          "joined_roles": []
+        }
+      ],
+      "word_cache_writes": [
+        {
+          "step": 327057,
+          "address": 44626,
+          "old_value": null,
+          "new_value": 0,
+          "width": 1,
+          "joined_roles": [
+            {
+              "role_id": "PLI1.OVL:mapped_emit_word",
+              "role": "mapped_emit_word",
+              "address": 44626,
+              "role_byte_offset": 0,
+              "join_evidence": "DEDUCED",
+              "role_evidence": "ACCUMULATED KNOWLEDGE",
+              "raw_address_retained": true
+            }
+          ]
+        },
+        {
+          "step": 327057,
+          "address": 44627,
+          "old_value": null,
+          "new_value": 0,
+          "width": 1,
+          "joined_roles": [
+            {
+              "role_id": "PLI1.OVL:mapped_emit_word",
+              "role": "mapped_emit_word",
+              "address": 44627,
+              "role_byte_offset": 1,
+              "join_evidence": "DEDUCED",
+              "role_evidence": "ACCUMULATED KNOWLEDGE",
+              "raw_address_retained": true
+            }
+          ]
+        }
+      ],
+      "word_cache_fresh_reads": [
+        {
+          "step": 327077,
+          "address": 44626,
+          "value": 0,
+          "width": 1,
+          "joined_roles": [
+            {
+              "role_id": "PLI1.OVL:mapped_emit_word",
+              "role": "mapped_emit_word",
+              "address": 44626,
+              "role_byte_offset": 0,
+              "join_evidence": "DEDUCED",
+              "role_evidence": "ACCUMULATED KNOWLEDGE",
+              "raw_address_retained": true
+            }
+          ]
+        },
+        {
+          "step": 327077,
+          "address": 44627,
+          "value": 0,
+          "width": 1,
+          "joined_roles": [
+            {
+              "role_id": "PLI1.OVL:mapped_emit_word",
+              "role": "mapped_emit_word",
+              "address": 44627,
+              "role_byte_offset": 1,
+              "join_evidence": "DEDUCED",
+              "role_evidence": "ACCUMULATED KNOWLEDGE",
+              "raw_address_retained": true
+            }
+          ]
+        }
+      ],
+      "wrapper_return_states": {
+        "PLI1.OVL+7E46": {
+          "a": 46,
+          "b": 29,
+          "c": 140,
+          "d": 171,
+          "e": 76,
+          "h": 29,
+          "l": 185,
+          "sp": 65500,
+          "pc": 41006,
+          "flags": {
+            "sign": true,
+            "zero": false,
+            "auxiliary_carry": true,
+            "parity": false,
+            "carry": true
+          }
+        },
+        "PLI1.OVL+7E56": {
+          "a": 47,
+          "b": 29,
+          "c": 140,
+          "d": 171,
+          "e": 76,
+          "h": 29,
+          "l": 186,
+          "sp": 65500,
+          "pc": 41009,
+          "flags": {
+            "sign": true,
+            "zero": false,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": true
+          }
+        }
+      },
+      "recycle_input_C": 1
+    },
+    {
+      "parent_call_step": 326116,
+      "caller": "PLI1.OVL+7ED3",
+      "map_call_step": 327138,
+      "cursor": 2,
+      "mapped": 176,
+      "transform_call_step": 327173,
+      "attribute": 6,
+      "channels": [
+        {
+          "channel": "mapped-byte",
+          "byte": 176,
+          "call_step": 327153
+        },
+        {
+          "channel": "mapped-word-low",
+          "word": 0,
+          "byte": 0,
+          "wrapper_call_step": 327215
+        },
+        {
+          "channel": "mapped-word-high",
+          "word": 0,
+          "byte": 0,
+          "wrapper_call_step": 327254
+        }
+      ],
+      "recycle_call_step": 327276,
+      "recycle_old_index": 1,
+      "recycle_write": {
+        "address": 43702,
+        "old_value": null,
+        "new_value": 1
+      },
+      "fresh_map_read": {
+        "address": 43553,
+        "value": 2
+      },
+      "new_index_write": {
+        "address": 44595,
+        "old_value": null,
+        "new_value": 2
+      },
+      "table_read": {
+        "call_step": 327173,
+        "caller": "PLI1.OVL+7DDB",
+        "input_C": 176,
+        "read_step": 327180,
+        "table_address": 7163,
+        "read_byte": 177,
+        "initial_byte": 177,
+        "latest_writer": null,
+        "source": "INITIAL_IMAGE / no observed prior write",
+        "transform_step": 327185,
+        "transformed_attribute": 6,
+        "return_step": 327186,
+        "returned_attribute": 6,
+        "returned_flags": {
+          "sign": false,
+          "zero": false,
+          "auxiliary_carry": false,
+          "parity": true,
+          "carry": false
+        }
+      },
+      "AE50_write": {
+        "step": 327187,
+        "writes": [
+          {
+            "address": 44624,
+            "old_value": null,
+            "new_value": 6,
+            "width": 1,
+            "joined_roles": [
+              {
+                "role_id": "PLI1.OVL:mapped_work_cache",
+                "role": "mapped_work_cache",
+                "address": 44624,
+                "role_byte_offset": 0,
+                "join_evidence": "DEDUCED",
+                "role_evidence": "ACCUMULATED KNOWLEDGE",
+                "raw_address_retained": true
+              }
+            ]
+          }
+        ]
+      },
+      "primary_read": [
+        {
+          "step": 327203,
+          "address": 44298,
+          "value": 0,
+          "width": 1,
+          "joined_roles": []
+        }
+      ],
+      "AE51_write": {
+        "step": 327205,
+        "writes": [
+          {
+            "address": 44625,
+            "old_value": null,
+            "new_value": 0,
+            "width": 1,
+            "joined_roles": [
+              {
+                "role_id": "PLI1.OVL:mapped_work_secondary",
+                "role": "mapped_work_secondary",
+                "address": 44625,
+                "role_byte_offset": 0,
+                "join_evidence": "DEDUCED",
+                "role_evidence": "ACCUMULATED KNOWLEDGE",
+                "raw_address_retained": true
+              }
+            ]
+          }
+        ]
+      },
+      "suppression_CPI": {
+        "step": 327210,
+        "before": {
+          "a": 6,
+          "b": 0,
+          "c": 2,
+          "d": 0,
+          "e": 0,
+          "h": 173,
+          "l": 10,
+          "sp": 65500,
+          "pc": 40983,
+          "flags": {
+            "sign": false,
+            "zero": false,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "after": {
+          "a": 6,
+          "b": 0,
+          "c": 2,
+          "d": 0,
+          "e": 0,
+          "h": 173,
+          "l": 10,
+          "sp": 65500,
+          "pc": 40985,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        }
+      },
+      "suppression_JZ": {
+        "step": 327211,
+        "control": {
+          "kind": "jump",
+          "target": 40995,
+          "taken": true
+        },
+        "before_flags": {
+          "sign": false,
+          "zero": true,
+          "auxiliary_carry": true,
+          "parity": true,
+          "carry": false
+        }
+      },
+      "pair_CPI": {
+        "step": 327213,
+        "before_A": 6,
+        "after_flags": {
+          "sign": false,
+          "zero": false,
+          "auxiliary_carry": true,
+          "parity": false,
+          "carry": false
+        }
+      },
+      "pair_JC": {
+        "step": 327214,
+        "control": {
+          "kind": "jump",
+          "target": 41009,
+          "taken": false
+        }
+      },
+      "exact_direct_call_order": [
+        {
+          "step": 327138,
+          "site": "PLI1.OVL+7DC5",
+          "target": "PLI1.OVL+7A4D"
+        },
+        {
+          "step": 327153,
+          "site": "PLI1.OVL+7DCC",
+          "target": "PLI.COM+0EF6"
+        },
+        {
+          "step": 327173,
+          "site": "PLI1.OVL+7DDB",
+          "target": "PLI1.OVL+7B64"
+        },
+        {
+          "step": 327192,
+          "site": "PLI1.OVL+7DFB",
+          "target": "PLI1.OVL+7AA9"
+        },
+        {
+          "step": 327215,
+          "site": "PLI1.OVL+7E2B",
+          "target": "PLI1.OVL+7E46"
+        },
+        {
+          "step": 327254,
+          "site": "PLI1.OVL+7E2E",
+          "target": "PLI1.OVL+7E56"
+        },
+        {
+          "step": 327276,
+          "site": "PLI1.OVL+7E35",
+          "target": "PLI1.OVL+7BA2"
+        }
+      ],
+      "mapped_word_reads": [
+        {
+          "step": 327230,
+          "address": 43853,
+          "value": 0,
+          "width": 1,
+          "joined_roles": []
+        },
+        {
+          "step": 327232,
+          "address": 43854,
+          "value": 0,
+          "width": 1,
+          "joined_roles": []
+        }
+      ],
+      "word_cache_writes": [
+        {
+          "step": 327235,
+          "address": 44626,
+          "old_value": null,
+          "new_value": 0,
+          "width": 1,
+          "joined_roles": [
+            {
+              "role_id": "PLI1.OVL:mapped_emit_word",
+              "role": "mapped_emit_word",
+              "address": 44626,
+              "role_byte_offset": 0,
+              "join_evidence": "DEDUCED",
+              "role_evidence": "ACCUMULATED KNOWLEDGE",
+              "raw_address_retained": true
+            }
+          ]
+        },
+        {
+          "step": 327235,
+          "address": 44627,
+          "old_value": null,
+          "new_value": 0,
+          "width": 1,
+          "joined_roles": [
+            {
+              "role_id": "PLI1.OVL:mapped_emit_word",
+              "role": "mapped_emit_word",
+              "address": 44627,
+              "role_byte_offset": 1,
+              "join_evidence": "DEDUCED",
+              "role_evidence": "ACCUMULATED KNOWLEDGE",
+              "raw_address_retained": true
+            }
+          ]
+        }
+      ],
+      "word_cache_fresh_reads": [
+        {
+          "step": 327255,
+          "address": 44626,
+          "value": 0,
+          "width": 1,
+          "joined_roles": [
+            {
+              "role_id": "PLI1.OVL:mapped_emit_word",
+              "role": "mapped_emit_word",
+              "address": 44626,
+              "role_byte_offset": 0,
+              "join_evidence": "DEDUCED",
+              "role_evidence": "ACCUMULATED KNOWLEDGE",
+              "raw_address_retained": true
+            }
+          ]
+        },
+        {
+          "step": 327255,
+          "address": 44627,
+          "value": 0,
+          "width": 1,
+          "joined_roles": [
+            {
+              "role_id": "PLI1.OVL:mapped_emit_word",
+              "role": "mapped_emit_word",
+              "address": 44627,
+              "role_byte_offset": 1,
+              "join_evidence": "DEDUCED",
+              "role_evidence": "ACCUMULATED KNOWLEDGE",
+              "raw_address_retained": true
+            }
+          ]
+        }
+      ],
+      "wrapper_return_states": {
+        "PLI1.OVL+7E46": {
+          "a": 49,
+          "b": 29,
+          "c": 140,
+          "d": 171,
+          "e": 78,
+          "h": 29,
+          "l": 188,
+          "sp": 65500,
+          "pc": 41006,
+          "flags": {
+            "sign": true,
+            "zero": false,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": true
+          }
+        },
+        "PLI1.OVL+7E56": {
+          "a": 50,
+          "b": 29,
+          "c": 140,
+          "d": 171,
+          "e": 78,
+          "h": 29,
+          "l": 189,
+          "sp": 65500,
+          "pc": 41009,
+          "flags": {
+            "sign": true,
+            "zero": false,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": true
+          }
+        }
+      },
+      "recycle_input_C": 2
+    }
+  ]
+}

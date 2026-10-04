@@ -1,0 +1,175 @@
+{
+  "runs": {
+    "MINIMAL": {
+      "run_id": "MINIMAL:efb57286cd9ece9983df85452329dda70f2f05a63d0835fd8e10f4f6a1dd90c4",
+      "observed_table_write_count": 2498,
+      "written_addresses": [
+        7212,
+        7213,
+        7214,
+        7215,
+        7216,
+        7217,
+        7218,
+        7219,
+        7220,
+        7221,
+        7222,
+        7223
+      ],
+      "changed_final_addresses": [
+        7212,
+        7214,
+        7215,
+        7216,
+        7217,
+        7218,
+        7219,
+        7220,
+        7221,
+        7222,
+        7223
+      ],
+      "high_distribution": {
+        "4": 8,
+        "2": 7,
+        "3": 1
+      },
+      "low_instruction_checks": 55,
+      "corrected_return_matches": 16,
+      "scope": "Exact initial256 bytes plus chronological guest writes, explicit host memory writes and BDOS read-record writes. Same-valued writes replace writer identity. No global immutability claim."
+    },
+    "FIZZBUZ": {
+      "run_id": "FIZZBUZ:a7a657b3c9c758be44a16c4c76a2986744f01de34d773d2b9597d4758eff0f49",
+      "observed_table_write_count": 3024,
+      "written_addresses": [
+        7212,
+        7213,
+        7214,
+        7215,
+        7216,
+        7217,
+        7218,
+        7219,
+        7220,
+        7221,
+        7222,
+        7223
+      ],
+      "changed_final_addresses": [
+        7212,
+        7214,
+        7215,
+        7216,
+        7217,
+        7218,
+        7219,
+        7220,
+        7221,
+        7222,
+        7223
+      ],
+      "high_distribution": {
+        "4": 60,
+        "2": 42,
+        "3": 7
+      },
+      "low_instruction_checks": 397,
+      "corrected_return_matches": 109,
+      "scope": "Exact initial256 bytes plus chronological guest writes, explicit host memory writes and BDOS read-record writes. Same-valued writes replace writer identity. No global immutability claim."
+    },
+    "OPTIMIST": {
+      "run_id": "OPTIMIST:e5a22aee4b3d77967a08dab6b8d4d1324ee7522961e5a46d3e313a6cd3bc13e9",
+      "observed_table_write_count": 4040,
+      "written_addresses": [
+        7212,
+        7213,
+        7214,
+        7215,
+        7216,
+        7217,
+        7218,
+        7219,
+        7220,
+        7221,
+        7222,
+        7223,
+        7224,
+        7225
+      ],
+      "changed_final_addresses": [
+        7212,
+        7213,
+        7214,
+        7215,
+        7216,
+        7217,
+        7218,
+        7219,
+        7220,
+        7221,
+        7222,
+        7223,
+        7224,
+        7225
+      ],
+      "high_distribution": {
+        "4": 134,
+        "2": 80,
+        "3": 5,
+        "6": 1
+      },
+      "low_instruction_checks": 1074,
+      "corrected_return_matches": 0,
+      "scope": "Exact initial256 bytes plus chronological guest writes, explicit host memory writes and BDOS read-record writes. Same-valued writes replace writer identity. No global immutability claim."
+    },
+    "PICTURE": {
+      "run_id": "PICTURE:690dbdc67d1a01c466bb359e3c28dcfc2bfb3635455616355c779599b38bcec2",
+      "observed_table_write_count": 2716,
+      "written_addresses": [
+        7212,
+        7213,
+        7214,
+        7215,
+        7216,
+        7217,
+        7218,
+        7219,
+        7220,
+        7221,
+        7222,
+        7223
+      ],
+      "changed_final_addresses": [
+        7212,
+        7214,
+        7215,
+        7216,
+        7217,
+        7218,
+        7219,
+        7220,
+        7221,
+        7222,
+        7223
+      ],
+      "high_distribution": {
+        "4": 12,
+        "2": 10,
+        "6": 3
+      },
+      "low_instruction_checks": 65,
+      "corrected_return_matches": 25,
+      "scope": "Exact initial256 bytes plus chronological guest writes, explicit host memory writes and BDOS read-record writes. Same-valued writes replace writer identity. No global immutability claim."
+    }
+  },
+  "unavailable_sources": [
+    "ARITH",
+    "ARRAY",
+    "STRUCT",
+    "CHAR",
+    "FIXEDDEC",
+    "FACTOR"
+  ],
+  "method": "Available witness runs audited; structural-only sources have no write-timeline claim. Only selected PICTURE detailed capture was newly generated."
+}

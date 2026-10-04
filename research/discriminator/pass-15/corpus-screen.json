@@ -1,0 +1,288 @@
+{
+  "baseline_commit": "0727eb4837a29be14e8bf6ef57cabde0c7974943",
+  "method": "Canonical image+file-offset instruction counters; all canonical bytes/runtime PCs verified against independent historical images; exact golden REL and terminal step checked. Entry counts are executions, not inferred procedure invocation counts.",
+  "sources": [
+    {
+      "source": "MINIMAL.PLI",
+      "source_path": "examples/pli80/MINIMAL.PLI",
+      "source_bytes": 77,
+      "source_sha256": "3fb1064d463968e5c398e8650efe008424b1910523551d2e6d676a561b21348f",
+      "guest_steps": 441855,
+      "REL_size": 256,
+      "REL_sha256": "7339d230f13c2614f6b1acb632081959659d7292814c747f7853b6944e91f119",
+      "golden_reference": "docs/pli80-experiments.md#validated-source-corpus",
+      "capture_path": "_build/minimal-baseline/capture",
+      "canonical_sha256": "349dee8f237a4a8355c5a311e4b47a6284fc66e6faa7143a5147e0f248692acf",
+      "event_witnesses_available": true,
+      "coordinates": {
+        "PLI1.OVL+7D53": {
+          "executed": true,
+          "execution_count": 21
+        },
+        "PLI1.OVL+7E2B": {
+          "executed": false,
+          "execution_count": 0
+        },
+        "PLI1.OVL+7E2E": {
+          "executed": false,
+          "execution_count": 0
+        }
+      },
+      "new_structural_run": false
+    },
+    {
+      "source": "ARITH.PLI",
+      "source_path": "examples/pli80/ARITH.PLI",
+      "source_bytes": 189,
+      "source_sha256": "c06365382706e4165b3769d2c27d532d5984bc585229556571925c4a1e5e69a9",
+      "guest_steps": 678165,
+      "REL_size": 256,
+      "REL_sha256": "ca98a3a7e1900d65f2b8bf73b8ccdd9e0e49ce7f15768607348740b1b7a8e553",
+      "golden_reference": "docs/pli80-experiments.md#validated-source-corpus",
+      "capture_path": "_build/discriminator-pass-15/screen/ARITH",
+      "canonical_sha256": "2a5e9fc6469a2eb4198d56530b3d7e9c7c45b786329a17030e33681be613333b",
+      "event_witnesses_available": false,
+      "coordinates": {
+        "PLI1.OVL+7D53": {
+          "executed": true,
+          "execution_count": 32
+        },
+        "PLI1.OVL+7E2B": {
+          "executed": false,
+          "execution_count": 0
+        },
+        "PLI1.OVL+7E2E": {
+          "executed": false,
+          "execution_count": 0
+        }
+      },
+      "new_structural_run": true
+    },
+    {
+      "source": "FIZZBUZ.PLI",
+      "source_path": "examples/pli80/FIZZBUZ.PLI",
+      "source_bytes": 343,
+      "source_sha256": "3cd603bb301407a34d3ed1c6674ed270b44b0787bf691336676bcb7e1210e96a",
+      "guest_steps": 1145517,
+      "REL_size": 768,
+      "REL_sha256": "68ec16931d4dae7a8f0831a29c9ae8b9ca139279f5104bb34e299644a8b2a203",
+      "golden_reference": "docs/pli80-experiments.md#validated-source-corpus",
+      "capture_path": "_build/evidence-packet-cross-run/fizzbuz-capture",
+      "canonical_sha256": "a8d5cfed6a403643ac5c11ee8649b345aa93d854ebfe12553abb719c673a79f1",
+      "event_witnesses_available": true,
+      "coordinates": {
+        "PLI1.OVL+7D53": {
+          "executed": true,
+          "execution_count": 77
+        },
+        "PLI1.OVL+7E2B": {
+          "executed": false,
+          "execution_count": 0
+        },
+        "PLI1.OVL+7E2E": {
+          "executed": false,
+          "execution_count": 0
+        }
+      },
+      "new_structural_run": false
+    },
+    {
+      "source": "FACTOR.PLI",
+      "source_path": "examples/pli80/FACTOR.PLI",
+      "source_bytes": 294,
+      "source_sha256": "27753f116c108a92cf017bb1007b7acb15d748bd35e8ae056a3a88df7b053250",
+      "guest_steps": 838415,
+      "REL_size": 384,
+      "REL_sha256": "9a42e8341a013243036040c8db0e56939c699c7fbbfb20878f7ba5af8d6b470d",
+      "golden_reference": "docs/pli80-experiments.md#validated-source-corpus",
+      "capture_path": "/var/tmp/runes-event-witness-corpus/factor",
+      "canonical_sha256": "a5108a9e63b45e47d7654b4db8aaf032f8e7cfedc9f61108a65e83e139ed3830",
+      "event_witnesses_available": false,
+      "coordinates": {
+        "PLI1.OVL+7D53": {
+          "executed": true,
+          "execution_count": 35
+        },
+        "PLI1.OVL+7E2B": {
+          "executed": true,
+          "execution_count": 2
+        },
+        "PLI1.OVL+7E2E": {
+          "executed": true,
+          "execution_count": 2
+        }
+      },
+      "new_structural_run": false
+    },
+    {
+      "source": "ARRAY.PLI",
+      "source_path": "examples/pli80/ARRAY.PLI",
+      "source_bytes": 180,
+      "source_sha256": "58640e1e3991e0f8221908c6896869c1c8801720230d3cdc3efb2d6a9f362254",
+      "guest_steps": 668822,
+      "REL_size": 256,
+      "REL_sha256": "875e6d15720691b7b1be7b537a709fb65e99efbcbb06f5761acefcffedbcb269",
+      "golden_reference": "docs/pli80-experiments.md#validated-source-corpus",
+      "capture_path": "_build/discriminator-pass-15/screen/ARRAY",
+      "canonical_sha256": "61f022dde2fbe2eca8c49c341f424644607a28da9b97eedfdf1b515ed562ede7",
+      "event_witnesses_available": false,
+      "coordinates": {
+        "PLI1.OVL+7D53": {
+          "executed": true,
+          "execution_count": 31
+        },
+        "PLI1.OVL+7E2B": {
+          "executed": false,
+          "execution_count": 0
+        },
+        "PLI1.OVL+7E2E": {
+          "executed": false,
+          "execution_count": 0
+        }
+      },
+      "new_structural_run": true
+    },
+    {
+      "source": "STRUCT.PLI",
+      "source_path": "examples/pli80/STRUCT.PLI",
+      "source_bytes": 197,
+      "source_sha256": "b1111cf042e3d0b3451d29a17b245f30e10a36fe21fa5fdf4d82cf928acc4fb4",
+      "guest_steps": 653850,
+      "REL_size": 256,
+      "REL_sha256": "af95363e5e428b38e0cc536ac6870cd91bc7203c86193a459c2d62e29f69ee3b",
+      "golden_reference": "docs/pli80-experiments.md#validated-source-corpus",
+      "capture_path": "_build/discriminator-pass-15/screen/STRUCT",
+      "canonical_sha256": "da49ccb3b7316c75b1cde82a38c34e54168b98f1ca7381c60e06ff4d5711988b",
+      "event_witnesses_available": false,
+      "coordinates": {
+        "PLI1.OVL+7D53": {
+          "executed": true,
+          "execution_count": 25
+        },
+        "PLI1.OVL+7E2B": {
+          "executed": false,
+          "execution_count": 0
+        },
+        "PLI1.OVL+7E2E": {
+          "executed": false,
+          "execution_count": 0
+        }
+      },
+      "new_structural_run": true
+    },
+    {
+      "source": "CHAR.PLI",
+      "source_path": "examples/pli80/CHAR.PLI",
+      "source_bytes": 121,
+      "source_sha256": "aa04b99f43431041d9187e073b3ff016edc841242fffd3ab1742fb0ca58161f3",
+      "guest_steps": 495103,
+      "REL_size": 256,
+      "REL_sha256": "1caa65bc5823889c3a3983c48b9da1c20ac50eed0edf733ff48e2a566e757b59",
+      "golden_reference": "docs/pli80-experiments.md#validated-source-corpus",
+      "capture_path": "_build/discriminator-pass-15/screen/CHAR",
+      "canonical_sha256": "70a2761da1a913cb939bd8a7faa296d136d1df3fe95d8716d278c7267cc92aa7",
+      "event_witnesses_available": false,
+      "coordinates": {
+        "PLI1.OVL+7D53": {
+          "executed": true,
+          "execution_count": 23
+        },
+        "PLI1.OVL+7E2B": {
+          "executed": false,
+          "execution_count": 0
+        },
+        "PLI1.OVL+7E2E": {
+          "executed": false,
+          "execution_count": 0
+        }
+      },
+      "new_structural_run": true
+    },
+    {
+      "source": "FIXEDDEC.PLI",
+      "source_path": "examples/pli80/FIXEDDEC.PLI",
+      "source_bytes": 205,
+      "source_sha256": "8936b0b20f6b5cb3def56c83e64e282cae06f2c74838b95579e2590fd9f59e92",
+      "guest_steps": 673691,
+      "REL_size": 384,
+      "REL_sha256": "b93cddf1e9dd85fa3ef7f8a27740b43da3396c69b10ff03eab248eef2f9e9938",
+      "golden_reference": "docs/pli80-experiments.md#validated-source-corpus",
+      "capture_path": "_build/discriminator-pass-15/screen/FIXEDDEC",
+      "canonical_sha256": "400daffd15c4de04cefc36ac2d10b010b97ee2c75010b5c36df2c1a277c0b414",
+      "event_witnesses_available": false,
+      "coordinates": {
+        "PLI1.OVL+7D53": {
+          "executed": true,
+          "execution_count": 27
+        },
+        "PLI1.OVL+7E2B": {
+          "executed": false,
+          "execution_count": 0
+        },
+        "PLI1.OVL+7E2E": {
+          "executed": false,
+          "execution_count": 0
+        }
+      },
+      "new_structural_run": true
+    },
+    {
+      "source": "PICTURE.PLI",
+      "source_path": "examples/pli80/PICTURE.PLI",
+      "source_bytes": 151,
+      "source_sha256": "670c42a00f63fbf536dc362e052bd453068f6de106b0a68c4c5c1bc386f51d09",
+      "guest_steps": 518213,
+      "REL_size": 256,
+      "REL_sha256": "c02f738a7504384a236289633210d1bf4e7ea5391e51e091e373950eefacc4f1",
+      "golden_reference": "docs/pli80-experiments.md#validated-source-corpus",
+      "capture_path": "_build/discriminator-pass-15/screen/PICTURE",
+      "canonical_sha256": "4cf79eb1573f4484b48e116a70c76ff8b4b81442cf28e985a44ffe018ed9c759",
+      "event_witnesses_available": false,
+      "coordinates": {
+        "PLI1.OVL+7D53": {
+          "executed": true,
+          "execution_count": 23
+        },
+        "PLI1.OVL+7E2B": {
+          "executed": true,
+          "execution_count": 2
+        },
+        "PLI1.OVL+7E2E": {
+          "executed": true,
+          "execution_count": 2
+        }
+      },
+      "new_structural_run": true
+    },
+    {
+      "source": "OPTIMIST.PLI",
+      "source_path": "/home/john/pli/cpm/pli80/DISK1/OPTIMIST.PLI",
+      "source_bytes": 1408,
+      "source_sha256": "880e307219759a7a5d9a0995b21803f73f2e60057f6ecb7f2a993f3eab84b0e6",
+      "guest_steps": 2535509,
+      "REL_size": 1408,
+      "REL_sha256": "5fca1ffe38d11c30d20cfb99a23fe2baf002c569790bda83e09151cf36032b15",
+      "golden_reference": "docs/event-witnesses.md and test/event_witness.ml",
+      "capture_path": "/var/tmp/runes-event-witness-opt-final4",
+      "canonical_sha256": "05bd1ad15fb5e3d866f64a9082f4033f671d330ae9ccc958692005f5eb59541c",
+      "event_witnesses_available": true,
+      "coordinates": {
+        "PLI1.OVL+7D53": {
+          "executed": true,
+          "execution_count": 86
+        },
+        "PLI1.OVL+7E2B": {
+          "executed": true,
+          "execution_count": 1
+        },
+        "PLI1.OVL+7E2E": {
+          "executed": true,
+          "execution_count": 1
+        }
+      },
+      "new_structural_run": false
+    }
+  ],
+  "selected_source": "PICTURE.PLI",
+  "selection_reason": "Smallest positive execution (518213) and six-line existing source; FACTOR838415 and OPTIMIST2535509 larger. OPTIMIST witness availability does not override the primary size preference."
+}

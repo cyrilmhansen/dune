@@ -1,0 +1,91 @@
+{
+  "baseline_commit": "0727eb4837a29be14e8bf6ef57cabde0c7974943",
+  "run_id": "PICTURE:690dbdc67d1a01c466bb359e3c28dcfc2bfb3635455616355c779599b38bcec2",
+  "capture_path": "_build/discriminator-pass-15/selected-capture",
+  "REL": {
+    "name": "PICTURE.REL",
+    "size": 256,
+    "sha256": "c02f738a7504384a236289633210d1bf4e7ea5391e51e091e373950eefacc4f1"
+  },
+  "invocations": 23,
+  "callers": {
+    "PLI1.OVL+8069": 10,
+    "PLI1.OVL+7ED3": 8,
+    "PLI1.OVL+80EB": 2,
+    "PLI1.OVL+816B": 3
+  },
+  "return_site_counts": {
+    "7D5D": 12,
+    "7E45": 10,
+    "7D65": 1
+  },
+  "own_coordinates": 96,
+  "own_occurrences": 1504,
+  "observed_byte_union": 232,
+  "accumulated_represented_bytes": 243,
+  "top_paths": {
+    "equal_range": 12,
+    "work": 10,
+    "gate": 1
+  },
+  "attribute_distribution": {
+    "4": 10,
+    "2": 10,
+    "6": 2
+  },
+  "direct_calls": {
+    "7D91": {
+      "target": "PLI1.OVL+7A4D",
+      "count": 11
+    },
+    "7D9D": {
+      "target": "PLI1.OVL+7C1B",
+      "count": 11
+    },
+    "7DA7": {
+      "target": "PLI1.OVL+7B7A",
+      "count": 11
+    },
+    "7DC5": {
+      "target": "PLI1.OVL+7A4D",
+      "count": 22
+    },
+    "7DCC": {
+      "target": "PLI.COM+0EF6",
+      "count": 22
+    },
+    "7DDB": {
+      "target": "PLI1.OVL+7B64",
+      "count": 22
+    },
+    "7DFB": {
+      "target": "PLI1.OVL+7AA9",
+      "count": 12
+    },
+    "7E20": {
+      "target": "PLI.COM+0EF6",
+      "count": 10
+    },
+    "7E35": {
+      "target": "PLI1.OVL+7BA2",
+      "count": 22
+    },
+    "7DE6": {
+      "target": "PLI1.OVL+7E46",
+      "count": 10
+    },
+    "7DF1": {
+      "target": "PLI1.OVL+7E56",
+      "count": 10
+    },
+    "7E2B": {
+      "target": "PLI1.OVL+7E46",
+      "count": 2
+    },
+    "7E2E": {
+      "target": "PLI1.OVL+7E56",
+      "count": 2
+    }
+  },
+  "method": "Corrected original-slot ordinary CALL/RET, child isolation via existing gatherer; existing Pass7/14 checks reused; no packet profile changes."
+}

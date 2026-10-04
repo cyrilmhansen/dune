@@ -38,7 +38,7 @@ class FizzbuzPassFourteenTests(unittest.TestCase):
         for r in self.records:verify_return(r['call'],r['ret'],r['relation'])
         own=[w for r in self.records for w in r['own_witnesses']];self.assertEqual((len(own),len({w['step_index'] for w in own}),len({coord(w['origin']) for w in own})),(6018,6018,99))
         union={o for w in own for o in range(w['origin']['offset'],w['origin']['offset']+len(bytes.fromhex(w['bytes'])))};seed=next(s for s in load(ROOT/'research/annotated-assembly/evidence.json')['seeds'] if s['id']==KEY)
-        self.assertEqual(len(union),237);self.assertEqual(p['observed_paths']['represented_bytes'],237);self.assertEqual(sum(len(bytes.fromhex(i['bytes'])) for i in seed['instructions']),237)
+        self.assertEqual(len(union),237);self.assertEqual(p['observed_paths']['represented_bytes'],243);self.assertEqual(sum(len(bytes.fromhex(i['bytes'])) for i in seed['instructions']),243)
 
     def test_packet_rejection_does_not_drop_nonhistorical_evidence(self):
         with self.assertRaisesRegex(ValueError,'Packet boundary has unresolved historical origin'):
@@ -123,14 +123,16 @@ class FizzbuzPassFourteenTests(unittest.TestCase):
 
     def test_RAW_pair_attr6_and_forward_wrap_stay_unobserved(self):
         manifest=load(ROOT/'research/annotated-assembly/manifest.json');image=next(i for i in manifest['images'] if i['name']=='PLI1.OVL');raw=(IMAGES/'PLI1.OVL').read_bytes();self.assertEqual(raw[0x7E2B:0x7E31],bytes.fromhex('CD46A0CD56A0'))
-        for o in range(0x7E2B,0x7E31):self.assertEqual(status_at(image,o),'RAW')
+        # Pass14's FIZZBUZ remains negative; Pass15 adds PICTURE-only byte evidence.
+        for o in range(0x7E2B,0x7E31):self.assertEqual(status_at(image,o),'UNDERSTOOD')
+        prior=load(ROOT/'research/fizzbuz-delta/pass-14/progress.json');self.assertEqual(prior['after_represented_bytes'],237)
         for r in self.records:
             ws=r['own_witnesses'];self.assertFalse(at(ws,0x7E2B));self.assertFalse(at(ws,0x7E2E))
             for w in at(ws,0x7E19):self.assertFalse(w['control']['taken']);self.assertEqual(ws[ws.index(w)-1]['origin']['offset'],0x7E17)
             for w in at(ws,0x7E28):self.assertTrue(w['control']['taken']);self.assertEqual(ws[ws.index(w)-1]['origin']['offset'],0x7E26)
             for w in at(ws,0x7E3C):
                 producer=ws[ws.index(w)-1];self.assertEqual(producer['origin']['offset'],0x7E3B);self.assertEqual(w['before']['flags'],producer['after']['flags']);value=producer['writes'][0]['new_value'];self.assertEqual(value,(producer['reads'][0]['value']+1)&255);self.assertEqual(w['control']['taken'],value!=0);self.assertNotEqual(value,0)
-        p=self.catalog[KEY];self.assertEqual(p['completeness'],dict(bounds='provisional',control_flow='partial',contract='partial'));self.assertEqual(p['observed_paths']['represented_bytes'],237)
+        p=self.catalog[KEY];self.assertEqual(p['completeness'],dict(bounds='stable',control_flow='complete',contract='partial'));self.assertEqual(p['observed_paths']['represented_bytes'],243)
         rows=[json.loads(s) for s in (ROOT/'research/minimal-baseline/instructions.jsonl').read_text().splitlines()];self.assertEqual(calculate(manifest,rows),load(ROOT/'research/minimal-baseline/dynamic-progress.json'));self.assertEqual(sum(i['length'] for i in manifest['images']),94720)
 
 if __name__=='__main__':

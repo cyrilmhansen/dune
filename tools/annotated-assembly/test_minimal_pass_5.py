@@ -89,7 +89,7 @@ class MinimalPassFiveTests(unittest.TestCase):
         caller=self.catalog[p['entry']]
         historical=next(r for r in json.loads((PASS/'regions.json').read_text()) if r['entry']==p['entry'])
         self.assertEqual(historical['byte_status'],'STRUCTURED')
-        self.assertEqual(caller['completeness'],{'bounds':'provisional','control_flow':'partial','contract':'partial'})
+        self.assertEqual(caller['completeness'],{'bounds':'stable','control_flow':'complete','contract':'partial'})
         self.assertEqual(sum(validate_packet_member(p,i)['forward_iterations'] for i in p['invocations']),16)
         self.assertEqual(sum(len(validate_packet_member(p,i)['emission_C_bytes']) for i in p['invocations']),26)
         self.assertTrue(any(c['contract_presentation']['kind']=='PARTIAL' for c in p['calls'].values()))

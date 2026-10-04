@@ -8111,9 +8111,9 @@ PLI1_7D52: RET ; RET A=F4; finalPOP H yields L=F3,H=F4; CY0 from frame DAD; NZPA
 ; Entry: PLI1_7D53 = PLI1.OVL+7D53 @ 9F53H; SHA-256
 ;   1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564
 ; Extent: HYPOTHESIS [7D53,7E46) file offsets; overlapping entries: none established
-; Callers: OBSERVED PLI1.OVL+7ED3 (FIZZBUZ=25, MINIMAL=7); PLI1.OVL+8069 (FIZZBUZ=30, MINIMAL=10);
-;   PLI1.OVL+80EB (FIZZBUZ=8, MINIMAL=1); PLI1.OVL+811B (FIZZBUZ=2); PLI1.OVL+816B
-;   (FIZZBUZ=12, MINIMAL=3)
+; Callers: OBSERVED PLI1.OVL+7ED3 (FIZZBUZ=25, MINIMAL=7, PICTURE=8); PLI1.OVL+8069 (FIZZBUZ=30,
+;   MINIMAL=10, PICTURE=10); PLI1.OVL+80EB (FIZZBUZ=8, MINIMAL=1, PICTURE=2); PLI1.OVL+811B
+;   (FIZZBUZ=2); PLI1.OVL+816B (FIZZBUZ=12, MINIMAL=3, PICTURE=3)
 ; Returns: OBSERVED/DEDUCED ordinary hardware CALL word; original slot unchanged, SP after
 ;   RET=entry_SP+2; PLI1.OVL+7D5D; PLI1.OVL+7D65; PLI1.OVL+7E45
 ; Inputs: DEDUCED byte begin/end/gate at AE34/AE35/AA1A, flags202B/2011, position_map AA1F,
@@ -8127,7 +8127,10 @@ PLI1_7D52: RET ; RET A=F4; finalPOP H yields L=F3,H=F4; CY0 from frame DAD; NZPA
 ;   ordered emitter arguments across102 forward iterations; direct top-level childA->AE50
 ;   distinct from descendant publication and private child F2/F4. Known special descendant
 ;   writeAD0D is later read/emitted on its own channel. Endpoint comparison determines
-;   normal work-exit flags; forward-wrap result remains unobserved.
+;   normal work-exit flags; forward-wrap result remains unobserved. PICTURE attr6: primary
+;   AE51=0 read/cache is suppressed at emission; distinct mapped byte18/B0 and
+;   word-low0/high0 emitted in order; AE52/53 cache writes and fresh high reads retained.
+;   Six new instruction bytes understood without widening helper algorithms.
 ; Clobbers: DEDUCED A,BC,DE,HL,flags; end/cursor/byte caches/word cache, named
 ;   mapping/attribute/word/auxiliary scratch, mapped and auxiliary publications, transient
 ;   stack; partial emitter buffer/index/scratch/host effects
@@ -8160,90 +8163,116 @@ PLI1_7D52: RET ; RET A=F4; finalPOP H yields L=F3,H=F4; CY0 from frame DAD; NZPA
 ; Direct callees: OBSERVED PLI1.OVL+7A4D @9C4DH; PLI1.OVL+7C1B @9E1BH; PLI1.OVL+7B7A @9D7AH;
 ;   PLI1.OVL+7A4D @9C4DH; PLI.COM+0EF6 @0FF6H; PLI1.OVL+7B64 @9D64H; PLI1.OVL+7E46
 ;   @A046H; PLI1.OVL+7E56 @A056H; PLI1.OVL+7AA9 @9CA9H; PLI1.OVL+7ABF @9CBFH;
-;   PLI.COM+0EF6 @0FF6H; PLI.COM+0EF6 @0FF6H; PLI1.OVL+7BA2 @9DA2H
-; Coverage: OBSERVED FIZZBUZ: 77 CALLs; MINIMAL: 21 CALLs; 237/243 bytes represented as
-;   instructions; MINIMAL:21 ordinary returns (12 equal-range,2 gate,7 work),9 reverse
-;   selections and16 forward iterations; FIZZBUZ:77 ordinary returns (40 equal-range,8
-;   gate,29 work),35 reverse selections and102 forward iterations. Both execute exactly99
-;   own coordinates/237 represented bytes; no new local branch outcome or RAW-arm
-;   execution. Full FIZZBUZ V0.2 packet rejects two nonhistorical emitter-subtree RET
-;   witnesses; bounded corrected projections retain them.
+;   PLI.COM+0EF6 @0FF6H; PLI.COM+0EF6 @0FF6H; PLI1.OVL+7E46 @A046H; PLI1.OVL+7E56
+;   @A056H; PLI1.OVL+7BA2 @9DA2H
+; Coverage: OBSERVED FIZZBUZ: 77 CALLs; MINIMAL: 21 CALLs; PICTURE: 23 CALLs; 243/243 bytes
+;   represented as instructions; MINIMAL:21 ordinary returns (12 equal-range,2 gate,7
+;   work),9 reverse selections and16 forward iterations; FIZZBUZ:77 ordinary returns (40
+;   equal-range,8 gate,29 work),35 reverse selections and102 forward iterations. Both
+;   execute exactly99 own coordinates/237 represented bytes; no new local branch outcome
+;   or RAW-arm execution. Full FIZZBUZ V0.2 packet rejects two nonhistorical
+;   emitter-subtree RET witnesses; bounded corrected projections retain them. PICTURE:23
+;   corrected returns (12 equal-range,1 gate,10 work),22 forward iterations with10
+;   attr2/10 attr4/2 attr6; raw-arm CALLs each execute twice in parent326116. Accumulated
+;   union243; PICTURE-only union232, preserving MINIMAL/FIZZBUZ observations.
 ; Unresolved: STATIC / UNOBSERVED:202B.bit0 shortcut,2011 nonzero shortcut, reverse/forward
-;   mapped>=F7, attributes0/1/5/6/7 including primary-suppression6, six RAW7E2B..7E30
-;   bytes, forward cursor-wrap return. / partial recursive/helper contract:7C1B
-;   mapped21/opposite max-clamp states and arbitrary recursion/7B7A termination/alias
-;   preconditions; known Pass13 cases now explicitly composed at observed scopes. /
-;   partial emitter contract and evidence-interface limitation: resident0EF6 error path
-;   and opaque buffer/host callees; one buffer-threshold normal return observed. Full
-;   V0.2 packet fails closed on runtime0005 nonhistorical subtree RET accesses; no
-;   schema/ownership change or dropped event. / producer/alias/precondition: initial
+;   mapped>=F7, attributes0/1/5/7, forward cursor-wrap return. / partial
+;   recursive/helper contract:7C1B mapped21/opposite max-clamp states and arbitrary
+;   recursion/7B7A termination/alias preconditions; known Pass13 cases now explicitly
+;   composed at observed scopes. / partial emitter contract and evidence-interface
+;   limitation: resident0EF6 error path and opaque buffer/host callees; one
+;   buffer-threshold normal return observed. Full FIZZBUZ V0.2 packet fails closed on
+;   runtime0005 nonhistorical subtree RET accesses; no schema/ownership change or
+;   dropped event. / producer/alias/precondition: initial
 ;   endpoint/map/byte/word/attribute/auxiliary data and table overlaps outside selected
-;   scope; no inferred capacity or source-language meaning.
+;   scope; no inferred capacity or source-language meaning. / runtime-table scope:
+;   initial256 bytes contain no highattr1/7, but address span includes mutable1C2C..1C37
+;   state; actual PICTURE reads have no prior writes, not a global immutability theorem.
+;   Attr5/7 remaining source candidates are not inferred from PLI syntax.
 ; Contract: DEDUCED (partial; scope: Accumulated MINIMAL empty/gate and seven work paths retained;
 ;   FIZZBUZ40 equal/8 gate/29 work paths with shortcuts clear, reverse/forward mapped
 ;   bytes<F7 and attributes2/3/4. Expanded7C1B partial scopes substituted without merging
 ;   descendant outputs with top-level A; controls/tables/scratch/stack nonaliasing.
 ;   Emitter algorithm/host/error effects remain partial: one selected buffer-threshold
 ;   return is concretely observed, not promoted into a general helper contract. STATIC /
-;   UNOBSERVED shortcuts, mapped>=F7, other attribute classes, forward-wrap and RAW pair
-;   excluded.) Test end[AE35] against begin[AE34]: equal returns +7D5D (MINIMAL12,
-;   FIZZBUZ40). Otherwise RAR of AA1A followed by JNC tests original bit0: set returns
-;   +7D65 (2/8). Work paths (7/29) save cursor=end. In both runs 202B.bit0 clear and 2011
-;   zero enter reverse processing. Predecrement cursor modulo256 and compare with
-;   u8(begin-1); equality resets forward cursor to fresh begin. For other reverse
-;   positions, complete7A4D maps cursor; CPI F7/JNC skips recursive processing iff
-;   mapped>=F7 (STATIC / UNOBSERVED). All observed mappings are belowF7. Call partial7C1B
-;   at fresh cursor, publish its direct returned A at AE50, then independently call
-;   complete7B7A at the same outer cursor and replace AE4F with its stopping position.
-;   Predecrement that stopping position again on the next outer iteration. No threshold is
-;   applied to the later child A; FIZZBUZ caches FE from a default child despite the
-;   earlier mapped<F7 guard. FIZZBUZ contains six parent windows whose direct7D9D child
-;   has Pass13 special/fallback descendants. No direct child itself takes those new arms.
-;   In parent618086, direct child618131/input6 maps0F/default and caches initial
-;   auxiliary15 in its F4 before recursion. Its descendants include special1E
-;   at618240/input5 and fallback17/predecessor05 at619581/input2. Direct child returns its
-;   original F4=15, not the descendant clamp result or its overwritten F2, despite equal
-;   bytes. AE50=15 is written at620118; independent7B7A(input6) returns0; AE4F becomes0
-;   and next predecrementFF equals begin0-minus1. Forward cursor then resets0 and
-;   visits0..6. Special AD0D=15 publication at619714 is a separate channel, read later by
-;   forward7AA9 at621220 and emitted as primary auxiliary at621231; latest recorded guest
-;   writer, address and chronology establish the local relation, not equality alone. Five
-;   other parents with fallback descendants return top-level A1/1/1/1/FE and use
-;   independent stopping cursors1/0/0/0/0. The first processes a further reverse position0
-;   before forward reset. Forward work exits when unsigned u8(end-1)<fresh cursor. In102
-;   FIZZBUZ iterations (MINIMAL16), fresh7A4D output is saved at AE50 and passed in C to
-;   partial resident0EF6. Fresh mapped cache<F7 invokes complete7B64: save input AE47 and
-;   return bits3..5 of fixed byte[1B4B+mapped]. Save that arbitrary transformed byte at
-;   AE50. Observed attribute2 (42/7) calls7E46 then7E56: select fresh
+;   UNOBSERVED shortcuts, mapped>=F7, remaining attribute classes and forward-wrap
+;   excluded; PICTURE attr6 word pair included below. PICTURE adds the two observed
+;   attr6/mapped18-orB0/word0 iterations; primary/word/cache/emission addresses remain
+;   nonaliasing under established helper scopes. Actual table reads are unchanged initial
+;   entries, while other addresses in the256-byte lookup span are dynamically written; no
+;   global immutability or attr1/7 impossibility claim.) Test end[AE35] against
+;   begin[AE34]: equal returns +7D5D (MINIMAL12, FIZZBUZ40). Otherwise RAR of AA1A
+;   followed by JNC tests original bit0: set returns +7D65 (2/8). Work paths (7/29) save
+;   cursor=end. In both runs 202B.bit0 clear and 2011 zero enter reverse processing.
+;   Predecrement cursor modulo256 and compare with u8(begin-1); equality resets forward
+;   cursor to fresh begin. For other reverse positions, complete7A4D maps cursor; CPI
+;   F7/JNC skips recursive processing iff mapped>=F7 (STATIC / UNOBSERVED). All observed
+;   mappings are belowF7. Call partial7C1B at fresh cursor, publish its direct returned A
+;   at AE50, then independently call complete7B7A at the same outer cursor and replace
+;   AE4F with its stopping position. Predecrement that stopping position again on the next
+;   outer iteration. No threshold is applied to the later child A; FIZZBUZ caches FE from
+;   a default child despite the earlier mapped<F7 guard. FIZZBUZ contains six parent
+;   windows whose direct7D9D child has Pass13 special/fallback descendants. No direct
+;   child itself takes those new arms. In parent618086, direct child618131/input6
+;   maps0F/default and caches initial auxiliary15 in its F4 before recursion. Its
+;   descendants include special1E at618240/input5 and fallback17/predecessor05
+;   at619581/input2. Direct child returns its original F4=15, not the descendant clamp
+;   result or its overwritten F2, despite equal bytes. AE50=15 is written at620118;
+;   independent7B7A(input6) returns0; AE4F becomes0 and next predecrementFF equals
+;   begin0-minus1. Forward cursor then resets0 and visits0..6. Special AD0D=15 publication
+;   at619714 is a separate channel, read later by forward7AA9 at621220 and emitted as
+;   primary auxiliary at621231; latest recorded guest writer, address and chronology
+;   establish the local relation, not equality alone. Five other parents with fallback
+;   descendants return top-level A1/1/1/1/FE and use independent stopping
+;   cursors1/0/0/0/0. The first processes a further reverse position0 before forward
+;   reset. Forward work exits when unsigned u8(end-1)<fresh cursor. In102 FIZZBUZ
+;   iterations (MINIMAL16), fresh7A4D output is saved at AE50 and passed in C to partial
+;   resident0EF6. Fresh mapped cache<F7 invokes complete7B64: save input AE47 and return
+;   bits3..5 of fixed byte[1B4B+mapped]. Save that arbitrary transformed byte at AE50.
+;   Observed attribute2 (42/7) calls7E46 then7E56: select fresh
 ;   word[AB49+2*position_map[cursor]], cache it atAE52/53 before low emission, then reread
 ;   AE52/53 for high emission. Attribute3 (7/1) reads primary auxiliary to AE51, then
 ;   independently reads/emits second auxiliary AD9D and emits primary AD08; attribute4
 ;   (53/8) emits primary only after mapped byte. These give253/40 separately identified
 ;   emitter arguments. Values, returned flags, mapped/auxiliary tables and cache carriers
-;   do not merge. STATIC / UNOBSERVED: attributes0/1 would emit mapped-byte then word-low;
-;   attributes5/7 would emit mapped-byte, primary auxiliary, word-low, word-high;
-;   attribute6 would suppress primary emission at CPI06/JZ7E19 but still enter the attr>=5
-;   pair via CPI05/JC7E28. Exact RAW bytes7E2B..7E30 encode CALL7E46 thenCALL7E56; neither
-;   is observed in either run, so no promotion. Attribute3 second-auxiliary channel
-;   remains distinct from the suppressed primary channel. After each observed iteration
-;   complete7BA2 publishes oldAE33 to the mapped AAB4 slot, independently rereads
-;   position_map[cursor] and stores the fresh index toAE33. Increment fresh AE4F; JNZ
-;   repeats iff nonzero. No forward INR->00 is observed; reverse predecrement0->FF is a
-;   different demonstrated event. Normal work exit publishes end=fresh begin then consumes
-;   the original hardware return. A is not a procedure-level Boolean status. One FIZZBUZ
-;   mapped-byte emission at478274 within parent472976 writes index127, increments to128,
-;   delegates resident buffer calls, resets index0 and returns A0 with actual flags;
-;   nonhistorical RET witnesses478324/478364 at runtime0005 remain opaque subtree effects.
-;   Parent continues via fresh cache/comparisons; no emission argument or helper register
-;   preservation is inferred from returned flags. No global
+;   do not merge. OBSERVED PICTURE parent326116, caller7ED3, begin0/end3: forward cursor1
+;   maps18 andcursor2 mapsB0. Actual7B64 reads bytes31 at1B63 andB1 at1BFB, returns6
+;   inboth; chronological table evidence has no prior write to either address. Parent7DDE
+;   publishes6 toAE50. Complete7AA9 still reads primary auxiliary0 (AD09/AD0A) and7DFE
+;   caches0 atAE51. CPI06 at7E17 producesZ1; JZ7E19 targets7E23 andskips7E1C/7E1F/7E20
+;   entirely, so primary0 isnotemitted. CPI05 at7E26 producesCY0 on6; JC7E28 isnot taken.
+;   At7E2B call7E46, then at7E2E call7E56. Thelow wrapper freshly selects word0
+;   atAB4B/AB4D through currentcursor/map, explicitly writes AE52/53=0 beforelow emission;
+;   high wrapper freshly rereads that same-valued cache andemits high0. Observed channels
+;   are mapped18-orB0, word-low0, word-high0; theunemitted primary0, cachedword0 andtwo
+;   emittedzeros aredifferent producers/addresses/calls. Actual writes establishcache
+;   ancestry evenwhenoldbytesalready0. Low/high wrapperreturnsareemitterstates, not
+;   wordresults; following7BA2 reloadscursor1/2 independently andpublishes oldAE33=0/1
+;   toAAB5/AAB6, thenfresh mapindex1/2 toAE33. CursorINR/JNZ ownsloopflags; noBoolean/data
+;   provenance inferredfrompreceding flags. These dynamically observed sixbytes are
+;   understood. STATIC / UNOBSERVED: attr0/1 low-only, attr5/7 primary-plus-word-pair;
+;   attr1/7 absent onlyfrominitialimage, notprovenimpossibleafterruntimewrites. Attribute3
+;   second-auxiliary channel remains distinct fromsuppressedprimary. After each observed
+;   iteration complete7BA2 publishes oldAE33 to the mapped AAB4 slot, independently
+;   rereads position_map[cursor] and stores the fresh index toAE33. Increment fresh AE4F;
+;   JNZ repeats iff nonzero. No forward INR->00 is observed; reverse predecrement0->FF is
+;   a different demonstrated event. Normal work exit publishes end=fresh begin then
+;   consumes the original hardware return. A is not a procedure-level Boolean status. One
+;   FIZZBUZ mapped-byte emission at478274 within parent472976 writes index127, increments
+;   to128, delegates resident buffer calls, resets index0 and returns A0 with actual
+;   flags; nonhistorical RET witnesses478324/478364 at runtime0005 remain opaque subtree
+;   effects. Parent continues via fresh cache/comparisons; no emission argument or helper
+;   register preservation is inferred from returned flags. No global
 ;   source-language/table/recursive ownership or arbitrary termination theorem is claimed.
 ; Hypothesis: none beyond the low-level operational description
-; Completeness: bounds=provisional; control_flow=partial; contract=partial
+; Completeness: bounds=stable; control_flow=complete; contract=partial
 ; Evidence: evidence.json#seeds/PLI1.OVL+7D53;
 ;   ../minimal-baseline/pass-5/structural.json#PLI1.OVL+7D53;
 ;   ../minimal-baseline/pass-6/README.md (selected helper substitutions);
 ;   ../minimal-baseline/pass-7/README.md; ../fizzbuz-delta/pass-14/structural.json;
-;   ../fizzbuz-delta/pass-14/README.md
+;   ../fizzbuz-delta/pass-14/README.md;
+;   ../discriminator/pass-15/selected-run-structure.json;
+;   ../discriminator/pass-15/README.md
 ; Procedure pseudo (operational; byte/word arithmetic wraps):
 ;   if end==begin: RET7D5D; if AA1A.bit0: RET7D65; cursor=end; if 202B.bit0==0 and byte[2011]==0:
 ;   repeat: cursor=u8(cursor-1); if cursor==u8(fresh_begin-1): break;         mapped=7A4D(cursor);
@@ -8252,9 +8281,9 @@ PLI1_7D52: RET ; RET A=F4; finalPOP H yields L=F3,H=F4; CY0 from frame DAD; NZPA
 ;   partial scope;     if fresh_AE50<F7:         AE50=7B64(fresh_AE50).A;         if attr<3:
 ;   7E46(); if fresh_attr==2:7E56();         else:             AE51=7AA9(fresh_cursor).A;
 ;   if fresh_attr==3: emit(7ABF(fresh_cursor).A);             if fresh_attr!=6: emit(fresh_AE51);
-;   if fresh_attr>=5: STATIC / UNOBSERVED CALL7E46; CALL7E56;     7BA2(fresh_cursor);
-;   cursor=u8(fresh_cursor+1); if cursor==0:break; // STATIC / UNOBSERVED forward wrap
-;   end=fresh_begin; RET7E45
+;   if fresh_attr>=5: partial7E46(); partial7E56(); // observed attr6; attr5/7 STATIC / UNOBSERVED
+;   7BA2(fresh_cursor); cursor=u8(fresh_cursor+1); if cursor==0:break; // STATIC / UNOBSERVED
+;   forward wrap end=fresh_begin; RET7E45
 ; @end-procedure-v1 PLI1.OVL+7D53
 ; SECTION [7D53,7E2B) UNDERSTOOD
 ; @block-pseudo 7D53
@@ -8415,11 +8444,11 @@ PLI1_7E10: MOV C,A ; C = A; flags preserved ; +7E10 runtime=A010H OBSERVED
 PLI1_7E11: CALL 0FF6H ; push following PC; invoke PLI.COM+0EF6; established partial contract at declared scope ; +7E11 runtime=A011H OBSERVED
 ; @block-pseudo 7E14
 ; pseudo:
-; | CPI6/JZ suppresses primary-auxiliary emission iff fresh attr==6 (STATIC / UNOBSERVED)
-; | suppression still continues to attr>=5 word-pair test; second auxiliary is separate
+; | CPI06/JZ suppresses only primary AE51 emission for attr6; PICTURE observes both taken outcomes
+; | thenCPI05/JC still reaches7E2B for6>=5; suppression iscontrol, not data/Boolean result
 PLI1_7E14: LDA 0AE50H ; A = byte[mapped_work_cache (AE50H)]; flags preserved ; +7E14 runtime=A014H OBSERVED
 PLI1_7E17: CPI 06H ; flags = unsigned byte comparison A-06H; A unchanged ; +7E17 runtime=A017H OBSERVED
-PLI1_7E19: JZ 0A023H ; JZ iff attr==6 from CPI06; would suppress primary AE51 emission but still reach +7E23 (STATIC / UNOBSERVED) ; +7E19 runtime=A019H OBSERVED
+PLI1_7E19: JZ 0A023H ; JZ iff transformed attr==6 from CPI06; both PICTURE cases skip primary emission and continue at7E23 ; +7E19 runtime=A019H OBSERVED
 ; @block-pseudo 7E1C
 ; pseudo:
 ; | C=byte[AE51], discarding adjacent high byte from LHLD; emit0EF6 at partial scope
@@ -8428,15 +8457,19 @@ PLI1_7E1F: MOV C,L ; C = L; flags preserved ; +7E1F runtime=A01FH OBSERVED
 PLI1_7E20: CALL 0FF6H ; push following PC; invoke PLI.COM+0EF6; established partial contract at declared scope ; +7E20 runtime=A020H OBSERVED
 ; @block-pseudo 7E23
 ; pseudo:
-; | CPI5/JC skips additional arm iff attr<5; all60 FIZZBUZ/9 MINIMAL executions skip
-; | STATIC / UNOBSERVED exact bytes: +7E2B CALL7E46 then +7E2E CALL7E56; attr5/6/7 enter, including6
-; | six bytes remainRAW; static decode changes neither represented coverage nor completeness
+; | CPI05/JC skips word-pair iff attr<5; PICTUREattr6 twice falls through
+; | attr5/7 paths remain STATIC / UNOBSERVED; both CALLs now dynamically supported atattr6
 PLI1_7E23: LDA 0AE50H ; A = byte[mapped_work_cache (AE50H)]; flags preserved ; +7E23 runtime=A023H OBSERVED
 PLI1_7E26: CPI 05H ; flags = unsigned byte comparison A-05H; A unchanged ; +7E26 runtime=A026H OBSERVED
-PLI1_7E28: JC 0A031H ; JC iff fresh attr<5; attr6 would fall through to RAW word-low/high pair, not skip it ; +7E28 runtime=A028H OBSERVED
-; SECTION [7E2B,7E31) RAW
-PLI1_7E2B: DB 0CDH,046H,0A0H,0CDH,056H ; +7E2B runtime=A02BH RAW
-PLI1_7E30: DB 0A0H ; +7E30 runtime=A030H RAW
+PLI1_7E28: JC 0A031H ; JC iff attr<5; PICTURE attr6 gives CY0 and enters word pair despite primary suppression ; +7E28 runtime=A028H OBSERVED
+; SECTION [7E2B,7E31) UNDERSTOOD
+; @block-pseudo 7E2B
+; pseudo:
+; | attr>=5:7E46 selects/caches mappedword then emitslow;7E56 freshlyreads cache/emits high
+; | PICTUREattr6 suppressesprimary0 whileword0low/high both emitted; channelsstaydistinct
+; | 7BA2 resumeswithfreshcursor; wrapperA/flags areemitterderived andnotword provenance
+PLI1_7E2B: CALL 0A046H ; partial7E46: fresh cursor selects mapped word; write AE52/53, then emit low byte; observed twice ; +7E2B runtime=A02BH OBSERVED
+PLI1_7E2E: CALL 0A056H ; partial7E56: freshly read AE52/53 and emit high byte; word zeros differ from suppressed primary zero ; +7E2E runtime=A02EH OBSERVED
 ; SECTION [7E31,7E46) UNDERSTOOD
 ; @block-pseudo 7E31
 ; pseudo:
@@ -9748,6 +9781,7 @@ PLI1_7DD0: EQU 09FD0H ; +7DD0 runtime=9FD0H coordinate-only label
 PLI1_7DE0: EQU 09FE0H ; +7DE0 runtime=9FE0H coordinate-only label
 PLI1_7DF0: EQU 09FF0H ; +7DF0 runtime=9FF0H coordinate-only label
 PLI1_7E00: EQU 0A000H ; +7E00 runtime=A000H coordinate-only label
+PLI1_7E30: EQU 0A030H ; +7E30 runtime=A030H coordinate-only label
 PLI1_7E40: EQU 0A040H ; +7E40 runtime=A040H coordinate-only label
 PLI1_7E60: EQU 0A060H ; +7E60 runtime=A060H coordinate-only label
 PLI1_8050: EQU 0A250H ; +8050 runtime=A250H coordinate-only label

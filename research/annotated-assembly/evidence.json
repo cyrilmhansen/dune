@@ -49893,9 +49893,9 @@
       "start_offset": 32083,
       "end_offset": 32326,
       "description": "scoped reverse processing, attribute-dispatched emission and mapped-table recycling",
-      "inputs_and_effects": "byte begin/end/gate at AE34/AE35/AA1A, flags202B/2011, position_map AA1F, mapped_byte_table AAB4; helper arguments/results and resident emission state at declared callee scopes; Early-return state as before; work emits mapped bytes, low/high mapped words, primary auxiliary bytes and selected second auxiliary byte through scoped0EF6; end=fresh begin; distinct word-cacheAE52, byte cachesAE50/51, auxiliary reverse writes, mapped recycle updates and AE33 replacement. Registers/flags retain exact return-path/callee scope; no single Boolean or data A result inferred. FIZZBUZ:253 ordered emitter arguments across102 forward iterations; direct top-level childA->AE50 distinct from descendant publication and private child F2/F4. Known special descendant writeAD0D is later read/emitted on its own channel. Endpoint comparison determines normal work-exit flags; forward-wrap result remains unobserved.",
+      "inputs_and_effects": "byte begin/end/gate at AE34/AE35/AA1A, flags202B/2011, position_map AA1F, mapped_byte_table AAB4; helper arguments/results and resident emission state at declared callee scopes; Early-return state as before; work emits mapped bytes, low/high mapped words, primary auxiliary bytes and selected second auxiliary byte through scoped0EF6; end=fresh begin; distinct word-cacheAE52, byte cachesAE50/51, auxiliary reverse writes, mapped recycle updates and AE33 replacement. Registers/flags retain exact return-path/callee scope; no single Boolean or data A result inferred. FIZZBUZ:253 ordered emitter arguments across102 forward iterations; direct top-level childA->AE50 distinct from descendant publication and private child F2/F4. Known special descendant writeAD0D is later read/emitted on its own channel. Endpoint comparison determines normal work-exit flags; forward-wrap result remains unobserved. PICTURE attr6: primary AE51=0 read/cache is suppressed at emission; distinct mapped byte18/B0 and word-low0/high0 emitted in order; AE52/53 cache writes and fresh high reads retained. Six new instruction bytes understood without widening helper algorithms.",
       "downstream_helpers_runtime": "PLI1.OVL+7A4D@9C4D, PLI1.OVL+7C1B@9E1B, PLI1.OVL+7B7A@9D7A, PLI1.OVL+7A4D@9C4D, PLI.COM+0EF6@0FF6, PLI1.OVL+7B64@9D64, PLI1.OVL+7E46@A046, PLI1.OVL+7E56@A056, PLI1.OVL+7AA9@9CA9, PLI1.OVL+7ABF@9CBF, PLI.COM+0EF6@0FF6, PLI.COM+0EF6@0FF6, PLI1.OVL+7BA2@9DA2",
-      "unresolved": "STATIC / UNOBSERVED:202B.bit0 shortcut,2011 nonzero shortcut, reverse/forward mapped>=F7, attributes0/1/5/6/7 including primary-suppression6, six RAW7E2B..7E30 bytes, forward cursor-wrap return. / partial recursive/helper contract:7C1B mapped21/opposite max-clamp states and arbitrary recursion/7B7A termination/alias preconditions; known Pass13 cases now explicitly composed at observed scopes. / partial emitter contract and evidence-interface limitation: resident0EF6 error path and opaque buffer/host callees; one buffer-threshold normal return observed. Full V0.2 packet fails closed on runtime0005 nonhistorical subtree RET accesses; no schema/ownership change or dropped event. / producer/alias/precondition: initial endpoint/map/byte/word/attribute/auxiliary data and table overlaps outside selected scope; no inferred capacity or source-language meaning.",
+      "unresolved": "STATIC / UNOBSERVED:202B.bit0 shortcut,2011 nonzero shortcut, reverse/forward mapped>=F7, attributes0/1/5/7, forward cursor-wrap return. / partial recursive/helper contract:7C1B mapped21/opposite max-clamp states and arbitrary recursion/7B7A termination/alias preconditions; known Pass13 cases now explicitly composed at observed scopes. / partial emitter contract and evidence-interface limitation: resident0EF6 error path and opaque buffer/host callees; one buffer-threshold normal return observed. Full FIZZBUZ V0.2 packet fails closed on runtime0005 nonhistorical subtree RET accesses; no schema/ownership change or dropped event. / producer/alias/precondition: initial endpoint/map/byte/word/attribute/auxiliary data and table overlaps outside selected scope; no inferred capacity or source-language meaning. / runtime-table scope: initial256 bytes contain no highattr1/7, but address span includes mutable1C2C..1C37 state; actual PICTURE reads have no prior writes, not a global immutability theorem. Attr5/7 remaining source candidates are not inferred from PLI syntax.",
       "instructions": [
         {
           "offset": 32083,
@@ -49914,6 +49914,12 @@
               "execution_count": 77,
               "first_step": 332036,
               "last_step": 637335
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 23,
+              "first_step": 264624,
+              "last_step": 353450
             }
           ]
         },
@@ -49934,6 +49940,12 @@
               "execution_count": 77,
               "first_step": 332037,
               "last_step": 637336
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 23,
+              "first_step": 264625,
+              "last_step": 353451
             }
           ]
         },
@@ -49954,6 +49966,12 @@
               "execution_count": 77,
               "first_step": 332038,
               "last_step": 637337
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 23,
+              "first_step": 264626,
+              "last_step": 353452
             }
           ]
         },
@@ -49974,6 +49992,12 @@
               "execution_count": 77,
               "first_step": 332039,
               "last_step": 637338
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 23,
+              "first_step": 264627,
+              "last_step": 353453
             }
           ]
         },
@@ -49994,6 +50018,12 @@
               "execution_count": 40,
               "first_step": 332040,
               "last_step": 637339
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 12,
+              "first_step": 264628,
+              "last_step": 353454
             }
           ]
         },
@@ -50014,6 +50044,12 @@
               "execution_count": 37,
               "first_step": 336000,
               "last_step": 632363
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 11,
+              "first_step": 268752,
+              "last_step": 348518
             }
           ]
         },
@@ -50034,6 +50070,12 @@
               "execution_count": 37,
               "first_step": 336001,
               "last_step": 632364
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 11,
+              "first_step": 268753,
+              "last_step": 348519
             }
           ]
         },
@@ -50054,6 +50096,12 @@
               "execution_count": 37,
               "first_step": 336002,
               "last_step": 632365
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 11,
+              "first_step": 268754,
+              "last_step": 348520
             }
           ]
         },
@@ -50074,6 +50122,12 @@
               "execution_count": 8,
               "first_step": 421506,
               "last_step": 597008
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 1,
+              "first_step": 321484,
+              "last_step": 321484
             }
           ]
         },
@@ -50094,6 +50148,12 @@
               "execution_count": 29,
               "first_step": 336003,
               "last_step": 632366
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 10,
+              "first_step": 268755,
+              "last_step": 348521
             }
           ]
         },
@@ -50114,6 +50174,12 @@
               "execution_count": 29,
               "first_step": 336004,
               "last_step": 632367
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 10,
+              "first_step": 268756,
+              "last_step": 348522
             }
           ]
         },
@@ -50134,6 +50200,12 @@
               "execution_count": 29,
               "first_step": 336005,
               "last_step": 632368
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 10,
+              "first_step": 268757,
+              "last_step": 348523
             }
           ]
         },
@@ -50154,6 +50226,12 @@
               "execution_count": 29,
               "first_step": 336006,
               "last_step": 632369
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 10,
+              "first_step": 268758,
+              "last_step": 348524
             }
           ]
         },
@@ -50174,6 +50252,12 @@
               "execution_count": 29,
               "first_step": 336007,
               "last_step": 632370
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 10,
+              "first_step": 268759,
+              "last_step": 348525
             }
           ]
         },
@@ -50194,6 +50278,12 @@
               "execution_count": 29,
               "first_step": 336008,
               "last_step": 632371
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 10,
+              "first_step": 268760,
+              "last_step": 348526
             }
           ]
         },
@@ -50214,6 +50304,12 @@
               "execution_count": 29,
               "first_step": 336009,
               "last_step": 632372
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 10,
+              "first_step": 268761,
+              "last_step": 348527
             }
           ]
         },
@@ -50234,6 +50330,12 @@
               "execution_count": 29,
               "first_step": 336010,
               "last_step": 632373
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 10,
+              "first_step": 268762,
+              "last_step": 348528
             }
           ]
         },
@@ -50254,6 +50356,12 @@
               "execution_count": 64,
               "first_step": 336011,
               "last_step": 632560
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 21,
+              "first_step": 268763,
+              "last_step": 348715
             }
           ]
         },
@@ -50274,6 +50382,12 @@
               "execution_count": 64,
               "first_step": 336012,
               "last_step": 632561
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 21,
+              "first_step": 268764,
+              "last_step": 348716
             }
           ]
         },
@@ -50294,6 +50408,12 @@
               "execution_count": 64,
               "first_step": 336013,
               "last_step": 632562
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 21,
+              "first_step": 268765,
+              "last_step": 348717
             }
           ]
         },
@@ -50314,6 +50434,12 @@
               "execution_count": 64,
               "first_step": 336014,
               "last_step": 632563
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 21,
+              "first_step": 268766,
+              "last_step": 348718
             }
           ]
         },
@@ -50334,6 +50460,12 @@
               "execution_count": 64,
               "first_step": 336015,
               "last_step": 632564
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 21,
+              "first_step": 268767,
+              "last_step": 348719
             }
           ]
         },
@@ -50354,6 +50486,12 @@
               "execution_count": 64,
               "first_step": 336016,
               "last_step": 632565
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 21,
+              "first_step": 268768,
+              "last_step": 348720
             }
           ]
         },
@@ -50374,6 +50512,12 @@
               "execution_count": 64,
               "first_step": 336017,
               "last_step": 632566
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 21,
+              "first_step": 268769,
+              "last_step": 348721
             }
           ]
         },
@@ -50394,6 +50538,12 @@
               "execution_count": 64,
               "first_step": 336018,
               "last_step": 632567
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 21,
+              "first_step": 268770,
+              "last_step": 348722
             }
           ]
         },
@@ -50414,6 +50564,12 @@
               "execution_count": 64,
               "first_step": 336019,
               "last_step": 632568
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 21,
+              "first_step": 268771,
+              "last_step": 348723
             }
           ]
         },
@@ -50434,6 +50590,12 @@
               "execution_count": 64,
               "first_step": 336020,
               "last_step": 632569
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 21,
+              "first_step": 268772,
+              "last_step": 348724
             }
           ]
         },
@@ -50454,6 +50616,12 @@
               "execution_count": 35,
               "first_step": 336021,
               "last_step": 632384
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 11,
+              "first_step": 268773,
+              "last_step": 348539
             }
           ]
         },
@@ -50474,6 +50642,12 @@
               "execution_count": 35,
               "first_step": 336022,
               "last_step": 632385
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 11,
+              "first_step": 268774,
+              "last_step": 348540
             }
           ]
         },
@@ -50494,6 +50668,12 @@
               "execution_count": 35,
               "first_step": 336023,
               "last_step": 632386
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 11,
+              "first_step": 268775,
+              "last_step": 348541
             }
           ]
         },
@@ -50514,6 +50694,12 @@
               "execution_count": 35,
               "first_step": 336036,
               "last_step": 632399
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 11,
+              "first_step": 268788,
+              "last_step": 348554
             }
           ]
         },
@@ -50534,6 +50720,12 @@
               "execution_count": 35,
               "first_step": 336037,
               "last_step": 632400
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 11,
+              "first_step": 268789,
+              "last_step": 348555
             }
           ]
         },
@@ -50554,6 +50746,12 @@
               "execution_count": 35,
               "first_step": 336038,
               "last_step": 632401
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 11,
+              "first_step": 268790,
+              "last_step": 348556
             }
           ]
         },
@@ -50574,6 +50772,12 @@
               "execution_count": 35,
               "first_step": 336039,
               "last_step": 632402
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 11,
+              "first_step": 268791,
+              "last_step": 348557
             }
           ]
         },
@@ -50594,6 +50798,12 @@
               "execution_count": 35,
               "first_step": 336040,
               "last_step": 632403
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 11,
+              "first_step": 268792,
+              "last_step": 348558
             }
           ]
         },
@@ -50614,6 +50824,12 @@
               "execution_count": 35,
               "first_step": 336150,
               "last_step": 632513
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 11,
+              "first_step": 268902,
+              "last_step": 348668
             }
           ]
         },
@@ -50634,6 +50850,12 @@
               "execution_count": 35,
               "first_step": 336151,
               "last_step": 632514
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 11,
+              "first_step": 268903,
+              "last_step": 348669
             }
           ]
         },
@@ -50654,6 +50876,12 @@
               "execution_count": 35,
               "first_step": 336152,
               "last_step": 632515
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 11,
+              "first_step": 268904,
+              "last_step": 348670
             }
           ]
         },
@@ -50674,6 +50902,12 @@
               "execution_count": 35,
               "first_step": 336153,
               "last_step": 632516
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 11,
+              "first_step": 268905,
+              "last_step": 348671
             }
           ]
         },
@@ -50694,6 +50928,12 @@
               "execution_count": 35,
               "first_step": 336195,
               "last_step": 632558
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 11,
+              "first_step": 268947,
+              "last_step": 348713
             }
           ]
         },
@@ -50714,6 +50954,12 @@
               "execution_count": 35,
               "first_step": 336196,
               "last_step": 632559
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 11,
+              "first_step": 268948,
+              "last_step": 348714
             }
           ]
         },
@@ -50734,6 +50980,12 @@
               "execution_count": 29,
               "first_step": 336207,
               "last_step": 632570
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 10,
+              "first_step": 268959,
+              "last_step": 348725
             }
           ]
         },
@@ -50754,6 +51006,12 @@
               "execution_count": 29,
               "first_step": 336208,
               "last_step": 632571
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 10,
+              "first_step": 268960,
+              "last_step": 348726
             }
           ]
         },
@@ -50774,6 +51032,12 @@
               "execution_count": 131,
               "first_step": 336209,
               "last_step": 632708
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 32,
+              "first_step": 268961,
+              "last_step": 348863
             }
           ]
         },
@@ -50794,6 +51058,12 @@
               "execution_count": 131,
               "first_step": 336210,
               "last_step": 632709
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 32,
+              "first_step": 268962,
+              "last_step": 348864
             }
           ]
         },
@@ -50814,6 +51084,12 @@
               "execution_count": 131,
               "first_step": 336211,
               "last_step": 632710
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 32,
+              "first_step": 268963,
+              "last_step": 348865
             }
           ]
         },
@@ -50834,6 +51110,12 @@
               "execution_count": 131,
               "first_step": 336212,
               "last_step": 632711
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 32,
+              "first_step": 268964,
+              "last_step": 348866
             }
           ]
         },
@@ -50854,6 +51136,12 @@
               "execution_count": 131,
               "first_step": 336213,
               "last_step": 632712
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 32,
+              "first_step": 268965,
+              "last_step": 348867
             }
           ]
         },
@@ -50874,6 +51162,12 @@
               "execution_count": 102,
               "first_step": 336214,
               "last_step": 632577
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 22,
+              "first_step": 268966,
+              "last_step": 348732
             }
           ]
         },
@@ -50894,6 +51188,12 @@
               "execution_count": 102,
               "first_step": 336215,
               "last_step": 632578
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 22,
+              "first_step": 268967,
+              "last_step": 348733
             }
           ]
         },
@@ -50914,6 +51214,12 @@
               "execution_count": 102,
               "first_step": 336216,
               "last_step": 632579
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 22,
+              "first_step": 268968,
+              "last_step": 348734
             }
           ]
         },
@@ -50934,6 +51240,12 @@
               "execution_count": 102,
               "first_step": 336229,
               "last_step": 632592
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 22,
+              "first_step": 268981,
+              "last_step": 348747
             }
           ]
         },
@@ -50954,6 +51266,12 @@
               "execution_count": 102,
               "first_step": 336230,
               "last_step": 632593
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 22,
+              "first_step": 268982,
+              "last_step": 348748
             }
           ]
         },
@@ -50974,6 +51292,12 @@
               "execution_count": 102,
               "first_step": 336231,
               "last_step": 632594
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 22,
+              "first_step": 268983,
+              "last_step": 348749
             }
           ]
         },
@@ -50994,6 +51318,12 @@
               "execution_count": 102,
               "first_step": 336246,
               "last_step": 632609
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 22,
+              "first_step": 268998,
+              "last_step": 348764
             }
           ]
         },
@@ -51014,6 +51344,12 @@
               "execution_count": 102,
               "first_step": 336247,
               "last_step": 632610
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 22,
+              "first_step": 268999,
+              "last_step": 348765
             }
           ]
         },
@@ -51034,6 +51370,12 @@
               "execution_count": 102,
               "first_step": 336248,
               "last_step": 632611
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 22,
+              "first_step": 269000,
+              "last_step": 348766
             }
           ]
         },
@@ -51054,6 +51396,12 @@
               "execution_count": 102,
               "first_step": 336249,
               "last_step": 632612
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 22,
+              "first_step": 269001,
+              "last_step": 348767
             }
           ]
         },
@@ -51074,6 +51422,12 @@
               "execution_count": 102,
               "first_step": 336250,
               "last_step": 632613
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 22,
+              "first_step": 269002,
+              "last_step": 348768
             }
           ]
         },
@@ -51094,6 +51448,12 @@
               "execution_count": 102,
               "first_step": 336251,
               "last_step": 632614
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 22,
+              "first_step": 269003,
+              "last_step": 348769
             }
           ]
         },
@@ -51114,6 +51474,12 @@
               "execution_count": 102,
               "first_step": 336265,
               "last_step": 632628
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 22,
+              "first_step": 269017,
+              "last_step": 348783
             }
           ]
         },
@@ -51134,6 +51500,12 @@
               "execution_count": 102,
               "first_step": 336266,
               "last_step": 632629
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 22,
+              "first_step": 269018,
+              "last_step": 348784
             }
           ]
         },
@@ -51154,6 +51526,12 @@
               "execution_count": 102,
               "first_step": 336267,
               "last_step": 632630
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 22,
+              "first_step": 269019,
+              "last_step": 348785
             }
           ]
         },
@@ -51174,6 +51552,12 @@
               "execution_count": 42,
               "first_step": 343714,
               "last_step": 620914
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 10,
+              "first_step": 277564,
+              "last_step": 334610
             }
           ]
         },
@@ -51194,6 +51578,12 @@
               "execution_count": 42,
               "first_step": 343753,
               "last_step": 620953
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 10,
+              "first_step": 277603,
+              "last_step": 334649
             }
           ]
         },
@@ -51214,6 +51604,12 @@
               "execution_count": 42,
               "first_step": 343754,
               "last_step": 620954
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 10,
+              "first_step": 277604,
+              "last_step": 334650
             }
           ]
         },
@@ -51234,6 +51630,12 @@
               "execution_count": 42,
               "first_step": 343755,
               "last_step": 620955
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 10,
+              "first_step": 277605,
+              "last_step": 334651
             }
           ]
         },
@@ -51254,6 +51656,12 @@
               "execution_count": 42,
               "first_step": 343756,
               "last_step": 620956
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 10,
+              "first_step": 277606,
+              "last_step": 334652
             }
           ]
         },
@@ -51274,6 +51682,12 @@
               "execution_count": 42,
               "first_step": 343776,
               "last_step": 620976
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 10,
+              "first_step": 277626,
+              "last_step": 334672
             }
           ]
         },
@@ -51294,6 +51708,12 @@
               "execution_count": 60,
               "first_step": 336268,
               "last_step": 632631
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 12,
+              "first_step": 269020,
+              "last_step": 348786
             }
           ]
         },
@@ -51314,6 +51734,12 @@
               "execution_count": 60,
               "first_step": 336269,
               "last_step": 632632
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 12,
+              "first_step": 269021,
+              "last_step": 348787
             }
           ]
         },
@@ -51334,6 +51760,12 @@
               "execution_count": 60,
               "first_step": 336270,
               "last_step": 632633
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 12,
+              "first_step": 269022,
+              "last_step": 348788
             }
           ]
         },
@@ -51354,6 +51786,12 @@
               "execution_count": 60,
               "first_step": 336283,
               "last_step": 632646
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 12,
+              "first_step": 269035,
+              "last_step": 348801
             }
           ]
         },
@@ -51374,6 +51812,12 @@
               "execution_count": 60,
               "first_step": 336284,
               "last_step": 632647
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 12,
+              "first_step": 269036,
+              "last_step": 348802
             }
           ]
         },
@@ -51394,6 +51838,12 @@
               "execution_count": 60,
               "first_step": 336285,
               "last_step": 632648
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 12,
+              "first_step": 269037,
+              "last_step": 348803
             }
           ]
         },
@@ -51414,6 +51864,12 @@
               "execution_count": 60,
               "first_step": 336286,
               "last_step": 632649
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 12,
+              "first_step": 269038,
+              "last_step": 348804
             }
           ]
         },
@@ -51534,6 +51990,12 @@
               "execution_count": 60,
               "first_step": 336287,
               "last_step": 632650
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 12,
+              "first_step": 269039,
+              "last_step": 348805
             }
           ]
         },
@@ -51554,6 +52016,12 @@
               "execution_count": 60,
               "first_step": 336288,
               "last_step": 632651
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 12,
+              "first_step": 269040,
+              "last_step": 348806
             }
           ]
         },
@@ -51574,6 +52042,12 @@
               "execution_count": 60,
               "first_step": 336289,
               "last_step": 632652
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 12,
+              "first_step": 269041,
+              "last_step": 348807
             }
           ]
         },
@@ -51594,6 +52068,12 @@
               "execution_count": 60,
               "first_step": 336290,
               "last_step": 632653
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 10,
+              "first_step": 269042,
+              "last_step": 348808
             }
           ]
         },
@@ -51614,6 +52094,12 @@
               "execution_count": 60,
               "first_step": 336291,
               "last_step": 632654
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 10,
+              "first_step": 269043,
+              "last_step": 348809
             }
           ]
         },
@@ -51634,6 +52120,12 @@
               "execution_count": 60,
               "first_step": 336292,
               "last_step": 632655
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 10,
+              "first_step": 269044,
+              "last_step": 348810
             }
           ]
         },
@@ -51654,6 +52146,12 @@
               "execution_count": 60,
               "first_step": 336307,
               "last_step": 632670
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 12,
+              "first_step": 269059,
+              "last_step": 348825
             }
           ]
         },
@@ -51674,6 +52172,12 @@
               "execution_count": 60,
               "first_step": 336308,
               "last_step": 632671
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 12,
+              "first_step": 269060,
+              "last_step": 348826
             }
           ]
         },
@@ -51694,6 +52198,40 @@
               "execution_count": 60,
               "first_step": 336309,
               "last_step": 632672
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 12,
+              "first_step": 269061,
+              "last_step": 348827
+            }
+          ]
+        },
+        {
+          "offset": 32299,
+          "bytes": "CD46A0",
+          "decoded": "CALL A046H",
+          "runtime_pc": 41003,
+          "runs": [
+            {
+              "run": "PICTURE",
+              "execution_count": 2,
+              "first_step": 327037,
+              "last_step": 327215
+            }
+          ]
+        },
+        {
+          "offset": 32302,
+          "bytes": "CD56A0",
+          "decoded": "CALL A056H",
+          "runtime_pc": 41006,
+          "runs": [
+            {
+              "run": "PICTURE",
+              "execution_count": 2,
+              "first_step": 327076,
+              "last_step": 327254
             }
           ]
         },
@@ -51714,6 +52252,12 @@
               "execution_count": 102,
               "first_step": 336310,
               "last_step": 632673
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 22,
+              "first_step": 269062,
+              "last_step": 348828
             }
           ]
         },
@@ -51734,6 +52278,12 @@
               "execution_count": 102,
               "first_step": 336311,
               "last_step": 632674
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 22,
+              "first_step": 269063,
+              "last_step": 348829
             }
           ]
         },
@@ -51754,6 +52304,12 @@
               "execution_count": 102,
               "first_step": 336312,
               "last_step": 632675
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 22,
+              "first_step": 269064,
+              "last_step": 348830
             }
           ]
         },
@@ -51774,6 +52330,12 @@
               "execution_count": 102,
               "first_step": 336342,
               "last_step": 632705
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 22,
+              "first_step": 269094,
+              "last_step": 348860
             }
           ]
         },
@@ -51794,6 +52356,12 @@
               "execution_count": 102,
               "first_step": 336343,
               "last_step": 632706
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 22,
+              "first_step": 269095,
+              "last_step": 348861
             }
           ]
         },
@@ -51814,6 +52382,12 @@
               "execution_count": 102,
               "first_step": 336344,
               "last_step": 632707
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 22,
+              "first_step": 269096,
+              "last_step": 348862
             }
           ]
         },
@@ -51834,6 +52408,12 @@
               "execution_count": 29,
               "first_step": 336350,
               "last_step": 632713
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 10,
+              "first_step": 269102,
+              "last_step": 348868
             }
           ]
         },
@@ -51854,6 +52434,12 @@
               "execution_count": 29,
               "first_step": 336351,
               "last_step": 632714
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 10,
+              "first_step": 269103,
+              "last_step": 348869
             }
           ]
         },
@@ -51874,6 +52460,12 @@
               "execution_count": 29,
               "first_step": 336352,
               "last_step": 632715
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 10,
+              "first_step": 269104,
+              "last_step": 348870
             }
           ]
         }
@@ -51950,6 +52542,38 @@
           "bytes": "CD539F",
           "execution_count": 12,
           "first_step": 424591
+        },
+        {
+          "run": "PICTURE",
+          "image": "PLI1.OVL",
+          "offset": 32467,
+          "bytes": "CD539F",
+          "execution_count": 8,
+          "first_step": 268747
+        },
+        {
+          "run": "PICTURE",
+          "image": "PLI1.OVL",
+          "offset": 32873,
+          "bytes": "CD539F",
+          "execution_count": 10,
+          "first_step": 264623
+        },
+        {
+          "run": "PICTURE",
+          "image": "PLI1.OVL",
+          "offset": 33003,
+          "bytes": "CD539F",
+          "execution_count": 2,
+          "first_step": 303045
+        },
+        {
+          "run": "PICTURE",
+          "image": "PLI1.OVL",
+          "offset": 33131,
+          "bytes": "CD539F",
+          "execution_count": 3,
+          "first_step": 321857
         }
       ],
       "observed_return_offsets": [
@@ -52126,7 +52750,7 @@
           }
         }
       },
-      "behavioral_contract": "Test end[AE35] against begin[AE34]: equal returns +7D5D (MINIMAL12, FIZZBUZ40). Otherwise RAR of AA1A followed by JNC tests original bit0: set returns +7D65 (2/8). Work paths (7/29) save cursor=end. In both runs 202B.bit0 clear and 2011 zero enter reverse processing. Predecrement cursor modulo256 and compare with u8(begin-1); equality resets forward cursor to fresh begin. For other reverse positions, complete7A4D maps cursor; CPI F7/JNC skips recursive processing iff mapped>=F7 (STATIC / UNOBSERVED). All observed mappings are belowF7. Call partial7C1B at fresh cursor, publish its direct returned A at AE50, then independently call complete7B7A at the same outer cursor and replace AE4F with its stopping position. Predecrement that stopping position again on the next outer iteration. No threshold is applied to the later child A; FIZZBUZ caches FE from a default child despite the earlier mapped<F7 guard.\nFIZZBUZ contains six parent windows whose direct7D9D child has Pass13 special/fallback descendants. No direct child itself takes those new arms. In parent618086, direct child618131/input6 maps0F/default and caches initial auxiliary15 in its F4 before recursion. Its descendants include special1E at618240/input5 and fallback17/predecessor05 at619581/input2. Direct child returns its original F4=15, not the descendant clamp result or its overwritten F2, despite equal bytes. AE50=15 is written at620118; independent7B7A(input6) returns0; AE4F becomes0 and next predecrementFF equals begin0-minus1. Forward cursor then resets0 and visits0..6. Special AD0D=15 publication at619714 is a separate channel, read later by forward7AA9 at621220 and emitted as primary auxiliary at621231; latest recorded guest writer, address and chronology establish the local relation, not equality alone. Five other parents with fallback descendants return top-level A1/1/1/1/FE and use independent stopping cursors1/0/0/0/0. The first processes a further reverse position0 before forward reset.\nForward work exits when unsigned u8(end-1)<fresh cursor. In102 FIZZBUZ iterations (MINIMAL16), fresh7A4D output is saved at AE50 and passed in C to partial resident0EF6. Fresh mapped cache<F7 invokes complete7B64: save input AE47 and return bits3..5 of fixed byte[1B4B+mapped]. Save that arbitrary transformed byte at AE50. Observed attribute2 (42/7) calls7E46 then7E56: select fresh word[AB49+2*position_map[cursor]], cache it atAE52/53 before low emission, then reread AE52/53 for high emission. Attribute3 (7/1) reads primary auxiliary to AE51, then independently reads/emits second auxiliary AD9D and emits primary AD08; attribute4 (53/8) emits primary only after mapped byte. These give253/40 separately identified emitter arguments. Values, returned flags, mapped/auxiliary tables and cache carriers do not merge.\nSTATIC / UNOBSERVED: attributes0/1 would emit mapped-byte then word-low; attributes5/7 would emit mapped-byte, primary auxiliary, word-low, word-high; attribute6 would suppress primary emission at CPI06/JZ7E19 but still enter the attr>=5 pair via CPI05/JC7E28. Exact RAW bytes7E2B..7E30 encode CALL7E46 thenCALL7E56; neither is observed in either run, so no promotion. Attribute3 second-auxiliary channel remains distinct from the suppressed primary channel.\nAfter each observed iteration complete7BA2 publishes oldAE33 to the mapped AAB4 slot, independently rereads position_map[cursor] and stores the fresh index toAE33. Increment fresh AE4F; JNZ repeats iff nonzero. No forward INR->00 is observed; reverse predecrement0->FF is a different demonstrated event. Normal work exit publishes end=fresh begin then consumes the original hardware return. A is not a procedure-level Boolean status. One FIZZBUZ mapped-byte emission at478274 within parent472976 writes index127, increments to128, delegates resident buffer calls, resets index0 and returns A0 with actual flags; nonhistorical RET witnesses478324/478364 at runtime0005 remain opaque subtree effects. Parent continues via fresh cache/comparisons; no emission argument or helper register preservation is inferred from returned flags. No global source-language/table/recursive ownership or arbitrary termination theorem is claimed."
+      "behavioral_contract": "Test end[AE35] against begin[AE34]: equal returns +7D5D (MINIMAL12, FIZZBUZ40). Otherwise RAR of AA1A followed by JNC tests original bit0: set returns +7D65 (2/8). Work paths (7/29) save cursor=end. In both runs 202B.bit0 clear and 2011 zero enter reverse processing. Predecrement cursor modulo256 and compare with u8(begin-1); equality resets forward cursor to fresh begin. For other reverse positions, complete7A4D maps cursor; CPI F7/JNC skips recursive processing iff mapped>=F7 (STATIC / UNOBSERVED). All observed mappings are belowF7. Call partial7C1B at fresh cursor, publish its direct returned A at AE50, then independently call complete7B7A at the same outer cursor and replace AE4F with its stopping position. Predecrement that stopping position again on the next outer iteration. No threshold is applied to the later child A; FIZZBUZ caches FE from a default child despite the earlier mapped<F7 guard.\nFIZZBUZ contains six parent windows whose direct7D9D child has Pass13 special/fallback descendants. No direct child itself takes those new arms. In parent618086, direct child618131/input6 maps0F/default and caches initial auxiliary15 in its F4 before recursion. Its descendants include special1E at618240/input5 and fallback17/predecessor05 at619581/input2. Direct child returns its original F4=15, not the descendant clamp result or its overwritten F2, despite equal bytes. AE50=15 is written at620118; independent7B7A(input6) returns0; AE4F becomes0 and next predecrementFF equals begin0-minus1. Forward cursor then resets0 and visits0..6. Special AD0D=15 publication at619714 is a separate channel, read later by forward7AA9 at621220 and emitted as primary auxiliary at621231; latest recorded guest writer, address and chronology establish the local relation, not equality alone. Five other parents with fallback descendants return top-level A1/1/1/1/FE and use independent stopping cursors1/0/0/0/0. The first processes a further reverse position0 before forward reset.\nForward work exits when unsigned u8(end-1)<fresh cursor. In102 FIZZBUZ iterations (MINIMAL16), fresh7A4D output is saved at AE50 and passed in C to partial resident0EF6. Fresh mapped cache<F7 invokes complete7B64: save input AE47 and return bits3..5 of fixed byte[1B4B+mapped]. Save that arbitrary transformed byte at AE50. Observed attribute2 (42/7) calls7E46 then7E56: select fresh word[AB49+2*position_map[cursor]], cache it atAE52/53 before low emission, then reread AE52/53 for high emission. Attribute3 (7/1) reads primary auxiliary to AE51, then independently reads/emits second auxiliary AD9D and emits primary AD08; attribute4 (53/8) emits primary only after mapped byte. These give253/40 separately identified emitter arguments. Values, returned flags, mapped/auxiliary tables and cache carriers do not merge.\nOBSERVED PICTURE parent326116, caller7ED3, begin0/end3: forward cursor1 maps18 andcursor2 mapsB0. Actual7B64 reads bytes31 at1B63 andB1 at1BFB, returns6 inboth; chronological table evidence has no prior write to either address. Parent7DDE publishes6 toAE50. Complete7AA9 still reads primary auxiliary0 (AD09/AD0A) and7DFE caches0 atAE51. CPI06 at7E17 producesZ1; JZ7E19 targets7E23 andskips7E1C/7E1F/7E20 entirely, so primary0 isnotemitted. CPI05 at7E26 producesCY0 on6; JC7E28 isnot taken. At7E2B call7E46, then at7E2E call7E56. Thelow wrapper freshly selects word0 atAB4B/AB4D through currentcursor/map, explicitly writes AE52/53=0 beforelow emission; high wrapper freshly rereads that same-valued cache andemits high0. Observed channels are mapped18-orB0, word-low0, word-high0; theunemitted primary0, cachedword0 andtwo emittedzeros aredifferent producers/addresses/calls. Actual writes establishcache ancestry evenwhenoldbytesalready0. Low/high wrapperreturnsareemitterstates, not wordresults; following7BA2 reloadscursor1/2 independently andpublishes oldAE33=0/1 toAAB5/AAB6, thenfresh mapindex1/2 toAE33. CursorINR/JNZ ownsloopflags; noBoolean/data provenance inferredfrompreceding flags. These dynamically observed sixbytes are understood. STATIC / UNOBSERVED: attr0/1 low-only, attr5/7 primary-plus-word-pair; attr1/7 absent onlyfrominitialimage, notprovenimpossibleafterruntimewrites. Attribute3 second-auxiliary channel remains distinct fromsuppressedprimary.\nAfter each observed iteration complete7BA2 publishes oldAE33 to the mapped AAB4 slot, independently rereads position_map[cursor] and stores the fresh index toAE33. Increment fresh AE4F; JNZ repeats iff nonzero. No forward INR->00 is observed; reverse predecrement0->FF is a different demonstrated event. Normal work exit publishes end=fresh begin then consumes the original hardware return. A is not a procedure-level Boolean status. One FIZZBUZ mapped-byte emission at478274 within parent472976 writes index127, increments to128, delegates resident buffer calls, resets index0 and returns A0 with actual flags; nonhistorical RET witnesses478324/478364 at runtime0005 remain opaque subtree effects. Parent continues via fresh cache/comparisons; no emission argument or helper register preservation is inferred from returned flags. No global source-language/table/recursive ownership or arbitrary termination theorem is claimed."
     },
     {
       "id": "PLI.COM+1376",
