@@ -7,3 +7,8 @@
  (name analyze)
  (public_name pli80-analyze)
  (libraries pli80 analysis cpm runner unix))
+
+(executable
+ (name native_7bbf)
+ (public_name pli80-native-7bbf)
+ (libraries pli80 pli80_host runner unix))

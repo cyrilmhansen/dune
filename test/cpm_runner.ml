@@ -686,6 +686,7 @@ let test_runner_errors () =
   | Error (Runner.Cpu_error _) -> failwith "wrong error for infinite NOP program"
   | Error (Runner.Bdos_error _) -> failwith "wrong error for infinite NOP program"
   | Error (Runner.Invalid_step_limit _) -> failwith "wrong error for infinite NOP program"
+  | Error (Runner.Invalid_host_transition _) -> failwith "unexpected native transition error"
   | Error (Runner.Invalid_command_tail _) -> failwith "wrong error for infinite NOP program"
   | Ok _ -> failwith "infinite NOP program unexpectedly terminated");
   assert (!steps = 3);
@@ -699,6 +700,7 @@ let test_runner_errors () =
   | Error (Runner.Bdos_error _) -> failwith "wrong runner error for halted CPU"
   | Error (Runner.Step_limit_exceeded _) -> failwith "wrong runner error for halted CPU"
   | Error (Runner.Invalid_step_limit _) -> failwith "wrong runner error for halted CPU"
+  | Error (Runner.Invalid_host_transition _) -> failwith "unexpected native transition error"
   | Error (Runner.Invalid_command_tail _) -> failwith "wrong runner error for halted CPU"
   | Ok _ -> failwith "halted CPU unexpectedly terminated");
   (match
@@ -712,6 +714,7 @@ let test_runner_errors () =
   | Error (Runner.Bdos_error (Cpm.Bdos.Filesystem_model_limit _)) -> failwith "wrong BDOS error"
   | Error (Runner.Step_limit_exceeded _) -> failwith "wrong runner error for unsupported BDOS function"
   | Error (Runner.Invalid_step_limit _) -> failwith "wrong runner error for unsupported BDOS function"
+  | Error (Runner.Invalid_host_transition _) -> failwith "unexpected native transition error"
   | Error (Runner.Invalid_command_tail _) -> failwith "wrong runner error for unsupported BDOS function"
   | Ok _ -> failwith "unsupported BDOS function unexpectedly ran");
   (match Runner.run_bytes ~max_steps:0 ~output:(fun _ -> ()) hello_com with
@@ -721,6 +724,7 @@ let test_runner_errors () =
   | Error (Runner.Bdos_error _) -> failwith "wrong invalid step limit error"
   | Error (Runner.Step_limit_exceeded _) -> failwith "wrong invalid step limit error"
   | Error (Runner.Invalid_step_limit _) -> failwith "wrong invalid step limit error"
+  | Error (Runner.Invalid_host_transition _) -> failwith "unexpected native transition error"
   | Error (Runner.Invalid_command_tail _) -> failwith "wrong invalid step limit error"
   | Ok _ -> failwith "zero instruction limit unexpectedly ran")
 

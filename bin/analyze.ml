@@ -89,8 +89,10 @@ let error_text = function
   |Run_error e->"compiler run failed: "^(match e with
     |Runner.Load_error _->"COM load failed"|Cpu_error _->"CPU error"|Bdos_error _->"BDOS error"
     |Step_limit_exceeded{max_steps;steps}->Printf.sprintf"instruction budget exhausted at %d/%d"steps max_steps
+    |Invalid_host_transition s->"invalid host transition: "^s
     |Invalid_step_limit _->"invalid step limit"|Invalid_command_tail _->"invalid command tail")
   |Structure_requires_execution_map->"--structure requires --analysis execution, data, or path"
+  |Interception_requires_execution_only->"native interception requires execution-only analysis without structure/witnesses"
   |Witnesses_require_execution_map->"--event-witnesses requires --analysis execution, data, or path"
 
 let run_compiler (options : options) =

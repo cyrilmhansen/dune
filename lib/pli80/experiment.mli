@@ -43,7 +43,7 @@ type result = {
 }
 
 type error = Invalid_module_name of string | Filesystem_error of Cpm.Filesystem.error
-  | Run_error of Runner.error | Structure_requires_execution_map | Witnesses_require_execution_map
+  | Run_error of Runner.error | Structure_requires_execution_map | Witnesses_require_execution_map | Interception_requires_execution_only
 
 val analysis_name : analysis -> string
 val parse_analysis : string -> (analysis, string) Stdlib.result
@@ -57,4 +57,9 @@ val output_names : string -> ((string * string), error) Stdlib.result
 val normalize_cpm_source : bytes -> bytes
 val prepare_source : normalize:bool -> bytes -> bytes
 val sha256_hex : bytes -> string
-val run : ?structure:bool -> ?event_witnesses:bool -> analysis:analysis -> input -> (result, error) Stdlib.result
+
+(** Read-only hooks preserve normal execution/capture behavior. Interception is
+    limited to execution-only analysis without structure, witnesses or provenance;
+    native writes to historical-image cells are rejected. Real guest Steps and
+    host transitions remain distinct. Record observers receive BDOS transfer data. *)
+val run : ?on_bdos_record:(step_index:int -> Cpm.Bdos.event -> unit) -> ?intercept:(origin:Analysis.Execution_map.origin -> step_index:int -> Runner.instruction_boundary -> Runner.instruction_action) -> ?on_guest_step:(step_index:int -> before:Runner.state_snapshot -> after:Runner.state_snapshot -> I8080.Step.t -> unit) -> ?on_before_instruction:(origin:Analysis.Execution_map.origin -> step_index:int -> Runner.instruction_boundary -> unit) -> ?structure:bool -> ?event_witnesses:bool -> analysis:analysis -> input -> (result, error) Stdlib.result

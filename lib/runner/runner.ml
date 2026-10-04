@@ -7,6 +7,7 @@ type run_result = {
   data_bytes_read : int;
   data_bytes_written : int;
   data_bytes_total : int;
+  host_transitions : int;
 }
 
 type state_snapshot = {
@@ -24,6 +25,15 @@ let snapshot state =
     auxiliary_carry = I8080.Flags.auxiliary_carry flags;
     parity = I8080.Flags.parity flags; carry = I8080.Flags.carry flags }
 
+type instruction_boundary = {
+  state : state_snapshot;
+  read_memory : int -> int;
+  copy_memory : unit -> bytes;
+}
+
+type host_transition = { memory_writes : (int * int) list; next_state : state_snapshot }
+type instruction_action = Continue_guest_execution | Apply_host_transition of host_transition
+
 type event =
   | Step of I8080.Step.t
   | Bdos_call of { step_index : int; function_number : int; de : int }
@@ -36,6 +46,7 @@ type error =
   | Step_limit_exceeded of { max_steps : int; steps : int }
   | Invalid_step_limit of int
   | Invalid_command_tail of int
+  | Invalid_host_transition of string
 
 let default_max_steps = 100_000
 
@@ -48,11 +59,11 @@ let data_access_counts step =
       | I8080.Step.Write _ -> reads, writes + 1)
     (0, 0) (I8080.Step.memory_accesses step)
 
-let completed_run ~termination ~steps ~t_states ~data_bytes_read ~data_bytes_written =
+let completed_run ~termination ~steps ~t_states ~data_bytes_read ~data_bytes_written ~host_transitions =
   { termination; steps; t_states; data_bytes_read; data_bytes_written;
-    data_bytes_total = data_bytes_read + data_bytes_written }
+    data_bytes_total = data_bytes_read + data_bytes_written; host_transitions }
 
-let run_loaded ~personality ~max_steps ~on_step ~on_step_state ~on_step_state_pair ~on_event ~on_bdos_event ~on_bdos_file_event ~on_bdos_effect ~on_bdos_effect_at ~on_bdos_call_state ~on_bdos_resume ~on_start ~on_start_state ~on_console_output ~output ~filesystem ~command_tail memory loaded =
+let run_loaded ~personality ~max_steps ~on_step ~on_step_state ~on_step_state_pair ~on_before_instruction ~intercept ~on_event ~on_bdos_event ~on_bdos_file_event ~on_bdos_effect ~on_bdos_effect_at ~on_bdos_call_state ~on_bdos_resume ~on_start ~on_start_state ~on_console_output ~output ~filesystem ~command_tail memory loaded =
   let process = Cpm.Personality.launch personality ~filesystem ~command_tail memory in
   let state = I8080.State.create () in
   I8080.State.set_pc state (Cpm.Personality.entry_point personality loaded);
@@ -61,11 +72,12 @@ let run_loaded ~personality ~max_steps ~on_step ~on_step_state ~on_step_state_pa
   on_start_state (snapshot state);
   let bus = I8080.Bus.create memory in
   let cpu = I8080.Cpu.create ~state ~bus in
+  let host_transitions = ref 0 in
   let rec run steps t_states data_bytes_read data_bytes_written =
     if I8080.State.pc state = Cpm.Personality.warm_boot_address personality then (
       on_event (Termination { step_index = steps; reason = Warm_boot });
       Ok (completed_run ~termination:Warm_boot ~steps ~t_states
-            ~data_bytes_read ~data_bytes_written))
+            ~data_bytes_read ~data_bytes_written ~host_transitions:!host_transitions))
     else if I8080.State.pc state = Cpm.Personality.bdos_entry_address personality then
       let function_number = I8080.State.c state in
       let dma = Cpm.Personality.dma personality process in
@@ -85,15 +97,40 @@ let run_loaded ~personality ~max_steps ~on_step ~on_step_state ~on_step_state_pa
           let reason = Bdos_function function_number in
           on_event (Termination { step_index = steps; reason });
           Ok (completed_run ~termination:reason ~steps ~t_states
-                ~data_bytes_read ~data_bytes_written)
+                ~data_bytes_read ~data_bytes_written ~host_transitions:!host_transitions)
       | Ok Cpm.Bdos.Continue ->
           on_bdos_resume ~step_index:steps ~state:(snapshot state);
           execute_step steps t_states data_bytes_read data_bytes_written)
     else execute_step steps t_states data_bytes_read data_bytes_written
   and execute_step steps t_states data_bytes_read data_bytes_written =
-    if steps >= max_steps then Error (Step_limit_exceeded { max_steps; steps })
+    if steps + !host_transitions >= max_steps then Error (Step_limit_exceeded { max_steps; steps })
     else
       let before = snapshot state in
+      let boundary={state=before;
+        read_memory=(fun a -> I8080.Memory.read memory a);
+        copy_memory=(fun () -> I8080.Memory.read_range memory ~address:0 ~length:65536)} in
+      on_before_instruction ~step_index:steps boundary;
+      match intercept ~step_index:steps boundary with
+      |Apply_host_transition transition->
+        let s=transition.next_state in
+        let valid maximum n=n>=0 && n<=maximum in
+        if not(List.for_all(valid 255)[s.a;s.b;s.c;s.d;s.e;s.h;s.l]
+          && valid 65535 s.sp && valid 65535 s.pc
+          && List.for_all(fun(a,v)->valid 65535 a && valid 255 v)transition.memory_writes)
+        then Error(Invalid_host_transition "register, address or byte out of bounds")
+        else (
+          List.iter(fun(a,v)->I8080.Memory.write memory a v)transition.memory_writes;
+          I8080.State.set_a state s.a;I8080.State.set_b state s.b;I8080.State.set_c state s.c;
+          I8080.State.set_d state s.d;I8080.State.set_e state s.e;
+          I8080.State.set_h state s.h;I8080.State.set_l state s.l;
+          I8080.State.set_sp state s.sp;I8080.State.set_pc state s.pc;
+          let flags=I8080.State.flags state in
+          I8080.Flags.set_sign flags s.sign;I8080.Flags.set_zero flags s.zero;
+          I8080.Flags.set_auxiliary_carry flags s.auxiliary_carry;
+          I8080.Flags.set_parity flags s.parity;I8080.Flags.set_carry flags s.carry;
+          incr host_transitions;
+          run steps t_states data_bytes_read data_bytes_written)
+      |Continue_guest_execution->
       match I8080.Cpu.step cpu with
       | Error error -> Error (Cpu_error error)
       | Ok step ->
@@ -108,7 +145,7 @@ let run_loaded ~personality ~max_steps ~on_step ~on_step_state ~on_step_state_pa
   in
   run 0 0 0 0
 
-let run_with_loader ~personality ~max_steps ~on_step ~on_step_state ~on_step_state_pair ~on_event ~on_bdos_event ~on_bdos_file_event ~on_bdos_effect ~on_bdos_effect_at ~on_bdos_call_state ~on_bdos_resume ~on_start ~on_start_state ~on_console_output ~output ~filesystem ~command_tail load =
+let run_with_loader ~personality ~max_steps ~on_step ~on_step_state ~on_step_state_pair ~on_before_instruction ~intercept ~on_event ~on_bdos_event ~on_bdos_file_event ~on_bdos_effect ~on_bdos_effect_at ~on_bdos_call_state ~on_bdos_resume ~on_start ~on_start_state ~on_console_output ~output ~filesystem ~command_tail load =
   if max_steps <= 0 then Error (Invalid_step_limit max_steps)
   else if Bytes.length command_tail > Cpm.Personality.maximum_command_tail_length personality then Error (Invalid_command_tail (Bytes.length command_tail))
   else
@@ -117,11 +154,13 @@ let run_with_loader ~personality ~max_steps ~on_step ~on_step_state ~on_step_sta
     match load memory with
     | Error error -> Error (Load_error error)
     | Ok loaded ->
-        run_loaded ~personality ~max_steps ~on_step ~on_step_state ~on_step_state_pair ~on_event ~on_bdos_event ~on_bdos_file_event ~on_bdos_effect ~on_bdos_effect_at ~on_bdos_call_state ~on_bdos_resume ~on_start ~on_start_state ~on_console_output ~output ~filesystem ~command_tail memory loaded
+        run_loaded ~personality ~max_steps ~on_step ~on_step_state ~on_step_state_pair ~on_before_instruction ~intercept ~on_event ~on_bdos_event ~on_bdos_file_event ~on_bdos_effect ~on_bdos_effect_at ~on_bdos_call_state ~on_bdos_resume ~on_start ~on_start_state ~on_console_output ~output ~filesystem ~command_tail memory loaded
 
 let run_bytes ?(personality = default_personality) ?(max_steps = default_max_steps) ?(on_step = fun _ -> ())
     ?(on_step_state = fun ~step_index:_ _ _ -> ())
     ?(on_step_state_pair = fun ~step_index:_ ~before:_ ~after:_ _ -> ())
+    ?(on_before_instruction = fun ~step_index:_ _ -> ())
+    ?(intercept = fun ~step_index:_ _ -> Continue_guest_execution)
     ?(on_event = fun _ -> ()) ?(on_bdos_event = fun ~step_index:_ _ -> ())
     ?(on_bdos_file_event = fun ~step_index:_ _ -> ())
     ?(on_console_output = fun ~step_index:_ _ -> ())
@@ -132,12 +171,14 @@ let run_bytes ?(personality = default_personality) ?(max_steps = default_max_ste
     ?(on_start = fun _ -> ()) ?filesystem
     ?(on_start_state = fun _ -> ())
     ?(command_tail = Bytes.empty) ~output bytes =
-  run_with_loader ~personality ~max_steps ~on_step ~on_step_state ~on_step_state_pair ~on_event ~on_bdos_event ~on_bdos_file_event ~on_bdos_effect ~on_bdos_effect_at ~on_bdos_call_state ~on_bdos_resume ~on_start ~on_start_state ~on_console_output ~output ~filesystem ~command_tail (fun memory ->
+  run_with_loader ~personality ~max_steps ~on_step ~on_step_state ~on_step_state_pair ~on_before_instruction ~intercept ~on_event ~on_bdos_event ~on_bdos_file_event ~on_bdos_effect ~on_bdos_effect_at ~on_bdos_call_state ~on_bdos_resume ~on_start ~on_start_state ~on_console_output ~output ~filesystem ~command_tail (fun memory ->
       Cpm.Personality.load_bytes personality memory bytes)
 
 let run_file ?(personality = default_personality) ?(max_steps = default_max_steps) ?(on_step = fun _ -> ())
     ?(on_step_state = fun ~step_index:_ _ _ -> ())
     ?(on_step_state_pair = fun ~step_index:_ ~before:_ ~after:_ _ -> ())
+    ?(on_before_instruction = fun ~step_index:_ _ -> ())
+    ?(intercept = fun ~step_index:_ _ -> Continue_guest_execution)
     ?(on_event = fun _ -> ()) ?(on_bdos_event = fun ~step_index:_ _ -> ())
     ?(on_bdos_file_event = fun ~step_index:_ _ -> ())
     ?(on_console_output = fun ~step_index:_ _ -> ())
@@ -148,5 +189,5 @@ let run_file ?(personality = default_personality) ?(max_steps = default_max_step
     ?(on_start = fun _ -> ()) ?filesystem
     ?(on_start_state = fun _ -> ())
     ?(command_tail = Bytes.empty) ~output ~path () =
-  run_with_loader ~personality ~max_steps ~on_step ~on_step_state ~on_step_state_pair ~on_event ~on_bdos_event ~on_bdos_file_event ~on_bdos_effect ~on_bdos_effect_at ~on_bdos_call_state ~on_bdos_resume ~on_start ~on_start_state ~on_console_output ~output ~filesystem ~command_tail (fun memory ->
+  run_with_loader ~personality ~max_steps ~on_step ~on_step_state ~on_step_state_pair ~on_before_instruction ~intercept ~on_event ~on_bdos_event ~on_bdos_file_event ~on_bdos_effect ~on_bdos_effect_at ~on_bdos_call_state ~on_bdos_resume ~on_start ~on_start_state ~on_console_output ~output ~filesystem ~command_tail (fun memory ->
       Cpm.Personality.load_file personality memory ~path)

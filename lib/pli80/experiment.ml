@@ -30,7 +30,7 @@ type result = {
   timings:timings;
 }
 type error = Invalid_module_name of string | Filesystem_error of Cpm.Filesystem.error
-  | Run_error of Runner.error | Structure_requires_execution_map | Witnesses_require_execution_map
+  | Run_error of Runner.error | Structure_requires_execution_map | Witnesses_require_execution_map | Interception_requires_execution_only
 
 let analysis_name = function Run->"run"|Execution->"execution"|Data->"data"|Path->"path"
 let parse_analysis = function
@@ -150,11 +150,12 @@ let sha256_hex input =
   done;
   Array.to_list h |> List.map(Printf.sprintf "%08lx") |> String.concat ""
 
-let run ?(structure=false) ?(event_witnesses=false) ~analysis input =
+let run ?on_bdos_record ?intercept ?on_guest_step ?on_before_instruction ?(structure=false) ?(event_witnesses=false) ~analysis input =
   match validate_module_name input.module_name with
   |Error _ as error->error
   |Ok _ when structure && analysis=Run->Error Structure_requires_execution_map
   |Ok _ when event_witnesses && analysis=Run->Error Witnesses_require_execution_map
+  |Ok _ when intercept<>None && (analysis<>Execution || structure || event_witnesses)->Error Interception_requires_execution_only
   |Ok module_name->
     let setup_started=Unix.gettimeofday() in
     let filesystem=Cpm.Filesystem.create() in
@@ -232,6 +233,11 @@ let run ?(structure=false) ?(event_witnesses=false) ~analysis input =
               |Analysis.Execution_map.Unknown->None) in
           Analysis.Provenance.observe_step ~origin_at:resolve p ~step_index state step)provenance;
           if dynamic_structure<>None then last_sp:=Some state.Runner.sp) in
+      let on_step_state_pair=match on_step_state_pair,on_guest_step with
+        |None,None->None
+        |internal,external_->Some(fun ~step_index ~before ~after step->
+          Option.iter(fun f->f ~step_index ~before ~after step)internal;
+          Option.iter(fun f->f ~step_index ~before ~after step)external_) in
       let on_event=Option.map Analysis.Execution_map.observe_runner_event execution_map in
       let on_event=match on_event,event_witnesses with
         |None,None->None
@@ -246,6 +252,11 @@ let run ?(structure=false) ?(event_witnesses=false) ~analysis input =
         |None,None->None
         |callback,witnesses->Some(fun ~step_index event->Option.iter(fun f->f ~step_index event)callback;
           Option.iter(fun w->Analysis.Event_witness.observe_bdos_record w ~step_index event)witnesses) in
+      let on_bdos_event=match on_bdos_event,on_bdos_record with
+        |None,None->None
+        |internal,external_->Some(fun ~step_index event->
+          Option.iter(fun f->f ~step_index event)internal;
+          Option.iter(fun f->f ~step_index event)external_) in
       let on_bdos_file_event ~step_index (event:Cpm.Bdos.file_event)=
         Option.iter(fun w->Analysis.Event_witness.observe_file_operation w ~step_index event)event_witnesses;
         let operation=match event.operation with
@@ -261,6 +272,23 @@ let run ?(structure=false) ?(event_witnesses=false) ~analysis input =
       let setup_seconds=Unix.gettimeofday()-.setup_started in
       let execution_started=Unix.gettimeofday() in
       let run_result=Runner.run_bytes ~max_steps:input.max_steps ?on_step_state ?on_step_state_pair ?on_event ?on_bdos_event ?on_bdos_effect ?on_bdos_effect_at ?on_bdos_call_state ?on_bdos_resume
+        ?on_before_instruction:(Option.map (fun callback ~step_index boundary ->
+          let origin=match execution_map with None->Analysis.Execution_map.Unknown
+            |Some map->Analysis.Execution_map.origin_at map boundary.Runner.state.pc in
+          callback ~origin ~step_index boundary) on_before_instruction)
+        ?intercept:(Option.map (fun callback ~step_index boundary ->
+          let origin=match execution_map with None->Analysis.Execution_map.Unknown
+            |Some map->Analysis.Execution_map.origin_at map boundary.Runner.state.pc in
+          let action=callback ~origin ~step_index boundary in
+          (* Native data writes cannot silently retain historical code origins.
+             This bounded experiment rejects such writes instead of extending
+             execution/provenance/event models with synthetic instructions. *)
+          (match action,execution_map with
+           |Runner.Apply_host_transition t,Some map->List.iter(fun(a,_)->
+              match Analysis.Execution_map.origin_at map a with
+              |Analysis.Execution_map.Unknown->()
+              |_->invalid_arg "native write targets historical-image memory")t.memory_writes
+           |_->());action) intercept)
         ~on_start ?on_start_state ~filesystem ~command_tail:input.command_tail
         ~on_bdos_file_event ~on_console_output:(Console_capture.emit console)
         ~output:(fun _ -> ()) input.pli_com in

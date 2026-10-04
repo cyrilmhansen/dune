@@ -79,3 +79,8 @@
 (test
  (name event_witness)
  (libraries i8080 cpm runner analysis pli80))
+
+(test
+ (name native_packed_scan)
+ (deps (env_var RUNES_HOST_IMAGES))
+ (libraries pli80_host pli80 runner cpm i8080 analysis))

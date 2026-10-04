@@ -13,6 +13,9 @@ type run_result = {
   data_bytes_written : int;
   (** [data_bytes_read + data_bytes_written]. *)
   data_bytes_total : int;
+  host_transitions : int;
+  (** Native transitions are counted separately. Steps/t-states/data accesses
+      count only instructions actually executed by Cpu; no synthetic Steps. *)
 }
 
 type state_snapshot = {
@@ -20,6 +23,20 @@ type state_snapshot = {
   sp : int; pc : int; sign : bool; zero : bool; auxiliary_carry : bool;
   parity : bool; carry : bool;
 }
+
+(** Read-only pre-instruction view. State is immutable and memory copying
+    returns independent bytes. Read closures are valid only during the callback. *)
+type instruction_boundary = {
+  state : state_snapshot; read_memory : int -> int; copy_memory : unit -> bytes;
+}
+
+type host_transition = { memory_writes : (int * int) list; next_state : state_snapshot }
+type instruction_action = Continue_guest_execution | Apply_host_transition of host_transition
+(** Applied atomically after validating all byte/register/address bounds.
+    The intercepted instruction does not execute. Observers see a new boundary
+    at the same guest-step index; no Step or Trace event is manufactured.
+    CPU hidden state (e.g. interrupt status) is unchanged. The work budget bounds
+    guest instructions plus host transitions, while reporting them separately. *)
 
 type event =
   | Step of I8080.Step.t
@@ -33,6 +50,7 @@ type error =
   | Step_limit_exceeded of { max_steps : int; steps : int }
   | Invalid_step_limit of int
   | Invalid_command_tail of int
+  | Invalid_host_transition of string
 
 (** The currently implemented process personality. Runes currently provides
     only [Cpm.Personality.cpm22]; CP/M Plus is retained as historical
@@ -70,6 +88,8 @@ val run_bytes :
   ?on_step:(I8080.Step.t -> unit) ->
   ?on_step_state:(step_index:int -> state_snapshot -> I8080.Step.t -> unit) ->
   ?on_step_state_pair:(step_index:int -> before:state_snapshot -> after:state_snapshot -> I8080.Step.t -> unit) ->
+  ?on_before_instruction:(step_index:int -> instruction_boundary -> unit) ->
+  ?intercept:(step_index:int -> instruction_boundary -> instruction_action) ->
   ?on_event:(event -> unit) ->
   ?on_bdos_event:(step_index:int -> Cpm.Bdos.event -> unit) ->
   ?on_bdos_file_event:(step_index:int -> Cpm.Bdos.file_event -> unit) ->
@@ -92,6 +112,8 @@ val run_file :
   ?on_step:(I8080.Step.t -> unit) ->
   ?on_step_state:(step_index:int -> state_snapshot -> I8080.Step.t -> unit) ->
   ?on_step_state_pair:(step_index:int -> before:state_snapshot -> after:state_snapshot -> I8080.Step.t -> unit) ->
+  ?on_before_instruction:(step_index:int -> instruction_boundary -> unit) ->
+  ?intercept:(step_index:int -> instruction_boundary -> instruction_action) ->
   ?on_event:(event -> unit) ->
   ?on_bdos_event:(step_index:int -> Cpm.Bdos.event -> unit) ->
   ?on_bdos_file_event:(step_index:int -> Cpm.Bdos.file_event -> unit) ->

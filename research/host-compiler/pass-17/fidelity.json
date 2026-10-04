@@ -1,0 +1,55 @@
+{
+  "baseline": "f5978c36ddcb75a30fa425553d36bec490463aab",
+  "historical_algorithm_represented_faithfully": true,
+  "historical_logical_memory_effects_represented_faithfully": true,
+  "final_ABI_register_flag_state_represented_faithfully": true,
+  "final_guest_visible_memory_identity": true,
+  "machine_transient_instruction_mechanics_outside_native_algorithm": true,
+  "stack_compatibility": {
+    "scope": "Only final six bytes below entrySP; not PUSH/CALL instruction replay",
+    "slots": [
+      {
+        "offset": -6,
+        "writer": "PLI1.OVL+7BF3",
+        "callee": "PLI1.OVL+82C9",
+        "continuation": 40438
+      },
+      {
+        "offset": -4,
+        "writer": "PLI1.OVL+7BF7",
+        "callee": "PLI.COM+1A2C",
+        "continuation": 40442
+      },
+      {
+        "offset": -2,
+        "writer": "PLI1.OVL+7C14",
+        "callee": "PLI1.OVL+7B2E",
+        "continuation": 40471
+      }
+    ],
+    "proof": "Verified historical CALL encodings/control flow establish the final writer at each stack depth; all27 actual CPU write observations match the specific last writer, address and value. Bridge derives words from verified callsite+3, never oracle copying.",
+    "outer_return": "Original caller CALL+7C37 writes9E3A atF; preserved by operation; resumePC9E3A/SPu16(F+2)."
+  },
+  "algorithm": {
+    "widths": "u8/u16; little-endian; repeated same-word doubling after counter mask; shifts before exit check; decrements only on continuation",
+    "AE39": "Actual historical read required and reported; discarded before index calculation; no invented semantic dependence",
+    "fresh_publication": "AE44 gets E from fresh AE4C/AE4D word, thenAE43 gets saved position; fresh AA1F lookup selectsAD08; returnedA freshly readsAE4C",
+    "flags": "Final ANA mask operands determineAC=(equality_mask|positive_mask).bit3; exit result zero setsS0/Z1/P1; RAR retainsNZPA; final DAD clearsCY. AC is not globally constant."
+  },
+  "implementation_is_8080_interpreter": false,
+  "full_memory_comparison": "All65536 bytes at every historical post-operation and applied hybrid resume; no stack/unchanged-byte exclusion",
+  "no_fallback": true,
+  "shadows_before_hybrid": "Readonly first27 shadow experiment succeeded before interception API was added; CLI gates all3 full shadow runs before any hybrid run and requires opaque input-bound proof tokens.",
+  "contracts_or_annotations_corrected": false,
+  "unresolved_differences": [],
+  "fidelity_debt": [],
+  "unsupported_scope": [
+    "Arbitrary scratch/table/stack/code aliases",
+    "Missing or changed historical image/code/continuation identity",
+    "An unvalidated source/input or different per-invocation full-memory entry",
+    "Hybrid structure/provenance/event-witness capture: explicitly rejected rather than inventing native Steps or provenance",
+    "General parser, source-language IR, other compiler procedures and continuation families"
+  ],
+  "packet_CPU_Trace_unchanged": true,
+  "recommended_pass18": "Repeat proof-first native replacement for existing complete +7B7A wrapping reverse balance scan; then consider +7C1B composition after that boundary is independently validated."
+}
