@@ -10,6 +10,6 @@ val cases : validated -> case list
 val shadow : Experiment.input -> (validated * Experiment.result, Experiment.error) result
 
 val record_summaries : validated -> (string * int * string) list
-val controller : validated -> Experiment.input -> Native_dispatch.t
+val controller : ?exclude_entry_steps:int list -> validated -> Experiment.input -> Native_dispatch.t
 val hybrid : validated -> Experiment.input -> (int * Experiment.result, Experiment.error) result
 val cumulative : validated -> Native_7bbf.validated -> Experiment.input -> ((int * int) * Experiment.result, Experiment.error) result

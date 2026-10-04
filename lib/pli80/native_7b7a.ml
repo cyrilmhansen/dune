@@ -49,11 +49,14 @@ let shadow input =
     Ok({cases=List.rev !cases;snapshots=List.rev !snapshots;records=List.rev !records;input_digest=Experiment.sha256_hex(Marshal.to_bytes input [])},result)
 
 let record_summaries v=List.map(fun(n,r,b)->n,r,Experiment.sha256_hex b)v.records
-let controller validated input =
+let controller ?(exclude_entry_steps=[]) validated input =
   require(validated.input_digest=Experiment.sha256_hex(Marshal.to_bytes input []))"source/input proof mismatch";
+  require(List.for_all(fun s->List.exists(fun c->c.entry_step=s)validated.cases)exclude_entry_steps
+    &&List.length exclude_entry_steps=List.length(List.sort_uniq compare exclude_entry_steps))"invalid nested invocation exclusion";
   let bridge=Balance_scan_bridge.create ~pli1:input.Experiment.pli1_ovl in
-  let oracles=List.map2(fun c(entry_memory,post_memory)->
-    {Native_dispatch.input=c.input;output=c.output;entry_memory;post_memory;logical_digest=c.logical_writes_sha256})validated.cases validated.snapshots in
+  let selected=List.combine validated.cases validated.snapshots|>List.filter(fun(c,_)->not(List.mem c.entry_step exclude_entry_steps))in
+  let oracles=List.map(fun(c,(entry_memory,post_memory))->
+    {Native_dispatch.input=c.input;output=c.output;entry_memory;post_memory;logical_digest=c.logical_writes_sha256})selected in
   let prepare(previous:Native_dispatch.previous)origin boundary=
     let call=Balance_scan_bridge.verify_call bridge ~origin:previous.origin ~before:previous.before ~after:previous.after previous.step ~entry:boundary.Runner.state in
     let p=Balance_scan_bridge.prepare bridge ~call ~origin ~state:boundary.state ~memory:(boundary.copy_memory())in

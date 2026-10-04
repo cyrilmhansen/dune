@@ -64,11 +64,14 @@ let shadow input =
   |Error _ as e->e
   |Ok result->require(!active=None)"scan never resumed";Ok({cases=List.rev !cases;input_digest=input_digest input;records=List.rev !records;snapshots=List.rev !snapshots},result)
 
-let controller validated input =
+let controller ?(exclude_entry_steps=[]) validated input =
   require (validated.input_digest=input_digest input) "shadow proof belongs to another input";
+  require(List.for_all(fun s->List.exists(fun c->c.entry_step=s)validated.cases)exclude_entry_steps
+    &&List.length exclude_entry_steps=List.length(List.sort_uniq compare exclude_entry_steps))"invalid nested invocation exclusion";
   let bridge=Packed_scan_bridge.create ~pli_com:input.Experiment.pli_com ~pli1:input.pli1_ovl in
-  let oracles=List.map2(fun c (entry_memory,post_memory)->
-    {Native_dispatch.input=c.input;output=c.output;entry_memory;post_memory;logical_digest=c.logical_writes_sha256})validated.cases validated.snapshots in
+  let selected=List.combine validated.cases validated.snapshots|>List.filter(fun(c,_)->not(List.mem c.entry_step exclude_entry_steps))in
+  let oracles=List.map(fun(c,(entry_memory,post_memory))->
+    {Native_dispatch.input=c.input;output=c.output;entry_memory;post_memory;logical_digest=c.logical_writes_sha256})selected in
   let prepare (previous:Native_dispatch.previous) origin boundary=
     Packed_scan_bridge.verify_call ~before:previous.before ~after:previous.after previous.step ~entry:boundary.Runner.state;
     let p=Packed_scan_bridge.prepare bridge ~origin ~state:boundary.state ~memory:(boundary.copy_memory())in

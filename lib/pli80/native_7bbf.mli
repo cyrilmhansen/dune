@@ -16,4 +16,4 @@ val shadow : Experiment.input -> (validated * Experiment.result, Experiment.erro
 
 val hybrid : validated -> Experiment.input -> (int * Experiment.result, Experiment.error) result
 
-val controller : validated -> Experiment.input -> Native_dispatch.t
+val controller : ?exclude_entry_steps:int list -> validated -> Experiment.input -> Native_dispatch.t

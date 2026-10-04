@@ -1,0 +1,31 @@
+{
+  "historical_five_byte_frame": "Faithful S-5 bytes, with L/H/L/H inheritance and actual assignment order. Discarded PUSH B low byte is compatibility only.",
+  "inherited_frame_bytes": "Preserved, including unassigned fallback F1/F2/F4 and returned inherited H.",
+  "wrapping_arithmetic": "u8/u16 explicit; special increment wraps before clamp guard.",
+  "recursive_order": "Faithful external roots and ordered internal logical recursion.",
+  "Mapped_lookup_reuse": true,
+  "auxiliary_read_write": "Reusable +7AA9/+7B2E; fresh maps, value-before-position publication, unconditional writes, adjacent-byte reads retained.",
+  "Packed_scan_reuse": true,
+  "Balance_scan_reuse": true,
+  "mapped17_fidelity": "predecessor0A recurse/store/publish; !=0A complete getter read-only path, including observed05 and mechanically justified non0A synthetic states.",
+  "default_fidelity": "Cache original auxiliary before children; exact low3 count, decrement cursor/recurse/Balance_scan/replace cursor/decrement countdown. Return cache.",
+  "mapped1E_scope": "Only first<second and u8(second+1)>0F; natural1,15 ->16 ->15. Unsupported comparison outcomes reject private transition.",
+  "mapped21": "Explicit rejection.",
+  "recursive_stack_residue": "Verified static CALL/PUSH compatibility planner, including overlapping recursive frames and surviving deep helper slots. No synthetic guest Steps.",
+  "full_memory_identity": "All 65536 bytes in every shadow and every single/cumulative root resume.",
+  "root_vs_recursive": "9/35/11 root transitions versus16/96/21 total logical nodes.",
+  "unsupported_special_outcomes": [
+    "mapped21",
+    "first>=second",
+    "incremented result<=0F"
+  ],
+  "recursion_termination": "Conditional, only terminating supported observations/synthetic states tested. No cycle/depth guards.",
+  "unsupported_aliases": "Frame, ancestor slots, scratch/selected tables and code must not alias. Proven operation scopes retained; tables remain one byte-addressed memory.",
+  "register_flags": "All A/B/C/D/E/H/L/SP/PC/S/Z/AC/P/CY match, with path-specific helper/local producers.",
+  "Runner_changed": false,
+  "historical_contract_complete": false,
+  "contract_corrections": [],
+  "divergences": [],
+  "fidelity_debt": [],
+  "hierarchical_cumulative_replacement_verified": true
+}
