@@ -33,7 +33,10 @@ let run input controllers =
       |[]->failwith"Unexpected additional output record")controllers
     |_->()in
   let intercept ~origin ~step_index:_ boundary=
-    match List.find_opt(fun c->c.entry_pc=boundary.Runner.state.pc)controllers with
+    (* Runtime PCs recur in different overlays; only the selected canonical image
+       is a replacement boundary. Unknown origins still fail through its proof. *)
+    match List.find_opt(fun c->c.entry_pc=boundary.Runner.state.pc &&
+      (match origin with Analysis.Execution_map.Image_byte{image;_}->image.name=c.image|_->true))controllers with
     |None->Runner.Continue_guest_execution
     |Some c->
       let expected=match !(c.remaining)with x::_->x|[]->failwith"Unexpected additional native invocation"in

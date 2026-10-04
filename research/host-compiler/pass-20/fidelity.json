@@ -1,0 +1,79 @@
+{
+  "baseline": "fcc1373325d8b3d5a616b56a23687d7e42e3170c",
+  "7AD5_scratch_order": "AE3D=value before AE3C=position; little-endian carrier reads both bytes before discarding high",
+  "7AD5_fresh_position_map_lookup": true,
+  "unconditional_mapped_publication": true,
+  "7BA2_neighboring_read": "AE33 low and AE34 high are read together; old word becomes DE, old AE33 passed as E",
+  "old_AE33_provenance": "Entry-memory byte at AE33, actual LHLD7BAA/XCHG7BAD/child CALL7BAE; not equality inference",
+  "internal_native_7AD5_reuse": true,
+  "second_independent_position_map_reread": "After child publication, fresh LHLD7BB1 of AE4A/AE4B and map read7BBA; child index never reused",
+  "AE33_replacement_ordering": true,
+  "shared_memory_visibility_to_Mapped_lookup": true,
+  "read_discriminator": {
+    "natural_static_different_indices": "Impossible within declared nonaliasing static scope: neither scratch nor selected destination can change accessed map byte",
+    "instrumented_probe": "Logical-write observer changes distinct AA1F from2 to3 after AAB6 publication; second map read returns3. Separate observer changes saved position before its fresh carrier read.",
+    "scope": "Tests only; no natural compiler/concurrent-write claim or new precondition. Production proof callbacks only observe.",
+    "selected_destination_map_alias": "Rejected; no alias requirement weakened"
+  },
+  "returned_register_flag_fidelity": true,
+  "return_flags": "S/Z/AC/P preserved from entry, CY cleared by final DAD B; both32 flag combinations and all476 natural snapshots match",
+  "ABI_residue": {
+    "7AD5": "No below-entry body stack writes; original actual CALL slot unchanged, original RET reads it",
+    "7BA2": {
+      "writer": "PLI1.OVL+7BAE",
+      "target": "PLI1.OVL+7AD5",
+      "slot": "u16(entry_SP-2)",
+      "continuation": 40369,
+      "bytes_low_high": [
+        177,
+        157
+      ],
+      "proof": "Independent historical image CALL encoding plus concrete latest writer/slot/RET ancestry in every shadow; never copied from post-oracle"
+    },
+    "resume": "Actual outer CALL-site+3, SP=entrySP+2"
+  },
+  "full_memory_identity": {
+    "shadow_invocations": 476,
+    "shadow_7AD5": 331,
+    "shadow_7BA2": 145,
+    "bytes_compared_per_state": 65536,
+    "hybrid_modes": 3,
+    "sources": 3,
+    "stack_exemptions": false
+  },
+  "cumulative_hierarchy": true,
+  "historical_replaced_bodies_absent": true,
+  "INT_REL_record_order_identity": true,
+  "native_dispatch_change": "Selection includes canonical image as well as runtime PC to avoid unrelated-overlay collisions. Unknown/invalid selected origins still require exact CALL proof.",
+  "Runner_changed": false,
+  "Cpu_Trace_packet_changed": false,
+  "unsupported_aliases": [
+    "Selected destination aliases accessed position-map byte",
+    "Selected scratch/table/neighbor/return-stack alias",
+    "Loaded operation/helper/caller code aliases stack"
+  ],
+  "unsupported_entries": [
+    "Wrong historical image/helper/caller identity",
+    "Wrong canonical entry or non-CALL ancestry",
+    "Malformed original continuation",
+    "Invalid memory/byte/address state",
+    "Changed input/source proof",
+    "Extra or omitted invocation/resume/record"
+  ],
+  "historical_contracts_statuses_roles_progress_changed": false,
+  "contract_corrections": [],
+  "divergences": [],
+  "fidelity_debt": [],
+  "next_step": {
+    "complete_primitives": [
+      "PLI1.OVL+7B64",
+      "PLI1.OVL+7ABF"
+    ],
+    "partial_wrappers": [
+      "PLI1.OVL+7E46",
+      "PLI1.OVL+7E56"
+    ],
+    "emitter_blocker": "PLI.COM+0EF6 has partial buffering/error/flush and resident/BDOS effects; must establish exact output boundary before native7D53",
+    "recommendation": "Implement complete high3 and second-auxiliary primitives next, then a separate scoped resident-emission boundary experiment. Do not implement7D53 yet."
+  }
+}
