@@ -1,0 +1,41 @@
+{
+  "baseline": "095e384e4e99664800dee2ab6104a8dce9902078",
+  "entry": "PLI1.OVL+7BBF",
+  "runtime_pc": 40383,
+  "extent": [
+    31679,
+    31771
+  ],
+  "return_coordinate": "PLI1.OVL+7C1A",
+  "resume_coordinate": "PLI1.OVL+7C3A",
+  "status": "READY for first faithful operation experiment at existing complete scope",
+  "checkpoint_resume_demonstrated": false,
+  "validation_snapshot": {
+    "registers": "A/B/C/D/E/H/L, flags, entrySP F and resume PC; no Cpu8080 object needed",
+    "memory": "Copy64KiB for validation/unchanged-byte oracle. Actual initial reads are map byte, selected word low/high, AE39 and original return F/F+1.",
+    "discarded_read": "AE39: +7A7D LHLD AE38 loads it into H; +7A80 MVI H00 discards it before address arithmetic.",
+    "write_footprint": "AE38,AE43/44,AE4B..4E,AD08+fresh map index and transient[F-6,F); original return word unchanged.",
+    "files_and_BDOS": "No observed calls/accesses; explicitly none within declared operation. Enclosing compiler/filesystem remain historical.",
+    "observations": "operation-captures.json preserves all27 correlated invocation inputs/post-states, addresses and ordered write digests"
+  },
+  "host_representation": {
+    "memory": "Bytes.t/sparse view with exact numeric addresses and shared aliases preserved",
+    "arithmetic": "explicit uint8/uint16 wrapping, little-endian word access, counter and masks; preserve iterative doubled-word publications and fresh map reload",
+    "interface": "position byte + logical historical memory -> counter/shifted-word/ordered memory effects. Register/flag/SP/stack compatibility exports stay in Differential adapter, not Cpu8080 or a native instruction interpreter."
+  },
+  "preconditions": "nonaliasing scratchAE38/AE43..AE4E, selected table bytes and original/temporary return-stack slots; complete +7A79/+82E1/+82BB/+82C9/+1A2C/+7B2E contracts; no concurrent mutation",
+  "fail_closed": [
+    "Reject overlap of selected table/input/output cells, scratch and return/save stack outside declared scope.",
+    "Reject missing snapshot cells, incorrect image/run identity or unexpected child/external behavior.",
+    "Stop on any memory/register/flag/write-order mismatch; no fallback approximation."
+  ],
+  "oracle": [
+    "Reuse historical 3 MINIMAL,21 FIZZBUZ,3 PICTURE ordinary-return windows; compare all touched bytes, scratch/publication order, final shifted word/count, all register/flag outputs and SP/return slot.",
+    "Compare unchanged bytes outside write footprint using full raw snapshot; preserve transient stack effects through the explicit validation bridge.",
+    "After shadow agreement, replace operation at the same historical entry, resume+7C3A, compare final REL bytes/hash for all three sources. This continuation experiment has not run in Pass16."
+  ],
+  "native_scope": "One meaningful bounded compiler-state transformation; does not yet accept source or replace a whole pass.",
+  "pragmatic_divergence_required": false,
+  "fidelity_debt": [],
+  "pass17": "Implement faithful native +7BBF operation and a minimal external differential boundary adapter, shadow all27 windows before writeback/resume. Preserve historical loop/order/widths rather than a bit_length shortcut; stop if any compatibility field cannot be accounted for."
+}

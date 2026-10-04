@@ -1,0 +1,222 @@
+{
+  "baseline": "095e384e4e99664800dee2ab6104a8dce9902078",
+  "factual_audit": {
+    "size": 768,
+    "sha256": "68ec16931d4dae7a8f0831a29c9ae8b9ca139279f5104bb34e299644a8b2a203",
+    "bit_writer_calls": 6144,
+    "bits_by_epoch": {
+      "before_PLI2": 469,
+      "PLI2_onward": 5675
+    },
+    "gate_values": {
+      "0": 6144
+    },
+    "all_writer_bits_reproduce_file": true,
+    "late_counted_writer_calls": [],
+    "logical_items": 289,
+    "kind_counts": {
+      "special": 59,
+      "absolute_byte": 207,
+      "relative_word": 23
+    },
+    "special_counts": {
+      "2": 1,
+      "3": 1,
+      "0": 1,
+      "7": 1,
+      "11": 26,
+      "10": 1,
+      "6": 25,
+      "13": 1,
+      "14": 1,
+      "15": 1
+    },
+    "item_sequence_sha256": "61e98003620b3d259e334caaf692d9b57292f219c16695417aebdf60c84370d4",
+    "first_items": [
+      {
+        "start_bit": 0,
+        "kind": "special",
+        "control": 2,
+        "name_hex": "46495a5a4255",
+        "end_bit": 58
+      },
+      {
+        "start_bit": 58,
+        "kind": "special",
+        "control": 3,
+        "name_hex": "504c494c4942",
+        "end_bit": 116
+      },
+      {
+        "start_bit": 116,
+        "kind": "special",
+        "control": 0,
+        "name_hex": "46495a5a4255",
+        "end_bit": 174
+      },
+      {
+        "start_bit": 174,
+        "kind": "special",
+        "control": 7,
+        "address": [
+          1,
+          0
+        ],
+        "name_hex": "46495a5a4255",
+        "end_bit": 250
+      },
+      {
+        "start_bit": 250,
+        "kind": "special",
+        "control": 11,
+        "address": [
+          2,
+          0
+        ],
+        "end_bit": 275
+      }
+    ],
+    "last_items": [
+      {
+        "start_bit": 5040,
+        "kind": "absolute_byte",
+        "value": 0,
+        "end_bit": 5049
+      },
+      {
+        "start_bit": 5049,
+        "kind": "special",
+        "control": 6,
+        "address": [
+          1,
+          213
+        ],
+        "name_hex": "3f53544f5058",
+        "end_bit": 5125
+      },
+      {
+        "start_bit": 5125,
+        "kind": "special",
+        "control": 13,
+        "address": [
+          1,
+          215
+        ],
+        "end_bit": 5150
+      },
+      {
+        "start_bit": 5150,
+        "kind": "special",
+        "control": 14,
+        "address": [
+          1,
+          0
+        ],
+        "end_bit": 5175
+      },
+      {
+        "start_bit": 5176,
+        "kind": "special",
+        "control": 15,
+        "end_bit": 5183
+      }
+    ],
+    "end_file_bit": 5183,
+    "module_alignment": [
+      {
+        "start_bit": 5175,
+        "bits": "0"
+      }
+    ],
+    "trailing_bit_count": 961,
+    "trailing_bits_sha256": "343571b72b92d40a13a49090bf1c3175a7de0bae40f990ef9a2e5ee9744405cd",
+    "trailing_all_zero": true
+  },
+  "record_writes": [
+    {
+      "step": 766468,
+      "file": "FIZZBUZ.REL",
+      "operation": "write_record",
+      "record": 0,
+      "dma": 7434,
+      "sha256": "3f3ec48a3f750103671e4bba5b6bdb1ec5f29dc1552c65a19dc9ecb6d3fbb443"
+    },
+    {
+      "step": 855755,
+      "file": "FIZZBUZ.REL",
+      "operation": "write_record",
+      "record": 1,
+      "dma": 7434,
+      "sha256": "e46c12df6e4e1042d12038697faa2f4bb58ec049970cb8d54415b2d0314a4c98"
+    },
+    {
+      "step": 945255,
+      "file": "FIZZBUZ.REL",
+      "operation": "write_record",
+      "record": 2,
+      "dma": 7434,
+      "sha256": "701f5401ec5c43763645ddd53621c15dbe5d7117eb7adf25d304f49c35a9cb29"
+    },
+    {
+      "step": 1018272,
+      "file": "FIZZBUZ.REL",
+      "operation": "write_record",
+      "record": 3,
+      "dma": 7434,
+      "sha256": "b8876b5ed7326ed1d1f57ca3c050e5cd806d64ef03ee162a3b21b712921daa43"
+    },
+    {
+      "step": 1092021,
+      "file": "FIZZBUZ.REL",
+      "operation": "write_record",
+      "record": 4,
+      "dma": 7434,
+      "sha256": "73db11062fbc1176047c543c80de1d117380391d3ee83b30f960b9f863b1f66a"
+    },
+    {
+      "step": 1143986,
+      "file": "FIZZBUZ.REL",
+      "operation": "write_record",
+      "record": 5,
+      "dma": 7434,
+      "sha256": "793b77c5429e3c7efe3118a2273de1d45c6b762e755af49e565799f6080dc297"
+    }
+  ],
+  "stages": [
+    {
+      "stage": "semantic item generation",
+      "state": "partial/unknown",
+      "known": [
+        "PLI2+7557 absolute item prefix and delegated753C",
+        "PLI2+7701 external-chain partial operation",
+        "resident1207 cached word -> prefix10/low8/high8 at declared scope"
+      ],
+      "missing": [
+        "allocation/address/segment choices and full handler dispatch",
+        "uncataloged item-control/name/address writers",
+        "module termination/fill driver"
+      ]
+    },
+    {
+      "stage": "bit serialization",
+      "state": "observed output oracle; existing119E/1140 partial contracts",
+      "known": [
+        "119E rotates8-bit value before each bit, decrements wrapping count",
+        "1140 shifts selected buffer byte and inserts C.bit0; indices advance and flush at128",
+        "6144 bit arguments reproduce entire768-byte REL MSB-first; gate2029=0 for all calls"
+      ]
+    },
+    {
+      "stage": "CP/M buffering/writing",
+      "state": "established128-byte record transfer oracle; compiler wrappers partial",
+      "known": [
+        "buffer1D0A..1D89, FCB1CE4, DMA helper02EE and writer0328 via19BB",
+        "6 sequential writes at offsets0..767 followed by CLOSE; no linker executed"
+      ]
+    }
+  ],
+  "parser_inventory": "No REL parser, grammar or parser tests found in baseline tracked lab files (or inspected local historical tooling). Added only a bounded read-only item audit, not a host REL encoder or linker.",
+  "format_reference": "Digital Research LINK-80 Operator Guide section1.6 and request item appendixE.1.7: https://deramp.com/downloads/digital_research/Manuals/LINK%20and%20RMAC.pdf",
+  "reader_scope": "Base item fields and observed name-only request control3; fail reserved4/8/truncated items. Item labels are format interpretation, not newly decompiled generator contracts.",
+  "padding": "EndModule ends atbit5175; one zero aligns next item; EndFile ends at5183;961 subsequent zero bits are actually writer inputs, not inferred CP/M fill. General final-fill algorithm remains unestablished."
+}
