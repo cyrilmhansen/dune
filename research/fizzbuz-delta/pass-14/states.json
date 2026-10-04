@@ -1,0 +1,398 @@
+{
+  "selected_operand_states": {
+    "end": {
+      "offset": 32086,
+      "value_field": "after.a",
+      "FIZZBUZ": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        7,
+        9
+      ],
+      "MINIMAL": [
+        0,
+        1,
+        2,
+        3,
+        7
+      ],
+      "new_FIZZBUZ_values": [
+        4,
+        9
+      ]
+    },
+    "reverse_mapped": {
+      "offset": 32148,
+      "value_field": "before.a",
+      "FIZZBUZ": [
+        0,
+        6,
+        15,
+        106,
+        108,
+        125,
+        141,
+        142,
+        161,
+        168,
+        172,
+        178,
+        181,
+        183
+      ],
+      "MINIMAL": [
+        0,
+        6,
+        125,
+        141,
+        142,
+        161,
+        172,
+        181,
+        183
+      ],
+      "new_FIZZBUZ_values": [
+        15,
+        106,
+        108,
+        168,
+        178
+      ]
+    },
+    "top_return": {
+      "offset": 32160,
+      "value_field": "before.a",
+      "FIZZBUZ": [
+        0,
+        1,
+        5,
+        15,
+        254
+      ],
+      "MINIMAL": [
+        0,
+        5,
+        254
+      ],
+      "new_FIZZBUZ_values": [
+        1,
+        15
+      ]
+    },
+    "forward_endpoint": {
+      "offset": 32190,
+      "value_field": "before.a",
+      "FIZZBUZ": [
+        0,
+        1,
+        2,
+        3,
+        6,
+        8
+      ],
+      "MINIMAL": [
+        0,
+        1,
+        2,
+        6
+      ],
+      "new_FIZZBUZ_values": [
+        3,
+        8
+      ]
+    },
+    "forward_mapped": {
+      "offset": 32210,
+      "value_field": "before.a",
+      "FIZZBUZ": [
+        0,
+        2,
+        5,
+        6,
+        10,
+        15,
+        20,
+        23,
+        30,
+        48,
+        61,
+        99,
+        106,
+        108,
+        125,
+        141,
+        142,
+        161,
+        168,
+        172,
+        178,
+        181,
+        183,
+        209
+      ],
+      "MINIMAL": [
+        0,
+        2,
+        6,
+        10,
+        20,
+        23,
+        125,
+        141,
+        142,
+        161,
+        172,
+        181,
+        183
+      ],
+      "new_FIZZBUZ_values": [
+        5,
+        15,
+        30,
+        48,
+        61,
+        99,
+        106,
+        108,
+        168,
+        178,
+        209
+      ]
+    },
+    "attribute": {
+      "offset": 32225,
+      "value_field": "before.a",
+      "FIZZBUZ": [
+        2,
+        3,
+        4
+      ],
+      "MINIMAL": [
+        2,
+        3,
+        4
+      ],
+      "new_FIZZBUZ_values": []
+    }
+  },
+  "branch_states": {
+    "FIZZBUZ": {
+      "7D70": {
+        "count": 29,
+        "taken": 0,
+        "before_A_values": [
+          0
+        ]
+      },
+      "7D78": {
+        "count": 29,
+        "taken": 0,
+        "before_A_values": [
+          0
+        ]
+      },
+      "7D96": {
+        "count": 35,
+        "taken": 0,
+        "before_A_values": [
+          0,
+          6,
+          15,
+          106,
+          108,
+          125,
+          141,
+          142,
+          161,
+          168,
+          172,
+          178,
+          181,
+          183
+        ]
+      },
+      "7DD4": {
+        "count": 102,
+        "taken": 0,
+        "before_A_values": [
+          0,
+          2,
+          5,
+          6,
+          10,
+          15,
+          20,
+          23,
+          30,
+          48,
+          61,
+          99,
+          106,
+          108,
+          125,
+          141,
+          142,
+          161,
+          168,
+          172,
+          178,
+          181,
+          183,
+          209
+        ]
+      },
+      "7E19": {
+        "count": 60,
+        "taken": 0,
+        "before_A_values": [
+          3,
+          4
+        ]
+      },
+      "7E28": {
+        "count": 60,
+        "taken": 60,
+        "before_A_values": [
+          3,
+          4
+        ]
+      },
+      "7E3C": {
+        "count": 102,
+        "taken": 102,
+        "before_A_values": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ]
+      }
+    },
+    "MINIMAL": {
+      "7D70": {
+        "count": 7,
+        "taken": 0,
+        "before_A_values": [
+          0
+        ]
+      },
+      "7D78": {
+        "count": 7,
+        "taken": 0,
+        "before_A_values": [
+          0
+        ]
+      },
+      "7D96": {
+        "count": 9,
+        "taken": 0,
+        "before_A_values": [
+          0,
+          6,
+          125,
+          141,
+          142,
+          161,
+          172,
+          181,
+          183
+        ]
+      },
+      "7DD4": {
+        "count": 16,
+        "taken": 0,
+        "before_A_values": [
+          0,
+          2,
+          6,
+          10,
+          20,
+          23,
+          125,
+          141,
+          142,
+          161,
+          172,
+          181,
+          183
+        ]
+      },
+      "7E19": {
+        "count": 9,
+        "taken": 0,
+        "before_A_values": [
+          3,
+          4
+        ]
+      },
+      "7E28": {
+        "count": 9,
+        "taken": 9,
+        "before_A_values": [
+          3,
+          4
+        ]
+      },
+      "7E3C": {
+        "count": 16,
+        "taken": 16,
+        "before_A_values": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      }
+    }
+  },
+  "classes": {
+    "FIZZBUZ": {
+      "4": 53,
+      "2": 42,
+      "3": 7
+    },
+    "MINIMAL": {
+      "4": 8,
+      "2": 7,
+      "3": 1
+    }
+  },
+  "observed_expected_channel_orders": {
+    "0": [],
+    "1": [],
+    "2": [
+      [
+        "mapped-byte",
+        "mapped-word-low",
+        "mapped-word-high"
+      ]
+    ],
+    "3": [
+      [
+        "mapped-byte",
+        "second-auxiliary-byte",
+        "primary-auxiliary-byte"
+      ]
+    ],
+    "4": [
+      [
+        "mapped-byte",
+        "primary-auxiliary-byte"
+      ]
+    ],
+    "5": [],
+    "6": [],
+    "7": []
+  }
+}

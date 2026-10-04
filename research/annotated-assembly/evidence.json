@@ -49893,9 +49893,9 @@
       "start_offset": 32083,
       "end_offset": 32326,
       "description": "scoped reverse processing, attribute-dispatched emission and mapped-table recycling",
-      "inputs_and_effects": "If endAE35==beginAE34 return7D5D (12); gateAA1A.bit0 set returns7D65 (2). Seven work calls set cursor=end; clear202B.bit0 and zero2011 select reverse path. Predecrement cursor modulo256, stop at u8(begin-1). Otherwise map through AA1F/AAB4; on witnessed mapped<F7 call partial7C1B: mapped0A now uses complete bounded word/top-bit scan7BBF and auxiliary publication; mapped17 writes child result; default returns initially cached auxiliary byte after attribute-counted children. Cache returnedA atAE50; independent7B7A balance scan replaces cursor, then outer predecrement repeats. Forward reset cursor=begin; exit when unsigned u8(end-1)<fresh cursor. Sixteen iterations map and emit current mapped byte through partial0EF6. Fresh AE50<F7 invokes7B64, storing bits3..5 of byte[1B4B+mapped] as attributeAE50. Attribute<3 calls7E46: select word[AB49+2*position_map[cursor]], publish it low/high toAE52/53, emit low byte. Fresh attribute==2 calls7E56, independently reading cached word and emitting high byte; seven observed pairs. Attribute>=3 reads primary auxiliary byte[AD08+position_map[cursor]] intoAE51; fresh attribute==3 reads distinct second auxiliary byte[AD9D+position_map[cursor]] via7ABF and emits it (one). Fresh attribute!=6 emits AE51 (nine); attribute<5 skips six RAW additional-arm bytes. Finally7BA2 publishes previousAE33 to mapped AAB4 slot selected by position_map[cursor], rereads map index and stores it intoAE33; increment freshly read cursor and loop unless byte wrap. Work exit publishes end=fresh begin. Parent direct emission arguments26 and low/high wrapper arguments14 give40 distinct emitter calls in these subtrees; no returned-A/flag/emission/cache/table channels merged. Own control and result flow is understood only at this partial scope: recursive RAW paths, emitter error/flush, shortcuts, mapped/attribute alternatives and cursor wrap prevent completion. No source-language/table ownership interpretation.",
+      "inputs_and_effects": "byte begin/end/gate at AE34/AE35/AA1A, flags202B/2011, position_map AA1F, mapped_byte_table AAB4; helper arguments/results and resident emission state at declared callee scopes; Early-return state as before; work emits mapped bytes, low/high mapped words, primary auxiliary bytes and selected second auxiliary byte through scoped0EF6; end=fresh begin; distinct word-cacheAE52, byte cachesAE50/51, auxiliary reverse writes, mapped recycle updates and AE33 replacement. Registers/flags retain exact return-path/callee scope; no single Boolean or data A result inferred. FIZZBUZ:253 ordered emitter arguments across102 forward iterations; direct top-level childA->AE50 distinct from descendant publication and private child F2/F4. Known special descendant writeAD0D is later read/emitted on its own channel. Endpoint comparison determines normal work-exit flags; forward-wrap result remains unobserved.",
       "downstream_helpers_runtime": "PLI1.OVL+7A4D@9C4D, PLI1.OVL+7C1B@9E1B, PLI1.OVL+7B7A@9D7A, PLI1.OVL+7A4D@9C4D, PLI.COM+0EF6@0FF6, PLI1.OVL+7B64@9D64, PLI1.OVL+7E46@A046, PLI1.OVL+7E56@A056, PLI1.OVL+7AA9@9CA9, PLI1.OVL+7ABF@9CBF, PLI.COM+0EF6@0FF6, PLI.COM+0EF6@0FF6, PLI1.OVL+7BA2@9DA2",
-      "unresolved": "partial helper contract: recursive7C1B mapped1E/21 and17/non0A predecessor RAW paths, arbitrary recursive/skip termination and alias preconditions remain excluded. / partial helper contract: resident0EF6 error/flush paths remain outside established success scope; not reopened in this pass. / unobserved path: shortcuts202B/2011, mapped>=F7, attributes0/1/5/6/7, equality6, cursor-wrap return; RAW7E2B..7E30 not decoded or promoted. / unknown producer/general provenance and alias/precondition: initial maps/word/byte/attribute tables, cursor controls and possible overlaps beyond selected scope; no inferred array capacities or ownership.",
+      "unresolved": "STATIC / UNOBSERVED:202B.bit0 shortcut,2011 nonzero shortcut, reverse/forward mapped>=F7, attributes0/1/5/6/7 including primary-suppression6, six RAW7E2B..7E30 bytes, forward cursor-wrap return. / partial recursive/helper contract:7C1B mapped21/opposite max-clamp states and arbitrary recursion/7B7A termination/alias preconditions; known Pass13 cases now explicitly composed at observed scopes. / partial emitter contract and evidence-interface limitation: resident0EF6 error path and opaque buffer/host callees; one buffer-threshold normal return observed. Full V0.2 packet fails closed on runtime0005 nonhistorical subtree RET accesses; no schema/ownership change or dropped event. / producer/alias/precondition: initial endpoint/map/byte/word/attribute/auxiliary data and table overlaps outside selected scope; no inferred capacity or source-language meaning.",
       "instructions": [
         {
           "offset": 32083,
@@ -49908,6 +49908,12 @@
               "execution_count": 21,
               "first_step": 228016,
               "last_step": 287901
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 77,
+              "first_step": 332036,
+              "last_step": 637335
             }
           ]
         },
@@ -49922,6 +49928,12 @@
               "execution_count": 21,
               "first_step": 228017,
               "last_step": 287902
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 77,
+              "first_step": 332037,
+              "last_step": 637336
             }
           ]
         },
@@ -49936,6 +49948,12 @@
               "execution_count": 21,
               "first_step": 228018,
               "last_step": 287903
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 77,
+              "first_step": 332038,
+              "last_step": 637337
             }
           ]
         },
@@ -49950,6 +49968,12 @@
               "execution_count": 21,
               "first_step": 228019,
               "last_step": 287904
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 77,
+              "first_step": 332039,
+              "last_step": 637338
             }
           ]
         },
@@ -49964,6 +49988,12 @@
               "execution_count": 12,
               "first_step": 228020,
               "last_step": 287905
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 40,
+              "first_step": 332040,
+              "last_step": 637339
             }
           ]
         },
@@ -49978,6 +50008,12 @@
               "execution_count": 9,
               "first_step": 231980,
               "last_step": 282969
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 37,
+              "first_step": 336000,
+              "last_step": 632363
             }
           ]
         },
@@ -49992,6 +50028,12 @@
               "execution_count": 9,
               "first_step": 231981,
               "last_step": 282970
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 37,
+              "first_step": 336001,
+              "last_step": 632364
             }
           ]
         },
@@ -50006,6 +50048,12 @@
               "execution_count": 9,
               "first_step": 231982,
               "last_step": 282971
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 37,
+              "first_step": 336002,
+              "last_step": 632365
             }
           ]
         },
@@ -50020,6 +50068,12 @@
               "execution_count": 2,
               "first_step": 248043,
               "last_step": 249427
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 8,
+              "first_step": 421506,
+              "last_step": 597008
             }
           ]
         },
@@ -50034,6 +50088,12 @@
               "execution_count": 7,
               "first_step": 231983,
               "last_step": 282972
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 29,
+              "first_step": 336003,
+              "last_step": 632366
             }
           ]
         },
@@ -50048,6 +50108,12 @@
               "execution_count": 7,
               "first_step": 231984,
               "last_step": 282973
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 29,
+              "first_step": 336004,
+              "last_step": 632367
             }
           ]
         },
@@ -50062,6 +50128,12 @@
               "execution_count": 7,
               "first_step": 231985,
               "last_step": 282974
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 29,
+              "first_step": 336005,
+              "last_step": 632368
             }
           ]
         },
@@ -50076,6 +50148,12 @@
               "execution_count": 7,
               "first_step": 231986,
               "last_step": 282975
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 29,
+              "first_step": 336006,
+              "last_step": 632369
             }
           ]
         },
@@ -50090,6 +50168,12 @@
               "execution_count": 7,
               "first_step": 231987,
               "last_step": 282976
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 29,
+              "first_step": 336007,
+              "last_step": 632370
             }
           ]
         },
@@ -50104,6 +50188,12 @@
               "execution_count": 7,
               "first_step": 231988,
               "last_step": 282977
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 29,
+              "first_step": 336008,
+              "last_step": 632371
             }
           ]
         },
@@ -50118,6 +50208,12 @@
               "execution_count": 7,
               "first_step": 231989,
               "last_step": 282978
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 29,
+              "first_step": 336009,
+              "last_step": 632372
             }
           ]
         },
@@ -50132,6 +50228,12 @@
               "execution_count": 7,
               "first_step": 231990,
               "last_step": 282979
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 29,
+              "first_step": 336010,
+              "last_step": 632373
             }
           ]
         },
@@ -50146,6 +50248,12 @@
               "execution_count": 16,
               "first_step": 231991,
               "last_step": 283166
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 64,
+              "first_step": 336011,
+              "last_step": 632560
             }
           ]
         },
@@ -50160,6 +50268,12 @@
               "execution_count": 16,
               "first_step": 231992,
               "last_step": 283167
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 64,
+              "first_step": 336012,
+              "last_step": 632561
             }
           ]
         },
@@ -50174,6 +50288,12 @@
               "execution_count": 16,
               "first_step": 231993,
               "last_step": 283168
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 64,
+              "first_step": 336013,
+              "last_step": 632562
             }
           ]
         },
@@ -50188,6 +50308,12 @@
               "execution_count": 16,
               "first_step": 231994,
               "last_step": 283169
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 64,
+              "first_step": 336014,
+              "last_step": 632563
             }
           ]
         },
@@ -50202,6 +50328,12 @@
               "execution_count": 16,
               "first_step": 231995,
               "last_step": 283170
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 64,
+              "first_step": 336015,
+              "last_step": 632564
             }
           ]
         },
@@ -50216,6 +50348,12 @@
               "execution_count": 16,
               "first_step": 231996,
               "last_step": 283171
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 64,
+              "first_step": 336016,
+              "last_step": 632565
             }
           ]
         },
@@ -50230,6 +50368,12 @@
               "execution_count": 16,
               "first_step": 231997,
               "last_step": 283172
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 64,
+              "first_step": 336017,
+              "last_step": 632566
             }
           ]
         },
@@ -50244,6 +50388,12 @@
               "execution_count": 16,
               "first_step": 231998,
               "last_step": 283173
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 64,
+              "first_step": 336018,
+              "last_step": 632567
             }
           ]
         },
@@ -50258,6 +50408,12 @@
               "execution_count": 16,
               "first_step": 231999,
               "last_step": 283174
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 64,
+              "first_step": 336019,
+              "last_step": 632568
             }
           ]
         },
@@ -50272,6 +50428,12 @@
               "execution_count": 16,
               "first_step": 232000,
               "last_step": 283175
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 64,
+              "first_step": 336020,
+              "last_step": 632569
             }
           ]
         },
@@ -50286,6 +50448,12 @@
               "execution_count": 9,
               "first_step": 232001,
               "last_step": 282990
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 35,
+              "first_step": 336021,
+              "last_step": 632384
             }
           ]
         },
@@ -50300,6 +50468,12 @@
               "execution_count": 9,
               "first_step": 232002,
               "last_step": 282991
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 35,
+              "first_step": 336022,
+              "last_step": 632385
             }
           ]
         },
@@ -50314,6 +50488,12 @@
               "execution_count": 9,
               "first_step": 232003,
               "last_step": 282992
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 35,
+              "first_step": 336023,
+              "last_step": 632386
             }
           ]
         },
@@ -50328,6 +50508,12 @@
               "execution_count": 9,
               "first_step": 232016,
               "last_step": 283005
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 35,
+              "first_step": 336036,
+              "last_step": 632399
             }
           ]
         },
@@ -50342,6 +50528,12 @@
               "execution_count": 9,
               "first_step": 232017,
               "last_step": 283006
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 35,
+              "first_step": 336037,
+              "last_step": 632400
             }
           ]
         },
@@ -50356,6 +50548,12 @@
               "execution_count": 9,
               "first_step": 232018,
               "last_step": 283007
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 35,
+              "first_step": 336038,
+              "last_step": 632401
             }
           ]
         },
@@ -50370,6 +50568,12 @@
               "execution_count": 9,
               "first_step": 232019,
               "last_step": 283008
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 35,
+              "first_step": 336039,
+              "last_step": 632402
             }
           ]
         },
@@ -50384,6 +50588,12 @@
               "execution_count": 9,
               "first_step": 232020,
               "last_step": 283009
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 35,
+              "first_step": 336040,
+              "last_step": 632403
             }
           ]
         },
@@ -50398,6 +50608,12 @@
               "execution_count": 9,
               "first_step": 232130,
               "last_step": 283119
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 35,
+              "first_step": 336150,
+              "last_step": 632513
             }
           ]
         },
@@ -50412,6 +50628,12 @@
               "execution_count": 9,
               "first_step": 232131,
               "last_step": 283120
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 35,
+              "first_step": 336151,
+              "last_step": 632514
             }
           ]
         },
@@ -50426,6 +50648,12 @@
               "execution_count": 9,
               "first_step": 232132,
               "last_step": 283121
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 35,
+              "first_step": 336152,
+              "last_step": 632515
             }
           ]
         },
@@ -50440,6 +50668,12 @@
               "execution_count": 9,
               "first_step": 232133,
               "last_step": 283122
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 35,
+              "first_step": 336153,
+              "last_step": 632516
             }
           ]
         },
@@ -50454,6 +50688,12 @@
               "execution_count": 9,
               "first_step": 232175,
               "last_step": 283164
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 35,
+              "first_step": 336195,
+              "last_step": 632558
             }
           ]
         },
@@ -50468,6 +50708,12 @@
               "execution_count": 9,
               "first_step": 232176,
               "last_step": 283165
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 35,
+              "first_step": 336196,
+              "last_step": 632559
             }
           ]
         },
@@ -50482,6 +50728,12 @@
               "execution_count": 7,
               "first_step": 232187,
               "last_step": 283176
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 29,
+              "first_step": 336207,
+              "last_step": 632570
             }
           ]
         },
@@ -50496,6 +50748,12 @@
               "execution_count": 7,
               "first_step": 232188,
               "last_step": 283177
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 29,
+              "first_step": 336208,
+              "last_step": 632571
             }
           ]
         },
@@ -50510,6 +50768,12 @@
               "execution_count": 23,
               "first_step": 232189,
               "last_step": 283314
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 131,
+              "first_step": 336209,
+              "last_step": 632708
             }
           ]
         },
@@ -50524,6 +50788,12 @@
               "execution_count": 23,
               "first_step": 232190,
               "last_step": 283315
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 131,
+              "first_step": 336210,
+              "last_step": 632709
             }
           ]
         },
@@ -50538,6 +50808,12 @@
               "execution_count": 23,
               "first_step": 232191,
               "last_step": 283316
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 131,
+              "first_step": 336211,
+              "last_step": 632710
             }
           ]
         },
@@ -50552,6 +50828,12 @@
               "execution_count": 23,
               "first_step": 232192,
               "last_step": 283317
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 131,
+              "first_step": 336212,
+              "last_step": 632711
             }
           ]
         },
@@ -50566,6 +50848,12 @@
               "execution_count": 23,
               "first_step": 232193,
               "last_step": 283318
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 131,
+              "first_step": 336213,
+              "last_step": 632712
             }
           ]
         },
@@ -50580,6 +50868,12 @@
               "execution_count": 16,
               "first_step": 232194,
               "last_step": 283183
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 102,
+              "first_step": 336214,
+              "last_step": 632577
             }
           ]
         },
@@ -50594,6 +50888,12 @@
               "execution_count": 16,
               "first_step": 232195,
               "last_step": 283184
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 102,
+              "first_step": 336215,
+              "last_step": 632578
             }
           ]
         },
@@ -50608,6 +50908,12 @@
               "execution_count": 16,
               "first_step": 232196,
               "last_step": 283185
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 102,
+              "first_step": 336216,
+              "last_step": 632579
             }
           ]
         },
@@ -50622,6 +50928,12 @@
               "execution_count": 16,
               "first_step": 232209,
               "last_step": 283198
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 102,
+              "first_step": 336229,
+              "last_step": 632592
             }
           ]
         },
@@ -50636,6 +50948,12 @@
               "execution_count": 16,
               "first_step": 232210,
               "last_step": 283199
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 102,
+              "first_step": 336230,
+              "last_step": 632593
             }
           ]
         },
@@ -50650,6 +50968,12 @@
               "execution_count": 16,
               "first_step": 232211,
               "last_step": 283200
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 102,
+              "first_step": 336231,
+              "last_step": 632594
             }
           ]
         },
@@ -50664,6 +50988,12 @@
               "execution_count": 16,
               "first_step": 232226,
               "last_step": 283215
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 102,
+              "first_step": 336246,
+              "last_step": 632609
             }
           ]
         },
@@ -50678,6 +51008,12 @@
               "execution_count": 16,
               "first_step": 232227,
               "last_step": 283216
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 102,
+              "first_step": 336247,
+              "last_step": 632610
             }
           ]
         },
@@ -50692,6 +51028,12 @@
               "execution_count": 16,
               "first_step": 232228,
               "last_step": 283217
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 102,
+              "first_step": 336248,
+              "last_step": 632611
             }
           ]
         },
@@ -50706,6 +51048,12 @@
               "execution_count": 16,
               "first_step": 232229,
               "last_step": 283218
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 102,
+              "first_step": 336249,
+              "last_step": 632612
             }
           ]
         },
@@ -50720,6 +51068,12 @@
               "execution_count": 16,
               "first_step": 232230,
               "last_step": 283219
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 102,
+              "first_step": 336250,
+              "last_step": 632613
             }
           ]
         },
@@ -50734,6 +51088,12 @@
               "execution_count": 16,
               "first_step": 232231,
               "last_step": 283220
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 102,
+              "first_step": 336251,
+              "last_step": 632614
             }
           ]
         },
@@ -50748,6 +51108,12 @@
               "execution_count": 16,
               "first_step": 232245,
               "last_step": 283234
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 102,
+              "first_step": 336265,
+              "last_step": 632628
             }
           ]
         },
@@ -50762,6 +51128,12 @@
               "execution_count": 16,
               "first_step": 232246,
               "last_step": 283235
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 102,
+              "first_step": 336266,
+              "last_step": 632629
             }
           ]
         },
@@ -50776,6 +51148,12 @@
               "execution_count": 16,
               "first_step": 232247,
               "last_step": 283236
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 102,
+              "first_step": 336267,
+              "last_step": 632630
             }
           ]
         },
@@ -50790,6 +51168,12 @@
               "execution_count": 7,
               "first_step": 241955,
               "last_step": 270693
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 42,
+              "first_step": 343714,
+              "last_step": 620914
             }
           ]
         },
@@ -50804,6 +51188,12 @@
               "execution_count": 7,
               "first_step": 241994,
               "last_step": 270732
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 42,
+              "first_step": 343753,
+              "last_step": 620953
             }
           ]
         },
@@ -50818,6 +51208,12 @@
               "execution_count": 7,
               "first_step": 241995,
               "last_step": 270733
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 42,
+              "first_step": 343754,
+              "last_step": 620954
             }
           ]
         },
@@ -50832,6 +51228,12 @@
               "execution_count": 7,
               "first_step": 241996,
               "last_step": 270734
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 42,
+              "first_step": 343755,
+              "last_step": 620955
             }
           ]
         },
@@ -50846,6 +51248,12 @@
               "execution_count": 7,
               "first_step": 241997,
               "last_step": 270735
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 42,
+              "first_step": 343756,
+              "last_step": 620956
             }
           ]
         },
@@ -50860,6 +51268,12 @@
               "execution_count": 7,
               "first_step": 242017,
               "last_step": 270755
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 42,
+              "first_step": 343776,
+              "last_step": 620976
             }
           ]
         },
@@ -50874,6 +51288,12 @@
               "execution_count": 9,
               "first_step": 232248,
               "last_step": 283237
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 60,
+              "first_step": 336268,
+              "last_step": 632631
             }
           ]
         },
@@ -50888,6 +51308,12 @@
               "execution_count": 9,
               "first_step": 232249,
               "last_step": 283238
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 60,
+              "first_step": 336269,
+              "last_step": 632632
             }
           ]
         },
@@ -50902,6 +51328,12 @@
               "execution_count": 9,
               "first_step": 232250,
               "last_step": 283239
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 60,
+              "first_step": 336270,
+              "last_step": 632633
             }
           ]
         },
@@ -50916,6 +51348,12 @@
               "execution_count": 9,
               "first_step": 232263,
               "last_step": 283252
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 60,
+              "first_step": 336283,
+              "last_step": 632646
             }
           ]
         },
@@ -50930,6 +51368,12 @@
               "execution_count": 9,
               "first_step": 232264,
               "last_step": 283253
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 60,
+              "first_step": 336284,
+              "last_step": 632647
             }
           ]
         },
@@ -50944,6 +51388,12 @@
               "execution_count": 9,
               "first_step": 232265,
               "last_step": 283254
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 60,
+              "first_step": 336285,
+              "last_step": 632648
             }
           ]
         },
@@ -50958,6 +51408,12 @@
               "execution_count": 9,
               "first_step": 232266,
               "last_step": 283255
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 60,
+              "first_step": 336286,
+              "last_step": 632649
             }
           ]
         },
@@ -50972,6 +51428,12 @@
               "execution_count": 1,
               "first_step": 255841,
               "last_step": 255841
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 7,
+              "first_step": 407952,
+              "last_step": 603422
             }
           ]
         },
@@ -50986,6 +51448,12 @@
               "execution_count": 1,
               "first_step": 255842,
               "last_step": 255842
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 7,
+              "first_step": 407953,
+              "last_step": 603423
             }
           ]
         },
@@ -51000,6 +51468,12 @@
               "execution_count": 1,
               "first_step": 255843,
               "last_step": 255843
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 7,
+              "first_step": 407954,
+              "last_step": 603424
             }
           ]
         },
@@ -51014,6 +51488,12 @@
               "execution_count": 1,
               "first_step": 255856,
               "last_step": 255856
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 7,
+              "first_step": 407967,
+              "last_step": 603437
             }
           ]
         },
@@ -51028,6 +51508,12 @@
               "execution_count": 1,
               "first_step": 255857,
               "last_step": 255857
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 7,
+              "first_step": 407968,
+              "last_step": 603438
             }
           ]
         },
@@ -51042,6 +51528,12 @@
               "execution_count": 9,
               "first_step": 232267,
               "last_step": 283256
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 60,
+              "first_step": 336287,
+              "last_step": 632650
             }
           ]
         },
@@ -51056,6 +51548,12 @@
               "execution_count": 9,
               "first_step": 232268,
               "last_step": 283257
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 60,
+              "first_step": 336288,
+              "last_step": 632651
             }
           ]
         },
@@ -51070,6 +51568,12 @@
               "execution_count": 9,
               "first_step": 232269,
               "last_step": 283258
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 60,
+              "first_step": 336289,
+              "last_step": 632652
             }
           ]
         },
@@ -51084,6 +51588,12 @@
               "execution_count": 9,
               "first_step": 232270,
               "last_step": 283259
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 60,
+              "first_step": 336290,
+              "last_step": 632653
             }
           ]
         },
@@ -51098,6 +51608,12 @@
               "execution_count": 9,
               "first_step": 232271,
               "last_step": 283260
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 60,
+              "first_step": 336291,
+              "last_step": 632654
             }
           ]
         },
@@ -51112,6 +51628,12 @@
               "execution_count": 9,
               "first_step": 232272,
               "last_step": 283261
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 60,
+              "first_step": 336292,
+              "last_step": 632655
             }
           ]
         },
@@ -51126,6 +51648,12 @@
               "execution_count": 9,
               "first_step": 232287,
               "last_step": 283276
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 60,
+              "first_step": 336307,
+              "last_step": 632670
             }
           ]
         },
@@ -51140,6 +51668,12 @@
               "execution_count": 9,
               "first_step": 232288,
               "last_step": 283277
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 60,
+              "first_step": 336308,
+              "last_step": 632671
             }
           ]
         },
@@ -51154,6 +51688,12 @@
               "execution_count": 9,
               "first_step": 232289,
               "last_step": 283278
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 60,
+              "first_step": 336309,
+              "last_step": 632672
             }
           ]
         },
@@ -51168,6 +51708,12 @@
               "execution_count": 16,
               "first_step": 232290,
               "last_step": 283279
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 102,
+              "first_step": 336310,
+              "last_step": 632673
             }
           ]
         },
@@ -51182,6 +51728,12 @@
               "execution_count": 16,
               "first_step": 232291,
               "last_step": 283280
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 102,
+              "first_step": 336311,
+              "last_step": 632674
             }
           ]
         },
@@ -51196,6 +51748,12 @@
               "execution_count": 16,
               "first_step": 232292,
               "last_step": 283281
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 102,
+              "first_step": 336312,
+              "last_step": 632675
             }
           ]
         },
@@ -51210,6 +51768,12 @@
               "execution_count": 16,
               "first_step": 232322,
               "last_step": 283311
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 102,
+              "first_step": 336342,
+              "last_step": 632705
             }
           ]
         },
@@ -51224,6 +51788,12 @@
               "execution_count": 16,
               "first_step": 232323,
               "last_step": 283312
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 102,
+              "first_step": 336343,
+              "last_step": 632706
             }
           ]
         },
@@ -51238,6 +51808,12 @@
               "execution_count": 16,
               "first_step": 232324,
               "last_step": 283313
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 102,
+              "first_step": 336344,
+              "last_step": 632707
             }
           ]
         },
@@ -51252,6 +51828,12 @@
               "execution_count": 7,
               "first_step": 232330,
               "last_step": 283319
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 29,
+              "first_step": 336350,
+              "last_step": 632713
             }
           ]
         },
@@ -51266,6 +51848,12 @@
               "execution_count": 7,
               "first_step": 232331,
               "last_step": 283320
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 29,
+              "first_step": 336351,
+              "last_step": 632714
             }
           ]
         },
@@ -51280,6 +51868,12 @@
               "execution_count": 7,
               "first_step": 232332,
               "last_step": 283321
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 29,
+              "first_step": 336352,
+              "last_step": 632715
             }
           ]
         }
@@ -51316,6 +51910,46 @@
           "bytes": "CD539F",
           "execution_count": 3,
           "first_step": 251128
+        },
+        {
+          "run": "FIZZBUZ",
+          "image": "PLI1.OVL",
+          "offset": 32467,
+          "bytes": "CD539F",
+          "execution_count": 25,
+          "first_step": 335995
+        },
+        {
+          "run": "FIZZBUZ",
+          "image": "PLI1.OVL",
+          "offset": 32873,
+          "bytes": "CD539F",
+          "execution_count": 30,
+          "first_step": 332035
+        },
+        {
+          "run": "FIZZBUZ",
+          "image": "PLI1.OVL",
+          "offset": 33003,
+          "bytes": "CD539F",
+          "execution_count": 8,
+          "first_step": 353310
+        },
+        {
+          "run": "FIZZBUZ",
+          "image": "PLI1.OVL",
+          "offset": 33051,
+          "bytes": "CD539F",
+          "execution_count": 2,
+          "first_step": 364577
+        },
+        {
+          "run": "FIZZBUZ",
+          "image": "PLI1.OVL",
+          "offset": 33131,
+          "bytes": "CD539F",
+          "execution_count": 12,
+          "first_step": 424591
         }
       ],
       "observed_return_offsets": [
@@ -51492,14 +52126,7 @@
           }
         }
       },
-      "behavioral_contract": {
-        "classification": "DEDUCED",
-        "description": "If endAE35==beginAE34 return7D5D (12); gateAA1A.bit0 set returns7D65 (2). Seven work calls set cursor=end; clear202B.bit0 and zero2011 select reverse path. Predecrement cursor modulo256, stop at u8(begin-1). Otherwise map through AA1F/AAB4; on witnessed mapped<F7 call partial7C1B: mapped0A now uses complete bounded word/top-bit scan7BBF and auxiliary publication; mapped17 writes child result; default returns initially cached auxiliary byte after attribute-counted children. Cache returnedA atAE50; independent7B7A balance scan replaces cursor, then outer predecrement repeats. Forward reset cursor=begin; exit when unsigned u8(end-1)<fresh cursor. Sixteen iterations map and emit current mapped byte through partial0EF6. Fresh AE50<F7 invokes7B64, storing bits3..5 of byte[1B4B+mapped] as attributeAE50. Attribute<3 calls7E46: select word[AB49+2*position_map[cursor]], publish it low/high toAE52/53, emit low byte. Fresh attribute==2 calls7E56, independently reading cached word and emitting high byte; seven observed pairs. Attribute>=3 reads primary auxiliary byte[AD08+position_map[cursor]] intoAE51; fresh attribute==3 reads distinct second auxiliary byte[AD9D+position_map[cursor]] via7ABF and emits it (one). Fresh attribute!=6 emits AE51 (nine); attribute<5 skips six RAW additional-arm bytes. Finally7BA2 publishes previousAE33 to mapped AAB4 slot selected by position_map[cursor], rereads map index and stores it intoAE33; increment freshly read cursor and loop unless byte wrap. Work exit publishes end=fresh begin. Parent direct emission arguments26 and low/high wrapper arguments14 give40 distinct emitter calls in these subtrees; no returned-A/flag/emission/cache/table channels merged. Own control and result flow is understood only at this partial scope: recursive RAW paths, emitter error/flush, shortcuts, mapped/attribute alternatives and cursor wrap prevent completion. No source-language/table ownership interpretation.",
-        "pseudocode": "if byte[AE35]==byte[AE34]: RET7D5D; if byte[AA1A].bit0: RET7D65; cursor=byte[AE35]; observed flags202B.bit0==0 && byte[2011]==0: loop { cursor=u8(cursor-1); if cursor==u8(byte[AE34]-1): break; a=map7A4D(C=cursor); scope a<F7: byte[AE50]=partial_recursive7C1B(C=cursor).A; cursor=balance_scan7B7A(C=cursor).A; }; cursor=byte[AE34]; while cursor<=u8(byte[AE35]-1) { a=map7A4D(C=cursor); byte[AE50]=a; emit0EF6(C=a) [partial]; scope fresh byte[AE50]<F7: byte[AE50]=bits3to5_7B64(C=byte[AE50]).A; if byte[AE50]<3 { w=word[AB49+2*position_map[fresh_cursor]]; word[AE52]=w; emit0EF6(C=w.low) [partial]; if fresh byte[AE50]==2: emit0EF6(C=word[AE52].high) [partial fresh read]; } else { byte[AE51]=auxiliary_read7AA9(C=cursor).A; if fresh byte[AE50]==3: emit0EF6(C=byte[AD9D+position_map[fresh_cursor]]); if fresh byte[AE50]!=6: emit0EF6(C=byte[AE51]); scope fresh byte[AE50]<5 skips RAW; }; publish_oldAE33_then_map_index7BA2(C=fresh cursor); byte[AE4F]++; if cursor==0: break; }; byte[AE35]=fresh byte[AE34]; RET7E45",
-        "scope_and_limits": "observed MINIMAL empty/gate returns and seven work paths: shortcuts clear, mapped bytes<F7, transformed attributes2/3/4; complete selected helpers, recursive7C1B partial scope and0EF6 success scope; controls/table/scratch/stack nonaliasing; RAW alternatives and arbitrary termination excluded",
-        "basis": "21 corrected MINIMAL invocations; selected witness/packet contract checks",
-        "report_ref": "../minimal-baseline/pass-7/README.md"
-      }
+      "behavioral_contract": "Test end[AE35] against begin[AE34]: equal returns +7D5D (MINIMAL12, FIZZBUZ40). Otherwise RAR of AA1A followed by JNC tests original bit0: set returns +7D65 (2/8). Work paths (7/29) save cursor=end. In both runs 202B.bit0 clear and 2011 zero enter reverse processing. Predecrement cursor modulo256 and compare with u8(begin-1); equality resets forward cursor to fresh begin. For other reverse positions, complete7A4D maps cursor; CPI F7/JNC skips recursive processing iff mapped>=F7 (STATIC / UNOBSERVED). All observed mappings are belowF7. Call partial7C1B at fresh cursor, publish its direct returned A at AE50, then independently call complete7B7A at the same outer cursor and replace AE4F with its stopping position. Predecrement that stopping position again on the next outer iteration. No threshold is applied to the later child A; FIZZBUZ caches FE from a default child despite the earlier mapped<F7 guard.\nFIZZBUZ contains six parent windows whose direct7D9D child has Pass13 special/fallback descendants. No direct child itself takes those new arms. In parent618086, direct child618131/input6 maps0F/default and caches initial auxiliary15 in its F4 before recursion. Its descendants include special1E at618240/input5 and fallback17/predecessor05 at619581/input2. Direct child returns its original F4=15, not the descendant clamp result or its overwritten F2, despite equal bytes. AE50=15 is written at620118; independent7B7A(input6) returns0; AE4F becomes0 and next predecrementFF equals begin0-minus1. Forward cursor then resets0 and visits0..6. Special AD0D=15 publication at619714 is a separate channel, read later by forward7AA9 at621220 and emitted as primary auxiliary at621231; latest recorded guest writer, address and chronology establish the local relation, not equality alone. Five other parents with fallback descendants return top-level A1/1/1/1/FE and use independent stopping cursors1/0/0/0/0. The first processes a further reverse position0 before forward reset.\nForward work exits when unsigned u8(end-1)<fresh cursor. In102 FIZZBUZ iterations (MINIMAL16), fresh7A4D output is saved at AE50 and passed in C to partial resident0EF6. Fresh mapped cache<F7 invokes complete7B64: save input AE47 and return bits3..5 of fixed byte[1B4B+mapped]. Save that arbitrary transformed byte at AE50. Observed attribute2 (42/7) calls7E46 then7E56: select fresh word[AB49+2*position_map[cursor]], cache it atAE52/53 before low emission, then reread AE52/53 for high emission. Attribute3 (7/1) reads primary auxiliary to AE51, then independently reads/emits second auxiliary AD9D and emits primary AD08; attribute4 (53/8) emits primary only after mapped byte. These give253/40 separately identified emitter arguments. Values, returned flags, mapped/auxiliary tables and cache carriers do not merge.\nSTATIC / UNOBSERVED: attributes0/1 would emit mapped-byte then word-low; attributes5/7 would emit mapped-byte, primary auxiliary, word-low, word-high; attribute6 would suppress primary emission at CPI06/JZ7E19 but still enter the attr>=5 pair via CPI05/JC7E28. Exact RAW bytes7E2B..7E30 encode CALL7E46 thenCALL7E56; neither is observed in either run, so no promotion. Attribute3 second-auxiliary channel remains distinct from the suppressed primary channel.\nAfter each observed iteration complete7BA2 publishes oldAE33 to the mapped AAB4 slot, independently rereads position_map[cursor] and stores the fresh index toAE33. Increment fresh AE4F; JNZ repeats iff nonzero. No forward INR->00 is observed; reverse predecrement0->FF is a different demonstrated event. Normal work exit publishes end=fresh begin then consumes the original hardware return. A is not a procedure-level Boolean status. One FIZZBUZ mapped-byte emission at478274 within parent472976 writes index127, increments to128, delegates resident buffer calls, resets index0 and returns A0 with actual flags; nonhistorical RET witnesses478324/478364 at runtime0005 remain opaque subtree effects. Parent continues via fresh cache/comparisons; no emission argument or helper register preservation is inferred from returned flags. No global source-language/table/recursive ownership or arbitrary termination theorem is claimed."
     },
     {
       "id": "PLI.COM+1376",

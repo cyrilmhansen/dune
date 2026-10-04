@@ -1,0 +1,6318 @@
+{
+  "capture_run_id": "FIZZBUZ:a7a657b3c9c758be44a16c4c76a2986744f01de34d773d2b9597d4758eff0f49",
+  "method": "Corrected return projection; existing Pass7 validate_d53 channel checker through an in-memory compatibility adapter. Not a V0.2 packet; nonhistorical effects retained with coordinate=null.",
+  "FIZZBUZ": [
+    {
+      "begin": 0,
+      "end": 0,
+      "return": "PLI1.OVL+7D5D",
+      "forward_iterations": 0,
+      "call_step": 332035,
+      "caller": "PLI1.OVL+8069",
+      "path": "equal_range",
+      "parent_return_step": 332040,
+      "reverse": [],
+      "forward": [],
+      "unsupported_effects": []
+    },
+    {
+      "begin": 0,
+      "end": 1,
+      "return": "PLI1.OVL+7E45",
+      "forward_iterations": 1,
+      "call_step": 335995,
+      "caller": "PLI1.OVL+7ED3",
+      "path": "work",
+      "parent_return_step": 336352,
+      "reverse": [
+        {
+          "call_step": 336040,
+          "return_step": 336149,
+          "input_position": 0,
+          "returned_A": 0,
+          "returned_flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          },
+          "AE50_write_step": 336150,
+          "AE50_value": 0,
+          "skip_call_step": 336153,
+          "skip_input": 0,
+          "skip_return": 0,
+          "skip_flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          },
+          "cursor_write_step": 336195,
+          "cursor_value": 0,
+          "next_loop_branch_step": 336206,
+          "next_saved_cursor": 255,
+          "next_begin_minus1": 255,
+          "next_loop_taken": true
+        }
+      ],
+      "forward": [
+        {
+          "map_call_step": 336216,
+          "cursor": 0,
+          "mapped": 141,
+          "transform_call_step": 336251,
+          "attribute": 4,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 141,
+              "call_step": 336231
+            },
+            {
+              "channel": "primary-auxiliary-byte",
+              "byte": 0,
+              "call_step": 336292
+            }
+          ],
+          "recycle_call_step": 336312,
+          "recycle_old_index": 1,
+          "recycle_write": {
+            "address": 43700,
+            "old_value": null,
+            "new_value": 1
+          },
+          "fresh_map_read": {
+            "address": 43551,
+            "value": 0
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 0
+          }
+        }
+      ],
+      "unsupported_effects": [],
+      "forward_start": {
+        "cursor": 0,
+        "step": 336208
+      },
+      "end_publication": {
+        "value": 0,
+        "step": 336351
+      }
+    },
+    {
+      "begin": 0,
+      "end": 0,
+      "return": "PLI1.OVL+7D5D",
+      "forward_iterations": 0,
+      "call_step": 342289,
+      "caller": "PLI1.OVL+8069",
+      "path": "equal_range",
+      "parent_return_step": 342294,
+      "reverse": [],
+      "forward": [],
+      "unsupported_effects": []
+    },
+    {
+      "begin": 0,
+      "end": 2,
+      "return": "PLI1.OVL+7E45",
+      "forward_iterations": 2,
+      "call_step": 343255,
+      "caller": "PLI1.OVL+7ED3",
+      "path": "work",
+      "parent_return_step": 343976,
+      "reverse": [
+        {
+          "call_step": 343300,
+          "return_step": 343409,
+          "input_position": 1,
+          "returned_A": 0,
+          "returned_flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          },
+          "AE50_write_step": 343410,
+          "AE50_value": 0,
+          "skip_call_step": 343413,
+          "skip_input": 1,
+          "skip_return": 1,
+          "skip_flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          },
+          "cursor_write_step": 343455,
+          "cursor_value": 1,
+          "next_loop_branch_step": 343466,
+          "next_saved_cursor": 0,
+          "next_begin_minus1": 255,
+          "next_loop_taken": false
+        },
+        {
+          "call_step": 343486,
+          "return_step": 343595,
+          "input_position": 0,
+          "returned_A": 0,
+          "returned_flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          },
+          "AE50_write_step": 343596,
+          "AE50_value": 0,
+          "skip_call_step": 343599,
+          "skip_input": 0,
+          "skip_return": 0,
+          "skip_flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          },
+          "cursor_write_step": 343641,
+          "cursor_value": 0,
+          "next_loop_branch_step": 343652,
+          "next_saved_cursor": 255,
+          "next_begin_minus1": 255,
+          "next_loop_taken": true
+        }
+      ],
+      "forward": [
+        {
+          "map_call_step": 343662,
+          "cursor": 0,
+          "mapped": 6,
+          "transform_call_step": 343697,
+          "attribute": 2,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 6,
+              "call_step": 343677
+            },
+            {
+              "channel": "mapped-word-low",
+              "word": 64476,
+              "byte": 220,
+              "wrapper_call_step": 343714
+            },
+            {
+              "channel": "mapped-word-high",
+              "word": 64476,
+              "byte": 251,
+              "wrapper_call_step": 343756
+            }
+          ],
+          "recycle_call_step": 343779,
+          "recycle_old_index": 2,
+          "recycle_write": {
+            "address": 43700,
+            "old_value": null,
+            "new_value": 2
+          },
+          "fresh_map_read": {
+            "address": 43551,
+            "value": 0
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 0
+          }
+        },
+        {
+          "map_call_step": 343819,
+          "cursor": 1,
+          "mapped": 125,
+          "transform_call_step": 343854,
+          "attribute": 2,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 125,
+              "call_step": 343834
+            },
+            {
+              "channel": "mapped-word-low",
+              "word": 64476,
+              "byte": 220,
+              "wrapper_call_step": 343871
+            },
+            {
+              "channel": "mapped-word-high",
+              "word": 64476,
+              "byte": 251,
+              "wrapper_call_step": 343913
+            }
+          ],
+          "recycle_call_step": 343936,
+          "recycle_old_index": 0,
+          "recycle_write": {
+            "address": 43701,
+            "old_value": null,
+            "new_value": 0
+          },
+          "fresh_map_read": {
+            "address": 43552,
+            "value": 1
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 1
+          }
+        }
+      ],
+      "unsupported_effects": [],
+      "forward_start": {
+        "cursor": 0,
+        "step": 343654
+      },
+      "end_publication": {
+        "value": 0,
+        "step": 343975
+      }
+    },
+    {
+      "begin": 0,
+      "end": 1,
+      "return": "PLI1.OVL+7E45",
+      "forward_iterations": 1,
+      "call_step": 353310,
+      "caller": "PLI1.OVL+80EB",
+      "path": "work",
+      "parent_return_step": 353688,
+      "reverse": [
+        {
+          "call_step": 353355,
+          "return_step": 353464,
+          "input_position": 0,
+          "returned_A": 0,
+          "returned_flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          },
+          "AE50_write_step": 353465,
+          "AE50_value": 0,
+          "skip_call_step": 353468,
+          "skip_input": 0,
+          "skip_return": 0,
+          "skip_flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          },
+          "cursor_write_step": 353510,
+          "cursor_value": 0,
+          "next_loop_branch_step": 353521,
+          "next_saved_cursor": 255,
+          "next_begin_minus1": 255,
+          "next_loop_taken": true
+        }
+      ],
+      "forward": [
+        {
+          "map_call_step": 353531,
+          "cursor": 0,
+          "mapped": 0,
+          "transform_call_step": 353566,
+          "attribute": 2,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 0,
+              "call_step": 353546
+            },
+            {
+              "channel": "mapped-word-low",
+              "word": 3,
+              "byte": 3,
+              "wrapper_call_step": 353583
+            },
+            {
+              "channel": "mapped-word-high",
+              "word": 3,
+              "byte": 0,
+              "wrapper_call_step": 353625
+            }
+          ],
+          "recycle_call_step": 353648,
+          "recycle_old_index": 1,
+          "recycle_write": {
+            "address": 43700,
+            "old_value": null,
+            "new_value": 1
+          },
+          "fresh_map_read": {
+            "address": 43551,
+            "value": 0
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 0
+          }
+        }
+      ],
+      "unsupported_effects": [],
+      "forward_start": {
+        "cursor": 0,
+        "step": 353523
+      },
+      "end_publication": {
+        "value": 0,
+        "step": 353687
+      }
+    },
+    {
+      "begin": 0,
+      "end": 0,
+      "return": "PLI1.OVL+7D5D",
+      "forward_iterations": 0,
+      "call_step": 354625,
+      "caller": "PLI1.OVL+8069",
+      "path": "equal_range",
+      "parent_return_step": 354630,
+      "reverse": [],
+      "forward": [],
+      "unsupported_effects": []
+    },
+    {
+      "begin": 0,
+      "end": 4,
+      "return": "PLI1.OVL+7E45",
+      "forward_iterations": 4,
+      "call_step": 361768,
+      "caller": "PLI1.OVL+7ED3",
+      "path": "work",
+      "parent_return_step": 364172,
+      "reverse": [
+        {
+          "call_step": 361813,
+          "return_step": 363405,
+          "input_position": 3,
+          "returned_A": 15,
+          "returned_flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          },
+          "AE50_write_step": 363406,
+          "AE50_value": 15,
+          "skip_call_step": 363409,
+          "skip_input": 3,
+          "skip_return": 0,
+          "skip_flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          },
+          "cursor_write_step": 363565,
+          "cursor_value": 0,
+          "next_loop_branch_step": 363576,
+          "next_saved_cursor": 255,
+          "next_begin_minus1": 255,
+          "next_loop_taken": true
+        }
+      ],
+      "forward": [
+        {
+          "map_call_step": 363586,
+          "cursor": 0,
+          "mapped": 5,
+          "transform_call_step": 363621,
+          "attribute": 2,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 5,
+              "call_step": 363601
+            },
+            {
+              "channel": "mapped-word-low",
+              "word": 64499,
+              "byte": 243,
+              "wrapper_call_step": 363638
+            },
+            {
+              "channel": "mapped-word-high",
+              "word": 64499,
+              "byte": 251,
+              "wrapper_call_step": 363680
+            }
+          ],
+          "recycle_call_step": 363703,
+          "recycle_old_index": 4,
+          "recycle_write": {
+            "address": 43700,
+            "old_value": null,
+            "new_value": 4
+          },
+          "fresh_map_read": {
+            "address": 43551,
+            "value": 0
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 0
+          }
+        },
+        {
+          "map_call_step": 363743,
+          "cursor": 1,
+          "mapped": 10,
+          "transform_call_step": 363778,
+          "attribute": 2,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 10,
+              "call_step": 363758
+            },
+            {
+              "channel": "mapped-word-low",
+              "word": 1,
+              "byte": 1,
+              "wrapper_call_step": 363795
+            },
+            {
+              "channel": "mapped-word-high",
+              "word": 1,
+              "byte": 0,
+              "wrapper_call_step": 363837
+            }
+          ],
+          "recycle_call_step": 363860,
+          "recycle_old_index": 0,
+          "recycle_write": {
+            "address": 43701,
+            "old_value": null,
+            "new_value": 0
+          },
+          "fresh_map_read": {
+            "address": 43552,
+            "value": 1
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 1
+          }
+        },
+        {
+          "map_call_step": 363900,
+          "cursor": 2,
+          "mapped": 23,
+          "transform_call_step": 363935,
+          "attribute": 4,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 23,
+              "call_step": 363915
+            },
+            {
+              "channel": "primary-auxiliary-byte",
+              "byte": 1,
+              "call_step": 363976
+            }
+          ],
+          "recycle_call_step": 363996,
+          "recycle_old_index": 1,
+          "recycle_write": {
+            "address": 43702,
+            "old_value": null,
+            "new_value": 1
+          },
+          "fresh_map_read": {
+            "address": 43553,
+            "value": 2
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 2
+          }
+        },
+        {
+          "map_call_step": 364036,
+          "cursor": 3,
+          "mapped": 15,
+          "transform_call_step": 364071,
+          "attribute": 4,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 15,
+              "call_step": 364051
+            },
+            {
+              "channel": "primary-auxiliary-byte",
+              "byte": 15,
+              "call_step": 364112
+            }
+          ],
+          "recycle_call_step": 364132,
+          "recycle_old_index": 2,
+          "recycle_write": {
+            "address": 43703,
+            "old_value": null,
+            "new_value": 2
+          },
+          "fresh_map_read": {
+            "address": 43554,
+            "value": 3
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 3
+          }
+        }
+      ],
+      "unsupported_effects": [],
+      "forward_start": {
+        "cursor": 0,
+        "step": 363578
+      },
+      "end_publication": {
+        "value": 0,
+        "step": 364171
+      }
+    },
+    {
+      "begin": 0,
+      "end": 0,
+      "return": "PLI1.OVL+7D5D",
+      "forward_iterations": 0,
+      "call_step": 364577,
+      "caller": "PLI1.OVL+811B",
+      "path": "equal_range",
+      "parent_return_step": 364582,
+      "reverse": [],
+      "forward": [],
+      "unsupported_effects": []
+    },
+    {
+      "begin": 0,
+      "end": 0,
+      "return": "PLI1.OVL+7D5D",
+      "forward_iterations": 0,
+      "call_step": 368361,
+      "caller": "PLI1.OVL+811B",
+      "path": "equal_range",
+      "parent_return_step": 368366,
+      "reverse": [],
+      "forward": [],
+      "unsupported_effects": []
+    },
+    {
+      "begin": 0,
+      "end": 7,
+      "return": "PLI1.OVL+7E45",
+      "forward_iterations": 7,
+      "call_step": 375015,
+      "caller": "PLI1.OVL+7ED3",
+      "path": "work",
+      "parent_return_step": 378229,
+      "reverse": [
+        {
+          "call_step": 375060,
+          "return_step": 376792,
+          "input_position": 6,
+          "returned_A": 1,
+          "returned_flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          },
+          "AE50_write_step": 376793,
+          "AE50_value": 1,
+          "skip_call_step": 376796,
+          "skip_input": 6,
+          "skip_return": 1,
+          "skip_flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          },
+          "cursor_write_step": 377028,
+          "cursor_value": 1,
+          "next_loop_branch_step": 377039,
+          "next_saved_cursor": 0,
+          "next_begin_minus1": 255,
+          "next_loop_taken": false
+        },
+        {
+          "call_step": 377059,
+          "return_step": 377168,
+          "input_position": 0,
+          "returned_A": 1,
+          "returned_flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          },
+          "AE50_write_step": 377169,
+          "AE50_value": 1,
+          "skip_call_step": 377172,
+          "skip_input": 0,
+          "skip_return": 0,
+          "skip_flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          },
+          "cursor_write_step": 377214,
+          "cursor_value": 0,
+          "next_loop_branch_step": 377225,
+          "next_saved_cursor": 255,
+          "next_begin_minus1": 255,
+          "next_loop_taken": true
+        }
+      ],
+      "forward": [
+        {
+          "map_call_step": 377235,
+          "cursor": 0,
+          "mapped": 168,
+          "transform_call_step": 377270,
+          "attribute": 4,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 168,
+              "call_step": 377250
+            },
+            {
+              "channel": "primary-auxiliary-byte",
+              "byte": 1,
+              "call_step": 377311
+            }
+          ],
+          "recycle_call_step": 377331,
+          "recycle_old_index": 7,
+          "recycle_write": {
+            "address": 43705,
+            "old_value": null,
+            "new_value": 7
+          },
+          "fresh_map_read": {
+            "address": 43551,
+            "value": 5
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 5
+          }
+        },
+        {
+          "map_call_step": 377371,
+          "cursor": 1,
+          "mapped": 5,
+          "transform_call_step": 377406,
+          "attribute": 2,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 5,
+              "call_step": 377386
+            },
+            {
+              "channel": "mapped-word-low",
+              "word": 64499,
+              "byte": 243,
+              "wrapper_call_step": 377423
+            },
+            {
+              "channel": "mapped-word-high",
+              "word": 64499,
+              "byte": 251,
+              "wrapper_call_step": 377465
+            }
+          ],
+          "recycle_call_step": 377488,
+          "recycle_old_index": 5,
+          "recycle_write": {
+            "address": 43703,
+            "old_value": null,
+            "new_value": 5
+          },
+          "fresh_map_read": {
+            "address": 43552,
+            "value": 3
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 3
+          }
+        },
+        {
+          "map_call_step": 377528,
+          "cursor": 2,
+          "mapped": 23,
+          "transform_call_step": 377563,
+          "attribute": 4,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 23,
+              "call_step": 377543
+            },
+            {
+              "channel": "primary-auxiliary-byte",
+              "byte": 15,
+              "call_step": 377604
+            }
+          ],
+          "recycle_call_step": 377624,
+          "recycle_old_index": 3,
+          "recycle_write": {
+            "address": 43702,
+            "old_value": null,
+            "new_value": 3
+          },
+          "fresh_map_read": {
+            "address": 43553,
+            "value": 2
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 2
+          }
+        },
+        {
+          "map_call_step": 377664,
+          "cursor": 3,
+          "mapped": 10,
+          "transform_call_step": 377699,
+          "attribute": 2,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 10,
+              "call_step": 377679
+            },
+            {
+              "channel": "mapped-word-low",
+              "word": 15,
+              "byte": 15,
+              "wrapper_call_step": 377716
+            },
+            {
+              "channel": "mapped-word-high",
+              "word": 15,
+              "byte": 0,
+              "wrapper_call_step": 377758
+            }
+          ],
+          "recycle_call_step": 377781,
+          "recycle_old_index": 2,
+          "recycle_write": {
+            "address": 43701,
+            "old_value": null,
+            "new_value": 2
+          },
+          "fresh_map_read": {
+            "address": 43554,
+            "value": 1
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 1
+          }
+        },
+        {
+          "map_call_step": 377821,
+          "cursor": 4,
+          "mapped": 23,
+          "transform_call_step": 377856,
+          "attribute": 4,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 23,
+              "call_step": 377836
+            },
+            {
+              "channel": "primary-auxiliary-byte",
+              "byte": 4,
+              "call_step": 377897
+            }
+          ],
+          "recycle_call_step": 377917,
+          "recycle_old_index": 1,
+          "recycle_write": {
+            "address": 43700,
+            "old_value": null,
+            "new_value": 1
+          },
+          "fresh_map_read": {
+            "address": 43555,
+            "value": 0
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 0
+          }
+        },
+        {
+          "map_call_step": 377957,
+          "cursor": 5,
+          "mapped": 61,
+          "transform_call_step": 377992,
+          "attribute": 4,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 61,
+              "call_step": 377972
+            },
+            {
+              "channel": "primary-auxiliary-byte",
+              "byte": 1,
+              "call_step": 378033
+            }
+          ],
+          "recycle_call_step": 378053,
+          "recycle_old_index": 0,
+          "recycle_write": {
+            "address": 43704,
+            "old_value": null,
+            "new_value": 0
+          },
+          "fresh_map_read": {
+            "address": 43556,
+            "value": 4
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 4
+          }
+        },
+        {
+          "map_call_step": 378093,
+          "cursor": 6,
+          "mapped": 106,
+          "transform_call_step": 378128,
+          "attribute": 4,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 106,
+              "call_step": 378108
+            },
+            {
+              "channel": "primary-auxiliary-byte",
+              "byte": 1,
+              "call_step": 378169
+            }
+          ],
+          "recycle_call_step": 378189,
+          "recycle_old_index": 4,
+          "recycle_write": {
+            "address": 43706,
+            "old_value": null,
+            "new_value": 4
+          },
+          "fresh_map_read": {
+            "address": 43557,
+            "value": 6
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 6
+          }
+        }
+      ],
+      "unsupported_effects": [],
+      "forward_start": {
+        "cursor": 0,
+        "step": 377227
+      },
+      "end_publication": {
+        "value": 0,
+        "step": 378228
+      }
+    },
+    {
+      "begin": 0,
+      "end": 1,
+      "return": "PLI1.OVL+7E45",
+      "forward_iterations": 1,
+      "call_step": 383215,
+      "caller": "PLI1.OVL+80EB",
+      "path": "work",
+      "parent_return_step": 383593,
+      "reverse": [
+        {
+          "call_step": 383260,
+          "return_step": 383369,
+          "input_position": 0,
+          "returned_A": 0,
+          "returned_flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          },
+          "AE50_write_step": 383370,
+          "AE50_value": 0,
+          "skip_call_step": 383373,
+          "skip_input": 0,
+          "skip_return": 0,
+          "skip_flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          },
+          "cursor_write_step": 383415,
+          "cursor_value": 0,
+          "next_loop_branch_step": 383426,
+          "next_saved_cursor": 255,
+          "next_begin_minus1": 255,
+          "next_loop_taken": true
+        }
+      ],
+      "forward": [
+        {
+          "map_call_step": 383436,
+          "cursor": 0,
+          "mapped": 0,
+          "transform_call_step": 383471,
+          "attribute": 2,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 0,
+              "call_step": 383451
+            },
+            {
+              "channel": "mapped-word-low",
+              "word": 4,
+              "byte": 4,
+              "wrapper_call_step": 383488
+            },
+            {
+              "channel": "mapped-word-high",
+              "word": 4,
+              "byte": 0,
+              "wrapper_call_step": 383530
+            }
+          ],
+          "recycle_call_step": 383553,
+          "recycle_old_index": 4,
+          "recycle_write": {
+            "address": 43706,
+            "old_value": null,
+            "new_value": 4
+          },
+          "fresh_map_read": {
+            "address": 43551,
+            "value": 6
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 6
+          }
+        }
+      ],
+      "unsupported_effects": [],
+      "forward_start": {
+        "cursor": 0,
+        "step": 383428
+      },
+      "end_publication": {
+        "value": 0,
+        "step": 383592
+      }
+    },
+    {
+      "begin": 0,
+      "end": 9,
+      "return": "PLI1.OVL+7E45",
+      "forward_iterations": 9,
+      "call_step": 403330,
+      "caller": "PLI1.OVL+7ED3",
+      "path": "work",
+      "parent_return_step": 408613,
+      "reverse": [
+        {
+          "call_step": 403375,
+          "return_step": 406924,
+          "input_position": 8,
+          "returned_A": 1,
+          "returned_flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          },
+          "AE50_write_step": 406925,
+          "AE50_value": 1,
+          "skip_call_step": 406928,
+          "skip_input": 8,
+          "skip_return": 0,
+          "skip_flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          },
+          "cursor_write_step": 407274,
+          "cursor_value": 0,
+          "next_loop_branch_step": 407285,
+          "next_saved_cursor": 255,
+          "next_begin_minus1": 255,
+          "next_loop_taken": true
+        }
+      ],
+      "forward": [
+        {
+          "map_call_step": 407295,
+          "cursor": 0,
+          "mapped": 5,
+          "transform_call_step": 407330,
+          "attribute": 2,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 5,
+              "call_step": 407310
+            },
+            {
+              "channel": "mapped-word-low",
+              "word": 64499,
+              "byte": 243,
+              "wrapper_call_step": 407347
+            },
+            {
+              "channel": "mapped-word-high",
+              "word": 64499,
+              "byte": 251,
+              "wrapper_call_step": 407389
+            }
+          ],
+          "recycle_call_step": 407412,
+          "recycle_old_index": 9,
+          "recycle_write": {
+            "address": 43706,
+            "old_value": null,
+            "new_value": 9
+          },
+          "fresh_map_read": {
+            "address": 43551,
+            "value": 6
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 6
+          }
+        },
+        {
+          "map_call_step": 407452,
+          "cursor": 1,
+          "mapped": 23,
+          "transform_call_step": 407487,
+          "attribute": 4,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 23,
+              "call_step": 407467
+            },
+            {
+              "channel": "primary-auxiliary-byte",
+              "byte": 15,
+              "call_step": 407528
+            }
+          ],
+          "recycle_call_step": 407548,
+          "recycle_old_index": 6,
+          "recycle_write": {
+            "address": 43704,
+            "old_value": null,
+            "new_value": 6
+          },
+          "fresh_map_read": {
+            "address": 43552,
+            "value": 4
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 4
+          }
+        },
+        {
+          "map_call_step": 407588,
+          "cursor": 2,
+          "mapped": 10,
+          "transform_call_step": 407623,
+          "attribute": 2,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 10,
+              "call_step": 407603
+            },
+            {
+              "channel": "mapped-word-low",
+              "word": 15,
+              "byte": 15,
+              "wrapper_call_step": 407640
+            },
+            {
+              "channel": "mapped-word-high",
+              "word": 15,
+              "byte": 0,
+              "wrapper_call_step": 407682
+            }
+          ],
+          "recycle_call_step": 407705,
+          "recycle_old_index": 4,
+          "recycle_write": {
+            "address": 43700,
+            "old_value": null,
+            "new_value": 4
+          },
+          "fresh_map_read": {
+            "address": 43553,
+            "value": 0
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 0
+          }
+        },
+        {
+          "map_call_step": 407745,
+          "cursor": 3,
+          "mapped": 23,
+          "transform_call_step": 407780,
+          "attribute": 4,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 23,
+              "call_step": 407760
+            },
+            {
+              "channel": "primary-auxiliary-byte",
+              "byte": 4,
+              "call_step": 407821
+            }
+          ],
+          "recycle_call_step": 407841,
+          "recycle_old_index": 0,
+          "recycle_write": {
+            "address": 43701,
+            "old_value": null,
+            "new_value": 0
+          },
+          "fresh_map_read": {
+            "address": 43554,
+            "value": 1
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 1
+          }
+        },
+        {
+          "map_call_step": 407881,
+          "cursor": 4,
+          "mapped": 209,
+          "transform_call_step": 407916,
+          "attribute": 3,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 209,
+              "call_step": 407896
+            },
+            {
+              "channel": "second-auxiliary-byte",
+              "byte": 0,
+              "call_step": 407968
+            },
+            {
+              "channel": "primary-auxiliary-byte",
+              "byte": 15,
+              "call_step": 407988
+            }
+          ],
+          "recycle_call_step": 408008,
+          "recycle_old_index": 1,
+          "recycle_write": {
+            "address": 43702,
+            "old_value": null,
+            "new_value": 1
+          },
+          "fresh_map_read": {
+            "address": 43555,
+            "value": 2
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 2
+          }
+        },
+        {
+          "map_call_step": 408048,
+          "cursor": 5,
+          "mapped": 10,
+          "transform_call_step": 408083,
+          "attribute": 2,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 10,
+              "call_step": 408063
+            },
+            {
+              "channel": "mapped-word-low",
+              "word": 0,
+              "byte": 0,
+              "wrapper_call_step": 408100
+            },
+            {
+              "channel": "mapped-word-high",
+              "word": 0,
+              "byte": 0,
+              "wrapper_call_step": 408142
+            }
+          ],
+          "recycle_call_step": 408165,
+          "recycle_old_index": 2,
+          "recycle_write": {
+            "address": 43703,
+            "old_value": null,
+            "new_value": 2
+          },
+          "fresh_map_read": {
+            "address": 43556,
+            "value": 3
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 3
+          }
+        },
+        {
+          "map_call_step": 408205,
+          "cursor": 6,
+          "mapped": 23,
+          "transform_call_step": 408240,
+          "attribute": 4,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 23,
+              "call_step": 408220
+            },
+            {
+              "channel": "primary-auxiliary-byte",
+              "byte": 0,
+              "call_step": 408281
+            }
+          ],
+          "recycle_call_step": 408301,
+          "recycle_old_index": 3,
+          "recycle_write": {
+            "address": 43705,
+            "old_value": null,
+            "new_value": 3
+          },
+          "fresh_map_read": {
+            "address": 43557,
+            "value": 5
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 5
+          }
+        },
+        {
+          "map_call_step": 408341,
+          "cursor": 7,
+          "mapped": 48,
+          "transform_call_step": 408376,
+          "attribute": 4,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 48,
+              "call_step": 408356
+            },
+            {
+              "channel": "primary-auxiliary-byte",
+              "byte": 1,
+              "call_step": 408417
+            }
+          ],
+          "recycle_call_step": 408437,
+          "recycle_old_index": 5,
+          "recycle_write": {
+            "address": 43707,
+            "old_value": null,
+            "new_value": 5
+          },
+          "fresh_map_read": {
+            "address": 43558,
+            "value": 7
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 7
+          }
+        },
+        {
+          "map_call_step": 408477,
+          "cursor": 8,
+          "mapped": 108,
+          "transform_call_step": 408512,
+          "attribute": 4,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 108,
+              "call_step": 408492
+            },
+            {
+              "channel": "primary-auxiliary-byte",
+              "byte": 1,
+              "call_step": 408553
+            }
+          ],
+          "recycle_call_step": 408573,
+          "recycle_old_index": 7,
+          "recycle_write": {
+            "address": 43708,
+            "old_value": null,
+            "new_value": 7
+          },
+          "fresh_map_read": {
+            "address": 43559,
+            "value": 8
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 8
+          }
+        }
+      ],
+      "unsupported_effects": [],
+      "forward_start": {
+        "cursor": 0,
+        "step": 407287
+      },
+      "end_publication": {
+        "value": 0,
+        "step": 408612
+      }
+    },
+    {
+      "begin": 0,
+      "end": 1,
+      "return": "PLI1.OVL+7E45",
+      "forward_iterations": 1,
+      "call_step": 415967,
+      "caller": "PLI1.OVL+80EB",
+      "path": "work",
+      "parent_return_step": 416345,
+      "reverse": [
+        {
+          "call_step": 416012,
+          "return_step": 416121,
+          "input_position": 0,
+          "returned_A": 0,
+          "returned_flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          },
+          "AE50_write_step": 416122,
+          "AE50_value": 0,
+          "skip_call_step": 416125,
+          "skip_input": 0,
+          "skip_return": 0,
+          "skip_flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          },
+          "cursor_write_step": 416167,
+          "cursor_value": 0,
+          "next_loop_branch_step": 416178,
+          "next_saved_cursor": 255,
+          "next_begin_minus1": 255,
+          "next_loop_taken": true
+        }
+      ],
+      "forward": [
+        {
+          "map_call_step": 416188,
+          "cursor": 0,
+          "mapped": 0,
+          "transform_call_step": 416223,
+          "attribute": 2,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 0,
+              "call_step": 416203
+            },
+            {
+              "channel": "mapped-word-low",
+              "word": 5,
+              "byte": 5,
+              "wrapper_call_step": 416240
+            },
+            {
+              "channel": "mapped-word-high",
+              "word": 5,
+              "byte": 0,
+              "wrapper_call_step": 416282
+            }
+          ],
+          "recycle_call_step": 416305,
+          "recycle_old_index": 7,
+          "recycle_write": {
+            "address": 43708,
+            "old_value": null,
+            "new_value": 7
+          },
+          "fresh_map_read": {
+            "address": 43551,
+            "value": 8
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 8
+          }
+        }
+      ],
+      "unsupported_effects": [],
+      "forward_start": {
+        "cursor": 0,
+        "step": 416180
+      },
+      "end_publication": {
+        "value": 0,
+        "step": 416344
+      }
+    },
+    {
+      "begin": 0,
+      "end": 3,
+      "return": "PLI1.OVL+7D65",
+      "forward_iterations": 0,
+      "call_step": 421498,
+      "caller": "PLI1.OVL+7ED3",
+      "path": "gate",
+      "parent_return_step": 421506,
+      "reverse": [],
+      "forward": [],
+      "unsupported_effects": []
+    },
+    {
+      "begin": 0,
+      "end": 7,
+      "return": "PLI1.OVL+7D65",
+      "forward_iterations": 0,
+      "call_step": 422882,
+      "caller": "PLI1.OVL+7ED3",
+      "path": "gate",
+      "parent_return_step": 422890,
+      "reverse": [],
+      "forward": [],
+      "unsupported_effects": []
+    },
+    {
+      "begin": 0,
+      "end": 7,
+      "return": "PLI1.OVL+7E45",
+      "forward_iterations": 7,
+      "call_step": 424591,
+      "caller": "PLI1.OVL+816B",
+      "path": "work",
+      "parent_return_step": 429400,
+      "reverse": [
+        {
+          "call_step": 424636,
+          "return_step": 426052,
+          "input_position": 6,
+          "returned_A": 5,
+          "returned_flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          },
+          "AE50_write_step": 426053,
+          "AE50_value": 5,
+          "skip_call_step": 426056,
+          "skip_input": 6,
+          "skip_return": 4,
+          "skip_flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          },
+          "cursor_write_step": 426174,
+          "cursor_value": 4,
+          "next_loop_branch_step": 426185,
+          "next_saved_cursor": 3,
+          "next_begin_minus1": 255,
+          "next_loop_taken": false
+        },
+        {
+          "call_step": 426205,
+          "return_step": 428173,
+          "input_position": 3,
+          "returned_A": 0,
+          "returned_flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          },
+          "AE50_write_step": 428174,
+          "AE50_value": 0,
+          "skip_call_step": 428177,
+          "skip_input": 3,
+          "skip_return": 0,
+          "skip_flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          },
+          "cursor_write_step": 428333,
+          "cursor_value": 0,
+          "next_loop_branch_step": 428344,
+          "next_saved_cursor": 255,
+          "next_begin_minus1": 255,
+          "next_loop_taken": true
+        }
+      ],
+      "forward": [
+        {
+          "map_call_step": 428354,
+          "cursor": 0,
+          "mapped": 10,
+          "transform_call_step": 428389,
+          "attribute": 2,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 10,
+              "call_step": 428369
+            },
+            {
+              "channel": "mapped-word-low",
+              "word": 1,
+              "byte": 1,
+              "wrapper_call_step": 428406
+            },
+            {
+              "channel": "mapped-word-high",
+              "word": 1,
+              "byte": 0,
+              "wrapper_call_step": 428448
+            }
+          ],
+          "recycle_call_step": 428471,
+          "recycle_old_index": 4,
+          "recycle_write": {
+            "address": 43703,
+            "old_value": null,
+            "new_value": 4
+          },
+          "fresh_map_read": {
+            "address": 43551,
+            "value": 3
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 3
+          }
+        },
+        {
+          "map_call_step": 428511,
+          "cursor": 1,
+          "mapped": 23,
+          "transform_call_step": 428546,
+          "attribute": 4,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 23,
+              "call_step": 428526
+            },
+            {
+              "channel": "primary-auxiliary-byte",
+              "byte": 1,
+              "call_step": 428587
+            }
+          ],
+          "recycle_call_step": 428607,
+          "recycle_old_index": 3,
+          "recycle_write": {
+            "address": 43702,
+            "old_value": null,
+            "new_value": 3
+          },
+          "fresh_map_read": {
+            "address": 43552,
+            "value": 2
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 2
+          }
+        },
+        {
+          "map_call_step": 428647,
+          "cursor": 2,
+          "mapped": 10,
+          "transform_call_step": 428682,
+          "attribute": 2,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 10,
+              "call_step": 428662
+            },
+            {
+              "channel": "mapped-word-low",
+              "word": 594,
+              "byte": 82,
+              "wrapper_call_step": 428699
+            },
+            {
+              "channel": "mapped-word-high",
+              "word": 594,
+              "byte": 2,
+              "wrapper_call_step": 428741
+            }
+          ],
+          "recycle_call_step": 428764,
+          "recycle_old_index": 2,
+          "recycle_write": {
+            "address": 43701,
+            "old_value": null,
+            "new_value": 2
+          },
+          "fresh_map_read": {
+            "address": 43553,
+            "value": 1
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 1
+          }
+        },
+        {
+          "map_call_step": 428804,
+          "cursor": 3,
+          "mapped": 161,
+          "transform_call_step": 428839,
+          "attribute": 4,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 161,
+              "call_step": 428819
+            },
+            {
+              "channel": "primary-auxiliary-byte",
+              "byte": 0,
+              "call_step": 428880
+            }
+          ],
+          "recycle_call_step": 428900,
+          "recycle_old_index": 1,
+          "recycle_write": {
+            "address": 43700,
+            "old_value": null,
+            "new_value": 1
+          },
+          "fresh_map_read": {
+            "address": 43554,
+            "value": 0
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 0
+          }
+        },
+        {
+          "map_call_step": 428940,
+          "cursor": 4,
+          "mapped": 10,
+          "transform_call_step": 428975,
+          "attribute": 2,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 10,
+              "call_step": 428955
+            },
+            {
+              "channel": "mapped-word-low",
+              "word": 1,
+              "byte": 1,
+              "wrapper_call_step": 428992
+            },
+            {
+              "channel": "mapped-word-high",
+              "word": 1,
+              "byte": 0,
+              "wrapper_call_step": 429034
+            }
+          ],
+          "recycle_call_step": 429057,
+          "recycle_old_index": 0,
+          "recycle_write": {
+            "address": 43708,
+            "old_value": null,
+            "new_value": 0
+          },
+          "fresh_map_read": {
+            "address": 43555,
+            "value": 8
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 8
+          }
+        },
+        {
+          "map_call_step": 429097,
+          "cursor": 5,
+          "mapped": 23,
+          "transform_call_step": 429132,
+          "attribute": 4,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 23,
+              "call_step": 429112
+            },
+            {
+              "channel": "primary-auxiliary-byte",
+              "byte": 1,
+              "call_step": 429173
+            }
+          ],
+          "recycle_call_step": 429193,
+          "recycle_old_index": 8,
+          "recycle_write": {
+            "address": 43707,
+            "old_value": null,
+            "new_value": 8
+          },
+          "fresh_map_read": {
+            "address": 43556,
+            "value": 7
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 7
+          }
+        },
+        {
+          "map_call_step": 429233,
+          "cursor": 6,
+          "mapped": 181,
+          "transform_call_step": 429268,
+          "attribute": 3,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 181,
+              "call_step": 429248
+            },
+            {
+              "channel": "second-auxiliary-byte",
+              "byte": 0,
+              "call_step": 429320
+            },
+            {
+              "channel": "primary-auxiliary-byte",
+              "byte": 5,
+              "call_step": 429340
+            }
+          ],
+          "recycle_call_step": 429360,
+          "recycle_old_index": 7,
+          "recycle_write": {
+            "address": 43705,
+            "old_value": null,
+            "new_value": 7
+          },
+          "fresh_map_read": {
+            "address": 43557,
+            "value": 5
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 5
+          }
+        }
+      ],
+      "unsupported_effects": [],
+      "forward_start": {
+        "cursor": 0,
+        "step": 428346
+      },
+      "end_publication": {
+        "value": 0,
+        "step": 429399
+      }
+    },
+    {
+      "begin": 0,
+      "end": 0,
+      "return": "PLI1.OVL+7D5D",
+      "forward_iterations": 0,
+      "call_step": 429418,
+      "caller": "PLI1.OVL+8069",
+      "path": "equal_range",
+      "parent_return_step": 429423,
+      "reverse": [],
+      "forward": [],
+      "unsupported_effects": []
+    },
+    {
+      "begin": 0,
+      "end": 3,
+      "return": "PLI1.OVL+7E45",
+      "forward_iterations": 3,
+      "call_step": 443924,
+      "caller": "PLI1.OVL+7ED3",
+      "path": "work",
+      "parent_return_step": 445040,
+      "reverse": [
+        {
+          "call_step": 443969,
+          "return_step": 444468,
+          "input_position": 2,
+          "returned_A": 254,
+          "returned_flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          },
+          "AE50_write_step": 444469,
+          "AE50_value": 254,
+          "skip_call_step": 444472,
+          "skip_input": 2,
+          "skip_return": 0,
+          "skip_flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          },
+          "cursor_write_step": 444590,
+          "cursor_value": 0,
+          "next_loop_branch_step": 444601,
+          "next_saved_cursor": 255,
+          "next_begin_minus1": 255,
+          "next_loop_taken": true
+        }
+      ],
+      "forward": [
+        {
+          "map_call_step": 444611,
+          "cursor": 0,
+          "mapped": 2,
+          "transform_call_step": 444646,
+          "attribute": 2,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 2,
+              "call_step": 444626
+            },
+            {
+              "channel": "mapped-word-low",
+              "word": 64377,
+              "byte": 121,
+              "wrapper_call_step": 444663
+            },
+            {
+              "channel": "mapped-word-high",
+              "word": 64377,
+              "byte": 251,
+              "wrapper_call_step": 444705
+            }
+          ],
+          "recycle_call_step": 444728,
+          "recycle_old_index": 0,
+          "recycle_write": {
+            "address": 43705,
+            "old_value": null,
+            "new_value": 0
+          },
+          "fresh_map_read": {
+            "address": 43551,
+            "value": 5
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 5
+          }
+        },
+        {
+          "map_call_step": 444768,
+          "cursor": 1,
+          "mapped": 20,
+          "transform_call_step": 444803,
+          "attribute": 4,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 20,
+              "call_step": 444783
+            },
+            {
+              "channel": "primary-auxiliary-byte",
+              "byte": 8,
+              "call_step": 444844
+            }
+          ],
+          "recycle_call_step": 444864,
+          "recycle_old_index": 5,
+          "recycle_write": {
+            "address": 43707,
+            "old_value": null,
+            "new_value": 5
+          },
+          "fresh_map_read": {
+            "address": 43552,
+            "value": 7
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 7
+          }
+        },
+        {
+          "map_call_step": 444904,
+          "cursor": 2,
+          "mapped": 172,
+          "transform_call_step": 444939,
+          "attribute": 4,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 172,
+              "call_step": 444919
+            },
+            {
+              "channel": "primary-auxiliary-byte",
+              "byte": 254,
+              "call_step": 444980
+            }
+          ],
+          "recycle_call_step": 445000,
+          "recycle_old_index": 7,
+          "recycle_write": {
+            "address": 43708,
+            "old_value": null,
+            "new_value": 7
+          },
+          "fresh_map_read": {
+            "address": 43553,
+            "value": 8
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 8
+          }
+        }
+      ],
+      "unsupported_effects": [],
+      "forward_start": {
+        "cursor": 0,
+        "step": 444603
+      },
+      "end_publication": {
+        "value": 0,
+        "step": 445039
+      }
+    },
+    {
+      "begin": 0,
+      "end": 0,
+      "return": "PLI1.OVL+7D5D",
+      "forward_iterations": 0,
+      "call_step": 445065,
+      "caller": "PLI1.OVL+8069",
+      "path": "equal_range",
+      "parent_return_step": 445070,
+      "reverse": [],
+      "forward": [],
+      "unsupported_effects": []
+    },
+    {
+      "begin": 0,
+      "end": 0,
+      "return": "PLI1.OVL+7D5D",
+      "forward_iterations": 0,
+      "call_step": 445110,
+      "caller": "PLI1.OVL+816B",
+      "path": "equal_range",
+      "parent_return_step": 445115,
+      "reverse": [],
+      "forward": [],
+      "unsupported_effects": []
+    },
+    {
+      "begin": 0,
+      "end": 0,
+      "return": "PLI1.OVL+7D5D",
+      "forward_iterations": 0,
+      "call_step": 445133,
+      "caller": "PLI1.OVL+8069",
+      "path": "equal_range",
+      "parent_return_step": 445138,
+      "reverse": [],
+      "forward": [],
+      "unsupported_effects": []
+    },
+    {
+      "begin": 0,
+      "end": 0,
+      "return": "PLI1.OVL+7D5D",
+      "forward_iterations": 0,
+      "call_step": 445427,
+      "caller": "PLI1.OVL+816B",
+      "path": "equal_range",
+      "parent_return_step": 445432,
+      "reverse": [],
+      "forward": [],
+      "unsupported_effects": []
+    },
+    {
+      "begin": 0,
+      "end": 0,
+      "return": "PLI1.OVL+7D5D",
+      "forward_iterations": 0,
+      "call_step": 445450,
+      "caller": "PLI1.OVL+8069",
+      "path": "equal_range",
+      "parent_return_step": 445455,
+      "reverse": [],
+      "forward": [],
+      "unsupported_effects": []
+    },
+    {
+      "begin": 0,
+      "end": 1,
+      "return": "PLI1.OVL+7E45",
+      "forward_iterations": 1,
+      "call_step": 445726,
+      "caller": "PLI1.OVL+7ED3",
+      "path": "work",
+      "parent_return_step": 446083,
+      "reverse": [
+        {
+          "call_step": 445771,
+          "return_step": 445880,
+          "input_position": 0,
+          "returned_A": 0,
+          "returned_flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          },
+          "AE50_write_step": 445881,
+          "AE50_value": 0,
+          "skip_call_step": 445884,
+          "skip_input": 0,
+          "skip_return": 0,
+          "skip_flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          },
+          "cursor_write_step": 445926,
+          "cursor_value": 0,
+          "next_loop_branch_step": 445937,
+          "next_saved_cursor": 255,
+          "next_begin_minus1": 255,
+          "next_loop_taken": true
+        }
+      ],
+      "forward": [
+        {
+          "map_call_step": 445947,
+          "cursor": 0,
+          "mapped": 183,
+          "transform_call_step": 445982,
+          "attribute": 4,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 183,
+              "call_step": 445962
+            },
+            {
+              "channel": "primary-auxiliary-byte",
+              "byte": 0,
+              "call_step": 446023
+            }
+          ],
+          "recycle_call_step": 446043,
+          "recycle_old_index": 7,
+          "recycle_write": {
+            "address": 43708,
+            "old_value": null,
+            "new_value": 7
+          },
+          "fresh_map_read": {
+            "address": 43551,
+            "value": 8
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 8
+          }
+        }
+      ],
+      "unsupported_effects": [],
+      "forward_start": {
+        "cursor": 0,
+        "step": 445939
+      },
+      "end_publication": {
+        "value": 0,
+        "step": 446082
+      }
+    },
+    {
+      "begin": 0,
+      "end": 0,
+      "return": "PLI1.OVL+7D5D",
+      "forward_iterations": 0,
+      "call_step": 452788,
+      "caller": "PLI1.OVL+8069",
+      "path": "equal_range",
+      "parent_return_step": 452793,
+      "reverse": [],
+      "forward": [],
+      "unsupported_effects": []
+    },
+    {
+      "begin": 0,
+      "end": 1,
+      "return": "PLI1.OVL+7E45",
+      "forward_iterations": 1,
+      "call_step": 452971,
+      "caller": "PLI1.OVL+80EB",
+      "path": "work",
+      "parent_return_step": 453349,
+      "reverse": [
+        {
+          "call_step": 453016,
+          "return_step": 453125,
+          "input_position": 0,
+          "returned_A": 0,
+          "returned_flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          },
+          "AE50_write_step": 453126,
+          "AE50_value": 0,
+          "skip_call_step": 453129,
+          "skip_input": 0,
+          "skip_return": 0,
+          "skip_flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          },
+          "cursor_write_step": 453171,
+          "cursor_value": 0,
+          "next_loop_branch_step": 453182,
+          "next_saved_cursor": 255,
+          "next_begin_minus1": 255,
+          "next_loop_taken": true
+        }
+      ],
+      "forward": [
+        {
+          "map_call_step": 453192,
+          "cursor": 0,
+          "mapped": 0,
+          "transform_call_step": 453227,
+          "attribute": 2,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 0,
+              "call_step": 453207
+            },
+            {
+              "channel": "mapped-word-low",
+              "word": 6,
+              "byte": 6,
+              "wrapper_call_step": 453244
+            },
+            {
+              "channel": "mapped-word-high",
+              "word": 6,
+              "byte": 0,
+              "wrapper_call_step": 453286
+            }
+          ],
+          "recycle_call_step": 453309,
+          "recycle_old_index": 7,
+          "recycle_write": {
+            "address": 43708,
+            "old_value": null,
+            "new_value": 7
+          },
+          "fresh_map_read": {
+            "address": 43551,
+            "value": 8
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 8
+          }
+        }
+      ],
+      "unsupported_effects": [],
+      "forward_start": {
+        "cursor": 0,
+        "step": 453184
+      },
+      "end_publication": {
+        "value": 0,
+        "step": 453348
+      }
+    },
+    {
+      "begin": 0,
+      "end": 9,
+      "return": "PLI1.OVL+7E45",
+      "forward_iterations": 9,
+      "call_step": 472976,
+      "caller": "PLI1.OVL+7ED3",
+      "path": "work",
+      "parent_return_step": 478475,
+      "reverse": [
+        {
+          "call_step": 473021,
+          "return_step": 476706,
+          "input_position": 8,
+          "returned_A": 1,
+          "returned_flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          },
+          "AE50_write_step": 476707,
+          "AE50_value": 1,
+          "skip_call_step": 476710,
+          "skip_input": 8,
+          "skip_return": 0,
+          "skip_flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          },
+          "cursor_write_step": 477056,
+          "cursor_value": 0,
+          "next_loop_branch_step": 477067,
+          "next_saved_cursor": 255,
+          "next_begin_minus1": 255,
+          "next_loop_taken": true
+        }
+      ],
+      "forward": [
+        {
+          "map_call_step": 477077,
+          "cursor": 0,
+          "mapped": 5,
+          "transform_call_step": 477112,
+          "attribute": 2,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 5,
+              "call_step": 477092
+            },
+            {
+              "channel": "mapped-word-low",
+              "word": 64499,
+              "byte": 243,
+              "wrapper_call_step": 477129
+            },
+            {
+              "channel": "mapped-word-high",
+              "word": 64499,
+              "byte": 251,
+              "wrapper_call_step": 477171
+            }
+          ],
+          "recycle_call_step": 477194,
+          "recycle_old_index": 9,
+          "recycle_write": {
+            "address": 43708,
+            "old_value": null,
+            "new_value": 9
+          },
+          "fresh_map_read": {
+            "address": 43551,
+            "value": 8
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 8
+          }
+        },
+        {
+          "map_call_step": 477234,
+          "cursor": 1,
+          "mapped": 23,
+          "transform_call_step": 477269,
+          "attribute": 4,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 23,
+              "call_step": 477249
+            },
+            {
+              "channel": "primary-auxiliary-byte",
+              "byte": 15,
+              "call_step": 477310
+            }
+          ],
+          "recycle_call_step": 477330,
+          "recycle_old_index": 8,
+          "recycle_write": {
+            "address": 43707,
+            "old_value": null,
+            "new_value": 8
+          },
+          "fresh_map_read": {
+            "address": 43552,
+            "value": 7
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 7
+          }
+        },
+        {
+          "map_call_step": 477370,
+          "cursor": 2,
+          "mapped": 10,
+          "transform_call_step": 477405,
+          "attribute": 2,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 10,
+              "call_step": 477385
+            },
+            {
+              "channel": "mapped-word-low",
+              "word": 3,
+              "byte": 3,
+              "wrapper_call_step": 477422
+            },
+            {
+              "channel": "mapped-word-high",
+              "word": 3,
+              "byte": 0,
+              "wrapper_call_step": 477464
+            }
+          ],
+          "recycle_call_step": 477487,
+          "recycle_old_index": 7,
+          "recycle_write": {
+            "address": 43705,
+            "old_value": null,
+            "new_value": 7
+          },
+          "fresh_map_read": {
+            "address": 43553,
+            "value": 5
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 5
+          }
+        },
+        {
+          "map_call_step": 477527,
+          "cursor": 3,
+          "mapped": 23,
+          "transform_call_step": 477562,
+          "attribute": 4,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 23,
+              "call_step": 477542
+            },
+            {
+              "channel": "primary-auxiliary-byte",
+              "byte": 2,
+              "call_step": 477603
+            }
+          ],
+          "recycle_call_step": 477623,
+          "recycle_old_index": 5,
+          "recycle_write": {
+            "address": 43700,
+            "old_value": null,
+            "new_value": 5
+          },
+          "fresh_map_read": {
+            "address": 43554,
+            "value": 0
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 0
+          }
+        },
+        {
+          "map_call_step": 477663,
+          "cursor": 4,
+          "mapped": 209,
+          "transform_call_step": 477698,
+          "attribute": 3,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 209,
+              "call_step": 477678
+            },
+            {
+              "channel": "second-auxiliary-byte",
+              "byte": 0,
+              "call_step": 477750
+            },
+            {
+              "channel": "primary-auxiliary-byte",
+              "byte": 15,
+              "call_step": 477770
+            }
+          ],
+          "recycle_call_step": 477790,
+          "recycle_old_index": 0,
+          "recycle_write": {
+            "address": 43701,
+            "old_value": null,
+            "new_value": 0
+          },
+          "fresh_map_read": {
+            "address": 43555,
+            "value": 1
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 1
+          }
+        },
+        {
+          "map_call_step": 477830,
+          "cursor": 5,
+          "mapped": 10,
+          "transform_call_step": 477865,
+          "attribute": 2,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 10,
+              "call_step": 477845
+            },
+            {
+              "channel": "mapped-word-low",
+              "word": 0,
+              "byte": 0,
+              "wrapper_call_step": 477882
+            },
+            {
+              "channel": "mapped-word-high",
+              "word": 0,
+              "byte": 0,
+              "wrapper_call_step": 477924
+            }
+          ],
+          "recycle_call_step": 477947,
+          "recycle_old_index": 1,
+          "recycle_write": {
+            "address": 43702,
+            "old_value": null,
+            "new_value": 1
+          },
+          "fresh_map_read": {
+            "address": 43556,
+            "value": 2
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 2
+          }
+        },
+        {
+          "map_call_step": 477987,
+          "cursor": 6,
+          "mapped": 23,
+          "transform_call_step": 478022,
+          "attribute": 4,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 23,
+              "call_step": 478002
+            },
+            {
+              "channel": "primary-auxiliary-byte",
+              "byte": 0,
+              "call_step": 478063
+            }
+          ],
+          "recycle_call_step": 478083,
+          "recycle_old_index": 2,
+          "recycle_write": {
+            "address": 43703,
+            "old_value": null,
+            "new_value": 2
+          },
+          "fresh_map_read": {
+            "address": 43557,
+            "value": 3
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 3
+          }
+        },
+        {
+          "map_call_step": 478123,
+          "cursor": 7,
+          "mapped": 48,
+          "transform_call_step": 478158,
+          "attribute": 4,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 48,
+              "call_step": 478138
+            },
+            {
+              "channel": "primary-auxiliary-byte",
+              "byte": 1,
+              "call_step": 478199
+            }
+          ],
+          "recycle_call_step": 478219,
+          "recycle_old_index": 3,
+          "recycle_write": {
+            "address": 43704,
+            "old_value": null,
+            "new_value": 3
+          },
+          "fresh_map_read": {
+            "address": 43558,
+            "value": 4
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 4
+          }
+        },
+        {
+          "map_call_step": 478259,
+          "cursor": 8,
+          "mapped": 108,
+          "transform_call_step": 478374,
+          "attribute": 4,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 108,
+              "call_step": 478274
+            },
+            {
+              "channel": "primary-auxiliary-byte",
+              "byte": 1,
+              "call_step": 478415
+            }
+          ],
+          "recycle_call_step": 478435,
+          "recycle_old_index": 4,
+          "recycle_write": {
+            "address": 43706,
+            "old_value": null,
+            "new_value": 4
+          },
+          "fresh_map_read": {
+            "address": 43559,
+            "value": 6
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 6
+          }
+        }
+      ],
+      "unsupported_effects": [
+        {
+          "call_step": 478274,
+          "target": "PLI.COM+0EF6",
+          "step": 478324,
+          "coordinate": null,
+          "runtime_pc": 5,
+          "reads": [
+            {
+              "address": 65467,
+              "value": 253
+            },
+            {
+              "address": 65468,
+              "value": 3
+            }
+          ],
+          "writes": []
+        },
+        {
+          "call_step": 478274,
+          "target": "PLI.COM+0EF6",
+          "step": 478364,
+          "coordinate": null,
+          "runtime_pc": 5,
+          "reads": [
+            {
+              "address": 65467,
+              "value": 55
+            },
+            {
+              "address": 65468,
+              "value": 4
+            }
+          ],
+          "writes": []
+        }
+      ],
+      "forward_start": {
+        "cursor": 0,
+        "step": 477069
+      },
+      "end_publication": {
+        "value": 0,
+        "step": 478474
+      }
+    },
+    {
+      "begin": 0,
+      "end": 1,
+      "return": "PLI1.OVL+7E45",
+      "forward_iterations": 1,
+      "call_step": 485365,
+      "caller": "PLI1.OVL+80EB",
+      "path": "work",
+      "parent_return_step": 485743,
+      "reverse": [
+        {
+          "call_step": 485410,
+          "return_step": 485519,
+          "input_position": 0,
+          "returned_A": 0,
+          "returned_flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          },
+          "AE50_write_step": 485520,
+          "AE50_value": 0,
+          "skip_call_step": 485523,
+          "skip_input": 0,
+          "skip_return": 0,
+          "skip_flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          },
+          "cursor_write_step": 485565,
+          "cursor_value": 0,
+          "next_loop_branch_step": 485576,
+          "next_saved_cursor": 255,
+          "next_begin_minus1": 255,
+          "next_loop_taken": true
+        }
+      ],
+      "forward": [
+        {
+          "map_call_step": 485586,
+          "cursor": 0,
+          "mapped": 0,
+          "transform_call_step": 485621,
+          "attribute": 2,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 0,
+              "call_step": 485601
+            },
+            {
+              "channel": "mapped-word-low",
+              "word": 7,
+              "byte": 7,
+              "wrapper_call_step": 485638
+            },
+            {
+              "channel": "mapped-word-high",
+              "word": 7,
+              "byte": 0,
+              "wrapper_call_step": 485680
+            }
+          ],
+          "recycle_call_step": 485703,
+          "recycle_old_index": 4,
+          "recycle_write": {
+            "address": 43706,
+            "old_value": null,
+            "new_value": 4
+          },
+          "fresh_map_read": {
+            "address": 43551,
+            "value": 6
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 6
+          }
+        }
+      ],
+      "unsupported_effects": [],
+      "forward_start": {
+        "cursor": 0,
+        "step": 485578
+      },
+      "end_publication": {
+        "value": 0,
+        "step": 485742
+      }
+    },
+    {
+      "begin": 0,
+      "end": 3,
+      "return": "PLI1.OVL+7D65",
+      "forward_iterations": 0,
+      "call_step": 490896,
+      "caller": "PLI1.OVL+7ED3",
+      "path": "gate",
+      "parent_return_step": 490904,
+      "reverse": [],
+      "forward": [],
+      "unsupported_effects": []
+    },
+    {
+      "begin": 0,
+      "end": 7,
+      "return": "PLI1.OVL+7D65",
+      "forward_iterations": 0,
+      "call_step": 492280,
+      "caller": "PLI1.OVL+7ED3",
+      "path": "gate",
+      "parent_return_step": 492288,
+      "reverse": [],
+      "forward": [],
+      "unsupported_effects": []
+    },
+    {
+      "begin": 0,
+      "end": 7,
+      "return": "PLI1.OVL+7E45",
+      "forward_iterations": 7,
+      "call_step": 493989,
+      "caller": "PLI1.OVL+816B",
+      "path": "work",
+      "parent_return_step": 498798,
+      "reverse": [
+        {
+          "call_step": 494034,
+          "return_step": 495450,
+          "input_position": 6,
+          "returned_A": 5,
+          "returned_flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          },
+          "AE50_write_step": 495451,
+          "AE50_value": 5,
+          "skip_call_step": 495454,
+          "skip_input": 6,
+          "skip_return": 4,
+          "skip_flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          },
+          "cursor_write_step": 495572,
+          "cursor_value": 4,
+          "next_loop_branch_step": 495583,
+          "next_saved_cursor": 3,
+          "next_begin_minus1": 255,
+          "next_loop_taken": false
+        },
+        {
+          "call_step": 495603,
+          "return_step": 497571,
+          "input_position": 3,
+          "returned_A": 0,
+          "returned_flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          },
+          "AE50_write_step": 497572,
+          "AE50_value": 0,
+          "skip_call_step": 497575,
+          "skip_input": 3,
+          "skip_return": 0,
+          "skip_flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          },
+          "cursor_write_step": 497731,
+          "cursor_value": 0,
+          "next_loop_branch_step": 497742,
+          "next_saved_cursor": 255,
+          "next_begin_minus1": 255,
+          "next_loop_taken": true
+        }
+      ],
+      "forward": [
+        {
+          "map_call_step": 497752,
+          "cursor": 0,
+          "mapped": 10,
+          "transform_call_step": 497787,
+          "attribute": 2,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 10,
+              "call_step": 497767
+            },
+            {
+              "channel": "mapped-word-low",
+              "word": 1,
+              "byte": 1,
+              "wrapper_call_step": 497804
+            },
+            {
+              "channel": "mapped-word-high",
+              "word": 1,
+              "byte": 0,
+              "wrapper_call_step": 497846
+            }
+          ],
+          "recycle_call_step": 497869,
+          "recycle_old_index": 7,
+          "recycle_write": {
+            "address": 43702,
+            "old_value": null,
+            "new_value": 7
+          },
+          "fresh_map_read": {
+            "address": 43551,
+            "value": 2
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 2
+          }
+        },
+        {
+          "map_call_step": 497909,
+          "cursor": 1,
+          "mapped": 23,
+          "transform_call_step": 497944,
+          "attribute": 4,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 23,
+              "call_step": 497924
+            },
+            {
+              "channel": "primary-auxiliary-byte",
+              "byte": 1,
+              "call_step": 497985
+            }
+          ],
+          "recycle_call_step": 498005,
+          "recycle_old_index": 2,
+          "recycle_write": {
+            "address": 43701,
+            "old_value": null,
+            "new_value": 2
+          },
+          "fresh_map_read": {
+            "address": 43552,
+            "value": 1
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 1
+          }
+        },
+        {
+          "map_call_step": 498045,
+          "cursor": 2,
+          "mapped": 10,
+          "transform_call_step": 498080,
+          "attribute": 2,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 10,
+              "call_step": 498060
+            },
+            {
+              "channel": "mapped-word-low",
+              "word": 594,
+              "byte": 82,
+              "wrapper_call_step": 498097
+            },
+            {
+              "channel": "mapped-word-high",
+              "word": 594,
+              "byte": 2,
+              "wrapper_call_step": 498139
+            }
+          ],
+          "recycle_call_step": 498162,
+          "recycle_old_index": 1,
+          "recycle_write": {
+            "address": 43700,
+            "old_value": null,
+            "new_value": 1
+          },
+          "fresh_map_read": {
+            "address": 43553,
+            "value": 0
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 0
+          }
+        },
+        {
+          "map_call_step": 498202,
+          "cursor": 3,
+          "mapped": 161,
+          "transform_call_step": 498237,
+          "attribute": 4,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 161,
+              "call_step": 498217
+            },
+            {
+              "channel": "primary-auxiliary-byte",
+              "byte": 0,
+              "call_step": 498278
+            }
+          ],
+          "recycle_call_step": 498298,
+          "recycle_old_index": 0,
+          "recycle_write": {
+            "address": 43705,
+            "old_value": null,
+            "new_value": 0
+          },
+          "fresh_map_read": {
+            "address": 43554,
+            "value": 5
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 5
+          }
+        },
+        {
+          "map_call_step": 498338,
+          "cursor": 4,
+          "mapped": 10,
+          "transform_call_step": 498373,
+          "attribute": 2,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 10,
+              "call_step": 498353
+            },
+            {
+              "channel": "mapped-word-low",
+              "word": 1,
+              "byte": 1,
+              "wrapper_call_step": 498390
+            },
+            {
+              "channel": "mapped-word-high",
+              "word": 1,
+              "byte": 0,
+              "wrapper_call_step": 498432
+            }
+          ],
+          "recycle_call_step": 498455,
+          "recycle_old_index": 5,
+          "recycle_write": {
+            "address": 43706,
+            "old_value": null,
+            "new_value": 5
+          },
+          "fresh_map_read": {
+            "address": 43555,
+            "value": 6
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 6
+          }
+        },
+        {
+          "map_call_step": 498495,
+          "cursor": 5,
+          "mapped": 23,
+          "transform_call_step": 498530,
+          "attribute": 4,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 23,
+              "call_step": 498510
+            },
+            {
+              "channel": "primary-auxiliary-byte",
+              "byte": 1,
+              "call_step": 498571
+            }
+          ],
+          "recycle_call_step": 498591,
+          "recycle_old_index": 6,
+          "recycle_write": {
+            "address": 43704,
+            "old_value": null,
+            "new_value": 6
+          },
+          "fresh_map_read": {
+            "address": 43556,
+            "value": 4
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 4
+          }
+        },
+        {
+          "map_call_step": 498631,
+          "cursor": 6,
+          "mapped": 181,
+          "transform_call_step": 498666,
+          "attribute": 3,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 181,
+              "call_step": 498646
+            },
+            {
+              "channel": "second-auxiliary-byte",
+              "byte": 0,
+              "call_step": 498718
+            },
+            {
+              "channel": "primary-auxiliary-byte",
+              "byte": 5,
+              "call_step": 498738
+            }
+          ],
+          "recycle_call_step": 498758,
+          "recycle_old_index": 4,
+          "recycle_write": {
+            "address": 43703,
+            "old_value": null,
+            "new_value": 4
+          },
+          "fresh_map_read": {
+            "address": 43557,
+            "value": 3
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 3
+          }
+        }
+      ],
+      "unsupported_effects": [],
+      "forward_start": {
+        "cursor": 0,
+        "step": 497744
+      },
+      "end_publication": {
+        "value": 0,
+        "step": 498797
+      }
+    },
+    {
+      "begin": 0,
+      "end": 0,
+      "return": "PLI1.OVL+7D5D",
+      "forward_iterations": 0,
+      "call_step": 498816,
+      "caller": "PLI1.OVL+8069",
+      "path": "equal_range",
+      "parent_return_step": 498821,
+      "reverse": [],
+      "forward": [],
+      "unsupported_effects": []
+    },
+    {
+      "begin": 0,
+      "end": 3,
+      "return": "PLI1.OVL+7E45",
+      "forward_iterations": 3,
+      "call_step": 510722,
+      "caller": "PLI1.OVL+7ED3",
+      "path": "work",
+      "parent_return_step": 511838,
+      "reverse": [
+        {
+          "call_step": 510767,
+          "return_step": 511266,
+          "input_position": 2,
+          "returned_A": 254,
+          "returned_flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          },
+          "AE50_write_step": 511267,
+          "AE50_value": 254,
+          "skip_call_step": 511270,
+          "skip_input": 2,
+          "skip_return": 0,
+          "skip_flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          },
+          "cursor_write_step": 511388,
+          "cursor_value": 0,
+          "next_loop_branch_step": 511399,
+          "next_saved_cursor": 255,
+          "next_begin_minus1": 255,
+          "next_loop_taken": true
+        }
+      ],
+      "forward": [
+        {
+          "map_call_step": 511409,
+          "cursor": 0,
+          "mapped": 2,
+          "transform_call_step": 511444,
+          "attribute": 2,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 2,
+              "call_step": 511424
+            },
+            {
+              "channel": "mapped-word-low",
+              "word": 64338,
+              "byte": 82,
+              "wrapper_call_step": 511461
+            },
+            {
+              "channel": "mapped-word-high",
+              "word": 64338,
+              "byte": 251,
+              "wrapper_call_step": 511503
+            }
+          ],
+          "recycle_call_step": 511526,
+          "recycle_old_index": 5,
+          "recycle_write": {
+            "address": 43703,
+            "old_value": null,
+            "new_value": 5
+          },
+          "fresh_map_read": {
+            "address": 43551,
+            "value": 3
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 3
+          }
+        },
+        {
+          "map_call_step": 511566,
+          "cursor": 1,
+          "mapped": 20,
+          "transform_call_step": 511601,
+          "attribute": 4,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 20,
+              "call_step": 511581
+            },
+            {
+              "channel": "primary-auxiliary-byte",
+              "byte": 4,
+              "call_step": 511642
+            }
+          ],
+          "recycle_call_step": 511662,
+          "recycle_old_index": 3,
+          "recycle_write": {
+            "address": 43704,
+            "old_value": null,
+            "new_value": 3
+          },
+          "fresh_map_read": {
+            "address": 43552,
+            "value": 4
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 4
+          }
+        },
+        {
+          "map_call_step": 511702,
+          "cursor": 2,
+          "mapped": 172,
+          "transform_call_step": 511737,
+          "attribute": 4,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 172,
+              "call_step": 511717
+            },
+            {
+              "channel": "primary-auxiliary-byte",
+              "byte": 254,
+              "call_step": 511778
+            }
+          ],
+          "recycle_call_step": 511798,
+          "recycle_old_index": 4,
+          "recycle_write": {
+            "address": 43706,
+            "old_value": null,
+            "new_value": 4
+          },
+          "fresh_map_read": {
+            "address": 43553,
+            "value": 6
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 6
+          }
+        }
+      ],
+      "unsupported_effects": [],
+      "forward_start": {
+        "cursor": 0,
+        "step": 511401
+      },
+      "end_publication": {
+        "value": 0,
+        "step": 511837
+      }
+    },
+    {
+      "begin": 0,
+      "end": 0,
+      "return": "PLI1.OVL+7D5D",
+      "forward_iterations": 0,
+      "call_step": 511863,
+      "caller": "PLI1.OVL+8069",
+      "path": "equal_range",
+      "parent_return_step": 511868,
+      "reverse": [],
+      "forward": [],
+      "unsupported_effects": []
+    },
+    {
+      "begin": 0,
+      "end": 0,
+      "return": "PLI1.OVL+7D5D",
+      "forward_iterations": 0,
+      "call_step": 511908,
+      "caller": "PLI1.OVL+816B",
+      "path": "equal_range",
+      "parent_return_step": 511913,
+      "reverse": [],
+      "forward": [],
+      "unsupported_effects": []
+    },
+    {
+      "begin": 0,
+      "end": 0,
+      "return": "PLI1.OVL+7D5D",
+      "forward_iterations": 0,
+      "call_step": 511931,
+      "caller": "PLI1.OVL+8069",
+      "path": "equal_range",
+      "parent_return_step": 511936,
+      "reverse": [],
+      "forward": [],
+      "unsupported_effects": []
+    },
+    {
+      "begin": 0,
+      "end": 0,
+      "return": "PLI1.OVL+7D5D",
+      "forward_iterations": 0,
+      "call_step": 512225,
+      "caller": "PLI1.OVL+816B",
+      "path": "equal_range",
+      "parent_return_step": 512230,
+      "reverse": [],
+      "forward": [],
+      "unsupported_effects": []
+    },
+    {
+      "begin": 0,
+      "end": 0,
+      "return": "PLI1.OVL+7D5D",
+      "forward_iterations": 0,
+      "call_step": 512248,
+      "caller": "PLI1.OVL+8069",
+      "path": "equal_range",
+      "parent_return_step": 512253,
+      "reverse": [],
+      "forward": [],
+      "unsupported_effects": []
+    },
+    {
+      "begin": 0,
+      "end": 1,
+      "return": "PLI1.OVL+7E45",
+      "forward_iterations": 1,
+      "call_step": 512524,
+      "caller": "PLI1.OVL+7ED3",
+      "path": "work",
+      "parent_return_step": 512881,
+      "reverse": [
+        {
+          "call_step": 512569,
+          "return_step": 512678,
+          "input_position": 0,
+          "returned_A": 0,
+          "returned_flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          },
+          "AE50_write_step": 512679,
+          "AE50_value": 0,
+          "skip_call_step": 512682,
+          "skip_input": 0,
+          "skip_return": 0,
+          "skip_flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          },
+          "cursor_write_step": 512724,
+          "cursor_value": 0,
+          "next_loop_branch_step": 512735,
+          "next_saved_cursor": 255,
+          "next_begin_minus1": 255,
+          "next_loop_taken": true
+        }
+      ],
+      "forward": [
+        {
+          "map_call_step": 512745,
+          "cursor": 0,
+          "mapped": 183,
+          "transform_call_step": 512780,
+          "attribute": 4,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 183,
+              "call_step": 512760
+            },
+            {
+              "channel": "primary-auxiliary-byte",
+              "byte": 0,
+              "call_step": 512821
+            }
+          ],
+          "recycle_call_step": 512841,
+          "recycle_old_index": 4,
+          "recycle_write": {
+            "address": 43706,
+            "old_value": null,
+            "new_value": 4
+          },
+          "fresh_map_read": {
+            "address": 43551,
+            "value": 6
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 6
+          }
+        }
+      ],
+      "unsupported_effects": [],
+      "forward_start": {
+        "cursor": 0,
+        "step": 512737
+      },
+      "end_publication": {
+        "value": 0,
+        "step": 512880
+      }
+    },
+    {
+      "begin": 0,
+      "end": 0,
+      "return": "PLI1.OVL+7D5D",
+      "forward_iterations": 0,
+      "call_step": 519586,
+      "caller": "PLI1.OVL+8069",
+      "path": "equal_range",
+      "parent_return_step": 519591,
+      "reverse": [],
+      "forward": [],
+      "unsupported_effects": []
+    },
+    {
+      "begin": 0,
+      "end": 1,
+      "return": "PLI1.OVL+7E45",
+      "forward_iterations": 1,
+      "call_step": 519769,
+      "caller": "PLI1.OVL+80EB",
+      "path": "work",
+      "parent_return_step": 520147,
+      "reverse": [
+        {
+          "call_step": 519814,
+          "return_step": 519923,
+          "input_position": 0,
+          "returned_A": 0,
+          "returned_flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          },
+          "AE50_write_step": 519924,
+          "AE50_value": 0,
+          "skip_call_step": 519927,
+          "skip_input": 0,
+          "skip_return": 0,
+          "skip_flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          },
+          "cursor_write_step": 519969,
+          "cursor_value": 0,
+          "next_loop_branch_step": 519980,
+          "next_saved_cursor": 255,
+          "next_begin_minus1": 255,
+          "next_loop_taken": true
+        }
+      ],
+      "forward": [
+        {
+          "map_call_step": 519990,
+          "cursor": 0,
+          "mapped": 0,
+          "transform_call_step": 520025,
+          "attribute": 2,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 0,
+              "call_step": 520005
+            },
+            {
+              "channel": "mapped-word-low",
+              "word": 8,
+              "byte": 8,
+              "wrapper_call_step": 520042
+            },
+            {
+              "channel": "mapped-word-high",
+              "word": 8,
+              "byte": 0,
+              "wrapper_call_step": 520084
+            }
+          ],
+          "recycle_call_step": 520107,
+          "recycle_old_index": 4,
+          "recycle_write": {
+            "address": 43706,
+            "old_value": null,
+            "new_value": 4
+          },
+          "fresh_map_read": {
+            "address": 43551,
+            "value": 6
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 6
+          }
+        }
+      ],
+      "unsupported_effects": [],
+      "forward_start": {
+        "cursor": 0,
+        "step": 519982
+      },
+      "end_publication": {
+        "value": 0,
+        "step": 520146
+      }
+    },
+    {
+      "begin": 0,
+      "end": 9,
+      "return": "PLI1.OVL+7E45",
+      "forward_iterations": 9,
+      "call_step": 539774,
+      "caller": "PLI1.OVL+7ED3",
+      "path": "work",
+      "parent_return_step": 545125,
+      "reverse": [
+        {
+          "call_step": 539819,
+          "return_step": 543436,
+          "input_position": 8,
+          "returned_A": 1,
+          "returned_flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          },
+          "AE50_write_step": 543437,
+          "AE50_value": 1,
+          "skip_call_step": 543440,
+          "skip_input": 8,
+          "skip_return": 0,
+          "skip_flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          },
+          "cursor_write_step": 543786,
+          "cursor_value": 0,
+          "next_loop_branch_step": 543797,
+          "next_saved_cursor": 255,
+          "next_begin_minus1": 255,
+          "next_loop_taken": true
+        }
+      ],
+      "forward": [
+        {
+          "map_call_step": 543807,
+          "cursor": 0,
+          "mapped": 5,
+          "transform_call_step": 543842,
+          "attribute": 2,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 5,
+              "call_step": 543822
+            },
+            {
+              "channel": "mapped-word-low",
+              "word": 64499,
+              "byte": 243,
+              "wrapper_call_step": 543859
+            },
+            {
+              "channel": "mapped-word-high",
+              "word": 64499,
+              "byte": 251,
+              "wrapper_call_step": 543901
+            }
+          ],
+          "recycle_call_step": 543924,
+          "recycle_old_index": 9,
+          "recycle_write": {
+            "address": 43706,
+            "old_value": null,
+            "new_value": 9
+          },
+          "fresh_map_read": {
+            "address": 43551,
+            "value": 6
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 6
+          }
+        },
+        {
+          "map_call_step": 543964,
+          "cursor": 1,
+          "mapped": 23,
+          "transform_call_step": 543999,
+          "attribute": 4,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 23,
+              "call_step": 543979
+            },
+            {
+              "channel": "primary-auxiliary-byte",
+              "byte": 15,
+              "call_step": 544040
+            }
+          ],
+          "recycle_call_step": 544060,
+          "recycle_old_index": 6,
+          "recycle_write": {
+            "address": 43704,
+            "old_value": null,
+            "new_value": 6
+          },
+          "fresh_map_read": {
+            "address": 43552,
+            "value": 4
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 4
+          }
+        },
+        {
+          "map_call_step": 544100,
+          "cursor": 2,
+          "mapped": 10,
+          "transform_call_step": 544135,
+          "attribute": 2,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 10,
+              "call_step": 544115
+            },
+            {
+              "channel": "mapped-word-low",
+              "word": 5,
+              "byte": 5,
+              "wrapper_call_step": 544152
+            },
+            {
+              "channel": "mapped-word-high",
+              "word": 5,
+              "byte": 0,
+              "wrapper_call_step": 544194
+            }
+          ],
+          "recycle_call_step": 544217,
+          "recycle_old_index": 4,
+          "recycle_write": {
+            "address": 43703,
+            "old_value": null,
+            "new_value": 4
+          },
+          "fresh_map_read": {
+            "address": 43553,
+            "value": 3
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 3
+          }
+        },
+        {
+          "map_call_step": 544257,
+          "cursor": 3,
+          "mapped": 23,
+          "transform_call_step": 544292,
+          "attribute": 4,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 23,
+              "call_step": 544272
+            },
+            {
+              "channel": "primary-auxiliary-byte",
+              "byte": 3,
+              "call_step": 544333
+            }
+          ],
+          "recycle_call_step": 544353,
+          "recycle_old_index": 3,
+          "recycle_write": {
+            "address": 43705,
+            "old_value": null,
+            "new_value": 3
+          },
+          "fresh_map_read": {
+            "address": 43554,
+            "value": 5
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 5
+          }
+        },
+        {
+          "map_call_step": 544393,
+          "cursor": 4,
+          "mapped": 209,
+          "transform_call_step": 544428,
+          "attribute": 3,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 209,
+              "call_step": 544408
+            },
+            {
+              "channel": "second-auxiliary-byte",
+              "byte": 0,
+              "call_step": 544480
+            },
+            {
+              "channel": "primary-auxiliary-byte",
+              "byte": 15,
+              "call_step": 544500
+            }
+          ],
+          "recycle_call_step": 544520,
+          "recycle_old_index": 5,
+          "recycle_write": {
+            "address": 43700,
+            "old_value": null,
+            "new_value": 5
+          },
+          "fresh_map_read": {
+            "address": 43555,
+            "value": 0
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 0
+          }
+        },
+        {
+          "map_call_step": 544560,
+          "cursor": 5,
+          "mapped": 10,
+          "transform_call_step": 544595,
+          "attribute": 2,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 10,
+              "call_step": 544575
+            },
+            {
+              "channel": "mapped-word-low",
+              "word": 0,
+              "byte": 0,
+              "wrapper_call_step": 544612
+            },
+            {
+              "channel": "mapped-word-high",
+              "word": 0,
+              "byte": 0,
+              "wrapper_call_step": 544654
+            }
+          ],
+          "recycle_call_step": 544677,
+          "recycle_old_index": 0,
+          "recycle_write": {
+            "address": 43701,
+            "old_value": null,
+            "new_value": 0
+          },
+          "fresh_map_read": {
+            "address": 43556,
+            "value": 1
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 1
+          }
+        },
+        {
+          "map_call_step": 544717,
+          "cursor": 6,
+          "mapped": 23,
+          "transform_call_step": 544752,
+          "attribute": 4,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 23,
+              "call_step": 544732
+            },
+            {
+              "channel": "primary-auxiliary-byte",
+              "byte": 0,
+              "call_step": 544793
+            }
+          ],
+          "recycle_call_step": 544813,
+          "recycle_old_index": 1,
+          "recycle_write": {
+            "address": 43702,
+            "old_value": null,
+            "new_value": 1
+          },
+          "fresh_map_read": {
+            "address": 43557,
+            "value": 2
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 2
+          }
+        },
+        {
+          "map_call_step": 544853,
+          "cursor": 7,
+          "mapped": 48,
+          "transform_call_step": 544888,
+          "attribute": 4,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 48,
+              "call_step": 544868
+            },
+            {
+              "channel": "primary-auxiliary-byte",
+              "byte": 1,
+              "call_step": 544929
+            }
+          ],
+          "recycle_call_step": 544949,
+          "recycle_old_index": 2,
+          "recycle_write": {
+            "address": 43707,
+            "old_value": null,
+            "new_value": 2
+          },
+          "fresh_map_read": {
+            "address": 43558,
+            "value": 7
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 7
+          }
+        },
+        {
+          "map_call_step": 544989,
+          "cursor": 8,
+          "mapped": 108,
+          "transform_call_step": 545024,
+          "attribute": 4,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 108,
+              "call_step": 545004
+            },
+            {
+              "channel": "primary-auxiliary-byte",
+              "byte": 1,
+              "call_step": 545065
+            }
+          ],
+          "recycle_call_step": 545085,
+          "recycle_old_index": 7,
+          "recycle_write": {
+            "address": 43708,
+            "old_value": null,
+            "new_value": 7
+          },
+          "fresh_map_read": {
+            "address": 43559,
+            "value": 8
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 8
+          }
+        }
+      ],
+      "unsupported_effects": [],
+      "forward_start": {
+        "cursor": 0,
+        "step": 543799
+      },
+      "end_publication": {
+        "value": 0,
+        "step": 545124
+      }
+    },
+    {
+      "begin": 0,
+      "end": 1,
+      "return": "PLI1.OVL+7E45",
+      "forward_iterations": 1,
+      "call_step": 552015,
+      "caller": "PLI1.OVL+80EB",
+      "path": "work",
+      "parent_return_step": 552393,
+      "reverse": [
+        {
+          "call_step": 552060,
+          "return_step": 552169,
+          "input_position": 0,
+          "returned_A": 0,
+          "returned_flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          },
+          "AE50_write_step": 552170,
+          "AE50_value": 0,
+          "skip_call_step": 552173,
+          "skip_input": 0,
+          "skip_return": 0,
+          "skip_flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          },
+          "cursor_write_step": 552215,
+          "cursor_value": 0,
+          "next_loop_branch_step": 552226,
+          "next_saved_cursor": 255,
+          "next_begin_minus1": 255,
+          "next_loop_taken": true
+        }
+      ],
+      "forward": [
+        {
+          "map_call_step": 552236,
+          "cursor": 0,
+          "mapped": 0,
+          "transform_call_step": 552271,
+          "attribute": 2,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 0,
+              "call_step": 552251
+            },
+            {
+              "channel": "mapped-word-low",
+              "word": 9,
+              "byte": 9,
+              "wrapper_call_step": 552288
+            },
+            {
+              "channel": "mapped-word-high",
+              "word": 9,
+              "byte": 0,
+              "wrapper_call_step": 552330
+            }
+          ],
+          "recycle_call_step": 552353,
+          "recycle_old_index": 7,
+          "recycle_write": {
+            "address": 43708,
+            "old_value": null,
+            "new_value": 7
+          },
+          "fresh_map_read": {
+            "address": 43551,
+            "value": 8
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 8
+          }
+        }
+      ],
+      "unsupported_effects": [],
+      "forward_start": {
+        "cursor": 0,
+        "step": 552228
+      },
+      "end_publication": {
+        "value": 0,
+        "step": 552392
+      }
+    },
+    {
+      "begin": 0,
+      "end": 3,
+      "return": "PLI1.OVL+7D65",
+      "forward_iterations": 0,
+      "call_step": 557546,
+      "caller": "PLI1.OVL+7ED3",
+      "path": "gate",
+      "parent_return_step": 557554,
+      "reverse": [],
+      "forward": [],
+      "unsupported_effects": []
+    },
+    {
+      "begin": 0,
+      "end": 7,
+      "return": "PLI1.OVL+7D65",
+      "forward_iterations": 0,
+      "call_step": 558930,
+      "caller": "PLI1.OVL+7ED3",
+      "path": "gate",
+      "parent_return_step": 558938,
+      "reverse": [],
+      "forward": [],
+      "unsupported_effects": []
+    },
+    {
+      "begin": 0,
+      "end": 7,
+      "return": "PLI1.OVL+7E45",
+      "forward_iterations": 7,
+      "call_step": 560639,
+      "caller": "PLI1.OVL+816B",
+      "path": "work",
+      "parent_return_step": 565448,
+      "reverse": [
+        {
+          "call_step": 560684,
+          "return_step": 562100,
+          "input_position": 6,
+          "returned_A": 5,
+          "returned_flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          },
+          "AE50_write_step": 562101,
+          "AE50_value": 5,
+          "skip_call_step": 562104,
+          "skip_input": 6,
+          "skip_return": 4,
+          "skip_flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          },
+          "cursor_write_step": 562222,
+          "cursor_value": 4,
+          "next_loop_branch_step": 562233,
+          "next_saved_cursor": 3,
+          "next_begin_minus1": 255,
+          "next_loop_taken": false
+        },
+        {
+          "call_step": 562253,
+          "return_step": 564221,
+          "input_position": 3,
+          "returned_A": 0,
+          "returned_flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          },
+          "AE50_write_step": 564222,
+          "AE50_value": 0,
+          "skip_call_step": 564225,
+          "skip_input": 3,
+          "skip_return": 0,
+          "skip_flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          },
+          "cursor_write_step": 564381,
+          "cursor_value": 0,
+          "next_loop_branch_step": 564392,
+          "next_saved_cursor": 255,
+          "next_begin_minus1": 255,
+          "next_loop_taken": true
+        }
+      ],
+      "forward": [
+        {
+          "map_call_step": 564402,
+          "cursor": 0,
+          "mapped": 10,
+          "transform_call_step": 564437,
+          "attribute": 2,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 10,
+              "call_step": 564417
+            },
+            {
+              "channel": "mapped-word-low",
+              "word": 1,
+              "byte": 1,
+              "wrapper_call_step": 564454
+            },
+            {
+              "channel": "mapped-word-high",
+              "word": 1,
+              "byte": 0,
+              "wrapper_call_step": 564496
+            }
+          ],
+          "recycle_call_step": 564519,
+          "recycle_old_index": 4,
+          "recycle_write": {
+            "address": 43701,
+            "old_value": null,
+            "new_value": 4
+          },
+          "fresh_map_read": {
+            "address": 43551,
+            "value": 1
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 1
+          }
+        },
+        {
+          "map_call_step": 564559,
+          "cursor": 1,
+          "mapped": 23,
+          "transform_call_step": 564594,
+          "attribute": 4,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 23,
+              "call_step": 564574
+            },
+            {
+              "channel": "primary-auxiliary-byte",
+              "byte": 1,
+              "call_step": 564635
+            }
+          ],
+          "recycle_call_step": 564655,
+          "recycle_old_index": 1,
+          "recycle_write": {
+            "address": 43700,
+            "old_value": null,
+            "new_value": 1
+          },
+          "fresh_map_read": {
+            "address": 43552,
+            "value": 0
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 0
+          }
+        },
+        {
+          "map_call_step": 564695,
+          "cursor": 2,
+          "mapped": 10,
+          "transform_call_step": 564730,
+          "attribute": 2,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 10,
+              "call_step": 564710
+            },
+            {
+              "channel": "mapped-word-low",
+              "word": 594,
+              "byte": 82,
+              "wrapper_call_step": 564747
+            },
+            {
+              "channel": "mapped-word-high",
+              "word": 594,
+              "byte": 2,
+              "wrapper_call_step": 564789
+            }
+          ],
+          "recycle_call_step": 564812,
+          "recycle_old_index": 0,
+          "recycle_write": {
+            "address": 43705,
+            "old_value": null,
+            "new_value": 0
+          },
+          "fresh_map_read": {
+            "address": 43553,
+            "value": 5
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 5
+          }
+        },
+        {
+          "map_call_step": 564852,
+          "cursor": 3,
+          "mapped": 161,
+          "transform_call_step": 564887,
+          "attribute": 4,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 161,
+              "call_step": 564867
+            },
+            {
+              "channel": "primary-auxiliary-byte",
+              "byte": 0,
+              "call_step": 564928
+            }
+          ],
+          "recycle_call_step": 564948,
+          "recycle_old_index": 5,
+          "recycle_write": {
+            "address": 43703,
+            "old_value": null,
+            "new_value": 5
+          },
+          "fresh_map_read": {
+            "address": 43554,
+            "value": 3
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 3
+          }
+        },
+        {
+          "map_call_step": 564988,
+          "cursor": 4,
+          "mapped": 10,
+          "transform_call_step": 565023,
+          "attribute": 2,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 10,
+              "call_step": 565003
+            },
+            {
+              "channel": "mapped-word-low",
+              "word": 1,
+              "byte": 1,
+              "wrapper_call_step": 565040
+            },
+            {
+              "channel": "mapped-word-high",
+              "word": 1,
+              "byte": 0,
+              "wrapper_call_step": 565082
+            }
+          ],
+          "recycle_call_step": 565105,
+          "recycle_old_index": 3,
+          "recycle_write": {
+            "address": 43708,
+            "old_value": null,
+            "new_value": 3
+          },
+          "fresh_map_read": {
+            "address": 43555,
+            "value": 8
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 8
+          }
+        },
+        {
+          "map_call_step": 565145,
+          "cursor": 5,
+          "mapped": 23,
+          "transform_call_step": 565180,
+          "attribute": 4,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 23,
+              "call_step": 565160
+            },
+            {
+              "channel": "primary-auxiliary-byte",
+              "byte": 1,
+              "call_step": 565221
+            }
+          ],
+          "recycle_call_step": 565241,
+          "recycle_old_index": 8,
+          "recycle_write": {
+            "address": 43707,
+            "old_value": null,
+            "new_value": 8
+          },
+          "fresh_map_read": {
+            "address": 43556,
+            "value": 7
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 7
+          }
+        },
+        {
+          "map_call_step": 565281,
+          "cursor": 6,
+          "mapped": 181,
+          "transform_call_step": 565316,
+          "attribute": 3,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 181,
+              "call_step": 565296
+            },
+            {
+              "channel": "second-auxiliary-byte",
+              "byte": 0,
+              "call_step": 565368
+            },
+            {
+              "channel": "primary-auxiliary-byte",
+              "byte": 5,
+              "call_step": 565388
+            }
+          ],
+          "recycle_call_step": 565408,
+          "recycle_old_index": 7,
+          "recycle_write": {
+            "address": 43702,
+            "old_value": null,
+            "new_value": 7
+          },
+          "fresh_map_read": {
+            "address": 43557,
+            "value": 2
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 2
+          }
+        }
+      ],
+      "unsupported_effects": [],
+      "forward_start": {
+        "cursor": 0,
+        "step": 564394
+      },
+      "end_publication": {
+        "value": 0,
+        "step": 565447
+      }
+    },
+    {
+      "begin": 0,
+      "end": 0,
+      "return": "PLI1.OVL+7D5D",
+      "forward_iterations": 0,
+      "call_step": 565466,
+      "caller": "PLI1.OVL+8069",
+      "path": "equal_range",
+      "parent_return_step": 565471,
+      "reverse": [],
+      "forward": [],
+      "unsupported_effects": []
+    },
+    {
+      "begin": 0,
+      "end": 3,
+      "return": "PLI1.OVL+7E45",
+      "forward_iterations": 3,
+      "call_step": 577367,
+      "caller": "PLI1.OVL+7ED3",
+      "path": "work",
+      "parent_return_step": 578483,
+      "reverse": [
+        {
+          "call_step": 577412,
+          "return_step": 577911,
+          "input_position": 2,
+          "returned_A": 254,
+          "returned_flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          },
+          "AE50_write_step": 577912,
+          "AE50_value": 254,
+          "skip_call_step": 577915,
+          "skip_input": 2,
+          "skip_return": 0,
+          "skip_flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          },
+          "cursor_write_step": 578033,
+          "cursor_value": 0,
+          "next_loop_branch_step": 578044,
+          "next_saved_cursor": 255,
+          "next_begin_minus1": 255,
+          "next_loop_taken": true
+        }
+      ],
+      "forward": [
+        {
+          "map_call_step": 578054,
+          "cursor": 0,
+          "mapped": 2,
+          "transform_call_step": 578089,
+          "attribute": 2,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 2,
+              "call_step": 578069
+            },
+            {
+              "channel": "mapped-word-low",
+              "word": 64299,
+              "byte": 43,
+              "wrapper_call_step": 578106
+            },
+            {
+              "channel": "mapped-word-high",
+              "word": 64299,
+              "byte": 251,
+              "wrapper_call_step": 578148
+            }
+          ],
+          "recycle_call_step": 578171,
+          "recycle_old_index": 3,
+          "recycle_write": {
+            "address": 43702,
+            "old_value": null,
+            "new_value": 3
+          },
+          "fresh_map_read": {
+            "address": 43551,
+            "value": 2
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 2
+          }
+        },
+        {
+          "map_call_step": 578211,
+          "cursor": 1,
+          "mapped": 20,
+          "transform_call_step": 578246,
+          "attribute": 4,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 20,
+              "call_step": 578226
+            },
+            {
+              "channel": "primary-auxiliary-byte",
+              "byte": 4,
+              "call_step": 578287
+            }
+          ],
+          "recycle_call_step": 578307,
+          "recycle_old_index": 2,
+          "recycle_write": {
+            "address": 43707,
+            "old_value": null,
+            "new_value": 2
+          },
+          "fresh_map_read": {
+            "address": 43552,
+            "value": 7
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 7
+          }
+        },
+        {
+          "map_call_step": 578347,
+          "cursor": 2,
+          "mapped": 172,
+          "transform_call_step": 578382,
+          "attribute": 4,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 172,
+              "call_step": 578362
+            },
+            {
+              "channel": "primary-auxiliary-byte",
+              "byte": 254,
+              "call_step": 578423
+            }
+          ],
+          "recycle_call_step": 578443,
+          "recycle_old_index": 7,
+          "recycle_write": {
+            "address": 43708,
+            "old_value": null,
+            "new_value": 7
+          },
+          "fresh_map_read": {
+            "address": 43553,
+            "value": 8
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 8
+          }
+        }
+      ],
+      "unsupported_effects": [],
+      "forward_start": {
+        "cursor": 0,
+        "step": 578046
+      },
+      "end_publication": {
+        "value": 0,
+        "step": 578482
+      }
+    },
+    {
+      "begin": 0,
+      "end": 0,
+      "return": "PLI1.OVL+7D5D",
+      "forward_iterations": 0,
+      "call_step": 578508,
+      "caller": "PLI1.OVL+8069",
+      "path": "equal_range",
+      "parent_return_step": 578513,
+      "reverse": [],
+      "forward": [],
+      "unsupported_effects": []
+    },
+    {
+      "begin": 0,
+      "end": 0,
+      "return": "PLI1.OVL+7D5D",
+      "forward_iterations": 0,
+      "call_step": 578553,
+      "caller": "PLI1.OVL+816B",
+      "path": "equal_range",
+      "parent_return_step": 578558,
+      "reverse": [],
+      "forward": [],
+      "unsupported_effects": []
+    },
+    {
+      "begin": 0,
+      "end": 0,
+      "return": "PLI1.OVL+7D5D",
+      "forward_iterations": 0,
+      "call_step": 578576,
+      "caller": "PLI1.OVL+8069",
+      "path": "equal_range",
+      "parent_return_step": 578581,
+      "reverse": [],
+      "forward": [],
+      "unsupported_effects": []
+    },
+    {
+      "begin": 0,
+      "end": 0,
+      "return": "PLI1.OVL+7D5D",
+      "forward_iterations": 0,
+      "call_step": 578870,
+      "caller": "PLI1.OVL+816B",
+      "path": "equal_range",
+      "parent_return_step": 578875,
+      "reverse": [],
+      "forward": [],
+      "unsupported_effects": []
+    },
+    {
+      "begin": 0,
+      "end": 0,
+      "return": "PLI1.OVL+7D5D",
+      "forward_iterations": 0,
+      "call_step": 578893,
+      "caller": "PLI1.OVL+8069",
+      "path": "equal_range",
+      "parent_return_step": 578898,
+      "reverse": [],
+      "forward": [],
+      "unsupported_effects": []
+    },
+    {
+      "begin": 0,
+      "end": 1,
+      "return": "PLI1.OVL+7E45",
+      "forward_iterations": 1,
+      "call_step": 579169,
+      "caller": "PLI1.OVL+7ED3",
+      "path": "work",
+      "parent_return_step": 579526,
+      "reverse": [
+        {
+          "call_step": 579214,
+          "return_step": 579323,
+          "input_position": 0,
+          "returned_A": 0,
+          "returned_flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          },
+          "AE50_write_step": 579324,
+          "AE50_value": 0,
+          "skip_call_step": 579327,
+          "skip_input": 0,
+          "skip_return": 0,
+          "skip_flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          },
+          "cursor_write_step": 579369,
+          "cursor_value": 0,
+          "next_loop_branch_step": 579380,
+          "next_saved_cursor": 255,
+          "next_begin_minus1": 255,
+          "next_loop_taken": true
+        }
+      ],
+      "forward": [
+        {
+          "map_call_step": 579390,
+          "cursor": 0,
+          "mapped": 183,
+          "transform_call_step": 579425,
+          "attribute": 4,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 183,
+              "call_step": 579405
+            },
+            {
+              "channel": "primary-auxiliary-byte",
+              "byte": 0,
+              "call_step": 579466
+            }
+          ],
+          "recycle_call_step": 579486,
+          "recycle_old_index": 7,
+          "recycle_write": {
+            "address": 43708,
+            "old_value": null,
+            "new_value": 7
+          },
+          "fresh_map_read": {
+            "address": 43551,
+            "value": 8
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 8
+          }
+        }
+      ],
+      "unsupported_effects": [],
+      "forward_start": {
+        "cursor": 0,
+        "step": 579382
+      },
+      "end_publication": {
+        "value": 0,
+        "step": 579525
+      }
+    },
+    {
+      "begin": 0,
+      "end": 0,
+      "return": "PLI1.OVL+7D5D",
+      "forward_iterations": 0,
+      "call_step": 589901,
+      "caller": "PLI1.OVL+8069",
+      "path": "equal_range",
+      "parent_return_step": 589906,
+      "reverse": [],
+      "forward": [],
+      "unsupported_effects": []
+    },
+    {
+      "begin": 0,
+      "end": 1,
+      "return": "PLI1.OVL+7E45",
+      "forward_iterations": 1,
+      "call_step": 590084,
+      "caller": "PLI1.OVL+80EB",
+      "path": "work",
+      "parent_return_step": 590462,
+      "reverse": [
+        {
+          "call_step": 590129,
+          "return_step": 590238,
+          "input_position": 0,
+          "returned_A": 0,
+          "returned_flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          },
+          "AE50_write_step": 590239,
+          "AE50_value": 0,
+          "skip_call_step": 590242,
+          "skip_input": 0,
+          "skip_return": 0,
+          "skip_flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          },
+          "cursor_write_step": 590284,
+          "cursor_value": 0,
+          "next_loop_branch_step": 590295,
+          "next_saved_cursor": 255,
+          "next_begin_minus1": 255,
+          "next_loop_taken": true
+        }
+      ],
+      "forward": [
+        {
+          "map_call_step": 590305,
+          "cursor": 0,
+          "mapped": 0,
+          "transform_call_step": 590340,
+          "attribute": 2,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 0,
+              "call_step": 590320
+            },
+            {
+              "channel": "mapped-word-low",
+              "word": 11,
+              "byte": 11,
+              "wrapper_call_step": 590357
+            },
+            {
+              "channel": "mapped-word-high",
+              "word": 11,
+              "byte": 0,
+              "wrapper_call_step": 590399
+            }
+          ],
+          "recycle_call_step": 590422,
+          "recycle_old_index": 7,
+          "recycle_write": {
+            "address": 43708,
+            "old_value": null,
+            "new_value": 7
+          },
+          "fresh_map_read": {
+            "address": 43551,
+            "value": 8
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 8
+          }
+        }
+      ],
+      "unsupported_effects": [],
+      "forward_start": {
+        "cursor": 0,
+        "step": 590297
+      },
+      "end_publication": {
+        "value": 0,
+        "step": 590461
+      }
+    },
+    {
+      "begin": 0,
+      "end": 3,
+      "return": "PLI1.OVL+7D65",
+      "forward_iterations": 0,
+      "call_step": 595615,
+      "caller": "PLI1.OVL+7ED3",
+      "path": "gate",
+      "parent_return_step": 595623,
+      "reverse": [],
+      "forward": [],
+      "unsupported_effects": []
+    },
+    {
+      "begin": 0,
+      "end": 7,
+      "return": "PLI1.OVL+7D65",
+      "forward_iterations": 0,
+      "call_step": 597000,
+      "caller": "PLI1.OVL+7ED3",
+      "path": "gate",
+      "parent_return_step": 597008,
+      "reverse": [],
+      "forward": [],
+      "unsupported_effects": []
+    },
+    {
+      "begin": 0,
+      "end": 7,
+      "return": "PLI1.OVL+7E45",
+      "forward_iterations": 7,
+      "call_step": 598709,
+      "caller": "PLI1.OVL+816B",
+      "path": "work",
+      "parent_return_step": 603518,
+      "reverse": [
+        {
+          "call_step": 598754,
+          "return_step": 600170,
+          "input_position": 6,
+          "returned_A": 5,
+          "returned_flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          },
+          "AE50_write_step": 600171,
+          "AE50_value": 5,
+          "skip_call_step": 600174,
+          "skip_input": 6,
+          "skip_return": 4,
+          "skip_flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          },
+          "cursor_write_step": 600292,
+          "cursor_value": 4,
+          "next_loop_branch_step": 600303,
+          "next_saved_cursor": 3,
+          "next_begin_minus1": 255,
+          "next_loop_taken": false
+        },
+        {
+          "call_step": 600323,
+          "return_step": 602291,
+          "input_position": 3,
+          "returned_A": 0,
+          "returned_flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          },
+          "AE50_write_step": 602292,
+          "AE50_value": 0,
+          "skip_call_step": 602295,
+          "skip_input": 3,
+          "skip_return": 0,
+          "skip_flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          },
+          "cursor_write_step": 602451,
+          "cursor_value": 0,
+          "next_loop_branch_step": 602462,
+          "next_saved_cursor": 255,
+          "next_begin_minus1": 255,
+          "next_loop_taken": true
+        }
+      ],
+      "forward": [
+        {
+          "map_call_step": 602472,
+          "cursor": 0,
+          "mapped": 10,
+          "transform_call_step": 602507,
+          "attribute": 2,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 10,
+              "call_step": 602487
+            },
+            {
+              "channel": "mapped-word-low",
+              "word": 1,
+              "byte": 1,
+              "wrapper_call_step": 602524
+            },
+            {
+              "channel": "mapped-word-high",
+              "word": 1,
+              "byte": 0,
+              "wrapper_call_step": 602566
+            }
+          ],
+          "recycle_call_step": 602589,
+          "recycle_old_index": 4,
+          "recycle_write": {
+            "address": 43703,
+            "old_value": null,
+            "new_value": 4
+          },
+          "fresh_map_read": {
+            "address": 43551,
+            "value": 3
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 3
+          }
+        },
+        {
+          "map_call_step": 602629,
+          "cursor": 1,
+          "mapped": 23,
+          "transform_call_step": 602664,
+          "attribute": 4,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 23,
+              "call_step": 602644
+            },
+            {
+              "channel": "primary-auxiliary-byte",
+              "byte": 1,
+              "call_step": 602705
+            }
+          ],
+          "recycle_call_step": 602725,
+          "recycle_old_index": 3,
+          "recycle_write": {
+            "address": 43705,
+            "old_value": null,
+            "new_value": 3
+          },
+          "fresh_map_read": {
+            "address": 43552,
+            "value": 5
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 5
+          }
+        },
+        {
+          "map_call_step": 602765,
+          "cursor": 2,
+          "mapped": 10,
+          "transform_call_step": 602800,
+          "attribute": 2,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 10,
+              "call_step": 602780
+            },
+            {
+              "channel": "mapped-word-low",
+              "word": 594,
+              "byte": 82,
+              "wrapper_call_step": 602817
+            },
+            {
+              "channel": "mapped-word-high",
+              "word": 594,
+              "byte": 2,
+              "wrapper_call_step": 602859
+            }
+          ],
+          "recycle_call_step": 602882,
+          "recycle_old_index": 5,
+          "recycle_write": {
+            "address": 43700,
+            "old_value": null,
+            "new_value": 5
+          },
+          "fresh_map_read": {
+            "address": 43553,
+            "value": 0
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 0
+          }
+        },
+        {
+          "map_call_step": 602922,
+          "cursor": 3,
+          "mapped": 161,
+          "transform_call_step": 602957,
+          "attribute": 4,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 161,
+              "call_step": 602937
+            },
+            {
+              "channel": "primary-auxiliary-byte",
+              "byte": 0,
+              "call_step": 602998
+            }
+          ],
+          "recycle_call_step": 603018,
+          "recycle_old_index": 0,
+          "recycle_write": {
+            "address": 43701,
+            "old_value": null,
+            "new_value": 0
+          },
+          "fresh_map_read": {
+            "address": 43554,
+            "value": 1
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 1
+          }
+        },
+        {
+          "map_call_step": 603058,
+          "cursor": 4,
+          "mapped": 10,
+          "transform_call_step": 603093,
+          "attribute": 2,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 10,
+              "call_step": 603073
+            },
+            {
+              "channel": "mapped-word-low",
+              "word": 1,
+              "byte": 1,
+              "wrapper_call_step": 603110
+            },
+            {
+              "channel": "mapped-word-high",
+              "word": 1,
+              "byte": 0,
+              "wrapper_call_step": 603152
+            }
+          ],
+          "recycle_call_step": 603175,
+          "recycle_old_index": 1,
+          "recycle_write": {
+            "address": 43708,
+            "old_value": null,
+            "new_value": 1
+          },
+          "fresh_map_read": {
+            "address": 43555,
+            "value": 8
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 8
+          }
+        },
+        {
+          "map_call_step": 603215,
+          "cursor": 5,
+          "mapped": 23,
+          "transform_call_step": 603250,
+          "attribute": 4,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 23,
+              "call_step": 603230
+            },
+            {
+              "channel": "primary-auxiliary-byte",
+              "byte": 1,
+              "call_step": 603291
+            }
+          ],
+          "recycle_call_step": 603311,
+          "recycle_old_index": 8,
+          "recycle_write": {
+            "address": 43707,
+            "old_value": null,
+            "new_value": 8
+          },
+          "fresh_map_read": {
+            "address": 43556,
+            "value": 7
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 7
+          }
+        },
+        {
+          "map_call_step": 603351,
+          "cursor": 6,
+          "mapped": 181,
+          "transform_call_step": 603386,
+          "attribute": 3,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 181,
+              "call_step": 603366
+            },
+            {
+              "channel": "second-auxiliary-byte",
+              "byte": 0,
+              "call_step": 603438
+            },
+            {
+              "channel": "primary-auxiliary-byte",
+              "byte": 5,
+              "call_step": 603458
+            }
+          ],
+          "recycle_call_step": 603478,
+          "recycle_old_index": 7,
+          "recycle_write": {
+            "address": 43702,
+            "old_value": null,
+            "new_value": 7
+          },
+          "fresh_map_read": {
+            "address": 43557,
+            "value": 2
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 2
+          }
+        }
+      ],
+      "unsupported_effects": [],
+      "forward_start": {
+        "cursor": 0,
+        "step": 602464
+      },
+      "end_publication": {
+        "value": 0,
+        "step": 603517
+      }
+    },
+    {
+      "begin": 0,
+      "end": 0,
+      "return": "PLI1.OVL+7D5D",
+      "forward_iterations": 0,
+      "call_step": 603536,
+      "caller": "PLI1.OVL+8069",
+      "path": "equal_range",
+      "parent_return_step": 603541,
+      "reverse": [],
+      "forward": [],
+      "unsupported_effects": []
+    },
+    {
+      "begin": 0,
+      "end": 4,
+      "return": "PLI1.OVL+7E45",
+      "forward_iterations": 4,
+      "call_step": 608084,
+      "caller": "PLI1.OVL+7ED3",
+      "path": "work",
+      "parent_return_step": 609428,
+      "reverse": [
+        {
+          "call_step": 608129,
+          "return_step": 608682,
+          "input_position": 3,
+          "returned_A": 254,
+          "returned_flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          },
+          "AE50_write_step": 608683,
+          "AE50_value": 254,
+          "skip_call_step": 608686,
+          "skip_input": 3,
+          "skip_return": 0,
+          "skip_flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          },
+          "cursor_write_step": 608842,
+          "cursor_value": 0,
+          "next_loop_branch_step": 608853,
+          "next_saved_cursor": 255,
+          "next_begin_minus1": 255,
+          "next_loop_taken": true
+        }
+      ],
+      "forward": [
+        {
+          "map_call_step": 608863,
+          "cursor": 0,
+          "mapped": 5,
+          "transform_call_step": 608898,
+          "attribute": 2,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 5,
+              "call_step": 608878
+            },
+            {
+              "channel": "mapped-word-low",
+              "word": 64499,
+              "byte": 243,
+              "wrapper_call_step": 608915
+            },
+            {
+              "channel": "mapped-word-high",
+              "word": 64499,
+              "byte": 251,
+              "wrapper_call_step": 608957
+            }
+          ],
+          "recycle_call_step": 608980,
+          "recycle_old_index": 0,
+          "recycle_write": {
+            "address": 43702,
+            "old_value": null,
+            "new_value": 0
+          },
+          "fresh_map_read": {
+            "address": 43551,
+            "value": 2
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 2
+          }
+        },
+        {
+          "map_call_step": 609020,
+          "cursor": 1,
+          "mapped": 23,
+          "transform_call_step": 609055,
+          "attribute": 4,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 23,
+              "call_step": 609035
+            },
+            {
+              "channel": "primary-auxiliary-byte",
+              "byte": 15,
+              "call_step": 609096
+            }
+          ],
+          "recycle_call_step": 609116,
+          "recycle_old_index": 2,
+          "recycle_write": {
+            "address": 43707,
+            "old_value": null,
+            "new_value": 2
+          },
+          "fresh_map_read": {
+            "address": 43552,
+            "value": 7
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 7
+          }
+        },
+        {
+          "map_call_step": 609156,
+          "cursor": 2,
+          "mapped": 99,
+          "transform_call_step": 609191,
+          "attribute": 4,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 99,
+              "call_step": 609171
+            },
+            {
+              "channel": "primary-auxiliary-byte",
+              "byte": 9,
+              "call_step": 609232
+            }
+          ],
+          "recycle_call_step": 609252,
+          "recycle_old_index": 7,
+          "recycle_write": {
+            "address": 43708,
+            "old_value": null,
+            "new_value": 7
+          },
+          "fresh_map_read": {
+            "address": 43553,
+            "value": 8
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 8
+          }
+        },
+        {
+          "map_call_step": 609292,
+          "cursor": 3,
+          "mapped": 178,
+          "transform_call_step": 609327,
+          "attribute": 4,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 178,
+              "call_step": 609307
+            },
+            {
+              "channel": "primary-auxiliary-byte",
+              "byte": 254,
+              "call_step": 609368
+            }
+          ],
+          "recycle_call_step": 609388,
+          "recycle_old_index": 8,
+          "recycle_write": {
+            "address": 43701,
+            "old_value": null,
+            "new_value": 8
+          },
+          "fresh_map_read": {
+            "address": 43554,
+            "value": 1
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 1
+          }
+        }
+      ],
+      "unsupported_effects": [],
+      "forward_start": {
+        "cursor": 0,
+        "step": 608855
+      },
+      "end_publication": {
+        "value": 0,
+        "step": 609427
+      }
+    },
+    {
+      "begin": 0,
+      "end": 0,
+      "return": "PLI1.OVL+7D5D",
+      "forward_iterations": 0,
+      "call_step": 609453,
+      "caller": "PLI1.OVL+8069",
+      "path": "equal_range",
+      "parent_return_step": 609458,
+      "reverse": [],
+      "forward": [],
+      "unsupported_effects": []
+    },
+    {
+      "begin": 0,
+      "end": 0,
+      "return": "PLI1.OVL+7D5D",
+      "forward_iterations": 0,
+      "call_step": 609578,
+      "caller": "PLI1.OVL+816B",
+      "path": "equal_range",
+      "parent_return_step": 609583,
+      "reverse": [],
+      "forward": [],
+      "unsupported_effects": []
+    },
+    {
+      "begin": 0,
+      "end": 0,
+      "return": "PLI1.OVL+7D5D",
+      "forward_iterations": 0,
+      "call_step": 609601,
+      "caller": "PLI1.OVL+8069",
+      "path": "equal_range",
+      "parent_return_step": 609606,
+      "reverse": [],
+      "forward": [],
+      "unsupported_effects": []
+    },
+    {
+      "begin": 0,
+      "end": 0,
+      "return": "PLI1.OVL+7D5D",
+      "forward_iterations": 0,
+      "call_step": 609895,
+      "caller": "PLI1.OVL+816B",
+      "path": "equal_range",
+      "parent_return_step": 609900,
+      "reverse": [],
+      "forward": [],
+      "unsupported_effects": []
+    },
+    {
+      "begin": 0,
+      "end": 0,
+      "return": "PLI1.OVL+7D5D",
+      "forward_iterations": 0,
+      "call_step": 609918,
+      "caller": "PLI1.OVL+8069",
+      "path": "equal_range",
+      "parent_return_step": 609923,
+      "reverse": [],
+      "forward": [],
+      "unsupported_effects": []
+    },
+    {
+      "begin": 0,
+      "end": 1,
+      "return": "PLI1.OVL+7E45",
+      "forward_iterations": 1,
+      "call_step": 610194,
+      "caller": "PLI1.OVL+7ED3",
+      "path": "work",
+      "parent_return_step": 610551,
+      "reverse": [
+        {
+          "call_step": 610239,
+          "return_step": 610348,
+          "input_position": 0,
+          "returned_A": 0,
+          "returned_flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          },
+          "AE50_write_step": 610349,
+          "AE50_value": 0,
+          "skip_call_step": 610352,
+          "skip_input": 0,
+          "skip_return": 0,
+          "skip_flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          },
+          "cursor_write_step": 610394,
+          "cursor_value": 0,
+          "next_loop_branch_step": 610405,
+          "next_saved_cursor": 255,
+          "next_begin_minus1": 255,
+          "next_loop_taken": true
+        }
+      ],
+      "forward": [
+        {
+          "map_call_step": 610415,
+          "cursor": 0,
+          "mapped": 183,
+          "transform_call_step": 610450,
+          "attribute": 4,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 183,
+              "call_step": 610430
+            },
+            {
+              "channel": "primary-auxiliary-byte",
+              "byte": 0,
+              "call_step": 610491
+            }
+          ],
+          "recycle_call_step": 610511,
+          "recycle_old_index": 8,
+          "recycle_write": {
+            "address": 43701,
+            "old_value": null,
+            "new_value": 8
+          },
+          "fresh_map_read": {
+            "address": 43551,
+            "value": 1
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 1
+          }
+        }
+      ],
+      "unsupported_effects": [],
+      "forward_start": {
+        "cursor": 0,
+        "step": 610407
+      },
+      "end_publication": {
+        "value": 0,
+        "step": 610550
+      }
+    },
+    {
+      "begin": 0,
+      "end": 0,
+      "return": "PLI1.OVL+7D5D",
+      "forward_iterations": 0,
+      "call_step": 613021,
+      "caller": "PLI1.OVL+8069",
+      "path": "equal_range",
+      "parent_return_step": 613026,
+      "reverse": [],
+      "forward": [],
+      "unsupported_effects": []
+    },
+    {
+      "begin": 0,
+      "end": 0,
+      "return": "PLI1.OVL+7D5D",
+      "forward_iterations": 0,
+      "call_step": 613088,
+      "caller": "PLI1.OVL+8069",
+      "path": "equal_range",
+      "parent_return_step": 613093,
+      "reverse": [],
+      "forward": [],
+      "unsupported_effects": []
+    },
+    {
+      "begin": 0,
+      "end": 0,
+      "return": "PLI1.OVL+7D5D",
+      "forward_iterations": 0,
+      "call_step": 613155,
+      "caller": "PLI1.OVL+8069",
+      "path": "equal_range",
+      "parent_return_step": 613160,
+      "reverse": [],
+      "forward": [],
+      "unsupported_effects": []
+    },
+    {
+      "begin": 0,
+      "end": 7,
+      "return": "PLI1.OVL+7E45",
+      "forward_iterations": 7,
+      "call_step": 618086,
+      "caller": "PLI1.OVL+7ED3",
+      "path": "work",
+      "parent_return_step": 621427,
+      "reverse": [
+        {
+          "call_step": 618131,
+          "return_step": 620117,
+          "input_position": 6,
+          "returned_A": 15,
+          "returned_flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          },
+          "AE50_write_step": 620118,
+          "AE50_value": 15,
+          "skip_call_step": 620121,
+          "skip_input": 6,
+          "skip_return": 0,
+          "skip_flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          },
+          "cursor_write_step": 620391,
+          "cursor_value": 0,
+          "next_loop_branch_step": 620402,
+          "next_saved_cursor": 255,
+          "next_begin_minus1": 255,
+          "next_loop_taken": true
+        }
+      ],
+      "forward": [
+        {
+          "map_call_step": 620412,
+          "cursor": 0,
+          "mapped": 5,
+          "transform_call_step": 620447,
+          "attribute": 2,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 5,
+              "call_step": 620427
+            },
+            {
+              "channel": "mapped-word-low",
+              "word": 64499,
+              "byte": 243,
+              "wrapper_call_step": 620464
+            },
+            {
+              "channel": "mapped-word-high",
+              "word": 64499,
+              "byte": 251,
+              "wrapper_call_step": 620506
+            }
+          ],
+          "recycle_call_step": 620529,
+          "recycle_old_index": 4,
+          "recycle_write": {
+            "address": 43701,
+            "old_value": null,
+            "new_value": 4
+          },
+          "fresh_map_read": {
+            "address": 43551,
+            "value": 1
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 1
+          }
+        },
+        {
+          "map_call_step": 620569,
+          "cursor": 1,
+          "mapped": 5,
+          "transform_call_step": 620604,
+          "attribute": 2,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 5,
+              "call_step": 620584
+            },
+            {
+              "channel": "mapped-word-low",
+              "word": 64499,
+              "byte": 243,
+              "wrapper_call_step": 620621
+            },
+            {
+              "channel": "mapped-word-high",
+              "word": 64499,
+              "byte": 251,
+              "wrapper_call_step": 620663
+            }
+          ],
+          "recycle_call_step": 620686,
+          "recycle_old_index": 1,
+          "recycle_write": {
+            "address": 43708,
+            "old_value": null,
+            "new_value": 1
+          },
+          "fresh_map_read": {
+            "address": 43552,
+            "value": 8
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 8
+          }
+        },
+        {
+          "map_call_step": 620726,
+          "cursor": 2,
+          "mapped": 23,
+          "transform_call_step": 620761,
+          "attribute": 4,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 23,
+              "call_step": 620741
+            },
+            {
+              "channel": "primary-auxiliary-byte",
+              "byte": 15,
+              "call_step": 620802
+            }
+          ],
+          "recycle_call_step": 620822,
+          "recycle_old_index": 8,
+          "recycle_write": {
+            "address": 43707,
+            "old_value": null,
+            "new_value": 8
+          },
+          "fresh_map_read": {
+            "address": 43553,
+            "value": 7
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 7
+          }
+        },
+        {
+          "map_call_step": 620862,
+          "cursor": 3,
+          "mapped": 10,
+          "transform_call_step": 620897,
+          "attribute": 2,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 10,
+              "call_step": 620877
+            },
+            {
+              "channel": "mapped-word-low",
+              "word": 1,
+              "byte": 1,
+              "wrapper_call_step": 620914
+            },
+            {
+              "channel": "mapped-word-high",
+              "word": 1,
+              "byte": 0,
+              "wrapper_call_step": 620956
+            }
+          ],
+          "recycle_call_step": 620979,
+          "recycle_old_index": 7,
+          "recycle_write": {
+            "address": 43702,
+            "old_value": null,
+            "new_value": 7
+          },
+          "fresh_map_read": {
+            "address": 43554,
+            "value": 2
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 2
+          }
+        },
+        {
+          "map_call_step": 621019,
+          "cursor": 4,
+          "mapped": 23,
+          "transform_call_step": 621054,
+          "attribute": 4,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 23,
+              "call_step": 621034
+            },
+            {
+              "channel": "primary-auxiliary-byte",
+              "byte": 1,
+              "call_step": 621095
+            }
+          ],
+          "recycle_call_step": 621115,
+          "recycle_old_index": 2,
+          "recycle_write": {
+            "address": 43700,
+            "old_value": null,
+            "new_value": 2
+          },
+          "fresh_map_read": {
+            "address": 43555,
+            "value": 0
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 0
+          }
+        },
+        {
+          "map_call_step": 621155,
+          "cursor": 5,
+          "mapped": 30,
+          "transform_call_step": 621190,
+          "attribute": 4,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 30,
+              "call_step": 621170
+            },
+            {
+              "channel": "primary-auxiliary-byte",
+              "byte": 15,
+              "call_step": 621231
+            }
+          ],
+          "recycle_call_step": 621251,
+          "recycle_old_index": 0,
+          "recycle_write": {
+            "address": 43705,
+            "old_value": null,
+            "new_value": 0
+          },
+          "fresh_map_read": {
+            "address": 43556,
+            "value": 5
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 5
+          }
+        },
+        {
+          "map_call_step": 621291,
+          "cursor": 6,
+          "mapped": 15,
+          "transform_call_step": 621326,
+          "attribute": 4,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 15,
+              "call_step": 621306
+            },
+            {
+              "channel": "primary-auxiliary-byte",
+              "byte": 15,
+              "call_step": 621367
+            }
+          ],
+          "recycle_call_step": 621387,
+          "recycle_old_index": 5,
+          "recycle_write": {
+            "address": 43703,
+            "old_value": null,
+            "new_value": 5
+          },
+          "fresh_map_read": {
+            "address": 43557,
+            "value": 3
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 3
+          }
+        }
+      ],
+      "unsupported_effects": [],
+      "forward_start": {
+        "cursor": 0,
+        "step": 620404
+      },
+      "end_publication": {
+        "value": 0,
+        "step": 621426
+      }
+    },
+    {
+      "begin": 0,
+      "end": 0,
+      "return": "PLI1.OVL+7D5D",
+      "forward_iterations": 0,
+      "call_step": 621450,
+      "caller": "PLI1.OVL+8069",
+      "path": "equal_range",
+      "parent_return_step": 621455,
+      "reverse": [],
+      "forward": [],
+      "unsupported_effects": []
+    },
+    {
+      "begin": 0,
+      "end": 0,
+      "return": "PLI1.OVL+7D5D",
+      "forward_iterations": 0,
+      "call_step": 626396,
+      "caller": "PLI1.OVL+8069",
+      "path": "equal_range",
+      "parent_return_step": 626401,
+      "reverse": [],
+      "forward": [],
+      "unsupported_effects": []
+    },
+    {
+      "begin": 0,
+      "end": 0,
+      "return": "PLI1.OVL+7D5D",
+      "forward_iterations": 0,
+      "call_step": 630958,
+      "caller": "PLI1.OVL+8069",
+      "path": "equal_range",
+      "parent_return_step": 630963,
+      "reverse": [],
+      "forward": [],
+      "unsupported_effects": []
+    },
+    {
+      "begin": 0,
+      "end": 1,
+      "return": "PLI1.OVL+7E45",
+      "forward_iterations": 1,
+      "call_step": 632358,
+      "caller": "PLI1.OVL+7ED3",
+      "path": "work",
+      "parent_return_step": 632715,
+      "reverse": [
+        {
+          "call_step": 632403,
+          "return_step": 632512,
+          "input_position": 0,
+          "returned_A": 0,
+          "returned_flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          },
+          "AE50_write_step": 632513,
+          "AE50_value": 0,
+          "skip_call_step": 632516,
+          "skip_input": 0,
+          "skip_return": 0,
+          "skip_flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          },
+          "cursor_write_step": 632558,
+          "cursor_value": 0,
+          "next_loop_branch_step": 632569,
+          "next_saved_cursor": 255,
+          "next_begin_minus1": 255,
+          "next_loop_taken": true
+        }
+      ],
+      "forward": [
+        {
+          "map_call_step": 632579,
+          "cursor": 0,
+          "mapped": 142,
+          "transform_call_step": 632614,
+          "attribute": 4,
+          "channels": [
+            {
+              "channel": "mapped-byte",
+              "byte": 142,
+              "call_step": 632594
+            },
+            {
+              "channel": "primary-auxiliary-byte",
+              "byte": 0,
+              "call_step": 632655
+            }
+          ],
+          "recycle_call_step": 632675,
+          "recycle_old_index": 5,
+          "recycle_write": {
+            "address": 43703,
+            "old_value": null,
+            "new_value": 5
+          },
+          "fresh_map_read": {
+            "address": 43551,
+            "value": 3
+          },
+          "new_index_write": {
+            "address": 44595,
+            "old_value": null,
+            "new_value": 3
+          }
+        }
+      ],
+      "unsupported_effects": [],
+      "forward_start": {
+        "cursor": 0,
+        "step": 632571
+      },
+      "end_publication": {
+        "value": 0,
+        "step": 632714
+      }
+    },
+    {
+      "begin": 0,
+      "end": 0,
+      "return": "PLI1.OVL+7D5D",
+      "forward_iterations": 0,
+      "call_step": 637228,
+      "caller": "PLI1.OVL+8069",
+      "path": "equal_range",
+      "parent_return_step": 637233,
+      "reverse": [],
+      "forward": [],
+      "unsupported_effects": []
+    },
+    {
+      "begin": 0,
+      "end": 0,
+      "return": "PLI1.OVL+7D5D",
+      "forward_iterations": 0,
+      "call_step": 637334,
+      "caller": "PLI1.OVL+8069",
+      "path": "equal_range",
+      "parent_return_step": 637339,
+      "reverse": [],
+      "forward": [],
+      "unsupported_effects": []
+    }
+  ]
+}

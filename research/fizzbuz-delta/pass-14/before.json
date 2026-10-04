@@ -1,0 +1,477 @@
+{
+  "id": "PLI1.OVL+7D53",
+  "image": "PLI1.OVL",
+  "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+  "stable_label": "PLI1_7D53",
+  "runtime_entry": 40787,
+  "start_offset": 32083,
+  "end_offset": 32326,
+  "length": 243,
+  "byte_status_at_entry": "UNDERSTOOD",
+  "description": "scoped reverse processing, attribute-dispatched emission and mapped-table recycling",
+  "completeness": {
+    "bounds": "provisional",
+    "control_flow": "partial",
+    "contract": "partial"
+  },
+  "observed_paths": {
+    "invocations_by_run": {
+      "MINIMAL": 21
+    },
+    "represented_bytes": 237,
+    "description": "21 ordinary returns:12 empty,2 gate-bit set,7 work; 9 reverse helper selections and16 forward mapped/emission iterations;12 correlated packet path classes; no recursion."
+  },
+  "unresolved_paths": [
+    "partial helper contract: recursive7C1B mapped1E/21 and17/non0A predecessor RAW paths, arbitrary recursive/skip termination and alias preconditions remain excluded.",
+    "partial helper contract: resident0EF6 error/flush paths remain outside established success scope; not reopened in this pass.",
+    "unobserved path: shortcuts202B/2011, mapped>=F7, attributes0/1/5/6/7, equality6, cursor-wrap return; RAW7E2B..7E30 not decoded or promoted.",
+    "unknown producer/general provenance and alias/precondition: initial maps/word/byte/attribute tables, cursor controls and possible overlaps beyond selected scope; no inferred array capacities or ownership."
+  ],
+  "inputs": "byte begin/end/gate at AE34/AE35/AA1A, flags202B/2011, position_map AA1F, mapped_byte_table AAB4; helper arguments/results and resident emission state at declared callee scopes",
+  "outputs": "Early-return state as before; work emits mapped bytes, low/high mapped words, primary auxiliary bytes and selected second auxiliary byte through scoped0EF6; end=fresh begin; distinct word-cacheAE52, byte cachesAE50/51, auxiliary reverse writes, mapped recycle updates and AE33 replacement. Registers/flags retain exact return-path/callee scope; no single Boolean or data A result inferred.",
+  "clobbers": "A,BC,DE,HL,flags; end/cursor/byte caches/word cache, named mapping/attribute/word/auxiliary scratch, mapped and auxiliary publications, transient stack; partial emitter buffer/index/scratch/host effects",
+  "memory_state": [
+    "mapped_range_begin=AE34H (byte lower endpoint read by +7D53; zeroed by initializer)",
+    "mapped_range_end=AE35H (byte endpoint/read-write work control of +7D53; zeroed by initializer)",
+    "mapped_work_gate=AA1AH (bit0 later gates +7D53; cleared by initializer)",
+    "mapped_work_cursor=AE4FH (byte cursor decremented/replaced/backward and incremented/forward)",
+    "mapped_work_cache=AE50H (mapped then helper-transformed byte; reloaded after calls)",
+    "mapped_work_secondary=AE51H (auxiliary mapped byte returned by +7AA9 and passed separately to emission)",
+    "mapped_work_shortcut_flags=202BH (bit0 selects unobserved reverse-scan shortcut)",
+    "mapped_work_shortcut_byte=2011H (nonzero selects unobserved reverse-scan shortcut)",
+    "position_map=AA1FH (first-stage byte mapping indexed by unsigned C)",
+    "mapped_byte_table=AAB4H (second-stage byte table indexed by mapped j; type meaning unknown)",
+    "packed_attribute_table=1B4BH (byte-indexed fixed table; low3 bits read by +7A63, bits3..5 by +7B64; capacity/producer unknown)",
+    "auxiliary_mapped_table=AD08H (position-map-indexed auxiliary bytes; +7AA9 reads, +7B2E writes; capacity unknown)",
+    "mapped_init_index=AE33H (byte counter during +8273 initialization, reset to zero; +7BA2 uses same storage as previous mapped-slot publication value then replaces it with current position-map index)",
+    "mapped_word_table=AB49H (little-endian words at base+2*position_map index; capacity/producer unknown)",
+    "mapped_word_position=AE38H (saved position for double-indexed word lookup)",
+    "mapped_emit_word=AE52H (mapped word cached before low-byte emission; high byte freshly read by7E56)",
+    "second_auxiliary_byte_table=AD9DH (byte[AD9D+position_map[C]] read by7ABF; distinct numeric base, capacity/producers unknown)",
+    "second_auxiliary_position=AE3BH (saved position for second auxiliary byte read)",
+    "packed_loop_word=AE4DH (mapped input word then repeatedly doubled/left-shifted modulo65536 atAE4D/4E)",
+    "packed_loop_counter=AE4CH (starts15; decremented after same-top-bit shifts; returned/published value16-total_shifts)",
+    "F=entry_SP; zero-byte reserved local frame; temporary saves/CALL words below F; original return word at F."
+  ],
+  "data_role_ids": [
+    "PLI1.OVL:mapped_range_begin",
+    "PLI1.OVL:mapped_range_end",
+    "PLI1.OVL:mapped_work_gate",
+    "PLI1.OVL:mapped_work_cursor",
+    "PLI1.OVL:mapped_work_cache",
+    "PLI1.OVL:mapped_work_secondary",
+    "PLI1.OVL:mapped_work_shortcut_flags",
+    "PLI1.OVL:mapped_work_shortcut_byte",
+    "PLI1.OVL:position_map",
+    "PLI1.OVL:mapped_byte_table",
+    "PLI1.OVL:packed_attribute_table",
+    "PLI1.OVL:auxiliary_mapped_table",
+    "PLI1.OVL:mapped_init_index",
+    "PLI1.OVL:mapped_word_table",
+    "PLI1.OVL:mapped_word_position",
+    "PLI1.OVL:mapped_emit_word",
+    "PLI1.OVL:second_auxiliary_byte_table",
+    "PLI1.OVL:second_auxiliary_position",
+    "PLI1.OVL:packed_loop_word",
+    "PLI1.OVL:packed_loop_counter"
+  ],
+  "callers": [
+    {
+      "coordinate": "PLI1.OVL+7ED3",
+      "counts_by_run": {
+        "MINIMAL": 7
+      }
+    },
+    {
+      "coordinate": "PLI1.OVL+8069",
+      "counts_by_run": {
+        "MINIMAL": 10
+      }
+    },
+    {
+      "coordinate": "PLI1.OVL+80EB",
+      "counts_by_run": {
+        "MINIMAL": 1
+      }
+    },
+    {
+      "coordinate": "PLI1.OVL+816B",
+      "counts_by_run": {
+        "MINIMAL": 3
+      }
+    }
+  ],
+  "returns": {
+    "convention": "ordinary hardware CALL word; original slot unchanged, SP after RET=entry_SP+2",
+    "observed_file_offsets": [
+      32093,
+      32101,
+      32325
+    ],
+    "sites_description": "PLI1.OVL+7D5D; PLI1.OVL+7D65; PLI1.OVL+7E45"
+  },
+  "direct_callees": [
+    {
+      "callsite_offset": 32145,
+      "coordinate": "PLI1.OVL+7A4D",
+      "runtime_address": 40013
+    },
+    {
+      "callsite_offset": 32157,
+      "coordinate": "PLI1.OVL+7C1B",
+      "runtime_address": 40475
+    },
+    {
+      "callsite_offset": 32167,
+      "coordinate": "PLI1.OVL+7B7A",
+      "runtime_address": 40314
+    },
+    {
+      "callsite_offset": 32197,
+      "coordinate": "PLI1.OVL+7A4D",
+      "runtime_address": 40013
+    },
+    {
+      "callsite_offset": 32204,
+      "coordinate": "PLI.COM+0EF6",
+      "runtime_address": 4086
+    },
+    {
+      "callsite_offset": 32219,
+      "coordinate": "PLI1.OVL+7B64",
+      "runtime_address": 40292
+    },
+    {
+      "callsite_offset": 32230,
+      "coordinate": "PLI1.OVL+7E46",
+      "runtime_address": 41030
+    },
+    {
+      "callsite_offset": 32241,
+      "coordinate": "PLI1.OVL+7E56",
+      "runtime_address": 41046
+    },
+    {
+      "callsite_offset": 32251,
+      "coordinate": "PLI1.OVL+7AA9",
+      "runtime_address": 40105
+    },
+    {
+      "callsite_offset": 32269,
+      "coordinate": "PLI1.OVL+7ABF",
+      "runtime_address": 40127
+    },
+    {
+      "callsite_offset": 32273,
+      "coordinate": "PLI.COM+0EF6",
+      "runtime_address": 4086
+    },
+    {
+      "callsite_offset": 32288,
+      "coordinate": "PLI.COM+0EF6",
+      "runtime_address": 4086
+    },
+    {
+      "callsite_offset": 32309,
+      "coordinate": "PLI1.OVL+7BA2",
+      "runtime_address": 40354
+    }
+  ],
+  "overlapping_entries": [],
+  "contract_scope": "observed MINIMAL empty/gate returns and seven work paths: shortcuts clear, mapped bytes<F7, transformed attributes2/3/4; complete selected helpers, recursive7C1B partial scope and0EF6 success scope; controls/table/scratch/stack nonaliasing; RAW alternatives and arbitrary termination excluded",
+  "contract": "If endAE35==beginAE34 return7D5D (12); gateAA1A.bit0 set returns7D65 (2). Seven work calls set cursor=end; clear202B.bit0 and zero2011 select reverse path. Predecrement cursor modulo256, stop at u8(begin-1). Otherwise map through AA1F/AAB4; on witnessed mapped<F7 call partial7C1B: mapped0A now uses complete bounded word/top-bit scan7BBF and auxiliary publication; mapped17 writes child result; default returns initially cached auxiliary byte after attribute-counted children. Cache returnedA atAE50; independent7B7A balance scan replaces cursor, then outer predecrement repeats. Forward reset cursor=begin; exit when unsigned u8(end-1)<fresh cursor. Sixteen iterations map and emit current mapped byte through partial0EF6. Fresh AE50<F7 invokes7B64, storing bits3..5 of byte[1B4B+mapped] as attributeAE50. Attribute<3 calls7E46: select word[AB49+2*position_map[cursor]], publish it low/high toAE52/53, emit low byte. Fresh attribute==2 calls7E56, independently reading cached word and emitting high byte; seven observed pairs. Attribute>=3 reads primary auxiliary byte[AD08+position_map[cursor]] intoAE51; fresh attribute==3 reads distinct second auxiliary byte[AD9D+position_map[cursor]] via7ABF and emits it (one). Fresh attribute!=6 emits AE51 (nine); attribute<5 skips six RAW additional-arm bytes. Finally7BA2 publishes previousAE33 to mapped AAB4 slot selected by position_map[cursor], rereads map index and stores it intoAE33; increment freshly read cursor and loop unless byte wrap. Work exit publishes end=fresh begin. Parent direct emission arguments26 and low/high wrapper arguments14 give40 distinct emitter calls in these subtrees; no returned-A/flag/emission/cache/table channels merged. Own control and result flow is understood only at this partial scope: recursive RAW paths, emitter error/flush, shortcuts, mapped/attribute alternatives and cursor wrap prevent completion. No source-language/table ownership interpretation.",
+  "semantic_hypothesis": null,
+  "pseudocode": "if byte[AE35]==byte[AE34]: RET7D5D; if byte[AA1A].bit0: RET7D65; cursor=byte[AE35]; observed flags202B.bit0==0 && byte[2011]==0: loop { cursor=u8(cursor-1); if cursor==u8(byte[AE34]-1): break; a=map7A4D(C=cursor); scope a<F7: byte[AE50]=partial_recursive7C1B(C=cursor).A; cursor=balance_scan7B7A(C=cursor).A; }; cursor=byte[AE34]; while cursor<=u8(byte[AE35]-1) { a=map7A4D(C=cursor); byte[AE50]=a; emit0EF6(C=a) [partial]; scope fresh byte[AE50]<F7: byte[AE50]=bits3to5_7B64(C=byte[AE50]).A; if byte[AE50]<3 { w=word[AB49+2*position_map[fresh_cursor]]; word[AE52]=w; emit0EF6(C=w.low) [partial]; if fresh byte[AE50]==2: emit0EF6(C=word[AE52].high) [partial fresh read]; } else { byte[AE51]=auxiliary_read7AA9(C=cursor).A; if fresh byte[AE50]==3: emit0EF6(C=byte[AD9D+position_map[fresh_cursor]]); if fresh byte[AE50]!=6: emit0EF6(C=byte[AE51]); scope fresh byte[AE50]<5 skips RAW; }; publish_oldAE33_then_map_index7BA2(C=fresh cursor); byte[AE4F]++; if cursor==0: break; }; byte[AE35]=fresh byte[AE34]; RET7E45",
+  "evidence_refs": [
+    "evidence.json#seeds/PLI1.OVL+7D53",
+    "../minimal-baseline/pass-5/structural.json#PLI1.OVL+7D53",
+    "../minimal-baseline/pass-6/README.md (selected helper substitutions)",
+    "../minimal-baseline/pass-7/README.md"
+  ],
+  "blocks": [
+    {
+      "offset": 32083,
+      "pseudocode": [
+        "compare end[AE35] with begin[AE34]; equal returns immediately"
+      ]
+    },
+    {
+      "offset": 32094,
+      "pseudocode": [
+        "RAR/JNC tests gate[AA1A].bit0; clear bit continues, set bit returns"
+      ]
+    },
+    {
+      "offset": 32102,
+      "pseudocode": [
+        "cursor[AE4F]=end; JC shortcut iff flags202B.bit0 set (unobserved)"
+      ]
+    },
+    {
+      "offset": 32115,
+      "pseudocode": [
+        "JNZ shortcut iff byte2011!=0 (unobserved); witnessed zero enters reverse loop"
+      ]
+    },
+    {
+      "offset": 32123,
+      "pseudocode": [
+        "cursor=u8(cursor-1); save decremented cursor in PSW",
+        "compare u8(begin-1) with saved cursor; JZ stops reverse loop even for begin0/cursorFF"
+      ]
+    },
+    {
+      "offset": 32141,
+      "pseudocode": [
+        "C=unsigned cursor; complete +7A4D maps position through AA1F then reads mapped byte atAAB4+j"
+      ]
+    },
+    {
+      "offset": 32148,
+      "pseudocode": [
+        "CPI F7/JNC skips opaque processing iff mapped byte>=F7; witnessed bytes<F7"
+      ]
+    },
+    {
+      "offset": 32153,
+      "pseudocode": [
+        "partial recursive7C1B; mapped0A counter/top-bit operation now complete via7BBF, special RAW paths remain excluded"
+      ]
+    },
+    {
+      "offset": 32160,
+      "pseudocode": [
+        "cache returnedA atAE50; +7B7A(C=fresh cursor) performs wrapping attribute-balance reverse scan"
+      ]
+    },
+    {
+      "offset": 32170,
+      "pseudocode": [
+        "replace cursor by stopping cursor; outer loop predecrements it next"
+      ]
+    },
+    {
+      "offset": 32176,
+      "pseudocode": [
+        "cursor=begin; reload endpoints around opaque calls"
+      ]
+    },
+    {
+      "offset": 32182,
+      "pseudocode": [
+        "end_minus1=u8(end-1); JC exits forward loop iff unsigned end_minus1<cursor"
+      ]
+    },
+    {
+      "offset": 32193,
+      "pseudocode": [
+        "C=cursor; map +7A4D again, using current mapped table state"
+      ]
+    },
+    {
+      "offset": 32200,
+      "pseudocode": [
+        "cache mapped A atAE50; C=A; emit through partial resident +0EF6"
+      ]
+    },
+    {
+      "offset": 32207,
+      "pseudocode": [
+        "fresh AE50 compared withF7; JNC skips typed-helper path when>=F7"
+      ]
+    },
+    {
+      "offset": 32215,
+      "pseudocode": [
+        "C=fresh mapped cache; +7B64 savesAE47 and returns (byte[1B4B+C]>>3)&7; scratch side effect retained"
+      ]
+    },
+    {
+      "offset": 32222,
+      "pseudocode": [
+        "cache transformed returned A atAE50; JNC selects >=3 branch"
+      ]
+    },
+    {
+      "offset": 32230,
+      "pseudocode": [
+        "7E46: w=word[AB49+2*position_map[fresh cursor]]; publish w toAE52/53, then emit low byte through partial0EF6"
+      ]
+    },
+    {
+      "offset": 32233,
+      "pseudocode": [
+        "fresh AE50 compared with2; JNZ skips +7E56 iff not2"
+      ]
+    },
+    {
+      "offset": 32241,
+      "pseudocode": [
+        "fresh attribute2:7E56 reads cached wordAE52 again and emits high byte through partial0EF6"
+      ]
+    },
+    {
+      "offset": 32247,
+      "pseudocode": [
+        "+7AA9(C=fresh cursor) reads auxiliary byte at AD08+position_map[cursor]"
+      ]
+    },
+    {
+      "offset": 32254,
+      "pseudocode": [
+        "secondary cache[AE51]=returned A; CPI3/JNZ skips special emission iff fresh AE50!=3"
+      ]
+    },
+    {
+      "offset": 32265,
+      "pseudocode": [
+        "fresh attribute3:7ABF reads byte[AD9D+position_map[cursor]]; distinct second auxiliary table",
+        "emit returned byte next; its incoming NZPA were preserved, not flags computed from returned data"
+      ]
+    },
+    {
+      "offset": 32272,
+      "pseudocode": [
+        "C=returned A; emit through partial +0EF6"
+      ]
+    },
+    {
+      "offset": 32276,
+      "pseudocode": [
+        "CPI6/JZ suppresses secondary-byte emission iff fresh AE50==6 (unobserved)"
+      ]
+    },
+    {
+      "offset": 32284,
+      "pseudocode": [
+        "C=byte[AE51], discarding adjacent high byte from LHLD; emit0EF6 at partial scope"
+      ]
+    },
+    {
+      "offset": 32291,
+      "pseudocode": [
+        "CPI5/JC skips RAW additional arm iff fresh transformed byte<5 (all9 observed)"
+      ]
+    },
+    {
+      "offset": 32305,
+      "pseudocode": [
+        "+7BA2 writes previousAE33 to AAB4+position_map[fresh cursor] via7AD5",
+        "then rereads position map at saved position and publishes its index toAE33; future7A4D reads use current mutated table"
+      ]
+    },
+    {
+      "offset": 32312,
+      "pseudocode": [
+        "increment fresh cursor byte; JNZ loops iff result!=0; wrap exit unobserved"
+      ]
+    },
+    {
+      "offset": 32319,
+      "pseudocode": [
+        "end[AE35]=fresh begin[AE34]; RET through original hardware word"
+      ]
+    }
+  ],
+  "local_comments": {
+    "7D53": "HL = mapped_range_begin (AE34H) (literal address/value)",
+    "7D56": "A = byte[mapped_range_end (AE35H)]; flags preserved",
+    "7D59": "flags = unsigned byte comparison A-byte[HL]; A unchanged",
+    "7D5A": "if Z=0: PC=9F5EH; flags preserved",
+    "7D5D": "consume original hardware return word at entry SP; SP=entry_SP+2; flags preserved",
+    "7D5E": "A = byte[mapped_work_gate (AA1AH)]; flags preserved",
+    "7D61": "A=(old_CY<<7)|(old_A>>1); CY=old_A.bit0; NZPA preserved",
+    "7D62": "JNC continues iff work_gate[AA1A].bit0 clear; set bit returns at+7D65",
+    "7D65": "consume original hardware return word at entry SP; SP=entry_SP+2; flags preserved",
+    "7D66": "A = byte[mapped_range_end (AE35H)]; flags preserved",
+    "7D69": "byte[mapped_work_cursor (AE4FH)] = A; flags preserved",
+    "7D6C": "A = byte[mapped_work_shortcut_flags (202BH)]; flags preserved",
+    "7D6F": "A=(old_CY<<7)|(old_A>>1); CY=old_A.bit0; NZPA preserved",
+    "7D70": "JC selects unobserved shortcut iff byte[202B].bit0 set",
+    "7D73": "A = byte[mapped_work_shortcut_byte (2011H)]; flags preserved",
+    "7D76": "flags = unsigned byte comparison A-00H; A unchanged",
+    "7D78": "if Z=0: PC=9FB0H; flags preserved",
+    "7D7B": "A = byte[mapped_work_cursor (AE4FH)]; flags preserved",
+    "7D7E": "A=u8(A-1); NZPA updated, CY preserved",
+    "7D7F": "byte[mapped_work_cursor (AE4FH)] = A; flags preserved",
+    "7D82": "push A/packed flags below SP; flags unchanged",
+    "7D83": "A = byte[mapped_range_begin (AE34H)]; flags preserved",
+    "7D86": "A=u8(A-1); NZPA updated, CY preserved",
+    "7D87": "pop B pair, low byte then high; SP+=2; flags unchanged",
+    "7D88": "C = B; flags preserved",
+    "7D89": "flags = unsigned byte comparison A-C; A unchanged",
+    "7D8A": "JZ starts forward scan iff saved decremented cursor==u8(begin-1); allows byte wrapFF",
+    "7D8D": "L=byte[mapped_work_cursor (AE4FH)]; H=neighbor byte[AE50H], discarded/unused by the subsequent byte argument/index",
+    "7D90": "C = L; flags preserved",
+    "7D91": "push following PC; invoke PLI1.OVL+7A4D; established complete contract at declared scope",
+    "7D94": "flags = unsigned byte comparison A-F7H; A unchanged",
+    "7D96": "if CY=0: PC=9FADH; flags preserved",
+    "7D99": "L=byte[mapped_work_cursor (AE4FH)]; H=neighbor byte[AE50H], discarded/unused by the subsequent byte argument/index",
+    "7D9C": "C = L; flags preserved",
+    "7D9D": "partial7C1B; mapped0A now complete bounded7BBF scan publishes16-shifts into auxiliary table",
+    "7DA0": "byte[mapped_work_cache (AE50H)] = A; flags preserved",
+    "7DA3": "L=byte[mapped_work_cursor (AE4FH)]; H=neighbor byte[AE50H], discarded/unused by the subsequent byte argument/index",
+    "7DA6": "C = L; flags preserved",
+    "7DA7": "invoke complete7B7A at cursor: reverse low3-attribute balance scan; returnedA stopping cursor",
+    "7DAA": "byte[mapped_work_cursor (AE4FH)] = A; flags preserved",
+    "7DAD": "if always: PC=9F7BH; flags preserved",
+    "7DB0": "A = byte[mapped_range_begin (AE34H)]; flags preserved",
+    "7DB3": "byte[mapped_work_cursor (AE4FH)] = A; flags preserved",
+    "7DB6": "A = byte[mapped_range_end (AE35H)]; flags preserved",
+    "7DB9": "A=u8(A-1); NZPA updated, CY preserved",
+    "7DBA": "HL = mapped_work_cursor (AE4FH) (literal address/value)",
+    "7DBD": "flags = unsigned byte comparison A-byte[HL]; A unchanged",
+    "7DBE": "JC exits forward loop iff unsigned u8(end-1)<fresh cursor",
+    "7DC1": "L=byte[mapped_work_cursor (AE4FH)]; H=neighbor byte[AE50H], discarded/unused by the subsequent byte argument/index",
+    "7DC4": "C = L; flags preserved",
+    "7DC5": "push following PC; invoke PLI1.OVL+7A4D; established complete contract at declared scope",
+    "7DC8": "byte[mapped_work_cache (AE50H)] = A; flags preserved",
+    "7DCB": "C = A; flags preserved",
+    "7DCC": "push following PC; invoke PLI.COM+0EF6; established partial contract at declared scope",
+    "7DCF": "A = byte[mapped_work_cache (AE50H)]; flags preserved",
+    "7DD2": "flags = unsigned byte comparison A-F7H; A unchanged",
+    "7DD4": "if CY=0: PC=A031H; flags preserved",
+    "7DD7": "L=byte[mapped_work_cache (AE50H)]; H=neighbor byte[AE51H], discarded/unused by the subsequent byte argument/index",
+    "7DDA": "C = L; flags preserved",
+    "7DDB": "invoke complete7B64: save mapped byteAE47; return packed bits3..5 from1B4B+inputC",
+    "7DDE": "byte[mapped_work_cache (AE50H)] = A; flags preserved",
+    "7DE1": "flags = unsigned byte comparison A-03H; A unchanged",
+    "7DE3": "JNC selects transformed-byte>=3 path; return from +7B64 is data, compared here",
+    "7DE6": "partial7E46: cache mapped word atAE52/53, emit low byte; mapped word tableAB49 distinct from byte tables",
+    "7DE9": "A = byte[mapped_work_cache (AE50H)]; flags preserved",
+    "7DEC": "flags = unsigned byte comparison A-02H; A unchanged",
+    "7DEE": "if Z=0: PC=9FF4H; flags preserved",
+    "7DF1": "partial7E56: fresh wordAE52 read; emit high byte only; incoming/returnedA is not an independent result",
+    "7DF4": "if always: PC=A031H; flags preserved",
+    "7DF7": "L=byte[mapped_work_cursor (AE4FH)]; H=neighbor byte[AE50H], discarded/unused by the subsequent byte argument/index",
+    "7DFA": "C = L; flags preserved",
+    "7DFB": "invoke complete7AA9: A=byte[AD08+position_map[C]], scratchAE3A=C",
+    "7DFE": "byte[mapped_work_secondary (AE51H)] = A; flags preserved",
+    "7E01": "A = byte[mapped_work_cache (AE50H)]; flags preserved",
+    "7E04": "flags = unsigned byte comparison A-03H; A unchanged",
+    "7E06": "if Z=0: PC=A014H; flags preserved",
+    "7E09": "L=byte[mapped_work_cursor (AE4FH)]; H=neighbor byte[AE50H], discarded/unused by the subsequent byte argument/index",
+    "7E0C": "C = L; flags preserved",
+    "7E0D": "complete7ABF: A=byte[AD9D+position_map[C]], scratchAE3B=C, DE/NZPA preserved,CY0",
+    "7E10": "C = A; flags preserved",
+    "7E11": "push following PC; invoke PLI.COM+0EF6; established partial contract at declared scope",
+    "7E14": "A = byte[mapped_work_cache (AE50H)]; flags preserved",
+    "7E17": "flags = unsigned byte comparison A-06H; A unchanged",
+    "7E19": "if Z=1: PC=A023H; flags preserved",
+    "7E1C": "L=byte[mapped_work_secondary (AE51H)]; H=neighbor byte[AE52H], discarded/unused by the subsequent byte argument/index",
+    "7E1F": "C = L; flags preserved",
+    "7E20": "push following PC; invoke PLI.COM+0EF6; established partial contract at declared scope",
+    "7E23": "A = byte[mapped_work_cache (AE50H)]; flags preserved",
+    "7E26": "flags = unsigned byte comparison A-05H; A unchanged",
+    "7E28": "if CY=1: PC=A031H; flags preserved",
+    "7E31": "L=byte[mapped_work_cursor (AE4FH)]; H=neighbor byte[AE50H], discarded/unused by the subsequent byte argument/index",
+    "7E34": "C = L; flags preserved",
+    "7E35": "invoke complete7BA2: mapped slot=oldAE33, then AE33=position_map[savedC]; channels/order distinct",
+    "7E38": "HL = mapped_work_cursor (AE4FH) (literal address/value)",
+    "7E3B": "byte[HL]=u8(byte[HL]+1); NZPA updated, CY preserved",
+    "7E3C": "if Z=0: PC=9FB6H; flags preserved",
+    "7E3F": "A = byte[mapped_range_begin (AE34H)]; flags preserved",
+    "7E42": "mapped_range_end[AE35] = fresh mapped_range_begin[AE34]; separate work-completion publication",
+    "7E45": "consume original hardware return word at entry SP; SP=entry_SP+2; flags preserved"
+  }
+}

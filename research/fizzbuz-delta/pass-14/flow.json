@@ -1,0 +1,262 @@
+{
+  "initial_auxiliary_cache": {
+    "step": 618197,
+    "coordinate": "PLI1.OVL+7D0D",
+    "reads": [],
+    "writes": [
+      {
+        "address": 65487,
+        "old_value": null,
+        "new_value": 15,
+        "width": 1,
+        "joined_roles": [],
+        "deduced_frame_relation": {
+          "F": 65483,
+          "offset": 4,
+          "expression": "F+4",
+          "evidence": "DEDUCED",
+          "address": 65487
+        }
+      }
+    ]
+  },
+  "direct_return_source": {
+    "step": 620113,
+    "coordinate": "PLI1.OVL+7D4E",
+    "reads": [
+      {
+        "address": 65487,
+        "value": 15,
+        "width": 1,
+        "joined_roles": [],
+        "deduced_frame_relation": {
+          "F": 65483,
+          "offset": 4,
+          "expression": "F+4",
+          "evidence": "DEDUCED",
+          "address": 65487
+        }
+      }
+    ],
+    "writes": []
+  },
+  "F4_address": 65487,
+  "child_F2_writes": [
+    {
+      "step": 619725,
+      "writes": [
+        {
+          "address": 65485,
+          "old_value": null,
+          "new_value": 15,
+          "width": 1,
+          "joined_roles": [],
+          "deduced_frame_relation": {
+            "F": 65483,
+            "offset": 2,
+            "expression": "F+2",
+            "evidence": "DEDUCED",
+            "address": 65485
+          }
+        }
+      ]
+    },
+    {
+      "step": 620053,
+      "writes": [
+        {
+          "address": 65485,
+          "old_value": null,
+          "new_value": 15,
+          "width": 1,
+          "joined_roles": [],
+          "deduced_frame_relation": {
+            "F": 65483,
+            "offset": 2,
+            "expression": "F+2",
+            "evidence": "DEDUCED",
+            "address": 65485
+          }
+        }
+      ]
+    }
+  ],
+  "auxiliary_relation": {
+    "address": 44301,
+    "writer_step": 619714,
+    "reader_step": 621220,
+    "value": 15,
+    "scope": "Latest recorded guest writer within this corrected parent window; no equal-value shortcut or general provenance claim; this window has no unresolved-origin callee effects."
+  },
+  "parent_call_step": 618086,
+  "direct_child_call_step": 618131,
+  "emitter_threshold_observation": {
+    "parent_call_step": 472976,
+    "call_step": 478274,
+    "returned": {
+      "a": 0,
+      "b": 0,
+      "c": 21,
+      "d": 28,
+      "e": 162,
+      "h": 0,
+      "l": 0,
+      "sp": 65473,
+      "pc": 40911,
+      "flags": {
+        "sign": false,
+        "zero": true,
+        "auxiliary_carry": true,
+        "parity": true,
+        "carry": false
+      }
+    },
+    "resident_accesses": [
+      {
+        "step": 478276,
+        "offset": 3833,
+        "reads": [],
+        "writes": [
+          {
+            "address": 8368,
+            "old_value": null,
+            "new_value": 108
+          }
+        ]
+      },
+      {
+        "step": 478277,
+        "offset": 3834,
+        "reads": [
+          {
+            "address": 7692,
+            "value": 127
+          },
+          {
+            "address": 7693,
+            "value": 0
+          }
+        ],
+        "writes": []
+      },
+      {
+        "step": 478281,
+        "offset": 3843,
+        "reads": [
+          {
+            "address": 8368,
+            "value": 108
+          }
+        ],
+        "writes": []
+      },
+      {
+        "step": 478282,
+        "offset": 3846,
+        "reads": [],
+        "writes": [
+          {
+            "address": 7691,
+            "old_value": null,
+            "new_value": 108
+          }
+        ]
+      },
+      {
+        "step": 478283,
+        "offset": 3847,
+        "reads": [
+          {
+            "address": 7692,
+            "value": 127
+          }
+        ],
+        "writes": []
+      },
+      {
+        "step": 478285,
+        "offset": 3851,
+        "reads": [],
+        "writes": [
+          {
+            "address": 7692,
+            "old_value": null,
+            "new_value": 128
+          }
+        ]
+      },
+      {
+        "step": 478289,
+        "offset": 3862,
+        "reads": [],
+        "writes": [
+          {
+            "address": 65470,
+            "old_value": null,
+            "new_value": 16
+          },
+          {
+            "address": 65469,
+            "old_value": null,
+            "new_value": 25
+          }
+        ]
+      },
+      {
+        "step": 478327,
+        "offset": 3868,
+        "reads": [],
+        "writes": [
+          {
+            "address": 7692,
+            "old_value": null,
+            "new_value": 0
+          }
+        ]
+      },
+      {
+        "step": 478329,
+        "offset": 3873,
+        "reads": [],
+        "writes": [
+          {
+            "address": 65470,
+            "old_value": null,
+            "new_value": 16
+          },
+          {
+            "address": 65469,
+            "old_value": null,
+            "new_value": 36
+          }
+        ]
+      },
+      {
+        "step": 478368,
+        "offset": 3884,
+        "reads": [
+          {
+            "address": 65471,
+            "value": 207
+          },
+          {
+            "address": 65472,
+            "value": 159
+          }
+        ],
+        "writes": []
+      }
+    ],
+    "unsupported_steps": [
+      478324,
+      478364
+    ]
+  },
+  "initial_auxiliary_read": [
+    {
+      "step": 618193,
+      "address": 44299,
+      "value": 15
+    }
+  ]
+}

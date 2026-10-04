@@ -1,0 +1,457 @@
+{
+  "baseline_commit": "f9be7d2fd104e38143d239d12f729f9917afea3a",
+  "capture_run_id": "FIZZBUZ:a7a657b3c9c758be44a16c4c76a2986744f01de34d773d2b9597d4758eff0f49",
+  "REL": {
+    "name": "FIZZBUZ.REL",
+    "size": 768,
+    "sha256": "68ec16931d4dae7a8f0831a29c9ae8b9ca139279f5104bb34e299644a8b2a203"
+  },
+  "runs": {
+    "FIZZBUZ": {
+      "invocations": 77,
+      "callers": {
+        "PLI1.OVL+8069": 30,
+        "PLI1.OVL+7ED3": 25,
+        "PLI1.OVL+80EB": 8,
+        "PLI1.OVL+811B": 2,
+        "PLI1.OVL+816B": 12
+      },
+      "return_sites": {
+        "7D5D": 40,
+        "7D65": 8,
+        "7E45": 29
+      },
+      "own_coordinates": 99,
+      "own_occurrences": 6018,
+      "represented_bytes": 237,
+      "direct_calls": {
+        "7D91": {
+          "target": "PLI1.OVL+7A4D",
+          "count": 35
+        },
+        "7D9D": {
+          "target": "PLI1.OVL+7C1B",
+          "count": 35
+        },
+        "7DA7": {
+          "target": "PLI1.OVL+7B7A",
+          "count": 35
+        },
+        "7DC5": {
+          "target": "PLI1.OVL+7A4D",
+          "count": 102
+        },
+        "7DCC": {
+          "target": "PLI.COM+0EF6",
+          "count": 102
+        },
+        "7DDB": {
+          "target": "PLI1.OVL+7B64",
+          "count": 102
+        },
+        "7DE6": {
+          "target": "PLI1.OVL+7E46",
+          "count": 42
+        },
+        "7DF1": {
+          "target": "PLI1.OVL+7E56",
+          "count": 42
+        },
+        "7DFB": {
+          "target": "PLI1.OVL+7AA9",
+          "count": 60
+        },
+        "7E0D": {
+          "target": "PLI1.OVL+7ABF",
+          "count": 7
+        },
+        "7E11": {
+          "target": "PLI.COM+0EF6",
+          "count": 7
+        },
+        "7E20": {
+          "target": "PLI.COM+0EF6",
+          "count": 60
+        },
+        "7E35": {
+          "target": "PLI1.OVL+7BA2",
+          "count": 102
+        }
+      }
+    },
+    "MINIMAL": {
+      "invocations": 21,
+      "callers": {
+        "PLI1.OVL+8069": 10,
+        "PLI1.OVL+7ED3": 7,
+        "PLI1.OVL+80EB": 1,
+        "PLI1.OVL+816B": 3
+      },
+      "return_sites": {
+        "7D5D": 12,
+        "7D65": 2,
+        "7E45": 7
+      },
+      "own_coordinates": 99,
+      "own_occurrences": 1144,
+      "represented_bytes": 237,
+      "direct_calls": {
+        "7D91": {
+          "target": "PLI1.OVL+7A4D",
+          "count": 9
+        },
+        "7D9D": {
+          "target": "PLI1.OVL+7C1B",
+          "count": 9
+        },
+        "7DA7": {
+          "target": "PLI1.OVL+7B7A",
+          "count": 9
+        },
+        "7DC5": {
+          "target": "PLI1.OVL+7A4D",
+          "count": 16
+        },
+        "7DCC": {
+          "target": "PLI.COM+0EF6",
+          "count": 16
+        },
+        "7DDB": {
+          "target": "PLI1.OVL+7B64",
+          "count": 16
+        },
+        "7DE6": {
+          "target": "PLI1.OVL+7E46",
+          "count": 7
+        },
+        "7DF1": {
+          "target": "PLI1.OVL+7E56",
+          "count": 7
+        },
+        "7DFB": {
+          "target": "PLI1.OVL+7AA9",
+          "count": 9
+        },
+        "7E0D": {
+          "target": "PLI1.OVL+7ABF",
+          "count": 1
+        },
+        "7E11": {
+          "target": "PLI.COM+0EF6",
+          "count": 1
+        },
+        "7E20": {
+          "target": "PLI.COM+0EF6",
+          "count": 9
+        },
+        "7E35": {
+          "target": "PLI1.OVL+7BA2",
+          "count": 16
+        }
+      }
+    }
+  },
+  "branch_outcomes": {
+    "FIZZBUZ": {
+      "7D5A": {
+        "False": 40,
+        "True": 37
+      },
+      "7D62": {
+        "True": 29,
+        "False": 8
+      },
+      "7D70": {
+        "False": 29
+      },
+      "7D78": {
+        "False": 29
+      },
+      "7D8A": {
+        "False": 35,
+        "True": 29
+      },
+      "7D96": {
+        "False": 35
+      },
+      "7DAD": {
+        "True": 35
+      },
+      "7DBE": {
+        "False": 102,
+        "True": 29
+      },
+      "7DD4": {
+        "False": 102
+      },
+      "7DE3": {
+        "True": 60,
+        "False": 42
+      },
+      "7DEE": {
+        "False": 42
+      },
+      "7DF4": {
+        "True": 42
+      },
+      "7E06": {
+        "True": 53,
+        "False": 7
+      },
+      "7E19": {
+        "False": 60
+      },
+      "7E28": {
+        "True": 60
+      },
+      "7E3C": {
+        "True": 102
+      }
+    },
+    "MINIMAL": {
+      "7D5A": {
+        "False": 12,
+        "True": 9
+      },
+      "7D62": {
+        "True": 7,
+        "False": 2
+      },
+      "7D70": {
+        "False": 7
+      },
+      "7D78": {
+        "False": 7
+      },
+      "7D8A": {
+        "False": 9,
+        "True": 7
+      },
+      "7D96": {
+        "False": 9
+      },
+      "7DAD": {
+        "True": 9
+      },
+      "7DBE": {
+        "False": 16,
+        "True": 7
+      },
+      "7DD4": {
+        "False": 16
+      },
+      "7DE3": {
+        "True": 9,
+        "False": 7
+      },
+      "7DEE": {
+        "False": 7
+      },
+      "7DF4": {
+        "True": 7
+      },
+      "7E06": {
+        "True": 8,
+        "False": 1
+      },
+      "7E19": {
+        "False": 9
+      },
+      "7E28": {
+        "True": 9
+      },
+      "7E3C": {
+        "True": 16
+      }
+    }
+  },
+  "new_instruction_offsets": [],
+  "new_outcomes_on_existing_branch_coordinates": {},
+  "accumulated_represented_bytes": 237,
+  "method": "Exact CALL plus corrected original-slot RET; nested return windows excluded; no basic-block or context ownership.",
+  "ordered_path_comparison": {
+    "rule": "Complete ordered own CALL/jump/RET coordinate/kind/outcome/internal or callee target. RET continuation targets excluded; no register/value grouping or context ownership.",
+    "MINIMAL_path_patterns": 7,
+    "FIZZBUZ_path_patterns": 12,
+    "FIZZBUZ_patterns_absent_in_MINIMAL": 5,
+    "patterns": [
+      {
+        "signature_sha256": "fd95e93e7ebe420e0a156dde14f06ee671582954fa962c568d9453aa533da92e",
+        "FIZZBUZ_count": 40,
+        "MINIMAL_count": 12,
+        "FIZZBUZ_call_steps": [
+          332035,
+          342289,
+          354625,
+          364577,
+          368361,
+          429418,
+          445065,
+          445110,
+          445133,
+          445427,
+          445450,
+          452788,
+          498816,
+          511863,
+          511908,
+          511931,
+          512225,
+          512248,
+          519586,
+          565466,
+          578508,
+          578553,
+          578576,
+          578870,
+          578893,
+          589901,
+          603536,
+          609453,
+          609578,
+          609601,
+          609895,
+          609918,
+          613021,
+          613088,
+          613155,
+          621450,
+          626396,
+          630958,
+          637228,
+          637334
+        ],
+        "transfer_count": 2
+      },
+      {
+        "signature_sha256": "cac87fe4d5bd3848f666b4408c43b949a78abd9930f71ff3664d6ef25d9b0e64",
+        "FIZZBUZ_count": 6,
+        "MINIMAL_count": 3,
+        "FIZZBUZ_call_steps": [
+          335995,
+          445726,
+          512524,
+          579169,
+          610194,
+          632358
+        ],
+        "transfer_count": 26
+      },
+      {
+        "signature_sha256": "11ab934d4c31edf99abd96db15528ec33199eadb9d1a9cc7f47fcab37dc8a61b",
+        "FIZZBUZ_count": 1,
+        "MINIMAL_count": 1,
+        "FIZZBUZ_call_steps": [
+          343255
+        ],
+        "transfer_count": 43
+      },
+      {
+        "signature_sha256": "7afa3f7ff493aef298b0d39c42e6b51080e3ccaf83ab2af0ec2076ac99b39ec6",
+        "FIZZBUZ_count": 8,
+        "MINIMAL_count": 1,
+        "FIZZBUZ_call_steps": [
+          353310,
+          383215,
+          415967,
+          452971,
+          485365,
+          519769,
+          552015,
+          590084
+        ],
+        "transfer_count": 25
+      },
+      {
+        "signature_sha256": "29f365ddb8bec8a1609a7a8b7d783848a9569fb739c9f4b1bef93e345cd4c4fd",
+        "FIZZBUZ_count": 1,
+        "MINIMAL_count": 0,
+        "FIZZBUZ_call_steps": [
+          361768
+        ],
+        "transfer_count": 63
+      },
+      {
+        "signature_sha256": "819418a2d2754e9b82aa89441fa090c2f568d171f452f14c45fe0ba2e7b8d826",
+        "FIZZBUZ_count": 1,
+        "MINIMAL_count": 0,
+        "FIZZBUZ_call_steps": [
+          375015
+        ],
+        "transfer_count": 108
+      },
+      {
+        "signature_sha256": "98bbf82948c25c5d330fcea2cf5ec3e2b4b7d7014bc0ac166358e3b5bd6da83c",
+        "FIZZBUZ_count": 3,
+        "MINIMAL_count": 0,
+        "FIZZBUZ_call_steps": [
+          403330,
+          472976,
+          539774
+        ],
+        "transfer_count": 129
+      },
+      {
+        "signature_sha256": "083ad306772c01b69a364c6979f4f0e9eabd2a20d001014681795e21b5432194",
+        "FIZZBUZ_count": 8,
+        "MINIMAL_count": 2,
+        "FIZZBUZ_call_steps": [
+          421498,
+          422882,
+          490896,
+          492280,
+          557546,
+          558930,
+          595615,
+          597000
+        ],
+        "transfer_count": 3
+      },
+      {
+        "signature_sha256": "c34abb2de558e05dafbb4e8d39b88cd35e60cfd61f8ecf67e6d8952460bac62d",
+        "FIZZBUZ_count": 4,
+        "MINIMAL_count": 1,
+        "FIZZBUZ_call_steps": [
+          424591,
+          493989,
+          560639,
+          598709
+        ],
+        "transfer_count": 109
+      },
+      {
+        "signature_sha256": "73dce914c22a43e250ff945fd188dbaafdc1f6354126f9c992a757b037ce1224",
+        "FIZZBUZ_count": 3,
+        "MINIMAL_count": 1,
+        "FIZZBUZ_call_steps": [
+          443924,
+          510722,
+          577367
+        ],
+        "transfer_count": 51
+      },
+      {
+        "signature_sha256": "60a59c1867c7c581d69f53ee10ae826bc282b0247cbacd44a7191b4ebab6c8f8",
+        "FIZZBUZ_count": 1,
+        "MINIMAL_count": 0,
+        "FIZZBUZ_call_steps": [
+          608084
+        ],
+        "transfer_count": 64
+      },
+      {
+        "signature_sha256": "cb9b58c99fb2baba7ca9ddc3fe14c3aa379c6c53d4944b80e62d9709429c5aea",
+        "FIZZBUZ_count": 1,
+        "MINIMAL_count": 0,
+        "FIZZBUZ_call_steps": [
+          618086
+        ],
+        "transfer_count": 101
+      }
+    ]
+  },
+  "target_RAW_global_index_presence": {
+    "7E2B": false,
+    "7E2E": false
+  }
+}
