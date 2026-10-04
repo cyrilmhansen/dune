@@ -428,3 +428,104 @@ registers, PCHL, arbitrary POP/count inference, stack switching and unsupported
 families remain outside the profile. Existing canonical-block/count, ordinary
 outer-return and explicit-frame restrictions still apply. Expanding those
 restrictions requires a separate justified infrastructure change.
+
+## Explicit cross-run capture selection (V0.2 unchanged)
+
+Task `PROCEDURE_EVIDENCE_PACKET_CROSS_RUN_CAPTURE`, baseline
+`63fd5da15e4ca44a8c99f49884a58bd4489a8be9`. No semantic decompilation,
+annotation/status/contract/role/progress change or combined-run packet occurs.
+
+`--run` selects a capture module label, independently of its directory name.
+The default remains MINIMAL with the existing default capture; selecting another
+run requires its explicit capture path. The Python API accepts keyword `run`.
+
+```sh
+python3 tools/annotated-assembly/procedure_evidence_packet.py \
+  --run MINIMAL --capture _build/minimal-baseline/capture \
+  --images /path/to/DISK1
+python3 tools/annotated-assembly/procedure_evidence_packet.py \
+  --run FIZZBUZ --capture _build/evidence-packet-cross-run/fizzbuz-capture \
+  --images /path/to/DISK1 --entry PLI1.OVL+7C1B \
+  --frame-bytes 5 --class-slots 0 3 --output _build/evidence-packet-fizzbuz
+```
+
+The second command currently fails clearly at the missing FIZZBUZ catalog count;
+it is syntax documentation, not a claim that this procedure is packet-ready.
+Required count: `observed_paths.invocations_by_run[selected_run]`. Caller-count
+validation also selects that run, omitting rows with no observations for it.
+Missing expected invocation metadata is never inferred from observed equality,
+path names or another run's count.
+
+The event index must name the requested run. Every indexed chunk must have that
+exact full run identity and chunk ID/count; the summary module must agree.
+Canonical reports do not carry a run ID, so each canonical instruction's exact
+bytes, decoded text, runtime PC, count and first/last steps are checked against
+the selected indexed witness chronology. Total instruction counts also agree
+with index and run summary. Existing image hashes, byte/runtime checks, canonical
+block/count restrictions, ordinary returns and software proof checks remain.
+`evidence_packet_local.py`, the ownership gatherer and
+`software_continuation.prove()` are unchanged.
+
+### Capture and infrastructure smoke results
+
+The existing `/var/tmp/runes-event-witness-corpus/fizzbuz` report contained
+canonical/dynamic reports and REL, but no event witnesses or corrected returns.
+No suitable FIZZBUZ witness capture existed in the inspected build/corpus state.
+The missing capture was therefore generated once, reproducibly, using:
+
+```sh
+dune exec pli80-analyze -- \
+  --toolchain /path/to/DISK1 --source examples/pli80/FIZZBUZ.PLI \
+  --output-dir _build/evidence-packet-cross-run/fizzbuz-capture \
+  --analysis execution --report summary --structure --event-witnesses
+```
+
+All artifacts remain ignored (about 930 MiB). PASS1/PASS2/END COMPILATION succeed;
+1,145,517 instruction witnesses, zero transfer mismatches, 44,687 corrected
+hardware returns and 93 software returns are recorded. The canonical report is
+exactly equal to the existing FIZZBUZ corpus report. REL is byte-identical to the
+existing 768-byte result, SHA-256
+`68ec16931d4dae7a8f0831a29c9ae8b9ca139279f5104bb34e299644a8b2a203`.
+
+- **+7C1B:** extraction rejects missing
+  `observed_paths.invocations_by_run['FIZZBUZ']`; its catalog contains MINIMAL 16
+  only. Its caller rows likewise contain MINIMAL observations only.
+- **+4468:** extraction rejects the same missing field (catalog MINIMAL 2 only).
+  Independently, software *outer* packets remain unsupported. The known +4468
+  convention must still be viewed through an ordinary parent projection.
+- A bounded existing +4738 parent projection against FIZZBUZ isolates three
+  +4468 children. Each passes the unchanged concrete proof: N2, copied slot E+2,
+  final SP delta2, and no child steps in parent-local chronology. This is a
+  mechanical proof smoke check, not a packet or semantic interpretation.
+- An additional already-cataloged +8225 attempt has legitimate FIZZBUZ 25 metadata
+  but rejects a callee-subtree access with unresolved historical origin (the
+  existing host/nonhistorical-effect limitation). No fallback or widening occurs.
+
+No successful FIZZBUZ packet was emitted; packet sizes are therefore not
+applicable. Captures and bounded proof outputs are not committed. These failures
+are retained profile/catalog limits, not permission to edit semantic knowledge.
+
+### Regression, complexity and readiness
+
++24BC MINIMAL Markdown is byte-for-byte identical before/after. Its compact JSON
+is byte-for-byte identical after replacing only the existing generator-source
+SHA-256 (the generator itself changed). No new schema field or architecture
+version is introduced. Default and explicit MINIMAL regeneration remain identical.
++28AA/+4B69 software-child ownership and all 55 corruption variants still pass.
+
+Physical LOC: generator 729 -> 776 (+47); local dependency module 507 -> 507;
+combined generator/local 1,236 -> 1,283 (+47); packet tests 521 -> 602 (+81).
+New tests cover explicit content identity independent of paths, mixed chunks/
+summary/canonical evidence, missing per-run catalog counts and selected-run
+caller validation. The complete packet suite has 27 tests. All 109 MINIMAL
+baseline/pass1–12 tests, V1 annotations, project tests and historical byte
+verification pass, along with `git diff --check`. All **94,720 bytes remain
+exact**; semantics, statuses and progress are unchanged.
+
+Run selection and the reproducible FIZZBUZ witness capture are ready for Pass 13.
+The requested +7C1B packet first needs independently established FIZZBUZ structural
+invocation/caller metadata in that semantic pass; this ticket does not add it.
++4468 still requires a supported ordinary parent or existing bounded forensic
+projection. Host/nonhistorical callee effects remain unsupported. No new ownership,
+ABI inference, continuation family, semantic substitution or differential merge
+is introduced.

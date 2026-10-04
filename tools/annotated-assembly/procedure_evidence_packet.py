@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Bounded MINIMAL evidence join; no decoding, discovery or semantic promotion."""
+"""Bounded selected-run evidence join; no decoding, discovery or semantic promotion."""
 
 import argparse
 import json
@@ -144,7 +144,48 @@ def immediate_predicate_producer(branch, previous, instructions, steps):
     return previous if flag is not None and changes_flag else None
 
 
-def build(capture, images_dir, entry=TARGET, frame_bytes=18, class_slots=(9, 10)):
+def selected_run(index, run):
+    identity = index.get('run_id', '').split(':', 1)
+    require(len(identity) == 2 and identity[0] == run and bool(identity[1]),
+            f"Capture run identity {index.get('run_id')!r} does not match requested run {run!r}")
+    return identity[0]
+
+
+def validate_capture(capture, index, canonical, run):
+    """Reports without run IDs are tied to the indexed concrete chronology."""
+    selected_run(index, run)
+    summary = load(capture / 'run-summary.json')
+    require(summary['module'] == run, 'Capture summary module/run mismatch')
+    facts = {coord({'image': i['image'], 'offset': i['offset']}): i
+             for i in canonical['instructions']}
+    require(len(facts) == len(canonical['instructions']), 'Duplicate canonical coordinate')
+    counts, first, last = Counter(), {}, {}
+    instruction_count = 0
+    for c in index['chunks']:
+        chunk = load(capture / 'event-witnesses/chunks' / f"{c['id']:06d}.json")
+        require(chunk['run_id'] == index['run_id'] and chunk['chunk_id'] == c['id'],
+                'Witness chunk run identity/index mismatch')
+        require(len(chunk['events']) == c['event_count'], 'Witness chunk event count mismatch')
+        for event in chunk['events']:
+            if event['type'] != 'instruction':
+                continue
+            instruction_count += 1
+            w = event['witness']; key = coord(w['origin'])
+            if key not in facts:
+                continue  # Host/exceptional coordinates are outside the canonical report.
+            fact = facts[key]
+            require(w['bytes'] == fact['bytes'] and w['disassembly'] == fact['decoded']
+                    and w['pc'] in {pc for ctx in fact['contexts'] for pc in ctx['runtime_pcs']},
+                    f'Canonical capture bytes/runtime mismatch: {key}')
+            counts[key] += 1; first.setdefault(key, w['step_index']); last[key] = w['step_index']
+    require(instruction_count == index['summary']['instruction_witnesses']
+            == summary['event_witnesses']['instruction_witnesses'], 'Capture instruction total mismatch')
+    require(all((counts[k], first.get(k), last.get(k)) ==
+                (f['execution_count'], f['first_step'], f['last_step']) for k, f in facts.items()),
+            'Canonical report does not match selected capture chronology')
+
+
+def build(capture, images_dir, entry=TARGET, frame_bytes=18, class_slots=(9, 10), *, run='MINIMAL'):
     annotation = ROOT / "research/annotated-assembly"
     manifest = load(annotation / "manifest.json")
     images = {i["name"]: i for i in manifest["images"]}
@@ -156,6 +197,10 @@ def build(capture, images_dir, entry=TARGET, frame_bytes=18, class_slots=(9, 10)
     catalog = {p["id"]: p for p in load(annotation / "procedures.json")["procedures"]}
     require(entry in catalog, "Entry must cite an existing ProcedureHypothesis")
     procedure = catalog[entry]
+    index = load(capture / "event-witnesses.json")
+    selected_run(index, run)
+    counts = procedure['observed_paths']['invocations_by_run']
+    require(run in counts, f'{entry}: catalog lacks observed_paths.invocations_by_run[{run!r}]')
     software_callees = software_profile(catalog)
     require(entry not in software_callees, 'Software outer returns are outside the packet profile')
     all_roles = load(annotation / "data-roles.json")["roles"]
@@ -163,16 +208,14 @@ def build(capture, images_dir, entry=TARGET, frame_bytes=18, class_slots=(9, 10)
                       if r["id"] in procedure["data_role_ids"]]
     require(all(r["image_sha256"] == images[r["image"]]["sha256"]
                 for r in selected_roles), "Role image identity mismatch")
-    index = load(capture / "event-witnesses.json")
-    require(index["run_id"].startswith("MINIMAL:"), "Only existing MINIMAL evidence is in scope")
     canonical = load(capture / "canonical-code-blocks.json")
+    validate_capture(capture, index, canonical, run)
     facts = {coord({"image": i["image"], "offset": i["offset"]}): i
              for i in canonical["instructions"]}
     records = sorted(gather(capture, {entry: (procedure["start_offset"], procedure["end_offset"])},
                             include_nested_returns=True, software_callees=software_callees)[entry],
                      key=lambda r: r["call"]["step_index"])
-    require(len(records) == procedure["observed_paths"]["invocations_by_run"]["MINIMAL"],
-            "Invocation count disagrees with catalog")
+    require(len(records) == counts[run], f"Invocation count disagrees with {run} catalog")
     local_counts = Counter(coord(w["origin"]) for r in records for w in r["own_witnesses"])
     require(all(local_counts[k] == facts[k]["execution_count"] for k in local_counts),
             "Local projection does not account for canonical coordinate counts")
@@ -580,7 +623,10 @@ def validate_packet(packet, canonical, dynamic, records, catalog):
                 dynamic_calls[(site, target)] += edge["count"]
     require(dynamic_calls == Counter({(c["callsite"], c["target"]): c["invocation_count"] for c in packet["callsites"]}), "Dynamic CALL inventory mismatch")
     callers = Counter(r["caller"] for r in packet["invocations"])
-    require(callers == Counter({c["coordinate"]: c["counts_by_run"]["MINIMAL"] for c in catalog[packet["entry"]]["callers"]}), "Caller counts mismatch")
+    run = packet['run_id'].split(':', 1)[0]
+    require(callers == Counter({c['coordinate']: c['counts_by_run'][run]
+                               for c in catalog[packet['entry']]['callers']
+                               if run in c['counts_by_run']}), f'{run} caller counts mismatch')
     for c in packet["calls"].values():
         require(c["contract_ref"] is None or c["target"] in catalog, "Contract does not cite an existing procedure")
         if c["recursive_child_invocation"] is not None:
@@ -712,6 +758,7 @@ def render(packet):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--run", default="MINIMAL", help="Requested capture module/run label (default: MINIMAL)")
     parser.add_argument("--capture", type=Path, default=ROOT / "_build/minimal-baseline/capture")
     parser.add_argument("--images", type=Path, required=True)
     parser.add_argument("--output", type=Path, default=ROOT / "_build/evidence-packet")
@@ -721,7 +768,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
     require(0 <= args.frame_bytes < 32768 and all(0 <= n < args.frame_bytes for n in args.class_slots),
             "Invalid frame/class-slot configuration")
-    packet = build(args.capture, args.images, args.entry, args.frame_bytes, tuple(args.class_slots))
+    packet = build(args.capture, args.images, args.entry, args.frame_bytes, tuple(args.class_slots), run=args.run)
     args.output.mkdir(parents=True, exist_ok=True)
     stem = args.entry.replace(".OVL", "").replace(".COM", "")
     (args.output / f"{stem}.json").write_text(json.dumps(packet, separators=(",", ":")) + "\n")

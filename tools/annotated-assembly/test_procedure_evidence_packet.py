@@ -12,7 +12,7 @@ from pathlib import Path
 
 from check_minimal_pass_3 import gather
 from minimal_baseline import load
-from procedure_evidence_packet import ROOT, TARGET, CONTINUATIONS, build, child_return, render, role_matches, validate_packet
+from procedure_evidence_packet import ROOT, TARGET, CONTINUATIONS, build, child_return, render, role_matches, selected_run, validate_capture, validate_packet
 from evidence_packet_local import call_contract, dependency_chain, derive_local, preserved_address
 from software_continuation import prove
 
@@ -255,6 +255,76 @@ class SoftwareContinuationPacketTests(unittest.TestCase):
         instance = self.instances[0]; proof = instance['proof']
         with self.assertRaisesRegex(ValueError, 'resume coordinate'):
             child_return(proof['call'], {'ret': proof['ret']}, {'pc': proof['ret']['pc_after'] + 1})
+
+
+class RunSelectionTests(unittest.TestCase):
+    def fixture(self, capture):
+        # Deliberately unrelated directory name: only content identifies the run.
+        run_id = 'FIZZBUZ:' + 'a' * 64
+        image = {'name': 'PLI.COM'}
+        witness = dict(step_index=5, origin=dict(image=image, offset=0),
+                       bytes='00', disassembly='NOP', pc=256)
+        index = dict(run_id=run_id, chunks=[dict(id=0, event_count=1)],
+                     summary=dict(instruction_witnesses=1))
+        canonical = dict(instructions=[dict(image=image, offset=0, bytes='00', decoded='NOP',
+                         execution_count=1, first_step=5, last_step=5,
+                         contexts=[dict(runtime_pcs=[256])])])
+        chunk = dict(run_id=run_id, chunk_id=0, events=[dict(type='instruction', witness=witness)])
+        path = capture / 'event-witnesses/chunks'
+        path.mkdir(parents=True)
+        (path / '000000.json').write_text(json.dumps(chunk))
+        (capture / 'run-summary.json').write_text(json.dumps(
+            dict(module='FIZZBUZ', event_witnesses=dict(instruction_witnesses=1))))
+        return index, canonical, chunk
+
+    def test_requested_identity_comes_from_content(self):
+        with tempfile.TemporaryDirectory(prefix='atlas-packet-run-test-', dir='/tmp') as temp:
+            capture = Path(temp)
+            index, canonical, _ = self.fixture(capture)
+            self.assertEqual(selected_run(index, 'FIZZBUZ'), 'FIZZBUZ')
+            validate_capture(capture, index, canonical, 'FIZZBUZ')
+            for requested in ['MINIMAL', 'FIZZ', '']:
+                with self.assertRaisesRegex(ValueError, 'does not match requested run'):
+                    selected_run(index, requested)
+
+    def test_mixed_chunk_summary_and_canonical_capture_fail_closed(self):
+        with tempfile.TemporaryDirectory(prefix='atlas-packet-run-test-', dir='/tmp') as temp:
+            capture = Path(temp)
+            index, canonical, chunk = self.fixture(capture)
+            path = capture / 'event-witnesses/chunks/000000.json'
+            for mutation, message in [('run', 'run identity/index'), ('slot', 'run identity/index'),
+                                      ('bytes', 'bytes/runtime'), ('pc', 'bytes/runtime')]:
+                bad = copy.deepcopy(chunk)
+                if mutation == 'run': bad['run_id'] = 'MINIMAL:' + 'b' * 64
+                elif mutation == 'slot': bad['chunk_id'] = 1
+                elif mutation == 'bytes': bad['events'][0]['witness']['bytes'] = '01'
+                else: bad['events'][0]['witness']['pc'] = 257
+                path.write_text(json.dumps(bad))
+                with self.assertRaisesRegex(ValueError, message):
+                    validate_capture(capture, index, canonical, 'FIZZBUZ')
+            path.write_text(json.dumps(chunk))
+            for field in ['execution_count', 'first_step', 'last_step']:
+                bad = copy.deepcopy(canonical); bad['instructions'][0][field] += 1
+                with self.assertRaisesRegex(ValueError, 'selected capture chronology'):
+                    validate_capture(capture, index, bad, 'FIZZBUZ')
+            (capture / 'run-summary.json').write_text(json.dumps(dict(module='MINIMAL')))
+            with self.assertRaisesRegex(ValueError, 'summary module/run'):
+                validate_capture(capture, index, canonical, 'FIZZBUZ')
+
+    def test_capture_mismatch_and_missing_run_metadata_are_explicit(self):
+        with self.assertRaisesRegex(ValueError, 'does not match requested run'):
+            build(CAPTURE, IMAGES, run='FIZZBUZ')
+        from unittest.mock import patch
+        original_load = load
+        def selected_metadata(path):
+            result = original_load(path)
+            if path.name == 'event-witnesses.json':
+                result['run_id'] = 'FIZZBUZ:' + 'c' * 64
+            return result
+        for target in ['PLI1.OVL+7C1B', 'PLI1.OVL+4468']:
+            with patch('procedure_evidence_packet.load', side_effect=selected_metadata):
+                with self.assertRaisesRegex(ValueError, "catalog lacks.*FIZZBUZ"):
+                    build(CAPTURE, IMAGES, target, 0, (), run='FIZZBUZ')
 
 
 class ExistingMinimalPacketTests(unittest.TestCase):
@@ -506,10 +576,21 @@ class ExistingMinimalPacketTests(unittest.TestCase):
             self.check(p)
 
     def test_deterministic_regeneration(self):
-        regenerated = build(CAPTURE, IMAGES)
+        regenerated = build(CAPTURE, IMAGES, run='MINIMAL')
         self.assertEqual(json.dumps(self.packet, separators=(",", ":")),
                          json.dumps(regenerated, separators=(",", ":")))
         self.assertEqual(render(self.packet), render(regenerated))
+
+    def test_caller_validation_uses_selected_run_counts(self):
+        packet, catalog = copy.deepcopy(self.packet), copy.deepcopy(self.catalog)
+        packet['run_id'] = 'FIZZBUZ:' + 'd' * 64
+        for caller in catalog[TARGET]['callers']:
+            caller['counts_by_run']['FIZZBUZ'] = caller['counts_by_run']['MINIMAL']
+            caller['counts_by_run']['MINIMAL'] = 0
+        validate_packet(packet, self.canonical, self.dynamic, self.records, catalog)
+        catalog[TARGET]['callers'][0]['counts_by_run']['FIZZBUZ'] += 1
+        with self.assertRaisesRegex(ValueError, 'FIZZBUZ caller counts mismatch'):
+            validate_packet(packet, self.canonical, self.dynamic, self.records, catalog)
 
 
 if __name__ == "__main__":
