@@ -2158,7 +2158,7 @@
       "name": "head_slot_table",
       "runtime_address": 43179,
       "width": null,
-      "role": "word slots selected by byteA8EB; only observed index0 reviewed, no whole capacity",
+      "role": "word slots selected by byteA8EB; 4802 observes indices0/1/2, zeros new1/2 then publishes savedpointer at0or2; capacity/ownership unspecified",
       "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
     },
     {
@@ -2649,6 +2649,116 @@
       "runtime_address": 42415,
       "width": 1,
       "role": "saved requestedbyte forentry-selector equality beforeconditional784E",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI1.OVL:scan_index",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "name": "scan_index",
+      "runtime_address": 43317,
+      "width": 1,
+      "role": "wrapping byte index for base-relative scan",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI1.OVL:scan_base",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "name": "scan_base",
+      "runtime_address": 43318,
+      "width": 2,
+      "role": "saved BC base for repeated reads",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI1.OVL:scan_sample",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "name": "scan_sample",
+      "runtime_address": 43320,
+      "width": 1,
+      "role": "latest sampled byte, distinct from selector",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI1.OVL:gate_cached_input",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "name": "gate_cached_input",
+      "runtime_address": 44665,
+      "width": 1,
+      "role": "saved C before AA1A publication",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI1.OVL:range_mask_index",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "name": "range_mask_index",
+      "runtime_address": 42569,
+      "width": 1,
+      "role": "saved selected-byte index for explicit range mask",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI1.OVL:byte_write_input",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "name": "byte_write_input",
+      "runtime_address": 42503,
+      "width": 1,
+      "role": "cached C for indexedbyte replacement",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI1.OVL:byte_write_index",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "name": "byte_write_index",
+      "runtime_address": 42502,
+      "width": 1,
+      "role": "current replacementindex; incremented onlybelow7",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI1.OVL:indexed_byte_base",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "name": "indexed_byte_base",
+      "runtime_address": 42494,
+      "width": null,
+      "role": "base of selectedbyte replacement/sentinel accesses; capacity unspecified",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI1.OVL:readback_cursor",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "name": "readback_cursor",
+      "runtime_address": 43105,
+      "width": 2,
+      "role": "cursor read then advanced by byte at oldpointer in4890",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI1.OVL:readback_mode",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "name": "readback_mode",
+      "runtime_address": 43295,
+      "width": 1,
+      "role": "zeroed by4802; nonzero4890 alternatives unobserved",
+      "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
+    },
+    {
+      "id": "PLI1.OVL:readback_parallel_slots",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "name": "readback_parallel_slots",
+      "runtime_address": 43117,
+      "width": null,
+      "role": "indexed word slots receiving savedA8E9 in4802; distinct fromA8AB slots; no capacity claim",
       "scope": "Only the reviewed hypotheses referencing this role; does not establish a global source-language type."
     }
   ]

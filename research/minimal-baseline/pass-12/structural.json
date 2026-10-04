@@ -1,0 +1,565 @@
+[
+  {
+    "entry": "PLI1.OVL+57B7",
+    "calls": 6,
+    "callers": {
+      "PLI1.OVL+201F": 1,
+      "PLI1.OVL+6325": 1,
+      "PLI1.OVL+592C": 1,
+      "PLI1.OVL+6414": 1,
+      "PLI1.OVL+647E": 1,
+      "PLI1.OVL+6556": 1
+    },
+    "own_coordinates": 26,
+    "own_occurrences": 502,
+    "observed_return_offsets": [
+      22491,
+      22504
+    ],
+    "direct_callees": {},
+    "candidate_extent": [
+      22455,
+      22508
+    ],
+    "classification": "SMALL / DIRECT",
+    "return_convention": "OBSERVED original hardware CALL slot; ordinary RET; transient saves restored; zero reserved frame",
+    "recursion": false,
+    "alternate_entries": "No observed alternate entry/shared tail within this selected extent; nearby entries retain separate identities",
+    "branch_sites": [
+      {
+        "offset": 22486,
+        "decoded": "JNZ 79DCH",
+        "taken": 25,
+        "fallthrough": 5
+      },
+      {
+        "offset": 22499,
+        "decoded": "JNZ 79E9H",
+        "taken": 24,
+        "fallthrough": 1
+      },
+      {
+        "offset": 22505,
+        "decoded": "JMP 79C2H",
+        "taken": 24,
+        "fallthrough": 0
+      }
+    ],
+    "unresolved_paths": [
+      "No unresolved local operation at declared scope; broader producers/alias relations remain general provenance questions."
+    ],
+    "local_written_addresses": [
+      43317,
+      43318,
+      43319,
+      43320
+    ]
+  },
+  {
+    "entry": "PLI1.OVL+41AF",
+    "calls": 5,
+    "callers": {
+      "PLI1.OVL+48AB": 3,
+      "PLI1.OVL+58F2": 1,
+      "PLI1.OVL+5900": 1
+    },
+    "own_coordinates": 6,
+    "own_occurrences": 30,
+    "observed_return_offsets": [
+      16825
+    ],
+    "direct_callees": {},
+    "candidate_extent": [
+      16815,
+      16826
+    ],
+    "classification": "SMALL / DIRECT",
+    "return_convention": "OBSERVED original hardware CALL slot; ordinary RET; transient saves restored; zero reserved frame",
+    "recursion": false,
+    "alternate_entries": "No observed alternate entry/shared tail within this selected extent; nearby entries retain separate identities",
+    "branch_sites": [],
+    "unresolved_paths": [
+      "No unresolved local operation at declared scope; broader producers/alias relations remain general provenance questions."
+    ],
+    "local_written_addresses": []
+  },
+  {
+    "entry": "PLI1.OVL+421F",
+    "calls": 6,
+    "callers": {
+      "PLI1.OVL+48D3": 3,
+      "PLI1.OVL+487A": 3
+    },
+    "own_coordinates": 5,
+    "own_occurrences": 30,
+    "observed_return_offsets": [
+      16934
+    ],
+    "direct_callees": {},
+    "candidate_extent": [
+      16927,
+      16935
+    ],
+    "classification": "SMALL / DIRECT",
+    "return_convention": "OBSERVED original hardware CALL slot; ordinary RET; transient saves restored; zero reserved frame",
+    "recursion": false,
+    "alternate_entries": "No observed alternate entry/shared tail within this selected extent; nearby entries retain separate identities",
+    "branch_sites": [],
+    "unresolved_paths": [
+      "No unresolved local operation at declared scope; broader producers/alias relations remain general provenance questions."
+    ],
+    "local_written_addresses": []
+  },
+  {
+    "entry": "PLI1.OVL+47E2",
+    "calls": 2,
+    "callers": {
+      "PLI1.OVL+4835": 2
+    },
+    "own_coordinates": 8,
+    "own_occurrences": 16,
+    "observed_return_offsets": [
+      18422
+    ],
+    "direct_callees": {},
+    "candidate_extent": [
+      18402,
+      18423
+    ],
+    "classification": "SMALL / DIRECT",
+    "return_convention": "OBSERVED original hardware CALL slot; ordinary RET; transient saves restored; zero reserved frame",
+    "recursion": false,
+    "alternate_entries": "No observed alternate entry/shared tail within this selected extent; nearby entries retain separate identities",
+    "branch_sites": [
+      {
+        "offset": 18413,
+        "decoded": "JNC 69F6H",
+        "taken": 2,
+        "fallthrough": 0
+      }
+    ],
+    "unresolved_paths": [
+      "unobserved path:47F0..47F5 higher-index operation remainsRAW."
+    ],
+    "local_written_addresses": [
+      43243
+    ]
+  },
+  {
+    "entry": "PLI1.OVL+4890",
+    "calls": 3,
+    "callers": {
+      "PLI1.OVL+481A": 2,
+      "PLI1.OVL+4889": 1
+    },
+    "own_coordinates": 70,
+    "own_occurrences": 136,
+    "observed_return_offsets": [
+      18728
+    ],
+    "direct_callees": {
+      "PLI1.OVL+41AF": 3,
+      "PLI1.OVL+421F": 3,
+      "PLI1.OVL+4227": 4,
+      "PLI1.OVL+452B": 1
+    },
+    "candidate_extent": [
+      18576,
+      18729
+    ],
+    "classification": "PACKET CANDIDATE",
+    "return_convention": "OBSERVED original hardware CALL slot; ordinary RET; transient saves restored; zero reserved frame",
+    "recursion": false,
+    "alternate_entries": "No observed alternate entry/shared tail within this selected extent; nearby entries retain separate identities",
+    "branch_sites": [
+      {
+        "offset": 18600,
+        "decoded": "JNZ 6ABFH",
+        "taken": 0,
+        "fallthrough": 3
+      },
+      {
+        "offset": 18608,
+        "decoded": "JNZ 6ABFH",
+        "taken": 3,
+        "fallthrough": 0
+      },
+      {
+        "offset": 18628,
+        "decoded": "JZ 6AD3H",
+        "taken": 3,
+        "fallthrough": 0
+      },
+      {
+        "offset": 18664,
+        "decoded": "JNC 6B28H",
+        "taken": 2,
+        "fallthrough": 1
+      }
+    ],
+    "unresolved_paths": [
+      "unobserved path:48B3..48BE field3-equality and48C7..48D2 mode-nonzero remainRAW.",
+      "producer/alias: byte-sized region progression, incomingA761slot producers; no global link ownership/capacity inferred."
+    ],
+    "local_written_addresses": [
+      42863,
+      42864,
+      43105,
+      43106,
+      43107,
+      43108,
+      64495,
+      64496,
+      65514,
+      65515,
+      65516,
+      65517,
+      65520,
+      65521,
+      65522,
+      65523
+    ]
+  },
+  {
+    "entry": "PLI1.OVL+4802",
+    "calls": 2,
+    "callers": {
+      "PLI1.OVL+013D": 2
+    },
+    "own_coordinates": 71,
+    "own_occurrences": 166,
+    "observed_return_offsets": [
+      18575
+    ],
+    "direct_callees": {
+      "PLI.COM+1A33": 2,
+      "PLI1.OVL+4890": 3,
+      "PLI1.OVL+4227": 4,
+      "PLI1.OVL+83A3": 3,
+      "PLI1.OVL+421F": 3,
+      "PLI1.OVL+47E2": 2
+    },
+    "candidate_extent": [
+      18434,
+      18576
+    ],
+    "classification": "PACKET CANDIDATE",
+    "return_convention": "OBSERVED original hardware CALL slot; ordinary RET; transient saves restored; zero reserved frame",
+    "recursion": false,
+    "alternate_entries": "No observed alternate entry/shared tail within this selected extent; nearby entries retain separate identities",
+    "branch_sites": [
+      {
+        "offset": 18448,
+        "decoded": "JC 6A14H",
+        "taken": 2,
+        "fallthrough": 0
+      },
+      {
+        "offset": 18482,
+        "decoded": "JNC 6A4BH",
+        "taken": 2,
+        "fallthrough": 2
+      },
+      {
+        "offset": 18504,
+        "decoded": "JMP 6A2AH",
+        "taken": 2,
+        "fallthrough": 0
+      },
+      {
+        "offset": 18566,
+        "decoded": "JNC 6A8FH",
+        "taken": 2,
+        "fallthrough": 1
+      },
+      {
+        "offset": 18572,
+        "decoded": "JMP 6A6BH",
+        "taken": 1,
+        "fallthrough": 0
+      }
+    ],
+    "unresolved_paths": [
+      "unobserved path:4813 nonborrowRET byte remainsRAW;47E2 higherindex/4890 specialmode/field3 arms missing.",
+      "termination/alias/provenance: arbitrary byte sizes canwrap/stall; incomingcursor/floor andindexedwordslot producers; no globalcontainermeaning."
+    ],
+    "local_written_addresses": [
+      43107,
+      43108,
+      43117,
+      43118,
+      43121,
+      43122,
+      43179,
+      43180,
+      43181,
+      43182,
+      43183,
+      43184,
+      43241,
+      43242,
+      43295,
+      64485,
+      64486,
+      64508,
+      64509,
+      65516,
+      65517,
+      65518,
+      65519,
+      65522,
+      65523,
+      65524,
+      65525
+    ]
+  },
+  {
+    "entry": "PLI1.OVL+8386",
+    "calls": 3,
+    "callers": {
+      "PLI1.OVL+14DF": 3
+    },
+    "own_coordinates": 14,
+    "own_occurrences": 105,
+    "observed_return_offsets": [
+      33685
+    ],
+    "direct_callees": {},
+    "candidate_extent": [
+      33670,
+      33686
+    ],
+    "classification": "SMALL / DIRECT",
+    "return_convention": "OBSERVED original hardware CALL slot; ordinary RET; transient saves restored; zero reserved frame",
+    "recursion": false,
+    "alternate_entries": "No observed alternate entry/shared tail within this selected extent; nearby entries retain separate identities",
+    "branch_sites": [
+      {
+        "offset": 33682,
+        "decoded": "JNZ A58AH",
+        "taken": 7,
+        "fallthrough": 3
+      }
+    ],
+    "unresolved_paths": [
+      "No unresolved local operation at declared scope; broader producers/alias relations remain general provenance questions."
+    ],
+    "local_written_addresses": []
+  },
+  {
+    "entry": "PLI1.OVL+2221",
+    "calls": 3,
+    "callers": {
+      "PLI1.OVL+1ABA": 1,
+      "PLI1.OVL+31AA": 1,
+      "PLI1.OVL+31B0": 1
+    },
+    "own_coordinates": 25,
+    "own_occurrences": 75,
+    "observed_return_offsets": [
+      8792
+    ],
+    "direct_callees": {},
+    "candidate_extent": [
+      8737,
+      8793
+    ],
+    "classification": "SMALL / DIRECT",
+    "return_convention": "OBSERVED original hardware CALL slot; ordinary RET; transient saves restored; zero reserved frame",
+    "recursion": false,
+    "alternate_entries": "No observed alternate entry/shared tail within this selected extent; nearby entries retain separate identities",
+    "branch_sites": [
+      {
+        "offset": 8753,
+        "decoded": "JNZ 4437H",
+        "taken": 3,
+        "fallthrough": 0
+      },
+      {
+        "offset": 8771,
+        "decoded": "JNZ 4449H",
+        "taken": 3,
+        "fallthrough": 0
+      }
+    ],
+    "unresolved_paths": [
+      "unobserved path:24/25 literal alternatives remainRAW."
+    ],
+    "local_written_addresses": [
+      42569
+    ]
+  },
+  {
+    "entry": "PLI1.OVL+020E",
+    "calls": 5,
+    "callers": {
+      "PLI1.OVL+0C81": 1,
+      "PLI1.OVL+0A4D": 2,
+      "PLI1.OVL+6223": 1,
+      "PLI1.OVL+0AF5": 1
+    },
+    "own_coordinates": 13,
+    "own_occurrences": 65,
+    "observed_return_offsets": [
+      545
+    ],
+    "direct_callees": {},
+    "candidate_extent": [
+      526,
+      546
+    ],
+    "classification": "SMALL / DIRECT",
+    "return_convention": "OBSERVED original hardware CALL slot; ordinary RET; transient saves restored; zero reserved frame",
+    "recursion": false,
+    "alternate_entries": "No observed alternate entry/shared tail within this selected extent; nearby entries retain separate identities",
+    "branch_sites": [],
+    "unresolved_paths": [
+      "No unresolved local operation at declared scope; broader producers/alias relations remain general provenance questions."
+    ],
+    "local_written_addresses": [
+      65467,
+      65468,
+      65510,
+      65511,
+      65526,
+      65527
+    ]
+  },
+  {
+    "entry": "PLI1.OVL+13E3",
+    "calls": 2,
+    "callers": {
+      "PLI1.OVL+1D06": 1,
+      "PLI1.OVL+1BBB": 1
+    },
+    "own_coordinates": 20,
+    "own_occurrences": 40,
+    "observed_return_offsets": [
+      5132
+    ],
+    "direct_callees": {},
+    "candidate_extent": [
+      5091,
+      5133
+    ],
+    "classification": "SMALL / DIRECT",
+    "return_convention": "OBSERVED original hardware CALL slot; ordinary RET; transient saves restored; zero reserved frame",
+    "recursion": false,
+    "alternate_entries": "No observed alternate entry/shared tail within this selected extent; nearby entries retain separate identities",
+    "branch_sites": [
+      {
+        "offset": 5113,
+        "decoded": "JNC 360CH",
+        "taken": 0,
+        "fallthrough": 2
+      }
+    ],
+    "unresolved_paths": [
+      "No unresolved local operation at declared scope; broader producers/alias relations remain general provenance questions."
+    ],
+    "local_written_addresses": [
+      42494,
+      42495,
+      42496,
+      42502,
+      42503
+    ]
+  },
+  {
+    "entry": "PLI1.OVL+14C8",
+    "calls": 6,
+    "callers": {
+      "PLI1.OVL+143E": 2,
+      "PLI1.OVL+14B4": 4
+    },
+    "own_coordinates": 6,
+    "own_occurrences": 36,
+    "observed_return_offsets": [
+      5331
+    ],
+    "direct_callees": {
+      "PLI1.OVL+7B7A": 6
+    },
+    "candidate_extent": [
+      5320,
+      5332
+    ],
+    "classification": "SMALL / DIRECT",
+    "return_convention": "OBSERVED original hardware CALL slot; ordinary RET; transient saves restored; zero reserved frame",
+    "recursion": false,
+    "alternate_entries": "No observed alternate entry/shared tail within this selected extent; nearby entries retain separate identities",
+    "branch_sites": [],
+    "unresolved_paths": [
+      "No unresolved local operation at declared scope; broader producers/alias relations remain general provenance questions."
+    ],
+    "local_written_addresses": [
+      42511,
+      65496,
+      65497
+    ]
+  },
+  {
+    "entry": "PLI1.OVL+8380",
+    "calls": 3,
+    "callers": {
+      "PLI1.OVL+1501": 3
+    },
+    "own_coordinates": 4,
+    "own_occurrences": 33,
+    "observed_return_offsets": [
+      33669
+    ],
+    "direct_callees": {},
+    "candidate_extent": [
+      33664,
+      33670
+    ],
+    "classification": "SMALL / DIRECT",
+    "return_convention": "OBSERVED original hardware CALL slot; ordinary RET; transient saves restored; zero reserved frame",
+    "recursion": false,
+    "alternate_entries": "No observed alternate entry/shared tail within this selected extent; nearby entries retain separate identities",
+    "branch_sites": [
+      {
+        "offset": 33666,
+        "decoded": "JNZ A580H",
+        "taken": 7,
+        "fallthrough": 3
+      }
+    ],
+    "unresolved_paths": [
+      "No unresolved local operation at declared scope; broader producers/alias relations remain general provenance questions."
+    ],
+    "local_written_addresses": []
+  },
+  {
+    "entry": "PLI1.OVL+8268",
+    "calls": 5,
+    "callers": {
+      "PLI1.OVL+1C13": 1,
+      "PLI1.OVL+1413": 3,
+      "PLI1.OVL+1B0B": 1
+    },
+    "own_coordinates": 5,
+    "own_occurrences": 25,
+    "observed_return_offsets": [
+      33394
+    ],
+    "direct_callees": {},
+    "candidate_extent": [
+      33384,
+      33395
+    ],
+    "classification": "SMALL / DIRECT",
+    "return_convention": "OBSERVED original hardware CALL slot; ordinary RET; transient saves restored; zero reserved frame",
+    "recursion": false,
+    "alternate_entries": "No observed alternate entry/shared tail within this selected extent; nearby entries retain separate identities",
+    "branch_sites": [],
+    "unresolved_paths": [
+      "No unresolved local operation at declared scope; broader producers/alias relations remain general provenance questions."
+    ],
+    "local_written_addresses": [
+      43546,
+      44665
+    ]
+  }
+]
