@@ -1,0 +1,46 @@
+{
+  "baseline": "a4f751da243847f63edeacaf2e1033e9c066a005",
+  "logical_7A4D_fidelity": true,
+  "logical_7A63_fidelity": true,
+  "iterative_7B7A_fidelity": true,
+  "scratch_write_chronology_fidelity": true,
+  "cursor_balance_wrapping_fidelity": true,
+  "register_flag_fidelity": true,
+  "multiple_caller_ABI_fidelity": true,
+  "final_guest_memory_identity": true,
+  "stack_residue": {
+    "outer": {
+      "writer": "PLI1.OVL+7B87",
+      "callee": "PLI1.OVL+7A63",
+      "slot": "u16(F-2)",
+      "continuation": 40330
+    },
+    "nested": {
+      "writer": "PLI1.OVL+7A6B",
+      "callee": "PLI1.OVL+7A4D",
+      "slot": "u16(F-4)",
+      "continuation": 40046
+    },
+    "proof": "Verified immutable CALL encodings plus final call nesting/depth; every corrected historical invocation and live shadow confirms exact final writer/address/value. No post-oracle byte copied."
+  },
+  "conditional_termination": "Core has no iteration bound, cycle detector or invented cycle rejection. Existing184 oracle cases terminate; arbitrary tables need not. Synthetic wrapping tests are explicitly terminating; no exhaustive termination claim.",
+  "final_flags": "CMP0,0 retainsS0 Z1 AC1 P1 CY0 through final LDA/RET; every historical snapshot agrees.",
+  "multiple_callers": "Original preceding actual CALL origin/encoding/target/state/SP/writes establishes callsite+3. No fixed resumePC; source/input-bound tokens reject other entries.",
+  "native_7BBF_algorithm_and_bridge_unchanged": true,
+  "shared_dispatch": "Only hybrid full-memory, record, count, pending-resume and explicit-body-isolation comparisons are shared. No ownership/ABI inference or compiler IR framework.",
+  "Runner_CPU_Trace_packet_unchanged": true,
+  "single_replacement_verified": true,
+  "cumulative_replacement_verified": true,
+  "full_memory_comparison": "All65536 bytes compared directly at historical shadows and every prepared/applied hybrid resume; no stack exemption.",
+  "unsupported_states": [
+    "Missing/invalid memory, byte/address state",
+    "Selected scratch/table/return-stack aliases outside established scope",
+    "Wrong historical image/helper/caller code, canonical entry or CALL ancestry",
+    "Malformed original continuation",
+    "Changed source/input, additional or omitted invocation, changed per-case complete entry state",
+    "General compiler semantics or new native operations"
+  ],
+  "contract_corrections": [],
+  "divergences": [],
+  "fidelity_debt": []
+}

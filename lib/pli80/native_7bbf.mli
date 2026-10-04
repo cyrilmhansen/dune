@@ -15,3 +15,5 @@ val record_summaries : validated -> (string * int * string) list
 val shadow : Experiment.input -> (validated * Experiment.result, Experiment.error) result
 
 val hybrid : validated -> Experiment.input -> (int * Experiment.result, Experiment.error) result
+
+val controller : validated -> Experiment.input -> Native_dispatch.t

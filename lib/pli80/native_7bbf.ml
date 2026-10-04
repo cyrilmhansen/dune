@@ -64,42 +64,19 @@ let shadow input =
   |Error _ as e->e
   |Ok result->require(!active=None)"scan never resumed";Ok({cases=List.rev !cases;input_digest=input_digest input;records=List.rev !records;snapshots=List.rev !snapshots},result)
 
-let hybrid validated input =
+let controller validated input =
   require (validated.input_digest=input_digest input) "shadow proof belongs to another input";
   let bridge=Packed_scan_bridge.create ~pli_com:input.Experiment.pli_com ~pli1:input.pli1_ovl in
-  let records=ref validated.records and memory_oracles=ref validated.snapshots in
-  let on_bdos_record ~step_index:_ = function
-    |Cpm.Bdos.Write_record{file;logical_record;data;_}->
-      (match !records with (name,r,b)::rest->
-        require(name=file.name && r=logical_record && b=data)"hybrid INT/REL record differs";records:=rest
-       |[]->failwith"Unexpected hybrid record write")
-    |_->() in
-  let remaining=ref validated.cases and previous=ref None and pending=ref None and count=ref 0 in
-  let on_guest_step ~step_index:_ ~before ~after step=previous:=Some(before,after,step) in
-  let on_before_instruction ~origin:_ ~step_index:_ boundary =
-    match !pending with
-    |None->()
-    |Some(expected,post_memory)->
-      require (boundary.Runner.state=expected.output) "applied native resume registers/flags differ";
-      require (boundary.copy_memory()=post_memory) "applied native full-memory state differs";
-      pending:=None in
-  let intercept ~origin ~step_index:_ boundary =
-    let state=boundary.Runner.state in
-    if state.pc<>0x9dbf then Runner.Continue_guest_execution
-    else (
-      let expected=match !remaining with []->failwith"Unexpected additional7BBF call"|x::_->x in
-      (match !previous with Some(before,after,step)->Packed_scan_bridge.verify_call ~before ~after step ~entry:state|None->failwith"Missing hybrid CALL writer");
-      let memory=boundary.copy_memory() in
-      let entry_memory,post_memory=match !memory_oracles with x::_->x|[]->failwith"Missing full-memory oracle" in
-      require (state=expected.input && memory=entry_memory)
-        "hybrid entry differs from corresponding validated shadow";
-      let prepared=Packed_scan_bridge.prepare bridge ~origin ~state ~memory in
-      require (prepared.state=expected.output && prepared.memory=post_memory)
-        "hybrid native post-state differs from validated oracle";
-      let writes=List.map(fun(w:Pli80_host.Packed_scan.write)->w.address,w.value)prepared.result.writes in
-      require (write_digest writes=expected.logical_writes_sha256) "hybrid logical write order differs";
-      remaining:=List.tl !remaining;memory_oracles:=List.tl !memory_oracles;incr count;pending:=Some(expected,post_memory);
-      Runner.Apply_host_transition{memory_writes=writes@prepared.compatibility_writes;next_state=prepared.state}) in
-  match Experiment.run ~analysis:Experiment.Execution ~on_bdos_record ~on_guest_step ~on_before_instruction ~intercept input with
-  |Error _ as e->e
-  |Ok result->require(!records=[] && !memory_oracles=[] && !remaining=[] && !pending=None && result.run.host_transitions= !count) "not all validated calls were replaced/resumed";Ok(!count,result)
+  let oracles=List.map2(fun c (entry_memory,post_memory)->
+    {Native_dispatch.input=c.input;output=c.output;entry_memory;post_memory;logical_digest=c.logical_writes_sha256})validated.cases validated.snapshots in
+  let prepare (previous:Native_dispatch.previous) origin boundary=
+    Packed_scan_bridge.verify_call ~before:previous.before ~after:previous.after previous.step ~entry:boundary.Runner.state;
+    let p=Packed_scan_bridge.prepare bridge ~origin ~state:boundary.state ~memory:(boundary.copy_memory())in
+    {Native_dispatch.state=p.state;memory=p.memory;
+     logical_writes=List.map(fun(w:Pli80_host.Packed_scan.write)->w.address,w.value)p.result.writes;
+     compatibility_writes=p.compatibility_writes}in
+  Native_dispatch.create ~image:"PLI1.OVL" ~entry_pc:0x9dbf ~end_pc:0x9e1b ~oracles ~records:validated.records ~prepare
+
+let hybrid validated input =
+  match Native_dispatch.run input [controller validated input]with
+  |Error _ as e->e|Ok([count],result)->Ok(count,result)|_->assert false
