@@ -19715,15 +19715,18 @@
       },
       "observed_paths": {
         "invocations_by_run": {
-          "MINIMAL": 8
+          "MINIMAL": 8,
+          "FIZZBUZ": 77,
+          "PICTURE": 12
         },
         "represented_bytes": 122,
-        "description": "Corrected original-slot returns; no recursion; zero reserved frame; below-entry CALL/save traffic."
+        "description": "OBSERVED: MINIMAL 8 (3 selector15H/extra0, 5 default), FIZZBUZ 77 (41/36), PICTURE 12 (5/7). Indices 0 and 2; same 59 local instruction coordinates and 122 represented bytes. Corrected original-slot returns; child windows isolated."
       },
       "unresolved_paths": [
-        "unobserved paths:15/nonzeroextra,16 and19 arms; partial23A0 C<E path; widerindexedstateprovenance."
+        "STATIC / UNOBSERVED: selector15H with nonzero A62E[index], selector16H and selector19H arms remain RAW.",
+        "Wider indexed-state producers, table capacities and alias relations remain unestablished; no global ownership or immutability claim."
       ],
-      "inputs": "C=stateindex; A642 limiter andindexedstate/pointer word; AE32 current position; selectedpartial23A0 andsetter alias scopes",
+      "inputs": "C=unsigned state index; readable indexed A628/A62B/A62E and word[A63B+2*index], A642/A643 and AE32/AE33 carriers; writable A653 and complete helper scratch; selected sources/scratch/destinations/executable code/return stack nonaliasing",
       "outputs": "optionalA62B byte rewrite; mapped word AB49 andseparateAC73/AD08/AD9Dbytes; final23D2 registers/flags",
       "clobbers": "A,BC,DE,HL,flags; A653, scoped23A0 caches/optionalA62B andmappedsetter effects; nested CALLstack",
       "memory_state": [
@@ -19749,9 +19752,37 @@
       ],
       "callers": [
         {
+          "coordinate": "PLI1.OVL+0F68",
+          "counts_by_run": {
+            "FIZZBUZ": 1
+          }
+        },
+        {
+          "coordinate": "PLI1.OVL+2500",
+          "counts_by_run": {
+            "FIZZBUZ": 1,
+            "PICTURE": 1
+          }
+        },
+        {
           "coordinate": "PLI1.OVL+251E",
           "counts_by_run": {
-            "MINIMAL": 8
+            "MINIMAL": 8,
+            "FIZZBUZ": 64,
+            "PICTURE": 9
+          }
+        },
+        {
+          "coordinate": "PLI1.OVL+4C4E",
+          "counts_by_run": {
+            "FIZZBUZ": 3
+          }
+        },
+        {
+          "coordinate": "PLI1.OVL+5E94",
+          "counts_by_run": {
+            "FIZZBUZ": 8,
+            "PICTURE": 2
           }
         }
       ],
@@ -19780,14 +19811,16 @@
         }
       ],
       "overlapping_entries": [],
-      "contract_scope": "eight index0 calls:three selected15/C>=E/extra0 andfive selectedother!=15/16/19; source/cache/selected destinations/stacknonaliasing",
-      "contract": "Save input index C atA653. If byte[A628+index]==15, call scoped23A0 with C=byte[A642], E=byte[A62B+index] andpublish returnedE(minimum atC>=E scope) backtoA62B+index. Allthree suchcalls have byte[A62E+index]==0, so JZ2444 skipsRAWhelper/zeroing arm. Five othercalls differfrom15,16,19 andskip thoseRAWselector alternatives. Common tail reads pointer word[A63B+2*index], publishes it through7AF0 atpositionAE32, thencalls complete23D2(index) forcontrol/primaryaux/secondauxbytes. Itdoesnot return anindependent predicate; finaloutputscome from23D2. STATIC / UNOBSERVED selector16/19 and15/nonzeroextra arms remainRAW.",
+      "contract_scope": "Bounded demonstrated composition: selector15H requires extra byte[A62E+index]=0; other route requires selector not in {15H,16H,19H}; existing complete child nonaliasing scopes. Observed indices 0 and 2 are evidence, not a table-capacity or snapshot whitelist.",
+      "contract": "Save C at A653. Freshly select byte[A628+saved index]. For selector15H, call complete +23A0 with C=low byte[A642/A643], E=byte[A62B+saved index]; publish its returned A to a freshly addressed A62B+saved index. All 49 such natural calls observe C>=E and extra byte[A62E+saved index]=0, so CPI00/JZ +2444 skips the RAW nonzero-extra arm. The 48 other natural calls freshly compare selector against 16H and 19H and skip both RAW matching arms. Common tail freshly reads little-endian word[A63B+2*saved index]; reads the AE32/AE33 carrier and calls complete +7AF0 at its low position, publishing low then high mapped-word bytes. Freshly reload saved index for complete +23D2, which independently rereads AE32 before control AC73, primary AD08 and secondary AD9D publication. Return machine state is delegated to final +23D2; comparison flags are not a procedure-level predicate. Selector16H/19H and selector15H/nonzero-extra remain STATIC / UNOBSERVED and RAW.",
       "semantic_hypothesis": null,
-      "pseudocode": "byte[A653]=C; scope selected15: byte[A62B+C]=partial23A0(byte[A642],byte[A62B+C]).A; selectedextra0 skipsRAW; otherobservedselected not15/16/19: commontail; complete7AF0(byte[AE32],word[A63B+2*C]); complete23D2(C); RET",
+      "pseudocode": "byte[A653]=C; selector=byte[A628+fresh saved index]; if selector==15H: byte[A62B+fresh saved index]=complete23A0(byte[A642],byte[A62B+fresh saved index]).A; require extra==0 at bounded scope; else require selector!=16H and selector!=19H; complete7AF0(fresh byte[AE32],word[A63B+2*fresh saved index]); complete23D2(fresh saved index); RET with final setter state",
       "evidence_refs": [
         "evidence.json#seeds/PLI1.OVL+240A",
         "../minimal-baseline/pass-11/structural.json#PLI1.OVL+240A",
-        "../minimal-baseline/pass-11/README.md"
+        "../minimal-baseline/pass-11/README.md",
+        "../host-compiler/pass-30/README.md",
+        "../host-compiler/pass-30/natural-paths.json"
       ],
       "blocks": [
         {
@@ -19799,7 +19832,7 @@
         {
           "offset": 9245,
           "pseudocode": [
-            "selected15:23A0 withlimiterA642 andA62B value; write returnedbyte"
+            "selector15H: complete23A0(limiter A642, indexed A62B); freshly address and publish returned A; all natural calls C>=E"
           ]
         },
         {
@@ -19850,12 +19883,12 @@
         "2426": "E = byte[HL]; flags preserved",
         "2427": "HL = little_endian_word[state_limiter_byte (A642H)]; low byte then high byte, flags preserved",
         "242A": "C = L; flags preserved",
-        "242B": "push following PC; invoke PLI1.OVL+23A0; established partial contract at declared scope",
+        "242B": "push following PC; invoke complete PLI1.OVL+23A0: A=unsigned min(C,E), flags=CMP C-E; natural +240A calls all C>=E",
         "242E": "L = saved byte[A653H]; H = adjacent byte[A654H], discarded or not passed as the byte input; flags preserved",
         "2431": "H = 00H; flags preserved",
         "2433": "BC = A62BH (literal address/value)",
         "2436": "HL=u16(HL+BC); only CY changes (word overflow)",
-        "2437": "byte[HL] = A; flags preserved",
+        "2437": "byte[HL] = returned minimum A; flags preserved; comparison flags are a separate channel",
         "2438": "L = saved byte[A653H]; H = adjacent byte[A654H], discarded or not passed as the byte input; flags preserved",
         "243B": "H = 00H; flags preserved",
         "243D": "BC = A62EH (literal address/value)",
@@ -20278,29 +20311,29 @@
       "end_offset": 9144,
       "length": 24,
       "byte_status_at_entry": "UNDERSTOOD",
-      "description": "scoped unsigned byte minimum selector",
+      "description": "cached unsigned byte minimum with comparison flags",
       "completeness": {
-        "bounds": "provisional",
-        "control_flow": "partial",
-        "contract": "partial"
+        "bounds": "stable",
+        "control_flow": "complete",
+        "contract": "complete"
       },
       "observed_paths": {
         "invocations_by_run": {
-          "MINIMAL": 3
+          "MINIMAL": 3,
+          "FIZZBUZ": 58,
+          "PICTURE": 7
         },
-        "represented_bytes": 20,
-        "description": "Corrected original-slot returns; no recursion; zero reserved frame; below-entry CALL/save traffic."
+        "represented_bytes": 24,
+        "description": "OBSERVED: MINIMAL 3 C>=E; FIZZBUZ 50 C>=E and 8 C<E; PICTURE 6 C>=E and 1 C<E. Exact ordinary original-slot returns, no body CALL/PUSH, both local RET sites."
       },
-      "unresolved_paths": [
-        "unobserved path:23B0..23B3 LDA/RET arm remains RAW."
-      ],
+      "unresolved_paths": [],
       "inputs": "C andE bytes; A64E/4F writable; scratch/return-stack nonaliasing",
-      "outputs": "observedA=E; HLA64F; BC/DEpreserved; CY0 andNZPA/AC comparisonC-E",
+      "outputs": "A=unsigned min(C,E); HL=A64F; BC/DE preserved; all flags from CMP C-E, distinct from returned A",
       "clobbers": "A,HL,flags; A64E/4F; BC/DEunchanged; no body stackwrites",
       "memory_state": [
         "minimum_left_byte=A64EH (saved C comparison operand)",
-        "minimum_right_byte=A64FH (saved E comparison operand andobserved returnedvalue)",
-        "F=entry_SP; zero-byte reserved local frame; temporary saves/CALL words below F; original return word at F."
+        "minimum_right_byte=A64FH (saved E comparison operand; selected return iff C>=E)",
+        "F=entry_SP; no reserved local frame or body CALL/PUSH writes; original hardware return word at F."
       ],
       "data_role_ids": [
         "PLI1.OVL:minimum_left_byte",
@@ -20310,39 +20343,76 @@
         {
           "coordinate": "PLI1.OVL+242B",
           "counts_by_run": {
-            "MINIMAL": 3
+            "MINIMAL": 3,
+            "FIZZBUZ": 41,
+            "PICTURE": 5
+          }
+        },
+        {
+          "coordinate": "PLI1.OVL+25CA",
+          "counts_by_run": {
+            "FIZZBUZ": 1,
+            "PICTURE": 1
+          }
+        },
+        {
+          "coordinate": "PLI1.OVL+25E0",
+          "counts_by_run": {
+            "FIZZBUZ": 7
+          }
+        },
+        {
+          "coordinate": "PLI1.OVL+27EF",
+          "counts_by_run": {
+            "FIZZBUZ": 1,
+            "PICTURE": 1
+          }
+        },
+        {
+          "coordinate": "PLI1.OVL+307A",
+          "counts_by_run": {
+            "FIZZBUZ": 8
           }
         }
       ],
       "returns": {
         "convention": "ordinary hardware CALL word; original slot unchanged, SP after RET=entry_SP+2",
         "observed_file_offsets": [
+          9139,
           9143
         ],
-        "sites_description": "PLI1.OVL+23B7"
+        "sites_description": "PLI1.OVL+23B3 (C<E), PLI1.OVL+23B7 (C>=E)"
       },
       "direct_callees": [],
       "overlapping_entries": [],
-      "contract_scope": "three C>=E calls; lower-C return arm STATIC / UNOBSERVED",
-      "contract": "Save C atA64E andE atA64F. CMP C-E/JNC23AD selects savedE iff C>=E. Allthree observed calls take that arm, returning A=E withcomparison flags, HL=A64F; B,C,DE preserved. STATIC / UNOBSERVED C<E arm returns savedC throughLDA/RET. Thus exact localcode supports an unsigned minimum interpretation, but onlyC>=E path is dynamically established. Returned flags describe C-E, not returnedminimum; no Boolean normalization.",
+      "contract_scope": "C/E bytes; writable A64E/A64F disjoint from original return word and executable code; no source-language meaning",
+      "contract": "Write E at A64F, then C at A64E. Reload saved C and CMP against saved E at A64F. JNC +23AD selects saved E iff unsigned C>=E; otherwise +23B0 reloads saved C. Both paths are OBSERVED across the three natural runs. DEDUCED at the nonaliasing scope: A=unsigned min(C,E), HL=A64F, BC/DE preserved; S/Z/AC/P/CY remain the exact C-E comparison flags across LDA/RET. SP=entry_SP+2 and PC=original CALL continuation. No body stack writes. Returned flags describe C-E, not the selected byte; no Boolean normalization.",
       "semantic_hypothesis": null,
-      "pseudocode": "byte[A64E]=C; byte[A64F]=E; scope C>=E: A=byte[A64F]; RET; STATIC / UNOBSERVED C<E: A=byte[A64E]",
+      "pseudocode": "byte[A64F]=E; byte[A64E]=C; A=fresh byte[A64E]; flags=CMP(A,byte[A64F]); if CY=0: A=byte[A64F]; else: A=byte[A64E]; RET preserving comparison flags",
       "evidence_refs": [
         "evidence.json#seeds/PLI1.OVL+23A0",
         "../minimal-baseline/pass-11/structural.json#PLI1.OVL+23A0",
-        "../minimal-baseline/pass-11/README.md"
+        "../minimal-baseline/pass-11/README.md",
+        "../host-compiler/pass-30/README.md",
+        "../host-compiler/pass-30/natural-paths.json"
       ],
       "blocks": [
         {
           "offset": 9120,
           "pseudocode": [
-            "cache two bytes; JNC iff C>=E; observedreturnsE preservingCMPflags"
+            "cache E then C; compare fresh saved C with saved E; JNC iff unsigned C>=E"
+          ]
+        },
+        {
+          "offset": 9136,
+          "pseudocode": [
+            "OBSERVED C<E: reload saved C; return with CMP C-E flags"
           ]
         },
         {
           "offset": 9140,
           "pseudocode": [
-            "reloadsavedE; flags unchanged byLDA/RET"
+            "OBSERVED C>=E: reload saved E; return with CMP C-E flags"
           ]
         }
       ],
@@ -20356,7 +20426,9 @@
         "23AC": "flags = unsigned byte comparison A-byte[HL]; A unchanged",
         "23AD": "if CY=0: PC=45B4H; flags preserved",
         "23B4": "A = byte[minimum_right_byte (A64FH)]; flags preserved",
-        "23B7": "consume original hardware return word at entry SP; SP=entry_SP+2; flags preserved"
+        "23B7": "consume original hardware return word at entry SP; SP=entry_SP+2; flags preserved",
+        "23B0": "A = byte[minimum_left_byte (A64EH)]; flags preserved; OBSERVED C<E arm",
+        "23B3": "consume original hardware return word at entry SP; SP=entry_SP+2; CMP C-E flags preserved"
       }
     },
     {
@@ -20377,10 +20449,12 @@
       },
       "observed_paths": {
         "invocations_by_run": {
-          "MINIMAL": 8
+          "MINIMAL": 8,
+          "FIZZBUZ": 77,
+          "PICTURE": 13
         },
         "represented_bytes": 56,
-        "description": "Corrected original-slot returns; no recursion; zero reserved frame; below-entry CALL/save traffic."
+        "description": "OBSERVED: MINIMAL 8, FIZZBUZ 77, PICTURE 13. All three source/read/call/publication correlations retained independently; PICTURE includes one direct +2591 call outside +240A. Fresh AE32/AE33 carriers and fresh position-map reads for each channel."
       },
       "unresolved_paths": [
         "No unresolved local operation at declared scope; broader producers/alias relations remain general provenance questions."
@@ -20409,7 +20483,15 @@
         {
           "coordinate": "PLI1.OVL+24ED",
           "counts_by_run": {
-            "MINIMAL": 8
+            "MINIMAL": 8,
+            "FIZZBUZ": 77,
+            "PICTURE": 12
+          }
+        },
+        {
+          "coordinate": "PLI1.OVL+2591",
+          "counts_by_run": {
+            "PICTURE": 1
           }
         }
       ],
@@ -20445,7 +20527,9 @@
       "evidence_refs": [
         "evidence.json#seeds/PLI1.OVL+23D2",
         "../minimal-baseline/pass-11/structural.json#PLI1.OVL+23D2",
-        "../minimal-baseline/pass-11/README.md"
+        "../minimal-baseline/pass-11/README.md",
+        "../host-compiler/pass-30/README.md",
+        "../host-compiler/pass-30/natural-paths.json"
       ],
       "blocks": [
         {

@@ -1,0 +1,41 @@
+{
+  "decision": "A",
+  "recommendation": "Pass31: bounded native +240A and +2511 together, with reusable native +23A0 and +23D2 as required internal primitives.",
+  "native_implementation_added": false,
+  "demonstrated_calls": {
+    "240A": 97,
+    "2511": 81
+  },
+  "state_predicates": {
+    "selector15H": "Require byte[A62E+saved_index]==0; invoke complete +23A0, publish its returned byte to freshly addressed A62B+saved_index.",
+    "default": "Fresh selector comparisons must exclude 15H,16H,19H.",
+    "common": "Publish fresh pointer word via +7AF0 at fresh AE32; then +23D2 with freshly reloaded saved index.",
+    "domain": "Unsigned byte index plus explicit source/cache/scratch/selected destination/code/stack nonaliasing scopes. Natural indices0/2 are observations, not semantic whitelist membership."
+  },
+  "reject_before_live_commit": [
+    "selector16H",
+    "selector19H",
+    "selector15H with nonzero extra",
+    "inherited helper alias violations",
+    "unsupported +8048/+7EC0 child states in +2511",
+    "invalid canonical code/CALL/continuation ancestry"
+  ],
+  "missing_natural_discriminator": null,
+  "remaining_archaeology": [
+    "The three unreached +240A arms remain RAW.",
+    "Wider indexed-state producers and table capacities are unestablished.",
+    "No ownership, arbitrary alias handling or global immutability has been inferred."
+  ],
+  "dependencies": {
+    "23A0": "Now stable/complete/complete; cached unsigned minimum returns CMP C-E flags separately.",
+    "23D2": "Already stable/complete/complete; 98 natural calls verify three distinct fresh-position channels.",
+    "7AF0": "Already complete and native.",
+    "8048": "Already bounded native; do not expand scope.",
+    "7EC0": "Already bounded native; do not expand scope."
+  },
+  "historically_interesting_new_algorithm": "No new +240A arm was observed. +23A0 is a faithful cached unsigned minimum primitive, not a newly inferred source-language algorithm.",
+  "contract_corrections": [
+    "Corrected +23A0 pseudocode publication order to E at A64F before C at A64E; exact instructions already had this order."
+  ],
+  "global_contract_upgrade_240A": false
+}

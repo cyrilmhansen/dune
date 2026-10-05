@@ -1,0 +1,83 @@
+{
+  "sources": [
+    {
+      "source": "MINIMAL",
+      "index_distribution": {
+        "0": 8
+      },
+      "selector_hex_distribution": {
+        "05": 2,
+        "15": 3,
+        "28": 1,
+        "40": 2
+      },
+      "paths": {
+        "default_not15_16_19": 5,
+        "selector15_extra0": 3
+      },
+      "minimum_paths": {
+        "C>=E": 3
+      },
+      "minimum_caller_paths": {
+        "PLI1.OVL+242B/C>=E": 3
+      }
+    },
+    {
+      "source": "FIZZBUZ",
+      "index_distribution": {
+        "0": 76,
+        "2": 1
+      },
+      "selector_hex_distribution": {
+        "02": 18,
+        "05": 6,
+        "15": 41,
+        "24": 5,
+        "28": 5,
+        "40": 2
+      },
+      "paths": {
+        "default_not15_16_19": 36,
+        "selector15_extra0": 41
+      },
+      "minimum_paths": {
+        "C<E": 8,
+        "C>=E": 50
+      },
+      "minimum_caller_paths": {
+        "PLI1.OVL+242B/C>=E": 41,
+        "PLI1.OVL+25CA/C<E": 1,
+        "PLI1.OVL+25E0/C<E": 7,
+        "PLI1.OVL+27EF/C>=E": 1,
+        "PLI1.OVL+307A/C>=E": 8
+      }
+    },
+    {
+      "source": "PICTURE",
+      "index_distribution": {
+        "0": 11,
+        "2": 1
+      },
+      "selector_hex_distribution": {
+        "02": 2,
+        "15": 5,
+        "28": 2,
+        "40": 2,
+        "43": 1
+      },
+      "paths": {
+        "default_not15_16_19": 7,
+        "selector15_extra0": 5
+      },
+      "minimum_paths": {
+        "C<E": 1,
+        "C>=E": 6
+      },
+      "minimum_caller_paths": {
+        "PLI1.OVL+242B/C>=E": 5,
+        "PLI1.OVL+25CA/C<E": 1,
+        "PLI1.OVL+27EF/C>=E": 1
+      }
+    }
+  ]
+}

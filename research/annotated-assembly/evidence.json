@@ -93258,9 +93258,9 @@
       "start_offset": 9226,
       "end_offset": 9457,
       "description": "partial selected-state adaptation and mapped word/byte publication",
-      "inputs_and_effects": "C=stateindex; A642 limiter andindexedstate/pointer word; AE32 current position; selectedpartial23A0 andsetter alias scopes; optionalA62B byte rewrite; mapped word AB49 andseparateAC73/AD08/AD9Dbytes; final23D2 registers/flags",
+      "inputs_and_effects": "C=unsigned state index; readable indexed A628/A62B/A62E and word[A63B+2*index], A642/A643 and AE32/AE33 carriers; writable A653 and complete helper scratch; selected sources/scratch/destinations/executable code/return stack nonaliasing; optionalA62B byte rewrite; mapped word AB49 andseparateAC73/AD08/AD9Dbytes; final23D2 registers/flags",
       "downstream_helpers_runtime": "PLI1.OVL+23A0@45A0, PLI1.OVL+7AF0@9CF0, PLI1.OVL+23D2@45D2",
-      "unresolved": "unobserved paths:15/nonzeroextra,16 and19 arms; partial23A0 C<E path; widerindexedstateprovenance.",
+      "unresolved": "STATIC / UNOBSERVED: selector15H with nonzero A62E[index], selector16H and selector19H arms remain RAW.; Wider indexed-state producers, table capacities and alias relations remain unestablished; no global ownership or immutability claim.",
       "instructions": [
         {
           "offset": 9226,
@@ -93273,6 +93273,18 @@
               "execution_count": 8,
               "first_step": 240938,
               "last_step": 269807
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 77,
+              "first_step": 342697,
+              "last_step": 621477
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 12,
+              "first_step": 276547,
+              "last_step": 333632
             }
           ]
         },
@@ -93287,6 +93299,18 @@
               "execution_count": 8,
               "first_step": 240939,
               "last_step": 269808
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 77,
+              "first_step": 342698,
+              "last_step": 621478
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 12,
+              "first_step": 276548,
+              "last_step": 333633
             }
           ]
         },
@@ -93301,6 +93325,18 @@
               "execution_count": 8,
               "first_step": 240940,
               "last_step": 269809
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 77,
+              "first_step": 342699,
+              "last_step": 621479
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 12,
+              "first_step": 276549,
+              "last_step": 333634
             }
           ]
         },
@@ -93315,6 +93351,18 @@
               "execution_count": 8,
               "first_step": 240941,
               "last_step": 269810
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 77,
+              "first_step": 342700,
+              "last_step": 621480
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 12,
+              "first_step": 276550,
+              "last_step": 333635
             }
           ]
         },
@@ -93329,6 +93377,18 @@
               "execution_count": 8,
               "first_step": 240942,
               "last_step": 269811
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 77,
+              "first_step": 342701,
+              "last_step": 621481
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 12,
+              "first_step": 276551,
+              "last_step": 333636
             }
           ]
         },
@@ -93343,6 +93403,18 @@
               "execution_count": 8,
               "first_step": 240943,
               "last_step": 269812
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 77,
+              "first_step": 342702,
+              "last_step": 621482
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 12,
+              "first_step": 276552,
+              "last_step": 333637
             }
           ]
         },
@@ -93357,6 +93429,18 @@
               "execution_count": 8,
               "first_step": 240944,
               "last_step": 269813
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 77,
+              "first_step": 342703,
+              "last_step": 621483
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 12,
+              "first_step": 276553,
+              "last_step": 333638
             }
           ]
         },
@@ -93371,6 +93455,18 @@
               "execution_count": 8,
               "first_step": 240945,
               "last_step": 269814
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 77,
+              "first_step": 342704,
+              "last_step": 621484
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 12,
+              "first_step": 276554,
+              "last_step": 333639
             }
           ]
         },
@@ -93385,6 +93481,18 @@
               "execution_count": 8,
               "first_step": 240946,
               "last_step": 269815
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 77,
+              "first_step": 342705,
+              "last_step": 621485
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 12,
+              "first_step": 276555,
+              "last_step": 333640
             }
           ]
         },
@@ -93399,6 +93507,18 @@
               "execution_count": 3,
               "first_step": 247471,
               "last_step": 248883
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 41,
+              "first_step": 354868,
+              "last_step": 621486
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 5,
+              "first_step": 303623,
+              "last_step": 332107
             }
           ]
         },
@@ -93413,6 +93533,18 @@
               "execution_count": 3,
               "first_step": 247472,
               "last_step": 248884
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 41,
+              "first_step": 354869,
+              "last_step": 621487
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 5,
+              "first_step": 303624,
+              "last_step": 332108
             }
           ]
         },
@@ -93427,6 +93559,18 @@
               "execution_count": 3,
               "first_step": 247473,
               "last_step": 248885
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 41,
+              "first_step": 354870,
+              "last_step": 621488
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 5,
+              "first_step": 303625,
+              "last_step": 332109
             }
           ]
         },
@@ -93441,6 +93585,18 @@
               "execution_count": 3,
               "first_step": 247474,
               "last_step": 248886
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 41,
+              "first_step": 354871,
+              "last_step": 621489
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 5,
+              "first_step": 303626,
+              "last_step": 332110
             }
           ]
         },
@@ -93455,6 +93611,18 @@
               "execution_count": 3,
               "first_step": 247475,
               "last_step": 248887
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 41,
+              "first_step": 354872,
+              "last_step": 621490
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 5,
+              "first_step": 303627,
+              "last_step": 332111
             }
           ]
         },
@@ -93469,6 +93637,18 @@
               "execution_count": 3,
               "first_step": 247476,
               "last_step": 248888
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 41,
+              "first_step": 354873,
+              "last_step": 621491
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 5,
+              "first_step": 303628,
+              "last_step": 332112
             }
           ]
         },
@@ -93483,6 +93663,18 @@
               "execution_count": 3,
               "first_step": 247477,
               "last_step": 248889
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 41,
+              "first_step": 354874,
+              "last_step": 621492
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 5,
+              "first_step": 303629,
+              "last_step": 332113
             }
           ]
         },
@@ -93497,6 +93689,18 @@
               "execution_count": 3,
               "first_step": 247478,
               "last_step": 248890
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 41,
+              "first_step": 354875,
+              "last_step": 621493
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 5,
+              "first_step": 303630,
+              "last_step": 332114
             }
           ]
         },
@@ -93511,6 +93715,18 @@
               "execution_count": 3,
               "first_step": 247489,
               "last_step": 248901
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 41,
+              "first_step": 354886,
+              "last_step": 621504
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 5,
+              "first_step": 303641,
+              "last_step": 332125
             }
           ]
         },
@@ -93525,6 +93741,18 @@
               "execution_count": 3,
               "first_step": 247490,
               "last_step": 248902
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 41,
+              "first_step": 354887,
+              "last_step": 621505
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 5,
+              "first_step": 303642,
+              "last_step": 332126
             }
           ]
         },
@@ -93539,6 +93767,18 @@
               "execution_count": 3,
               "first_step": 247491,
               "last_step": 248903
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 41,
+              "first_step": 354888,
+              "last_step": 621506
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 5,
+              "first_step": 303643,
+              "last_step": 332127
             }
           ]
         },
@@ -93553,6 +93793,18 @@
               "execution_count": 3,
               "first_step": 247492,
               "last_step": 248904
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 41,
+              "first_step": 354889,
+              "last_step": 621507
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 5,
+              "first_step": 303644,
+              "last_step": 332128
             }
           ]
         },
@@ -93567,6 +93819,18 @@
               "execution_count": 3,
               "first_step": 247493,
               "last_step": 248905
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 41,
+              "first_step": 354890,
+              "last_step": 621508
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 5,
+              "first_step": 303645,
+              "last_step": 332129
             }
           ]
         },
@@ -93581,6 +93845,18 @@
               "execution_count": 3,
               "first_step": 247494,
               "last_step": 248906
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 41,
+              "first_step": 354891,
+              "last_step": 621509
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 5,
+              "first_step": 303646,
+              "last_step": 332130
             }
           ]
         },
@@ -93595,6 +93871,18 @@
               "execution_count": 3,
               "first_step": 247495,
               "last_step": 248907
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 41,
+              "first_step": 354892,
+              "last_step": 621510
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 5,
+              "first_step": 303647,
+              "last_step": 332131
             }
           ]
         },
@@ -93609,6 +93897,18 @@
               "execution_count": 3,
               "first_step": 247496,
               "last_step": 248908
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 41,
+              "first_step": 354893,
+              "last_step": 621511
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 5,
+              "first_step": 303648,
+              "last_step": 332132
             }
           ]
         },
@@ -93623,6 +93923,18 @@
               "execution_count": 3,
               "first_step": 247497,
               "last_step": 248909
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 41,
+              "first_step": 354894,
+              "last_step": 621512
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 5,
+              "first_step": 303649,
+              "last_step": 332133
             }
           ]
         },
@@ -93637,6 +93949,18 @@
               "execution_count": 3,
               "first_step": 247498,
               "last_step": 248910
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 41,
+              "first_step": 354895,
+              "last_step": 621513
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 5,
+              "first_step": 303650,
+              "last_step": 332134
             }
           ]
         },
@@ -93651,6 +93975,18 @@
               "execution_count": 3,
               "first_step": 247499,
               "last_step": 248911
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 41,
+              "first_step": 354896,
+              "last_step": 621514
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 5,
+              "first_step": 303651,
+              "last_step": 332135
             }
           ]
         },
@@ -93665,6 +94001,18 @@
               "execution_count": 3,
               "first_step": 247500,
               "last_step": 248912
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 41,
+              "first_step": 354897,
+              "last_step": 621515
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 5,
+              "first_step": 303652,
+              "last_step": 332136
             }
           ]
         },
@@ -93679,6 +94027,18 @@
               "execution_count": 3,
               "first_step": 247501,
               "last_step": 248913
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 41,
+              "first_step": 354898,
+              "last_step": 621516
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 5,
+              "first_step": 303653,
+              "last_step": 332137
             }
           ]
         },
@@ -93693,6 +94053,18 @@
               "execution_count": 5,
               "first_step": 240947,
               "last_step": 269816
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 36,
+              "first_step": 342706,
+              "last_step": 607946
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 7,
+              "first_step": 276556,
+              "last_step": 333641
             }
           ]
         },
@@ -93707,6 +94079,18 @@
               "execution_count": 5,
               "first_step": 240948,
               "last_step": 269817
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 36,
+              "first_step": 342707,
+              "last_step": 607947
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 7,
+              "first_step": 276557,
+              "last_step": 333642
             }
           ]
         },
@@ -93721,6 +94105,18 @@
               "execution_count": 5,
               "first_step": 240949,
               "last_step": 269818
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 36,
+              "first_step": 342708,
+              "last_step": 607948
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 7,
+              "first_step": 276558,
+              "last_step": 333643
             }
           ]
         },
@@ -93735,6 +94131,18 @@
               "execution_count": 5,
               "first_step": 240950,
               "last_step": 269819
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 36,
+              "first_step": 342709,
+              "last_step": 607949
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 7,
+              "first_step": 276559,
+              "last_step": 333644
             }
           ]
         },
@@ -93749,6 +94157,18 @@
               "execution_count": 5,
               "first_step": 240951,
               "last_step": 269820
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 36,
+              "first_step": 342710,
+              "last_step": 607950
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 7,
+              "first_step": 276560,
+              "last_step": 333645
             }
           ]
         },
@@ -93763,6 +94183,18 @@
               "execution_count": 5,
               "first_step": 240952,
               "last_step": 269821
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 36,
+              "first_step": 342711,
+              "last_step": 607951
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 7,
+              "first_step": 276561,
+              "last_step": 333646
             }
           ]
         },
@@ -93777,6 +94209,18 @@
               "execution_count": 5,
               "first_step": 240953,
               "last_step": 269822
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 36,
+              "first_step": 342712,
+              "last_step": 607952
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 7,
+              "first_step": 276562,
+              "last_step": 333647
             }
           ]
         },
@@ -93791,6 +94235,18 @@
               "execution_count": 5,
               "first_step": 240954,
               "last_step": 269823
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 36,
+              "first_step": 342713,
+              "last_step": 607953
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 7,
+              "first_step": 276563,
+              "last_step": 333648
             }
           ]
         },
@@ -93805,6 +94261,18 @@
               "execution_count": 5,
               "first_step": 240955,
               "last_step": 269824
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 36,
+              "first_step": 342714,
+              "last_step": 607954
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 7,
+              "first_step": 276564,
+              "last_step": 333649
             }
           ]
         },
@@ -93819,6 +94287,18 @@
               "execution_count": 5,
               "first_step": 240956,
               "last_step": 269825
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 36,
+              "first_step": 342715,
+              "last_step": 607955
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 7,
+              "first_step": 276565,
+              "last_step": 333650
             }
           ]
         },
@@ -93833,6 +94313,18 @@
               "execution_count": 5,
               "first_step": 240957,
               "last_step": 269826
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 36,
+              "first_step": 342716,
+              "last_step": 607956
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 7,
+              "first_step": 276566,
+              "last_step": 333651
             }
           ]
         },
@@ -93847,6 +94339,18 @@
               "execution_count": 5,
               "first_step": 240958,
               "last_step": 269827
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 36,
+              "first_step": 342717,
+              "last_step": 607957
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 7,
+              "first_step": 276567,
+              "last_step": 333652
             }
           ]
         },
@@ -93861,6 +94365,18 @@
               "execution_count": 5,
               "first_step": 240959,
               "last_step": 269828
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 36,
+              "first_step": 342718,
+              "last_step": 607958
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 7,
+              "first_step": 276568,
+              "last_step": 333653
             }
           ]
         },
@@ -93875,6 +94391,18 @@
               "execution_count": 5,
               "first_step": 240960,
               "last_step": 269829
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 36,
+              "first_step": 342719,
+              "last_step": 607959
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 7,
+              "first_step": 276569,
+              "last_step": 333654
             }
           ]
         },
@@ -93889,6 +94417,18 @@
               "execution_count": 8,
               "first_step": 240961,
               "last_step": 269830
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 77,
+              "first_step": 342720,
+              "last_step": 621517
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 12,
+              "first_step": 276570,
+              "last_step": 333655
             }
           ]
         },
@@ -93903,6 +94443,18 @@
               "execution_count": 8,
               "first_step": 240962,
               "last_step": 269831
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 77,
+              "first_step": 342721,
+              "last_step": 621518
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 12,
+              "first_step": 276571,
+              "last_step": 333656
             }
           ]
         },
@@ -93917,6 +94469,18 @@
               "execution_count": 8,
               "first_step": 240963,
               "last_step": 269832
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 77,
+              "first_step": 342722,
+              "last_step": 621519
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 12,
+              "first_step": 276572,
+              "last_step": 333657
             }
           ]
         },
@@ -93931,6 +94495,18 @@
               "execution_count": 8,
               "first_step": 240964,
               "last_step": 269833
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 77,
+              "first_step": 342723,
+              "last_step": 621520
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 12,
+              "first_step": 276573,
+              "last_step": 333658
             }
           ]
         },
@@ -93945,6 +94521,18 @@
               "execution_count": 8,
               "first_step": 240965,
               "last_step": 269834
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 77,
+              "first_step": 342724,
+              "last_step": 621521
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 12,
+              "first_step": 276574,
+              "last_step": 333659
             }
           ]
         },
@@ -93959,6 +94547,18 @@
               "execution_count": 8,
               "first_step": 240966,
               "last_step": 269835
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 77,
+              "first_step": 342725,
+              "last_step": 621522
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 12,
+              "first_step": 276575,
+              "last_step": 333660
             }
           ]
         },
@@ -93973,6 +94573,18 @@
               "execution_count": 8,
               "first_step": 240967,
               "last_step": 269836
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 77,
+              "first_step": 342726,
+              "last_step": 621523
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 12,
+              "first_step": 276576,
+              "last_step": 333661
             }
           ]
         },
@@ -93987,6 +94599,18 @@
               "execution_count": 8,
               "first_step": 240968,
               "last_step": 269837
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 77,
+              "first_step": 342727,
+              "last_step": 621524
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 12,
+              "first_step": 276577,
+              "last_step": 333662
             }
           ]
         },
@@ -94001,6 +94625,18 @@
               "execution_count": 8,
               "first_step": 240969,
               "last_step": 269838
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 77,
+              "first_step": 342728,
+              "last_step": 621525
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 12,
+              "first_step": 276578,
+              "last_step": 333663
             }
           ]
         },
@@ -94015,6 +94651,18 @@
               "execution_count": 8,
               "first_step": 240970,
               "last_step": 269839
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 77,
+              "first_step": 342729,
+              "last_step": 621526
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 12,
+              "first_step": 276579,
+              "last_step": 333664
             }
           ]
         },
@@ -94029,6 +94677,18 @@
               "execution_count": 8,
               "first_step": 240971,
               "last_step": 269840
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 77,
+              "first_step": 342730,
+              "last_step": 621527
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 12,
+              "first_step": 276580,
+              "last_step": 333665
             }
           ]
         },
@@ -94043,6 +94703,18 @@
               "execution_count": 8,
               "first_step": 240995,
               "last_step": 269864
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 77,
+              "first_step": 342754,
+              "last_step": 621551
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 12,
+              "first_step": 276604,
+              "last_step": 333689
             }
           ]
         },
@@ -94057,6 +94729,18 @@
               "execution_count": 8,
               "first_step": 240996,
               "last_step": 269865
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 77,
+              "first_step": 342755,
+              "last_step": 621552
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 12,
+              "first_step": 276605,
+              "last_step": 333690
             }
           ]
         },
@@ -94071,6 +94755,18 @@
               "execution_count": 8,
               "first_step": 240997,
               "last_step": 269866
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 77,
+              "first_step": 342756,
+              "last_step": 621553
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 12,
+              "first_step": 276606,
+              "last_step": 333691
             }
           ]
         },
@@ -94085,6 +94781,18 @@
               "execution_count": 8,
               "first_step": 241070,
               "last_step": 269939
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 77,
+              "first_step": 342829,
+              "last_step": 621626
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 12,
+              "first_step": 276679,
+              "last_step": 333764
             }
           ]
         }
@@ -94097,6 +94805,70 @@
           "bytes": "CD0A46",
           "execution_count": 8,
           "first_step": 240937
+        },
+        {
+          "run": "FIZZBUZ",
+          "image": "PLI1.OVL",
+          "offset": 3944,
+          "bytes": "CD0A46",
+          "execution_count": 1,
+          "first_step": 372933
+        },
+        {
+          "run": "FIZZBUZ",
+          "image": "PLI1.OVL",
+          "offset": 9472,
+          "bytes": "CD0A46",
+          "execution_count": 1,
+          "first_step": 607545
+        },
+        {
+          "run": "FIZZBUZ",
+          "image": "PLI1.OVL",
+          "offset": 9502,
+          "bytes": "CD0A46",
+          "execution_count": 64,
+          "first_step": 342696
+        },
+        {
+          "run": "FIZZBUZ",
+          "image": "PLI1.OVL",
+          "offset": 19534,
+          "bytes": "CD0A46",
+          "execution_count": 3,
+          "first_step": 395797
+        },
+        {
+          "run": "FIZZBUZ",
+          "image": "PLI1.OVL",
+          "offset": 24212,
+          "bytes": "CD0A46",
+          "execution_count": 8,
+          "first_step": 354858
+        },
+        {
+          "run": "PICTURE",
+          "image": "PLI1.OVL",
+          "offset": 9472,
+          "bytes": "CD0A46",
+          "execution_count": 1,
+          "first_step": 333240
+        },
+        {
+          "run": "PICTURE",
+          "image": "PLI1.OVL",
+          "offset": 9502,
+          "bytes": "CD0A46",
+          "execution_count": 9,
+          "first_step": 276546
+        },
+        {
+          "run": "PICTURE",
+          "image": "PLI1.OVL",
+          "offset": 24212,
+          "bytes": "CD0A46",
+          "execution_count": 2,
+          "first_step": 303613
         }
       ],
       "observed_return_offsets": [
@@ -94271,7 +95043,7 @@
           }
         }
       },
-      "behavioral_contract": "Save input index C atA653. If byte[A628+index]==15, call scoped23A0 with C=byte[A642], E=byte[A62B+index] andpublish returnedE(minimum atC>=E scope) backtoA62B+index. Allthree suchcalls have byte[A62E+index]==0, so JZ2444 skipsRAWhelper/zeroing arm. Five othercalls differfrom15,16,19 andskip thoseRAWselector alternatives. Common tail reads pointer word[A63B+2*index], publishes it through7AF0 atpositionAE32, thencalls complete23D2(index) forcontrol/primaryaux/secondauxbytes. Itdoesnot return anindependent predicate; finaloutputscome from23D2. STATIC / UNOBSERVED selector16/19 and15/nonzeroextra arms remainRAW."
+      "behavioral_contract": "Save C at A653. Freshly select byte[A628+saved index]. For selector15H, call complete +23A0 with C=low byte[A642/A643], E=byte[A62B+saved index]; publish its returned A to a freshly addressed A62B+saved index. All 49 such natural calls observe C>=E and extra byte[A62E+saved index]=0, so CPI00/JZ +2444 skips the RAW nonzero-extra arm. The 48 other natural calls freshly compare selector against 16H and 19H and skip both RAW matching arms. Common tail freshly reads little-endian word[A63B+2*saved index]; reads the AE32/AE33 carrier and calls complete +7AF0 at its low position, publishing low then high mapped-word bytes. Freshly reload saved index for complete +23D2, which independently rereads AE32 before control AC73, primary AD08 and secondary AD9D publication. Return machine state is delegated to final +23D2; comparison flags are not a procedure-level predicate. Selector16H/19H and selector15H/nonzero-extra remain STATIC / UNOBSERVED and RAW."
     },
     {
       "id": "PLI1.OVL+01AF",
@@ -95152,10 +95924,10 @@
       "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
       "start_offset": 9120,
       "end_offset": 9144,
-      "description": "scoped unsigned byte minimum selector",
-      "inputs_and_effects": "C andE bytes; A64E/4F writable; scratch/return-stack nonaliasing; observedA=E; HLA64F; BC/DEpreserved; CY0 andNZPA/AC comparisonC-E",
+      "description": "cached unsigned byte minimum with comparison flags",
+      "inputs_and_effects": "C andE bytes; A64E/4F writable; scratch/return-stack nonaliasing; A=unsigned min(C,E); HL=A64F; BC/DE preserved; all flags from CMP C-E, distinct from returned A",
       "downstream_helpers_runtime": "",
-      "unresolved": "unobserved path:23B0..23B3 LDA/RET arm remains RAW.",
+      "unresolved": "",
       "instructions": [
         {
           "offset": 9120,
@@ -95168,6 +95940,18 @@
               "execution_count": 3,
               "first_step": 247479,
               "last_step": 248891
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 58,
+              "first_step": 354876,
+              "last_step": 621494
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 7,
+              "first_step": 303631,
+              "last_step": 332986
             }
           ]
         },
@@ -95182,6 +95966,18 @@
               "execution_count": 3,
               "first_step": 247480,
               "last_step": 248892
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 58,
+              "first_step": 354877,
+              "last_step": 621495
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 7,
+              "first_step": 303632,
+              "last_step": 332987
             }
           ]
         },
@@ -95196,6 +95992,18 @@
               "execution_count": 3,
               "first_step": 247481,
               "last_step": 248893
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 58,
+              "first_step": 354878,
+              "last_step": 621496
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 7,
+              "first_step": 303633,
+              "last_step": 332988
             }
           ]
         },
@@ -95210,6 +96018,18 @@
               "execution_count": 3,
               "first_step": 247482,
               "last_step": 248894
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 58,
+              "first_step": 354879,
+              "last_step": 621497
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 7,
+              "first_step": 303634,
+              "last_step": 332989
             }
           ]
         },
@@ -95224,6 +96044,18 @@
               "execution_count": 3,
               "first_step": 247483,
               "last_step": 248895
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 58,
+              "first_step": 354880,
+              "last_step": 621498
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 7,
+              "first_step": 303635,
+              "last_step": 332990
             }
           ]
         },
@@ -95238,6 +96070,18 @@
               "execution_count": 3,
               "first_step": 247484,
               "last_step": 248896
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 58,
+              "first_step": 354881,
+              "last_step": 621499
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 7,
+              "first_step": 303636,
+              "last_step": 332991
             }
           ]
         },
@@ -95252,6 +96096,18 @@
               "execution_count": 3,
               "first_step": 247485,
               "last_step": 248897
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 58,
+              "first_step": 354882,
+              "last_step": 621500
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 7,
+              "first_step": 303637,
+              "last_step": 332992
             }
           ]
         },
@@ -95266,6 +96122,58 @@
               "execution_count": 3,
               "first_step": 247486,
               "last_step": 248898
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 58,
+              "first_step": 354883,
+              "last_step": 621501
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 7,
+              "first_step": 303638,
+              "last_step": 332993
+            }
+          ]
+        },
+        {
+          "offset": 9136,
+          "runtime_pc": 17840,
+          "bytes": "3A4EA6",
+          "decoded": "LDA A64EH",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 8,
+              "first_step": 371065,
+              "last_step": 607278
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 1,
+              "first_step": 332973,
+              "last_step": 332973
+            }
+          ]
+        },
+        {
+          "offset": 9139,
+          "runtime_pc": 17843,
+          "bytes": "C9",
+          "decoded": "RET",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 8,
+              "first_step": 371066,
+              "last_step": 607279
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 1,
+              "first_step": 332974,
+              "last_step": 332974
             }
           ]
         },
@@ -95280,6 +96188,18 @@
               "execution_count": 3,
               "first_step": 247487,
               "last_step": 248899
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 50,
+              "first_step": 354884,
+              "last_step": 621502
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 6,
+              "first_step": 303639,
+              "last_step": 332994
             }
           ]
         },
@@ -95294,6 +96214,18 @@
               "execution_count": 3,
               "first_step": 247488,
               "last_step": 248900
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 50,
+              "first_step": 354885,
+              "last_step": 621503
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 6,
+              "first_step": 303640,
+              "last_step": 332995
             }
           ]
         }
@@ -95306,9 +96238,74 @@
           "bytes": "CDA045",
           "execution_count": 3,
           "first_step": 247478
+        },
+        {
+          "run": "FIZZBUZ",
+          "image": "PLI1.OVL",
+          "offset": 9259,
+          "bytes": "CDA045",
+          "execution_count": 41,
+          "first_step": 354875
+        },
+        {
+          "run": "FIZZBUZ",
+          "image": "PLI1.OVL",
+          "offset": 9674,
+          "bytes": "CDA045",
+          "execution_count": 1,
+          "first_step": 607269
+        },
+        {
+          "run": "FIZZBUZ",
+          "image": "PLI1.OVL",
+          "offset": 9696,
+          "bytes": "CDA045",
+          "execution_count": 7,
+          "first_step": 371056
+        },
+        {
+          "run": "FIZZBUZ",
+          "image": "PLI1.OVL",
+          "offset": 10223,
+          "bytes": "CDA045",
+          "execution_count": 1,
+          "first_step": 607290
+        },
+        {
+          "run": "FIZZBUZ",
+          "image": "PLI1.OVL",
+          "offset": 12410,
+          "bytes": "CDA045",
+          "execution_count": 8,
+          "first_step": 371136
+        },
+        {
+          "run": "PICTURE",
+          "image": "PLI1.OVL",
+          "offset": 9259,
+          "bytes": "CDA045",
+          "execution_count": 5,
+          "first_step": 303630
+        },
+        {
+          "run": "PICTURE",
+          "image": "PLI1.OVL",
+          "offset": 9674,
+          "bytes": "CDA045",
+          "execution_count": 1,
+          "first_step": 332964
+        },
+        {
+          "run": "PICTURE",
+          "image": "PLI1.OVL",
+          "offset": 10223,
+          "bytes": "CDA045",
+          "execution_count": 1,
+          "first_step": 332985
         }
       ],
       "observed_return_offsets": [
+        9139,
         9143
       ],
       "matched_return_sample": {
@@ -95480,7 +96477,7 @@
           }
         }
       },
-      "behavioral_contract": "Save C atA64E andE atA64F. CMP C-E/JNC23AD selects savedE iff C>=E. Allthree observed calls take that arm, returning A=E withcomparison flags, HL=A64F; B,C,DE preserved. STATIC / UNOBSERVED C<E arm returns savedC throughLDA/RET. Thus exact localcode supports an unsigned minimum interpretation, but onlyC>=E path is dynamically established. Returned flags describe C-E, not returnedminimum; no Boolean normalization."
+      "behavioral_contract": "Write E at A64F, then C at A64E. Reload saved C and CMP against saved E at A64F. JNC +23AD selects saved E iff unsigned C>=E; otherwise +23B0 reloads saved C. Both paths are OBSERVED across the three natural runs. DEDUCED at the nonaliasing scope: A=unsigned min(C,E), HL=A64F, BC/DE preserved; S/Z/AC/P/CY remain the exact C-E comparison flags across LDA/RET. SP=entry_SP+2 and PC=original CALL continuation. No body stack writes. Returned flags describe C-E, not the selected byte; no Boolean normalization."
     },
     {
       "id": "PLI1.OVL+23D2",
@@ -95504,6 +96501,18 @@
               "execution_count": 8,
               "first_step": 240998,
               "last_step": 269867
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 77,
+              "first_step": 342757,
+              "last_step": 621554
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 13,
+              "first_step": 276607,
+              "last_step": 333692
             }
           ]
         },
@@ -95518,6 +96527,18 @@
               "execution_count": 8,
               "first_step": 240999,
               "last_step": 269868
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 77,
+              "first_step": 342758,
+              "last_step": 621555
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 13,
+              "first_step": 276608,
+              "last_step": 333693
             }
           ]
         },
@@ -95532,6 +96553,18 @@
               "execution_count": 8,
               "first_step": 241000,
               "last_step": 269869
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 77,
+              "first_step": 342759,
+              "last_step": 621556
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 13,
+              "first_step": 276609,
+              "last_step": 333694
             }
           ]
         },
@@ -95546,6 +96579,18 @@
               "execution_count": 8,
               "first_step": 241001,
               "last_step": 269870
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 77,
+              "first_step": 342760,
+              "last_step": 621557
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 13,
+              "first_step": 276610,
+              "last_step": 333695
             }
           ]
         },
@@ -95560,6 +96605,18 @@
               "execution_count": 8,
               "first_step": 241002,
               "last_step": 269871
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 77,
+              "first_step": 342761,
+              "last_step": 621558
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 13,
+              "first_step": 276611,
+              "last_step": 333696
             }
           ]
         },
@@ -95574,6 +96631,18 @@
               "execution_count": 8,
               "first_step": 241003,
               "last_step": 269872
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 77,
+              "first_step": 342762,
+              "last_step": 621559
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 13,
+              "first_step": 276612,
+              "last_step": 333697
             }
           ]
         },
@@ -95588,6 +96657,18 @@
               "execution_count": 8,
               "first_step": 241004,
               "last_step": 269873
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 77,
+              "first_step": 342763,
+              "last_step": 621560
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 13,
+              "first_step": 276613,
+              "last_step": 333698
             }
           ]
         },
@@ -95602,6 +96683,18 @@
               "execution_count": 8,
               "first_step": 241005,
               "last_step": 269874
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 77,
+              "first_step": 342764,
+              "last_step": 621561
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 13,
+              "first_step": 276614,
+              "last_step": 333699
             }
           ]
         },
@@ -95616,6 +96709,18 @@
               "execution_count": 8,
               "first_step": 241006,
               "last_step": 269875
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 77,
+              "first_step": 342765,
+              "last_step": 621562
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 13,
+              "first_step": 276615,
+              "last_step": 333700
             }
           ]
         },
@@ -95630,6 +96735,18 @@
               "execution_count": 8,
               "first_step": 241007,
               "last_step": 269876
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 77,
+              "first_step": 342766,
+              "last_step": 621563
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 13,
+              "first_step": 276616,
+              "last_step": 333701
             }
           ]
         },
@@ -95644,6 +96761,18 @@
               "execution_count": 8,
               "first_step": 241023,
               "last_step": 269892
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 77,
+              "first_step": 342782,
+              "last_step": 621579
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 13,
+              "first_step": 276632,
+              "last_step": 333717
             }
           ]
         },
@@ -95658,6 +96787,18 @@
               "execution_count": 8,
               "first_step": 241024,
               "last_step": 269893
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 77,
+              "first_step": 342783,
+              "last_step": 621580
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 13,
+              "first_step": 276633,
+              "last_step": 333718
             }
           ]
         },
@@ -95672,6 +96813,18 @@
               "execution_count": 8,
               "first_step": 241025,
               "last_step": 269894
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 77,
+              "first_step": 342784,
+              "last_step": 621581
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 13,
+              "first_step": 276634,
+              "last_step": 333719
             }
           ]
         },
@@ -95686,6 +96839,18 @@
               "execution_count": 8,
               "first_step": 241026,
               "last_step": 269895
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 77,
+              "first_step": 342785,
+              "last_step": 621582
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 13,
+              "first_step": 276635,
+              "last_step": 333720
             }
           ]
         },
@@ -95700,6 +96865,18 @@
               "execution_count": 8,
               "first_step": 241027,
               "last_step": 269896
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 77,
+              "first_step": 342786,
+              "last_step": 621583
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 13,
+              "first_step": 276636,
+              "last_step": 333721
             }
           ]
         },
@@ -95714,6 +96891,18 @@
               "execution_count": 8,
               "first_step": 241028,
               "last_step": 269897
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 77,
+              "first_step": 342787,
+              "last_step": 621584
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 13,
+              "first_step": 276637,
+              "last_step": 333722
             }
           ]
         },
@@ -95728,6 +96917,18 @@
               "execution_count": 8,
               "first_step": 241029,
               "last_step": 269898
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 77,
+              "first_step": 342788,
+              "last_step": 621585
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 13,
+              "first_step": 276638,
+              "last_step": 333723
             }
           ]
         },
@@ -95742,6 +96943,18 @@
               "execution_count": 8,
               "first_step": 241030,
               "last_step": 269899
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 77,
+              "first_step": 342789,
+              "last_step": 621586
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 13,
+              "first_step": 276639,
+              "last_step": 333724
             }
           ]
         },
@@ -95756,6 +96969,18 @@
               "execution_count": 8,
               "first_step": 241046,
               "last_step": 269915
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 77,
+              "first_step": 342805,
+              "last_step": 621602
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 13,
+              "first_step": 276655,
+              "last_step": 333740
             }
           ]
         },
@@ -95770,6 +96995,18 @@
               "execution_count": 8,
               "first_step": 241047,
               "last_step": 269916
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 77,
+              "first_step": 342806,
+              "last_step": 621603
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 13,
+              "first_step": 276656,
+              "last_step": 333741
             }
           ]
         },
@@ -95784,6 +97021,18 @@
               "execution_count": 8,
               "first_step": 241048,
               "last_step": 269917
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 77,
+              "first_step": 342807,
+              "last_step": 621604
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 13,
+              "first_step": 276657,
+              "last_step": 333742
             }
           ]
         },
@@ -95798,6 +97047,18 @@
               "execution_count": 8,
               "first_step": 241049,
               "last_step": 269918
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 77,
+              "first_step": 342808,
+              "last_step": 621605
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 13,
+              "first_step": 276658,
+              "last_step": 333743
             }
           ]
         },
@@ -95812,6 +97073,18 @@
               "execution_count": 8,
               "first_step": 241050,
               "last_step": 269919
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 77,
+              "first_step": 342809,
+              "last_step": 621606
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 13,
+              "first_step": 276659,
+              "last_step": 333744
             }
           ]
         },
@@ -95826,6 +97099,18 @@
               "execution_count": 8,
               "first_step": 241051,
               "last_step": 269920
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 77,
+              "first_step": 342810,
+              "last_step": 621607
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 13,
+              "first_step": 276660,
+              "last_step": 333745
             }
           ]
         },
@@ -95840,6 +97125,18 @@
               "execution_count": 8,
               "first_step": 241052,
               "last_step": 269921
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 77,
+              "first_step": 342811,
+              "last_step": 621608
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 13,
+              "first_step": 276661,
+              "last_step": 333746
             }
           ]
         },
@@ -95854,6 +97151,18 @@
               "execution_count": 8,
               "first_step": 241053,
               "last_step": 269922
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 77,
+              "first_step": 342812,
+              "last_step": 621609
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 13,
+              "first_step": 276662,
+              "last_step": 333747
             }
           ]
         },
@@ -95868,6 +97177,18 @@
               "execution_count": 8,
               "first_step": 241069,
               "last_step": 269938
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 77,
+              "first_step": 342828,
+              "last_step": 621625
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 13,
+              "first_step": 276678,
+              "last_step": 333763
             }
           ]
         }
@@ -95880,6 +97201,30 @@
           "bytes": "CDD245",
           "execution_count": 8,
           "first_step": 240997
+        },
+        {
+          "run": "FIZZBUZ",
+          "image": "PLI1.OVL",
+          "offset": 9453,
+          "bytes": "CDD245",
+          "execution_count": 77,
+          "first_step": 342756
+        },
+        {
+          "run": "PICTURE",
+          "image": "PLI1.OVL",
+          "offset": 9453,
+          "bytes": "CDD245",
+          "execution_count": 12,
+          "first_step": 276606
+        },
+        {
+          "run": "PICTURE",
+          "image": "PLI1.OVL",
+          "offset": 9617,
+          "bytes": "CDD245",
+          "execution_count": 1,
+          "first_step": 325776
         }
       ],
       "observed_return_offsets": [

@@ -89,11 +89,16 @@ class HostBoundaryPassSixteenTests(unittest.TestCase):
         audit=load(REPORT/'critical-path-audit.json');actual=self.timeline['call_inventory']
         # Pass16 is a frozen reconnaissance audit. Pass22 separately records the
         # later emitter refinement and newly cataloged sequential-write wrapper.
+        # Pass30 records the later complete +23A0 contract; retain its prior state
+        # when checking the frozen Pass16 classification, not the live catalog.
         later=load(ROOT/'research/host-compiler/pass-22/catalog-refinement.json')
+        prior30=load(ROOT/'research/host-compiler/pass-30/before.json')
         self.assertEqual(later['new_entries'],['PLI.COM+0328'])
         self.assertEqual({p['entry'] for p in audit['established']},{k for k in actual if k in self.catalog and k not in later['new_entries']})
         for p in audit['established']:
-            self.assertEqual(p['FIZZBUZ_calls'],actual[p['entry']]['count']);self.assertEqual(p['completeness'],later['previous'].get(p['entry'],self.catalog[p['entry']])['completeness'])
+            self.assertEqual(p['FIZZBUZ_calls'],actual[p['entry']]['count'])
+            previous=later['previous'].get(p['entry'],prior30.get(p['entry'],self.catalog[p['entry']]))
+            self.assertEqual(p['completeness'],previous['completeness'])
             if p['classification']=='READY FOR FAITHFUL HOST IMPLEMENTATION':self.assertEqual(p['completeness']['contract'],'complete')
             else:self.assertTrue(p['missing_scope'])
 
