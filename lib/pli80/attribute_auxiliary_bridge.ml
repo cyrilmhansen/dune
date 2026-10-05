@@ -56,3 +56,8 @@ let prepare t ~call ~origin ~(state:Runner.state_snapshot) ~memory =
    |Secondary q->{state with a=q.value;b=0;c=q.index;h=q.address lsr 8;l=q.address land 255;carry=false}in
   let state={state with sp=Pli80_host.U16.wrap(state.sp+2);pc=call.resume}in
   {result;writes=List.rev !writes;memory=Pli80_host.State.copy m;state;compatibility_writes=[]}
+
+let internal_call t site =
+  let offset=site-0x2200 in
+  require(offset>=0 && offset+3<=Bytes.length t.image && Char.code(Bytes.get t.image offset)=0xcd && word t.image(offset+1)=0x9d64) "unproven internal CALL";
+  {coordinate=Printf.sprintf "PLI1.OVL+%04X" offset;runtime_site=site;resume=site+3;operation=High_attribute}

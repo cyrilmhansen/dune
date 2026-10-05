@@ -1,0 +1,30 @@
+{
+  "recommendation": "Pass26: complete reusable mapped-word publication +7AF0 and second-auxiliary publication +7B49, before their larger +7E5F parent",
+  "7E5F": {
+    "completeness": "provisional/partial/partial",
+    "native_child": "7AD5; internal Auxiliary +7B2E",
+    "missing_native_children": [
+      "7AF0",
+      "7B49"
+    ],
+    "unobserved_branch": "7E70..7E72 CALL runtime9C46",
+    "scope_blockers": [
+      "fresh-end threshold arm",
+      "AE33/displaced-byte producer provenance",
+      "alias and capacity questions"
+    ]
+  },
+  "8048": {
+    "completeness": "provisional/partial/partial",
+    "newly_native_child": "bounded 7D53 and successful 0EF6",
+    "missing_native_children": [
+      "7E5F",
+      "7A93",
+      "7B13"
+    ],
+    "unobserved_branch": "805C..8068 high-input/gate publication arm",
+    "decision": "Defer larger composition until reusable children and explicit branch scope are established"
+  },
+  "fidelity_debt": null,
+  "no_new_fixture": true
+}

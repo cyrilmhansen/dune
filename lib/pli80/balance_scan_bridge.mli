@@ -10,3 +10,6 @@ val verify_call : t -> origin:Analysis.Execution_map.origin ->
   I8080.Step.t -> entry:Runner.state_snapshot -> call
 val prepare : t -> call:call -> origin:Analysis.Execution_map.origin ->
   state:Runner.state_snapshot -> memory:bytes -> prepared
+
+(** Construct only a verified immutable internal CALL; no synthetic Step. *)
+val internal_call : t -> int -> call

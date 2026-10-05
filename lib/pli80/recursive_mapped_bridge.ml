@@ -4,7 +4,7 @@ type t = { image:bytes; code:(int*bytes)list }
 type call = { coordinate:string; runtime_site:int; resume:int }
 type residue = { address:int; value:int; writer:int; depth:int; kind:string }
 type prepared = { result:R.result; memory:bytes; state:Runner.state_snapshot;
-                  compatibility_writes:(int*int)list; final_writers:residue list }
+                  compatibility_writes:(int*int)list; final_writers:residue list; journal:residue list }
 let require b message=if not b then invalid_arg("7C1B bridge: "^message)
 let word b a=Char.code(Bytes.get b a)lor(Char.code(Bytes.get b(a+1))lsl 8)
 let create ~pli_com ~pli1 =
@@ -39,9 +39,10 @@ let prepare t ~call ~origin ~(state:Runner.state_snapshot) ~memory =
   List.iter(fun(a,b)->require(Bytes.sub memory a(Bytes.length b)=b)"changed historical code/helper identity")t.code;
   require(Bytes.sub memory call.runtime_site 3=Bytes.sub t.image(call.runtime_site-0x2200)3)"changed root caller";
   require(Pli80_host.State.word m state.sp=call.resume)"malformed continuation";
-  let latest=Hashtbl.create 64 in
+  let latest=Hashtbl.create 64 and journal=ref[] in
   let remember address value writer depth kind=
-    Hashtbl.replace latest address {address;value;writer;depth;kind}in
+    let item={address;value;writer;depth;kind}in
+    journal:=item::!journal;Hashtbl.replace latest address item in
   let put site depth address value=
     Pli80_host.State.write m address value;
     remember address value site depth "compatibility"in
@@ -74,4 +75,9 @@ let prepare t ~call ~origin ~(state:Runner.state_snapshot) ~memory =
      that later acquired logical owners. Supply only final compatibility cells
      to the unchanged generic Runner transition API. *)
   let compatibility_writes=List.filter_map(fun q->if q.kind="compatibility"then Some(q.address,q.value)else None)final_writers in
-  {result;memory=Pli80_host.State.copy m;state;compatibility_writes;final_writers}
+  {result;memory=Pli80_host.State.copy m;state;compatibility_writes;final_writers;journal=List.rev !journal}
+
+let internal_call t site =
+  let offset=site-0x2200 in
+  require(offset>=0 && offset+3<=Bytes.length t.image && Char.code(Bytes.get t.image offset)=0xcd && word t.image(offset+1)=0x9e1b) "unproven internal CALL";
+  {coordinate=Printf.sprintf "PLI1.OVL+%04X" offset;runtime_site=site;resume=site+3}

@@ -70,11 +70,15 @@ let shadow input =
 let roots v=List.filter(fun c->c.parent_entry_step=None)v.cases
 let inside_steps v entries=List.filter(fun(step,_)->List.exists(fun c->c.entry_step<step&&step<c.return_step)(roots v))entries|>List.map fst
 let record_summaries v=List.map(fun(n,r,b)->n,r,Experiment.sha256_hex b)v.records
-let controller validated input =
+let controller ?(exclude_entry_steps=[]) validated input =
+  let members=roots validated in
+  require(List.for_all(fun step->List.exists(fun c->c.entry_step=step)members)exclude_entry_steps
+    &&List.length exclude_entry_steps=List.length(List.sort_uniq compare exclude_entry_steps))"invalid root exclusion";
+  let members=List.filter(fun c->not(List.mem c.entry_step exclude_entry_steps))members in
   require(validated.input_digest=Experiment.sha256_hex(Marshal.to_bytes input[]))"source/input proof mismatch";
   let bridge=B.create ~pli_com:input.Experiment.pli_com ~pli1:input.pli1_ovl in
   let oracles=List.map(fun c->let _,entry_memory,post_memory=List.find(fun(s,_,_)->s=c.entry_step)validated.snapshots in
-    {Native_dispatch.input=c.input;output=c.output;entry_memory;post_memory;logical_digest=c.logical_writes_sha256})(roots validated)in
+    {Native_dispatch.input=c.input;output=c.output;entry_memory;post_memory;logical_digest=c.logical_writes_sha256})members in
   let prepare(previous:Native_dispatch.previous)origin boundary=
     let call=B.verify_call bridge ~origin:previous.origin ~before:previous.before ~after:previous.after previous.step ~entry:boundary.Runner.state in
     let p=B.prepare bridge ~call ~origin ~state:boundary.state ~memory:(boundary.copy_memory())in
