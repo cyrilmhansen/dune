@@ -11,3 +11,5 @@ val create : pli_com:bytes -> pli1:bytes -> t
 val origin : string -> int -> Analysis.Execution_map.origin
 val verify_call : t -> Native_dispatch.previous -> entry:Runner.state_snapshot -> call
 val prepare : t -> call:call -> origin:Analysis.Execution_map.origin -> Runner.instruction_boundary -> prepared
+
+val internal_call : t -> int -> call

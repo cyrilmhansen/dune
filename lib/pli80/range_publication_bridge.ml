@@ -60,3 +60,8 @@ let prepare t ~call ~origin ~(state:Runner.state_snapshot) ~memory =
  List.iter(fun w->if w.kind="ABI" then Hashtbl.replace latest w.address w.value)(List.rev !journal);
  let compatibility_writes=Hashtbl.to_seq latest|>List.of_seq|>List.sort compare in
  {result;writes=List.rev !writes;journal=List.rev !journal;compatibility_writes;memory=Pli80_host.State.copy m;state=final}
+
+let internal_call t site =
+ let offset=site-0x2200 in
+ require(offset>=0&&offset+3<=Bytes.length t.image&&Char.code(Bytes.get t.image offset)=0xcd&&word t.image(offset+1)=0xa05f)"unproven internal CALL";
+ {coordinate=Printf.sprintf"PLI1.OVL+%04X"offset;runtime_site=site;resume=site+3}

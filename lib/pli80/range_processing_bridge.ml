@@ -168,3 +168,8 @@ let prepare t ~call:(call:call) ~origin:o (boundary:Runner.instruction_boundary)
   then Error "root ordered-program/service result mismatch"else Ok()in
  let program={(staged state)with validate}in
  {result;program;state;journal;children=List.rev !children;logical_writes;compatibility_writes}
+
+let internal_call t site =
+ let offset=site-0x2200 in
+ require(offset>=0&&offset+3<=Bytes.length t.image&&Char.code(Bytes.get t.image offset)=0xcd&&word t.image(offset+1)=0x9f53)"unproven internal CALL";
+ {coordinate=Printf.sprintf"PLI1.OVL+%04X"offset;site=site;resume=site+3}

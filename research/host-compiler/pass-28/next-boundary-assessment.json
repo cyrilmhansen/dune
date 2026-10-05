@@ -1,0 +1,136 @@
+{
+  "recommendation": "Pass29: bounded native +7EC0 plus +80B7 saved-byte parent composition in one pass.",
+  "reason": "+7EC0 has a short established packed-byte gate and delegates processing to the already-native bounded +7D53. +80B7 has no new local branching: fresh saved-byte +8048 then +7EC0. Adding the reusable gate within the parent ticket absorbs a complete demonstrated subtree without a separate leaf migration pass.",
+  "candidates": [
+    {
+      "entry": "PLI1.OVL+7EC0",
+      "extent": "[7EC0,7ED7)",
+      "status": "stable/complete/partial",
+      "operation_at_current_evidence": "save C to AE57; paired AE57/AE58 read; direct packed-byte table read at1B4B+C; RLC then RAR restores A and sets CY to original bit7; bit7 clear skips child, set calls bounded +7D53; returned child state is delegated",
+      "dependencies": "bounded +7D53 is now native; preserve exact gate and scratch/ABI, no general termination claim",
+      "value": "small reusable preparation needed by two larger parents"
+    },
+    {
+      "entry": "PLI1.OVL+80B7",
+      "extent": "[80B7,80CA)",
+      "status": "stable/complete/partial",
+      "operation_at_current_evidence": "save input at AE6B; +8048; fresh paired AE6B/AE6C reload; +7EC0; return final child state",
+      "missing_native_dependency": "+7EC0 only",
+      "value": "46 natural parent roots with two compositional children and potential nested +7D53 work; prefer absorbing this parent in the same ticket"
+    },
+    {
+      "entry": "PLI1.OVL+2511",
+      "status": "stable/complete/partial",
+      "missing_native_dependencies": [
+        "+7EC0",
+        "partial +240A state adapter; +23A0 and selector alternatives remain scoped"
+      ],
+      "decision": "defer; do not hide the remaining +240A branches beneath this parent"
+    },
+    {
+      "entry": "PLI1.OVL+80B1",
+      "status": "RAW",
+      "decision": "tiny adapter; lower expected semantic leverage than the established +80B7 parent; no decompilation performed"
+    }
+  ],
+  "corrected_capture_observations": {
+    "MINIMAL": {
+      "PLI1.OVL+7EC0": {
+        "calls": 18,
+        "callers": {
+          "PLI1.OVL+80C6": 10,
+          "PLI1.OVL+2526": 8
+        },
+        "direct_callees": {
+          "PLI1.OVL+7D53": 7
+        }
+      },
+      "PLI1.OVL+80B7": {
+        "calls": 10,
+        "callers": {
+          "PLI1.OVL+80F7": 4,
+          "PLI1.OVL+0CC1": 1,
+          "PLI1.OVL+1BB6": 1,
+          "PLI1.OVL+1C49": 1,
+          "PLI1.OVL+0AE5": 1,
+          "PLI1.OVL+0CE3": 1,
+          "PLI1.OVL+0123": 1
+        },
+        "direct_callees": {
+          "PLI1.OVL+8048": 10,
+          "PLI1.OVL+7EC0": 10
+        }
+      }
+    },
+    "FIZZBUZ": {
+      "PLI1.OVL+7EC0": {
+        "calls": 89,
+        "callers": {
+          "PLI1.OVL+80C6": 25,
+          "PLI1.OVL+2526": 64
+        },
+        "direct_callees": {
+          "PLI1.OVL+7D53": 25
+        }
+      },
+      "PLI1.OVL+80B7": {
+        "calls": 25,
+        "callers": {
+          "PLI1.OVL+80F7": 4,
+          "PLI1.OVL+0CC1": 1,
+          "PLI1.OVL+03BE": 3,
+          "PLI1.OVL+1BB6": 4,
+          "PLI1.OVL+1C49": 4,
+          "PLI1.OVL+03E2": 3,
+          "PLI1.OVL+03F3": 3,
+          "PLI1.OVL+0AE5": 1,
+          "PLI1.OVL+0CE3": 1,
+          "PLI1.OVL+0123": 1
+        },
+        "direct_callees": {
+          "PLI1.OVL+8048": 25,
+          "PLI1.OVL+7EC0": 25
+        }
+      }
+    },
+    "PICTURE": {
+      "PLI1.OVL+7EC0": {
+        "calls": 21,
+        "callers": {
+          "PLI1.OVL+80C6": 11,
+          "PLI1.OVL+2526": 9,
+          "PLI1.OVL+2599": 1
+        },
+        "direct_callees": {
+          "PLI1.OVL+7D53": 8
+        }
+      },
+      "PLI1.OVL+80B7": {
+        "calls": 11,
+        "callers": {
+          "PLI1.OVL+80F7": 4,
+          "PLI1.OVL+0CC1": 1,
+          "PLI1.OVL+1BB6": 1,
+          "PLI1.OVL+1C90": 1,
+          "PLI1.OVL+1C9E": 1,
+          "PLI1.OVL+0AE5": 1,
+          "PLI1.OVL+0CE3": 1,
+          "PLI1.OVL+0123": 1
+        },
+        "direct_callees": {
+          "PLI1.OVL+8048": 11,
+          "PLI1.OVL+7EC0": 11
+        }
+      }
+    }
+  },
+  "future_proof_obligations": [
+    "derive all actual +7EC0 gate states and +80B7 roots from corrected captures",
+    "shadow full RAM/registers/flags and external state",
+    "preserve AE6B cache and neighboring reads across both children",
+    "one staged +80B7 root; +7EC0 and nested +7D53 native internally",
+    "retain all child exclusions and alias/termination scopes; no snapshot-based semantics"
+  ],
+  "implementation_in_pass28": false,
+  "speculative_backend_or_IR": false
+}

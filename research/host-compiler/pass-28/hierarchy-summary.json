@@ -1,0 +1,121 @@
+{
+  "vector_order": [
+    "8048",
+    "external_7E5F",
+    "external_7D53",
+    "external_7C1B",
+    "external_7BBF",
+    "external_7B7A",
+    "external_7BA2",
+    "external_7AD5",
+    "external_7B64",
+    "external_7ABF",
+    "external_0EF6",
+    "external_7A79",
+    "external_7E46",
+    "external_7E56",
+    "external_7AF0",
+    "external_7B49",
+    "external_7A93",
+    "external_7B13"
+  ],
+  "sources": [
+    {
+      "source": "MINIMAL",
+      "roots": 22,
+      "low": 12,
+      "high": 10,
+      "callers": {
+        "PLI1.OVL+80BF": 10,
+        "PLI1.OVL+2519": 8,
+        "PLI1.OVL+80B3": 4
+      },
+      "nested_logical_operations": {
+        "7E5F": 12,
+        "7AD5": 12,
+        "7AF0": 12,
+        "7B2E_zero": 12,
+        "7B49_zero": 12,
+        "7A93": 12,
+        "7B13": 12,
+        "primary_predecessor_read_publish_pairs": 12,
+        "secondary_predecessor_read_publish_pairs": 12,
+        "7D53": 10,
+        "7D53_path_distribution": {
+          "equal": 10
+        },
+        "Int_emitter": 10,
+        "Int_emitter_nonflush": 10,
+        "Int_emitter_flush_success": 0,
+        "BDOS26": 0,
+        "BDOS21": 0
+      }
+    },
+    {
+      "source": "FIZZBUZ",
+      "roots": 108,
+      "low": 78,
+      "high": 30,
+      "callers": {
+        "PLI1.OVL+80BF": 25,
+        "PLI1.OVL+2519": 64,
+        "PLI1.OVL+80B3": 17,
+        "PLI1.OVL+0FB7": 1,
+        "PLI1.OVL+24F9": 1
+      },
+      "nested_logical_operations": {
+        "7E5F": 78,
+        "7AD5": 78,
+        "7AF0": 78,
+        "7B2E_zero": 78,
+        "7B49_zero": 78,
+        "7A93": 78,
+        "7B13": 78,
+        "primary_predecessor_read_publish_pairs": 78,
+        "secondary_predecessor_read_publish_pairs": 78,
+        "7D53": 30,
+        "7D53_path_distribution": {
+          "equal": 30
+        },
+        "Int_emitter": 30,
+        "Int_emitter_nonflush": 29,
+        "Int_emitter_flush_success": 1,
+        "BDOS26": 1,
+        "BDOS21": 1
+      }
+    },
+    {
+      "source": "PICTURE",
+      "roots": 26,
+      "low": 16,
+      "high": 10,
+      "callers": {
+        "PLI1.OVL+80BF": 11,
+        "PLI1.OVL+2519": 9,
+        "PLI1.OVL+80B3": 4,
+        "PLI1.OVL+2581": 1,
+        "PLI1.OVL+24F9": 1
+      },
+      "nested_logical_operations": {
+        "7E5F": 16,
+        "7AD5": 16,
+        "7AF0": 16,
+        "7B2E_zero": 16,
+        "7B49_zero": 16,
+        "7A93": 16,
+        "7B13": 16,
+        "primary_predecessor_read_publish_pairs": 16,
+        "secondary_predecessor_read_publish_pairs": 16,
+        "7D53": 10,
+        "7D53_path_distribution": {
+          "equal": 10
+        },
+        "Int_emitter": 10,
+        "Int_emitter_nonflush": 10,
+        "Int_emitter_flush_success": 0,
+        "BDOS26": 0,
+        "BDOS21": 0
+      }
+    }
+  ]
+}
