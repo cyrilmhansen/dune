@@ -1,0 +1,50 @@
+{
+  "derivation": "Immutable PLI1 CALL/PUSH/POP encodings and native logical child results; no historical post-memory copied.",
+  "root_entry_SP": "S",
+  "ordered_call_sites": [
+    "7E95 ->7AD5",
+    "7EA0 ->7AF0",
+    "7EA9 ->7B2E",
+    "7EB2 ->7B49"
+  ],
+  "final_bytes": [
+    {
+      "relative_address": -4,
+      "value": "low(AB49+2*fresh_j_at_7AF0)",
+      "writer": "PLI1+7B09 PUSH H",
+      "logical_depth": 1
+    },
+    {
+      "relative_address": -3,
+      "value": "high(AB49+2*fresh_j_at_7AF0)",
+      "writer": "PLI1+7B09 PUSH H",
+      "logical_depth": 1
+    },
+    {
+      "relative_address": -2,
+      "value": "B5",
+      "writer": "PLI1+7EB2 CALL",
+      "logical_depth": 0
+    },
+    {
+      "relative_address": -1,
+      "value": "A0",
+      "writer": "PLI1+7EB2 CALL",
+      "logical_depth": 0
+    }
+  ],
+  "overwrite_ancestry": {
+    "S-2/S-1": [
+      "7E95 continuation A098",
+      "7EA0 continuation A0A3",
+      "7EA9 continuation A0AC",
+      "7EB2 continuation A0B5"
+    ],
+    "S-4/S-3": [
+      "7B09 destination save; POP7B0E consumes without erasing"
+    ]
+  },
+  "original_slot": "unchanged; RET7EBF consumes S/S+1; SP=S+2",
+  "full_writer_journal": "natural-cases.json: every write address/value/writer/depth and chronological overwrites are checked against guest execution and corrected capture windows.",
+  "shadow_invocations": 145
+}

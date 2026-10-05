@@ -119,8 +119,8 @@ let compare_external v (r:Experiment.result)=
 let run v input controllers=match Native_dispatch.run input controllers with Error _ as e->e|Ok(_,r)as q->compare_external v r;q
 let single v input=run v input[controller v input]
 
-let controllers v words emitter attributes publications recursive packed balances input=
- let windows=List.map(fun c->c.entry_step,c.return_step)v.cases in
+let controllers ?(exclude_windows=[]) v words emitter attributes publications recursive packed balances input=
+ let windows=exclude_windows@List.map(fun c->c.entry_step,c.return_step)v.cases in
  let inside step windows=List.exists(fun(a,b)->a<step&&step<b)windows in
  let excluded get cases windows=List.filter_map(fun c->let s=get c in if inside s windows then Some s else None)cases in
  let recursive_windows=List.map(fun(c:Native_7c1b.case)->c.entry_step,c.return_step)(Native_7c1b.roots recursive)in

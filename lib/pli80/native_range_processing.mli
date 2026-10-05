@@ -10,4 +10,4 @@ val controller : validated -> Experiment.input -> Native_dispatch.t
 val single : validated -> Experiment.input -> (int list * Experiment.result,Experiment.error) result
 val cumulative : validated -> Native_word_emitters.validated -> Native_int_emitter.validated -> Native_attribute_auxiliary.validated -> Native_mapped_publication.validated -> Native_7c1b.validated -> Native_7bbf.validated -> Native_7b7a.validated -> Experiment.input -> (int list * Experiment.result,Experiment.error) result
 
-val controllers : validated -> Native_word_emitters.validated -> Native_int_emitter.validated -> Native_attribute_auxiliary.validated -> Native_mapped_publication.validated -> Native_7c1b.validated -> Native_7bbf.validated -> Native_7b7a.validated -> Experiment.input -> Native_dispatch.t list
+val controllers : ?exclude_windows:(int * int) list -> validated -> Native_word_emitters.validated -> Native_int_emitter.validated -> Native_attribute_auxiliary.validated -> Native_mapped_publication.validated -> Native_7c1b.validated -> Native_7bbf.validated -> Native_7b7a.validated -> Experiment.input -> Native_dispatch.t list

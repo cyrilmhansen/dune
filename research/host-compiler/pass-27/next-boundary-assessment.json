@@ -1,0 +1,27 @@
+{
+  "recommendation": "B: bounded native +8048 composition with reusable Mapped_control.read(+7A93) and publish(+7B13) introduced in the same pass.",
+  "reason": "Both remaining control primitives are complete short operations. Preserve reusable explicit APIs and independently test their algorithm/ABI, then prove their composition with existing native children in +8048; a separate two-helper migration ticket is unnecessary.",
+  "existing_dependencies": [
+    "bounded +7E5F",
+    "bounded +7D53",
+    "bounded resident Int_emitter",
+    "Auxiliary primary read/publish",
+    "Auxiliary secondary read/publish"
+  ],
+  "supported_proposed_routes": [
+    "C<=DD: +7E5F word0; three independent predecessor-read/current-publication channels",
+    "C>DD and AA1A.bit0=0: bounded +7D53 then fresh saved-input emission"
+  ],
+  "unsupported": "C>DD and AA1A.bit0=1: RAW +805C..+8068 gate-set arm; reject on staged state, do not decode/promote it for implementation.",
+  "proof_obligations": [
+    "Freshly derive all natural corrected +8048 roots and branches",
+    "Named reusable control primitives: scratch/neighbor/fresh map/AC73 channel/ABI tests",
+    "Preserve three separate predecessor DCR/read/current-map/publication pairs",
+    "Preserve high-path fresh AE6A reload after +7D53; returned A is not emission input",
+    "One transaction covers +7D53 and later emission/CPM services; fail-closed child scopes inherited",
+    "Derive child-stack overlap and final ABI separately for both paths",
+    "Shadow full RAM/external state and prove single/cumulative hierarchy"
+  ],
+  "archaeological_completeness": "Do not promote partial +8048 or decode/promote unobserved gate-set bytes.",
+  "implementation_in_this_pass": false
+}

@@ -1,0 +1,78 @@
+{
+  "baseline_commit": "f3e17523f52167c251e3a89182df7f09eab24b92",
+  "supported_predicate": "unsigned byte[AE35]<=94, valid byte/word inputs, protected code/return/temp stack, parent cache/endpoint cells and inherited child nonalias scopes",
+  "semantic_selection": "actual shared historical state only; oracle/source/step identity confined to differential proof harness",
+  "input_save_order": [
+    "AE56 D high",
+    "AE55 E low",
+    "AE54 C"
+  ],
+  "fresh_end_comparison": true,
+  "position_map_link_then_displaced_byte_read": true,
+  "AE33_replaced_before_children": true,
+  "native_child_order": [
+    "Mapped_publication.publish",
+    "Mapped_word.publish",
+    "Auxiliary.publish",
+    "Auxiliary.publish_secondary"
+  ],
+  "fresh_position_reads_between_children": true,
+  "child_algorithms_reused": true,
+  "unconditional_publications": true,
+  "final_order": [
+    "fresh end to AE32",
+    "increment fresh AE35"
+  ],
+  "returned_state": "A=old end; BC=last secondary fresh map j; DE=saved word high<<8; HL=AE35; SP=S+2; PC=actual caller+3",
+  "final_flags": "NZPA/AC from final INR; CY retained from final child DAD, proven zero at scoped addresses",
+  "scratch_table_order": true,
+  "all_65536_bytes": true,
+  "all_registers_flags": true,
+  "stack_last_writers_derived": true,
+  "private_staging_fail_closed": true,
+  "unsupported": [
+    "end>94 (+7E70/+7A46)",
+    "aliases outside parent/child scope",
+    "invalid CALL/image/code/input proofs"
+  ],
+  "native_children_not_Runner_transitions": true,
+  "no_enabled_body_execution": true,
+  "ordered_INT_REL_and_file_events": true,
+  "filesystem_identity": true,
+  "caller_distributions": {
+    "MINIMAL": {
+      "PLI1.OVL+807D": 12,
+      "PLI1.OVL+80E8": 1,
+      "PLI1.OVL+7FFF": 3
+    },
+    "FIZZBUZ": {
+      "PLI1.OVL+807D": 78,
+      "PLI1.OVL+80E8": 8,
+      "PLI1.OVL+7FFF": 21
+    },
+    "PICTURE": {
+      "PLI1.OVL+807D": 16,
+      "PLI1.OVL+80E8": 2,
+      "PLI1.OVL+7FFF": 4
+    }
+  },
+  "observed_end_ranges": {
+    "MINIMAL": [
+      0,
+      6
+    ],
+    "FIZZBUZ": [
+      0,
+      8
+    ],
+    "PICTURE": [
+      0,
+      3
+    ]
+  },
+  "archaeology_changes": [],
+  "Runner_changes": [],
+  "CPM_changes": [],
+  "pragmatic_divergence": [],
+  "fidelity_debt": []
+}
