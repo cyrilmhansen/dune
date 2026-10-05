@@ -1,0 +1,8019 @@
+{
+  "flushes": [
+    {
+      "source": "MINIMAL",
+      "entry_step": 319815,
+      "caller": "PLI.COM+10AF",
+      "append_step": 319822,
+      "index80_step": 319825,
+      "dma_wrapper_call_step": 319829,
+      "index_reset_step": 319867,
+      "write_wrapper_call_step": 319869,
+      "status_compare_step": 319906,
+      "return_step": 319908,
+      "bridge_returns": [
+        {
+          "call_step": 319837,
+          "call_coordinate": "PLI.COM+02FA",
+          "call_slot_writes": [
+            {
+              "address": 65525,
+              "old_value": null,
+              "new_value": 3
+            },
+            {
+              "address": 65524,
+              "old_value": null,
+              "new_value": 253
+            }
+          ],
+          "ret_step": 319864,
+          "ret_origin": null,
+          "ret_pc": 5,
+          "ret_slot_reads": [
+            {
+              "address": 65524,
+              "value": 253
+            },
+            {
+              "address": 65525,
+              "value": 3
+            }
+          ],
+          "resumed_pc": 1021,
+          "relation": {
+            "type": "hardware_frame_return",
+            "step_index": 319864,
+            "frame": {
+              "kind": "hardware_call",
+              "call_step": 319837,
+              "call_pc": 1018,
+              "callsite": {
+                "image": {
+                  "drive": 0,
+                  "user": 0,
+                  "name": "PLI.COM",
+                  "identity": "0:0:PLI.COM"
+                },
+                "offset": 762
+              },
+              "return_address": 1021,
+              "stack_slot": 65524,
+              "target_pc": 6843,
+              "target": {
+                "image": {
+                  "drive": 0,
+                  "user": 0,
+                  "name": "PLI.COM",
+                  "identity": "0:0:PLI.COM"
+                },
+                "offset": 6587
+              }
+            }
+          }
+        },
+        {
+          "call_step": 319877,
+          "call_coordinate": "PLI.COM+0334",
+          "call_slot_writes": [
+            {
+              "address": 65525,
+              "old_value": null,
+              "new_value": 4
+            },
+            {
+              "address": 65524,
+              "old_value": null,
+              "new_value": 55
+            }
+          ],
+          "ret_step": 319904,
+          "ret_origin": null,
+          "ret_pc": 5,
+          "ret_slot_reads": [
+            {
+              "address": 65524,
+              "value": 55
+            },
+            {
+              "address": 65525,
+              "value": 4
+            }
+          ],
+          "resumed_pc": 1079,
+          "relation": {
+            "type": "hardware_frame_return",
+            "step_index": 319904,
+            "frame": {
+              "kind": "hardware_call",
+              "call_step": 319877,
+              "call_pc": 1076,
+              "callsite": {
+                "image": {
+                  "drive": 0,
+                  "user": 0,
+                  "name": "PLI.COM",
+                  "identity": "0:0:PLI.COM"
+                },
+                "offset": 820
+              },
+              "return_address": 1079,
+              "stack_slot": 65524,
+              "target_pc": 6843,
+              "target": {
+                "image": {
+                  "drive": 0,
+                  "user": 0,
+                  "name": "PLI.COM",
+                  "identity": "0:0:PLI.COM"
+                },
+                "offset": 6587
+              }
+            }
+          }
+        }
+      ],
+      "buffer_writers": [
+        [
+          7564,
+          228031,
+          "PLI.COM+0F06",
+          251
+        ],
+        [
+          7565,
+          228066,
+          "PLI.COM+0F06",
+          1
+        ],
+        [
+          7566,
+          228084,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7567,
+          232219,
+          "PLI.COM+0F06",
+          141
+        ],
+        [
+          7568,
+          232280,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7569,
+          240546,
+          "PLI.COM+0F06",
+          251
+        ],
+        [
+          7570,
+          240581,
+          "PLI.COM+0F06",
+          2
+        ],
+        [
+          7571,
+          240599,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7572,
+          241926,
+          "PLI.COM+0F06",
+          6
+        ],
+        [
+          7573,
+          241986,
+          "PLI.COM+0F06",
+          231
+        ],
+        [
+          7574,
+          242009,
+          "PLI.COM+0F06",
+          251
+        ],
+        [
+          7575,
+          242083,
+          "PLI.COM+0F06",
+          125
+        ],
+        [
+          7576,
+          242143,
+          "PLI.COM+0F06",
+          231
+        ],
+        [
+          7577,
+          242166,
+          "PLI.COM+0F06",
+          251
+        ],
+        [
+          7578,
+          242912,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7579,
+          242972,
+          "PLI.COM+0F06",
+          2
+        ],
+        [
+          7580,
+          242995,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7581,
+          254914,
+          "PLI.COM+0F06",
+          10
+        ],
+        [
+          7582,
+          254974,
+          "PLI.COM+0F06",
+          1
+        ],
+        [
+          7583,
+          254997,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7584,
+          255071,
+          "PLI.COM+0F06",
+          23
+        ],
+        [
+          7585,
+          255132,
+          "PLI.COM+0F06",
+          1
+        ],
+        [
+          7586,
+          255207,
+          "PLI.COM+0F06",
+          10
+        ],
+        [
+          7587,
+          255267,
+          "PLI.COM+0F06",
+          82
+        ],
+        [
+          7588,
+          255290,
+          "PLI.COM+0F06",
+          2
+        ],
+        [
+          7589,
+          255364,
+          "PLI.COM+0F06",
+          161
+        ],
+        [
+          7590,
+          255425,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7591,
+          255500,
+          "PLI.COM+0F06",
+          10
+        ],
+        [
+          7592,
+          255560,
+          "PLI.COM+0F06",
+          1
+        ],
+        [
+          7593,
+          255583,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7594,
+          255657,
+          "PLI.COM+0F06",
+          23
+        ],
+        [
+          7595,
+          255718,
+          "PLI.COM+0F06",
+          1
+        ],
+        [
+          7596,
+          255793,
+          "PLI.COM+0F06",
+          181
+        ],
+        [
+          7597,
+          255865,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7598,
+          255885,
+          "PLI.COM+0F06",
+          5
+        ],
+        [
+          7599,
+          255971,
+          "PLI.COM+0F06",
+          254
+        ],
+        [
+          7600,
+          270664,
+          "PLI.COM+0F06",
+          2
+        ],
+        [
+          7601,
+          270724,
+          "PLI.COM+0F06",
+          181
+        ],
+        [
+          7602,
+          270747,
+          "PLI.COM+0F06",
+          251
+        ],
+        [
+          7603,
+          270821,
+          "PLI.COM+0F06",
+          20
+        ],
+        [
+          7604,
+          270882,
+          "PLI.COM+0F06",
+          7
+        ],
+        [
+          7605,
+          270957,
+          "PLI.COM+0F06",
+          172
+        ],
+        [
+          7606,
+          271018,
+          "PLI.COM+0F06",
+          254
+        ],
+        [
+          7607,
+          271111,
+          "PLI.COM+0F06",
+          254
+        ],
+        [
+          7608,
+          271179,
+          "PLI.COM+0F06",
+          254
+        ],
+        [
+          7609,
+          271496,
+          "PLI.COM+0F06",
+          254
+        ],
+        [
+          7610,
+          272000,
+          "PLI.COM+0F06",
+          183
+        ],
+        [
+          7611,
+          272061,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7612,
+          277058,
+          "PLI.COM+0F06",
+          247
+        ],
+        [
+          7613,
+          281580,
+          "PLI.COM+0F06",
+          252
+        ],
+        [
+          7614,
+          281615,
+          "PLI.COM+0F06",
+          3
+        ],
+        [
+          7615,
+          281633,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7616,
+          283208,
+          "PLI.COM+0F06",
+          142
+        ],
+        [
+          7617,
+          283269,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7618,
+          287810,
+          "PLI.COM+0F06",
+          252
+        ],
+        [
+          7619,
+          287845,
+          "PLI.COM+0F06",
+          3
+        ],
+        [
+          7620,
+          287863,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7621,
+          287916,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7622,
+          318442,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7623,
+          318462,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7624,
+          318482,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7625,
+          318502,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7626,
+          318522,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7627,
+          318542,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7628,
+          318562,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7629,
+          318582,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7630,
+          318602,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7631,
+          318622,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7632,
+          318642,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7633,
+          318662,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7634,
+          318682,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7635,
+          318702,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7636,
+          318722,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7637,
+          318742,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7638,
+          318762,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7639,
+          318782,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7640,
+          318802,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7641,
+          318822,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7642,
+          318842,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7643,
+          318862,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7644,
+          318882,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7645,
+          318902,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7646,
+          318922,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7647,
+          318942,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7648,
+          318962,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7649,
+          318982,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7650,
+          319002,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7651,
+          319022,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7652,
+          319042,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7653,
+          319062,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7654,
+          319082,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7655,
+          319102,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7656,
+          319122,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7657,
+          319142,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7658,
+          319162,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7659,
+          319182,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7660,
+          319202,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7661,
+          319222,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7662,
+          319242,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7663,
+          319262,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7664,
+          319282,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7665,
+          319302,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7666,
+          319322,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7667,
+          319342,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7668,
+          319362,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7669,
+          319382,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7670,
+          319402,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7671,
+          319422,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7672,
+          319442,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7673,
+          319462,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7674,
+          319482,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7675,
+          319502,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7676,
+          319522,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7677,
+          319542,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7678,
+          319562,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7679,
+          319582,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7680,
+          319602,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7681,
+          319622,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7682,
+          319642,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7683,
+          319662,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7684,
+          319682,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7685,
+          319702,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7686,
+          319722,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7687,
+          319742,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7688,
+          319762,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7689,
+          319782,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7690,
+          319802,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7691,
+          319822,
+          "PLI.COM+0F06",
+          255
+        ]
+      ],
+      "bdos_calls": [
+        {
+          "step_index": 319864,
+          "function": 26,
+          "state": {
+            "a": 170,
+            "b": 29,
+            "c": 26,
+            "d": 29,
+            "e": 140,
+            "h": 253,
+            "l": 254,
+            "sp": 65524,
+            "pc": 5,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "dma": 128,
+          "fcb_address": null,
+          "fcb_bytes": null,
+          "frames": [
+            {
+              "kind": "hardware_call",
+              "call_step": 319837,
+              "call_pc": 1018,
+              "callsite": {
+                "image": {
+                  "drive": 0,
+                  "user": 0,
+                  "name": "PLI.COM",
+                  "identity": "0:0:PLI.COM"
+                },
+                "offset": 762
+              },
+              "return_address": 1021,
+              "stack_slot": 65524,
+              "target_pc": 6843,
+              "target": {
+                "image": {
+                  "drive": 0,
+                  "user": 0,
+                  "name": "PLI.COM",
+                  "identity": "0:0:PLI.COM"
+                },
+                "offset": 6587
+              }
+            },
+            {
+              "kind": "hardware_call",
+              "call_step": 319829,
+              "call_pc": 4118,
+              "callsite": {
+                "image": {
+                  "drive": 0,
+                  "user": 0,
+                  "name": "PLI.COM",
+                  "identity": "0:0:PLI.COM"
+                },
+                "offset": 3862
+              },
+              "return_address": 4121,
+              "stack_slot": 65526,
+              "target_pc": 1006,
+              "target": {
+                "image": {
+                  "drive": 0,
+                  "user": 0,
+                  "name": "PLI.COM",
+                  "identity": "0:0:PLI.COM"
+                },
+                "offset": 750
+              }
+            },
+            {
+              "kind": "hardware_call",
+              "call_step": 319814,
+              "call_pc": 4527,
+              "callsite": {
+                "image": {
+                  "drive": 0,
+                  "user": 0,
+                  "name": "PLI.COM",
+                  "identity": "0:0:PLI.COM"
+                },
+                "offset": 4271
+              },
+              "return_address": 4530,
+              "stack_slot": 65528,
+              "target_pc": 4086,
+              "target": {
+                "image": {
+                  "drive": 0,
+                  "user": 0,
+                  "name": "PLI.COM",
+                  "identity": "0:0:PLI.COM"
+                },
+                "offset": 3830
+              }
+            }
+          ],
+          "bridge_step": 319863,
+          "bridge_origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI.COM",
+              "identity": "0:0:PLI.COM"
+            },
+            "offset": 6612
+          }
+        },
+        {
+          "step_index": 319904,
+          "function": 21,
+          "state": {
+            "a": 170,
+            "b": 28,
+            "c": 21,
+            "d": 28,
+            "e": 162,
+            "h": 253,
+            "l": 254,
+            "sp": 65524,
+            "pc": 5,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "dma": 7564,
+          "fcb_address": 7330,
+          "fcb_bytes": "004D494E494D414C20494E54000080000000000000000000000000000000000000000000",
+          "frames": [
+            {
+              "kind": "hardware_call",
+              "call_step": 319877,
+              "call_pc": 1076,
+              "callsite": {
+                "image": {
+                  "drive": 0,
+                  "user": 0,
+                  "name": "PLI.COM",
+                  "identity": "0:0:PLI.COM"
+                },
+                "offset": 820
+              },
+              "return_address": 1079,
+              "stack_slot": 65524,
+              "target_pc": 6843,
+              "target": {
+                "image": {
+                  "drive": 0,
+                  "user": 0,
+                  "name": "PLI.COM",
+                  "identity": "0:0:PLI.COM"
+                },
+                "offset": 6587
+              }
+            },
+            {
+              "kind": "hardware_call",
+              "call_step": 319869,
+              "call_pc": 4129,
+              "callsite": {
+                "image": {
+                  "drive": 0,
+                  "user": 0,
+                  "name": "PLI.COM",
+                  "identity": "0:0:PLI.COM"
+                },
+                "offset": 3873
+              },
+              "return_address": 4132,
+              "stack_slot": 65526,
+              "target_pc": 1064,
+              "target": {
+                "image": {
+                  "drive": 0,
+                  "user": 0,
+                  "name": "PLI.COM",
+                  "identity": "0:0:PLI.COM"
+                },
+                "offset": 808
+              }
+            },
+            {
+              "kind": "hardware_call",
+              "call_step": 319814,
+              "call_pc": 4527,
+              "callsite": {
+                "image": {
+                  "drive": 0,
+                  "user": 0,
+                  "name": "PLI.COM",
+                  "identity": "0:0:PLI.COM"
+                },
+                "offset": 4271
+              },
+              "return_address": 4530,
+              "stack_slot": 65528,
+              "target_pc": 4086,
+              "target": {
+                "image": {
+                  "drive": 0,
+                  "user": 0,
+                  "name": "PLI.COM",
+                  "identity": "0:0:PLI.COM"
+                },
+                "offset": 3830
+              }
+            }
+          ],
+          "bridge_step": 319903,
+          "bridge_origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI.COM",
+              "identity": "0:0:PLI.COM"
+            },
+            "offset": 6612
+          }
+        }
+      ],
+      "bdos_resumes": [
+        {
+          "type": "bdos_resume",
+          "step_index": 319864,
+          "state": {
+            "a": 0,
+            "b": 0,
+            "c": 26,
+            "d": 29,
+            "e": 140,
+            "h": 0,
+            "l": 0,
+            "sp": 65524,
+            "pc": 5,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          }
+        },
+        {
+          "type": "bdos_resume",
+          "step_index": 319904,
+          "state": {
+            "a": 0,
+            "b": 0,
+            "c": 21,
+            "d": 28,
+            "e": 162,
+            "h": 0,
+            "l": 0,
+            "sp": 65524,
+            "pc": 5,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          }
+        }
+      ],
+      "host_effects": [
+        {
+          "type": "host_effect",
+          "step_index": 319864,
+          "effect": {
+            "kind": "register_write",
+            "register": "A",
+            "old_value": 170,
+            "new_value": 0
+          }
+        },
+        {
+          "type": "host_effect",
+          "step_index": 319864,
+          "effect": {
+            "kind": "register_write",
+            "register": "B",
+            "old_value": 29,
+            "new_value": 0
+          }
+        },
+        {
+          "type": "host_effect",
+          "step_index": 319864,
+          "effect": {
+            "kind": "register_write",
+            "register": "H",
+            "old_value": 253,
+            "new_value": 0
+          }
+        },
+        {
+          "type": "host_effect",
+          "step_index": 319864,
+          "effect": {
+            "kind": "register_write",
+            "register": "L",
+            "old_value": 254,
+            "new_value": 0
+          }
+        },
+        {
+          "type": "host_effect",
+          "step_index": 319904,
+          "effect": {
+            "kind": "register_write",
+            "register": "A",
+            "old_value": 170,
+            "new_value": 0
+          }
+        },
+        {
+          "type": "host_effect",
+          "step_index": 319904,
+          "effect": {
+            "kind": "register_write",
+            "register": "B",
+            "old_value": 28,
+            "new_value": 0
+          }
+        },
+        {
+          "type": "host_effect",
+          "step_index": 319904,
+          "effect": {
+            "kind": "register_write",
+            "register": "H",
+            "old_value": 253,
+            "new_value": 0
+          }
+        },
+        {
+          "type": "host_effect",
+          "step_index": 319904,
+          "effect": {
+            "kind": "register_write",
+            "register": "L",
+            "old_value": 254,
+            "new_value": 0
+          }
+        },
+        {
+          "type": "host_effect",
+          "step_index": 319904,
+          "effect": {
+            "kind": "memory_write",
+            "address": 7342,
+            "old_value": 0,
+            "new_value": 0,
+            "cause": "fcb_update"
+          }
+        },
+        {
+          "type": "host_effect",
+          "step_index": 319904,
+          "effect": {
+            "kind": "memory_write",
+            "address": 7344,
+            "old_value": 128,
+            "new_value": 0,
+            "cause": "fcb_update"
+          }
+        },
+        {
+          "type": "host_effect",
+          "step_index": 319904,
+          "effect": {
+            "kind": "memory_write",
+            "address": 7345,
+            "old_value": 0,
+            "new_value": 1,
+            "cause": "fcb_update"
+          }
+        },
+        {
+          "type": "host_effect",
+          "step_index": 319904,
+          "effect": {
+            "kind": "memory_write",
+            "address": 7362,
+            "old_value": 0,
+            "new_value": 1,
+            "cause": "fcb_update"
+          }
+        }
+      ],
+      "file_events": [
+        {
+          "type": "file_operation",
+          "step_index": 319904,
+          "operation": "sequential_write",
+          "file": {
+            "drive": 0,
+            "user": 0,
+            "name": "MINIMAL.INT",
+            "identity": "0:0:MINIMAL.INT"
+          },
+          "succeeded": true,
+          "record": 0
+        }
+      ],
+      "record": {
+        "type": "bdos_record",
+        "step_index": 319904,
+        "operation": "write_record",
+        "file": {
+          "drive": 0,
+          "user": 0,
+          "name": "MINIMAL.INT",
+          "identity": "0:0:MINIMAL.INT"
+        },
+        "record": 0,
+        "dma": 7564,
+        "data": "FB01008D00FB020006E7FB7DE7FB0002000A010017010A5202A1000A01001701B50005FE02B5FB1407ACFEFEFEFEB700F7FC03008E00FC0300FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF"
+      },
+      "post_host_boundaries": [
+        {
+          "step": 319864,
+          "post_host_state": {
+            "a": 0,
+            "b": 0,
+            "c": 26,
+            "d": 29,
+            "e": 140,
+            "h": 0,
+            "l": 0,
+            "sp": 65524,
+            "pc": 5,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "index": 128,
+          "buffer_hex": "FB01008D00FB020006E7FB7DE7FB0002000A010017010A5202A1000A01001701B50005FE02B5FB1407ACFEFEFEFEB700F7FC03008E00FC0300FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+          "FCB_hex": "004D494E494D414C20494E54000080000000000000000000000000000000000000000000"
+        },
+        {
+          "step": 319904,
+          "post_host_state": {
+            "a": 0,
+            "b": 0,
+            "c": 21,
+            "d": 28,
+            "e": 162,
+            "h": 0,
+            "l": 0,
+            "sp": 65524,
+            "pc": 5,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "index": 0,
+          "buffer_hex": "FB01008D00FB020006E7FB7DE7FB0002000A010017010A5202A1000A01001701B50005FE02B5FB1407ACFEFEFEFEB700F7FC03008E00FC0300FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+          "FCB_hex": "004D494E494D414C20494E54000000010000000000000000000000000000000001000000"
+        }
+      ],
+      "guards": [
+        {
+          "signature_comparisons": [
+            {
+              "producer_step": 319843,
+              "compare_step": 319844,
+              "left_read": {
+                "address": 5,
+                "value": 201
+              },
+              "right_read": {
+                "address": 8540,
+                "value": 201
+              }
+            },
+            {
+              "producer_step": 319848,
+              "compare_step": 319849,
+              "left_read": {
+                "address": 6,
+                "value": 254
+              },
+              "right_read": {
+                "address": 8541,
+                "value": 254
+              }
+            },
+            {
+              "producer_step": 319853,
+              "compare_step": 319854,
+              "left_read": {
+                "address": 7,
+                "value": 255
+              },
+              "right_read": {
+                "address": 8542,
+                "value": 255
+              }
+            }
+          ],
+          "bdos_step": 319864,
+          "signature_equal_return": {
+            "a": 255,
+            "b": 29,
+            "c": 26,
+            "d": 0,
+            "e": 7,
+            "h": 33,
+            "l": 94,
+            "sp": 65520,
+            "pc": 6854,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "marker_read": {
+            "address": 65022,
+            "value": 170
+          },
+          "guard_branches": [
+            319856,
+            319860
+          ]
+        },
+        {
+          "signature_comparisons": [
+            {
+              "producer_step": 319883,
+              "compare_step": 319884,
+              "left_read": {
+                "address": 5,
+                "value": 201
+              },
+              "right_read": {
+                "address": 8540,
+                "value": 201
+              }
+            },
+            {
+              "producer_step": 319888,
+              "compare_step": 319889,
+              "left_read": {
+                "address": 6,
+                "value": 254
+              },
+              "right_read": {
+                "address": 8541,
+                "value": 254
+              }
+            },
+            {
+              "producer_step": 319893,
+              "compare_step": 319894,
+              "left_read": {
+                "address": 7,
+                "value": 255
+              },
+              "right_read": {
+                "address": 8542,
+                "value": 255
+              }
+            }
+          ],
+          "bdos_step": 319904,
+          "signature_equal_return": {
+            "a": 255,
+            "b": 28,
+            "c": 21,
+            "d": 0,
+            "e": 7,
+            "h": 33,
+            "l": 94,
+            "sp": 65520,
+            "pc": 6854,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "marker_read": {
+            "address": 65022,
+            "value": 170
+          },
+          "guard_branches": [
+            319896,
+            319900
+          ]
+        }
+      ],
+      "final_stack_writers": [
+        {
+          "address": 65518,
+          "step": 319882,
+          "coordinate": "PLI.COM+19C3",
+          "value": 198
+        },
+        {
+          "address": 65519,
+          "step": 319882,
+          "coordinate": "PLI.COM+19C3",
+          "value": 26
+        },
+        {
+          "address": 65520,
+          "step": 319879,
+          "coordinate": "PLI.COM+19BC",
+          "value": 162
+        },
+        {
+          "address": 65521,
+          "step": 319879,
+          "coordinate": "PLI.COM+19BC",
+          "value": 28
+        },
+        {
+          "address": 65522,
+          "step": 319878,
+          "coordinate": "PLI.COM+19BB",
+          "value": 21
+        },
+        {
+          "address": 65523,
+          "step": 319878,
+          "coordinate": "PLI.COM+19BB",
+          "value": 28
+        },
+        {
+          "address": 65524,
+          "step": 319877,
+          "coordinate": "PLI.COM+0334",
+          "value": 55
+        },
+        {
+          "address": 65525,
+          "step": 319877,
+          "coordinate": "PLI.COM+0334",
+          "value": 4
+        },
+        {
+          "address": 65526,
+          "step": 319869,
+          "coordinate": "PLI.COM+0F21",
+          "value": 36
+        },
+        {
+          "address": 65527,
+          "step": 319869,
+          "coordinate": "PLI.COM+0F21",
+          "value": 16
+        }
+      ],
+      "output": {
+        "a": 0,
+        "b": 0,
+        "c": 21,
+        "d": 28,
+        "e": 162,
+        "h": 0,
+        "l": 0,
+        "sp": 65530,
+        "pc": 4530,
+        "flags": {
+          "sign": false,
+          "zero": true,
+          "auxiliary_carry": true,
+          "parity": true,
+          "carry": false
+        }
+      }
+    },
+    {
+      "source": "FIZZBUZ",
+      "entry_step": 478275,
+      "caller": "PLI1.OVL+7DCC",
+      "append_step": 478282,
+      "index80_step": 478285,
+      "dma_wrapper_call_step": 478289,
+      "index_reset_step": 478327,
+      "write_wrapper_call_step": 478329,
+      "status_compare_step": 478366,
+      "return_step": 478368,
+      "bridge_returns": [
+        {
+          "call_step": 478297,
+          "call_coordinate": "PLI.COM+02FA",
+          "call_slot_writes": [
+            {
+              "address": 65468,
+              "old_value": null,
+              "new_value": 3
+            },
+            {
+              "address": 65467,
+              "old_value": null,
+              "new_value": 253
+            }
+          ],
+          "ret_step": 478324,
+          "ret_origin": null,
+          "ret_pc": 5,
+          "ret_slot_reads": [
+            {
+              "address": 65467,
+              "value": 253
+            },
+            {
+              "address": 65468,
+              "value": 3
+            }
+          ],
+          "resumed_pc": 1021,
+          "relation": {
+            "type": "hardware_frame_return",
+            "step_index": 478324,
+            "frame": {
+              "kind": "hardware_call",
+              "call_step": 478297,
+              "call_pc": 1018,
+              "callsite": {
+                "image": {
+                  "drive": 0,
+                  "user": 0,
+                  "name": "PLI.COM",
+                  "identity": "0:0:PLI.COM"
+                },
+                "offset": 762
+              },
+              "return_address": 1021,
+              "stack_slot": 65467,
+              "target_pc": 6843,
+              "target": {
+                "image": {
+                  "drive": 0,
+                  "user": 0,
+                  "name": "PLI.COM",
+                  "identity": "0:0:PLI.COM"
+                },
+                "offset": 6587
+              }
+            }
+          }
+        },
+        {
+          "call_step": 478337,
+          "call_coordinate": "PLI.COM+0334",
+          "call_slot_writes": [
+            {
+              "address": 65468,
+              "old_value": null,
+              "new_value": 4
+            },
+            {
+              "address": 65467,
+              "old_value": null,
+              "new_value": 55
+            }
+          ],
+          "ret_step": 478364,
+          "ret_origin": null,
+          "ret_pc": 5,
+          "ret_slot_reads": [
+            {
+              "address": 65467,
+              "value": 55
+            },
+            {
+              "address": 65468,
+              "value": 4
+            }
+          ],
+          "resumed_pc": 1079,
+          "relation": {
+            "type": "hardware_frame_return",
+            "step_index": 478364,
+            "frame": {
+              "kind": "hardware_call",
+              "call_step": 478337,
+              "call_pc": 1076,
+              "callsite": {
+                "image": {
+                  "drive": 0,
+                  "user": 0,
+                  "name": "PLI.COM",
+                  "identity": "0:0:PLI.COM"
+                },
+                "offset": 820
+              },
+              "return_address": 1079,
+              "stack_slot": 65467,
+              "target_pc": 6843,
+              "target": {
+                "image": {
+                  "drive": 0,
+                  "user": 0,
+                  "name": "PLI.COM",
+                  "identity": "0:0:PLI.COM"
+                },
+                "offset": 6587
+              }
+            }
+          }
+        }
+      ],
+      "buffer_writers": [
+        [
+          7564,
+          332051,
+          "PLI.COM+0F06",
+          251
+        ],
+        [
+          7565,
+          332086,
+          "PLI.COM+0F06",
+          1
+        ],
+        [
+          7566,
+          332104,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7567,
+          336239,
+          "PLI.COM+0F06",
+          141
+        ],
+        [
+          7568,
+          336300,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7569,
+          342305,
+          "PLI.COM+0F06",
+          251
+        ],
+        [
+          7570,
+          342340,
+          "PLI.COM+0F06",
+          2
+        ],
+        [
+          7571,
+          342358,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7572,
+          343685,
+          "PLI.COM+0F06",
+          6
+        ],
+        [
+          7573,
+          343745,
+          "PLI.COM+0F06",
+          220
+        ],
+        [
+          7574,
+          343768,
+          "PLI.COM+0F06",
+          251
+        ],
+        [
+          7575,
+          343842,
+          "PLI.COM+0F06",
+          125
+        ],
+        [
+          7576,
+          343902,
+          "PLI.COM+0F06",
+          220
+        ],
+        [
+          7577,
+          343925,
+          "PLI.COM+0F06",
+          251
+        ],
+        [
+          7578,
+          353554,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7579,
+          353614,
+          "PLI.COM+0F06",
+          3
+        ],
+        [
+          7580,
+          353637,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7581,
+          354641,
+          "PLI.COM+0F06",
+          254
+        ],
+        [
+          7582,
+          363609,
+          "PLI.COM+0F06",
+          5
+        ],
+        [
+          7583,
+          363669,
+          "PLI.COM+0F06",
+          243
+        ],
+        [
+          7584,
+          363692,
+          "PLI.COM+0F06",
+          251
+        ],
+        [
+          7585,
+          363766,
+          "PLI.COM+0F06",
+          10
+        ],
+        [
+          7586,
+          363826,
+          "PLI.COM+0F06",
+          1
+        ],
+        [
+          7587,
+          363849,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7588,
+          363923,
+          "PLI.COM+0F06",
+          23
+        ],
+        [
+          7589,
+          363984,
+          "PLI.COM+0F06",
+          1
+        ],
+        [
+          7590,
+          364059,
+          "PLI.COM+0F06",
+          15
+        ],
+        [
+          7591,
+          364120,
+          "PLI.COM+0F06",
+          15
+        ],
+        [
+          7592,
+          377258,
+          "PLI.COM+0F06",
+          168
+        ],
+        [
+          7593,
+          377319,
+          "PLI.COM+0F06",
+          1
+        ],
+        [
+          7594,
+          377394,
+          "PLI.COM+0F06",
+          5
+        ],
+        [
+          7595,
+          377454,
+          "PLI.COM+0F06",
+          243
+        ],
+        [
+          7596,
+          377477,
+          "PLI.COM+0F06",
+          251
+        ],
+        [
+          7597,
+          377551,
+          "PLI.COM+0F06",
+          23
+        ],
+        [
+          7598,
+          377612,
+          "PLI.COM+0F06",
+          15
+        ],
+        [
+          7599,
+          377687,
+          "PLI.COM+0F06",
+          10
+        ],
+        [
+          7600,
+          377747,
+          "PLI.COM+0F06",
+          15
+        ],
+        [
+          7601,
+          377770,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7602,
+          377844,
+          "PLI.COM+0F06",
+          23
+        ],
+        [
+          7603,
+          377905,
+          "PLI.COM+0F06",
+          4
+        ],
+        [
+          7604,
+          377980,
+          "PLI.COM+0F06",
+          61
+        ],
+        [
+          7605,
+          378041,
+          "PLI.COM+0F06",
+          1
+        ],
+        [
+          7606,
+          378116,
+          "PLI.COM+0F06",
+          106
+        ],
+        [
+          7607,
+          378177,
+          "PLI.COM+0F06",
+          1
+        ],
+        [
+          7608,
+          383459,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7609,
+          383519,
+          "PLI.COM+0F06",
+          4
+        ],
+        [
+          7610,
+          383542,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7611,
+          407318,
+          "PLI.COM+0F06",
+          5
+        ],
+        [
+          7612,
+          407378,
+          "PLI.COM+0F06",
+          243
+        ],
+        [
+          7613,
+          407401,
+          "PLI.COM+0F06",
+          251
+        ],
+        [
+          7614,
+          407475,
+          "PLI.COM+0F06",
+          23
+        ],
+        [
+          7615,
+          407536,
+          "PLI.COM+0F06",
+          15
+        ],
+        [
+          7616,
+          407611,
+          "PLI.COM+0F06",
+          10
+        ],
+        [
+          7617,
+          407671,
+          "PLI.COM+0F06",
+          15
+        ],
+        [
+          7618,
+          407694,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7619,
+          407768,
+          "PLI.COM+0F06",
+          23
+        ],
+        [
+          7620,
+          407829,
+          "PLI.COM+0F06",
+          4
+        ],
+        [
+          7621,
+          407904,
+          "PLI.COM+0F06",
+          209
+        ],
+        [
+          7622,
+          407976,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7623,
+          407996,
+          "PLI.COM+0F06",
+          15
+        ],
+        [
+          7624,
+          408071,
+          "PLI.COM+0F06",
+          10
+        ],
+        [
+          7625,
+          408131,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7626,
+          408154,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7627,
+          408228,
+          "PLI.COM+0F06",
+          23
+        ],
+        [
+          7628,
+          408289,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7629,
+          408364,
+          "PLI.COM+0F06",
+          48
+        ],
+        [
+          7630,
+          408425,
+          "PLI.COM+0F06",
+          1
+        ],
+        [
+          7631,
+          408500,
+          "PLI.COM+0F06",
+          108
+        ],
+        [
+          7632,
+          408561,
+          "PLI.COM+0F06",
+          1
+        ],
+        [
+          7633,
+          416211,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7634,
+          416271,
+          "PLI.COM+0F06",
+          5
+        ],
+        [
+          7635,
+          416294,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7636,
+          428377,
+          "PLI.COM+0F06",
+          10
+        ],
+        [
+          7637,
+          428437,
+          "PLI.COM+0F06",
+          1
+        ],
+        [
+          7638,
+          428460,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7639,
+          428534,
+          "PLI.COM+0F06",
+          23
+        ],
+        [
+          7640,
+          428595,
+          "PLI.COM+0F06",
+          1
+        ],
+        [
+          7641,
+          428670,
+          "PLI.COM+0F06",
+          10
+        ],
+        [
+          7642,
+          428730,
+          "PLI.COM+0F06",
+          82
+        ],
+        [
+          7643,
+          428753,
+          "PLI.COM+0F06",
+          2
+        ],
+        [
+          7644,
+          428827,
+          "PLI.COM+0F06",
+          161
+        ],
+        [
+          7645,
+          428888,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7646,
+          428963,
+          "PLI.COM+0F06",
+          10
+        ],
+        [
+          7647,
+          429023,
+          "PLI.COM+0F06",
+          1
+        ],
+        [
+          7648,
+          429046,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7649,
+          429120,
+          "PLI.COM+0F06",
+          23
+        ],
+        [
+          7650,
+          429181,
+          "PLI.COM+0F06",
+          1
+        ],
+        [
+          7651,
+          429256,
+          "PLI.COM+0F06",
+          181
+        ],
+        [
+          7652,
+          429328,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7653,
+          429348,
+          "PLI.COM+0F06",
+          5
+        ],
+        [
+          7654,
+          429434,
+          "PLI.COM+0F06",
+          254
+        ],
+        [
+          7655,
+          444634,
+          "PLI.COM+0F06",
+          2
+        ],
+        [
+          7656,
+          444694,
+          "PLI.COM+0F06",
+          121
+        ],
+        [
+          7657,
+          444717,
+          "PLI.COM+0F06",
+          251
+        ],
+        [
+          7658,
+          444791,
+          "PLI.COM+0F06",
+          20
+        ],
+        [
+          7659,
+          444852,
+          "PLI.COM+0F06",
+          8
+        ],
+        [
+          7660,
+          444927,
+          "PLI.COM+0F06",
+          172
+        ],
+        [
+          7661,
+          444988,
+          "PLI.COM+0F06",
+          254
+        ],
+        [
+          7662,
+          445081,
+          "PLI.COM+0F06",
+          254
+        ],
+        [
+          7663,
+          445149,
+          "PLI.COM+0F06",
+          254
+        ],
+        [
+          7664,
+          445466,
+          "PLI.COM+0F06",
+          254
+        ],
+        [
+          7665,
+          445970,
+          "PLI.COM+0F06",
+          183
+        ],
+        [
+          7666,
+          446031,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7667,
+          452804,
+          "PLI.COM+0F06",
+          248
+        ],
+        [
+          7668,
+          453215,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7669,
+          453275,
+          "PLI.COM+0F06",
+          6
+        ],
+        [
+          7670,
+          453298,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7671,
+          477100,
+          "PLI.COM+0F06",
+          5
+        ],
+        [
+          7672,
+          477160,
+          "PLI.COM+0F06",
+          243
+        ],
+        [
+          7673,
+          477183,
+          "PLI.COM+0F06",
+          251
+        ],
+        [
+          7674,
+          477257,
+          "PLI.COM+0F06",
+          23
+        ],
+        [
+          7675,
+          477318,
+          "PLI.COM+0F06",
+          15
+        ],
+        [
+          7676,
+          477393,
+          "PLI.COM+0F06",
+          10
+        ],
+        [
+          7677,
+          477453,
+          "PLI.COM+0F06",
+          3
+        ],
+        [
+          7678,
+          477476,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7679,
+          477550,
+          "PLI.COM+0F06",
+          23
+        ],
+        [
+          7680,
+          477611,
+          "PLI.COM+0F06",
+          2
+        ],
+        [
+          7681,
+          477686,
+          "PLI.COM+0F06",
+          209
+        ],
+        [
+          7682,
+          477758,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7683,
+          477778,
+          "PLI.COM+0F06",
+          15
+        ],
+        [
+          7684,
+          477853,
+          "PLI.COM+0F06",
+          10
+        ],
+        [
+          7685,
+          477913,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7686,
+          477936,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7687,
+          478010,
+          "PLI.COM+0F06",
+          23
+        ],
+        [
+          7688,
+          478071,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7689,
+          478146,
+          "PLI.COM+0F06",
+          48
+        ],
+        [
+          7690,
+          478207,
+          "PLI.COM+0F06",
+          1
+        ],
+        [
+          7691,
+          478282,
+          "PLI.COM+0F06",
+          108
+        ]
+      ],
+      "bdos_calls": [
+        {
+          "step_index": 478324,
+          "function": 26,
+          "state": {
+            "a": 170,
+            "b": 29,
+            "c": 26,
+            "d": 29,
+            "e": 140,
+            "h": 253,
+            "l": 254,
+            "sp": 65467,
+            "pc": 5,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "dma": 64894,
+          "fcb_address": null,
+          "fcb_bytes": null,
+          "frames": [
+            {
+              "kind": "hardware_call",
+              "call_step": 478297,
+              "call_pc": 1018,
+              "callsite": {
+                "image": {
+                  "drive": 0,
+                  "user": 0,
+                  "name": "PLI.COM",
+                  "identity": "0:0:PLI.COM"
+                },
+                "offset": 762
+              },
+              "return_address": 1021,
+              "stack_slot": 65467,
+              "target_pc": 6843,
+              "target": {
+                "image": {
+                  "drive": 0,
+                  "user": 0,
+                  "name": "PLI.COM",
+                  "identity": "0:0:PLI.COM"
+                },
+                "offset": 6587
+              }
+            },
+            {
+              "kind": "hardware_call",
+              "call_step": 478289,
+              "call_pc": 4118,
+              "callsite": {
+                "image": {
+                  "drive": 0,
+                  "user": 0,
+                  "name": "PLI.COM",
+                  "identity": "0:0:PLI.COM"
+                },
+                "offset": 3862
+              },
+              "return_address": 4121,
+              "stack_slot": 65469,
+              "target_pc": 1006,
+              "target": {
+                "image": {
+                  "drive": 0,
+                  "user": 0,
+                  "name": "PLI.COM",
+                  "identity": "0:0:PLI.COM"
+                },
+                "offset": 750
+              }
+            },
+            {
+              "kind": "hardware_call",
+              "call_step": 478274,
+              "call_pc": 40908,
+              "callsite": {
+                "image": {
+                  "drive": 0,
+                  "user": 0,
+                  "name": "PLI1.OVL",
+                  "identity": "0:0:PLI1.OVL"
+                },
+                "offset": 32204
+              },
+              "return_address": 40911,
+              "stack_slot": 65471,
+              "target_pc": 4086,
+              "target": {
+                "image": {
+                  "drive": 0,
+                  "user": 0,
+                  "name": "PLI.COM",
+                  "identity": "0:0:PLI.COM"
+                },
+                "offset": 3830
+              }
+            }
+          ],
+          "bridge_step": 478323,
+          "bridge_origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI.COM",
+              "identity": "0:0:PLI.COM"
+            },
+            "offset": 6612
+          }
+        },
+        {
+          "step_index": 478364,
+          "function": 21,
+          "state": {
+            "a": 170,
+            "b": 28,
+            "c": 21,
+            "d": 28,
+            "e": 162,
+            "h": 253,
+            "l": 254,
+            "sp": 65467,
+            "pc": 5,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "dma": 7564,
+          "fcb_address": 7330,
+          "fcb_bytes": "0046495A5A42555A20494E54000080000000000000000000000000000000000000000000",
+          "frames": [
+            {
+              "kind": "hardware_call",
+              "call_step": 478337,
+              "call_pc": 1076,
+              "callsite": {
+                "image": {
+                  "drive": 0,
+                  "user": 0,
+                  "name": "PLI.COM",
+                  "identity": "0:0:PLI.COM"
+                },
+                "offset": 820
+              },
+              "return_address": 1079,
+              "stack_slot": 65467,
+              "target_pc": 6843,
+              "target": {
+                "image": {
+                  "drive": 0,
+                  "user": 0,
+                  "name": "PLI.COM",
+                  "identity": "0:0:PLI.COM"
+                },
+                "offset": 6587
+              }
+            },
+            {
+              "kind": "hardware_call",
+              "call_step": 478329,
+              "call_pc": 4129,
+              "callsite": {
+                "image": {
+                  "drive": 0,
+                  "user": 0,
+                  "name": "PLI.COM",
+                  "identity": "0:0:PLI.COM"
+                },
+                "offset": 3873
+              },
+              "return_address": 4132,
+              "stack_slot": 65469,
+              "target_pc": 1064,
+              "target": {
+                "image": {
+                  "drive": 0,
+                  "user": 0,
+                  "name": "PLI.COM",
+                  "identity": "0:0:PLI.COM"
+                },
+                "offset": 808
+              }
+            },
+            {
+              "kind": "hardware_call",
+              "call_step": 478274,
+              "call_pc": 40908,
+              "callsite": {
+                "image": {
+                  "drive": 0,
+                  "user": 0,
+                  "name": "PLI1.OVL",
+                  "identity": "0:0:PLI1.OVL"
+                },
+                "offset": 32204
+              },
+              "return_address": 40911,
+              "stack_slot": 65471,
+              "target_pc": 4086,
+              "target": {
+                "image": {
+                  "drive": 0,
+                  "user": 0,
+                  "name": "PLI.COM",
+                  "identity": "0:0:PLI.COM"
+                },
+                "offset": 3830
+              }
+            }
+          ],
+          "bridge_step": 478363,
+          "bridge_origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI.COM",
+              "identity": "0:0:PLI.COM"
+            },
+            "offset": 6612
+          }
+        }
+      ],
+      "bdos_resumes": [
+        {
+          "type": "bdos_resume",
+          "step_index": 478324,
+          "state": {
+            "a": 0,
+            "b": 0,
+            "c": 26,
+            "d": 29,
+            "e": 140,
+            "h": 0,
+            "l": 0,
+            "sp": 65467,
+            "pc": 5,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          }
+        },
+        {
+          "type": "bdos_resume",
+          "step_index": 478364,
+          "state": {
+            "a": 0,
+            "b": 0,
+            "c": 21,
+            "d": 28,
+            "e": 162,
+            "h": 0,
+            "l": 0,
+            "sp": 65467,
+            "pc": 5,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          }
+        }
+      ],
+      "host_effects": [
+        {
+          "type": "host_effect",
+          "step_index": 478324,
+          "effect": {
+            "kind": "register_write",
+            "register": "A",
+            "old_value": 170,
+            "new_value": 0
+          }
+        },
+        {
+          "type": "host_effect",
+          "step_index": 478324,
+          "effect": {
+            "kind": "register_write",
+            "register": "B",
+            "old_value": 29,
+            "new_value": 0
+          }
+        },
+        {
+          "type": "host_effect",
+          "step_index": 478324,
+          "effect": {
+            "kind": "register_write",
+            "register": "H",
+            "old_value": 253,
+            "new_value": 0
+          }
+        },
+        {
+          "type": "host_effect",
+          "step_index": 478324,
+          "effect": {
+            "kind": "register_write",
+            "register": "L",
+            "old_value": 254,
+            "new_value": 0
+          }
+        },
+        {
+          "type": "host_effect",
+          "step_index": 478364,
+          "effect": {
+            "kind": "register_write",
+            "register": "A",
+            "old_value": 170,
+            "new_value": 0
+          }
+        },
+        {
+          "type": "host_effect",
+          "step_index": 478364,
+          "effect": {
+            "kind": "register_write",
+            "register": "B",
+            "old_value": 28,
+            "new_value": 0
+          }
+        },
+        {
+          "type": "host_effect",
+          "step_index": 478364,
+          "effect": {
+            "kind": "register_write",
+            "register": "H",
+            "old_value": 253,
+            "new_value": 0
+          }
+        },
+        {
+          "type": "host_effect",
+          "step_index": 478364,
+          "effect": {
+            "kind": "register_write",
+            "register": "L",
+            "old_value": 254,
+            "new_value": 0
+          }
+        },
+        {
+          "type": "host_effect",
+          "step_index": 478364,
+          "effect": {
+            "kind": "memory_write",
+            "address": 7342,
+            "old_value": 0,
+            "new_value": 0,
+            "cause": "fcb_update"
+          }
+        },
+        {
+          "type": "host_effect",
+          "step_index": 478364,
+          "effect": {
+            "kind": "memory_write",
+            "address": 7344,
+            "old_value": 128,
+            "new_value": 0,
+            "cause": "fcb_update"
+          }
+        },
+        {
+          "type": "host_effect",
+          "step_index": 478364,
+          "effect": {
+            "kind": "memory_write",
+            "address": 7345,
+            "old_value": 0,
+            "new_value": 1,
+            "cause": "fcb_update"
+          }
+        },
+        {
+          "type": "host_effect",
+          "step_index": 478364,
+          "effect": {
+            "kind": "memory_write",
+            "address": 7362,
+            "old_value": 0,
+            "new_value": 1,
+            "cause": "fcb_update"
+          }
+        }
+      ],
+      "file_events": [
+        {
+          "type": "file_operation",
+          "step_index": 478364,
+          "operation": "sequential_write",
+          "file": {
+            "drive": 0,
+            "user": 0,
+            "name": "FIZZBUZ.INT",
+            "identity": "0:0:FIZZBUZ.INT"
+          },
+          "succeeded": true,
+          "record": 0
+        }
+      ],
+      "record": {
+        "type": "bdos_record",
+        "step_index": 478364,
+        "operation": "write_record",
+        "file": {
+          "drive": 0,
+          "user": 0,
+          "name": "FIZZBUZ.INT",
+          "identity": "0:0:FIZZBUZ.INT"
+        },
+        "record": 0,
+        "dma": 7564,
+        "data": "FB01008D00FB020006DCFB7DDCFB000300FE05F3FB0A010017010F0FA80105F3FB170F0A0F0017043D016A0100040005F3FB170F0A0F001704D1000F0A0000170030016C010005000A010017010A5202A1000A01001701B50005FE0279FB1408ACFEFEFEFEB700F800060005F3FB170F0A03001702D1000F0A0000170030016C"
+      },
+      "post_host_boundaries": [
+        {
+          "step": 478324,
+          "post_host_state": {
+            "a": 0,
+            "b": 0,
+            "c": 26,
+            "d": 29,
+            "e": 140,
+            "h": 0,
+            "l": 0,
+            "sp": 65467,
+            "pc": 5,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "index": 128,
+          "buffer_hex": "FB01008D00FB020006DCFB7DDCFB000300FE05F3FB0A010017010F0FA80105F3FB170F0A0F0017043D016A0100040005F3FB170F0A0F001704D1000F0A0000170030016C010005000A010017010A5202A1000A01001701B50005FE0279FB1408ACFEFEFEFEB700F800060005F3FB170F0A03001702D1000F0A0000170030016C",
+          "FCB_hex": "0046495A5A42555A20494E54000080000000000000000000000000000000000000000000"
+        },
+        {
+          "step": 478364,
+          "post_host_state": {
+            "a": 0,
+            "b": 0,
+            "c": 21,
+            "d": 28,
+            "e": 162,
+            "h": 0,
+            "l": 0,
+            "sp": 65467,
+            "pc": 5,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "index": 0,
+          "buffer_hex": "FB01008D00FB020006DCFB7DDCFB000300FE05F3FB0A010017010F0FA80105F3FB170F0A0F0017043D016A0100040005F3FB170F0A0F001704D1000F0A0000170030016C010005000A010017010A5202A1000A01001701B50005FE0279FB1408ACFEFEFEFEB700F800060005F3FB170F0A03001702D1000F0A0000170030016C",
+          "FCB_hex": "0046495A5A42555A20494E54000000010000000000000000000000000000000001000000"
+        }
+      ],
+      "guards": [
+        {
+          "signature_comparisons": [
+            {
+              "producer_step": 478303,
+              "compare_step": 478304,
+              "left_read": {
+                "address": 5,
+                "value": 201
+              },
+              "right_read": {
+                "address": 8540,
+                "value": 201
+              }
+            },
+            {
+              "producer_step": 478308,
+              "compare_step": 478309,
+              "left_read": {
+                "address": 6,
+                "value": 254
+              },
+              "right_read": {
+                "address": 8541,
+                "value": 254
+              }
+            },
+            {
+              "producer_step": 478313,
+              "compare_step": 478314,
+              "left_read": {
+                "address": 7,
+                "value": 255
+              },
+              "right_read": {
+                "address": 8542,
+                "value": 255
+              }
+            }
+          ],
+          "bdos_step": 478324,
+          "signature_equal_return": {
+            "a": 255,
+            "b": 29,
+            "c": 26,
+            "d": 0,
+            "e": 7,
+            "h": 33,
+            "l": 94,
+            "sp": 65463,
+            "pc": 6854,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "marker_read": {
+            "address": 65022,
+            "value": 170
+          },
+          "guard_branches": [
+            478316,
+            478320
+          ]
+        },
+        {
+          "signature_comparisons": [
+            {
+              "producer_step": 478343,
+              "compare_step": 478344,
+              "left_read": {
+                "address": 5,
+                "value": 201
+              },
+              "right_read": {
+                "address": 8540,
+                "value": 201
+              }
+            },
+            {
+              "producer_step": 478348,
+              "compare_step": 478349,
+              "left_read": {
+                "address": 6,
+                "value": 254
+              },
+              "right_read": {
+                "address": 8541,
+                "value": 254
+              }
+            },
+            {
+              "producer_step": 478353,
+              "compare_step": 478354,
+              "left_read": {
+                "address": 7,
+                "value": 255
+              },
+              "right_read": {
+                "address": 8542,
+                "value": 255
+              }
+            }
+          ],
+          "bdos_step": 478364,
+          "signature_equal_return": {
+            "a": 255,
+            "b": 28,
+            "c": 21,
+            "d": 0,
+            "e": 7,
+            "h": 33,
+            "l": 94,
+            "sp": 65463,
+            "pc": 6854,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "marker_read": {
+            "address": 65022,
+            "value": 170
+          },
+          "guard_branches": [
+            478356,
+            478360
+          ]
+        }
+      ],
+      "final_stack_writers": [
+        {
+          "address": 65461,
+          "step": 478342,
+          "coordinate": "PLI.COM+19C3",
+          "value": 198
+        },
+        {
+          "address": 65462,
+          "step": 478342,
+          "coordinate": "PLI.COM+19C3",
+          "value": 26
+        },
+        {
+          "address": 65463,
+          "step": 478339,
+          "coordinate": "PLI.COM+19BC",
+          "value": 162
+        },
+        {
+          "address": 65464,
+          "step": 478339,
+          "coordinate": "PLI.COM+19BC",
+          "value": 28
+        },
+        {
+          "address": 65465,
+          "step": 478338,
+          "coordinate": "PLI.COM+19BB",
+          "value": 21
+        },
+        {
+          "address": 65466,
+          "step": 478338,
+          "coordinate": "PLI.COM+19BB",
+          "value": 28
+        },
+        {
+          "address": 65467,
+          "step": 478337,
+          "coordinate": "PLI.COM+0334",
+          "value": 55
+        },
+        {
+          "address": 65468,
+          "step": 478337,
+          "coordinate": "PLI.COM+0334",
+          "value": 4
+        },
+        {
+          "address": 65469,
+          "step": 478329,
+          "coordinate": "PLI.COM+0F21",
+          "value": 36
+        },
+        {
+          "address": 65470,
+          "step": 478329,
+          "coordinate": "PLI.COM+0F21",
+          "value": 16
+        }
+      ],
+      "output": {
+        "a": 0,
+        "b": 0,
+        "c": 21,
+        "d": 28,
+        "e": 162,
+        "h": 0,
+        "l": 0,
+        "sp": 65473,
+        "pc": 40911,
+        "flags": {
+          "sign": false,
+          "zero": true,
+          "auxiliary_carry": true,
+          "parity": true,
+          "carry": false
+        }
+      }
+    },
+    {
+      "source": "FIZZBUZ",
+      "entry_step": 609462,
+      "caller": "PLI1.OVL+8070",
+      "append_step": 609469,
+      "index80_step": 609472,
+      "dma_wrapper_call_step": 609476,
+      "index_reset_step": 609514,
+      "write_wrapper_call_step": 609516,
+      "status_compare_step": 609553,
+      "return_step": 609555,
+      "bridge_returns": [
+        {
+          "call_step": 609484,
+          "call_coordinate": "PLI.COM+02FA",
+          "call_slot_writes": [
+            {
+              "address": 65450,
+              "old_value": null,
+              "new_value": 3
+            },
+            {
+              "address": 65449,
+              "old_value": null,
+              "new_value": 253
+            }
+          ],
+          "ret_step": 609511,
+          "ret_origin": null,
+          "ret_pc": 5,
+          "ret_slot_reads": [
+            {
+              "address": 65449,
+              "value": 253
+            },
+            {
+              "address": 65450,
+              "value": 3
+            }
+          ],
+          "resumed_pc": 1021,
+          "relation": {
+            "type": "hardware_frame_return",
+            "step_index": 609511,
+            "frame": {
+              "kind": "hardware_call",
+              "call_step": 609484,
+              "call_pc": 1018,
+              "callsite": {
+                "image": {
+                  "drive": 0,
+                  "user": 0,
+                  "name": "PLI.COM",
+                  "identity": "0:0:PLI.COM"
+                },
+                "offset": 762
+              },
+              "return_address": 1021,
+              "stack_slot": 65449,
+              "target_pc": 6843,
+              "target": {
+                "image": {
+                  "drive": 0,
+                  "user": 0,
+                  "name": "PLI.COM",
+                  "identity": "0:0:PLI.COM"
+                },
+                "offset": 6587
+              }
+            }
+          }
+        },
+        {
+          "call_step": 609524,
+          "call_coordinate": "PLI.COM+0334",
+          "call_slot_writes": [
+            {
+              "address": 65450,
+              "old_value": null,
+              "new_value": 4
+            },
+            {
+              "address": 65449,
+              "old_value": null,
+              "new_value": 55
+            }
+          ],
+          "ret_step": 609551,
+          "ret_origin": null,
+          "ret_pc": 5,
+          "ret_slot_reads": [
+            {
+              "address": 65449,
+              "value": 55
+            },
+            {
+              "address": 65450,
+              "value": 4
+            }
+          ],
+          "resumed_pc": 1079,
+          "relation": {
+            "type": "hardware_frame_return",
+            "step_index": 609551,
+            "frame": {
+              "kind": "hardware_call",
+              "call_step": 609524,
+              "call_pc": 1076,
+              "callsite": {
+                "image": {
+                  "drive": 0,
+                  "user": 0,
+                  "name": "PLI.COM",
+                  "identity": "0:0:PLI.COM"
+                },
+                "offset": 820
+              },
+              "return_address": 1079,
+              "stack_slot": 65449,
+              "target_pc": 6843,
+              "target": {
+                "image": {
+                  "drive": 0,
+                  "user": 0,
+                  "name": "PLI.COM",
+                  "identity": "0:0:PLI.COM"
+                },
+                "offset": 6587
+              }
+            }
+          }
+        }
+      ],
+      "buffer_writers": [
+        [
+          7564,
+          478423,
+          "PLI.COM+0F06",
+          1
+        ],
+        [
+          7565,
+          485609,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7566,
+          485669,
+          "PLI.COM+0F06",
+          7
+        ],
+        [
+          7567,
+          485692,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7568,
+          497775,
+          "PLI.COM+0F06",
+          10
+        ],
+        [
+          7569,
+          497835,
+          "PLI.COM+0F06",
+          1
+        ],
+        [
+          7570,
+          497858,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7571,
+          497932,
+          "PLI.COM+0F06",
+          23
+        ],
+        [
+          7572,
+          497993,
+          "PLI.COM+0F06",
+          1
+        ],
+        [
+          7573,
+          498068,
+          "PLI.COM+0F06",
+          10
+        ],
+        [
+          7574,
+          498128,
+          "PLI.COM+0F06",
+          82
+        ],
+        [
+          7575,
+          498151,
+          "PLI.COM+0F06",
+          2
+        ],
+        [
+          7576,
+          498225,
+          "PLI.COM+0F06",
+          161
+        ],
+        [
+          7577,
+          498286,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7578,
+          498361,
+          "PLI.COM+0F06",
+          10
+        ],
+        [
+          7579,
+          498421,
+          "PLI.COM+0F06",
+          1
+        ],
+        [
+          7580,
+          498444,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7581,
+          498518,
+          "PLI.COM+0F06",
+          23
+        ],
+        [
+          7582,
+          498579,
+          "PLI.COM+0F06",
+          1
+        ],
+        [
+          7583,
+          498654,
+          "PLI.COM+0F06",
+          181
+        ],
+        [
+          7584,
+          498726,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7585,
+          498746,
+          "PLI.COM+0F06",
+          5
+        ],
+        [
+          7586,
+          498832,
+          "PLI.COM+0F06",
+          254
+        ],
+        [
+          7587,
+          511432,
+          "PLI.COM+0F06",
+          2
+        ],
+        [
+          7588,
+          511492,
+          "PLI.COM+0F06",
+          82
+        ],
+        [
+          7589,
+          511515,
+          "PLI.COM+0F06",
+          251
+        ],
+        [
+          7590,
+          511589,
+          "PLI.COM+0F06",
+          20
+        ],
+        [
+          7591,
+          511650,
+          "PLI.COM+0F06",
+          4
+        ],
+        [
+          7592,
+          511725,
+          "PLI.COM+0F06",
+          172
+        ],
+        [
+          7593,
+          511786,
+          "PLI.COM+0F06",
+          254
+        ],
+        [
+          7594,
+          511879,
+          "PLI.COM+0F06",
+          254
+        ],
+        [
+          7595,
+          511947,
+          "PLI.COM+0F06",
+          254
+        ],
+        [
+          7596,
+          512264,
+          "PLI.COM+0F06",
+          254
+        ],
+        [
+          7597,
+          512768,
+          "PLI.COM+0F06",
+          183
+        ],
+        [
+          7598,
+          512829,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7599,
+          519602,
+          "PLI.COM+0F06",
+          248
+        ],
+        [
+          7600,
+          520013,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7601,
+          520073,
+          "PLI.COM+0F06",
+          8
+        ],
+        [
+          7602,
+          520096,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7603,
+          543830,
+          "PLI.COM+0F06",
+          5
+        ],
+        [
+          7604,
+          543890,
+          "PLI.COM+0F06",
+          243
+        ],
+        [
+          7605,
+          543913,
+          "PLI.COM+0F06",
+          251
+        ],
+        [
+          7606,
+          543987,
+          "PLI.COM+0F06",
+          23
+        ],
+        [
+          7607,
+          544048,
+          "PLI.COM+0F06",
+          15
+        ],
+        [
+          7608,
+          544123,
+          "PLI.COM+0F06",
+          10
+        ],
+        [
+          7609,
+          544183,
+          "PLI.COM+0F06",
+          5
+        ],
+        [
+          7610,
+          544206,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7611,
+          544280,
+          "PLI.COM+0F06",
+          23
+        ],
+        [
+          7612,
+          544341,
+          "PLI.COM+0F06",
+          3
+        ],
+        [
+          7613,
+          544416,
+          "PLI.COM+0F06",
+          209
+        ],
+        [
+          7614,
+          544488,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7615,
+          544508,
+          "PLI.COM+0F06",
+          15
+        ],
+        [
+          7616,
+          544583,
+          "PLI.COM+0F06",
+          10
+        ],
+        [
+          7617,
+          544643,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7618,
+          544666,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7619,
+          544740,
+          "PLI.COM+0F06",
+          23
+        ],
+        [
+          7620,
+          544801,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7621,
+          544876,
+          "PLI.COM+0F06",
+          48
+        ],
+        [
+          7622,
+          544937,
+          "PLI.COM+0F06",
+          1
+        ],
+        [
+          7623,
+          545012,
+          "PLI.COM+0F06",
+          108
+        ],
+        [
+          7624,
+          545073,
+          "PLI.COM+0F06",
+          1
+        ],
+        [
+          7625,
+          552259,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7626,
+          552319,
+          "PLI.COM+0F06",
+          9
+        ],
+        [
+          7627,
+          552342,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7628,
+          564425,
+          "PLI.COM+0F06",
+          10
+        ],
+        [
+          7629,
+          564485,
+          "PLI.COM+0F06",
+          1
+        ],
+        [
+          7630,
+          564508,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7631,
+          564582,
+          "PLI.COM+0F06",
+          23
+        ],
+        [
+          7632,
+          564643,
+          "PLI.COM+0F06",
+          1
+        ],
+        [
+          7633,
+          564718,
+          "PLI.COM+0F06",
+          10
+        ],
+        [
+          7634,
+          564778,
+          "PLI.COM+0F06",
+          82
+        ],
+        [
+          7635,
+          564801,
+          "PLI.COM+0F06",
+          2
+        ],
+        [
+          7636,
+          564875,
+          "PLI.COM+0F06",
+          161
+        ],
+        [
+          7637,
+          564936,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7638,
+          565011,
+          "PLI.COM+0F06",
+          10
+        ],
+        [
+          7639,
+          565071,
+          "PLI.COM+0F06",
+          1
+        ],
+        [
+          7640,
+          565094,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7641,
+          565168,
+          "PLI.COM+0F06",
+          23
+        ],
+        [
+          7642,
+          565229,
+          "PLI.COM+0F06",
+          1
+        ],
+        [
+          7643,
+          565304,
+          "PLI.COM+0F06",
+          181
+        ],
+        [
+          7644,
+          565376,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7645,
+          565396,
+          "PLI.COM+0F06",
+          5
+        ],
+        [
+          7646,
+          565482,
+          "PLI.COM+0F06",
+          254
+        ],
+        [
+          7647,
+          578077,
+          "PLI.COM+0F06",
+          2
+        ],
+        [
+          7648,
+          578137,
+          "PLI.COM+0F06",
+          43
+        ],
+        [
+          7649,
+          578160,
+          "PLI.COM+0F06",
+          251
+        ],
+        [
+          7650,
+          578234,
+          "PLI.COM+0F06",
+          20
+        ],
+        [
+          7651,
+          578295,
+          "PLI.COM+0F06",
+          4
+        ],
+        [
+          7652,
+          578370,
+          "PLI.COM+0F06",
+          172
+        ],
+        [
+          7653,
+          578431,
+          "PLI.COM+0F06",
+          254
+        ],
+        [
+          7654,
+          578524,
+          "PLI.COM+0F06",
+          254
+        ],
+        [
+          7655,
+          578592,
+          "PLI.COM+0F06",
+          254
+        ],
+        [
+          7656,
+          578909,
+          "PLI.COM+0F06",
+          254
+        ],
+        [
+          7657,
+          579413,
+          "PLI.COM+0F06",
+          183
+        ],
+        [
+          7658,
+          579474,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7659,
+          589917,
+          "PLI.COM+0F06",
+          248
+        ],
+        [
+          7660,
+          590328,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7661,
+          590388,
+          "PLI.COM+0F06",
+          11
+        ],
+        [
+          7662,
+          590411,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7663,
+          602495,
+          "PLI.COM+0F06",
+          10
+        ],
+        [
+          7664,
+          602555,
+          "PLI.COM+0F06",
+          1
+        ],
+        [
+          7665,
+          602578,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7666,
+          602652,
+          "PLI.COM+0F06",
+          23
+        ],
+        [
+          7667,
+          602713,
+          "PLI.COM+0F06",
+          1
+        ],
+        [
+          7668,
+          602788,
+          "PLI.COM+0F06",
+          10
+        ],
+        [
+          7669,
+          602848,
+          "PLI.COM+0F06",
+          82
+        ],
+        [
+          7670,
+          602871,
+          "PLI.COM+0F06",
+          2
+        ],
+        [
+          7671,
+          602945,
+          "PLI.COM+0F06",
+          161
+        ],
+        [
+          7672,
+          603006,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7673,
+          603081,
+          "PLI.COM+0F06",
+          10
+        ],
+        [
+          7674,
+          603141,
+          "PLI.COM+0F06",
+          1
+        ],
+        [
+          7675,
+          603164,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7676,
+          603238,
+          "PLI.COM+0F06",
+          23
+        ],
+        [
+          7677,
+          603299,
+          "PLI.COM+0F06",
+          1
+        ],
+        [
+          7678,
+          603374,
+          "PLI.COM+0F06",
+          181
+        ],
+        [
+          7679,
+          603446,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7680,
+          603466,
+          "PLI.COM+0F06",
+          5
+        ],
+        [
+          7681,
+          603552,
+          "PLI.COM+0F06",
+          254
+        ],
+        [
+          7682,
+          608886,
+          "PLI.COM+0F06",
+          5
+        ],
+        [
+          7683,
+          608946,
+          "PLI.COM+0F06",
+          243
+        ],
+        [
+          7684,
+          608969,
+          "PLI.COM+0F06",
+          251
+        ],
+        [
+          7685,
+          609043,
+          "PLI.COM+0F06",
+          23
+        ],
+        [
+          7686,
+          609104,
+          "PLI.COM+0F06",
+          15
+        ],
+        [
+          7687,
+          609179,
+          "PLI.COM+0F06",
+          99
+        ],
+        [
+          7688,
+          609240,
+          "PLI.COM+0F06",
+          9
+        ],
+        [
+          7689,
+          609315,
+          "PLI.COM+0F06",
+          178
+        ],
+        [
+          7690,
+          609376,
+          "PLI.COM+0F06",
+          254
+        ],
+        [
+          7691,
+          609469,
+          "PLI.COM+0F06",
+          254
+        ]
+      ],
+      "bdos_calls": [
+        {
+          "step_index": 609511,
+          "function": 26,
+          "state": {
+            "a": 170,
+            "b": 29,
+            "c": 26,
+            "d": 29,
+            "e": 140,
+            "h": 253,
+            "l": 254,
+            "sp": 65449,
+            "pc": 5,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "dma": 7564,
+          "fcb_address": null,
+          "fcb_bytes": null,
+          "frames": [
+            {
+              "kind": "hardware_call",
+              "call_step": 609484,
+              "call_pc": 1018,
+              "callsite": {
+                "image": {
+                  "drive": 0,
+                  "user": 0,
+                  "name": "PLI.COM",
+                  "identity": "0:0:PLI.COM"
+                },
+                "offset": 762
+              },
+              "return_address": 1021,
+              "stack_slot": 65449,
+              "target_pc": 6843,
+              "target": {
+                "image": {
+                  "drive": 0,
+                  "user": 0,
+                  "name": "PLI.COM",
+                  "identity": "0:0:PLI.COM"
+                },
+                "offset": 6587
+              }
+            },
+            {
+              "kind": "hardware_call",
+              "call_step": 609476,
+              "call_pc": 4118,
+              "callsite": {
+                "image": {
+                  "drive": 0,
+                  "user": 0,
+                  "name": "PLI.COM",
+                  "identity": "0:0:PLI.COM"
+                },
+                "offset": 3862
+              },
+              "return_address": 4121,
+              "stack_slot": 65451,
+              "target_pc": 1006,
+              "target": {
+                "image": {
+                  "drive": 0,
+                  "user": 0,
+                  "name": "PLI.COM",
+                  "identity": "0:0:PLI.COM"
+                },
+                "offset": 750
+              }
+            },
+            {
+              "kind": "hardware_call",
+              "call_step": 609461,
+              "call_pc": 41584,
+              "callsite": {
+                "image": {
+                  "drive": 0,
+                  "user": 0,
+                  "name": "PLI1.OVL",
+                  "identity": "0:0:PLI1.OVL"
+                },
+                "offset": 32880
+              },
+              "return_address": 41587,
+              "stack_slot": 65453,
+              "target_pc": 4086,
+              "target": {
+                "image": {
+                  "drive": 0,
+                  "user": 0,
+                  "name": "PLI.COM",
+                  "identity": "0:0:PLI.COM"
+                },
+                "offset": 3830
+              }
+            }
+          ],
+          "bridge_step": 609510,
+          "bridge_origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI.COM",
+              "identity": "0:0:PLI.COM"
+            },
+            "offset": 6612
+          }
+        },
+        {
+          "step_index": 609551,
+          "function": 21,
+          "state": {
+            "a": 170,
+            "b": 28,
+            "c": 21,
+            "d": 28,
+            "e": 162,
+            "h": 253,
+            "l": 254,
+            "sp": 65449,
+            "pc": 5,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "dma": 7564,
+          "fcb_address": 7330,
+          "fcb_bytes": "0046495A5A42555A20494E54000000010000000000000000000000000000000001000000",
+          "frames": [
+            {
+              "kind": "hardware_call",
+              "call_step": 609524,
+              "call_pc": 1076,
+              "callsite": {
+                "image": {
+                  "drive": 0,
+                  "user": 0,
+                  "name": "PLI.COM",
+                  "identity": "0:0:PLI.COM"
+                },
+                "offset": 820
+              },
+              "return_address": 1079,
+              "stack_slot": 65449,
+              "target_pc": 6843,
+              "target": {
+                "image": {
+                  "drive": 0,
+                  "user": 0,
+                  "name": "PLI.COM",
+                  "identity": "0:0:PLI.COM"
+                },
+                "offset": 6587
+              }
+            },
+            {
+              "kind": "hardware_call",
+              "call_step": 609516,
+              "call_pc": 4129,
+              "callsite": {
+                "image": {
+                  "drive": 0,
+                  "user": 0,
+                  "name": "PLI.COM",
+                  "identity": "0:0:PLI.COM"
+                },
+                "offset": 3873
+              },
+              "return_address": 4132,
+              "stack_slot": 65451,
+              "target_pc": 1064,
+              "target": {
+                "image": {
+                  "drive": 0,
+                  "user": 0,
+                  "name": "PLI.COM",
+                  "identity": "0:0:PLI.COM"
+                },
+                "offset": 808
+              }
+            },
+            {
+              "kind": "hardware_call",
+              "call_step": 609461,
+              "call_pc": 41584,
+              "callsite": {
+                "image": {
+                  "drive": 0,
+                  "user": 0,
+                  "name": "PLI1.OVL",
+                  "identity": "0:0:PLI1.OVL"
+                },
+                "offset": 32880
+              },
+              "return_address": 41587,
+              "stack_slot": 65453,
+              "target_pc": 4086,
+              "target": {
+                "image": {
+                  "drive": 0,
+                  "user": 0,
+                  "name": "PLI.COM",
+                  "identity": "0:0:PLI.COM"
+                },
+                "offset": 3830
+              }
+            }
+          ],
+          "bridge_step": 609550,
+          "bridge_origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI.COM",
+              "identity": "0:0:PLI.COM"
+            },
+            "offset": 6612
+          }
+        }
+      ],
+      "bdos_resumes": [
+        {
+          "type": "bdos_resume",
+          "step_index": 609511,
+          "state": {
+            "a": 0,
+            "b": 0,
+            "c": 26,
+            "d": 29,
+            "e": 140,
+            "h": 0,
+            "l": 0,
+            "sp": 65449,
+            "pc": 5,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          }
+        },
+        {
+          "type": "bdos_resume",
+          "step_index": 609551,
+          "state": {
+            "a": 0,
+            "b": 0,
+            "c": 21,
+            "d": 28,
+            "e": 162,
+            "h": 0,
+            "l": 0,
+            "sp": 65449,
+            "pc": 5,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          }
+        }
+      ],
+      "host_effects": [
+        {
+          "type": "host_effect",
+          "step_index": 609511,
+          "effect": {
+            "kind": "register_write",
+            "register": "A",
+            "old_value": 170,
+            "new_value": 0
+          }
+        },
+        {
+          "type": "host_effect",
+          "step_index": 609511,
+          "effect": {
+            "kind": "register_write",
+            "register": "B",
+            "old_value": 29,
+            "new_value": 0
+          }
+        },
+        {
+          "type": "host_effect",
+          "step_index": 609511,
+          "effect": {
+            "kind": "register_write",
+            "register": "H",
+            "old_value": 253,
+            "new_value": 0
+          }
+        },
+        {
+          "type": "host_effect",
+          "step_index": 609511,
+          "effect": {
+            "kind": "register_write",
+            "register": "L",
+            "old_value": 254,
+            "new_value": 0
+          }
+        },
+        {
+          "type": "host_effect",
+          "step_index": 609551,
+          "effect": {
+            "kind": "register_write",
+            "register": "A",
+            "old_value": 170,
+            "new_value": 0
+          }
+        },
+        {
+          "type": "host_effect",
+          "step_index": 609551,
+          "effect": {
+            "kind": "register_write",
+            "register": "B",
+            "old_value": 28,
+            "new_value": 0
+          }
+        },
+        {
+          "type": "host_effect",
+          "step_index": 609551,
+          "effect": {
+            "kind": "register_write",
+            "register": "H",
+            "old_value": 253,
+            "new_value": 0
+          }
+        },
+        {
+          "type": "host_effect",
+          "step_index": 609551,
+          "effect": {
+            "kind": "register_write",
+            "register": "L",
+            "old_value": 254,
+            "new_value": 0
+          }
+        },
+        {
+          "type": "host_effect",
+          "step_index": 609551,
+          "effect": {
+            "kind": "memory_write",
+            "address": 7342,
+            "old_value": 0,
+            "new_value": 0,
+            "cause": "fcb_update"
+          }
+        },
+        {
+          "type": "host_effect",
+          "step_index": 609551,
+          "effect": {
+            "kind": "memory_write",
+            "address": 7344,
+            "old_value": 0,
+            "new_value": 0,
+            "cause": "fcb_update"
+          }
+        },
+        {
+          "type": "host_effect",
+          "step_index": 609551,
+          "effect": {
+            "kind": "memory_write",
+            "address": 7345,
+            "old_value": 1,
+            "new_value": 2,
+            "cause": "fcb_update"
+          }
+        },
+        {
+          "type": "host_effect",
+          "step_index": 609551,
+          "effect": {
+            "kind": "memory_write",
+            "address": 7362,
+            "old_value": 1,
+            "new_value": 2,
+            "cause": "fcb_update"
+          }
+        }
+      ],
+      "file_events": [
+        {
+          "type": "file_operation",
+          "step_index": 609551,
+          "operation": "sequential_write",
+          "file": {
+            "drive": 0,
+            "user": 0,
+            "name": "FIZZBUZ.INT",
+            "identity": "0:0:FIZZBUZ.INT"
+          },
+          "succeeded": true,
+          "record": 1
+        }
+      ],
+      "record": {
+        "type": "bdos_record",
+        "step_index": 609551,
+        "operation": "write_record",
+        "file": {
+          "drive": 0,
+          "user": 0,
+          "name": "FIZZBUZ.INT",
+          "identity": "0:0:FIZZBUZ.INT"
+        },
+        "record": 1,
+        "dma": 7564,
+        "data": "010007000A010017010A5202A1000A01001701B50005FE0252FB1404ACFEFEFEFEB700F800080005F3FB170F0A05001703D1000F0A0000170030016C010009000A010017010A5202A1000A01001701B50005FE022BFB1404ACFEFEFEFEB700F8000B000A010017010A5202A1000A01001701B50005FE05F3FB170F6309B2FEFE"
+      },
+      "post_host_boundaries": [
+        {
+          "step": 609511,
+          "post_host_state": {
+            "a": 0,
+            "b": 0,
+            "c": 26,
+            "d": 29,
+            "e": 140,
+            "h": 0,
+            "l": 0,
+            "sp": 65449,
+            "pc": 5,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "index": 128,
+          "buffer_hex": "010007000A010017010A5202A1000A01001701B50005FE0252FB1404ACFEFEFEFEB700F800080005F3FB170F0A05001703D1000F0A0000170030016C010009000A010017010A5202A1000A01001701B50005FE022BFB1404ACFEFEFEFEB700F8000B000A010017010A5202A1000A01001701B50005FE05F3FB170F6309B2FEFE",
+          "FCB_hex": "0046495A5A42555A20494E54000000010000000000000000000000000000000001000000"
+        },
+        {
+          "step": 609551,
+          "post_host_state": {
+            "a": 0,
+            "b": 0,
+            "c": 21,
+            "d": 28,
+            "e": 162,
+            "h": 0,
+            "l": 0,
+            "sp": 65449,
+            "pc": 5,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "index": 0,
+          "buffer_hex": "010007000A010017010A5202A1000A01001701B50005FE0252FB1404ACFEFEFEFEB700F800080005F3FB170F0A05001703D1000F0A0000170030016C010009000A010017010A5202A1000A01001701B50005FE022BFB1404ACFEFEFEFEB700F8000B000A010017010A5202A1000A01001701B50005FE05F3FB170F6309B2FEFE",
+          "FCB_hex": "0046495A5A42555A20494E54000000020000000000000000000000000000000002000000"
+        }
+      ],
+      "guards": [
+        {
+          "signature_comparisons": [
+            {
+              "producer_step": 609490,
+              "compare_step": 609491,
+              "left_read": {
+                "address": 5,
+                "value": 201
+              },
+              "right_read": {
+                "address": 8540,
+                "value": 201
+              }
+            },
+            {
+              "producer_step": 609495,
+              "compare_step": 609496,
+              "left_read": {
+                "address": 6,
+                "value": 254
+              },
+              "right_read": {
+                "address": 8541,
+                "value": 254
+              }
+            },
+            {
+              "producer_step": 609500,
+              "compare_step": 609501,
+              "left_read": {
+                "address": 7,
+                "value": 255
+              },
+              "right_read": {
+                "address": 8542,
+                "value": 255
+              }
+            }
+          ],
+          "bdos_step": 609511,
+          "signature_equal_return": {
+            "a": 255,
+            "b": 29,
+            "c": 26,
+            "d": 0,
+            "e": 7,
+            "h": 33,
+            "l": 94,
+            "sp": 65445,
+            "pc": 6854,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "marker_read": {
+            "address": 65022,
+            "value": 170
+          },
+          "guard_branches": [
+            609503,
+            609507
+          ]
+        },
+        {
+          "signature_comparisons": [
+            {
+              "producer_step": 609530,
+              "compare_step": 609531,
+              "left_read": {
+                "address": 5,
+                "value": 201
+              },
+              "right_read": {
+                "address": 8540,
+                "value": 201
+              }
+            },
+            {
+              "producer_step": 609535,
+              "compare_step": 609536,
+              "left_read": {
+                "address": 6,
+                "value": 254
+              },
+              "right_read": {
+                "address": 8541,
+                "value": 254
+              }
+            },
+            {
+              "producer_step": 609540,
+              "compare_step": 609541,
+              "left_read": {
+                "address": 7,
+                "value": 255
+              },
+              "right_read": {
+                "address": 8542,
+                "value": 255
+              }
+            }
+          ],
+          "bdos_step": 609551,
+          "signature_equal_return": {
+            "a": 255,
+            "b": 28,
+            "c": 21,
+            "d": 0,
+            "e": 7,
+            "h": 33,
+            "l": 94,
+            "sp": 65445,
+            "pc": 6854,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "marker_read": {
+            "address": 65022,
+            "value": 170
+          },
+          "guard_branches": [
+            609543,
+            609547
+          ]
+        }
+      ],
+      "final_stack_writers": [
+        {
+          "address": 65443,
+          "step": 609529,
+          "coordinate": "PLI.COM+19C3",
+          "value": 198
+        },
+        {
+          "address": 65444,
+          "step": 609529,
+          "coordinate": "PLI.COM+19C3",
+          "value": 26
+        },
+        {
+          "address": 65445,
+          "step": 609526,
+          "coordinate": "PLI.COM+19BC",
+          "value": 162
+        },
+        {
+          "address": 65446,
+          "step": 609526,
+          "coordinate": "PLI.COM+19BC",
+          "value": 28
+        },
+        {
+          "address": 65447,
+          "step": 609525,
+          "coordinate": "PLI.COM+19BB",
+          "value": 21
+        },
+        {
+          "address": 65448,
+          "step": 609525,
+          "coordinate": "PLI.COM+19BB",
+          "value": 28
+        },
+        {
+          "address": 65449,
+          "step": 609524,
+          "coordinate": "PLI.COM+0334",
+          "value": 55
+        },
+        {
+          "address": 65450,
+          "step": 609524,
+          "coordinate": "PLI.COM+0334",
+          "value": 4
+        },
+        {
+          "address": 65451,
+          "step": 609516,
+          "coordinate": "PLI.COM+0F21",
+          "value": 36
+        },
+        {
+          "address": 65452,
+          "step": 609516,
+          "coordinate": "PLI.COM+0F21",
+          "value": 16
+        }
+      ],
+      "output": {
+        "a": 0,
+        "b": 0,
+        "c": 21,
+        "d": 28,
+        "e": 162,
+        "h": 0,
+        "l": 0,
+        "sp": 65455,
+        "pc": 41587,
+        "flags": {
+          "sign": false,
+          "zero": true,
+          "auxiliary_carry": true,
+          "parity": true,
+          "carry": false
+        }
+      }
+    },
+    {
+      "source": "FIZZBUZ",
+      "entry_step": 670472,
+      "caller": "PLI.COM+10AF",
+      "append_step": 670479,
+      "index80_step": 670482,
+      "dma_wrapper_call_step": 670486,
+      "index_reset_step": 670524,
+      "write_wrapper_call_step": 670526,
+      "status_compare_step": 670563,
+      "return_step": 670565,
+      "bridge_returns": [
+        {
+          "call_step": 670494,
+          "call_coordinate": "PLI.COM+02FA",
+          "call_slot_writes": [
+            {
+              "address": 65525,
+              "old_value": null,
+              "new_value": 3
+            },
+            {
+              "address": 65524,
+              "old_value": null,
+              "new_value": 253
+            }
+          ],
+          "ret_step": 670521,
+          "ret_origin": null,
+          "ret_pc": 5,
+          "ret_slot_reads": [
+            {
+              "address": 65524,
+              "value": 253
+            },
+            {
+              "address": 65525,
+              "value": 3
+            }
+          ],
+          "resumed_pc": 1021,
+          "relation": {
+            "type": "hardware_frame_return",
+            "step_index": 670521,
+            "frame": {
+              "kind": "hardware_call",
+              "call_step": 670494,
+              "call_pc": 1018,
+              "callsite": {
+                "image": {
+                  "drive": 0,
+                  "user": 0,
+                  "name": "PLI.COM",
+                  "identity": "0:0:PLI.COM"
+                },
+                "offset": 762
+              },
+              "return_address": 1021,
+              "stack_slot": 65524,
+              "target_pc": 6843,
+              "target": {
+                "image": {
+                  "drive": 0,
+                  "user": 0,
+                  "name": "PLI.COM",
+                  "identity": "0:0:PLI.COM"
+                },
+                "offset": 6587
+              }
+            }
+          }
+        },
+        {
+          "call_step": 670534,
+          "call_coordinate": "PLI.COM+0334",
+          "call_slot_writes": [
+            {
+              "address": 65525,
+              "old_value": null,
+              "new_value": 4
+            },
+            {
+              "address": 65524,
+              "old_value": null,
+              "new_value": 55
+            }
+          ],
+          "ret_step": 670561,
+          "ret_origin": null,
+          "ret_pc": 5,
+          "ret_slot_reads": [
+            {
+              "address": 65524,
+              "value": 55
+            },
+            {
+              "address": 65525,
+              "value": 4
+            }
+          ],
+          "resumed_pc": 1079,
+          "relation": {
+            "type": "hardware_frame_return",
+            "step_index": 670561,
+            "frame": {
+              "kind": "hardware_call",
+              "call_step": 670534,
+              "call_pc": 1076,
+              "callsite": {
+                "image": {
+                  "drive": 0,
+                  "user": 0,
+                  "name": "PLI.COM",
+                  "identity": "0:0:PLI.COM"
+                },
+                "offset": 820
+              },
+              "return_address": 1079,
+              "stack_slot": 65524,
+              "target_pc": 6843,
+              "target": {
+                "image": {
+                  "drive": 0,
+                  "user": 0,
+                  "name": "PLI.COM",
+                  "identity": "0:0:PLI.COM"
+                },
+                "offset": 6587
+              }
+            }
+          }
+        }
+      ],
+      "buffer_writers": [
+        [
+          7564,
+          609617,
+          "PLI.COM+0F06",
+          254
+        ],
+        [
+          7565,
+          609934,
+          "PLI.COM+0F06",
+          254
+        ],
+        [
+          7566,
+          610438,
+          "PLI.COM+0F06",
+          183
+        ],
+        [
+          7567,
+          610499,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7568,
+          613037,
+          "PLI.COM+0F06",
+          249
+        ],
+        [
+          7569,
+          613104,
+          "PLI.COM+0F06",
+          249
+        ],
+        [
+          7570,
+          613171,
+          "PLI.COM+0F06",
+          249
+        ],
+        [
+          7571,
+          620435,
+          "PLI.COM+0F06",
+          5
+        ],
+        [
+          7572,
+          620495,
+          "PLI.COM+0F06",
+          243
+        ],
+        [
+          7573,
+          620518,
+          "PLI.COM+0F06",
+          251
+        ],
+        [
+          7574,
+          620592,
+          "PLI.COM+0F06",
+          5
+        ],
+        [
+          7575,
+          620652,
+          "PLI.COM+0F06",
+          243
+        ],
+        [
+          7576,
+          620675,
+          "PLI.COM+0F06",
+          251
+        ],
+        [
+          7577,
+          620749,
+          "PLI.COM+0F06",
+          23
+        ],
+        [
+          7578,
+          620810,
+          "PLI.COM+0F06",
+          15
+        ],
+        [
+          7579,
+          620885,
+          "PLI.COM+0F06",
+          10
+        ],
+        [
+          7580,
+          620945,
+          "PLI.COM+0F06",
+          1
+        ],
+        [
+          7581,
+          620968,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7582,
+          621042,
+          "PLI.COM+0F06",
+          23
+        ],
+        [
+          7583,
+          621103,
+          "PLI.COM+0F06",
+          1
+        ],
+        [
+          7584,
+          621178,
+          "PLI.COM+0F06",
+          30
+        ],
+        [
+          7585,
+          621239,
+          "PLI.COM+0F06",
+          15
+        ],
+        [
+          7586,
+          621314,
+          "PLI.COM+0F06",
+          15
+        ],
+        [
+          7587,
+          621375,
+          "PLI.COM+0F06",
+          15
+        ],
+        [
+          7588,
+          621466,
+          "PLI.COM+0F06",
+          250
+        ],
+        [
+          7589,
+          626412,
+          "PLI.COM+0F06",
+          247
+        ],
+        [
+          7590,
+          630974,
+          "PLI.COM+0F06",
+          252
+        ],
+        [
+          7591,
+          631009,
+          "PLI.COM+0F06",
+          13
+        ],
+        [
+          7592,
+          631027,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7593,
+          632602,
+          "PLI.COM+0F06",
+          142
+        ],
+        [
+          7594,
+          632663,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7595,
+          637244,
+          "PLI.COM+0F06",
+          252
+        ],
+        [
+          7596,
+          637279,
+          "PLI.COM+0F06",
+          13
+        ],
+        [
+          7597,
+          637297,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7598,
+          637350,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7599,
+          668639,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7600,
+          668659,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7601,
+          668679,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7602,
+          668699,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7603,
+          668719,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7604,
+          668739,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7605,
+          668759,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7606,
+          668779,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7607,
+          668799,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7608,
+          668819,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7609,
+          668839,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7610,
+          668859,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7611,
+          668879,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7612,
+          668899,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7613,
+          668919,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7614,
+          668939,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7615,
+          668959,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7616,
+          668979,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7617,
+          668999,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7618,
+          669019,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7619,
+          669039,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7620,
+          669059,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7621,
+          669079,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7622,
+          669099,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7623,
+          669119,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7624,
+          669139,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7625,
+          669159,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7626,
+          669179,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7627,
+          669199,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7628,
+          669219,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7629,
+          669239,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7630,
+          669259,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7631,
+          669279,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7632,
+          669299,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7633,
+          669319,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7634,
+          669339,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7635,
+          669359,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7636,
+          669379,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7637,
+          669399,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7638,
+          669419,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7639,
+          669439,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7640,
+          669459,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7641,
+          669479,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7642,
+          669499,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7643,
+          669519,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7644,
+          669539,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7645,
+          669559,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7646,
+          669579,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7647,
+          669599,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7648,
+          669619,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7649,
+          669639,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7650,
+          669659,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7651,
+          669679,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7652,
+          669699,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7653,
+          669719,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7654,
+          669739,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7655,
+          669759,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7656,
+          669779,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7657,
+          669799,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7658,
+          669819,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7659,
+          669839,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7660,
+          669859,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7661,
+          669879,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7662,
+          669899,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7663,
+          669919,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7664,
+          669939,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7665,
+          669959,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7666,
+          669979,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7667,
+          669999,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7668,
+          670019,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7669,
+          670039,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7670,
+          670059,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7671,
+          670079,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7672,
+          670099,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7673,
+          670119,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7674,
+          670139,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7675,
+          670159,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7676,
+          670179,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7677,
+          670199,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7678,
+          670219,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7679,
+          670239,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7680,
+          670259,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7681,
+          670279,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7682,
+          670299,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7683,
+          670319,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7684,
+          670339,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7685,
+          670359,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7686,
+          670379,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7687,
+          670399,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7688,
+          670419,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7689,
+          670439,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7690,
+          670459,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7691,
+          670479,
+          "PLI.COM+0F06",
+          255
+        ]
+      ],
+      "bdos_calls": [
+        {
+          "step_index": 670521,
+          "function": 26,
+          "state": {
+            "a": 170,
+            "b": 29,
+            "c": 26,
+            "d": 29,
+            "e": 140,
+            "h": 253,
+            "l": 254,
+            "sp": 65524,
+            "pc": 5,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "dma": 128,
+          "fcb_address": null,
+          "fcb_bytes": null,
+          "frames": [
+            {
+              "kind": "hardware_call",
+              "call_step": 670494,
+              "call_pc": 1018,
+              "callsite": {
+                "image": {
+                  "drive": 0,
+                  "user": 0,
+                  "name": "PLI.COM",
+                  "identity": "0:0:PLI.COM"
+                },
+                "offset": 762
+              },
+              "return_address": 1021,
+              "stack_slot": 65524,
+              "target_pc": 6843,
+              "target": {
+                "image": {
+                  "drive": 0,
+                  "user": 0,
+                  "name": "PLI.COM",
+                  "identity": "0:0:PLI.COM"
+                },
+                "offset": 6587
+              }
+            },
+            {
+              "kind": "hardware_call",
+              "call_step": 670486,
+              "call_pc": 4118,
+              "callsite": {
+                "image": {
+                  "drive": 0,
+                  "user": 0,
+                  "name": "PLI.COM",
+                  "identity": "0:0:PLI.COM"
+                },
+                "offset": 3862
+              },
+              "return_address": 4121,
+              "stack_slot": 65526,
+              "target_pc": 1006,
+              "target": {
+                "image": {
+                  "drive": 0,
+                  "user": 0,
+                  "name": "PLI.COM",
+                  "identity": "0:0:PLI.COM"
+                },
+                "offset": 750
+              }
+            },
+            {
+              "kind": "hardware_call",
+              "call_step": 670471,
+              "call_pc": 4527,
+              "callsite": {
+                "image": {
+                  "drive": 0,
+                  "user": 0,
+                  "name": "PLI.COM",
+                  "identity": "0:0:PLI.COM"
+                },
+                "offset": 4271
+              },
+              "return_address": 4530,
+              "stack_slot": 65528,
+              "target_pc": 4086,
+              "target": {
+                "image": {
+                  "drive": 0,
+                  "user": 0,
+                  "name": "PLI.COM",
+                  "identity": "0:0:PLI.COM"
+                },
+                "offset": 3830
+              }
+            }
+          ],
+          "bridge_step": 670520,
+          "bridge_origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI.COM",
+              "identity": "0:0:PLI.COM"
+            },
+            "offset": 6612
+          }
+        },
+        {
+          "step_index": 670561,
+          "function": 21,
+          "state": {
+            "a": 170,
+            "b": 28,
+            "c": 21,
+            "d": 28,
+            "e": 162,
+            "h": 253,
+            "l": 254,
+            "sp": 65524,
+            "pc": 5,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "dma": 7564,
+          "fcb_address": 7330,
+          "fcb_bytes": "0046495A5A42555A20494E54000000020000000000000000000000000000000002000000",
+          "frames": [
+            {
+              "kind": "hardware_call",
+              "call_step": 670534,
+              "call_pc": 1076,
+              "callsite": {
+                "image": {
+                  "drive": 0,
+                  "user": 0,
+                  "name": "PLI.COM",
+                  "identity": "0:0:PLI.COM"
+                },
+                "offset": 820
+              },
+              "return_address": 1079,
+              "stack_slot": 65524,
+              "target_pc": 6843,
+              "target": {
+                "image": {
+                  "drive": 0,
+                  "user": 0,
+                  "name": "PLI.COM",
+                  "identity": "0:0:PLI.COM"
+                },
+                "offset": 6587
+              }
+            },
+            {
+              "kind": "hardware_call",
+              "call_step": 670526,
+              "call_pc": 4129,
+              "callsite": {
+                "image": {
+                  "drive": 0,
+                  "user": 0,
+                  "name": "PLI.COM",
+                  "identity": "0:0:PLI.COM"
+                },
+                "offset": 3873
+              },
+              "return_address": 4132,
+              "stack_slot": 65526,
+              "target_pc": 1064,
+              "target": {
+                "image": {
+                  "drive": 0,
+                  "user": 0,
+                  "name": "PLI.COM",
+                  "identity": "0:0:PLI.COM"
+                },
+                "offset": 808
+              }
+            },
+            {
+              "kind": "hardware_call",
+              "call_step": 670471,
+              "call_pc": 4527,
+              "callsite": {
+                "image": {
+                  "drive": 0,
+                  "user": 0,
+                  "name": "PLI.COM",
+                  "identity": "0:0:PLI.COM"
+                },
+                "offset": 4271
+              },
+              "return_address": 4530,
+              "stack_slot": 65528,
+              "target_pc": 4086,
+              "target": {
+                "image": {
+                  "drive": 0,
+                  "user": 0,
+                  "name": "PLI.COM",
+                  "identity": "0:0:PLI.COM"
+                },
+                "offset": 3830
+              }
+            }
+          ],
+          "bridge_step": 670560,
+          "bridge_origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI.COM",
+              "identity": "0:0:PLI.COM"
+            },
+            "offset": 6612
+          }
+        }
+      ],
+      "bdos_resumes": [
+        {
+          "type": "bdos_resume",
+          "step_index": 670521,
+          "state": {
+            "a": 0,
+            "b": 0,
+            "c": 26,
+            "d": 29,
+            "e": 140,
+            "h": 0,
+            "l": 0,
+            "sp": 65524,
+            "pc": 5,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          }
+        },
+        {
+          "type": "bdos_resume",
+          "step_index": 670561,
+          "state": {
+            "a": 0,
+            "b": 0,
+            "c": 21,
+            "d": 28,
+            "e": 162,
+            "h": 0,
+            "l": 0,
+            "sp": 65524,
+            "pc": 5,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          }
+        }
+      ],
+      "host_effects": [
+        {
+          "type": "host_effect",
+          "step_index": 670521,
+          "effect": {
+            "kind": "register_write",
+            "register": "A",
+            "old_value": 170,
+            "new_value": 0
+          }
+        },
+        {
+          "type": "host_effect",
+          "step_index": 670521,
+          "effect": {
+            "kind": "register_write",
+            "register": "B",
+            "old_value": 29,
+            "new_value": 0
+          }
+        },
+        {
+          "type": "host_effect",
+          "step_index": 670521,
+          "effect": {
+            "kind": "register_write",
+            "register": "H",
+            "old_value": 253,
+            "new_value": 0
+          }
+        },
+        {
+          "type": "host_effect",
+          "step_index": 670521,
+          "effect": {
+            "kind": "register_write",
+            "register": "L",
+            "old_value": 254,
+            "new_value": 0
+          }
+        },
+        {
+          "type": "host_effect",
+          "step_index": 670561,
+          "effect": {
+            "kind": "register_write",
+            "register": "A",
+            "old_value": 170,
+            "new_value": 0
+          }
+        },
+        {
+          "type": "host_effect",
+          "step_index": 670561,
+          "effect": {
+            "kind": "register_write",
+            "register": "B",
+            "old_value": 28,
+            "new_value": 0
+          }
+        },
+        {
+          "type": "host_effect",
+          "step_index": 670561,
+          "effect": {
+            "kind": "register_write",
+            "register": "H",
+            "old_value": 253,
+            "new_value": 0
+          }
+        },
+        {
+          "type": "host_effect",
+          "step_index": 670561,
+          "effect": {
+            "kind": "register_write",
+            "register": "L",
+            "old_value": 254,
+            "new_value": 0
+          }
+        },
+        {
+          "type": "host_effect",
+          "step_index": 670561,
+          "effect": {
+            "kind": "memory_write",
+            "address": 7342,
+            "old_value": 0,
+            "new_value": 0,
+            "cause": "fcb_update"
+          }
+        },
+        {
+          "type": "host_effect",
+          "step_index": 670561,
+          "effect": {
+            "kind": "memory_write",
+            "address": 7344,
+            "old_value": 0,
+            "new_value": 0,
+            "cause": "fcb_update"
+          }
+        },
+        {
+          "type": "host_effect",
+          "step_index": 670561,
+          "effect": {
+            "kind": "memory_write",
+            "address": 7345,
+            "old_value": 2,
+            "new_value": 3,
+            "cause": "fcb_update"
+          }
+        },
+        {
+          "type": "host_effect",
+          "step_index": 670561,
+          "effect": {
+            "kind": "memory_write",
+            "address": 7362,
+            "old_value": 2,
+            "new_value": 3,
+            "cause": "fcb_update"
+          }
+        }
+      ],
+      "file_events": [
+        {
+          "type": "file_operation",
+          "step_index": 670561,
+          "operation": "sequential_write",
+          "file": {
+            "drive": 0,
+            "user": 0,
+            "name": "FIZZBUZ.INT",
+            "identity": "0:0:FIZZBUZ.INT"
+          },
+          "succeeded": true,
+          "record": 2
+        }
+      ],
+      "record": {
+        "type": "bdos_record",
+        "step_index": 670561,
+        "operation": "write_record",
+        "file": {
+          "drive": 0,
+          "user": 0,
+          "name": "FIZZBUZ.INT",
+          "identity": "0:0:FIZZBUZ.INT"
+        },
+        "record": 2,
+        "dma": 7564,
+        "data": "FEFEB700F9F9F905F3FB05F3FB170F0A010017011E0F0F0FFAF7FC0D008E00FC0D00FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF"
+      },
+      "post_host_boundaries": [
+        {
+          "step": 670521,
+          "post_host_state": {
+            "a": 0,
+            "b": 0,
+            "c": 26,
+            "d": 29,
+            "e": 140,
+            "h": 0,
+            "l": 0,
+            "sp": 65524,
+            "pc": 5,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "index": 128,
+          "buffer_hex": "FEFEB700F9F9F905F3FB05F3FB170F0A010017011E0F0F0FFAF7FC0D008E00FC0D00FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+          "FCB_hex": "0046495A5A42555A20494E54000000020000000000000000000000000000000002000000"
+        },
+        {
+          "step": 670561,
+          "post_host_state": {
+            "a": 0,
+            "b": 0,
+            "c": 21,
+            "d": 28,
+            "e": 162,
+            "h": 0,
+            "l": 0,
+            "sp": 65524,
+            "pc": 5,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "index": 0,
+          "buffer_hex": "FEFEB700F9F9F905F3FB05F3FB170F0A010017011E0F0F0FFAF7FC0D008E00FC0D00FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+          "FCB_hex": "0046495A5A42555A20494E54000000030000000000000000000000000000000003000000"
+        }
+      ],
+      "guards": [
+        {
+          "signature_comparisons": [
+            {
+              "producer_step": 670500,
+              "compare_step": 670501,
+              "left_read": {
+                "address": 5,
+                "value": 201
+              },
+              "right_read": {
+                "address": 8540,
+                "value": 201
+              }
+            },
+            {
+              "producer_step": 670505,
+              "compare_step": 670506,
+              "left_read": {
+                "address": 6,
+                "value": 254
+              },
+              "right_read": {
+                "address": 8541,
+                "value": 254
+              }
+            },
+            {
+              "producer_step": 670510,
+              "compare_step": 670511,
+              "left_read": {
+                "address": 7,
+                "value": 255
+              },
+              "right_read": {
+                "address": 8542,
+                "value": 255
+              }
+            }
+          ],
+          "bdos_step": 670521,
+          "signature_equal_return": {
+            "a": 255,
+            "b": 29,
+            "c": 26,
+            "d": 0,
+            "e": 7,
+            "h": 33,
+            "l": 94,
+            "sp": 65520,
+            "pc": 6854,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "marker_read": {
+            "address": 65022,
+            "value": 170
+          },
+          "guard_branches": [
+            670513,
+            670517
+          ]
+        },
+        {
+          "signature_comparisons": [
+            {
+              "producer_step": 670540,
+              "compare_step": 670541,
+              "left_read": {
+                "address": 5,
+                "value": 201
+              },
+              "right_read": {
+                "address": 8540,
+                "value": 201
+              }
+            },
+            {
+              "producer_step": 670545,
+              "compare_step": 670546,
+              "left_read": {
+                "address": 6,
+                "value": 254
+              },
+              "right_read": {
+                "address": 8541,
+                "value": 254
+              }
+            },
+            {
+              "producer_step": 670550,
+              "compare_step": 670551,
+              "left_read": {
+                "address": 7,
+                "value": 255
+              },
+              "right_read": {
+                "address": 8542,
+                "value": 255
+              }
+            }
+          ],
+          "bdos_step": 670561,
+          "signature_equal_return": {
+            "a": 255,
+            "b": 28,
+            "c": 21,
+            "d": 0,
+            "e": 7,
+            "h": 33,
+            "l": 94,
+            "sp": 65520,
+            "pc": 6854,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "marker_read": {
+            "address": 65022,
+            "value": 170
+          },
+          "guard_branches": [
+            670553,
+            670557
+          ]
+        }
+      ],
+      "final_stack_writers": [
+        {
+          "address": 65518,
+          "step": 670539,
+          "coordinate": "PLI.COM+19C3",
+          "value": 198
+        },
+        {
+          "address": 65519,
+          "step": 670539,
+          "coordinate": "PLI.COM+19C3",
+          "value": 26
+        },
+        {
+          "address": 65520,
+          "step": 670536,
+          "coordinate": "PLI.COM+19BC",
+          "value": 162
+        },
+        {
+          "address": 65521,
+          "step": 670536,
+          "coordinate": "PLI.COM+19BC",
+          "value": 28
+        },
+        {
+          "address": 65522,
+          "step": 670535,
+          "coordinate": "PLI.COM+19BB",
+          "value": 21
+        },
+        {
+          "address": 65523,
+          "step": 670535,
+          "coordinate": "PLI.COM+19BB",
+          "value": 28
+        },
+        {
+          "address": 65524,
+          "step": 670534,
+          "coordinate": "PLI.COM+0334",
+          "value": 55
+        },
+        {
+          "address": 65525,
+          "step": 670534,
+          "coordinate": "PLI.COM+0334",
+          "value": 4
+        },
+        {
+          "address": 65526,
+          "step": 670526,
+          "coordinate": "PLI.COM+0F21",
+          "value": 36
+        },
+        {
+          "address": 65527,
+          "step": 670526,
+          "coordinate": "PLI.COM+0F21",
+          "value": 16
+        }
+      ],
+      "output": {
+        "a": 0,
+        "b": 0,
+        "c": 21,
+        "d": 28,
+        "e": 162,
+        "h": 0,
+        "l": 0,
+        "sp": 65530,
+        "pc": 4530,
+        "flags": {
+          "sign": false,
+          "zero": true,
+          "auxiliary_carry": true,
+          "parity": true,
+          "carry": false
+        }
+      }
+    },
+    {
+      "source": "PICTURE",
+      "entry_step": 385280,
+      "caller": "PLI.COM+10AF",
+      "append_step": 385287,
+      "index80_step": 385290,
+      "dma_wrapper_call_step": 385294,
+      "index_reset_step": 385332,
+      "write_wrapper_call_step": 385334,
+      "status_compare_step": 385371,
+      "return_step": 385373,
+      "bridge_returns": [
+        {
+          "call_step": 385302,
+          "call_coordinate": "PLI.COM+02FA",
+          "call_slot_writes": [
+            {
+              "address": 65525,
+              "old_value": null,
+              "new_value": 3
+            },
+            {
+              "address": 65524,
+              "old_value": null,
+              "new_value": 253
+            }
+          ],
+          "ret_step": 385329,
+          "ret_origin": null,
+          "ret_pc": 5,
+          "ret_slot_reads": [
+            {
+              "address": 65524,
+              "value": 253
+            },
+            {
+              "address": 65525,
+              "value": 3
+            }
+          ],
+          "resumed_pc": 1021,
+          "relation": {
+            "type": "hardware_frame_return",
+            "step_index": 385329,
+            "frame": {
+              "kind": "hardware_call",
+              "call_step": 385302,
+              "call_pc": 1018,
+              "callsite": {
+                "image": {
+                  "drive": 0,
+                  "user": 0,
+                  "name": "PLI.COM",
+                  "identity": "0:0:PLI.COM"
+                },
+                "offset": 762
+              },
+              "return_address": 1021,
+              "stack_slot": 65524,
+              "target_pc": 6843,
+              "target": {
+                "image": {
+                  "drive": 0,
+                  "user": 0,
+                  "name": "PLI.COM",
+                  "identity": "0:0:PLI.COM"
+                },
+                "offset": 6587
+              }
+            }
+          }
+        },
+        {
+          "call_step": 385342,
+          "call_coordinate": "PLI.COM+0334",
+          "call_slot_writes": [
+            {
+              "address": 65525,
+              "old_value": null,
+              "new_value": 4
+            },
+            {
+              "address": 65524,
+              "old_value": null,
+              "new_value": 55
+            }
+          ],
+          "ret_step": 385369,
+          "ret_origin": null,
+          "ret_pc": 5,
+          "ret_slot_reads": [
+            {
+              "address": 65524,
+              "value": 55
+            },
+            {
+              "address": 65525,
+              "value": 4
+            }
+          ],
+          "resumed_pc": 1079,
+          "relation": {
+            "type": "hardware_frame_return",
+            "step_index": 385369,
+            "frame": {
+              "kind": "hardware_call",
+              "call_step": 385342,
+              "call_pc": 1076,
+              "callsite": {
+                "image": {
+                  "drive": 0,
+                  "user": 0,
+                  "name": "PLI.COM",
+                  "identity": "0:0:PLI.COM"
+                },
+                "offset": 820
+              },
+              "return_address": 1079,
+              "stack_slot": 65524,
+              "target_pc": 6843,
+              "target": {
+                "image": {
+                  "drive": 0,
+                  "user": 0,
+                  "name": "PLI.COM",
+                  "identity": "0:0:PLI.COM"
+                },
+                "offset": 6587
+              }
+            }
+          }
+        }
+      ],
+      "buffer_writers": [
+        [
+          7564,
+          264639,
+          "PLI.COM+0F06",
+          251
+        ],
+        [
+          7565,
+          264674,
+          "PLI.COM+0F06",
+          1
+        ],
+        [
+          7566,
+          264692,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7567,
+          268991,
+          "PLI.COM+0F06",
+          141
+        ],
+        [
+          7568,
+          269052,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7569,
+          276155,
+          "PLI.COM+0F06",
+          251
+        ],
+        [
+          7570,
+          276190,
+          "PLI.COM+0F06",
+          2
+        ],
+        [
+          7571,
+          276208,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7572,
+          277535,
+          "PLI.COM+0F06",
+          6
+        ],
+        [
+          7573,
+          277595,
+          "PLI.COM+0F06",
+          181
+        ],
+        [
+          7574,
+          277618,
+          "PLI.COM+0F06",
+          251
+        ],
+        [
+          7575,
+          277692,
+          "PLI.COM+0F06",
+          125
+        ],
+        [
+          7576,
+          277752,
+          "PLI.COM+0F06",
+          181
+        ],
+        [
+          7577,
+          277775,
+          "PLI.COM+0F06",
+          251
+        ],
+        [
+          7578,
+          303289,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7579,
+          303349,
+          "PLI.COM+0F06",
+          4
+        ],
+        [
+          7580,
+          303372,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7581,
+          311850,
+          "PLI.COM+0F06",
+          5
+        ],
+        [
+          7582,
+          311910,
+          "PLI.COM+0F06",
+          208
+        ],
+        [
+          7583,
+          311933,
+          "PLI.COM+0F06",
+          251
+        ],
+        [
+          7584,
+          312007,
+          "PLI.COM+0F06",
+          10
+        ],
+        [
+          7585,
+          312067,
+          "PLI.COM+0F06",
+          7
+        ],
+        [
+          7586,
+          312090,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7587,
+          312164,
+          "PLI.COM+0F06",
+          23
+        ],
+        [
+          7588,
+          312225,
+          "PLI.COM+0F06",
+          3
+        ],
+        [
+          7589,
+          312300,
+          "PLI.COM+0F06",
+          15
+        ],
+        [
+          7590,
+          312361,
+          "PLI.COM+0F06",
+          15
+        ],
+        [
+          7591,
+          318762,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7592,
+          318822,
+          "PLI.COM+0F06",
+          5
+        ],
+        [
+          7593,
+          318845,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7594,
+          324074,
+          "PLI.COM+0F06",
+          10
+        ],
+        [
+          7595,
+          324134,
+          "PLI.COM+0F06",
+          1
+        ],
+        [
+          7596,
+          324157,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7597,
+          324231,
+          "PLI.COM+0F06",
+          23
+        ],
+        [
+          7598,
+          324292,
+          "PLI.COM+0F06",
+          1
+        ],
+        [
+          7599,
+          324367,
+          "PLI.COM+0F06",
+          10
+        ],
+        [
+          7600,
+          324427,
+          "PLI.COM+0F06",
+          82
+        ],
+        [
+          7601,
+          324450,
+          "PLI.COM+0F06",
+          2
+        ],
+        [
+          7602,
+          324524,
+          "PLI.COM+0F06",
+          161
+        ],
+        [
+          7603,
+          324585,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7604,
+          324671,
+          "PLI.COM+0F06",
+          254
+        ],
+        [
+          7605,
+          326826,
+          "PLI.COM+0F06",
+          6
+        ],
+        [
+          7606,
+          326886,
+          "PLI.COM+0F06",
+          246
+        ],
+        [
+          7607,
+          326909,
+          "PLI.COM+0F06",
+          251
+        ],
+        [
+          7608,
+          326983,
+          "PLI.COM+0F06",
+          24
+        ],
+        [
+          7609,
+          327068,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7610,
+          327088,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7611,
+          327161,
+          "PLI.COM+0F06",
+          176
+        ],
+        [
+          7612,
+          327246,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7613,
+          327266,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7614,
+          334581,
+          "PLI.COM+0F06",
+          5
+        ],
+        [
+          7615,
+          334641,
+          "PLI.COM+0F06",
+          208
+        ],
+        [
+          7616,
+          334664,
+          "PLI.COM+0F06",
+          251
+        ],
+        [
+          7617,
+          334738,
+          "PLI.COM+0F06",
+          23
+        ],
+        [
+          7618,
+          334799,
+          "PLI.COM+0F06",
+          15
+        ],
+        [
+          7619,
+          334874,
+          "PLI.COM+0F06",
+          99
+        ],
+        [
+          7620,
+          334935,
+          "PLI.COM+0F06",
+          9
+        ],
+        [
+          7621,
+          335010,
+          "PLI.COM+0F06",
+          178
+        ],
+        [
+          7622,
+          335071,
+          "PLI.COM+0F06",
+          254
+        ],
+        [
+          7623,
+          335164,
+          "PLI.COM+0F06",
+          254
+        ],
+        [
+          7624,
+          335232,
+          "PLI.COM+0F06",
+          254
+        ],
+        [
+          7625,
+          335597,
+          "PLI.COM+0F06",
+          254
+        ],
+        [
+          7626,
+          336101,
+          "PLI.COM+0F06",
+          183
+        ],
+        [
+          7627,
+          336162,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7628,
+          342363,
+          "PLI.COM+0F06",
+          247
+        ],
+        [
+          7629,
+          346965,
+          "PLI.COM+0F06",
+          252
+        ],
+        [
+          7630,
+          347000,
+          "PLI.COM+0F06",
+          6
+        ],
+        [
+          7631,
+          347018,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7632,
+          348757,
+          "PLI.COM+0F06",
+          142
+        ],
+        [
+          7633,
+          348818,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7634,
+          353359,
+          "PLI.COM+0F06",
+          252
+        ],
+        [
+          7635,
+          353394,
+          "PLI.COM+0F06",
+          6
+        ],
+        [
+          7636,
+          353412,
+          "PLI.COM+0F06",
+          0
+        ],
+        [
+          7637,
+          353465,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7638,
+          384227,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7639,
+          384247,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7640,
+          384267,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7641,
+          384287,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7642,
+          384307,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7643,
+          384327,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7644,
+          384347,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7645,
+          384367,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7646,
+          384387,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7647,
+          384407,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7648,
+          384427,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7649,
+          384447,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7650,
+          384467,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7651,
+          384487,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7652,
+          384507,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7653,
+          384527,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7654,
+          384547,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7655,
+          384567,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7656,
+          384587,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7657,
+          384607,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7658,
+          384627,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7659,
+          384647,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7660,
+          384667,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7661,
+          384687,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7662,
+          384707,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7663,
+          384727,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7664,
+          384747,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7665,
+          384767,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7666,
+          384787,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7667,
+          384807,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7668,
+          384827,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7669,
+          384847,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7670,
+          384867,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7671,
+          384887,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7672,
+          384907,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7673,
+          384927,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7674,
+          384947,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7675,
+          384967,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7676,
+          384987,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7677,
+          385007,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7678,
+          385027,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7679,
+          385047,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7680,
+          385067,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7681,
+          385087,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7682,
+          385107,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7683,
+          385127,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7684,
+          385147,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7685,
+          385167,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7686,
+          385187,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7687,
+          385207,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7688,
+          385227,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7689,
+          385247,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7690,
+          385267,
+          "PLI.COM+0F06",
+          255
+        ],
+        [
+          7691,
+          385287,
+          "PLI.COM+0F06",
+          255
+        ]
+      ],
+      "bdos_calls": [
+        {
+          "step_index": 385329,
+          "function": 26,
+          "state": {
+            "a": 170,
+            "b": 29,
+            "c": 26,
+            "d": 29,
+            "e": 140,
+            "h": 253,
+            "l": 254,
+            "sp": 65524,
+            "pc": 5,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "dma": 128,
+          "fcb_address": null,
+          "fcb_bytes": null,
+          "frames": [
+            {
+              "kind": "hardware_call",
+              "call_step": 385302,
+              "call_pc": 1018,
+              "callsite": {
+                "image": {
+                  "drive": 0,
+                  "user": 0,
+                  "name": "PLI.COM",
+                  "identity": "0:0:PLI.COM"
+                },
+                "offset": 762
+              },
+              "return_address": 1021,
+              "stack_slot": 65524,
+              "target_pc": 6843,
+              "target": {
+                "image": {
+                  "drive": 0,
+                  "user": 0,
+                  "name": "PLI.COM",
+                  "identity": "0:0:PLI.COM"
+                },
+                "offset": 6587
+              }
+            },
+            {
+              "kind": "hardware_call",
+              "call_step": 385294,
+              "call_pc": 4118,
+              "callsite": {
+                "image": {
+                  "drive": 0,
+                  "user": 0,
+                  "name": "PLI.COM",
+                  "identity": "0:0:PLI.COM"
+                },
+                "offset": 3862
+              },
+              "return_address": 4121,
+              "stack_slot": 65526,
+              "target_pc": 1006,
+              "target": {
+                "image": {
+                  "drive": 0,
+                  "user": 0,
+                  "name": "PLI.COM",
+                  "identity": "0:0:PLI.COM"
+                },
+                "offset": 750
+              }
+            },
+            {
+              "kind": "hardware_call",
+              "call_step": 385279,
+              "call_pc": 4527,
+              "callsite": {
+                "image": {
+                  "drive": 0,
+                  "user": 0,
+                  "name": "PLI.COM",
+                  "identity": "0:0:PLI.COM"
+                },
+                "offset": 4271
+              },
+              "return_address": 4530,
+              "stack_slot": 65528,
+              "target_pc": 4086,
+              "target": {
+                "image": {
+                  "drive": 0,
+                  "user": 0,
+                  "name": "PLI.COM",
+                  "identity": "0:0:PLI.COM"
+                },
+                "offset": 3830
+              }
+            }
+          ],
+          "bridge_step": 385328,
+          "bridge_origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI.COM",
+              "identity": "0:0:PLI.COM"
+            },
+            "offset": 6612
+          }
+        },
+        {
+          "step_index": 385369,
+          "function": 21,
+          "state": {
+            "a": 170,
+            "b": 28,
+            "c": 21,
+            "d": 28,
+            "e": 162,
+            "h": 253,
+            "l": 254,
+            "sp": 65524,
+            "pc": 5,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "dma": 7564,
+          "fcb_address": 7330,
+          "fcb_bytes": "005049435455524520494E54000080000000000000000000000000000000000000000000",
+          "frames": [
+            {
+              "kind": "hardware_call",
+              "call_step": 385342,
+              "call_pc": 1076,
+              "callsite": {
+                "image": {
+                  "drive": 0,
+                  "user": 0,
+                  "name": "PLI.COM",
+                  "identity": "0:0:PLI.COM"
+                },
+                "offset": 820
+              },
+              "return_address": 1079,
+              "stack_slot": 65524,
+              "target_pc": 6843,
+              "target": {
+                "image": {
+                  "drive": 0,
+                  "user": 0,
+                  "name": "PLI.COM",
+                  "identity": "0:0:PLI.COM"
+                },
+                "offset": 6587
+              }
+            },
+            {
+              "kind": "hardware_call",
+              "call_step": 385334,
+              "call_pc": 4129,
+              "callsite": {
+                "image": {
+                  "drive": 0,
+                  "user": 0,
+                  "name": "PLI.COM",
+                  "identity": "0:0:PLI.COM"
+                },
+                "offset": 3873
+              },
+              "return_address": 4132,
+              "stack_slot": 65526,
+              "target_pc": 1064,
+              "target": {
+                "image": {
+                  "drive": 0,
+                  "user": 0,
+                  "name": "PLI.COM",
+                  "identity": "0:0:PLI.COM"
+                },
+                "offset": 808
+              }
+            },
+            {
+              "kind": "hardware_call",
+              "call_step": 385279,
+              "call_pc": 4527,
+              "callsite": {
+                "image": {
+                  "drive": 0,
+                  "user": 0,
+                  "name": "PLI.COM",
+                  "identity": "0:0:PLI.COM"
+                },
+                "offset": 4271
+              },
+              "return_address": 4530,
+              "stack_slot": 65528,
+              "target_pc": 4086,
+              "target": {
+                "image": {
+                  "drive": 0,
+                  "user": 0,
+                  "name": "PLI.COM",
+                  "identity": "0:0:PLI.COM"
+                },
+                "offset": 3830
+              }
+            }
+          ],
+          "bridge_step": 385368,
+          "bridge_origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI.COM",
+              "identity": "0:0:PLI.COM"
+            },
+            "offset": 6612
+          }
+        }
+      ],
+      "bdos_resumes": [
+        {
+          "type": "bdos_resume",
+          "step_index": 385329,
+          "state": {
+            "a": 0,
+            "b": 0,
+            "c": 26,
+            "d": 29,
+            "e": 140,
+            "h": 0,
+            "l": 0,
+            "sp": 65524,
+            "pc": 5,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          }
+        },
+        {
+          "type": "bdos_resume",
+          "step_index": 385369,
+          "state": {
+            "a": 0,
+            "b": 0,
+            "c": 21,
+            "d": 28,
+            "e": 162,
+            "h": 0,
+            "l": 0,
+            "sp": 65524,
+            "pc": 5,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          }
+        }
+      ],
+      "host_effects": [
+        {
+          "type": "host_effect",
+          "step_index": 385329,
+          "effect": {
+            "kind": "register_write",
+            "register": "A",
+            "old_value": 170,
+            "new_value": 0
+          }
+        },
+        {
+          "type": "host_effect",
+          "step_index": 385329,
+          "effect": {
+            "kind": "register_write",
+            "register": "B",
+            "old_value": 29,
+            "new_value": 0
+          }
+        },
+        {
+          "type": "host_effect",
+          "step_index": 385329,
+          "effect": {
+            "kind": "register_write",
+            "register": "H",
+            "old_value": 253,
+            "new_value": 0
+          }
+        },
+        {
+          "type": "host_effect",
+          "step_index": 385329,
+          "effect": {
+            "kind": "register_write",
+            "register": "L",
+            "old_value": 254,
+            "new_value": 0
+          }
+        },
+        {
+          "type": "host_effect",
+          "step_index": 385369,
+          "effect": {
+            "kind": "register_write",
+            "register": "A",
+            "old_value": 170,
+            "new_value": 0
+          }
+        },
+        {
+          "type": "host_effect",
+          "step_index": 385369,
+          "effect": {
+            "kind": "register_write",
+            "register": "B",
+            "old_value": 28,
+            "new_value": 0
+          }
+        },
+        {
+          "type": "host_effect",
+          "step_index": 385369,
+          "effect": {
+            "kind": "register_write",
+            "register": "H",
+            "old_value": 253,
+            "new_value": 0
+          }
+        },
+        {
+          "type": "host_effect",
+          "step_index": 385369,
+          "effect": {
+            "kind": "register_write",
+            "register": "L",
+            "old_value": 254,
+            "new_value": 0
+          }
+        },
+        {
+          "type": "host_effect",
+          "step_index": 385369,
+          "effect": {
+            "kind": "memory_write",
+            "address": 7342,
+            "old_value": 0,
+            "new_value": 0,
+            "cause": "fcb_update"
+          }
+        },
+        {
+          "type": "host_effect",
+          "step_index": 385369,
+          "effect": {
+            "kind": "memory_write",
+            "address": 7344,
+            "old_value": 128,
+            "new_value": 0,
+            "cause": "fcb_update"
+          }
+        },
+        {
+          "type": "host_effect",
+          "step_index": 385369,
+          "effect": {
+            "kind": "memory_write",
+            "address": 7345,
+            "old_value": 0,
+            "new_value": 1,
+            "cause": "fcb_update"
+          }
+        },
+        {
+          "type": "host_effect",
+          "step_index": 385369,
+          "effect": {
+            "kind": "memory_write",
+            "address": 7362,
+            "old_value": 0,
+            "new_value": 1,
+            "cause": "fcb_update"
+          }
+        }
+      ],
+      "file_events": [
+        {
+          "type": "file_operation",
+          "step_index": 385369,
+          "operation": "sequential_write",
+          "file": {
+            "drive": 0,
+            "user": 0,
+            "name": "PICTURE.INT",
+            "identity": "0:0:PICTURE.INT"
+          },
+          "succeeded": true,
+          "record": 0
+        }
+      ],
+      "record": {
+        "type": "bdos_record",
+        "step_index": 385369,
+        "operation": "write_record",
+        "file": {
+          "drive": 0,
+          "user": 0,
+          "name": "PICTURE.INT",
+          "identity": "0:0:PICTURE.INT"
+        },
+        "record": 0,
+        "dma": 7564,
+        "data": "FB01008D00FB020006B5FB7DB5FB00040005D0FB0A070017030F0F0005000A010017010A5202A100FE06F6FB180000B0000005D0FB170F6309B2FEFEFEFEB700F7FC06008E00FC0600FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF"
+      },
+      "post_host_boundaries": [
+        {
+          "step": 385329,
+          "post_host_state": {
+            "a": 0,
+            "b": 0,
+            "c": 26,
+            "d": 29,
+            "e": 140,
+            "h": 0,
+            "l": 0,
+            "sp": 65524,
+            "pc": 5,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "index": 128,
+          "buffer_hex": "FB01008D00FB020006B5FB7DB5FB00040005D0FB0A070017030F0F0005000A010017010A5202A100FE06F6FB180000B0000005D0FB170F6309B2FEFEFEFEB700F7FC06008E00FC0600FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+          "FCB_hex": "005049435455524520494E54000080000000000000000000000000000000000000000000"
+        },
+        {
+          "step": 385369,
+          "post_host_state": {
+            "a": 0,
+            "b": 0,
+            "c": 21,
+            "d": 28,
+            "e": 162,
+            "h": 0,
+            "l": 0,
+            "sp": 65524,
+            "pc": 5,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "index": 0,
+          "buffer_hex": "FB01008D00FB020006B5FB7DB5FB00040005D0FB0A070017030F0F0005000A010017010A5202A100FE06F6FB180000B0000005D0FB170F6309B2FEFEFEFEB700F7FC06008E00FC0600FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+          "FCB_hex": "005049435455524520494E54000000010000000000000000000000000000000001000000"
+        }
+      ],
+      "guards": [
+        {
+          "signature_comparisons": [
+            {
+              "producer_step": 385308,
+              "compare_step": 385309,
+              "left_read": {
+                "address": 5,
+                "value": 201
+              },
+              "right_read": {
+                "address": 8540,
+                "value": 201
+              }
+            },
+            {
+              "producer_step": 385313,
+              "compare_step": 385314,
+              "left_read": {
+                "address": 6,
+                "value": 254
+              },
+              "right_read": {
+                "address": 8541,
+                "value": 254
+              }
+            },
+            {
+              "producer_step": 385318,
+              "compare_step": 385319,
+              "left_read": {
+                "address": 7,
+                "value": 255
+              },
+              "right_read": {
+                "address": 8542,
+                "value": 255
+              }
+            }
+          ],
+          "bdos_step": 385329,
+          "signature_equal_return": {
+            "a": 255,
+            "b": 29,
+            "c": 26,
+            "d": 0,
+            "e": 7,
+            "h": 33,
+            "l": 94,
+            "sp": 65520,
+            "pc": 6854,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "marker_read": {
+            "address": 65022,
+            "value": 170
+          },
+          "guard_branches": [
+            385321,
+            385325
+          ]
+        },
+        {
+          "signature_comparisons": [
+            {
+              "producer_step": 385348,
+              "compare_step": 385349,
+              "left_read": {
+                "address": 5,
+                "value": 201
+              },
+              "right_read": {
+                "address": 8540,
+                "value": 201
+              }
+            },
+            {
+              "producer_step": 385353,
+              "compare_step": 385354,
+              "left_read": {
+                "address": 6,
+                "value": 254
+              },
+              "right_read": {
+                "address": 8541,
+                "value": 254
+              }
+            },
+            {
+              "producer_step": 385358,
+              "compare_step": 385359,
+              "left_read": {
+                "address": 7,
+                "value": 255
+              },
+              "right_read": {
+                "address": 8542,
+                "value": 255
+              }
+            }
+          ],
+          "bdos_step": 385369,
+          "signature_equal_return": {
+            "a": 255,
+            "b": 28,
+            "c": 21,
+            "d": 0,
+            "e": 7,
+            "h": 33,
+            "l": 94,
+            "sp": 65520,
+            "pc": 6854,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "marker_read": {
+            "address": 65022,
+            "value": 170
+          },
+          "guard_branches": [
+            385361,
+            385365
+          ]
+        }
+      ],
+      "final_stack_writers": [
+        {
+          "address": 65518,
+          "step": 385347,
+          "coordinate": "PLI.COM+19C3",
+          "value": 198
+        },
+        {
+          "address": 65519,
+          "step": 385347,
+          "coordinate": "PLI.COM+19C3",
+          "value": 26
+        },
+        {
+          "address": 65520,
+          "step": 385344,
+          "coordinate": "PLI.COM+19BC",
+          "value": 162
+        },
+        {
+          "address": 65521,
+          "step": 385344,
+          "coordinate": "PLI.COM+19BC",
+          "value": 28
+        },
+        {
+          "address": 65522,
+          "step": 385343,
+          "coordinate": "PLI.COM+19BB",
+          "value": 21
+        },
+        {
+          "address": 65523,
+          "step": 385343,
+          "coordinate": "PLI.COM+19BB",
+          "value": 28
+        },
+        {
+          "address": 65524,
+          "step": 385342,
+          "coordinate": "PLI.COM+0334",
+          "value": 55
+        },
+        {
+          "address": 65525,
+          "step": 385342,
+          "coordinate": "PLI.COM+0334",
+          "value": 4
+        },
+        {
+          "address": 65526,
+          "step": 385334,
+          "coordinate": "PLI.COM+0F21",
+          "value": 36
+        },
+        {
+          "address": 65527,
+          "step": 385334,
+          "coordinate": "PLI.COM+0F21",
+          "value": 16
+        }
+      ],
+      "output": {
+        "a": 0,
+        "b": 0,
+        "c": 21,
+        "d": 28,
+        "e": 162,
+        "h": 0,
+        "l": 0,
+        "sp": 65530,
+        "pc": 4530,
+        "flags": {
+          "sign": false,
+          "zero": true,
+          "auxiliary_carry": true,
+          "parity": true,
+          "carry": false
+        }
+      }
+    }
+  ]
+}

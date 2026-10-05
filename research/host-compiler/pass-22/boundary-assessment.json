@@ -1,0 +1,231 @@
+{
+  "recommendation": "A: bounded native +0EF6 non-flush and successful-flush scope; first establish a faithful generic CP/M operation service in its compatibility adapter",
+  "candidates": [
+    {
+      "option": "A",
+      "assessment": "Local compiler algorithm, ordering, final state and successful host effects are now exact for the three natural inputs. Native core may prepare ordered buffer/scratch/index mutations, but must invoke actual existing CP/M26/21 semantics with their explicit machine state and effects. Unsupported guard/write-error states fail closed; never approximate append callback."
+    },
+    {
+      "option": "B",
+      "assessment": "Complete +7A79 mapped-word primitive can be extracted separately, but it does not remove the host-emission boundary."
+    },
+    {
+      "option": "C",
+      "assessment": "+7E46/+7E56 composition should follow proven native emitter integration; otherwise mixed native helper/historical child execution obscures exact state chronology."
+    },
+    {
+      "option": "D",
+      "assessment": "General guard/error contracts remain unknown but do not block explicit demonstrated success scope. Needed if future inputs hit those alternatives."
+    }
+  ],
+  "minimum_IO_boundary": {
+    "compiler_core": "Shared byte-addressed memory and ordered logical writes; explicit request for set_DMA(1D8C), then sequential_write(FCB1CA2). Index reset occurs between requests.",
+    "adapter": "Use existing CP/M2.2 BDOS semantics and live filesystem/DMA/FCB state; exact BC/DE/flags and wrapper/bridge CALL-slot compatibility required. Returned status must be checked. No PL/I semantics in CPU.",
+    "observability": "Native host requests/effects reported separately, without fabricated guest Step/t-state/provenance events",
+    "current_limitation": "Runner pre-instruction transition API supplies memory/register state but no native CP/M request service. That integration needs design and validation in implementation ticket; no API changed here."
+  },
+  "readiness": "Ready for faithful bounded implementation experiment once the explicit CP/M service/compatibility bridge is validated",
+  "unsupported": [
+    "Guard mismatches",
+    "BDOS21 nonzero status/error-helper semantics",
+    "Aliasing code/scratch/FCB/buffer/stack",
+    "Universal BDOS callee-save conventions",
+    "Other CP/M implementations"
+  ],
+  "pragmatic_divergence": null,
+  "fidelity_debt": null,
+  "native_code_added": false,
+  "infrastructure_changed": {
+    "Runner": false,
+    "CPU": false,
+    "packet": false
+  },
+  "annotation_before": [
+    {
+      "image": "PLI.COM",
+      "sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+      "bytes_total": 8064,
+      "statuses": {
+        "RAW": {
+          "bytes": 6691,
+          "percent": 82.9737
+        },
+        "DECODED": {
+          "bytes": 142,
+          "percent": 1.7609
+        },
+        "STRUCTURED": {
+          "bytes": 65,
+          "percent": 0.8061
+        },
+        "UNDERSTOOD": {
+          "bytes": 1166,
+          "percent": 14.4593
+        }
+      }
+    },
+    {
+      "image": "PLI0.OVL",
+      "sha256": "e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff",
+      "bytes_total": 18048,
+      "statuses": {
+        "RAW": {
+          "bytes": 17107,
+          "percent": 94.7861
+        },
+        "DECODED": {
+          "bytes": 0,
+          "percent": 0.0
+        },
+        "STRUCTURED": {
+          "bytes": 661,
+          "percent": 3.6625
+        },
+        "UNDERSTOOD": {
+          "bytes": 280,
+          "percent": 1.5514
+        }
+      }
+    },
+    {
+      "image": "PLI1.OVL",
+      "sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "bytes_total": 34816,
+      "statuses": {
+        "RAW": {
+          "bytes": 30050,
+          "percent": 86.3109
+        },
+        "DECODED": {
+          "bytes": 0,
+          "percent": 0.0
+        },
+        "STRUCTURED": {
+          "bytes": 0,
+          "percent": 0.0
+        },
+        "UNDERSTOOD": {
+          "bytes": 4766,
+          "percent": 13.6891
+        }
+      }
+    },
+    {
+      "image": "PLI2.OVL",
+      "sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "bytes_total": 33792,
+      "statuses": {
+        "RAW": {
+          "bytes": 32675,
+          "percent": 96.6945
+        },
+        "DECODED": {
+          "bytes": 162,
+          "percent": 0.4794
+        },
+        "STRUCTURED": {
+          "bytes": 570,
+          "percent": 1.6868
+        },
+        "UNDERSTOOD": {
+          "bytes": 385,
+          "percent": 1.1393
+        }
+      }
+    }
+  ],
+  "annotation_after": [
+    {
+      "image": "PLI.COM",
+      "sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+      "bytes_total": 8064,
+      "statuses": {
+        "RAW": {
+          "bytes": 6672,
+          "percent": 82.7381
+        },
+        "DECODED": {
+          "bytes": 93,
+          "percent": 1.1533
+        },
+        "STRUCTURED": {
+          "bytes": 65,
+          "percent": 0.8061
+        },
+        "UNDERSTOOD": {
+          "bytes": 1234,
+          "percent": 15.3026
+        }
+      }
+    },
+    {
+      "image": "PLI0.OVL",
+      "sha256": "e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff",
+      "bytes_total": 18048,
+      "statuses": {
+        "RAW": {
+          "bytes": 17107,
+          "percent": 94.7861
+        },
+        "DECODED": {
+          "bytes": 0,
+          "percent": 0.0
+        },
+        "STRUCTURED": {
+          "bytes": 661,
+          "percent": 3.6625
+        },
+        "UNDERSTOOD": {
+          "bytes": 280,
+          "percent": 1.5514
+        }
+      }
+    },
+    {
+      "image": "PLI1.OVL",
+      "sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "bytes_total": 34816,
+      "statuses": {
+        "RAW": {
+          "bytes": 30050,
+          "percent": 86.3109
+        },
+        "DECODED": {
+          "bytes": 0,
+          "percent": 0.0
+        },
+        "STRUCTURED": {
+          "bytes": 0,
+          "percent": 0.0
+        },
+        "UNDERSTOOD": {
+          "bytes": 4766,
+          "percent": 13.6891
+        }
+      }
+    },
+    {
+      "image": "PLI2.OVL",
+      "sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "bytes_total": 33792,
+      "statuses": {
+        "RAW": {
+          "bytes": 32675,
+          "percent": 96.6945
+        },
+        "DECODED": {
+          "bytes": 162,
+          "percent": 0.4794
+        },
+        "STRUCTURED": {
+          "bytes": 570,
+          "percent": 1.6868
+        },
+        "UNDERSTOOD": {
+          "bytes": 385,
+          "percent": 1.1393
+        }
+      }
+    }
+  ]
+}

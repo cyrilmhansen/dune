@@ -52,10 +52,11 @@ def header_lines(procedure):
         "Clobbers": "DEDUCED " + p["clobbers"],
         "Memory": "DEDUCED "
         + ("; ".join(p["memory_state"]) or "operand memory and return stack only"),
-        "Direct callees": "OBSERVED "
+        "Direct callees": ("OBSERVED/STATIC " if any(c.get("evidence_status") == "STATIC / UNOBSERVED" for c in p["direct_callees"]) else "OBSERVED ")
         + (
             "; ".join(
                 c["coordinate"] + f" @{c['runtime_address']:04X}H"
+                + (" (STATIC / UNOBSERVED)" if c.get("evidence_status") == "STATIC / UNOBSERVED" else "")
                 for c in p["direct_callees"]
             )
             or "none"

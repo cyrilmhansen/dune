@@ -77,13 +77,28 @@
         {
           "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
           "start_offset": 808,
-          "end_offset": 833,
-          "length": 25,
+          "end_offset": 824,
+          "length": 16,
           "runtime_start": 1064,
+          "runtime_end": 1080,
+          "status": "UNDERSTOOD",
+          "original_sha256": "982aea07f3c1157eea1d96adc7e7fbd2e1b7b2a934b31aae5ef4547e059c6fe2",
+          "reassembled_sha256": "982aea07f3c1157eea1d96adc7e7fbd2e1b7b2a934b31aae5ef4547e059c6fe2",
+          "exact_match": true,
+          "evidence_refs": [
+            "evidence.json#seeds/PLI.COM+0328"
+          ]
+        },
+        {
+          "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+          "start_offset": 824,
+          "end_offset": 833,
+          "length": 9,
+          "runtime_start": 1080,
           "runtime_end": 1089,
           "status": "RAW",
-          "original_sha256": "c00d725c29dec4ca3507a3cbdd43fa677eff6b93ce155af0fbac13868bbab733",
-          "reassembled_sha256": "c00d725c29dec4ca3507a3cbdd43fa677eff6b93ce155af0fbac13868bbab733",
+          "original_sha256": "3f54dcf59fa9b50d4921d5d1f162b5c0924990df33084923fb784b7a23dc64ca",
+          "reassembled_sha256": "3f54dcf59fa9b50d4921d5d1f162b5c0924990df33084923fb784b7a23dc64ca",
           "exact_match": true,
           "evidence_refs": []
         },
@@ -826,7 +841,7 @@
           "length": 51,
           "runtime_start": 4086,
           "runtime_end": 4137,
-          "status": "DECODED",
+          "status": "UNDERSTOOD",
           "original_sha256": "2a5c99e46f7964ab21f1f436bff3dfc29f4789133cb1015e61794eabedf3163d",
           "reassembled_sha256": "2a5c99e46f7964ab21f1f436bff3dfc29f4789133cb1015e61794eabedf3163d",
           "exact_match": true,
@@ -841,7 +856,7 @@
           "length": 3,
           "runtime_start": 4137,
           "runtime_end": 4140,
-          "status": "RAW",
+          "status": "DECODED",
           "original_sha256": "81013cc49f36c8987718f8b74ddd7c19b16be2da3b4242c58f3798f20e3dc616",
           "reassembled_sha256": "81013cc49f36c8987718f8b74ddd7c19b16be2da3b4242c58f3798f20e3dc616",
           "exact_match": true,
@@ -856,7 +871,7 @@
           "length": 1,
           "runtime_start": 4140,
           "runtime_end": 4141,
-          "status": "DECODED",
+          "status": "UNDERSTOOD",
           "original_sha256": "4fb733bedb74fec8d65bedf056b935189a289e928b3302bec38a281814de523a",
           "reassembled_sha256": "4fb733bedb74fec8d65bedf056b935189a289e928b3302bec38a281814de523a",
           "exact_match": true,
@@ -1786,6 +1801,7 @@
         }
       ],
       "coordinate_only_labels": [
+        816,
         2848,
         4627,
         4995,

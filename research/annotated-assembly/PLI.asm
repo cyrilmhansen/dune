@@ -138,9 +138,60 @@ PLI_0321: XCHG ; swap HL and DE; flags preserved ; +0321 runtime=0421H OBSERVED
 PLI_0322: MVI C,14H ; C = 14H ; +0322 runtime=0422H OBSERVED
 PLI_0324: CALL 1ABBH ; push following PC; invoke PLI.COM+19BB; result effects belong to callee ; +0324 runtime=0424H OBSERVED
 PLI_0327: RET ; PC = word[SP]; SP += 2; use the convention in procedure header ; +0327 runtime=0427H OBSERVED
-; SECTION [0328,0341) RAW
-PLI_0328: DB 021H,066H,020H,070H,02BH,071H,02AH,065H ; +0328 runtime=0428H RAW
-PLI_0330: DB 020H,0EBH,00EH,015H,0CDH,0BBH,01AH,0C9H,011H,000H,000H,00EH,019H,0CDH,0BBH,01AH ; +0330 runtime=0430H RAW
+
+; @procedure-v1 PLI.COM+0328
+; ProcedureHypothesis: BDOS function21 sequential-write wrapper
+; Entry: PLI_0328 = PLI.COM+0328 @ 0428H; SHA-256
+;   c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80
+; Extent: HYPOTHESIS [0328,0338) file offsets; overlapping entries: none established
+; Callers: OBSERVED PLI.COM+0F21 (FIZZBUZ=3, MINIMAL=1, PICTURE=1); PLI.COM+118D (FIZZBUZ=6,
+;   MINIMAL=2, PICTURE=2)
+; Returns: OBSERVED/DEDUCED ordinary hardware CALL word; observed SP after RET = (entry SP + 2)
+;   mod 65536; PLI.COM+0337
+; Inputs: DEDUCED BC=FCB address; existing file/DMA/BDOS guard state
+; Outputs: DEDUCED word[2065]=input BC (high byte written first); freshly read into DE; C=21; BDOS
+;   register/flag and filesystem effects delegated
+; Clobbers: DEDUCED A,BC,DE,HL,flags; host may change results
+; Memory: DEDUCED sequential_write_argument=2065H (little-endian saved wrapper BC, high-first
+;   publication); Selected FCB, current DMA record, filesystem and guard state delegated to
+;   +19BB/BDOS21
+; Direct callees: OBSERVED PLI.COM+19BB @1ABBH
+; Coverage: OBSERVED FIZZBUZ: 9 CALLs; MINIMAL: 3 CALLs; PICTURE: 3 CALLs; 16/16 bytes represented
+;   as instructions; All nine local coordinates and ordinary returns observed; INT and REL
+;   FCB callers; downstream host/error/guard scope remains delegated.
+; Unresolved: Opaque/delegated downstream effects or incomplete historical contract:
+;   B/C/D/E/H/L/A/flags after nested bridge follow BDOS; no independent
+;   register-preservation claim.
+; Contract: DEDUCED (partial; scope: Own nonaliasing scratch/argument setup and ordinary wrapper
+;   return; guard/BDOS effects delegated; successful INT flush calls correlated
+;   independently) Publish B to2066 then C to2065; freshly LHLD2065 and XCHG so DE=input
+;   BC; set C=21; CALL+19BB, which jumps to real runtime0005 on witnessed guards. Host
+;   BDOS21 then runtime0005 RET consumes bridge CALL word; +0337 RET consumes original
+;   wrapper CALL word. No universal host output or callee-save claim.
+; Hypothesis: none beyond the low-level operational description
+; Completeness: bounds=stable; control_flow=complete; contract=partial
+; Evidence: evidence.json#seeds/PLI.COM+0328; ../host-compiler/pass-22/bdos-write-wrapper.json
+; Procedure pseudo (operational; byte/word arithmetic wraps):
+;   byte[2066]=B; byte[2065]=C; DE=fresh little_endian_word[2065]; C=21; call guarded_BDOS_19BB();
+;   return delegated machine state and external effects
+; @end-procedure-v1 PLI.COM+0328
+; SECTION [0328,0338) UNDERSTOOD
+; @block-pseudo 0328
+; pseudo:
+; | OBSERVED: publish high then low saved BC at2066/2065; freshly read word and pass DE to BDOS21 through +19BB.
+; | OBSERVED: runtime0005 is a real host boundary; its RET consumes +0334 CALL word.
+PLI_0328: LXI H,2066H ; HL = &2066H, high byte of saved sequential-write argument ; +0328 runtime=0428H OBSERVED
+PLI_032B: MOV M,B ; byte[2066H] = B; high byte published first ; +032B runtime=042BH OBSERVED
+PLI_032C: DCX H ; HL = 2065H; flags preserved ; +032C runtime=042CH OBSERVED
+PLI_032D: MOV M,C ; byte[2065H] = C; low byte published second ; +032D runtime=042DH OBSERVED
+PLI_032E: LHLD 2065H ; HL = fresh little_endian_word[2065H] ; +032E runtime=042EH OBSERVED
+PLI_0331: XCHG ; swap HL and DE; DE = saved input BC; flags preserved ; +0331 runtime=0431H OBSERVED
+PLI_0332: MVI C,15H ; C = 15H (BDOS function21 sequential write) ; +0332 runtime=0432H OBSERVED
+PLI_0334: CALL 1ABBH ; CALL guarded bridge +19BB; witnessed jump to runtime0005, real host write and RET; results delegated ; +0334 runtime=0434H OBSERVED
+PLI_0337: RET ; consume original wrapper CALL word; retain BDOS returned machine state ; +0337 runtime=0437H OBSERVED
+PLI_0330: EQU 00430H ; +0330 runtime=0430H RAW coordinate-only former DB row; within LHLD operand
+; SECTION [0338,0341) RAW
+PLI_0338: DB 011H,000H,000H,00EH,019H,0CDH,0BBH,01AH ; +0338 runtime=0438H RAW
 PLI_0340: DB 0C9H ; +0340 runtime=0440H RAW
 
 ; @procedure-v1 PLI.COM+0341
@@ -1141,39 +1192,64 @@ PLI_0EF0: DB 000H,0CDH,0A0H,00FH,033H,0C9H ; +0EF0 runtime=0FF0H RAW
 ; Entry: PLI_0EF6 = PLI.COM+0EF6 @ 0FF6H; SHA-256
 ;   c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80
 ; Extent: HYPOTHESIS [0EF6,0F2D) file offsets; overlapping entries: none established
-; Callers: OBSERVED PLI.COM+10AF (FACTOR=67, FIZZBUZ=93, MINIMAL=70, OPTIMIST=13); PLI1.OVL+7DCC
-;   (FACTOR=61, FIZZBUZ=102, MINIMAL=16, OPTIMIST=189); PLI1.OVL+7E11 (FACTOR=8, FIZZBUZ=7,
-;   MINIMAL=1, OPTIMIST=5); PLI1.OVL+7E20 (FACTOR=28, FIZZBUZ=60, MINIMAL=9, OPTIMIST=108);
-;   PLI1.OVL+7E52 (FACTOR=33, FIZZBUZ=42, MINIMAL=7, OPTIMIST=81); PLI1.OVL+7E5B
-;   (FACTOR=33, FIZZBUZ=42, MINIMAL=7, OPTIMIST=81); PLI1.OVL+8070 (FACTOR=14, FIZZBUZ=30,
-;   MINIMAL=10, OPTIMIST=27); PLI1.OVL+80FF (FACTOR=6, FIZZBUZ=4, MINIMAL=4, OPTIMIST=4);
-;   PLI1.OVL+8107 (FACTOR=6, FIZZBUZ=4, MINIMAL=4, OPTIMIST=4)
+; Callers: OBSERVED PLI.COM+10AF (FACTOR=67, FIZZBUZ=93, MINIMAL=70, OPTIMIST=13, PICTURE=54);
+;   PLI1.OVL+7DCC (FACTOR=61, FIZZBUZ=102, MINIMAL=16, OPTIMIST=189, PICTURE=22);
+;   PLI1.OVL+7E11 (FACTOR=8, FIZZBUZ=7, MINIMAL=1, OPTIMIST=5); PLI1.OVL+7E20 (FACTOR=28,
+;   FIZZBUZ=60, MINIMAL=9, OPTIMIST=108, PICTURE=10); PLI1.OVL+7E52 (FACTOR=33, FIZZBUZ=42,
+;   MINIMAL=7, OPTIMIST=81, PICTURE=12); PLI1.OVL+7E5B (FACTOR=33, FIZZBUZ=42, MINIMAL=7,
+;   OPTIMIST=81, PICTURE=12); PLI1.OVL+8070 (FACTOR=14, FIZZBUZ=30, MINIMAL=10,
+;   OPTIMIST=27, PICTURE=10); PLI1.OVL+80FF (FACTOR=6, FIZZBUZ=4, MINIMAL=4, OPTIMIST=4,
+;   PICTURE=4); PLI1.OVL+8107 (FACTOR=6, FIZZBUZ=4, MINIMAL=4, OPTIMIST=4, PICTURE=4)
 ; Returns: OBSERVED/DEDUCED ordinary hardware CALL word; observed SP after RET = (entry SP + 2)
 ;   mod 65536; PLI.COM+0F2C
-; Inputs: DEDUCED C=byte to append
-; Outputs: DEDUCED record buffer gets C; index advances/resets; write status on flush
-; Clobbers: DEDUCED A,BC,DE,HL,flags; nested BDOS effects
+; Inputs: DEDUCED C=append byte; byte[1E0C]=index; byte[1E0D] actually read then discarded;
+;   successful flush additionally consumes DMA/FCB/file/guard state
+; Outputs: DEDUCED Ordered writes: 20B0=C, buffer[1D8C+i]=fresh 20B0, 1E0C=u8(i+1). Non-flush:
+;   A=u8(i+1), BC=1D8C, DE preserved, HL=1D8C+i; flags=CPI80. Flush success: index=0,
+;   DMA=1D8C, current 128-byte INT record written; A=0, BC=0015, DE=1CA2, HL=0,
+;   flags=CPI00. Ordinary return SP=entry+2.
+; Clobbers: DEDUCED A,BC,DE,HL,flags (DE unchanged on non-flush). Flush delegates host effects:
+;   FCB updates, sequential filesystem record write, DMA change and stack residue; no
+;   universal BDOS callee-save claim.
 ; Memory: DEDUCED int_fcb=1CA2H (INT record FCB); int_record_buffer=1D8CH (INT byte record
 ;   destination); int_byte_index=1E0CH (INT append index); int_append_byte=20B0H (saved INT
 ;   append C)
-; Direct callees: OBSERVED PLI.COM+02EE @03EEH; PLI.COM+0328 @0428H
+; Direct callees: OBSERVED/STATIC PLI.COM+02EE @03EEH; PLI.COM+0328 @0428H; PLI.COM+0EA0 @0FA0H
+;   (STATIC / UNOBSERVED)
 ; Coverage: OBSERVED FACTOR: 256 CALLs; FIZZBUZ: 384 CALLs; MINIMAL: 128 CALLs; OPTIMIST: 512
-;   CALLs; 52/55 bytes represented as instructions; fetched path fragments only; error
-;   branch +0F29 not observed
-; Unresolved: error branch +0F29 not observed
-; Contract: DEDUCED (partial; scope: own low-level operation; opaque callees explicitly delegated)
-;   C byte; buffer 1D8CH, index 1E0CH; scratch 20B0H
-; Hypothesis: HYPOTHESIS INT record byte append
-; Completeness: bounds=provisional; control_flow=partial; contract=partial
-; Evidence: evidence.json#seeds/PLI.COM+0EF6
+;   CALLs; PICTURE: 128 CALLs; 55/55 bytes represented as instructions;
+;   MINIMAL/FIZZBUZ/PICTURE: all 52 successful-path bytes dynamically observed; remaining
+;   three-byte CALL +0F29 decoded STATIC / UNOBSERVED. FACTOR/OPTIMIST counts retained
+;   from earlier evidence; not reclassified here.
+; Unresolved: STATIC / UNOBSERVED: nonzero BDOS21 status calls runtime 0FA0 (PLI.COM+0EA0); the
+;   bounded seven-byte helper calls runtime 05F2 (PLI.COM+04F2), with opaque downstream
+;   effects; no error return guarantee. / Guard failures in +19BB; other host/BDOS
+;   status states are outside the witnessed success scope. / Full-record producer scope
+;   uses index 00..7F and disjoint code, scratch, index, buffer, FCB and live stack;
+;   arbitrary aliases and external CP/M behavior are not established.
+; Contract: DEDUCED (partial; scope: Nonaliasing local append; witnessed successful 128-byte
+;   record flush in current Runes CP/M model, MINIMAL/FIZZBUZ/PICTURE; write-error
+;   semantics delegated) Save C at 20B0; LHLD1E0C reads low index and neighboring high
+;   (discarded). Store freshly read 20B0 at 1D8C+i; reload index, increment modulo256,
+;   publish it, compare with80H. If unequal return with CPI80 flags and DE preserved.
+;   At80H set DMA through +02EE/BDOS26, then reset index to00 before +0328/BDOS21 writes
+;   FCB1CA2 from current DMA bytes. Buffer is not cleared. On witnessed status A=0, CPI00
+;   produces S=0,Z=1,AC=1,P=1,CY=0 and return. STATIC / UNOBSERVED nonzero status
+;   delegates to +0EA0; if it returns, local successor is +0F2C RET.
+; Hypothesis: HYPOTHESIS None beyond INT byte-buffer append and witnessed sequential-record flush
+; Completeness: bounds=stable; control_flow=complete; contract=partial
+; Evidence: evidence.json#seeds/PLI.COM+0EF6; ../host-compiler/pass-22/bdos-chronology.json
 ; Procedure pseudo (operational; byte/word arithmetic wraps):
-;   save C; buffer[index]=C; index++; if index==128: set_DMA(buffer); index=0;
-;   write_record(INT_FCB); on witnessed success RET
+;   byte[20B0]=C; i=byte[1E0C]; read neighboring byte[1E0D] then discard for addressing;
+;   byte[1D8C+i]=fresh byte[20B0]; q=u8(fresh byte[1E0C]+1); byte[1E0C]=q; flags=CPI(q,80H); if
+;   q!=80H: return; +02EE(BC=1D8C) sets DMA on witnessed success; byte[1E0C]=0; +0328(BC=1CA2)
+;   writes current128-byte record; flags=CPI(A,0); if A!=0: STATIC_UNOBSERVED opaque_0EA0();
+;   return only if delegated helper returns
 ; @end-procedure-v1 PLI.COM+0EF6
-; SECTION [0EF6,0F29) DECODED
+; SECTION [0EF6,0F29) UNDERSTOOD
 ; @block-pseudo 0EF6
 ; pseudo:
-; | save C in int_byte; buffer[index]=C
+; | OBSERVED: save C to20B0; read index pair (discard high); append fresh saved C at1D8C+low index.
 PLI_0EF6: LXI H,20B0H ; HL = &int_append_byte (20B0H) ; +0EF6 runtime=0FF6H OBSERVED
 PLI_0EF9: MOV M,C ; byte[int_append_byte (20B0H)] = C ; +0EF9 runtime=0FF9H OBSERVED
 PLI_0EFA: LHLD 1E0CH ; L = byte[int_byte_index (1E0CH)]; H = byte[1E0DH] ; +0EFA runtime=0FFAH OBSERVED
@@ -1181,32 +1257,39 @@ PLI_0EFD: MVI H,00H ; HL = zero_extend(L); flags preserved ; +0EFD runtime=0FFDH
 PLI_0EFF: LXI B,1D8CH ; BC = &int_record_buffer (1D8CH) ; +0EFF runtime=0FFFH OBSERVED
 PLI_0F02: DAD B ; HL = (HL + BC) & FFFF; only CY changes ; +0F02 runtime=1002H OBSERVED
 PLI_0F03: LDA 20B0H ; A = byte[int_append_byte (20B0H)] ; +0F03 runtime=1003H OBSERVED
-PLI_0F06: MOV M,A ; byte[HL] = A ; +0F06 runtime=1006H OBSERVED
+PLI_0F06: MOV M,A ; byte[1D8CH+low index] = fresh saved byte[20B0H]; before index publication ; +0F06 runtime=1006H OBSERVED
 ; @block-pseudo 0F07
 ; pseudo:
-; | index++; if index!=128: return
+; | OBSERVED: freshly reload index; publish u8(index+1); CPI80; JNZ returns iff incremented index!=80H.
 PLI_0F07: LDA 1E0CH ; A = byte[int_byte_index (1E0CH)] ; +0F07 runtime=1007H OBSERVED
 PLI_0F0A: INR A ; A = (A + 1) & FF; NZPA updated, CY preserved ; +0F0A runtime=100AH OBSERVED
 PLI_0F0B: STA 1E0CH ; byte[int_byte_index (1E0CH)] = A ; +0F0B runtime=100BH OBSERVED
-PLI_0F0E: CPI 80H ; flags = compare_unsigned(A, 80H); A unchanged ; +0F0E runtime=100EH OBSERVED
+PLI_0F0E: CPI 80H ; flags = CPI(A,80H); JNZ tests incremented index; final nonflush NZPAC ; +0F0E runtime=100EH OBSERVED
 PLI_0F10: JNZ 102CH ; if Z=0: PC -> PLI.COM+0F2C; flags preserved ; +0F10 runtime=1010H OBSERVED
 ; @block-pseudo 0F13
 ; pseudo:
-; | set DMA; reset index; write INT record
+; | OBSERVED: +02EE sets DMA1D8C through real BDOS26 boundary; THEN reset index0; +0328 writes FCB1CA2 through BDOS21.
+; | DEDUCED: returned DMA-wrapper registers/flags are overwritten before final result; persistent DMA/scratch/stack effects remain.
 PLI_0F13: LXI B,1D8CH ; BC = &int_record_buffer (1D8CH) ; +0F13 runtime=1013H OBSERVED
-PLI_0F16: CALL 03EEH ; push following PC; invoke PLI.COM+02EE; result effects belong to callee ; +0F16 runtime=1016H OBSERVED
+PLI_0F16: CALL 03EEH ; invoke +02EE: on witnessed success DMA=1D8CH through BDOS26; result registers/flags do not survive later setup ; +0F16 runtime=1016H OBSERVED
 PLI_0F19: LXI H,1E0CH ; HL = &int_byte_index (1E0CH) ; +0F19 runtime=1019H OBSERVED
-PLI_0F1C: MVI M,00H ; byte[int_byte_index (1E0CH)] = 00H ; +0F1C runtime=101CH OBSERVED
+PLI_0F1C: MVI M,00H ; reset index to00 AFTER DMA setup and BEFORE BDOS21; do not clear buffer ; +0F1C runtime=101CH OBSERVED
 PLI_0F1E: LXI B,1CA2H ; BC = &int_fcb (1CA2H) ; +0F1E runtime=101EH OBSERVED
-PLI_0F21: CALL 0428H ; push following PC; invoke PLI.COM+0328; result effects belong to callee ; +0F21 runtime=1021H OBSERVED
-PLI_0F24: CPI 00H ; flags = compare_unsigned(A, 00H); A unchanged ; +0F24 runtime=1024H OBSERVED
+PLI_0F21: CALL 0428H ; invoke +0328 with BC=1CA2H; BDOS21 consumes current DMA record and mutates FCB/file on witnessed success ; +0F21 runtime=1021H OBSERVED
+; @block-pseudo 0F24
+; pseudo:
+; | OBSERVED success: CPI00 tests BDOS21 returned A; JZ returns iff status0.
+PLI_0F24: CPI 00H ; flags = CPI(BDOS21 returned A,00H); witnessed status0 gives S0 Z1 AC1 P1 CY0 ; +0F24 runtime=1024H OBSERVED
 PLI_0F26: JZ 102CH ; if Z=1: PC -> PLI.COM+0F2C; flags preserved ; +0F26 runtime=1026H OBSERVED
-; SECTION [0F29,0F2C) RAW
-PLI_0F29: DB 0CDH,0A0H,00FH ; +0F29 runtime=1029H RAW
-; SECTION [0F2C,0F2D) DECODED
+; SECTION [0F29,0F2C) DECODED
+; @block-pseudo 0F29
+; pseudo:
+; | STATIC / UNOBSERVED: CALL0FA0 invokes opaque +0EA0; local successor +0F2C only if child returns.
+PLI_0F29: CALL 0FA0H ; STATIC / UNOBSERVED: CALL runtime0FA0 = PLI.COM+0EA0; continuation +0F2C exists only if helper returns ; +0F29 runtime=1029H RAW
+; SECTION [0F2C,0F2D) UNDERSTOOD
 ; @block-pseudo 0F2C
 ; pseudo:
-; | return on the witnessed success path
+; | OBSERVED: consume original outer CALL word; successful nonflush/flush returns retain last CPI flags.
 PLI_0F2C: RET ; PC = word[SP]; SP += 2; use the convention in procedure header ; +0F2C runtime=102CH OBSERVED
 ; SECTION [0F2D,1140) RAW
 PLI_0F2D: DB 03AH,00CH,01EH,0FEH,080H,0C2H,051H,010H,001H,08CH,01DH,0CDH,0EEH,003H,001H,0A2H ; +0F2D runtime=102DH RAW

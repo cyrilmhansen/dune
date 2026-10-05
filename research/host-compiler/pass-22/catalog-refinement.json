@@ -1,0 +1,213 @@
+{
+  "baseline": "d00743be9eddcc955d8ccab0fa3db74f7899c38c",
+  "previous": {
+    "PLI.COM+0EF6": {
+      "id": "PLI.COM+0EF6",
+      "image": "PLI.COM",
+      "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+      "stable_label": "PLI_0EF6",
+      "runtime_entry": 4086,
+      "start_offset": 3830,
+      "end_offset": 3885,
+      "length": 55,
+      "byte_status_at_entry": "DECODED",
+      "description": "INT byte append / record flush",
+      "completeness": {
+        "bounds": "provisional",
+        "control_flow": "partial",
+        "contract": "partial"
+      },
+      "observed_paths": {
+        "invocations_by_run": {
+          "MINIMAL": 128,
+          "FIZZBUZ": 384,
+          "FACTOR": 256,
+          "OPTIMIST": 512
+        },
+        "represented_bytes": 52,
+        "description": "fetched path fragments only; error branch +0F29 not observed"
+      },
+      "unresolved_paths": [
+        "error branch +0F29 not observed"
+      ],
+      "inputs": "C=byte to append",
+      "outputs": "record buffer gets C; index advances/resets; write status on flush",
+      "clobbers": "A,BC,DE,HL,flags; nested BDOS effects",
+      "memory_state": [
+        "int_fcb=1CA2H (INT record FCB)",
+        "int_record_buffer=1D8CH (INT byte record destination)",
+        "int_byte_index=1E0CH (INT append index)",
+        "int_append_byte=20B0H (saved INT append C)"
+      ],
+      "data_role_ids": [
+        "PLI.COM:int_fcb",
+        "PLI.COM:int_record_buffer",
+        "PLI.COM:int_byte_index",
+        "PLI.COM:int_append_byte"
+      ],
+      "callers": [
+        {
+          "coordinate": "PLI.COM+10AF",
+          "counts_by_run": {
+            "MINIMAL": 70,
+            "FIZZBUZ": 93,
+            "FACTOR": 67,
+            "OPTIMIST": 13
+          }
+        },
+        {
+          "coordinate": "PLI1.OVL+7DCC",
+          "counts_by_run": {
+            "MINIMAL": 16,
+            "FIZZBUZ": 102,
+            "FACTOR": 61,
+            "OPTIMIST": 189
+          }
+        },
+        {
+          "coordinate": "PLI1.OVL+7E11",
+          "counts_by_run": {
+            "MINIMAL": 1,
+            "FIZZBUZ": 7,
+            "FACTOR": 8,
+            "OPTIMIST": 5
+          }
+        },
+        {
+          "coordinate": "PLI1.OVL+7E20",
+          "counts_by_run": {
+            "MINIMAL": 9,
+            "FIZZBUZ": 60,
+            "FACTOR": 28,
+            "OPTIMIST": 108
+          }
+        },
+        {
+          "coordinate": "PLI1.OVL+7E52",
+          "counts_by_run": {
+            "MINIMAL": 7,
+            "FIZZBUZ": 42,
+            "FACTOR": 33,
+            "OPTIMIST": 81
+          }
+        },
+        {
+          "coordinate": "PLI1.OVL+7E5B",
+          "counts_by_run": {
+            "MINIMAL": 7,
+            "FIZZBUZ": 42,
+            "FACTOR": 33,
+            "OPTIMIST": 81
+          }
+        },
+        {
+          "coordinate": "PLI1.OVL+8070",
+          "counts_by_run": {
+            "MINIMAL": 10,
+            "FIZZBUZ": 30,
+            "FACTOR": 14,
+            "OPTIMIST": 27
+          }
+        },
+        {
+          "coordinate": "PLI1.OVL+80FF",
+          "counts_by_run": {
+            "MINIMAL": 4,
+            "FIZZBUZ": 4,
+            "FACTOR": 6,
+            "OPTIMIST": 4
+          }
+        },
+        {
+          "coordinate": "PLI1.OVL+8107",
+          "counts_by_run": {
+            "MINIMAL": 4,
+            "FIZZBUZ": 4,
+            "FACTOR": 6,
+            "OPTIMIST": 4
+          }
+        }
+      ],
+      "returns": {
+        "convention": "ordinary hardware CALL word; observed SP after RET = (entry SP + 2) mod 65536",
+        "observed_file_offsets": [
+          3884
+        ],
+        "sites_description": "PLI.COM+0F2C"
+      },
+      "direct_callees": [
+        {
+          "callsite_offset": 3862,
+          "coordinate": "PLI.COM+02EE",
+          "runtime_address": 1006
+        },
+        {
+          "callsite_offset": 3873,
+          "coordinate": "PLI.COM+0328",
+          "runtime_address": 1064
+        }
+      ],
+      "overlapping_entries": [],
+      "contract_scope": "own low-level operation; opaque callees explicitly delegated",
+      "contract": "C byte; buffer 1D8CH, index 1E0CH; scratch 20B0H",
+      "semantic_hypothesis": "INT record byte append",
+      "pseudocode": "save C; buffer[index]=C; index++; if index==128: set_DMA(buffer); index=0; write_record(INT_FCB); on witnessed success RET",
+      "evidence_refs": [
+        "evidence.json#seeds/PLI.COM+0EF6"
+      ],
+      "blocks": [
+        {
+          "offset": 3830,
+          "pseudocode": [
+            "save C in int_byte; buffer[index]=C"
+          ]
+        },
+        {
+          "offset": 3847,
+          "pseudocode": [
+            "index++; if index!=128: return"
+          ]
+        },
+        {
+          "offset": 3859,
+          "pseudocode": [
+            "set DMA; reset index; write INT record"
+          ]
+        },
+        {
+          "offset": 3884,
+          "pseudocode": [
+            "return on the witnessed success path"
+          ]
+        }
+      ],
+      "local_comments": {
+        "0EF6": "HL = &int_append_byte (20B0H)",
+        "0EF9": "byte[int_append_byte (20B0H)] = C",
+        "0EFA": "L = byte[int_byte_index (1E0CH)]; H = byte[1E0DH]",
+        "0EFD": "HL = zero_extend(L); flags preserved",
+        "0EFF": "BC = &int_record_buffer (1D8CH)",
+        "0F02": "HL = (HL + BC) & FFFF; only CY changes",
+        "0F03": "A = byte[int_append_byte (20B0H)]",
+        "0F06": "byte[HL] = A",
+        "0F07": "A = byte[int_byte_index (1E0CH)]",
+        "0F0A": "A = (A + 1) & FF; NZPA updated, CY preserved",
+        "0F0B": "byte[int_byte_index (1E0CH)] = A",
+        "0F0E": "flags = compare_unsigned(A, 80H); A unchanged",
+        "0F10": "if Z=0: PC -> PLI.COM+0F2C; flags preserved",
+        "0F13": "BC = &int_record_buffer (1D8CH)",
+        "0F16": "push following PC; invoke PLI.COM+02EE; result effects belong to callee",
+        "0F19": "HL = &int_byte_index (1E0CH)",
+        "0F1C": "byte[int_byte_index (1E0CH)] = 00H",
+        "0F1E": "BC = &int_fcb (1CA2H)",
+        "0F21": "push following PC; invoke PLI.COM+0328; result effects belong to callee",
+        "0F24": "flags = compare_unsigned(A, 00H); A unchanged",
+        "0F26": "if Z=1: PC -> PLI.COM+0F2C; flags preserved",
+        "0F2C": "PC = word[SP]; SP += 2; use the convention in procedure header"
+      }
+    }
+  },
+  "new_entries": [
+    "PLI.COM+0328"
+  ]
+}

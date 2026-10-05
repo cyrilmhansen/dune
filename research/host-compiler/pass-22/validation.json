@@ -1,0 +1,172 @@
+{
+  "baseline": "d00743be9eddcc955d8ccab0fa3db74f7899c38c",
+  "all_passed": true,
+  "suite_exit_codes": {
+    "project": 0,
+    "native-unit": 0,
+    "balance-unit": 0,
+    "recursive-unit": 0,
+    "mapped-unit": 0,
+    "attribute-unit": 0,
+    "emitter-unit": 0,
+    "pass17-native": 0,
+    "pass18-native": 0,
+    "pass19-native": 0,
+    "pass20-native": 0,
+    "pass16": 0,
+    "pass15": 0,
+    "pass14": 0,
+    "pass13": 0,
+    "baseline": 0,
+    "minimal-pass-1": 0,
+    "minimal-pass-2": 0,
+    "minimal-pass-3": 0,
+    "minimal-pass-4": 0,
+    "minimal-pass-5": 0,
+    "minimal-pass-6": 0,
+    "minimal-pass-7": 0,
+    "minimal-pass-8": 0,
+    "minimal-pass-9": 0,
+    "minimal-pass-10": 0,
+    "minimal-pass-11": 0,
+    "minimal-pass-12": 0,
+    "packet-continuation": 0,
+    "V1": 0,
+    "roundtrip-tests": 0,
+    "roundtrip": 0,
+    "pass21-native": 0,
+    "pass22": 0
+  },
+  "Python_test_counts": {
+    "pass17-native": 5,
+    "pass18-native": 6,
+    "pass19-native": 9,
+    "pass20-native": 7,
+    "pass16": 6,
+    "pass15": 7,
+    "pass14": 8,
+    "pass13": 8,
+    "baseline": 9,
+    "minimal-pass-1": 8,
+    "minimal-pass-2": 9,
+    "minimal-pass-3": 9,
+    "minimal-pass-4": 11,
+    "minimal-pass-5": 8,
+    "minimal-pass-6": 8,
+    "minimal-pass-7": 8,
+    "minimal-pass-8": 8,
+    "minimal-pass-9": 7,
+    "minimal-pass-10": 8,
+    "minimal-pass-11": 8,
+    "minimal-pass-12": 8,
+    "packet-continuation": 27,
+    "V1": 9,
+    "roundtrip-tests": 11,
+    "pass21-native": 6,
+    "pass22": 9
+  },
+  "total_Python_tests": 227,
+  "MINIMAL_tests": 109,
+  "packet_and_continuation_tests": 27,
+  "new_mechanical_tests": 9,
+  "exact_CPU_nonflush_index_flag_cases": 8096,
+  "natural_emitter_invocations": 640,
+  "natural_nonflush": 635,
+  "natural_flush_success": 5,
+  "natural_flush_error": 0,
+  "write_wrapper_invocations": 15,
+  "original_images": [
+    {
+      "image": "PLI.COM",
+      "bytes": 8064,
+      "sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+      "exact_roundtrip": true
+    },
+    {
+      "image": "PLI0.OVL",
+      "bytes": 18048,
+      "sha256": "e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff",
+      "exact_roundtrip": true
+    },
+    {
+      "image": "PLI1.OVL",
+      "bytes": 34816,
+      "sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "exact_roundtrip": true
+    },
+    {
+      "image": "PLI2.OVL",
+      "bytes": 33792,
+      "sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "exact_roundtrip": true
+    }
+  ],
+  "historical_bytes": 94720,
+  "historical_reconstruction": "EXACT",
+  "sources": [
+    {
+      "source": "MINIMAL",
+      "REL_size": 256,
+      "REL_sha256": "7339d230f13c2614f6b1acb632081959659d7292814c747f7853b6944e91f119",
+      "actual_guest_instructions": 441855,
+      "PASS1_PASS2_END_warm_boot": true
+    },
+    {
+      "source": "FIZZBUZ",
+      "REL_size": 768,
+      "REL_sha256": "68ec16931d4dae7a8f0831a29c9ae8b9ca139279f5104bb34e299644a8b2a203",
+      "actual_guest_instructions": 1145517,
+      "PASS1_PASS2_END_warm_boot": true
+    },
+    {
+      "source": "PICTURE",
+      "REL_size": 256,
+      "REL_sha256": "c02f738a7504384a236289633210d1bf4e7ea5391e51e091e373950eefacc4f1",
+      "actual_guest_instructions": 518213,
+      "PASS1_PASS2_END_warm_boot": true
+    }
+  ],
+  "annotation_changes": {
+    "RAW_to_UNDERSTOOD": 16,
+    "RAW_to_DECODED_static_unobserved": 3,
+    "DECODED_to_UNDERSTOOD": 52
+  },
+  "MINIMAL_dynamic_before": {
+    "instruction_occurrences": 439998,
+    "occurrences_by_status": {
+      "RAW": 103216,
+      "DECODED": 63790,
+      "STRUCTURED": 58181,
+      "UNDERSTOOD": 214811
+    },
+    "understood_percent": 48.820904
+  },
+  "MINIMAL_dynamic_after": {
+    "instruction_occurrences": 439998,
+    "occurrences_by_status": {
+      "RAW": 103189,
+      "DECODED": 61990,
+      "STRUCTURED": 58181,
+      "UNDERSTOOD": 216638
+    },
+    "understood_percent": 49.236133
+  },
+  "rerun_after_fix": [
+    "MINIMAL pass3/pass4: retained original DB-coordinate labels0330/0340 with standard EQU/DB layout",
+    "Verifier regression now checks decoded STATIC / UNOBSERVED error CALL has no dynamic runs and remains semantically unpromoted"
+  ],
+  "infrastructure_changed": {
+    "Runner": false,
+    "CPU": false,
+    "CPM": false,
+    "packet": false,
+    "native_host_compiler": false
+  },
+  "annotation_renderer": "Tiny optional static-callee label presentation; no packet change",
+  "custom_fixtures": false,
+  "failure_injection": false,
+  "divergence": null,
+  "fidelity_debt": null,
+  "git_diff_check": true,
+  "temporary_files": "Task-owned TemporaryDirectory contexts removed after fresh replay"
+}

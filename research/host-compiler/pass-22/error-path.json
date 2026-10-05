@@ -1,0 +1,77 @@
+{
+  "evidence_status": "STATIC / UNOBSERVED",
+  "observed_write_errors": 0,
+  "exact_regions": [
+    {
+      "start": 3830,
+      "end": 3885,
+      "description": "Emitter; 52 observed bytes, three STATIC / UNOBSERVED error CALL bytes",
+      "bytes": "21B020712A0C1E2600018C1D093AB020773A0C1E3C320C1EFE80C22C10018C1DCDEE03210C1E360001A21CCD2804FE00CA2C10CDA00FC9"
+    },
+    {
+      "start": 808,
+      "end": 824,
+      "description": "Sequential-write wrapper; all 16 bytes observed",
+      "bytes": "216620702B712A6520EB0E15CDBB1AC9"
+    },
+    {
+      "start": 3744,
+      "end": 3751,
+      "description": "STATIC / UNOBSERVED seven-byte local helper envelope; CALL +04F2 may escape",
+      "bytes": "019802CDF205C9"
+    },
+    {
+      "start": 1266,
+      "end": 1299,
+      "description": "STATIC / UNOBSERVED straight-line/conditional local envelope with two delegated callees; no dynamic callable extent established",
+      "bytes": "217520702B713A051D1FD2050601E41CCD050421112036012A7420444DCD7D05C9"
+    }
+  ],
+  "selection": {
+    "producer": "PLI.COM+0F24 CPI00",
+    "branch": "PLI.COM+0F26 JZ102C",
+    "error_condition": "BDOS21 A != 0; JZ not taken",
+    "target_runtime": 4000,
+    "target_coordinate": "PLI.COM+0EA0",
+    "call_coordinate": "PLI.COM+0F29",
+    "local_successor_if_child_returns": "PLI.COM+0F2C"
+  },
+  "helper_0EA0": {
+    "local_decode": [
+      "+0EA0 LXI B,0298H",
+      "+0EA3 CALL05F2H (PLI.COM+04F2)",
+      "+0EA6 RET"
+    ],
+    "boundary": "Seven-byte static local envelope; no observed CALL establishes a dynamic ProcedureHypothesis in the selected captures",
+    "return_scope": "Locally RET after child only if child returns; child may escape or not terminate",
+    "BC_0298_meaning": "Unestablished numeric input; no error/message semantics claimed"
+  },
+  "child_04F2": {
+    "local_decode": [
+      "+04F2 LXI H,2075H",
+      "+04F5 MOV M,B",
+      "+04F6 DCX H",
+      "+04F7 MOV M,C",
+      "+04F8 LDA1D05H",
+      "+04FB RAR",
+      "+04FC JNC0605H",
+      "+04FF LXI B,1CE4H",
+      "+0502 CALL0405H (PLI.COM+0305)",
+      "+0505 LXI H,2011H",
+      "+0508 MVI M,01H",
+      "+050A LHLD2074H",
+      "+050D MOV B,H",
+      "+050E MOV C,L",
+      "+050F CALL057DH (PLI.COM+047D)",
+      "+0512 RET"
+    ],
+    "status": "Not cataloged; no calls in the selected captures; nested +0305/+047D effects not investigated",
+    "deduced_local_operation": "Save input BC at2074/75; bit0 of byte1D05 selects optional call0305 withBC1CE4; set2011=1; reload saved BC and call047D; localRET only if children return"
+  },
+  "failure_injection": "No existing production BDOS21 failure-injection hook was used or added; no synthetic compiler failure",
+  "unresolved": [
+    "Semantics and nonreturning behavior of runtime05F2 and its children",
+    "Nonzero BDOS21 output/register/filesystem states",
+    "Guard-failure transfers in +19BB"
+  ]
+}

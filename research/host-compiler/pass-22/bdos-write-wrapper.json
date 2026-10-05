@@ -1,0 +1,684 @@
+{
+  "id": "PLI.COM+0328",
+  "extent": [
+    808,
+    824
+  ],
+  "sources": [
+    {
+      "source": "MINIMAL",
+      "calls": 3,
+      "callers": {
+        "PLI.COM+0F21": 1,
+        "PLI.COM+118D": 2
+      },
+      "members": [
+        {
+          "caller": "PLI.COM+0F21",
+          "entry_step": 319870,
+          "return_step": 319905,
+          "input": {
+            "a": 0,
+            "b": 28,
+            "c": 162,
+            "d": 29,
+            "e": 140,
+            "h": 30,
+            "l": 12,
+            "sp": 65526,
+            "pc": 1064,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 0,
+            "b": 0,
+            "c": 21,
+            "d": 28,
+            "e": 162,
+            "h": 0,
+            "l": 0,
+            "sp": 65528,
+            "pc": 4132,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "argument": 7330,
+          "bridge_call_step": 319877
+        },
+        {
+          "caller": "PLI.COM+118D",
+          "entry_step": 382542,
+          "return_step": 382577,
+          "input": {
+            "a": 0,
+            "b": 28,
+            "c": 228,
+            "d": 29,
+            "e": 10,
+            "h": 0,
+            "l": 0,
+            "sp": 65468,
+            "pc": 1064,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 0,
+            "b": 0,
+            "c": 21,
+            "d": 28,
+            "e": 228,
+            "h": 0,
+            "l": 0,
+            "sp": 65470,
+            "pc": 4752,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "argument": 7396,
+          "bridge_call_step": 382549
+        },
+        {
+          "caller": "PLI.COM+118D",
+          "entry_step": 440290,
+          "return_step": 440325,
+          "input": {
+            "a": 0,
+            "b": 28,
+            "c": 228,
+            "d": 29,
+            "e": 10,
+            "h": 0,
+            "l": 0,
+            "sp": 65528,
+            "pc": 1064,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 0,
+            "b": 0,
+            "c": 21,
+            "d": 28,
+            "e": 228,
+            "h": 0,
+            "l": 0,
+            "sp": 65530,
+            "pc": 4752,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "argument": 7396,
+          "bridge_call_step": 440297
+        }
+      ]
+    },
+    {
+      "source": "FIZZBUZ",
+      "calls": 9,
+      "callers": {
+        "PLI.COM+0F21": 3,
+        "PLI.COM+118D": 6
+      },
+      "members": [
+        {
+          "caller": "PLI.COM+0F21",
+          "entry_step": 478330,
+          "return_step": 478365,
+          "input": {
+            "a": 0,
+            "b": 28,
+            "c": 162,
+            "d": 29,
+            "e": 140,
+            "h": 30,
+            "l": 12,
+            "sp": 65469,
+            "pc": 1064,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 0,
+            "b": 0,
+            "c": 21,
+            "d": 28,
+            "e": 162,
+            "h": 0,
+            "l": 0,
+            "sp": 65471,
+            "pc": 4132,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "argument": 7330,
+          "bridge_call_step": 478337
+        },
+        {
+          "caller": "PLI.COM+0F21",
+          "entry_step": 609517,
+          "return_step": 609552,
+          "input": {
+            "a": 0,
+            "b": 28,
+            "c": 162,
+            "d": 29,
+            "e": 140,
+            "h": 30,
+            "l": 12,
+            "sp": 65451,
+            "pc": 1064,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 0,
+            "b": 0,
+            "c": 21,
+            "d": 28,
+            "e": 162,
+            "h": 0,
+            "l": 0,
+            "sp": 65453,
+            "pc": 4132,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "argument": 7330,
+          "bridge_call_step": 609524
+        },
+        {
+          "caller": "PLI.COM+0F21",
+          "entry_step": 670527,
+          "return_step": 670562,
+          "input": {
+            "a": 0,
+            "b": 28,
+            "c": 162,
+            "d": 29,
+            "e": 140,
+            "h": 30,
+            "l": 12,
+            "sp": 65526,
+            "pc": 1064,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 0,
+            "b": 0,
+            "c": 21,
+            "d": 28,
+            "e": 162,
+            "h": 0,
+            "l": 0,
+            "sp": 65528,
+            "pc": 4132,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "argument": 7330,
+          "bridge_call_step": 670534
+        },
+        {
+          "caller": "PLI.COM+118D",
+          "entry_step": 766434,
+          "return_step": 766469,
+          "input": {
+            "a": 0,
+            "b": 28,
+            "c": 228,
+            "d": 29,
+            "e": 10,
+            "h": 0,
+            "l": 0,
+            "sp": 65424,
+            "pc": 1064,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 0,
+            "b": 0,
+            "c": 21,
+            "d": 28,
+            "e": 228,
+            "h": 0,
+            "l": 0,
+            "sp": 65426,
+            "pc": 4752,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "argument": 7396,
+          "bridge_call_step": 766441
+        },
+        {
+          "caller": "PLI.COM+118D",
+          "entry_step": 855721,
+          "return_step": 855756,
+          "input": {
+            "a": 0,
+            "b": 28,
+            "c": 228,
+            "d": 29,
+            "e": 10,
+            "h": 0,
+            "l": 0,
+            "sp": 65378,
+            "pc": 1064,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 0,
+            "b": 0,
+            "c": 21,
+            "d": 28,
+            "e": 228,
+            "h": 0,
+            "l": 0,
+            "sp": 65380,
+            "pc": 4752,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "argument": 7396,
+          "bridge_call_step": 855728
+        },
+        {
+          "caller": "PLI.COM+118D",
+          "entry_step": 945221,
+          "return_step": 945256,
+          "input": {
+            "a": 0,
+            "b": 28,
+            "c": 228,
+            "d": 29,
+            "e": 10,
+            "h": 0,
+            "l": 0,
+            "sp": 65354,
+            "pc": 1064,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 0,
+            "b": 0,
+            "c": 21,
+            "d": 28,
+            "e": 228,
+            "h": 0,
+            "l": 0,
+            "sp": 65356,
+            "pc": 4752,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "argument": 7396,
+          "bridge_call_step": 945228
+        },
+        {
+          "caller": "PLI.COM+118D",
+          "entry_step": 1018238,
+          "return_step": 1018273,
+          "input": {
+            "a": 0,
+            "b": 28,
+            "c": 228,
+            "d": 29,
+            "e": 10,
+            "h": 0,
+            "l": 0,
+            "sp": 65370,
+            "pc": 1064,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 0,
+            "b": 0,
+            "c": 21,
+            "d": 28,
+            "e": 228,
+            "h": 0,
+            "l": 0,
+            "sp": 65372,
+            "pc": 4752,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "argument": 7396,
+          "bridge_call_step": 1018245
+        },
+        {
+          "caller": "PLI.COM+118D",
+          "entry_step": 1091987,
+          "return_step": 1092022,
+          "input": {
+            "a": 0,
+            "b": 28,
+            "c": 228,
+            "d": 29,
+            "e": 10,
+            "h": 0,
+            "l": 0,
+            "sp": 65496,
+            "pc": 1064,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 0,
+            "b": 0,
+            "c": 21,
+            "d": 28,
+            "e": 228,
+            "h": 0,
+            "l": 0,
+            "sp": 65498,
+            "pc": 4752,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "argument": 7396,
+          "bridge_call_step": 1091994
+        },
+        {
+          "caller": "PLI.COM+118D",
+          "entry_step": 1143952,
+          "return_step": 1143987,
+          "input": {
+            "a": 0,
+            "b": 28,
+            "c": 228,
+            "d": 29,
+            "e": 10,
+            "h": 0,
+            "l": 0,
+            "sp": 65528,
+            "pc": 1064,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 0,
+            "b": 0,
+            "c": 21,
+            "d": 28,
+            "e": 228,
+            "h": 0,
+            "l": 0,
+            "sp": 65530,
+            "pc": 4752,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "argument": 7396,
+          "bridge_call_step": 1143959
+        }
+      ]
+    },
+    {
+      "source": "PICTURE",
+      "calls": 3,
+      "callers": {
+        "PLI.COM+0F21": 1,
+        "PLI.COM+118D": 2
+      },
+      "members": [
+        {
+          "caller": "PLI.COM+0F21",
+          "entry_step": 385335,
+          "return_step": 385370,
+          "input": {
+            "a": 0,
+            "b": 28,
+            "c": 162,
+            "d": 29,
+            "e": 140,
+            "h": 30,
+            "l": 12,
+            "sp": 65526,
+            "pc": 1064,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 0,
+            "b": 0,
+            "c": 21,
+            "d": 28,
+            "e": 162,
+            "h": 0,
+            "l": 0,
+            "sp": 65528,
+            "pc": 4132,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "argument": 7330,
+          "bridge_call_step": 385342
+        },
+        {
+          "caller": "PLI.COM+118D",
+          "entry_step": 458898,
+          "return_step": 458933,
+          "input": {
+            "a": 0,
+            "b": 28,
+            "c": 228,
+            "d": 29,
+            "e": 10,
+            "h": 0,
+            "l": 0,
+            "sp": 65464,
+            "pc": 1064,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 0,
+            "b": 0,
+            "c": 21,
+            "d": 28,
+            "e": 228,
+            "h": 0,
+            "l": 0,
+            "sp": 65466,
+            "pc": 4752,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "argument": 7396,
+          "bridge_call_step": 458905
+        },
+        {
+          "caller": "PLI.COM+118D",
+          "entry_step": 516648,
+          "return_step": 516683,
+          "input": {
+            "a": 0,
+            "b": 28,
+            "c": 228,
+            "d": 29,
+            "e": 10,
+            "h": 0,
+            "l": 0,
+            "sp": 65528,
+            "pc": 1064,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 0,
+            "b": 0,
+            "c": 21,
+            "d": 28,
+            "e": 228,
+            "h": 0,
+            "l": 0,
+            "sp": 65530,
+            "pc": 4752,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "argument": 7396,
+          "bridge_call_step": 516655
+        }
+      ]
+    }
+  ]
+}

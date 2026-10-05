@@ -154,11 +154,20 @@ class AnnotatedAssemblyTests(unittest.TestCase):
         with self.assertRaisesRegex(v.VerificationError, 'stack-byte relation'):
             v.verify(root / 'manifest.json', IMAGES)
 
-    def test_raw_branch_bytes_stay_unpromoted(self):
+    def test_unobserved_error_branches_stay_semantically_unpromoted(self):
         image = self.manifest['images'][0]
-        for offset in (0xF29, 0x114B, 0x1195):
+        for offset in (0x114B, 0x1195):
             section = next(s for s in image['sections'] if s['start_offset'] <= offset < s['end_offset'])
             self.assertEqual(section['status'], 'RAW')
+        # Pass22 decodes only the exact error CALL; it adds no dynamic outcome
+        # or UNDERSTOOD claim for those previously RAW three bytes.
+        section = next(s for s in image['sections'] if s['start_offset'] == 0xF29)
+        self.assertEqual((section['end_offset'], section['status']), (0xF2C, 'DECODED'))
+        seed = next(s for s in v.read_json(v.DEFAULT_MANIFEST.parent / 'evidence.json')['seeds'] if s['id'] == 'PLI.COM+0EF6')
+        instruction = next(i for i in seed['instructions'] if i['offset'] == 0xF29)
+        self.assertEqual(instruction['runs'], [])
+        self.assertEqual((instruction['bytes'], instruction['decoded']), ('CDA00F', 'CALL 0FA0H'))
+        self.assertEqual(instruction['evidence_status'], 'STATIC / UNOBSERVED')
 
 
 if __name__ == '__main__':
