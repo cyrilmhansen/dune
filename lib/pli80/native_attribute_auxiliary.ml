@@ -1,14 +1,13 @@
 [@@@warning "-4-40-41-42"]
-module R=Pli80_host.Mapped_publication
-module B=Mapped_publication_bridge
+module B=Attribute_auxiliary_bridge
 type case={caller:string;entry_step:int;return_step:int;parent_entry_step:int option;
-  input:Runner.state_snapshot;output:Runner.state_snapshot;result:R.result;
+  input:Runner.state_snapshot;output:Runner.state_snapshot;result:B.result;
   writes:Pli80_host.Mapped_lookup.write list;entry_scratch:(int*int)list;
   entry_memory_sha256:string;final_memory_sha256:string;logical_writes_sha256:string;
   compatibility_writes:(int*int)list}
 type validated={cases:case list;snapshots:(int*bytes*bytes)list;records:(string*int*bytes)list;input_digest:string}
 let cases v=v.cases
-let require b message=if not b then failwith("Native mapped publication: "^message)
+let require b message=if not b then failwith("Native attribute auxiliary: "^message)
 let shadow input =
  let bridge=B.create ~pli1:input.Experiment.pli1_ovl in
  let active=ref[]and previous=ref None and current_origin=ref Analysis.Execution_map.Unknown in
@@ -25,7 +24,7 @@ let shadow input =
   current_origin:=origin;let state=boundary.Runner.state in
   (match !active with
   |(entry_step,parent_entry_step,(input:Runner.state_snapshot),entry_memory,call,(p:B.prepared),writes,latest)::rest when state.pc=call.B.resume->
-    let ret_pc=match call.operation with B.Publish->0x9cef|B.Recycle->0x9dbe in
+    let ret_pc=match call.operation with B.High_attribute->0x9d79|B.Second_auxiliary->0x9cd4 in
     (match !previous with Some(_,before,after,step)->
      require(I8080.Step.pc_before step=ret_pc && I8080.Step.control_flow step=I8080.Step.Return{target=Some call.resume;taken=true}
       &&before.sp=input.sp&&after=state)"terminal RET ancestry";
@@ -36,31 +35,31 @@ let shadow input =
     let logical=List.map(fun(w:Pli80_host.Mapped_lookup.write)->w.address,w.value)p.writes in
     require(List.rev !writes=logical)"logical write chronology";
     require(state=p.state)"returned registers/flags";
-    List.iter(fun(a,v)->require(Hashtbl.find_opt latest a=Some(0x9dae,v))"child CALL final writer")p.compatibility_writes;
+    require(p.compatibility_writes=[])"leaf has unexpected stack residue";
     require(Hashtbl.length latest=List.length(List.sort_uniq compare(List.map fst(logical@p.compatibility_writes))))"unexplained write cell";
     let post=boundary.copy_memory()in require(post=p.memory)"full64KiB post-state";
-    cases:={caller=call.coordinate;entry_step;return_step=step_index-1;parent_entry_step;input;output=state;result=p.result;writes=p.writes;entry_scratch=List.map(fun a->a,Char.code(Bytes.get entry_memory a))[0xae33;0xae34;0xae3c;0xae3d;0xae4a;0xae4b];
+    cases:={caller=call.coordinate;entry_step;return_step=step_index-1;parent_entry_step;input;output=state;result=p.result;writes=p.writes;entry_scratch=List.map(fun a->a,Char.code(Bytes.get entry_memory a))[0xae47;0xae48;0xae3b;0xae3c];
       entry_memory_sha256=Experiment.sha256_hex entry_memory;final_memory_sha256=Experiment.sha256_hex post;
       logical_writes_sha256=Native_dispatch.write_digest logical;compatibility_writes=p.compatibility_writes}::!cases;
     snapshots:=(entry_step,entry_memory,post)::!snapshots;active:=rest
   |_->());
   let selected_image=match origin with Analysis.Execution_map.Image_byte{image;_}->image.name="PLI1.OVL"|_->false in
-  if selected_image&&(state.pc=0x9cd5||state.pc=0x9da2) then (
+  if selected_image&&(state.pc=0x9d64||state.pc=0x9cbf) then (
    let call=match !previous with Some(origin,before,after,step)->B.verify_call bridge ~origin ~before ~after step ~entry:state|_->failwith"Entry without actual CALL"in
    let parent=match !active with (s,_,_,_,_,_,_,_)::_->Some s|[]->None in
-   require((call.runtime_site=0x9dae)=(parent<>None))"publication child ancestry";
+   require(parent=None)"leaf has nested/reentrant invocation";
    let memory=boundary.copy_memory()in let p=B.prepare bridge ~call ~origin ~state ~memory in
    active:=(step_index,parent,state,memory,call,p,ref[],Hashtbl.create 8)::!active)in
  match Experiment.run ~analysis:Experiment.Execution ~on_before_instruction ~on_guest_step ~on_bdos_record input with
  |Error _ as e->e|Ok result->require(!active=[])"missing return";
   Ok({cases=List.sort(fun a b->compare a.entry_step b.entry_step)!cases;snapshots= !snapshots;
     records=List.rev !records;input_digest=Experiment.sha256_hex(Marshal.to_bytes input[])},result)
-let publications v=List.filter(fun c->match c.result with R.Publication _->true|_->false)v.cases
-let recycles v=List.filter(fun c->match c.result with R.Recycle _->true|_->false)v.cases
+let high_attributes v=List.filter(fun c->match c.result with B.High _->true|_->false)v.cases
+let second_auxiliaries v=List.filter(fun c->match c.result with B.Secondary _->true|_->false)v.cases
 let record_summaries v=List.map(fun(n,r,b)->n,r,Experiment.sha256_hex b)v.records
 let controller ?(exclude_entry_steps=[]) operation v input =
  require(v.input_digest=Experiment.sha256_hex(Marshal.to_bytes input[]))"source/input proof mismatch";
- let members=match operation with B.Publish->publications v|B.Recycle->recycles v in
+ let members=match operation with B.High_attribute->high_attributes v|B.Second_auxiliary->second_auxiliaries v in
  require(List.for_all(fun s->List.exists(fun c->c.entry_step=s)members)exclude_entry_steps
    &&List.length exclude_entry_steps=List.length(List.sort_uniq compare exclude_entry_steps))"invalid child exclusion";
  let selected=List.filter(fun c->not(List.mem c.entry_step exclude_entry_steps))members in
@@ -72,23 +71,12 @@ let controller ?(exclude_entry_steps=[]) operation v input =
   let p=B.prepare bridge ~call ~origin ~state:boundary.state ~memory:(boundary.copy_memory())in
   {Native_dispatch.state=p.state;memory=p.memory;logical_writes=List.map(fun(w:Pli80_host.Mapped_lookup.write)->w.address,w.value)p.writes;
    compatibility_writes=p.compatibility_writes}in
- let entry_pc,end_pc=match operation with B.Publish->0x9cd5,0x9cf0|B.Recycle->0x9da2,0x9dbf in
+ let entry_pc,end_pc=match operation with B.High_attribute->0x9d64,0x9d7a|B.Second_auxiliary->0x9cbf,0x9cd5 in
  Native_dispatch.create ~image:"PLI1.OVL" ~entry_pc ~end_pc ~oracles ~records:v.records ~prepare
-let standalone v input=Native_dispatch.run input[controller B.Publish v input]
-let inside windows step=List.exists(fun(a,b)->a<step&&step<b)windows
-let children v=let windows=List.map(fun c->c.entry_step,c.return_step)(recycles v)in
- publications v|>List.filter(fun c->inside windows c.entry_step)|>List.map(fun c->c.entry_step)
-let hierarchical v input=Native_dispatch.run input[controller B.Recycle v input;controller ~exclude_entry_steps:(children v) B.Publish v input]
-let controllers v recursive words balances input=
- let windows=List.map(fun(c:Native_7c1b.case)->c.entry_step,c.return_step)(Native_7c1b.roots recursive)in
- let word_steps=Native_7bbf.cases words|>List.filter(fun(c:Native_7bbf.case)->inside windows c.entry_step)|>List.map(fun(c:Native_7bbf.case)->c.entry_step)in
- let balance_steps=Native_7b7a.cases balances|>List.filter(fun(c:Native_7b7a.case)->inside windows c.entry_step)|>List.map(fun(c:Native_7b7a.case)->c.entry_step)in
- (* Cross-check these operations do not acquire a suppressed ancestor silently. *)
- require(not(List.exists(fun c->inside windows c.entry_step)(recycles v)))"recycle nested beneath recursive root";
- let publication_steps=List.sort_uniq compare(children v@(publications v|>List.filter(fun c->inside windows c.entry_step)|>List.map(fun c->c.entry_step)))in
- [Native_7c1b.controller recursive input;
-  Native_7bbf.controller ~exclude_entry_steps:word_steps words input;
-  Native_7b7a.controller ~exclude_entry_steps:balance_steps balances input;
-  controller B.Recycle v input;controller ~exclude_entry_steps:publication_steps B.Publish v input]
-
-let cumulative v recursive words balances input=Native_dispatch.run input(controllers v recursive words balances input)
+let single operation v input=Native_dispatch.run input[controller operation v input]
+let cumulative v publication recursive words balances input=
+ let suppressed=List.map(fun(c:Native_7c1b.case)->c.entry_step,c.return_step)(Native_7c1b.roots recursive)
+   @List.map(fun(c:Native_mapped_publication.case)->c.entry_step,c.return_step)(Native_mapped_publication.recycles publication)in
+ require(not(List.exists(fun c->List.exists(fun(a,b)->a<c.entry_step&&c.entry_step<b)suppressed)v.cases))"new leaf unexpectedly beneath a native ancestor";
+ Native_dispatch.run input(Native_mapped_publication.controllers publication recursive words balances input
+  @[controller B.High_attribute v input;controller B.Second_auxiliary v input])

@@ -1,0 +1,62 @@
+{
+  "baseline_commit": "3e5705ef61bf19b1bec3811f35f809fabe37f9f8",
+  "recommended_pass_22": "B: focused resident PLI.COM+0EF6 archaeology",
+  "implements_emitters": false,
+  "pragmatic_divergence_authorized": false,
+  "candidates": [
+    {
+      "option": "A",
+      "coordinates": [
+        "PLI1.OVL+7A79"
+      ],
+      "status": "stable/complete/complete",
+      "operation": "save AE38; read/discard adjacent AE39; fresh position map; word low/high lookup at AB49+2*j",
+      "assessment": "small faithful reusable extraction from existing Packed_scan is possible, but extraction alone does not close emission dependency; avoid refactor for elegance",
+      "priority": "useful subordinate preparation after emission boundary is established"
+    },
+    {
+      "option": "B",
+      "coordinates": [
+        "PLI.COM+0EF6"
+      ],
+      "status": "provisional/partial/partial",
+      "operation_at_current_scope": "save C to20B0; buffer1D8C+index1E0C; increment index; at128 set DMA, reset index, write INT record through resident helpers/BDOS; return success state",
+      "unresolved": [
+        "+0F29 error branch not observed",
+        "resident02EE/0328 and nested BDOS state, DMA and record-write effect scope",
+        "exact final flags/registers and stack compatibility at both buffered and flush returns"
+      ],
+      "assessment": "next material blocker: every7E46/7E56 wrapper inherits emitter machine state, buffer mutations and host record effects; first establish exact supported state transition",
+      "priority": "recommended"
+    },
+    {
+      "option": "C",
+      "coordinates": [
+        "PLI1.OVL+7E46",
+        "PLI1.OVL+7E56"
+      ],
+      "status": "stable/complete/partial",
+      "operation": "7E46 selects word via7A79, publishes AE52/53 and sends low byte;7E56 freshly reads AE52/53 and sends high byte; both return0EF6 machine state",
+      "assessment": "current atomic host-transition API cannot run nested historical emitter/BDOS as a native sub-operation; stopping native work before emitter would split wrappers across guest execution and require new continuation semantics. Do not approximate as append/callback or invent synthetic guest Steps",
+      "priority": "after B; no wrapper implementation in this pass"
+    },
+    {
+      "option": "D",
+      "coordinates": [
+        "PLI1.OVL+7D53"
+      ],
+      "status": "stable/complete/partial",
+      "assessment": "would encompass recursive/composition work plus six direct emission channels and7E46/7E56; retains unobserved shortcuts/mapped>=F7/wrap, termination/alias/provenance scope; too broad before exact resident emitter boundary",
+      "priority": "defer"
+    }
+  ],
+  "evidence_sources": [
+    "research/annotated-assembly/procedures.json#PLI1.OVL+7A79",
+    "research/annotated-assembly/procedures.json#PLI1.OVL+7E46",
+    "research/annotated-assembly/procedures.json#PLI1.OVL+7E56",
+    "research/annotated-assembly/procedures.json#PLI.COM+0EF6",
+    "lib/runner/runner.mli",
+    "lib/pli80/native_dispatch.ml"
+  ],
+  "next_experiment": "bounded archaeology of exact0EF6 ordinary buffered and128-byte flush success states using existing MINIMAL/FIZZBUZ/PICTURE evidence; enumerate resident/BDOS dependencies and explicit failure scope before designing native emission; no new source or emitter approximation"
+}

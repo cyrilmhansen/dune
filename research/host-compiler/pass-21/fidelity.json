@@ -1,0 +1,39 @@
+{
+  "baseline_commit": "3e5705ef61bf19b1bec3811f35f809fabe37f9f8",
+  "high_attribute": {
+    "AE47_scratch": "C published before paired read",
+    "neighbor_AE48": "actually read by State.word; retained as metadata, discarded for zero-extended address",
+    "extraction": "ANI FC clears carry; three carry-aware right shifts in order; ANI07 last",
+    "final_result": "high3 from final masked third shift",
+    "final_flags": "S/Z/P from final high3; CY0; Intel8080 ANI AC from (third_shift OR07).bit3 = packed.bit6; incoming flags overwritten",
+    "DE": "preserved"
+  },
+  "second_auxiliary": {
+    "AE3B_scratch": "position published before paired read",
+    "neighbor_AE3C": "actually read and recorded; discarded for addressing",
+    "position_map": "fresh AA1F+position read at invocation",
+    "selected_table": "fresh AD9D+j read; distinct from AD08 primary channel",
+    "DE_NZPA": "preserved; returned value does not produce NZPA; final CY0 from DAD B"
+  },
+  "shared_memory": "same mutable Bytes.t-backed State; no persistent table copies; independent channels remain separate when addresses differ; real physical AD08+149/AD9D+0 overlap remains visible",
+  "ABI": "actual canonical PLI1 CALL, target, before/after state, SP ancestry, immutable bytes and pushed continuation proved; resume actual CALL+3, SP entry+2",
+  "stack_residue": "neither leaf has CALL/PUSH or other stack write; only one named scratch write; no compatibility bytes manufactured; RET consumes unchanged original outer CALL slot",
+  "full_memory_identity": "all296 natural shadows and every native transition in nine complete hybrids compare all65536 bytes without exclusions",
+  "cumulative_hierarchy": "unchanged native7C1B roots/recursive/Packed/Balance children and native7BA2/7AD5 hierarchy plus two Runner-level leaves; canonical-image-aware body isolation preserved",
+  "unsupported_states": [
+    "incorrect image or loaded operation/caller code",
+    "wrong canonical entry or non-CALL ancestry",
+    "malformed continuation",
+    "invalid byte/address/memory size",
+    "accessed scratch/table/return-stack/code alias outside scope",
+    "secondary selected address aliases own AE3B/AE3C carrier (indices158/159)",
+    "source/input proof mismatch, extra/omitted invocation"
+  ],
+  "contract_corrections": [],
+  "annotations_changed": false,
+  "Runner_changed": false,
+  "Native_dispatch_changed": false,
+  "differential_refactor": "existing five-operation controller construction exposed and reused; no proof/ownership relaxation",
+  "divergences": [],
+  "fidelity_debt": []
+}

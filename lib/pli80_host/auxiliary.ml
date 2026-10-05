@@ -23,3 +23,11 @@ let publish memory ~position ~value ~protected ~write =
   let value=State.read memory 0xae44 in
   put memory write "auxiliary_publication" address value;
   {position;index;address;value;discarded_high=carrier lsr 8}
+let read_secondary memory ~position ~protected ~write =
+  U8.check position;guard protected [0xae3b;0xae3c;0xaa1f+position];
+  put memory write "secondary_auxiliary_position" 0xae3b position;
+  let carrier=State.word memory 0xae3b in
+  let map_address=0xaa1f+(carrier land 255) in guard protected [map_address];
+  let index=State.read memory map_address in
+  let address=0xad9d+index in guard (0xae3b::0xae3c::map_address::protected) [address];
+  {position;index;address;value=State.read memory address;discarded_high=carrier lsr 8}

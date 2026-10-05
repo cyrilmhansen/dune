@@ -18,3 +18,6 @@ val controller : ?exclude_entry_steps:int list -> B.operation -> validated -> Ex
 val standalone : validated -> Experiment.input -> (int list * Experiment.result,Experiment.error) result
 val hierarchical : validated -> Experiment.input -> (int list * Experiment.result,Experiment.error) result
 val cumulative : validated -> Native_7c1b.validated -> Native_7bbf.validated -> Native_7b7a.validated -> Experiment.input -> (int list * Experiment.result,Experiment.error) result
+
+(** Existing five-operation hierarchy, for explicit cumulative composition. *)
+val controllers : validated -> Native_7c1b.validated -> Native_7bbf.validated -> Native_7b7a.validated -> Experiment.input -> Native_dispatch.t list
