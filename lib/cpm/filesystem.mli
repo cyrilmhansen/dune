@@ -43,3 +43,8 @@ val key_of_fcb :
   (key, error) result
 
 val key_of_name : drive:int -> user:int -> name:string -> (key, error) result
+
+(** Owned snapshots include all drives/users, physical records and logical sizes. *)
+val copy : t -> t
+val copy_into : source:t -> destination:t -> unit
+val equal : t -> t -> bool

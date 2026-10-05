@@ -505,3 +505,8 @@ let summary map =
     mixed_or_unresolved_executions = map.mixed_steps;
     interrupt_acknowledge_executions = map.interrupt_steps;
   }
+
+let invalidate_host_writes map writes =
+  List.iter(fun(address,value)->
+    if address<0 || address>=I8080.Memory.size || value<0 || value>255 then invalid_arg "host write bounds")writes;
+  List.iter(fun(address,_)->map.origins.(address)<-Unknown)writes

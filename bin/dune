@@ -37,3 +37,8 @@
  (name int_emitter_audit)
  (public_name pli80-int-emitter-audit)
  (libraries pli80 runner unix))
+
+(executable
+ (name native_int_emitter)
+ (public_name pli80-native-int-emitter)
+ (libraries pli80 pli80_host runner unix))

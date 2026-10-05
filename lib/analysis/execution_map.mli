@@ -89,3 +89,7 @@ val control_flow_observations : t -> control_flow_observation list
 val cross_image_transitions : t -> control_flow_observation list
 val bdos_sites : t -> bdos_site list
 val summary : t -> summary
+
+(** Actual committed host writes invalidate historical origins, including
+    same-valued writes. No instruction, coverage or provenance is fabricated. *)
+val invalidate_host_writes : t -> (int * int) list -> unit

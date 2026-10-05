@@ -1,0 +1,31 @@
+{
+  "local_memory_algorithm": "faithful ordered scratch -> paired index read -> address -> fresh scratch read -> buffer write -> fresh index read -> wrapping increment -> index publication -> compare",
+  "paired_neighbor_read": "actual 1E0D read retained as discarded metadata",
+  "scratch_reread": true,
+  "index_chronology": "80 published before DMA; reset00 only after DMA and before BDOS21",
+  "threshold": "CPI80, non-flush iff unequal; demonstrated supported index domain00..7F",
+  "CPM_services": "existing actual Cpm.Personality/Cpm.Bdos functions26 and21; no host-compiler duplication",
+  "FCB_and_filesystem": "all640 private post-filesystems match; all5 actual writes consume current DMA buffer, produce exact records and actual FCB effects",
+  "returned_service_state": "actual dispatch validated; historical post-BDOS RAM/registers/flags/DMA independently compared",
+  "final_CPI_ABI": "all returned fields match, nonflush CPI80 and successful flush CPI00; outer original CALL word ancestry proved",
+  "wrapper_scratch": "high2060 then low205F forDMA; high2066 then low2065 forFCB",
+  "stack_residue": "derived from immutable CALL/PUSH encodings and chronological last writers, not copied from post-oracle",
+  "flush_stack_words_relative_to_entry_SP": [
+    {"depth":2,"word":4132,"writer":"PLI.COM+0F21"},
+    {"depth":4,"word":1079,"writer":"PLI.COM+0334"},
+    {"depth":6,"word":7189,"writer":"PLI.COM+19BB"},
+    {"depth":8,"word":7330,"writer":"PLI.COM+19BC"},
+    {"depth":10,"word":6854,"writer":"PLI.COM+19C3"}
+  ],
+  "nonflush_body_stack_residue": "none; original CALL slot remains untouched",
+  "full_memory_identity": "all640 shadows and all single/cumulative resume transitions",
+  "buffer_persistence": "index reset does not clear the128 physical bytes",
+  "transaction_fail_closed": "pre-state copies staged; failed service, ordering, bounds or final validation discard effects and observer notifications",
+  "external_state_identity": "DMA at every flush, full physical/logical filesystem per operation and at end, exact file-event sequence and ordered INT/REL record data",
+  "unsupported": ["nonzeroBDOS21/errorhelper","BDOSguards","index outside00..7F","code/scratch/buffer/FCB/guard/stack aliases outside declared scope"],
+  "Runner_extension": "generic ordered atomic host-service program, preview and separate native service accounting",
+  "archaeology_correction": null,
+  "contract_completeness_changed": false,
+  "pragmatic_divergence": null,
+  "fidelity_debt": null
+}

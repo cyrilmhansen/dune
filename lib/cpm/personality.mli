@@ -41,3 +41,8 @@ val dispatch_with_file_events :
   t -> process -> on_event:(Bdos.event -> unit) -> on_file_event:(Bdos.file_event -> unit) ->
   on_effect:(Bdos.external_effect -> unit) -> memory:I8080.Memory.t -> state:I8080.State.t ->
   output:(char -> unit) -> (Bdos.action, Bdos.error) result
+
+(** Generic process snapshots for atomic native host-service transactions. *)
+val copy : t -> process -> process
+val copy_into : t -> source:process -> destination:process -> unit
+val filesystem : t -> process -> Filesystem.t

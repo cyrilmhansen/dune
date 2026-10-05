@@ -14,6 +14,9 @@ type run_result = {
   (** [data_bytes_read + data_bytes_written]. *)
   data_bytes_total : int;
   host_transitions : int;
+  (** Actual committed native services; excluded from guest BDOS entry and
+      instruction/t-state accounting. *)
+  host_bdos_services : int;
   (** Native transitions are counted separately. Steps/t-states/data accesses
       count only instructions actually executed by Cpu; no synthetic Steps. *)
 }
@@ -24,19 +27,55 @@ type state_snapshot = {
   parity : bool; carry : bool;
 }
 
-(** Read-only pre-instruction view. State is immutable and memory copying
-    returns independent bytes. Read closures are valid only during the callback. *)
-type instruction_boundary = {
-  state : state_snapshot; read_memory : int -> int; copy_memory : unit -> bytes;
+(** Factual service executions on a staged process. Memory snapshots are owned
+    copies at each service boundary, before and after dispatch. No CPU RET runs. *)
+type host_service = {
+  call_state : state_snapshot;
+  resume_state : state_snapshot;
+  dma_before : int;
+  dma_after : int;
+  events : Cpm.Bdos.event list;
+  file_events : Cpm.Bdos.file_event list;
+  effects : Cpm.Bdos.external_effect list;
+  memory_before : bytes;
+  memory_after : bytes;
 }
-
+type host_program_result = {
+  memory : bytes;
+  filesystem : Cpm.Filesystem.t;
+  dma : int;
+  services : host_service list;
+}
+type host_effect =
+  | Memory_write of int * int
+  | Dispatch_bdos of { call_state : state_snapshot; expected_resume : state_snapshot }
+(** Ordered writes/services. Both callback arguments are owned snapshots:
+    [validate] is read-only and runs before any live commit or observer delivery;
+    [on_commit] is an observer after successful commit. Observer exceptions do not
+    undo a committed transaction. Preview invokes neither commit nor observers. *)
+type host_program = {
+  effects : host_effect list;
+  next_state : state_snapshot;
+  validate : host_program_result -> (unit, string) result;
+  on_commit : host_program_result -> unit;
+}
+(* Read-only pre-instruction view. State and copied memory/filesystems are
+    owned snapshots. Read/preview closures observe the live process; use them
+    during the callback, or after the run has returned for final validation,
+    never concurrently with continued execution. *)
+type instruction_boundary = {
+  state : state_snapshot;
+  read_memory : int -> int;
+  copy_memory : unit -> bytes;
+  copy_filesystem : unit -> Cpm.Filesystem.t;
+  dma : int;
+  (** Preview clones live RAM, DMA and the complete filesystem. Unsupported
+      service/status/validation outcomes discard all staged effects. *)
+  preview_host_program : host_program -> (host_program_result, string) result;
+}
 type host_transition = { memory_writes : (int * int) list; next_state : state_snapshot }
 type instruction_action = Continue_guest_execution | Apply_host_transition of host_transition
-(** Applied atomically after validating all byte/register/address bounds.
-    The intercepted instruction does not execute. Observers see a new boundary
-    at the same guest-step index; no Step or Trace event is manufactured.
-    CPU hidden state (e.g. interrupt status) is unchanged. The work budget bounds
-    guest instructions plus host transitions, while reporting them separately. *)
+  | Apply_host_program of host_program
 
 type event =
   | Step of I8080.Step.t

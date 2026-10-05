@@ -1,0 +1,64 @@
+{
+  "total_BDOS26": 5,
+  "total_BDOS21": 5,
+  "exact_service_states_and_FCB_effects": "emitter-native-cases.json services per independent flush",
+  "sources": [
+    {
+      "source": "MINIMAL",
+      "flushes": 1,
+      "native_BDOS26": 1,
+      "native_BDOS21": 1,
+      "native_service_DMA": 7564,
+      "INT_records": [
+        {
+          "file": "MINIMAL.INT",
+          "record": 0,
+          "dma": 7564,
+          "sha256": "713dec081e73c533164b9fe151114d1d7dc29acb8017bb0fc226e9ae72658aec"
+        }
+      ]
+    },
+    {
+      "source": "FIZZBUZ",
+      "flushes": 3,
+      "native_BDOS26": 3,
+      "native_BDOS21": 3,
+      "native_service_DMA": 7564,
+      "INT_records": [
+        {
+          "file": "FIZZBUZ.INT",
+          "record": 0,
+          "dma": 7564,
+          "sha256": "d573ad1a823a2ef7763333500878bda4e79d0fc8ef4befa2521f90d3bcb64dd1"
+        },
+        {
+          "file": "FIZZBUZ.INT",
+          "record": 1,
+          "dma": 7564,
+          "sha256": "bfcf1b230bfd84368c711794d9a05e0c8c9ae030e95d4198d369d2d7af9d307a"
+        },
+        {
+          "file": "FIZZBUZ.INT",
+          "record": 2,
+          "dma": 7564,
+          "sha256": "accb72136b1f332260fd30345c4d5a3e409516d10c1ed5447849a8291780b538"
+        }
+      ]
+    },
+    {
+      "source": "PICTURE",
+      "flushes": 1,
+      "native_BDOS26": 1,
+      "native_BDOS21": 1,
+      "native_service_DMA": 7564,
+      "INT_records": [
+        {
+          "file": "PICTURE.INT",
+          "record": 0,
+          "dma": 7564,
+          "sha256": "f23cb615e2222183e89119bd2579b7900143d1c7e4dc8ddc21d204fc0d24791c"
+        }
+      ]
+    }
+  ]
+}

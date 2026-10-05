@@ -1,0 +1,16 @@
+{
+  "baseline": "f5c0e4eeb54109ce246138e71fdc6738d316cfd7",
+  "core": "Pli80_host.Int_emitter: byte-addressed compiler state and ordered Write/Set_dma/Sequential_write plan; no I8080, Runner or CP/M dependencies",
+  "adapter": "Pli80.Int_emitter_bridge: exact caller, resident/helper image identities, guard preconditions, wrapper scratch, derived CALL/PUSH residue and service states",
+  "Runner": "Apply_host_program and preview_host_program retain Apply_host_transition; ordered Memory_write/Dispatch_bdos uses actual Cpm.Personality.dispatch_with_file_events",
+  "transaction": "Deep copy actual PRE-state RAM, filesystem including physical records/logical size, and BDOS process/DMA. Execute services on those copies; buffer all factual callbacks. Require exact service resume states and final validation. Commit staged process/RAM/registers only after all checks pass; then deliver callbacks in their original order.",
+  "failed_transaction": "Discard private process/RAM/filesystem and all buffered callbacks; no live changes, no successful resume, no fallback",
+  "observers": "on_commit is an after-commit observer; exceptions in observers do not roll back a committed operation. Validation callbacks are read-only.",
+  "accounting": "host_bdos_services counts committed native services separately. Guest steps/t-states/BDOS-entry callbacks do not count or fabricate suppressed instructions or runtime0005 RETs.",
+  "origin_tracking": "Committed ordered host-program writes, including equal-valued resident data writes and actual FCB service effects, invalidate historical origins via Execution_map.invalidate_host_writes. No instruction/coverage/provenance is manufactured. Simple Apply_host_transition retains its existing image-write restriction.",
+  "guard_scope": "Existing +19BB entry stub/sentinel success is validated before preparing the plan. Guard failures remain unsupported.",
+  "service_scope": "A real BDOS21 nonzero result fails expected resume validation on the staged runtime. Neither +0EA0 nor a historical fallback executes.",
+  "native_services_are_not_guest_BDOS_entries": true,
+  "post_state_oracle_used_to_manufacture_effects": false,
+  "global_wrapper_interception": false
+}

@@ -91,3 +91,7 @@ val dispatch_with_effects_and_file_events :
     batch-console and CP/M 2.2 version behavior. Standard CP/M 2.2 functions
     not implemented here return [Unsupported_function]; numbers above the
     CP/M 2.2 BDOS range use its observed zero-return fallback. *)
+
+(** Private transaction snapshots; restore only into the same process identity. *)
+val copy : t -> t
+val copy_into : source:t -> destination:t -> unit

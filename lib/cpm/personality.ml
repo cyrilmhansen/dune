@@ -81,3 +81,7 @@ let dispatch_with_effects Cpm22 process =
 
 let dispatch_with_file_events Cpm22 process =
   Bdos.dispatch_with_effects_and_file_events ~runtime:process.bdos
+
+let copy Cpm22 process = {bdos=Bdos.copy process.bdos}
+let copy_into Cpm22 ~source ~destination = Bdos.copy_into ~source:source.bdos ~destination:destination.bdos
+let filesystem Cpm22 process = Bdos.filesystem process.bdos

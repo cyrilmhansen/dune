@@ -280,15 +280,22 @@ let run ?on_bdos_record ?intercept ?on_guest_step ?on_before_instruction ?(struc
           let origin=match execution_map with None->Analysis.Execution_map.Unknown
             |Some map->Analysis.Execution_map.origin_at map boundary.Runner.state.pc in
           let action=callback ~origin ~step_index boundary in
-          (* Native data writes cannot silently retain historical code origins.
-             This bounded experiment rejects such writes instead of extending
-             execution/provenance/event models with synthetic instructions. *)
-          (match action,execution_map with
-           |Runner.Apply_host_transition t,Some map->List.iter(fun(a,_)->
-              match Analysis.Execution_map.origin_at map a with
-              |Analysis.Execution_map.Unknown->()
-              |_->invalid_arg "native write targets historical-image memory")t.memory_writes
-           |_->());action) intercept)
+          (* Simple transitions retain their strict image-write restriction.
+             Ordered programs invalidate actual committed host-write origins,
+             including resident data, without synthesizing instructions. *)
+          let action=match action,execution_map with
+           |Runner.Apply_host_transition t,Some map->
+             List.iter(fun(a,_)->match Analysis.Execution_map.origin_at map a with
+               |Analysis.Execution_map.Unknown->()
+               |_->invalid_arg "native write targets historical-image memory")t.memory_writes;action
+           |Runner.Apply_host_program p,Some map->
+             let on_commit (result:Runner.host_program_result)=
+               let writes=List.filter_map(function Runner.Memory_write(a,v)->Some(a,v)|_->None)p.effects
+                 @List.concat_map(fun(s:Runner.host_service)->List.filter_map(function
+                   Cpm.Bdos.Memory_write q->Some(q.address,q.value)|_->None)s.effects)result.services in
+               Analysis.Execution_map.invalidate_host_writes map writes;p.on_commit result in
+             Runner.Apply_host_program{p with on_commit}
+           |_->action in action) intercept)
         ~on_start ?on_start_state ~filesystem ~command_tail:input.command_tail
         ~on_bdos_file_event ~on_console_output:(Console_capture.emit console)
         ~output:(fun _ -> ()) input.pli_com in

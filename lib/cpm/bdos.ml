@@ -329,3 +329,10 @@ let dispatch_with_effects ~on_event ~on_effect ~runtime ~memory ~state ~output =
 
 let dispatch ~runtime ~memory ~state ~output =
   dispatch_instrumented ~on_event:(fun _ -> ()) ~runtime ~memory ~state ~output
+
+let copy runtime = {runtime with filesystem=Filesystem.copy runtime.filesystem}
+let copy_into ~source ~destination =
+  if source.current_drive<>destination.current_drive || source.current_user<>destination.current_user then
+    invalid_arg "BDOS snapshot process identity differs";
+  Filesystem.copy_into ~source:source.filesystem ~destination:destination.filesystem;
+  destination.dma <- source.dma

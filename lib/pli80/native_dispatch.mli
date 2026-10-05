@@ -11,4 +11,5 @@ val write_digest : (int * int) list -> string
 val create : image:string -> entry_pc:int -> end_pc:int -> oracles:oracle list ->
   records:(string * int * bytes) list ->
   prepare:(previous -> Analysis.Execution_map.origin -> Runner.instruction_boundary -> prepared) -> t
+val with_host_program : t -> (Runner.instruction_boundary -> prepared -> Runner.host_program) -> t
 val run : Experiment.input -> t list -> (int list * Experiment.result, Experiment.error) result

@@ -8,11 +8,13 @@ type prepared = { state : Runner.state_snapshot; memory : bytes;
 type t = { image : string; entry_pc : int; end_pc : int;
   remaining : oracle list ref; records : (string * int * bytes) list ref;
   pending : oracle option ref; count : int ref;
+  host_program : (Runner.instruction_boundary -> prepared -> Runner.host_program) option;
   prepare : previous -> Analysis.Execution_map.origin -> Runner.instruction_boundary -> prepared }
 let require b message=if not b then failwith("Native dispatch: "^message)
 let write_digest writes=Experiment.sha256_hex(Bytes.of_string(String.concat";"(List.map(fun(a,v)->Printf.sprintf"%04X:%02X"a v)writes)))
 let create ~image ~entry_pc ~end_pc ~oracles ~records ~prepare=
-  {image;entry_pc;end_pc;remaining=ref oracles;records=ref records;pending=ref None;count=ref 0;prepare}
+  {image;entry_pc;end_pc;remaining=ref oracles;records=ref records;pending=ref None;count=ref 0;prepare;host_program=None}
+let with_host_program t program = {t with host_program=Some program}
 let run input controllers =
   require(List.length controllers=List.length(List.sort_uniq compare(List.map(fun c->c.entry_pc)controllers)))"overlapping interceptors";
   let previous=ref None and current_origin=ref Analysis.Execution_map.Unknown in
@@ -46,7 +48,9 @@ let run input controllers =
       require(result.state=expected.output && result.memory=expected.post_memory)"prepared full post-state differs";
       require(write_digest result.logical_writes=expected.logical_digest)"logical write chronology";
       c.remaining:=List.tl !(c.remaining);incr c.count;c.pending:=Some expected;
-      Runner.Apply_host_transition{next_state=result.state;memory_writes=result.logical_writes@result.compatibility_writes}in
+      (match c.host_program with
+       |None->Runner.Apply_host_transition{next_state=result.state;memory_writes=result.logical_writes@result.compatibility_writes}
+       |Some program->Runner.Apply_host_program(program boundary result))in
   match Experiment.run ~analysis:Experiment.Execution ~on_before_instruction ~on_guest_step ~on_bdos_record ~intercept input with
   |Error _ as e->e|Ok result->
     List.iter(fun c->require(!(c.remaining)=[] && !(c.pending)=None && !(c.records)=[])"omitted expected invocation/resume/record")controllers;

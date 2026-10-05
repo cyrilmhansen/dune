@@ -134,3 +134,17 @@ let write_record filesystem key ~record bytes =
     Bytes.blit bytes 0 file.data (record * record_size) record_size;
     file.logical_size <- max file.logical_size end_offset;
     Ok ())
+
+(* Value snapshots retain physical record storage and logical size independently. *)
+let copy filesystem =
+  let result=create () in
+  Hashtbl.iter(fun key file->Hashtbl.add result key {data=Bytes.copy file.data;logical_size=file.logical_size})filesystem;
+  result
+let copy_into ~source ~destination =
+  let owned=copy source in
+  Hashtbl.clear destination;
+  Hashtbl.iter(Hashtbl.add destination)owned
+let equal a b =
+  Hashtbl.length a=Hashtbl.length b &&
+  Hashtbl.fold(fun key file ok->ok && match Hashtbl.find_opt b key with
+    |Some other->file.logical_size=other.logical_size && file.data=other.data|None->false)a true
