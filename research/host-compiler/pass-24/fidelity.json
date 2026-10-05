@@ -1,0 +1,68 @@
+{
+  "baseline": "519c1eb5ec10d18bb9be51c732961dab45f0a4e4",
+  "mapped_word": {
+    "scratch_AE38": true,
+    "discarded_AE39_read": true,
+    "fresh_map": true,
+    "two_u16_index_additions": true,
+    "ordered_low_high_read": true,
+    "returned_BC_DE_HL": true,
+    "A_NZPA_preserved": true,
+    "CY_cleared": true,
+    "no_body_stack_residue": true
+  },
+  "packed_scan": {
+    "single_lookup_implementation": true,
+    "logical_phases_and_algorithm_unchanged": true,
+    "all_prior_differentials_retained": true
+  },
+  "low": {
+    "paired_AE4F_AE50_read": true,
+    "low_cursor_only": true,
+    "reuses_mapped_word": true,
+    "cache_low_then_high": true,
+    "cache_before_emitter": true,
+    "sets_both_A_and_C_to_selected_low": true,
+    "emitter_derived_return": true
+  },
+  "high": {
+    "fresh_shared_memory_cache": true,
+    "low_byte_read_discarded": true,
+    "sets_both_A_and_C_to_fresh_high": true,
+    "emitter_derived_return": true
+  },
+  "composition": {
+    "native_emitter_internal": true,
+    "one_root_transition_per_wrapper": true,
+    "ordered_transaction_preserved": true,
+    "existing_real_CPM_services": true,
+    "natural_wrappers_all_nonflush": true,
+    "synthetic_low_and_high_flush_success_proven": true,
+    "exact_full_memory": true,
+    "exact_final_filesystem_and_file_events": true,
+    "INT_REL_record_identity": true
+  },
+  "ABI": {
+    "original_outer_CALL_RET_ancestry": true,
+    "stack_bytes_from_code_not_oracle": true,
+    "low_nonflush_last_writer": "PLI1.OVL+7E52 CALL -> S-2=A055; overwrites +7E4A CALL -> A04D",
+    "high_nonflush_last_writer": "PLI1.OVL+7E5B CALL -> S-2=A05E",
+    "flush": "Child entry T=S-2 proven by wrapper CALL. Service planner supplies actual ordered CALL/PUSH writes at T-2,-4,-6,-8,-10; final values1024,0437,1C15,1CA2,1AC6. Outer continuation atS untouched. Synthetic historical execution verifies full64KiB including all final residues."
+  },
+  "unsupported": [
+    "emitter index outside00..7F",
+    "nonzero BDOS21 status/error helper",
+    "BDOS guard failures",
+    "declared scratch/table/cache/stack aliases",
+    "altered historical boundary/helper/caller code",
+    "unproved CALL/source ancestry"
+  ],
+  "archaeology_corrections": [],
+  "contracts_changed": false,
+  "Runner_changed": false,
+  "CPM_changed": false,
+  "CPU_changed": false,
+  "packet_changed": false,
+  "pragmatic_divergence": null,
+  "fidelity_debt": null
+}

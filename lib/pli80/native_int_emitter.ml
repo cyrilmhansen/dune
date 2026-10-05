@@ -67,10 +67,12 @@ let shadow input =
  |Error _ as e->e|Ok historical->require(!active=None)"missing emitter return";
   Ok({cases=List.rev !cases;snapshots=List.rev !snapshots;records=List.rev !records;
     input_digest=Experiment.sha256_hex(Marshal.to_bytes input[]);historical},historical)
-let controller v input =
+let controller ?(exclude_entry_steps=[]) v input =
  require(v.input_digest=Experiment.sha256_hex(Marshal.to_bytes input[]))"source/input proof mismatch";
  let bridge=B.create ~pli_com:input.Experiment.pli_com ~pli1:input.pli1_ovl in
- let members=List.combine v.cases v.snapshots in
+ require(List.for_all(fun step->List.exists(fun c->c.entry_step=step)v.cases)exclude_entry_steps
+  &&List.length exclude_entry_steps=List.length(List.sort_uniq compare exclude_entry_steps))"invalid emitter child exclusion";
+ let members=List.filter(fun(c,_)->not(List.mem c.entry_step exclude_entry_steps))(List.combine v.cases v.snapshots)in
  let remaining=ref members and pending_program=ref None in
  let prepare previous origin (boundary:Runner.instruction_boundary)=
   let c,s=match !remaining with q::_->q|[]->failwith"Additional emitter invocation"in

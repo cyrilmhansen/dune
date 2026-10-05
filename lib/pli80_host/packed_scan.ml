@@ -7,11 +7,10 @@ type result = {
 }
 let validate memory ~position ~protected =
   U8.check position; List.iter U16.check protected;
-  let map = 0xaa1f + position in
-  let j = State.read memory map in
-  let word = 0xab49 + 2*j and auxiliary = 0xad08+j in
+  let map,j,word,high = Mapped_word.addresses memory position in
+  let auxiliary = 0xad08+j in
   let scratch = 0xae38 :: 0xae39 :: List.init 12 (fun i -> 0xae43+i) in
-  let selected = [map;word;word+1;auxiliary] in
+  let selected = [map;word;high;auxiliary] in
   let unique = List.sort_uniq compare (scratch @ selected) in
   if List.length unique <> List.length scratch + List.length selected
      || List.exists (fun a -> List.mem a unique) protected
@@ -31,11 +30,10 @@ let run memory ~position ~protected =
   put "input_position" 0xae4b position;
   put "counter_initialization" 0xae4c 15;
   let saved_position = State.word memory 0xae4b land 255 in
-  put "mapped_word_position" 0xae38 saved_position;
-  let saved_lookup = State.word memory 0xae38 in
-  let discarded_ae39 = saved_lookup lsr 8 in
-  let initial_index = State.read memory (0xaa1f + (saved_lookup land 255)) in
-  let initial_word = State.word memory (0xab49 + 2*initial_index) in
+  let lookup = Mapped_word.lookup memory ~position:saved_position ~protected
+    ~write:(fun w -> writes := {address=w.Mapped_word.address;value=w.value;phase=w.phase} :: !writes) in
+  let discarded_ae39 = lookup.discarded_ae39 in
+  let initial_index = lookup.index and initial_word = lookup.word in
   put_word "initial_word" 0xae4d initial_word;
   let shifts = ref 0 in
   let rec loop () =

@@ -42,3 +42,8 @@
  (name native_int_emitter)
  (public_name pli80-native-int-emitter)
  (libraries pli80 pli80_host runner unix))
+
+(executable
+ (name native_word_emitters)
+ (public_name pli80-native-word-emitters)
+ (libraries pli80 pli80_host runner unix))
