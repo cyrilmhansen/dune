@@ -112,7 +112,7 @@ let prepare t ~call:(call:call) ~origin:o (boundary:Runner.instruction_boundary)
    balance:=Some p.result;
    List.iter(fun(w:Pli80_host.Mapped_lookup.write)->
     let writer=match w.phase with
-     |"cursor_initialization"->0x9d7d|"balance_initialization"->0x9d80
+     |"cursor_initialization"->0x9d7d|"balance_initialization"->0x9d81
      |"attribute_position"->static_call 0x7b87 0x9c63 sp 1;0x9c66
      |"mapped_position"->static_call 0x7a6b 0x9c4d(U.wrap(sp-2))2;0x9c50
      |"balance_publication"->0x9d8f|"cursor_decrement"->0x9d9a|_->invalid_arg"unproved balance phase"in

@@ -1,15 +1,15 @@
 [@@@warning "-4-40-41-42"]
-module B=Input_processing_bridge
-module H=Pli80_host.Input_processing
+module B=Attribute_gate_bridge
+module H=Pli80_host.Attribute_gate
 type case={caller:string;entry_step:int;return_step:int;input:Runner.state_snapshot;output:Runner.state_snapshot;
  prepared:B.prepared;services:Runner.host_service list;entry_cells:(int*int)list;
  entry_memory_sha256:string;post_memory_sha256:string;entry_dma:int;post_dma:int;entry_filesystem_sha256:string;post_filesystem_sha256:string}
 type snapshot={entry_memory:bytes;post_memory:bytes;entry_files:Cpm.Filesystem.t;post_files:Cpm.Filesystem.t}
-type validated={cases:case list;snapshots:(int*snapshot)list;records:(string*int*bytes)list;
+type validated={operation:B.operation;cases:case list;snapshots:(int*snapshot)list;records:(string*int*bytes)list;
  input_digest:string;historical:Experiment.result}
 let cases v=v.cases
 let record_summaries v=List.map(fun(n,r,b)->n,r,Experiment.sha256_hex b)v.records
-let require b m=if not b then failwith("Native8048: "^m)
+let require b m=if not b then failwith("Native attribute gate: "^m)
 let filesystem_hash files=
  let inventory=ref[]in
  for drive=0 to 15 do for user=0 to 31 do
@@ -21,7 +21,8 @@ let filesystem_hash files=
    inventory:=(drive,user,name,logical,records)::!inventory)(Cpm.Filesystem.list_files files ~drive ~user())
  done done;
  Experiment.sha256_hex(Marshal.to_bytes(List.rev !inventory)[])
-let shadow input=
+let shadow operation input=
+ let first,last=B.bounds operation in
  let bridge=B.create ~pli_com:input.Experiment.pli_com ~pli1:input.pli1_ovl in
  let previous=ref None and current_origin=ref Analysis.Execution_map.Unknown and active=ref None in
  let cases=ref[]and snapshots=ref[]and records=ref[]and psws=ref[]and direct=ref 0 in
@@ -55,11 +56,12 @@ let shadow input=
   |Some(entry_step,call,(entry:Runner.state_snapshot),ram,files,dma,(p:B.prepared),(preview:Runner.host_program_result),writes,latest,calls)
     when state.pc=call.B.resume->
    let prev=Option.get !previous in
-   require(List.mem(I8080.Step.pc_before prev.step)[0xa2b0]
+   require(List.mem(I8080.Step.pc_before prev.step)[last+0x2200-1]
     &&prev.before.sp=entry.sp&&prev.after=state
     &&I8080.Step.control_flow prev.step=I8080.Step.Return{target=Some call.resume;taken=true})"original hardware RET ancestry";
    let reads=List.filter_map(function I8080.Step.Read q->Some(q.address,q.value)|_->None)(I8080.Step.memory_accesses prev.step)in
    require(reads=[entry.sp,call.resume land 255;entry.sp+1,call.resume lsr 8])"original CALL slot consumed";
+   require(!direct=List.length p.children)"omitted direct child";
    let label=Printf.sprintf"entry%d path%s"entry_step p.result.route in
    if state<>p.state then failwith(label^" return ABI: "^Marshal.to_string(state,p.state)[]);
    if boundary.copy_memory()<>preview.memory then(
@@ -91,15 +93,15 @@ let shadow input=
     let show xs=String.concat","(List.map(Printf.sprintf"%04X")xs)in
     failwith(label^" CALL chronology actual="^show actual^" planned="^show expected));
    cases:={caller=call.coordinate;entry_step;return_step=step_index-1;input=entry;output=state;prepared=p;services=preview.services;
-    entry_cells=List.map(fun a->a,Char.code(Bytes.get ram a))[0xae32;0xae33;0xae34;0xae35;0xaa1a;0xae6a;0xae6b;0x1e0c];
+    entry_cells=List.map(fun a->a,Char.code(Bytes.get ram a))[0xae32;0xae33;0xae34;0xae35;0xaa1a;0xae57;0xae58;0xae6b;0xae6c;0x1e0c];
     entry_memory_sha256=Experiment.sha256_hex ram;post_memory_sha256=Experiment.sha256_hex preview.memory;entry_dma=dma;post_dma=preview.dma;entry_filesystem_sha256=filesystem_hash files;post_filesystem_sha256=filesystem_hash preview.filesystem}::!cases;
    snapshots:=(entry_step,{entry_memory=ram;post_memory=preview.memory;entry_files=files;post_files=preview.filesystem})::!snapshots;active:=None
   |_->());
-  if o=B.origin "PLI1.OVL" 0x8048 then(
-   require(!active=None)"unexpected recursive 8048 root";psws:=[];root_records:=[];direct:=0;
-   let call=B.verify_call bridge(Option.get !previous)~entry:state in
+  if o=B.origin "PLI1.OVL" first then(
+   require(!active=None)"unexpected recursive attribute gate root";psws:=[];root_records:=[];direct:=0;
+   let call=B.verify_call bridge operation(Option.get !previous)~entry:state in
    let ram=boundary.copy_memory()and files=boundary.copy_filesystem()in
-   let p=B.prepare bridge ~call ~origin:o boundary in
+   let p=B.prepare bridge operation ~call ~origin:o boundary in
    let preview=match boundary.preview_host_program p.program with Ok q->q|Error e->failwith e in
    active:=Some(step_index,call,state,ram,files,boundary.dma,p,preview,ref[],Hashtbl.create 64,ref[]))in
  match Experiment.run ~analysis:Experiment.Execution ~on_guest_step ~on_before_instruction ~on_bdos_record input with
@@ -110,9 +112,10 @@ let shadow input=
    let operation=function Experiment.Open->Cpm.Bdos.Open|Close->Close|Make->Make|Delete->Delete|Sequential_read->Sequential_read|Sequential_write->Sequential_write in
    require(List.map(fun(e:Experiment.file_event)->operation e.operation,e.file,e.succeeded,e.logical_record)actual
     =List.map(fun(e:Cpm.Bdos.file_event)->e.operation,e.file,e.succeeded,e.logical_record)planned)"root factual file-event sequence")!cases;
-  Ok({cases=List.sort(fun a b->compare a.entry_step b.entry_step)!cases;snapshots= !snapshots;records=List.rev !records;
+  Ok({operation;cases=List.sort(fun a b->compare a.entry_step b.entry_step)!cases;snapshots= !snapshots;records=List.rev !records;
    input_digest=Experiment.sha256_hex(Marshal.to_bytes input[]);historical},historical)
 let controller ?(exclude_entry_steps=[]) v input=
+ let operation=v.operation in let first,last=B.bounds operation in
  require(v.input_digest=Experiment.sha256_hex(Marshal.to_bytes input[]))"source/input proof mismatch";
  let exclusions=List.sort_uniq compare exclude_entry_steps in
  require(List.length exclusions=List.length exclude_entry_steps&&List.for_all(fun n->List.exists(fun c->c.entry_step=n)v.cases)exclusions)"invalid exclusions";
@@ -120,11 +123,11 @@ let controller ?(exclude_entry_steps=[]) v input=
  let bridge=B.create ~pli_com:input.Experiment.pli_com ~pli1:input.pli1_ovl in
  let remaining=ref selected and pending=ref None in
  let prepare previous origin (boundary:Runner.instruction_boundary)=
-  let c=match !remaining with q::_->q|[]->failwith"Additional8048 root"in
+  let c=match !remaining with q::_->q|[]->failwith"Additionalattribute gate root"in
   let s=List.assoc c.entry_step v.snapshots in
   require(boundary.dma=c.entry_dma&&Cpm.Filesystem.equal(boundary.copy_filesystem())s.entry_files)"entry external state proof";
-  let call=B.verify_call bridge previous ~entry:boundary.state in
-  let p=B.prepare bridge ~call ~origin boundary in
+  let call=B.verify_call bridge operation previous ~entry:boundary.state in
+  let p=B.prepare bridge operation ~call ~origin boundary in
   let validate(r:Runner.host_program_result)=
    match p.program.validate r with Error _ as e->e|Ok()->
    if r.memory<>s.post_memory||r.dma<>c.post_dma||r.services<>c.services
@@ -136,7 +139,7 @@ let controller ?(exclude_entry_steps=[]) v input=
  let oracles=List.map(fun c->let s=List.assoc c.entry_step v.snapshots in
   {Native_dispatch.input=c.input;output=c.output;entry_memory=s.entry_memory;post_memory=s.post_memory;
    logical_digest=Native_dispatch.write_digest c.prepared.logical_writes})selected in
- let t=Native_dispatch.create ~image:"PLI1.OVL" ~entry_pc:0xa248 ~end_pc:0xa2b1 ~oracles ~records:v.records ~prepare in
+ let t=Native_dispatch.create ~image:"PLI1.OVL" ~entry_pc:(first+0x2200) ~end_pc:(last+0x2200) ~oracles ~records:v.records ~prepare in
  Native_dispatch.with_host_program t(fun _ _->let p=Option.get !pending in pending:=None;p)
 let compare_external v (r:Experiment.result)=
  require(Cpm.Filesystem.equal r.filesystem v.historical.filesystem)"final filesystem";
@@ -145,22 +148,3 @@ let compare_external v (r:Experiment.result)=
  require(r.int_bytes=v.historical.int_bytes&&r.rel_bytes=v.historical.rel_bytes)"INT/REL identity"
 let run v input controllers=match Native_dispatch.run input controllers with Error _ as e->e|Ok(_,r)as q->compare_external v r;q
 let single v input=run v input[controller v input]
-
-let controllers ?(exclude_windows=[]) v controls publication new_publications range words emitter attributes publications recursive packed balances input=
- let windows=exclude_windows@List.map(fun c->c.entry_step,c.return_step)v.cases in
- let all_publication_windows=List.map(fun(c:Native_range_publication.case)->c.entry_step,c.return_step)(Native_range_publication.cases publication)in
- let exclude get cases windows=List.filter_map(fun c->let s=get c in if List.exists(fun(a,b)->a<s&&s<b)windows then Some s else None)cases in
- let range_controllers=Native_range_processing.controllers ~exclude_windows:(windows@all_publication_windows)
-  range words emitter attributes publications recursive packed balances input in
- let publication_controller=Native_range_publication.controller
-  ~exclude_entry_steps:(exclude(fun(c:Native_range_publication.case)->c.entry_step)(Native_range_publication.cases publication)windows)publication input in
- let child_windows=windows@all_publication_windows in
- let extra=[
-  Native_publication_primitives.controller ~exclude_entry_steps:(exclude(fun(c:Native_publication_primitives.case)->c.entry_step)(Native_publication_primitives.mapped_words new_publications)child_windows)Publication_primitives_bridge.Mapped_word new_publications input;
-  Native_publication_primitives.controller ~exclude_entry_steps:(exclude(fun(c:Native_publication_primitives.case)->c.entry_step)(Native_publication_primitives.secondary_bytes new_publications)child_windows)Publication_primitives_bridge.Secondary new_publications input;
-  Native_mapped_control.controller ~exclude_entry_steps:(exclude(fun(c:Native_mapped_control.case)->c.entry_step)(Native_mapped_control.reads controls)windows)Mapped_control_bridge.Read controls input;
-  Native_mapped_control.controller ~exclude_entry_steps:(exclude(fun(c:Native_mapped_control.case)->c.entry_step)(Native_mapped_control.publications controls)windows)Mapped_control_bridge.Publish controls input]in
- controller ~exclude_entry_steps:(exclude(fun c->c.entry_step)v.cases exclude_windows)v input::publication_controller::range_controllers@extra
-let cumulative v controls publication new_publications range words emitter attributes publications recursive packed balances input=
- match run v input(controllers v controls publication new_publications range words emitter attributes publications recursive packed balances input)with
- |Error _ as e->e|Ok(_,r)as q->Native_int_emitter.compare_external emitter r;q

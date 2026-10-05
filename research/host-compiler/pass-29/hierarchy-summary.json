@@ -1,0 +1,164 @@
+{
+  "transition_order": [
+    "80B7",
+    "external 7EC0",
+    "external 8048",
+    "external 7E5F",
+    "external 7D53",
+    "external 7C1B",
+    "external 7BBF",
+    "external 7B7A",
+    "external 7BA2",
+    "external 7AD5",
+    "external 7B64",
+    "external 7ABF",
+    "external 0EF6",
+    "external 7A79",
+    "external 7E46",
+    "external 7E56",
+    "external 7AF0",
+    "external 7B49",
+    "external 7A93",
+    "external 7B13"
+  ],
+  "sources": {
+    "MINIMAL": {
+      "gate_count": 18,
+      "gate_paths": {
+        "skip": 11,
+        "call": 7
+      },
+      "gate_callers": {
+        "PLI1.OVL+80C6": 10,
+        "PLI1.OVL+2526": 8
+      },
+      "saved_roots": 10,
+      "root_callers": {
+        "PLI1.OVL+80F7": 4,
+        "PLI1.OVL+0CC1": 1,
+        "PLI1.OVL+1BB6": 1,
+        "PLI1.OVL+1C49": 1,
+        "PLI1.OVL+0AE5": 1,
+        "PLI1.OVL+0CE3": 1,
+        "PLI1.OVL+0123": 1
+      },
+      "beneath_saved_roots": {
+        "8048": 10,
+        "7EC0": 10,
+        "7D53": 10,
+        "7E5F": 4,
+        "reverse_selections": 3,
+        "recursive_nodes": 3,
+        "forward_iterations": 3,
+        "emitters": 12
+      },
+      "range_path_distribution": {
+        "equal": 6,
+        "work": 3,
+        "gate": 1
+      },
+      "services_beneath_saved_roots": {},
+      "all_gate_children_range_paths": {
+        "work": 5,
+        "gate": 2
+      },
+      "all_gate_services": {}
+    },
+    "FIZZBUZ": {
+      "gate_count": 89,
+      "gate_paths": {
+        "skip": 64,
+        "call": 25
+      },
+      "gate_callers": {
+        "PLI1.OVL+80C6": 25,
+        "PLI1.OVL+2526": 64
+      },
+      "saved_roots": 25,
+      "root_callers": {
+        "PLI1.OVL+80F7": 4,
+        "PLI1.OVL+0CC1": 1,
+        "PLI1.OVL+03BE": 3,
+        "PLI1.OVL+1BB6": 4,
+        "PLI1.OVL+1C49": 4,
+        "PLI1.OVL+03E2": 3,
+        "PLI1.OVL+03F3": 3,
+        "PLI1.OVL+0AE5": 1,
+        "PLI1.OVL+0CE3": 1,
+        "PLI1.OVL+0123": 1
+      },
+      "beneath_saved_roots": {
+        "8048": 25,
+        "7EC0": 25,
+        "7D53": 25,
+        "7E5F": 13,
+        "reverse_selections": 9,
+        "recursive_nodes": 30,
+        "forward_iterations": 33,
+        "emitters": 90
+      },
+      "range_path_distribution": {
+        "equal": 12,
+        "work": 9,
+        "gate": 4
+      },
+      "services_beneath_saved_roots": {
+        "26": 1,
+        "21": 1
+      },
+      "all_gate_children_range_paths": {
+        "work": 17,
+        "gate": 8
+      },
+      "all_gate_services": {
+        "26": 1,
+        "21": 1
+      }
+    },
+    "PICTURE": {
+      "gate_count": 21,
+      "gate_paths": {
+        "skip": 13,
+        "call": 8
+      },
+      "gate_callers": {
+        "PLI1.OVL+80C6": 11,
+        "PLI1.OVL+2526": 9,
+        "PLI1.OVL+2599": 1
+      },
+      "saved_roots": 11,
+      "root_callers": {
+        "PLI1.OVL+80F7": 4,
+        "PLI1.OVL+0CC1": 1,
+        "PLI1.OVL+1BB6": 1,
+        "PLI1.OVL+1C90": 1,
+        "PLI1.OVL+1C9E": 1,
+        "PLI1.OVL+0AE5": 1,
+        "PLI1.OVL+0CE3": 1,
+        "PLI1.OVL+0123": 1
+      },
+      "beneath_saved_roots": {
+        "8048": 11,
+        "7EC0": 11,
+        "7D53": 11,
+        "7E5F": 5,
+        "reverse_selections": 4,
+        "recursive_nodes": 6,
+        "forward_iterations": 6,
+        "emitters": 21
+      },
+      "range_path_distribution": {
+        "equal": 6,
+        "work": 4,
+        "gate": 1
+      },
+      "services_beneath_saved_roots": {},
+      "all_gate_children_range_paths": {
+        "work": 7,
+        "gate": 1
+      },
+      "all_gate_services": {}
+    }
+  },
+  "scope": "Independent standalone shadow totals overlap nested parent coverage; do not sum them as disjoint historical execution."
+}

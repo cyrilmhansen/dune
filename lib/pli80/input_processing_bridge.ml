@@ -27,6 +27,10 @@ let verify_call t (p:Native_dispatch.previous) ~(entry:Runner.state_snapshot)=
  let writes=List.filter_map(function I8080.Step.Write q->Some(q.address,q.value)|_->None)(I8080.Step.memory_accesses p.step)in
  require(List.sort compare writes=List.sort compare[entry.sp,resume land 255;U.wrap(entry.sp+1),resume lsr 8])"original CALL word";
  {coordinate=Printf.sprintf"PLI1.OVL+%04X"off;site;resume}
+let internal_call t site=
+ let off=site-0x2200 in
+ require(off>=0&&off+3<=Bytes.length t.image&&Char.code(Bytes.get t.image off)=0xcd&&word t.image(off+1)=0xa248)"internal CALL identity";
+ {coordinate=Printf.sprintf"PLI1.OVL+%04X"off;site;resume=site+3}
 let logical (s:Runner.state_snapshot)={R.a=s.a;bc=s.b lsl 8 lor s.c;de=s.d lsl 8 lor s.e;hl=s.h lsl 8 lor s.l;
  flags={sign=s.sign;zero=s.zero;auxiliary_carry=s.auxiliary_carry;parity=s.parity;carry=s.carry}}
 let machine template (q:R.returned) sp pc={template with Runner.a=q.a;b=q.bc lsr 8;c=q.bc land 255;

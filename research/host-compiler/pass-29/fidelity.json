@@ -1,0 +1,26 @@
+{
+  "historical_algorithm": {
+    "7EC0": "AE57 publication; paired AE57/AE58 read; direct 1B4B+unsigned position; explicit RLC then RAR restores A and places original bit7 in CY; NZPA/AC unchanged; conditional bounded +7D53",
+    "80B7": "AE6B publication; paired saved input read; native +8048; fresh AE6B/AE6C read; native +7EC0; final child state retained"
+  },
+  "shared_state": true,
+  "neighboring_bytes_read_and_discarded": true,
+  "no_position_map_in_gate": true,
+  "no_child_return_used_as_saved_input": true,
+  "ordered_logical_writes_match_every_natural_invocation": true,
+  "all_registers_flags_SP_PC_match": true,
+  "full_65536_byte_memory_identity": true,
+  "stack": "Derived immutable CALL continuations and imported child CALL/PUSH journals, checked against every actual CPU write and final writer. No oracle byte is copied into an implementation.",
+  "one_root_transaction": "Ordered programs preview through existing copied RAM/process/filesystem runtime; unsupported late states/services/aliases reject without live mutation or callbacks.",
+  "CPM_services": "Existing real services only; child effects imported in original chronological order, source/input oracles confined to proof harness.",
+  "unsupported": "All +8048/+7D53/+7E5F/Recursive_mapped/Int_emitter bounded-domain restrictions; scratch/table/stack and parent saved-byte aliases; malformed historical image/code/CALL/continuation.",
+  "termination": "Same conditional termination as existing native children; no iteration/depth/cycle guards added.",
+  "guest_accounting": "No synthetic Steps/t-states/BDOS entries. Canonical image-aware dispatch suppresses entire enabled bodies; nested calls are logical operations, not Runner transitions.",
+  "proof_metadata_correction": "Direct Range_processing Balance_scan balance_initialization writer is runtime9D81 (PLI1+7B81 MVI M,01), replacing erroneous9D80 operand coordinate; no state/algorithm/contract change.",
+  "archaeology_contract_changes": [],
+  "Runner_changes": [],
+  "CPM_changes": [],
+  "packet_changes": [],
+  "pragmatic_divergence": [],
+  "fidelity_debt": []
+}

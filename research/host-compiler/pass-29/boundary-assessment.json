@@ -1,0 +1,290 @@
+{
+  "recommendation": "Pass30: focused accumulated-natural-state archaeology of +240A and its delegated +23A0/+23D2 effects, to prepare the high-leverage +2511 parent. Do not hide these contracts inside a premature native +2511.",
+  "candidates": [
+    {
+      "entry": "PLI1.OVL+2511",
+      "status": "stable/complete/partial",
+      "native_children": [
+        "+8048",
+        "+7EC0"
+      ],
+      "remaining_dependency": "+240A (provisional/partial/partial), including partial +23A0 and complete but not native +23D2",
+      "natural_calls": 81,
+      "inclusive_historical_instruction_occurrences": 52445,
+      "note": "Counts sum independent selected-run windows; not a projected speedup. Most descendants are already native; the local adapter contract is the remaining fidelity blocker."
+    },
+    {
+      "entry": "PLI1.OVL+80CA",
+      "status": "RAW; candidate bounds only, not a ProcedureHypothesis",
+      "native_observed_children": [
+        "+7E5F",
+        "+7D53"
+      ],
+      "other_observed_child": "resident +1A33 pointer/word difference is complete but not native",
+      "natural_calls": 11,
+      "inclusive_historical_instruction_occurrences": 5709,
+      "decision": "A plausible subsequent parent, but local gate/comparison behavior still needs a bounded contract audit. No decoding or promotion performed."
+    },
+    {
+      "entry": "PLI1.OVL+80EF",
+      "status": "RAW; candidate bounds only, not a ProcedureHypothesis",
+      "native_observed_children": [
+        "+80B7",
+        "resident +0EF6"
+      ],
+      "natural_calls": 12,
+      "inclusive_historical_instruction_occurrences": 1152,
+      "decision": "All observed child bodies are native, but only four calls per source and low residual leverage. Local state/ABI still needs archaeology; not preferred merely because it is nearby."
+    }
+  ],
+  "corrected_observations": {
+    "MINIMAL": {
+      "PLI1.OVL+2511": {
+        "calls": 8,
+        "callers": {
+          "PLI1.OVL+58E9": 1,
+          "PLI1.OVL+0C47": 1,
+          "PLI1.OVL+0D90": 2,
+          "PLI1.OVL+1D01": 1,
+          "PLI1.OVL+5A39": 1,
+          "PLI1.OVL+6249": 1,
+          "PLI1.OVL+1ADD": 1
+        },
+        "own_coordinates": 15,
+        "own_occurrences": 120,
+        "inclusive_instruction_occurrences": 5003,
+        "direct_call_sites": {
+          "PLI1.OVL+2519": 8,
+          "PLI1.OVL+251E": 8,
+          "PLI1.OVL+2526": 8
+        },
+        "return_sites": {
+          "PLI1.OVL+252A": 8
+        }
+      },
+      "PLI1.OVL+240A": {
+        "calls": 8,
+        "callers": {
+          "PLI1.OVL+251E": 8
+        },
+        "own_coordinates": 59,
+        "own_occurrences": 325,
+        "inclusive_instruction_occurrences": 1115,
+        "direct_call_sites": {
+          "PLI1.OVL+24E6": 8,
+          "PLI1.OVL+24ED": 8,
+          "PLI1.OVL+242B": 3
+        },
+        "return_sites": {
+          "PLI1.OVL+24F0": 8
+        }
+      },
+      "PLI1.OVL+80EF": {
+        "calls": 4,
+        "callers": {
+          "PLI1.OVL+0142": 2,
+          "PLI1.OVL+014B": 2
+        },
+        "own_coordinates": 14,
+        "own_occurrences": 56,
+        "inclusive_instruction_occurrences": 384,
+        "direct_call_sites": {
+          "PLI1.OVL+80F7": 4,
+          "PLI1.OVL+80FF": 4,
+          "PLI1.OVL+8107": 4
+        },
+        "return_sites": {
+          "PLI1.OVL+810A": 4
+        }
+      },
+      "PLI1.OVL+80CA": {
+        "calls": 1,
+        "callers": {
+          "PLI1.OVL+02F1": 1
+        },
+        "own_coordinates": 15,
+        "own_occurrences": 15,
+        "inclusive_instruction_occurrences": 519,
+        "direct_call_sites": {
+          "PLI1.OVL+80D8": 1,
+          "PLI1.OVL+80E8": 1,
+          "PLI1.OVL+80EB": 1
+        },
+        "return_sites": {
+          "PLI1.OVL+80EE": 1
+        }
+      }
+    },
+    "FIZZBUZ": {
+      "PLI1.OVL+2511": {
+        "calls": 64,
+        "callers": {
+          "PLI1.OVL+58E9": 5,
+          "PLI1.OVL+0C47": 1,
+          "PLI1.OVL+5A39": 11,
+          "PLI1.OVL+6249": 11,
+          "PLI1.OVL+109A": 1,
+          "PLI1.OVL+25A4": 7,
+          "PLI1.OVL+0EED": 1,
+          "PLI1.OVL+0FC5": 1,
+          "PLI1.OVL+5028": 3,
+          "PLI1.OVL+25BC": 3,
+          "PLI1.OVL+0D90": 9,
+          "PLI1.OVL+1D01": 4,
+          "PLI1.OVL+1ADD": 4,
+          "PLI1.OVL+12C5": 1,
+          "PLI1.OVL+12D1": 1,
+          "PLI1.OVL+12FE": 1
+        },
+        "own_coordinates": 15,
+        "own_occurrences": 960,
+        "inclusive_instruction_occurrences": 39563,
+        "direct_call_sites": {
+          "PLI1.OVL+2519": 64,
+          "PLI1.OVL+251E": 64,
+          "PLI1.OVL+2526": 64
+        },
+        "return_sites": {
+          "PLI1.OVL+252A": 64
+        }
+      },
+      "PLI1.OVL+240A": {
+        "calls": 77,
+        "callers": {
+          "PLI1.OVL+251E": 64,
+          "PLI1.OVL+5E94": 8,
+          "PLI1.OVL+0F68": 1,
+          "PLI1.OVL+4C4E": 3,
+          "PLI1.OVL+2500": 1
+        },
+        "own_coordinates": 59,
+        "own_occurrences": 3213,
+        "inclusive_instruction_occurrences": 10938,
+        "direct_call_sites": {
+          "PLI1.OVL+24E6": 77,
+          "PLI1.OVL+24ED": 77,
+          "PLI1.OVL+242B": 41
+        },
+        "return_sites": {
+          "PLI1.OVL+24F0": 77
+        }
+      },
+      "PLI1.OVL+80EF": {
+        "calls": 4,
+        "callers": {
+          "PLI1.OVL+0142": 2,
+          "PLI1.OVL+014B": 2
+        },
+        "own_coordinates": 14,
+        "own_occurrences": 56,
+        "inclusive_instruction_occurrences": 384,
+        "direct_call_sites": {
+          "PLI1.OVL+80F7": 4,
+          "PLI1.OVL+80FF": 4,
+          "PLI1.OVL+8107": 4
+        },
+        "return_sites": {
+          "PLI1.OVL+810A": 4
+        }
+      },
+      "PLI1.OVL+80CA": {
+        "calls": 8,
+        "callers": {
+          "PLI1.OVL+02F1": 8
+        },
+        "own_coordinates": 15,
+        "own_occurrences": 120,
+        "inclusive_instruction_occurrences": 4152,
+        "direct_call_sites": {
+          "PLI1.OVL+80D8": 8,
+          "PLI1.OVL+80E8": 8,
+          "PLI1.OVL+80EB": 8
+        },
+        "return_sites": {
+          "PLI1.OVL+80EE": 8
+        }
+      }
+    },
+    "PICTURE": {
+      "PLI1.OVL+2511": {
+        "calls": 9,
+        "callers": {
+          "PLI1.OVL+58E9": 2,
+          "PLI1.OVL+0C47": 1,
+          "PLI1.OVL+5A39": 1,
+          "PLI1.OVL+6249": 1,
+          "PLI1.OVL+25A4": 2,
+          "PLI1.OVL+0D90": 1,
+          "PLI1.OVL+1ADD": 1
+        },
+        "own_coordinates": 15,
+        "own_occurrences": 135,
+        "inclusive_instruction_occurrences": 7879,
+        "direct_call_sites": {
+          "PLI1.OVL+2519": 9,
+          "PLI1.OVL+251E": 9,
+          "PLI1.OVL+2526": 9
+        },
+        "return_sites": {
+          "PLI1.OVL+252A": 9
+        }
+      },
+      "PLI1.OVL+240A": {
+        "calls": 12,
+        "callers": {
+          "PLI1.OVL+251E": 9,
+          "PLI1.OVL+5E94": 2,
+          "PLI1.OVL+2500": 1
+        },
+        "own_coordinates": 59,
+        "own_occurrences": 491,
+        "inclusive_instruction_occurrences": 1681,
+        "direct_call_sites": {
+          "PLI1.OVL+24E6": 12,
+          "PLI1.OVL+24ED": 12,
+          "PLI1.OVL+242B": 5
+        },
+        "return_sites": {
+          "PLI1.OVL+24F0": 12
+        }
+      },
+      "PLI1.OVL+80EF": {
+        "calls": 4,
+        "callers": {
+          "PLI1.OVL+0142": 2,
+          "PLI1.OVL+014B": 2
+        },
+        "own_coordinates": 14,
+        "own_occurrences": 56,
+        "inclusive_instruction_occurrences": 384,
+        "direct_call_sites": {
+          "PLI1.OVL+80F7": 4,
+          "PLI1.OVL+80FF": 4,
+          "PLI1.OVL+8107": 4
+        },
+        "return_sites": {
+          "PLI1.OVL+810A": 4
+        }
+      },
+      "PLI1.OVL+80CA": {
+        "calls": 2,
+        "callers": {
+          "PLI1.OVL+02F1": 2
+        },
+        "own_coordinates": 15,
+        "own_occurrences": 30,
+        "inclusive_instruction_occurrences": 1038,
+        "direct_call_sites": {
+          "PLI1.OVL+80D8": 2,
+          "PLI1.OVL+80E8": 2,
+          "PLI1.OVL+80EB": 2
+        },
+        "return_sites": {
+          "PLI1.OVL+80EE": 2
+        }
+      }
+    }
+  },
+  "uncertainty": "Do not infer arbitrary table/alias/termination scope from repeated natural coordinates. +240A selector16/19, selector15 nonzero-extra, and +23A0 missing outcomes remain explicit until independently audited.",
+  "work_in_this_pass": "Ownership/count screen only; no +2511/+240A/+80xx decompilation, no RAW80B1 or FACTOR work."
+}
