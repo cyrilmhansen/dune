@@ -1,0 +1,54 @@
+{
+  "baseline": "0630f8ea83a36e58f9e7edc27c067a3a7c99256f",
+  "historical_algorithm": "faithful at explicit bounded scope",
+  "cached_minimum": {
+    "scratch_order": [
+      "A64F=E",
+      "A64E=C"
+    ],
+    "unsigned_comparison": "CMP saved C-E",
+    "result": "min(C,E)",
+    "flags": "CMP flags, independently of selected A",
+    "body_stack_residue": "none"
+  },
+  "three_publications": {
+    "order": [
+      "A628[index] -> AC73",
+      "A62B[index] -> AD08",
+      "A62E[index] -> AD9D"
+    ],
+    "fresh_positions": "AE32/AE33 is independently reread before each channel; each child freshly reads AA1F",
+    "unconditional_writes": true
+  },
+  "adapter": {
+    "selector15": "cached minimum from limiter and indexed primary; freshly addressed rewrite; fresh extra must be zero",
+    "default": "fresh selector checks reject 16 and 19",
+    "common_tail": "fresh saved index -> little-endian pointer at A63B+2*index -> word publication at fresh AE32 -> fresh saved index -> three publications",
+    "unsupported": [
+      "selector15 nonzero extra",
+      "selector16",
+      "selector19",
+      "declared aliases"
+    ]
+  },
+  "parent": {
+    "frame": "entry SP-1 retains input C, created by MOV B,C/PUSH B/INX SP",
+    "reloads": [
+      "fresh frame byte ->8048",
+      "explicit C=0 ->240A",
+      "fresh frame byte ->7EC0"
+    ],
+    "cleanup": "discard exactly one private byte then consume original CALL word",
+    "private_frame_last_writer": "PLI1+2512; child CALL slots start at entry SP-3"
+  },
+  "compatibility": "Proven immutable CALL/PUSH writers, ordered imports and last-writer ancestry; no post-oracle byte copying",
+  "all_registers_flags_and_full_65536_memory": "matched in all 344 independent shadows",
+  "external_state": "DMA, complete filesystem, record contents/order and final INT/REL compared in standalone and cumulative runs",
+  "transaction": "existing Runner Apply_host_program copied RAM/process/filesystem; complete parent stages before live commit; no fallback",
+  "semantic_selection": "actual registers/memory only; source/hash/step binding exists only in differential proof harness",
+  "native_scope": "child declared nonalias scopes; supported terminating native child states; no invented termination guard",
+  "runner_changes": [],
+  "archaeology_corrections": [],
+  "pragmatic_divergences": [],
+  "fidelity_debt": []
+}

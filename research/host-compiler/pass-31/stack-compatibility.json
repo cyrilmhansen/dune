@@ -1,0 +1,41 @@
+{
+  "derivation": "Exact immutable CALL/PUSH instructions supply words; chronological native child plans overwrite earlier cells. Every final writer/value and every logical write is checked against CPU evidence; full RAM includes untouched residue.",
+  "minimum": "No body CALL/PUSH; only original outer CALL slot is consumed.",
+  "publications": "Successive +23E4/+23F5/+2406 CALL words share S-2/S-1; final word is 4609H from +2406.",
+  "adapter": "The +7B09 destination PUSH writes S-4/S-3 during the word child (S is adapter entry SP). It is later overwritten by the final +23D2 child CALL at +2406. Final adapter residue: S-1=46H/S-2=F0H from +24ED; S-3=46H/S-4=09H from +2406. Temporary values come from the fresh publication address, never post-memory.",
+  "parent": {
+    "initial": [
+      {
+        "relative": -1,
+        "value": "input C",
+        "writer": "PLI1+2512",
+        "kind": "frame"
+      },
+      {
+        "relative": -2,
+        "value": "input C",
+        "writer": "PLI1+2512",
+        "kind": "compatibility"
+      }
+    ],
+    "final": [
+      {
+        "relative": -1,
+        "value": "input C",
+        "writer": "PLI1+2512"
+      },
+      {
+        "relative": -2,
+        "value": "47H",
+        "writer": "PLI1+2526"
+      },
+      {
+        "relative": -3,
+        "value": "29H",
+        "writer": "PLI1+2526"
+      }
+    ],
+    "descendants": "Deeper surviving bytes come from proven 8048/240A/7EC0 children and their nested operations. Per-case complete-proof digests and deepest-relative-address inventory are retained in natural-cases.json."
+  },
+  "copying_oracle_post_state": false
+}

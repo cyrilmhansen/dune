@@ -9,3 +9,6 @@ val verify_call : t -> origin:Analysis.Execution_map.origin -> before:Runner.sta
 val prepare : t -> call:call -> origin:Analysis.Execution_map.origin -> state:Runner.state_snapshot -> memory:bytes -> prepared
 
 val extent : operation -> int * int
+
+(** Verified immutable historical internal CALL; no synthetic Step. *)
+val internal_call : t -> int -> call

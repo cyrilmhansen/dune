@@ -65,3 +65,9 @@ let prepare t ~call ~origin ~(state:Runner.state_snapshot) ~memory =
  let state={next with sp=Pli80_host.U16.wrap(state.sp+2);pc=call.resume}in
  {result;writes=List.rev !writes;memory=Pli80_host.State.copy m;state;compatibility_writes= !compatibility_writes;
   residue_writer=(if call.operation=Mapped_word then Some 0x9d09 else None)}
+
+let internal_call t site =
+ let offset=site-0x2200 in
+ require(offset>=0 && offset+3<=Bytes.length t.image && Char.code(Bytes.get t.image offset)=0xcd) "unproven internal CALL";
+ let operation=match word t.image(offset+1)with 0x9cf0->Mapped_word|0x9d49->Secondary|_->invalid_arg "Not a publication CALL" in
+ {coordinate=Printf.sprintf "PLI1.OVL+%04X" offset;runtime_site=site;resume=site+3;operation}

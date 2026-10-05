@@ -148,3 +148,8 @@
  (name native_attribute_gate)
  (deps (env_var RUNES_HOST_IMAGES))
  (libraries pli80_host pli80 runner cpm i8080 analysis))
+
+(test
+ (name native_state_adaptation)
+ (deps (env_var RUNES_HOST_IMAGES))
+ (libraries pli80_host pli80 runner cpm i8080 analysis))

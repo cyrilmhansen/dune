@@ -1,0 +1,451 @@
+{
+  "corrected_observations": {
+    "MINIMAL": {
+      "PLI1.OVL+80CA": {
+        "calls": 1,
+        "callers": {
+          "PLI1.OVL+02F1": 1
+        },
+        "own_occurrences": 15,
+        "inclusive_memory_instruction_occurrences": 248,
+        "direct_targets": {
+          "PLI.COM+1A33": 1,
+          "PLI1.OVL+7D53": 1,
+          "PLI1.OVL+7E5F": 1
+        }
+      },
+      "PLI1.OVL+80EF": {
+        "calls": 4,
+        "callers": {
+          "PLI1.OVL+0142": 2,
+          "PLI1.OVL+014B": 2
+        },
+        "own_occurrences": 56,
+        "inclusive_memory_instruction_occurrences": 220,
+        "direct_targets": {
+          "PLI.COM+0EF6": 8,
+          "PLI1.OVL+80B7": 4
+        }
+      }
+    },
+    "FIZZBUZ": {
+      "PLI1.OVL+80CA": {
+        "calls": 8,
+        "callers": {
+          "PLI1.OVL+02F1": 8
+        },
+        "own_occurrences": 120,
+        "inclusive_memory_instruction_occurrences": 1984,
+        "direct_targets": {
+          "PLI.COM+1A33": 8,
+          "PLI1.OVL+7D53": 8,
+          "PLI1.OVL+7E5F": 8
+        }
+      },
+      "PLI1.OVL+80EF": {
+        "calls": 4,
+        "callers": {
+          "PLI1.OVL+0142": 2,
+          "PLI1.OVL+014B": 2
+        },
+        "own_occurrences": 56,
+        "inclusive_memory_instruction_occurrences": 220,
+        "direct_targets": {
+          "PLI.COM+0EF6": 8,
+          "PLI1.OVL+80B7": 4
+        }
+      }
+    },
+    "PICTURE": {
+      "PLI1.OVL+80CA": {
+        "calls": 2,
+        "callers": {
+          "PLI1.OVL+02F1": 2
+        },
+        "own_occurrences": 30,
+        "inclusive_memory_instruction_occurrences": 496,
+        "direct_targets": {
+          "PLI.COM+1A33": 2,
+          "PLI1.OVL+7D53": 2,
+          "PLI1.OVL+7E5F": 2
+        }
+      },
+      "PLI1.OVL+80EF": {
+        "calls": 4,
+        "callers": {
+          "PLI1.OVL+0142": 2,
+          "PLI1.OVL+014B": 2
+        },
+        "own_occurrences": 56,
+        "inclusive_memory_instruction_occurrences": 220,
+        "direct_targets": {
+          "PLI.COM+0EF6": 8,
+          "PLI1.OVL+80B7": 4
+        }
+      }
+    }
+  },
+  "newly_exposed_enclosing_ordinary_windows": {
+    "MINIMAL": {
+      "nearest_enclosing_windows": {
+        "PLI1.OVL+0C1B": {
+          "contained_2511_roots": 1,
+          "absorbed_2511_instruction_occurrences": 1110,
+          "ordinary_parent_window_count": 1,
+          "inclusive_instruction_occurrences": 48108
+        },
+        "PLI1.OVL+0D6E": {
+          "contained_2511_roots": 2,
+          "absorbed_2511_instruction_occurrences": 810,
+          "ordinary_parent_window_count": 2,
+          "inclusive_instruction_occurrences": 1092
+        },
+        "PLI1.OVL+19F0": {
+          "contained_2511_roots": 1,
+          "absorbed_2511_instruction_occurrences": 1505,
+          "ordinary_parent_window_count": 1,
+          "inclusive_instruction_occurrences": 14378
+        },
+        "PLI1.OVL+1C07": {
+          "contained_2511_roots": 1,
+          "absorbed_2511_instruction_occurrences": 414,
+          "ordinary_parent_window_count": 1,
+          "inclusive_instruction_occurrences": 26826
+        },
+        "PLI1.OVL+58BB": {
+          "contained_2511_roots": 1,
+          "absorbed_2511_instruction_occurrences": 388,
+          "ordinary_parent_window_count": 1,
+          "inclusive_instruction_occurrences": 495
+        },
+        "PLI1.OVL+5929": {
+          "contained_2511_roots": 1,
+          "absorbed_2511_instruction_occurrences": 388,
+          "ordinary_parent_window_count": 1,
+          "inclusive_instruction_occurrences": 1469
+        },
+        "PLI1.OVL+6223": {
+          "contained_2511_roots": 1,
+          "absorbed_2511_instruction_occurrences": 388,
+          "ordinary_parent_window_count": 1,
+          "inclusive_instruction_occurrences": 1987
+        }
+      },
+      "candidate_residual_leverage": {
+        "PLI1.OVL+80CA": {
+          "ordinary_windows": 1,
+          "historical_instruction_occurrences": 519,
+          "residual_guest_instruction_occurrences_with_current_native_descendants": 28
+        },
+        "PLI1.OVL+80EF": {
+          "ordinary_windows": 4,
+          "historical_instruction_occurrences": 384,
+          "residual_guest_instruction_occurrences_with_current_native_descendants": 56
+        },
+        "PLI1.OVL+58BB": {
+          "ordinary_windows": 1,
+          "historical_instruction_occurrences": 495,
+          "residual_guest_instruction_occurrences_with_current_native_descendants": 107
+        },
+        "PLI1.OVL+5929": {
+          "ordinary_windows": 1,
+          "historical_instruction_occurrences": 1469,
+          "residual_guest_instruction_occurrences_with_current_native_descendants": 1081
+        },
+        "PLI1.OVL+6223": {
+          "ordinary_windows": 1,
+          "historical_instruction_occurrences": 1987,
+          "residual_guest_instruction_occurrences_with_current_native_descendants": 1211
+        },
+        "PLI1.OVL+0D6E": {
+          "ordinary_windows": 2,
+          "historical_instruction_occurrences": 1092,
+          "residual_guest_instruction_occurrences_with_current_native_descendants": 56
+        },
+        "PLI1.OVL+256C": {
+          "ordinary_windows": 0,
+          "historical_instruction_occurrences": 0,
+          "residual_guest_instruction_occurrences_with_current_native_descendants": 0
+        },
+        "PLI1.OVL+25A9": {
+          "ordinary_windows": 0,
+          "historical_instruction_occurrences": 0,
+          "residual_guest_instruction_occurrences_with_current_native_descendants": 0
+        }
+      }
+    },
+    "FIZZBUZ": {
+      "nearest_enclosing_windows": {
+        "PLI1.OVL+0C1B": {
+          "contained_2511_roots": 1,
+          "absorbed_2511_instruction_occurrences": 1110,
+          "ordinary_parent_window_count": 1,
+          "inclusive_instruction_occurrences": 293482
+        },
+        "PLI1.OVL+0D6E": {
+          "contained_2511_roots": 9,
+          "absorbed_2511_instruction_occurrences": 3645,
+          "ordinary_parent_window_count": 9,
+          "inclusive_instruction_occurrences": 4914
+        },
+        "PLI1.OVL+0E00": {
+          "contained_2511_roots": 2,
+          "absorbed_2511_instruction_occurrences": 4008,
+          "ordinary_parent_window_count": 1,
+          "inclusive_instruction_occurrences": 23626
+        },
+        "PLI1.OVL+1014": {
+          "contained_2511_roots": 1,
+          "absorbed_2511_instruction_occurrences": 2810,
+          "ordinary_parent_window_count": 1,
+          "inclusive_instruction_occurrences": 9486
+        },
+        "PLI1.OVL+11E2": {
+          "contained_2511_roots": 3,
+          "absorbed_2511_instruction_occurrences": 4362,
+          "ordinary_parent_window_count": 1,
+          "inclusive_instruction_occurrences": 269833
+        },
+        "PLI1.OVL+19F0": {
+          "contained_2511_roots": 4,
+          "absorbed_2511_instruction_occurrences": 6248,
+          "ordinary_parent_window_count": 4,
+          "inclusive_instruction_occurrences": 45561
+        },
+        "PLI1.OVL+1C07": {
+          "contained_2511_roots": 4,
+          "absorbed_2511_instruction_occurrences": 1656,
+          "ordinary_parent_window_count": 4,
+          "inclusive_instruction_occurrences": 94478
+        },
+        "PLI1.OVL+256C": {
+          "contained_2511_roots": 7,
+          "absorbed_2511_instruction_occurrences": 2818,
+          "ordinary_parent_window_count": 7,
+          "inclusive_instruction_occurrences": 3014
+        },
+        "PLI1.OVL+25A9": {
+          "contained_2511_roots": 3,
+          "absorbed_2511_instruction_occurrences": 1164,
+          "ordinary_parent_window_count": 3,
+          "inclusive_instruction_occurrences": 1206
+        },
+        "PLI1.OVL+500F": {
+          "contained_2511_roots": 3,
+          "absorbed_2511_instruction_occurrences": 1215,
+          "ordinary_parent_window_count": 3,
+          "inclusive_instruction_occurrences": 24162
+        },
+        "PLI1.OVL+58BB": {
+          "contained_2511_roots": 5,
+          "absorbed_2511_instruction_occurrences": 1991,
+          "ordinary_parent_window_count": 5,
+          "inclusive_instruction_occurrences": 2684
+        },
+        "PLI1.OVL+5929": {
+          "contained_2511_roots": 11,
+          "absorbed_2511_instruction_occurrences": 4268,
+          "ordinary_parent_window_count": 11,
+          "inclusive_instruction_occurrences": 19213
+        },
+        "PLI1.OVL+6223": {
+          "contained_2511_roots": 11,
+          "absorbed_2511_instruction_occurrences": 4268,
+          "ordinary_parent_window_count": 11,
+          "inclusive_instruction_occurrences": 24911
+        }
+      },
+      "candidate_residual_leverage": {
+        "PLI1.OVL+80CA": {
+          "ordinary_windows": 8,
+          "historical_instruction_occurrences": 4152,
+          "residual_guest_instruction_occurrences_with_current_native_descendants": 224
+        },
+        "PLI1.OVL+80EF": {
+          "ordinary_windows": 4,
+          "historical_instruction_occurrences": 384,
+          "residual_guest_instruction_occurrences_with_current_native_descendants": 56
+        },
+        "PLI1.OVL+58BB": {
+          "ordinary_windows": 5,
+          "historical_instruction_occurrences": 2684,
+          "residual_guest_instruction_occurrences_with_current_native_descendants": 693
+        },
+        "PLI1.OVL+5929": {
+          "ordinary_windows": 11,
+          "historical_instruction_occurrences": 19213,
+          "residual_guest_instruction_occurrences_with_current_native_descendants": 14945
+        },
+        "PLI1.OVL+6223": {
+          "ordinary_windows": 18,
+          "historical_instruction_occurrences": 67185,
+          "residual_guest_instruction_occurrences_with_current_native_descendants": 46510
+        },
+        "PLI1.OVL+0D6E": {
+          "ordinary_windows": 9,
+          "historical_instruction_occurrences": 4914,
+          "residual_guest_instruction_occurrences_with_current_native_descendants": 252
+        },
+        "PLI1.OVL+256C": {
+          "ordinary_windows": 7,
+          "historical_instruction_occurrences": 3014,
+          "residual_guest_instruction_occurrences_with_current_native_descendants": 105
+        },
+        "PLI1.OVL+25A9": {
+          "ordinary_windows": 3,
+          "historical_instruction_occurrences": 1206,
+          "residual_guest_instruction_occurrences_with_current_native_descendants": 42
+        }
+      }
+    },
+    "PICTURE": {
+      "nearest_enclosing_windows": {
+        "PLI1.OVL+0C1B": {
+          "contained_2511_roots": 1,
+          "absorbed_2511_instruction_occurrences": 1110,
+          "ordinary_parent_window_count": 1,
+          "inclusive_instruction_occurrences": 76885
+        },
+        "PLI1.OVL+0D6E": {
+          "contained_2511_roots": 1,
+          "absorbed_2511_instruction_occurrences": 405,
+          "ordinary_parent_window_count": 1,
+          "inclusive_instruction_occurrences": 546
+        },
+        "PLI1.OVL+19F0": {
+          "contained_2511_roots": 1,
+          "absorbed_2511_instruction_occurrences": 1733,
+          "ordinary_parent_window_count": 1,
+          "inclusive_instruction_occurrences": 5858
+        },
+        "PLI1.OVL+256C": {
+          "contained_2511_roots": 2,
+          "absorbed_2511_instruction_occurrences": 3079,
+          "ordinary_parent_window_count": 2,
+          "inclusive_instruction_occurrences": 3135
+        },
+        "PLI1.OVL+58BB": {
+          "contained_2511_roots": 2,
+          "absorbed_2511_instruction_occurrences": 776,
+          "ordinary_parent_window_count": 2,
+          "inclusive_instruction_occurrences": 990
+        },
+        "PLI1.OVL+5929": {
+          "contained_2511_roots": 1,
+          "absorbed_2511_instruction_occurrences": 388,
+          "ordinary_parent_window_count": 1,
+          "inclusive_instruction_occurrences": 1103
+        },
+        "PLI1.OVL+6223": {
+          "contained_2511_roots": 1,
+          "absorbed_2511_instruction_occurrences": 388,
+          "ordinary_parent_window_count": 1,
+          "inclusive_instruction_occurrences": 1621
+        }
+      },
+      "candidate_residual_leverage": {
+        "PLI1.OVL+80CA": {
+          "ordinary_windows": 2,
+          "historical_instruction_occurrences": 1038,
+          "residual_guest_instruction_occurrences_with_current_native_descendants": 56
+        },
+        "PLI1.OVL+80EF": {
+          "ordinary_windows": 4,
+          "historical_instruction_occurrences": 384,
+          "residual_guest_instruction_occurrences_with_current_native_descendants": 56
+        },
+        "PLI1.OVL+58BB": {
+          "ordinary_windows": 2,
+          "historical_instruction_occurrences": 990,
+          "residual_guest_instruction_occurrences_with_current_native_descendants": 214
+        },
+        "PLI1.OVL+5929": {
+          "ordinary_windows": 1,
+          "historical_instruction_occurrences": 1103,
+          "residual_guest_instruction_occurrences_with_current_native_descendants": 715
+        },
+        "PLI1.OVL+6223": {
+          "ordinary_windows": 2,
+          "historical_instruction_occurrences": 4447,
+          "residual_guest_instruction_occurrences_with_current_native_descendants": 2851
+        },
+        "PLI1.OVL+0D6E": {
+          "ordinary_windows": 1,
+          "historical_instruction_occurrences": 546,
+          "residual_guest_instruction_occurrences_with_current_native_descendants": 28
+        },
+        "PLI1.OVL+256C": {
+          "ordinary_windows": 3,
+          "historical_instruction_occurrences": 3510,
+          "residual_guest_instruction_occurrences_with_current_native_descendants": 57
+        },
+        "PLI1.OVL+25A9": {
+          "ordinary_windows": 0,
+          "historical_instruction_occurrences": 0,
+          "residual_guest_instruction_occurrences_with_current_native_descendants": 0
+        }
+      }
+    }
+  },
+  "recommendation": "Pass32: focused accumulated-natural contract reconnaissance of PLI1+6223, the highest measured residual-leverage parent, before native composition. Keep its unresolved local/dependency paths explicit; do not start a broad PLI1 sweep.",
+  "note": "Residual leverage is computed by unioning all enabled native ordinary CALL/RET body windows inside each corrected ordinary parent. Original child CALL instructions remain counted. It excludes no unproved ownership, and is a supported-corpus instruction measure, not a timing estimate. The own/memory projection counts use a separate metric.",
+  "ranked_residual_candidates": [
+    {
+      "entry": "PLI1.OVL+6223",
+      "calls": 21,
+      "historical_instruction_occurrences": 73619,
+      "residual_guest_instruction_occurrences": 50572
+    },
+    {
+      "entry": "PLI1.OVL+5929",
+      "calls": 13,
+      "historical_instruction_occurrences": 21785,
+      "residual_guest_instruction_occurrences": 16741
+    },
+    {
+      "entry": "PLI1.OVL+58BB",
+      "calls": 8,
+      "historical_instruction_occurrences": 4169,
+      "residual_guest_instruction_occurrences": 1014
+    },
+    {
+      "entry": "PLI1.OVL+0D6E",
+      "calls": 12,
+      "historical_instruction_occurrences": 6552,
+      "residual_guest_instruction_occurrences": 336
+    },
+    {
+      "entry": "PLI1.OVL+80CA",
+      "calls": 11,
+      "historical_instruction_occurrences": 5709,
+      "residual_guest_instruction_occurrences": 308
+    },
+    {
+      "entry": "PLI1.OVL+80EF",
+      "calls": 12,
+      "historical_instruction_occurrences": 1152,
+      "residual_guest_instruction_occurrences": 168
+    },
+    {
+      "entry": "PLI1.OVL+256C",
+      "calls": 10,
+      "historical_instruction_occurrences": 6524,
+      "residual_guest_instruction_occurrences": 162
+    },
+    {
+      "entry": "PLI1.OVL+25A9",
+      "calls": 3,
+      "historical_instruction_occurrences": 1206,
+      "residual_guest_instruction_occurrences": 42
+    }
+  ],
+  "comparison": {
+    "PLI1+6223": "21 corrected ordinary windows / 50,572 remaining guest instructions across the selected corpus. It encloses +2511 naturally, but substantial local/dependency knowledge is not yet established; archaeology is required before a faithful bounded native parent.",
+    "PLI1+5929": "13 windows / 16,741 remaining instructions; another exposed parent, lower measured residual leverage. Deferred.",
+    "PLI1+58BB": "8 windows / 1,014 remaining instructions; majority of its subtree is already native, but no reviewed local contract yet.",
+    "PLI1+0D6E": "12 windows / 336 remaining instructions. A cheap subsequent parent-level composition candidate after its exact local/ABI routes are established, rather than a new helper-only ticket.",
+    "PLI1+80CA": "11 windows / 308 remaining instructions; native +7E5F/+7D53 children, plus complete but not native resident +1A33; local RAW/gate behavior still needs a bounded contract.",
+    "PLI1+80EF": "12 windows / 168 remaining instructions; all observed major children native, but small residual benefit and no reviewed local contract.",
+    "PLI1+256C/+25A9": "Mostly absorbed by +2511/+23A0; only 162/42 remaining instructions. Not preferred just because nearby."
+  }
+}
