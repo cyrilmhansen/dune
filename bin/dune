@@ -52,3 +52,8 @@
  (name native_range_processing)
  (public_name pli80-native-range-processing)
  (libraries pli80 pli80_host runner unix))
+
+(executable
+ (name native_publication_primitives)
+ (public_name pli80-native-publication-primitives)
+ (libraries pli80 pli80_host runner unix))

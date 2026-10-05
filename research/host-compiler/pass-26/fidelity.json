@@ -1,0 +1,120 @@
+{
+  "baseline_commit": "6a8ba519e2fa56d6ba1c32322fac7381ca97148f",
+  "mapped_word": {
+    "scratch_order": [
+      "AE40 high",
+      "AE3F low",
+      "AE3E position"
+    ],
+    "paired_read": [
+      "AE3E saved position",
+      "AE3F saved word low: read then discarded for addressing"
+    ],
+    "fresh_position_map": true,
+    "address_algorithm": [
+      "AB49+j",
+      "previous+j"
+    ],
+    "destination_save": "PUSH H at PLI1+7B09, POP H at +7B0E; S-1 high then S-2 low",
+    "saved_word_reload": "AE3F/AE40 after destination PUSH",
+    "publication_order": [
+      "low at AB49+2*j",
+      "high at previous+1"
+    ],
+    "returned": "A/DE/NZPA preserved; BC=zero-extended j; HL=high destination; CY=0"
+  },
+  "secondary": {
+    "scratch_order": [
+      "AE46 E",
+      "AE45 C"
+    ],
+    "paired_read": [
+      "AE45 saved position",
+      "AE46 value: read then discarded for addressing"
+    ],
+    "fresh_position_map": true,
+    "distinct_table": "AD9D",
+    "unconditional_write": true,
+    "returned": "A=saved E; BC=zero-extended j; DE/NZPA preserved; HL=AD9D+j; CY=0",
+    "body_stack_writes": []
+  },
+  "shadow": {
+    "invocations": 679,
+    "mapped_word": 276,
+    "secondary": 403,
+    "all_registers_flags": true,
+    "full_65536_bytes": true,
+    "logical_write_order": true,
+    "duplicate_cases_retained": true,
+    "stack_values_derived_from_code": true
+  },
+  "shared_memory": "Existing State Bytes.t; no copied table representations; read-after-publication tested.",
+  "nonalias_scope": "Accessed scratch, selected map/table bytes and live return/temporary stack slots must be distinct; code and CALL site protected. Secondary j=168/169 aliases AE45/AE46 and is rejected.",
+  "hybrid": {
+    "single_runs": 6,
+    "cumulative_runs": 3,
+    "no_fallback": true,
+    "no_enabled_historical_bodies": true,
+    "filesystem_and_file_events": true,
+    "ordered_INT_REL_records": true,
+    "canonical_image_aware": true,
+    "guest_steps_not_fabricated": true
+  },
+  "caller_distributions": {
+    "mapped-word-publication-cases": {
+      "MINIMAL": {
+        "PLI1.OVL+7EA0": 16,
+        "PLI1.OVL+24E6": 8,
+        "PLI1.OVL+1BDC": 1,
+        "PLI1.OVL+2BB6": 1
+      },
+      "FIZZBUZ": {
+        "PLI1.OVL+7EA0": 107,
+        "PLI1.OVL+24E6": 77,
+        "PLI1.OVL+3FCB": 9,
+        "PLI1.OVL+2BB6": 12,
+        "PLI1.OVL+1BDC": 4
+      },
+      "PICTURE": {
+        "PLI1.OVL+7EA0": 22,
+        "PLI1.OVL+24E6": 12,
+        "PLI1.OVL+3FCB": 4,
+        "PLI1.OVL+2BB6": 1,
+        "PLI1.OVL+1BDC": 1,
+        "PLI1.OVL+258C": 1
+      }
+    },
+    "secondary-publication-cases": {
+      "MINIMAL": {
+        "PLI1.OVL+7EB2": 16,
+        "PLI1.OVL+80AD": 12,
+        "PLI1.OVL+2406": 8,
+        "PLI1.OVL+2BE9": 1,
+        "PLI1.OVL+2C3E": 1
+      },
+      "FIZZBUZ": {
+        "PLI1.OVL+7EB2": 107,
+        "PLI1.OVL+80AD": 78,
+        "PLI1.OVL+2406": 77,
+        "PLI1.OVL+3FA0": 9,
+        "PLI1.OVL+4072": 9,
+        "PLI1.OVL+2BE9": 12,
+        "PLI1.OVL+2C3E": 12
+      },
+      "PICTURE": {
+        "PLI1.OVL+7EB2": 22,
+        "PLI1.OVL+80AD": 16,
+        "PLI1.OVL+2406": 13,
+        "PLI1.OVL+3FA0": 4,
+        "PLI1.OVL+4072": 4,
+        "PLI1.OVL+2BE9": 1,
+        "PLI1.OVL+2C3E": 1
+      }
+    }
+  },
+  "archaeology_corrections": [],
+  "runner_changes": [],
+  "cpm_changes": [],
+  "pragmatic_divergences": [],
+  "fidelity_debt": []
+}

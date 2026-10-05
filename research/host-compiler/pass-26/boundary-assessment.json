@@ -1,0 +1,36 @@
+{
+  "recommended_pass27": "Bounded native PLI1+7E5F composition at end<=94, reject +7E70 arm on private state.",
+  "evidence_level": "Exact established instructions and accumulated contracts; no implementation in Pass26.",
+  "predicate": {
+    "comparison": "PLI1+7E67 MVI A,94; +7E6C CMP byte[AE35]; +7E6D JNC +7E73",
+    "supported": "unsigned end<=94",
+    "unsupported": "end>94 enters +7E70 CALL +7A46, STATIC / UNOBSERVED"
+  },
+  "native_children": {
+    "7AD5": "Mapped_publication",
+    "7AF0": "Mapped_word.publish",
+    "7B2E": "Auxiliary.publish",
+    "7B49": "Auxiliary.publish_secondary"
+  },
+  "important_order": [
+    "Save input DE high/low and C at AE56/55/54",
+    "Fresh end/map linkage and AE33 mutation",
+    "Mapped byte publication",
+    "Mapped word publication",
+    "Primary zero publication",
+    "Secondary zero publication",
+    "AE32=end; increment end"
+  ],
+  "next_proof_obligations": [
+    "Derive full natural +7E5F roots, not metadata counts",
+    "Preserve paired reads and fresh maps across physical table mutation",
+    "Derive all ABI/stack last writers and exact return flags",
+    "Reject unobserved end>94 on staged state",
+    "Shadow all natural calls then standalone/cumulative exact compiler outputs"
+  ],
+  "deferred": [
+    "+8048 composition",
+    "+7E70 behavior",
+    "FACTOR attr5"
+  ]
+}

@@ -119,7 +119,7 @@ let compare_external v (r:Experiment.result)=
 let run v input controllers=match Native_dispatch.run input controllers with Error _ as e->e|Ok(_,r)as q->compare_external v r;q
 let single v input=run v input[controller v input]
 
-let cumulative v words emitter attributes publications recursive packed balances input=
+let controllers v words emitter attributes publications recursive packed balances input=
  let windows=List.map(fun c->c.entry_step,c.return_step)v.cases in
  let inside step windows=List.exists(fun(a,b)->a<step&&step<b)windows in
  let excluded get cases windows=List.filter_map(fun c->let s=get c in if inside s windows then Some s else None)cases in
@@ -140,4 +140,7 @@ let cumulative v words emitter attributes publications recursive packed balances
   Native_word_emitters.controller ~exclude_entry_steps:(excluded(fun(c:Native_word_emitters.case)->c.entry_step)(Native_word_emitters.selected Word_emitter_bridge.Mapped_word words)(windows@wrapper_windows@recursive_windows@packed_windows))Mapped_word words input;
   Native_word_emitters.controller ~exclude_entry_steps:(excluded(fun(c:Native_word_emitters.case)->c.entry_step)(Native_word_emitters.selected Word_emitter_bridge.Low words)windows)Low words input;
   Native_word_emitters.controller ~exclude_entry_steps:(excluded(fun(c:Native_word_emitters.case)->c.entry_step)(Native_word_emitters.selected Word_emitter_bridge.High words)windows)High words input]in
- match run v input controllers with Error _ as e->e|Ok(_,r)as q->Native_int_emitter.compare_external emitter r;q
+ controllers
+let cumulative v words emitter attributes publications recursive packed balances input=
+ match run v input(controllers v words emitter attributes publications recursive packed balances input)with
+ |Error _ as e->e|Ok(_,r)as q->Native_int_emitter.compare_external emitter r;q

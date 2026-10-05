@@ -31,3 +31,18 @@ let read_secondary memory ~position ~protected ~write =
   let index=State.read memory map_address in
   let address=0xad9d+index in guard (0xae3b::0xae3c::map_address::protected) [address];
   {position;index;address;value=State.read memory address;discarded_high=carrier lsr 8}
+
+let publish_secondary memory ~position ~value ~protected ~write =
+ U8.check position;U8.check value;
+ let map_address=0xaa1f+position in
+ guard protected [0xae45;0xae46;map_address];
+ let selected=0xad9d+State.read memory map_address in
+ guard (0xae45::0xae46::map_address::protected) [selected];
+ put memory write "secondary_auxiliary_value" 0xae46 value;
+ put memory write "secondary_auxiliary_write_position" 0xae45 position;
+ let carrier=State.word memory 0xae45 in
+ let index=State.read memory(0xaa1f+(carrier land 255))in
+ let address=0xad9d+index in
+ let value=State.read memory 0xae46 in
+ put memory write "secondary_auxiliary_publication" address value;
+ {position=carrier land 255;index;address;value;discarded_high=carrier lsr 8}
