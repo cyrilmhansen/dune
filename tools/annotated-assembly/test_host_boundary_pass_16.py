@@ -102,6 +102,8 @@ class HostBoundaryPassSixteenTests(unittest.TestCase):
         added32|={k for k,v in prior33.items()if v is None}
         prior34=load(ROOT/'research/host-compiler/pass-34/before.json')
         added32|={k for k,v in prior34.items()if v is None}
+        prior37=load(ROOT/'research/host-compiler/pass-37/before.json')
+        added32|={k for k,v in prior37.items()if v is None}
         prior36=load(ROOT/'research/host-compiler/pass-36/before.json')
         added32|={k for k,v in prior36.items()if v is None}
         prior35=load(ROOT/'research/host-compiler/pass-35/before.json')
@@ -109,7 +111,7 @@ class HostBoundaryPassSixteenTests(unittest.TestCase):
         self.assertEqual({p['entry'] for p in audit['established']},{k for k in actual if k in self.catalog and k not in set(later['new_entries'])|added32})
         for p in audit['established']:
             self.assertEqual(p['FIZZBUZ_calls'],actual[p['entry']]['count'])
-            previous=later['previous'].get(p['entry'],prior30.get(p['entry'],self.catalog[p['entry']]))
+            previous=later['previous'].get(p['entry'],prior30.get(p['entry'],prior37.get(p['entry']) or self.catalog[p['entry']]))
             self.assertEqual(p['completeness'],previous['completeness'])
             if p['classification']=='READY FOR FAITHFUL HOST IMPLEMENTATION':self.assertEqual(p['completeness']['contract'],'complete')
             else:self.assertTrue(p['missing_scope'])

@@ -1,0 +1,73 @@
+{
+  "native_implementation_added": false,
+  "deferred_native_ready_queue": [
+    {
+      "entry": "PLI1.OVL+21AD",
+      "scope": "Complete nonaliasing uint8 input gate; all256 static mask/domain proof; delegated membership false-prefix is sufficient"
+    },
+    {
+      "entry": "PLI1.OVL+213C",
+      "scope": "False comparison-prefix and equality02; other literal equalities RAW"
+    },
+    {
+      "entry": "PLI1.OVL+22CB",
+      "scope": "Selector15 or mismatch15/16/19;16/19 literals RAW"
+    },
+    {
+      "entry": "PLI1.OVL+230E",
+      "scope": "Selector28 or bounded22CB fallback;24/25 RAW"
+    },
+    {
+      "entry": "PLI1.OVL+2355",
+      "scope": "Child-bit-clear literal5;31 literal6; bounded230E delegation;2A RAW"
+    },
+    {
+      "entry": "PLI1.OVL+239A",
+      "scope": "Freshzeroindex ->bounded2355; no constant4"
+    },
+    {
+      "entry": "PLI1.OVL+4601",
+      "scope": "Successor<=top through existing4584 floor, complete4227/428E"
+    },
+    {
+      "entry": "PLI1.OVL+3DD9",
+      "scope": "Pass35/36 accumulated natural C0, index0, E0/1/2, supported pointer/field masks, boundedC0 3C8A, cached415E equality, nowclosed15/80/31 classifier"
+    }
+  ],
+  "parent_readiness": {
+    "3DD9": "bounded native-ready; global partial status retained",
+    "5E98": "blocked by506E/500F and784E required scopes",
+    "60E5": "blocked by required5E98 child",
+    "61A4/620C": "blocked transitively; no readiness claim"
+  },
+  "remaining_blockers": [
+    {
+      "rank": 1,
+      "entry": "+506E/+500F acquisition subtree",
+      "reason": "Substantial private-frame/acquisition chain with six indirect +6223 reentries under +4F54 across three FIZZBUZ +500F windows; highest causal leverage",
+      "scope": "Follow required +4F54, +4CD4/+4F2A boundaries only as needed"
+    },
+    {
+      "rank": 2,
+      "entry": "+784E",
+      "reason": "Required resident1376 counted-buffer/input boundary; distinct refill/EOF obligations remain"
+    }
+  ],
+  "pass38": "Focused substantial +506E/+500F acquisition subtree, beginning with its +4F54 causal reentry obligation; compact packet, explicit large-child delegation. Do not allocate migration passes per ready leaf.",
+  "global_contracts_not_widened": [
+    "2355",
+    "213C",
+    "230E",
+    "22CB",
+    "239A",
+    "3DD9",
+    "5E98"
+  ],
+  "complete_contract_upgrade": {
+    "entry": "21AD",
+    "reason": "Every slow input C==30 or C>31 is disjoint from membership literals; fullrepresented gategraph plus false-prefix proves every uint8 input without promoting other leaf equality arms"
+  },
+  "corrections": [],
+  "divergences": [],
+  "fidelity_debt": []
+}

@@ -1,0 +1,47 @@
+{
+  "new_oracle_queries": 0,
+  "reused_proofs": [
+    "Pass9 classifier cached-mask/dispatch",
+    "Pass10 22CB literal and twoINR flags",
+    "Pass32 accumulated239A delegation",
+    "Pass34 bounded4584 floor",
+    "Pass35 3DD9 inputs/consumption",
+    "Pass36 bounded3C8A subtree"
+  ],
+  "candidates": [
+    {
+      "law": "4601 control is constant1",
+      "result": "FALSIFIED",
+      "counterexample": "Both PICTURE calls read6 from actual field low5"
+    },
+    {
+      "law": "4601 returns zero because successor is zero",
+      "result": "FALSIFIED",
+      "counterexample": "Floor returns top-successor; allseven HL values equal distinctnonzero tops, A=their high byte"
+    },
+    {
+      "law": "239A constant4",
+      "result": "FALSIFIED",
+      "counterexample": "Required3DD9 selectors80/31 yield5/6;15 yields4"
+    },
+    {
+      "law": "Every returned4 has identical flags",
+      "result": "FALSIFIED",
+      "counterexample": "22CB CPI15 equality producesCY0; default02/05 finalCPI19 producesCY1; twoINR preserveCY"
+    },
+    {
+      "law": "21AD slow branch can reach an unresolved213C literal equality",
+      "result": "FALSIFIED by static domain proof",
+      "finite_byte_cases": 256,
+      "true_fast_cases": 49,
+      "false_delegation_cases": 207,
+      "domain": "C==30 OR C>31 excludes0B/0C/0D/02/03/04"
+    },
+    {
+      "law": "Cached scratch is an immutable logical array",
+      "result": "REJECTED",
+      "evidence": "Every LHLD/indexedreload is checked against its own chronological read; no copied-table model"
+    }
+  ],
+  "independent_natural_windows": 428
+}
