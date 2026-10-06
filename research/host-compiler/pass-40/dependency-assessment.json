@@ -1,0 +1,45 @@
+{
+  "complete_reused": [
+    "8309 (new)",
+    "83A3",
+    "8396",
+    "8380",
+    "PLI.COM+1A38",
+    "PLI.COM+1A43",
+    "834F",
+    "Mapped_word.publish",
+    "Balance_scan",
+    "Mapped_control.publish",
+    "Auxiliary.publish",
+    "Auxiliary.publish_secondary",
+    "Mapped_publication.publish"
+  ],
+  "bounded_reused": [
+    "2185/213C",
+    "2355"
+  ],
+  "unsupported": [
+    "other6708 entry masks/types/selectors",
+    "dot",
+    "invalid digit",
+    "overflow",
+    "offset wrap",
+    "negative prefix",
+    "nonborrow finish",
+    "one-byte output",
+    "unrelated28AA allocator/output alternatives"
+  ],
+  "continuation": {
+    "entry": "6708",
+    "argument_words_at": [
+      "SP+2 source",
+      "SP+4 selector low / discarded high",
+      "SP+6 working pointer",
+      "SP+8 prefix low / discarded high"
+    ],
+    "copied_continuation_at": "SP+8",
+    "returned_SP": "entrySP+10",
+    "caller_owned_PSWat": "entrySP+10,entrySP+11",
+    "stack_scope": "CALL/PUSH last writers include consumed argument cells below entrySP+10, not just below entrySP"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "oracle_queries": 0,
+  "tests": [
+    {
+      "candidate": "E02 equals E05 copying/padding",
+      "result": "rejected: ten actual67BE routes enter decimal accumulation instead"
+    },
+    {
+      "candidate": "multiply10 CY=unwrapped10w overflow",
+      "result": "rejected by exact iterative wrapping law; CY is last wrapped8w+wrapped2w carry"
+    },
+    {
+      "candidate": "ordinary RET consumes originalCALL slot",
+      "result": "rejected: original POP D; four POP B; PUSH D copies continuation atSP+8; proven RET finalSP+10"
+    },
+    {
+      "candidate": "childA01 is parent mapped publication value",
+      "result": "rejected: parent fresh word assembly,2355 result plus13, final mapped byte17"
+    }
+  ]
+}

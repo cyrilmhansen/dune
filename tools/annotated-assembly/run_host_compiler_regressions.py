@@ -50,6 +50,8 @@ cmds['pass35']=['python3','tools/annotated-assembly/test_3dd9_pass_35.py','--ima
 cmds['pass36']=['python3','tools/annotated-assembly/test_3a76_pass_36.py','--images',images,'-q']
 cmds['pass37']=['python3','tools/annotated-assembly/test_small_gates_pass_37.py','--images',images,'-q']
 cmds['pass38']=['python3','tools/annotated-assembly/test_acquisition_reentry_pass_38.py','--images',images,'-q']
+cmds['pass39']=['python3','tools/annotated-assembly/test_state_transformation_pass_39.py','--images',images,'-q']
+cmds['pass40']=['python3','tools/annotated-assembly/test_selector02_pass_40.py','--images',images,'-q']
 cmds['diff-check']=['git','diff','--check']
 
 def run(name,cmd):

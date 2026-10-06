@@ -1,0 +1,1527 @@
+{
+  "PLI1.OVL+8309": {
+    "id": "PLI1.OVL+8309",
+    "image": "PLI1.OVL",
+    "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+    "stable_label": "PLI1_8309",
+    "runtime_entry": 42249,
+    "start_offset": 33545,
+    "end_offset": 33556,
+    "length": 11,
+    "byte_status_at_entry": "UNDERSTOOD",
+    "description": "Little-endian word multiply by10 through iterative doubles",
+    "completeness": {
+      "bounds": "stable",
+      "control_flow": "complete",
+      "contract": "complete"
+    },
+    "observed_paths": {
+      "invocations_by_run": {
+        "MINIMAL": 0,
+        "FIZZBUZ": 12,
+        "PICTURE": 1
+      },
+      "represented_bytes": 11,
+      "description": "OBSERVED corrected ordinary CALL/return windows independently retained for MINIMAL/FIZZBUZ/PICTURE; union of own bytes excludes child bodies."
+    },
+    "unresolved_paths": [],
+    "inputs": "Actual entry registers and selected shared byte-addressed memory; child scopes inherited; executable code, selected scratch/publications/read carriers and active return/save slots nonaliasing where their operation requires it. No table capacity or ownership assumption.",
+    "outputs": "Path-specific A/BC/DE/HL and flags as documented below and in correlated natural cases; SP=entry_SP+2; PC=original CALL continuation.",
+    "clobbers": "Path-specific A/BC/DE/HL/flags; local scratch/publications stated below; delegated child effects; proven CALL/PUSH stack residue.",
+    "memory_state": [
+      "All numerical addresses denote historical runtime bytes, not separate host arrays.",
+      "F=entry_SP; original hardware CALL word at F; body CALL/save traffic below F; preserved per-invocation last writers."
+    ],
+    "data_role_ids": [],
+    "callers": [
+      {
+        "coordinate": "PLI1.OVL+6C32",
+        "counts_by_run": {
+          "FIZZBUZ": 12,
+          "PICTURE": 1
+        }
+      }
+    ],
+    "returns": {
+      "convention": "ordinary hardware CALL word; original slot unchanged; SP after RET=entry_SP+2",
+      "observed_file_offsets": [
+        33555
+      ],
+      "sites_description": "PLI1.OVL+8313"
+    },
+    "direct_callees": [],
+    "overlapping_entries": [],
+    "contract_scope": "Bounded accumulated-natural routes and exact represented local operations; delegated partial/opaque children and unexecuted local arms are not silently implemented.",
+    "contract": "Read low byte at entryHL, increment HL modulo65536, read high byte independently. XCHG gives the word inHL and source_high_address inDE. DAD H forms2w modulo65536; PUSH H saves2w high then low. Two more DAD H form4w then8w modulo65536. POP B restores2w; DAD B forms u16(8w+2w). A and NZPA preserved; BC=u16(2w), DE=u16(entryHL+1), HL=u16(10w); CY is overflow of the FINAL wrapped8w plus wrapped2w, not an unwrapped10w overflow test. Only temporary PUSH writes below entrySP; final residue is2w from830E. Ordinary RET; noninterfering code/input-word/active stack scope.",
+    "semantic_hypothesis": null,
+    "pseudocode": "read little_endian_word[entryHL] low then high; preserve A/NZPA; HL=u16(2*w); PUSH H saves doubled word; HL=u16(2*HL); HL=u16(2*HL); POP B restores2w; HL=u16(HL+BC); CY from final addition; RET",
+    "evidence_refs": [
+      "evidence.json#seeds/PLI1.OVL+8309",
+      "../host-compiler/pass-40/README.md",
+      "../host-compiler/pass-40/route-distribution.json"
+    ],
+    "blocks": [
+      {
+        "offset": 33545,
+        "pseudocode": [
+          "read little_endian_word[entryHL] low then high; preserve A/NZPA",
+          "HL=u16(2*w); PUSH H saves doubled word",
+          "HL=u16(2*HL); HL=u16(2*HL); POP B restores2w",
+          "HL=u16(HL+BC); CY from final addition; RET"
+        ]
+      }
+    ],
+    "local_comments": {
+      "8309": "E=fresh byte[HL]; flags preserved",
+      "830A": "H=u16(H +1); flags preserved",
+      "830B": "D=fresh byte[HL]; flags preserved",
+      "830C": "exchange DE and HL; flags preserved",
+      "830D": "HL=u16(HL+H); only CY changes to word overflow",
+      "830E": "write high then low H below SP; SP-=2; preserve flags; compatibility residue retained",
+      "830F": "HL=u16(HL+H); only CY changes to word overflow",
+      "8310": "HL=u16(HL+H); only CY changes to word overflow",
+      "8311": "read low then high into B pair; SP+=2; flags preserved; residue remains",
+      "8312": "HL=u16(HL+B); only CY changes to word overflow",
+      "8313": "consume original hardware return word; SP=entry_SP+2; preserve final path flags and registers"
+    }
+  },
+  "PLI1.OVL+2185": {
+    "id": "PLI1.OVL+2185",
+    "image": "PLI1.OVL",
+    "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+    "stable_label": "PLI1_2185",
+    "runtime_entry": 17285,
+    "start_offset": 8581,
+    "end_offset": 8621,
+    "length": 40,
+    "byte_status_at_entry": "UNDERSTOOD",
+    "description": "Saved-byte nibble / classifier-bit / equality31 predicate",
+    "completeness": {
+      "bounds": "stable",
+      "control_flow": "complete",
+      "contract": "partial"
+    },
+    "observed_paths": {
+      "invocations_by_run": {
+        "MINIMAL": 1,
+        "FIZZBUZ": 20,
+        "PICTURE": 2
+      },
+      "represented_bytes": 40,
+      "description": "OBSERVED corrected ordinary CALL/return windows independently retained for MINIMAL/FIZZBUZ/PICTURE; union of own bytes excludes child bodies."
+    },
+    "unresolved_paths": [
+      "Child213C unobserved literal equality arms0B/0C/0D/03/04 remain unsupported at accumulated scope; no arbitrary classifier contract."
+    ],
+    "inputs": "Actual entry registers and selected shared byte-addressed memory; child scopes inherited; executable code, selected scratch/publications/read carriers and active return/save slots nonaliasing where their operation requires it. No table capacity or ownership assumption.",
+    "outputs": "Path-specific A/BC/DE/HL and flags as documented below and in correlated natural cases; SP=entry_SP+2; PC=original CALL continuation.",
+    "clobbers": "Path-specific A/BC/DE/HL/flags; local scratch/publications stated below; delegated child effects; proven CALL/PUSH stack residue.",
+    "memory_state": [
+      "All numerical addresses denote historical runtime bytes, not separate host arrays.",
+      "F=entry_SP; original hardware CALL word at F; body CALL/save traffic below F; preserved per-invocation last writers."
+    ],
+    "data_role_ids": [],
+    "callers": [
+      {
+        "coordinate": "PLI1.OVL+2953",
+        "counts_by_run": {
+          "MINIMAL": 1,
+          "FIZZBUZ": 12,
+          "PICTURE": 1
+        }
+      },
+      {
+        "coordinate": "PLI1.OVL+338A",
+        "counts_by_run": {
+          "FIZZBUZ": 2,
+          "PICTURE": 1
+        }
+      },
+      {
+        "coordinate": "PLI1.OVL+346F",
+        "counts_by_run": {
+          "FIZZBUZ": 3
+        }
+      },
+      {
+        "coordinate": "PLI1.OVL+3477",
+        "counts_by_run": {
+          "FIZZBUZ": 3
+        }
+      }
+    ],
+    "returns": {
+      "convention": "ordinary hardware CALL word; original slot unchanged; SP after RET=entry_SP+2",
+      "observed_file_offsets": [
+        8597,
+        8611,
+        8620
+      ],
+      "sites_description": "PLI1.OVL+2195; PLI1.OVL+21A3; PLI1.OVL+21AC"
+    },
+    "direct_callees": [
+      {
+        "callsite_offset": 8602,
+        "coordinate": "PLI1.OVL+213C",
+        "runtime_address": 17212
+      }
+    ],
+    "overlapping_entries": [],
+    "contract_scope": "Bounded accumulated-natural routes and exact represented local operations; delegated partial/opaque children and unexecuted local arms are not silently implemented.",
+    "contract": "Save C atA646; fresh savedC ANDF0 then CPI10. Equality returns literal01 at2195 retaining the masked-C comparison flags; BC/DE preserved, HL=A646. Otherwise read pairedA646/A647, pass only low to213C; RAR retains child NZPA/AC and setsCY=childA.bit0. Setbit returns literal01 at21A3 preserving rotate/child flags. Clearbit freshly reloadsA646, SUI31/SUI01/selfSBB returnsFF iff savedC31 else00 with selfSBB flags. Fresh neighboringA647 is read then discarded. Only local data writeA646; CALL continuation belowentrySP survives on child routes. All three local routes observed; underlying213C remains partial for unobserved equality alternatives. Returned01/FF are distinct representations, not uniform Boolean flag state.",
+    "semantic_hypothesis": null,
+    "pseudocode": "save C; fresh savedC ANDF0; compare10; equal: literal01 with CMP flags; RET; fresh paired savedC/neighbor ->213C; RAR actual childA/CY; setbit: literal01 with child/rotate flags; RET; clearbit: fresh savedC -> wrapping equality31 mask; RET",
+    "evidence_refs": [
+      "evidence.json#seeds/PLI1.OVL+2185",
+      "../host-compiler/pass-40/README.md",
+      "../host-compiler/pass-40/route-distribution.json"
+    ],
+    "blocks": [
+      {
+        "offset": 8581,
+        "pseudocode": [
+          "save C; fresh savedC ANDF0; compare10",
+          "equal: literal01 with CMP flags; RET"
+        ]
+      },
+      {
+        "offset": 8598,
+        "pseudocode": [
+          "fresh paired savedC/neighbor ->213C; RAR actual childA/CY",
+          "setbit: literal01 with child/rotate flags; RET",
+          "clearbit: fresh savedC -> wrapping equality31 mask; RET"
+        ]
+      },
+      {
+        "offset": 8612,
+        "pseudocode": [
+          "A=u8(saved C-31); SUI1 sets borrow iff difference==0; SBB A yields equality mask"
+        ]
+      }
+    ],
+    "local_comments": {
+      "2185": "H pair = literal A646H; flags preserved",
+      "2188": "byte[HL]=C; flags preserved",
+      "2189": "A=fresh byte[A646H]; flags preserved",
+      "218C": "A=A AND F0H; Intel8080 logical flags/CY0",
+      "218E": "flags=unsigned byte comparison A-10H; A preserved",
+      "2190": "if Z=0: PC=4396H; flags preserved",
+      "2196": "HL=fresh little_endian_word[A646H]; low then high read; flags preserved",
+      "2199": "C=L; flags preserved",
+      "219A": "push following PC; invoke PLI1.OVL+213C; child state/effects at the explicitly scoped contract",
+      "219D": "A=(incoming_CY<<7)|(old_A>>1); CY=old_A.bit0; NZPA preserved",
+      "219E": "if CY=0: PC=43A4H; flags preserved",
+      "21A4": "A=fresh byte[A646H]; flags preserved",
+      "21A7": "A=u8(A-31H); arithmetic flags; CY=borrow of this subtraction only",
+      "21A9": "A=u8(A-01H); arithmetic flags; CY=borrow of this subtraction only",
+      "21AB": "A=old_CY?FFH:00H for self subtraction; exact S/Z/AC/P/CY arithmetic flags",
+      "21AC": "consume original hardware return word; SP=entry_SP+2; preserve final path flags and registers",
+      "2193": "A=01H; flags preserved",
+      "2195": "consume original hardware return word; SP=entry_SP+2; preserve final path flags and registers",
+      "21A1": "A=01H; flags preserved",
+      "21A3": "consume original hardware return word; SP=entry_SP+2; preserve final path flags and registers"
+    }
+  },
+  "PLI1.OVL+6708": {
+    "id": "PLI1.OVL+6708",
+    "image": "PLI1.OVL",
+    "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+    "stable_label": "PLI1_6708",
+    "runtime_entry": 35080,
+    "start_offset": 26376,
+    "end_offset": 27809,
+    "length": 1433,
+    "byte_status_at_entry": "UNDERSTOOD",
+    "description": "Eight-byte software continuation with distinct E05 and E02 acquisition routes",
+    "completeness": {
+      "bounds": "provisional",
+      "control_flow": "partial",
+      "contract": "partial"
+    },
+    "observed_paths": {
+      "invocations_by_run": {
+        "MINIMAL": 2,
+        "FIZZBUZ": 15,
+        "PICTURE": 1
+      },
+      "represented_bytes": 504,
+      "description": "OBSERVED corrected eight-byte software-continuation windows across all three runs. E05 and E02 have distinct local paths and returned state; scope-specific own byte union excludes child bodies."
+    },
+    "unresolved_paths": [
+      "Prior unexecuted alternatives remain unsupported; required E02/selector02 delegation now closed at the documented scope.",
+      "STATIC / UNOBSERVED: alternate flags24/25, E06..09, selector19, E04, selector!=15, dot, invalid digit, overflow, source-offset wrap, nonborrow finish, negative prefix, one-byte result and all other RAW holes remain unsupported.",
+      "Old E05 copy/padding contract remains distinct; globally provisional/partial/partial."
+    ],
+    "inputs": "Actual entry registers and selected shared byte-addressed memory; child scopes inherited; executable code, selected scratch/publications/read carriers and active return/save slots nonaliasing where their operation requires it. No table capacity or ownership assumption.",
+    "outputs": "E05/E02 path-specific machine state; SP=entrySP+10; PC=original copied CALL continuation; consumes eight caller argument bytes.",
+    "clobbers": "Path-specific A/BC/DE/HL/flags; local scratch/publications stated below; delegated child effects; proven CALL/PUSH stack residue.",
+    "memory_state": [
+      "F=entrySP; four consumed words atF+2,F+4,F+6,F+8; copied continuation atF+8; callerPSW atF+10 survives; body stack may overwrite consumed slots."
+    ],
+    "data_role_ids": [],
+    "callers": [
+      {
+        "coordinate": "PLI1.OVL+2985",
+        "counts_by_run": {
+          "MINIMAL": 1,
+          "FIZZBUZ": 12,
+          "PICTURE": 1
+        }
+      },
+      {
+        "coordinate": "PLI1.OVL+2AB4",
+        "counts_by_run": {
+          "MINIMAL": 1,
+          "FIZZBUZ": 3
+        }
+      }
+    ],
+    "returns": {
+      "convention": "argument-consuming software return; original POP D, four POP B, copied PUSH D atentrySP+8, RET SP=entrySP+10",
+      "consumed_caller_bytes": 8,
+      "observed_file_offsets": [
+        26554,
+        27808
+      ],
+      "sites_description": "Distinct E05 and E02 software return sites"
+    },
+    "direct_callees": [
+      {
+        "callsite_offset": 27651,
+        "coordinate": "PLI1.OVL+83A3",
+        "runtime_address": 42403
+      },
+      {
+        "callsite_offset": 27660,
+        "coordinate": "PLI.COM+1A38",
+        "runtime_address": 6968
+      },
+      {
+        "callsite_offset": 27698,
+        "coordinate": "PLI1.OVL+8309",
+        "runtime_address": 42249
+      },
+      {
+        "callsite_offset": 27720,
+        "coordinate": "PLI1.OVL+8396",
+        "runtime_address": 42390
+      },
+      {
+        "callsite_offset": 27746,
+        "coordinate": "PLI1.OVL+8380",
+        "runtime_address": 42368
+      },
+      {
+        "callsite_offset": 27752,
+        "coordinate": "PLI.COM+1A43",
+        "runtime_address": 6979
+      }
+    ],
+    "overlapping_entries": [],
+    "contract_scope": "Bounded accumulated-natural routes and exact represented local operations; delegated partial/opaque children and unexecuted local arms are not silently implemented.",
+    "contract": "E=entrySP=S-2 for preCALL S. Save input E atA9E1 and C atA9E0. POP D at670F consumes original CALL word; four POP B at6710/6715/6718/671D consume words S,S+2,S+4,S+6 in order. Cache full word0 atA9DE/DF (source pointer), low word1 atA9DD (selector), full word2 atA9DB/DC (published to working pointerA863), low word3 atA9DA (otherwise unused on observed arm). High word1/3 discarded. PUSH D671F copies original continuation to S+6=entrySP+8; RET67BA leaves SP=S+8. No local pushes/pops occur between original-word POP and continuation PUSH; body uses no nested calls on observed arm. Gate: (byte[A628+selector]&28)==28 and savedE==05; other arm escapes to67BE and is not reconstructed. ClearA9E2 destination count andA9E3 source offset. Observed (flag&22)!=22 skips RAW prefix arm. Loop reloads selector fromA9DD and limit fromA62B+selector each time; if source_offset>=fresh limit, finish. Otherwise if source_offset<fresh savedC, read byte[word[A9DE]+source_offset] intoA9E4, else cache20. Write cached byte toA948+fresh destination count; then incrementA9E2 andA9E3. Destination/control overlap is part of the demonstrated operation: first call selector0 starts limitFE, writes150 bytes (seven source,143 padding); offsets146..149 overwriteA9DA/DB/DC/DD with20, selector becomes20 and fresh limit atA64B is00, causing exit. Second selector2 limit7 writes seven source bytes without those overlaps. PublishA9E2 toA947. SUB fresh savedC fromfresh source offset; SBB A produces borrow mask; CMA returnsFF iff offset>=count,00 otherwise while flags remain self-SBB, CY=borrow. Both observed returnsFF/CY0/Z1; input caches are not universally preserved. Source/stack words are inputs, not writable result slots; only the highest caller word slot is overwritten with copied continuation. Full bounds/raw alternative operations and arbitrary overlapping-state termination remain partial. ADDITIONAL E02 SCOPE: saveE02 and source_countC; POP original continuation intoDE; consume four caller words in order source pointer, low selector (discard high), working pointer, low prefix (discard high); publish argument scratch high-before-low where the historical MOVs do, then working pointerA863/A864 low-before-high. PUSH D copies continuation to entrySP+8, RET6CA0 resumes original caller withSP=entrySP+10. Fresh selector basebyte15 selects67BE ->68F1 ->6924 ->6B86 ->6B91 ->6BA0; no E05 copy/padding conflation. Clear working wordA948/A949, setA9E3=1 and offsetA9E2=0. Each loop compares fresh u8(saved_count-1) against fresh offset. Supported count1/2, nondot digits30..39. Source byte is independently reread for dot/range/overflow/arithmetic tests. Overflow mask combines acc>0CCC with (acc==0CCC AND digit>37) using independent word difference helpers and PSW masks. Supported clear mask invokes complete8309 to multiply10 through wrapped doubles; add fresh raw source byte modulo65536, then complete8396 subtracts30; publish working low then high; increment offset only afterwards. Exit when current offset exceeds fresh countminus1. Fresh width fromA62B+selector feeds repeated-shift8380; resident1A43 comparison borrows for demonstrated width15/word0..15. Prefix!=2D skips unobserved negation. Fresh width>7 selects literal02->A947 then literal01->A. FinalBC=A62B,DE=A949,HL=A947; flags remainCMP(07,fresh width), independent of literalA01. Scratch and consumed argument slots remain physical bytes; deeper CALL/PUSH last writers may overwrite consumed slots, but caller-owned bytes at entrySP+10 and above survive. Conditional termination only at stated bounded domain; nonaliasing source/scratch/selected tables/code/live stack required.",
+    "semantic_hypothesis": null,
+    "pseudocode": "save C/E; ret=POP D(original CALL word); src=POP word0; selector=POP word1.low; initial_cursor=POP word2; extra=POP word3.low; PUSH ret atentrySP+8; word[A863]=initial_cursor; scope flags[selector]&28==28 && E==5 && flags[selector]&22!=22: dest_count=0; source_offset=0; loop { selector=byte[A9DD]; if unsigned(byte[A9E3])>=byte[A62B+selector]: break; if byte[A9E3]<byte[A9E0]: byte[A9E4]=byte[word[A9DE]+byte[A9E3]]; else byte[A9E4]=20; byte[A948+byte[A9E2]]=byte[A9E4]; byte[A9E2]++; byte[A9E3]++; }; byte[A947]=byte[A9E2]; A=(byte[A9E3]>=byte[A9E0])?FF:00; RET copied continuation; retain actual state overlaps/order; saveE/C; POP original continuation; consume four argument words; source_word, low_selector, working_pointer, low_prefix cached in exact order; PUSH original continuation atentrySP+8; fresh working pointer ->A863/A864; dispatch to prior E05 scope or bounded alternate E02 scope; fresh selected flags24/25 equality masks clear at E02 scope; fresh E06/07/08/09 masks clear; selector!=19; E!=04; fresh selected15 enters word accumulation; wordA948=0; A9E3=1; A9E2=0; while fresh u8(C-1)>=fresh offset: fresh source byte must be supported digit; independent dot/range/overflow masks retain PSW channels; overflow = acc>0CCC OR (acc==0CCC AND fresh digit>37); supported clear: 8309(acc) iterative multiply10; add fresh raw digit; 8396 subtract30; publish low then high; increment offset; fresh width ->8380 repeated shifts; resident1A43 comparison; supported borrow / nonnegative-prefix / width>7 route; publishA947=2; A=1; retain CMP7,width flags; RET consumes copied continuation atentrySP+8; finalSP=entrySP+10",
+    "evidence_refs": [
+      "evidence.json#seeds/PLI1.OVL+6708",
+      "../host-compiler/pass-40/README.md",
+      "../host-compiler/pass-40/route-distribution.json"
+    ],
+    "blocks": [
+      {
+        "offset": 26376,
+        "pseudocode": [
+          "saveE/C; POP original continuation; consume four argument words",
+          "source_word, low_selector, working_pointer, low_prefix cached in exact order",
+          "PUSH original continuation atentrySP+8; fresh working pointer ->A863/A864",
+          "dispatch to prior E05 scope or bounded alternate E02 scope"
+        ]
+      },
+      {
+        "offset": 26399,
+        "pseudocode": [
+          "PUSH copied return atentrySP+8; initialize A863 fromcached word2"
+        ]
+      },
+      {
+        "offset": 26406,
+        "pseudocode": [
+          "fresh selector indexesA628; ANI28/CPI28 requires masked bits28; other path goes outside observed envelope"
+        ]
+      },
+      {
+        "offset": 26423,
+        "pseudocode": [
+          "CPI savedE,5; observed equal continues; alternative RAW"
+        ]
+      },
+      {
+        "offset": 26434,
+        "pseudocode": [
+          "dest countA9E2=0; source offsetA9E3=0"
+        ]
+      },
+      {
+        "offset": 26442,
+        "pseudocode": [
+          "flag byte&22 compared with22; observed mismatch skips RAW prefix arm"
+        ]
+      },
+      {
+        "offset": 26469,
+        "pseudocode": [
+          "reload selectorA9DD and limitA62B+selector; CMP offset,limit/JNC stops iff offset>=limit"
+        ]
+      },
+      {
+        "offset": 26485,
+        "pseudocode": [
+          "CMP offset,savedC/JNC pads iff offset>=source count"
+        ]
+      },
+      {
+        "offset": 26495,
+        "pseudocode": [
+          "source pointer plus fresh offset; cache read byte inA9E4"
+        ]
+      },
+      {
+        "offset": 26512,
+        "pseudocode": [
+          "cache padding20"
+        ]
+      },
+      {
+        "offset": 26517,
+        "pseudocode": [
+          "write A948+fresh destination count; this can overwrite saved controls; increment destination count then source offset"
+        ]
+      },
+      {
+        "offset": 26539,
+        "pseudocode": [
+          "publish countA947; SUB savedC/SBB/CMA returnsFF for no borrow; flags are not recalculated after complement"
+        ]
+      },
+      {
+        "offset": 26554,
+        "pseudocode": [
+          "software RET reads copied original continuation atentrySP+8; SP=entrySP+10"
+        ]
+      },
+      {
+        "offset": 26558,
+        "pseudocode": [
+          "fresh selected flags24/25 equality masks clear at E02 scope",
+          "fresh E06/07/08/09 masks clear; selector!=19; E!=04",
+          "fresh selected15 enters word accumulation"
+        ]
+      },
+      {
+        "offset": 27552,
+        "pseudocode": [
+          "wordA948=0; A9E3=1; A9E2=0",
+          "while fresh u8(C-1)>=fresh offset: fresh source byte must be supported digit",
+          "independent dot/range/overflow masks retain PSW channels"
+        ]
+      },
+      {
+        "offset": 27645,
+        "pseudocode": [
+          "overflow = acc>0CCC OR (acc==0CCC AND fresh digit>37)",
+          "supported clear: 8309(acc) iterative multiply10",
+          "add fresh raw digit; 8396 subtract30; publish low then high; increment offset"
+        ]
+      },
+      {
+        "offset": 27733,
+        "pseudocode": [
+          "fresh width ->8380 repeated shifts; resident1A43 comparison",
+          "supported borrow / nonnegative-prefix / width>7 route",
+          "publishA947=2; A=1; retain CMP7,width flags",
+          "RET consumes copied continuation atentrySP+8; finalSP=entrySP+10"
+        ]
+      }
+    ],
+    "local_comments": {
+      "6708": "H pair = literal A9E1H; flags preserved",
+      "670B": "byte[HL]=E; flags preserved",
+      "670C": "H=u16(H -1); flags preserved",
+      "670D": "byte[HL]=C; flags preserved",
+      "670E": "H=u16(H -1); flags preserved",
+      "670F": "DE=original CALL continuation from [entrySP]; SP+=2; flags preserved; original slot consumed",
+      "6710": "read low then high into B pair; SP+=2; flags preserved; residue remains",
+      "6711": "byte[HL]=B; flags preserved",
+      "6712": "H=u16(H -1); flags preserved",
+      "6713": "byte[HL]=C; flags preserved",
+      "6714": "H=u16(H -1); flags preserved",
+      "6715": "read low then high into B pair; SP+=2; flags preserved; residue remains",
+      "6716": "byte[HL]=C; flags preserved",
+      "6717": "H=u16(H -1); flags preserved",
+      "6718": "read low then high into B pair; SP+=2; flags preserved; residue remains",
+      "6719": "byte[HL]=B; flags preserved",
+      "671A": "H=u16(H -1); flags preserved",
+      "671B": "byte[HL]=C; flags preserved",
+      "671C": "H=u16(H -1); flags preserved",
+      "671D": "read low then high into B pair; SP+=2; flags preserved; residue remains",
+      "671E": "byte[HL]=C; flags preserved",
+      "671F": "write original continuation high then low at entrySP+9,+8; copied continuation consumed by software RET",
+      "6720": "HL=fresh little_endian_word[A9DBH]; low then high read; flags preserved",
+      "6723": "byte[A863H]=L then byte[address+1]=H; flags preserved",
+      "6726": "HL=fresh little_endian_word[A9DDH]; low then high read; flags preserved",
+      "6729": "H=00H; flags preserved",
+      "672B": "B pair = literal A628H; flags preserved",
+      "672E": "HL=u16(HL+B); only CY changes to word overflow",
+      "672F": "A=28H; flags preserved",
+      "6731": "A=A AND M; Intel8080 logical flags/CY0",
+      "6732": "flags=unsigned byte comparison A-28H; A preserved",
+      "6734": "if Z=0: PC=89BEH; flags preserved",
+      "6737": "A = byte[copy_saved_E (A9E1H)]; flags preserved",
+      "673A": "flags = unsigned byte comparison A-05H; A unchanged",
+      "673C": "if Z=1: PC=8942H; flags preserved",
+      "6742": "HL = copy_written_count (A9E2H) (literal address/value)",
+      "6745": "byte[HL] = 00H; flags preserved",
+      "6747": "HL=u16(HL+1); flags preserved",
+      "6748": "byte[HL] = 00H; flags preserved",
+      "674A": "HL = little_endian_word[copy_selector (A9DDH)]; low byte then high byte, flags preserved",
+      "674D": "H = 00H; flags preserved",
+      "674F": "BC = copy_flag_table (A628H) (literal address/value)",
+      "6752": "HL=u16(HL+BC); only CY changes (word overflow)",
+      "6753": "A = 22H; flags preserved",
+      "6755": "A=A & byte[HL]; logical flags, CY=0",
+      "6756": "flags = unsigned byte comparison A-22H; A unchanged",
+      "6758": "if Z=0: PC=8965H; flags preserved",
+      "6765": "HL = little_endian_word[copy_selector (A9DDH)]; low byte then high byte, flags preserved",
+      "6768": "H = 00H; flags preserved",
+      "676A": "BC = copy_limit_table (A62BH) (literal address/value)",
+      "676D": "HL=u16(HL+BC); only CY changes (word overflow)",
+      "676E": "A = byte[copy_source_offset (A9E3H)]; flags preserved",
+      "6771": "flags = unsigned byte comparison A-byte[HL]; A unchanged",
+      "6772": "JNC exitsiffsourceoffset>=freshlimit atA62B+freshselector; firstcallaliaschangesselector0->20 andlimitFE->00",
+      "6775": "HL = copy_source_count (A9E0H) (literal address/value)",
+      "6778": "A = byte[copy_source_offset (A9E3H)]; flags preserved",
+      "677B": "flags = unsigned byte comparison A-byte[HL]; A unchanged",
+      "677C": "if CY=0: PC=8990H; flags preserved",
+      "677F": "HL = little_endian_word[copy_source_offset (A9E3H)]; low byte then high byte, flags preserved",
+      "6782": "H = 00H; flags preserved",
+      "6784": "swap HL and DE; flags preserved",
+      "6785": "HL = little_endian_word[copy_source_pointer (A9DEH)]; low byte then high byte, flags preserved",
+      "6788": "HL=u16(HL+DE); only CY changes (word overflow)",
+      "6789": "A = byte[HL]; flags preserved",
+      "678A": "byte[copy_byte_cache (A9E4H)] = A; flags preserved",
+      "678D": "if always: PC=8995H; flags preserved",
+      "6790": "HL = copy_byte_cache (A9E4H) (literal address/value)",
+      "6793": "byte[HL] = 20H; flags preserved",
+      "6795": "HL = little_endian_word[copy_written_count (A9E2H)]; low byte then high byte, flags preserved",
+      "6798": "H = 00H; flags preserved",
+      "679A": "BC = repair_payload_source (A948H) (literal address/value)",
+      "679D": "HL=A948+freshdestinationcount; firstcalloffsets146..149 aliascachedargumentsA9DA..A9DD",
+      "679E": "A = byte[copy_byte_cache (A9E4H)]; flags preserved",
+      "67A1": "store source/paddingbyte; actualA9DD overwritechangesnextlimitlookup; not astable-limit memcpy",
+      "67A2": "HL = copy_written_count (A9E2H) (literal address/value)",
+      "67A5": "byte[HL]=u8(byte[HL]+1); NZPA updated, CY preserved",
+      "67A6": "HL=u16(HL+1); flags preserved",
+      "67A7": "byte[HL]=u8(byte[HL]+1); NZPA updated, CY preserved",
+      "67A8": "if always: PC=8965H; flags preserved",
+      "67AB": "A = byte[copy_written_count (A9E2H)]; flags preserved",
+      "67AE": "byte[repair_payload_count (A947H)] = A; flags preserved",
+      "67B1": "HL = copy_source_count (A9E0H) (literal address/value)",
+      "67B4": "A = byte[copy_source_offset (A9E3H)]; flags preserved",
+      "67B7": "A=u8(A-byte[HL]); arithmetic flags including CY=borrow",
+      "67B8": "A=CY?FFH:00H; self-subtraction cancels old A; CY is retained Boolean borrow",
+      "67B9": "CMA complementsSBB borrowmask: A=FF iff offset>=freshsavedC; CY stillborrow, NZPAfromSBB",
+      "67BA": "softwareRET consumescopiedwordatE+8, finalSP=E+10=preCALLSP+8",
+      "67BE": "HL=fresh little_endian_word[A9DDH]; low then high read; flags preserved",
+      "67C1": "H=00H; flags preserved",
+      "67C3": "B pair = literal A628H; flags preserved",
+      "67C6": "HL=u16(HL+B); only CY changes to word overflow",
+      "67C7": "A=fresh byte[HL]; flags preserved",
+      "67C8": "A=u8(A-24H); arithmetic flags; CY=borrow of this subtraction only",
+      "67CA": "A=u8(A-01H); arithmetic flags; CY=borrow of this subtraction only",
+      "67CC": "A=old_CY?FFH:00H for self subtraction; exact S/Z/AC/P/CY arithmetic flags",
+      "67CD": "write high then low PSW below SP; SP-=2; preserve flags; compatibility residue retained",
+      "67CE": "A=fresh byte[HL]; flags preserved",
+      "67CF": "A=u8(A-25H); arithmetic flags; CY=borrow of this subtraction only",
+      "67D1": "A=u8(A-01H); arithmetic flags; CY=borrow of this subtraction only",
+      "67D3": "A=old_CY?FFH:00H for self subtraction; exact S/Z/AC/P/CY arithmetic flags",
+      "67D4": "read low then high into B pair; SP+=2; flags preserved; residue remains",
+      "67D5": "C=B; flags preserved",
+      "67D6": "A=A OR C; logical flags; CY=0",
+      "67D7": "A=(incoming_CY<<7)|(old_A>>1); CY=old_A.bit0; NZPA preserved",
+      "67D8": "if CY=0: PC=8AF1H; flags preserved",
+      "68F1": "A=fresh byte[A9E1H]; flags preserved",
+      "68F4": "A=u8(A-06H); arithmetic flags; CY=borrow of this subtraction only",
+      "68F6": "A=u8(A-01H); arithmetic flags; CY=borrow of this subtraction only",
+      "68F8": "A=old_CY?FFH:00H for self subtraction; exact S/Z/AC/P/CY arithmetic flags",
+      "68F9": "write high then low PSW below SP; SP-=2; preserve flags; compatibility residue retained",
+      "68FA": "A=fresh byte[A9E1H]; flags preserved",
+      "68FD": "A=u8(A-07H); arithmetic flags; CY=borrow of this subtraction only",
+      "68FF": "A=u8(A-01H); arithmetic flags; CY=borrow of this subtraction only",
+      "6901": "A=old_CY?FFH:00H for self subtraction; exact S/Z/AC/P/CY arithmetic flags",
+      "6902": "read low then high into B pair; SP+=2; flags preserved; residue remains",
+      "6903": "C=B; flags preserved",
+      "6904": "A=A OR C; logical flags; CY=0",
+      "6905": "write high then low PSW below SP; SP-=2; preserve flags; compatibility residue retained",
+      "6906": "A=fresh byte[A9E1H]; flags preserved",
+      "6909": "A=u8(A-08H); arithmetic flags; CY=borrow of this subtraction only",
+      "690B": "A=u8(A-01H); arithmetic flags; CY=borrow of this subtraction only",
+      "690D": "A=old_CY?FFH:00H for self subtraction; exact S/Z/AC/P/CY arithmetic flags",
+      "690E": "read low then high into B pair; SP+=2; flags preserved; residue remains",
+      "690F": "C=B; flags preserved",
+      "6910": "A=A OR C; logical flags; CY=0",
+      "6911": "write high then low PSW below SP; SP-=2; preserve flags; compatibility residue retained",
+      "6912": "A=fresh byte[A9E1H]; flags preserved",
+      "6915": "A=u8(A-09H); arithmetic flags; CY=borrow of this subtraction only",
+      "6917": "A=u8(A-01H); arithmetic flags; CY=borrow of this subtraction only",
+      "6919": "A=old_CY?FFH:00H for self subtraction; exact S/Z/AC/P/CY arithmetic flags",
+      "691A": "read low then high into B pair; SP+=2; flags preserved; residue remains",
+      "691B": "C=B; flags preserved",
+      "691C": "A=A OR C; logical flags; CY=0",
+      "691D": "A=(incoming_CY<<7)|(old_A>>1); CY=old_A.bit0; NZPA preserved",
+      "691E": "if CY=0: PC=8B24H; flags preserved",
+      "6924": "HL=fresh little_endian_word[A9DDH]; low then high read; flags preserved",
+      "6927": "H=00H; flags preserved",
+      "6929": "B pair = literal A628H; flags preserved",
+      "692C": "HL=u16(HL+B); only CY changes to word overflow",
+      "692D": "A=fresh byte[HL]; flags preserved",
+      "692E": "flags=unsigned byte comparison A-19H; A preserved",
+      "6930": "if Z=0: PC=8D86H; flags preserved",
+      "6B86": "A=fresh byte[A9E1H]; flags preserved",
+      "6B89": "flags=unsigned byte comparison A-04H; A preserved",
+      "6B8B": "if Z=0: PC=8D91H; flags preserved",
+      "6B91": "HL=fresh little_endian_word[A9DDH]; low then high read; flags preserved",
+      "6B94": "H=00H; flags preserved",
+      "6B96": "B pair = literal A628H; flags preserved",
+      "6B99": "HL=u16(HL+B); only CY changes to word overflow",
+      "6B9A": "A=fresh byte[HL]; flags preserved",
+      "6B9B": "flags=unsigned byte comparison A-15H; A preserved",
+      "6B9D": "if Z=0: PC=8EA4H; flags preserved",
+      "6BA0": "H pair = literal 0000H; flags preserved",
+      "6BA3": "byte[A948H]=L then byte[address+1]=H; flags preserved",
+      "6BA6": "H pair = literal A9E3H; flags preserved",
+      "6BA9": "byte[HL]=01H; flags preserved",
+      "6BAB": "H=u16(H -1); flags preserved",
+      "6BAC": "byte[HL]=00H; flags preserved",
+      "6BAE": "A=fresh byte[A9E0H]; flags preserved",
+      "6BB1": "A=u8(A-1); NZPA from decrement; CY preserved",
+      "6BB2": "H pair = literal A9E2H; flags preserved",
+      "6BB5": "flags=unsigned byte comparison A against M; operands preserved",
+      "6BB6": "if CY=1: PC=8E55H; flags preserved",
+      "6BB9": "HL=fresh little_endian_word[A9E2H]; low then high read; flags preserved",
+      "6BBC": "H=00H; flags preserved",
+      "6BBE": "exchange DE and HL; flags preserved",
+      "6BBF": "HL=fresh little_endian_word[A9DEH]; low then high read; flags preserved",
+      "6BC2": "HL=u16(HL+D); only CY changes to word overflow",
+      "6BC3": "A=fresh byte[HL]; flags preserved",
+      "6BC4": "A=u8(A-2EH); arithmetic flags; CY=borrow of this subtraction only",
+      "6BC6": "A=u8(A-01H); arithmetic flags; CY=borrow of this subtraction only",
+      "6BC8": "A=old_CY?FFH:00H for self subtraction; exact S/Z/AC/P/CY arithmetic flags",
+      "6BC9": "H pair = literal A9E3H; flags preserved",
+      "6BCC": "A=A AND M; Intel8080 logical flags/CY0",
+      "6BCD": "A=(incoming_CY<<7)|(old_A>>1); CY=old_A.bit0; NZPA preserved",
+      "6BCE": "if CY=0: PC=8DD9H; flags preserved",
+      "6BD9": "HL=fresh little_endian_word[A9E2H]; low then high read; flags preserved",
+      "6BDC": "H=00H; flags preserved",
+      "6BDE": "exchange DE and HL; flags preserved",
+      "6BDF": "HL=fresh little_endian_word[A9DEH]; low then high read; flags preserved",
+      "6BE2": "HL=u16(HL+D); only CY changes to word overflow",
+      "6BE3": "A=fresh byte[HL]; flags preserved",
+      "6BE4": "A=u8(A-30H); arithmetic flags; CY=borrow of this subtraction only",
+      "6BE6": "A=old_CY?FFH:00H for self subtraction; exact S/Z/AC/P/CY arithmetic flags",
+      "6BE7": "write high then low PSW below SP; SP-=2; preserve flags; compatibility residue retained",
+      "6BE8": "A=39H; flags preserved",
+      "6BEA": "A=u8(A - fresh byte[HL]); exact subtraction NZPA/CY; operands remain distinct channels",
+      "6BEB": "A=old_CY?FFH:00H for self subtraction; exact S/Z/AC/P/CY arithmetic flags",
+      "6BEC": "read low then high into B pair; SP+=2; flags preserved; residue remains",
+      "6BED": "C=B; flags preserved",
+      "6BEE": "A=A OR C; logical flags; CY=0",
+      "6BEF": "A=(incoming_CY<<7)|(old_A>>1); CY=old_A.bit0; NZPA preserved",
+      "6BF0": "if CY=0: PC=8DF6H; flags preserved",
+      "6BF6": "A=fresh byte[A9E3H]; flags preserved",
+      "6BF9": "A=(incoming_CY<<7)|(old_A>>1); CY=old_A.bit0; NZPA preserved",
+      "6BFA": "if CY=0: PC=8E4EH; flags preserved",
+      "6BFD": "D pair = literal 0CCCH; flags preserved",
+      "6C00": "H pair = literal A948H; flags preserved",
+      "6C03": "compare 0CCC against fresh working word[A948]; word borrow contributes independent overflow mask",
+      "6C06": "A=old_CY?FFH:00H for self subtraction; exact S/Z/AC/P/CY arithmetic flags",
+      "6C07": "B pair = literal 0CCCH; flags preserved",
+      "6C0A": "D=u16(D -1); flags preserved",
+      "6C0B": "write high then low PSW below SP; SP-=2; preserve flags; compatibility residue retained",
+      "6C0C": "subtract0CCC from fresh working word; high OR low supplies equality mask distinct from prior borrow",
+      "6C0F": "A=A OR L; logical flags; CY=0",
+      "6C10": "A=u8(A-01H); arithmetic flags; CY=borrow of this subtraction only",
+      "6C12": "A=old_CY?FFH:00H for self subtraction; exact S/Z/AC/P/CY arithmetic flags",
+      "6C13": "HL=fresh little_endian_word[A9E2H]; low then high read; flags preserved",
+      "6C16": "H=00H; flags preserved",
+      "6C18": "exchange DE and HL; flags preserved",
+      "6C19": "HL=fresh little_endian_word[A9DEH]; low then high read; flags preserved",
+      "6C1C": "HL=u16(HL+D); only CY changes to word overflow",
+      "6C1D": "write high then low PSW below SP; SP-=2; preserve flags; compatibility residue retained",
+      "6C1E": "A=37H; flags preserved",
+      "6C20": "A=u8(A - fresh byte[HL]); exact subtraction NZPA/CY; operands remain distinct channels",
+      "6C21": "A=old_CY?FFH:00H for self subtraction; exact S/Z/AC/P/CY arithmetic flags",
+      "6C22": "read low then high into B pair; SP+=2; flags preserved; residue remains",
+      "6C23": "C=B; flags preserved",
+      "6C24": "A=A AND C; Intel8080 logical flags/CY0",
+      "6C25": "read low then high into B pair; SP+=2; flags preserved; residue remains",
+      "6C26": "C=B; flags preserved",
+      "6C27": "A=A OR C; logical flags; CY=0",
+      "6C28": "A=(incoming_CY<<7)|(old_A>>1); CY=old_A.bit0; NZPA preserved",
+      "6C29": "if CY=0: PC=8E2FH; flags preserved",
+      "6C2F": "H pair = literal A948H; flags preserved",
+      "6C32": "invoke complete iterative word-times10 leaf using pointerA948; preserve its doubled-word PUSH residue",
+      "6C35": "write high then low H below SP; SP-=2; preserve flags; compatibility residue retained",
+      "6C36": "HL=fresh little_endian_word[A9E2H]; low then high read; flags preserved",
+      "6C39": "H=00H; flags preserved",
+      "6C3B": "exchange DE and HL; flags preserved",
+      "6C3C": "HL=fresh little_endian_word[A9DEH]; low then high read; flags preserved",
+      "6C3F": "HL=u16(HL+D); only CY changes to word overflow",
+      "6C40": "E=fresh byte[HL]; flags preserved",
+      "6C41": "D=00H; flags preserved",
+      "6C43": "read low then high into H pair; SP+=2; flags preserved; residue remains",
+      "6C44": "HL=u16(HL+D); only CY changes to word overflow",
+      "6C45": "exchange DE and HL; flags preserved",
+      "6C46": "A=30H; flags preserved",
+      "6C48": "HL=u16(raw-digit-added working word -30); subtraction result is separate from raw source byte",
+      "6C4B": "publish current accumulator low toA948 then high toA949; occurs before source-offset increment",
+      "6C4E": "H pair = literal A9E2H; flags preserved",
+      "6C51": "fresh byte[A9E2]=u8(old+1); publish offset after word update; retain prior CY",
+      "6C52": "if Z=0: PC=8DAEH; flags preserved",
+      "6C55": "HL=fresh little_endian_word[A9DDH]; low then high read; flags preserved",
+      "6C58": "H=00H; flags preserved",
+      "6C5A": "B pair = literal A62BH; flags preserved",
+      "6C5D": "HL=u16(HL+B); only CY changes to word overflow",
+      "6C5E": "C=fresh byte[HL]; flags preserved",
+      "6C5F": "H pair = literal 0001H; flags preserved",
+      "6C62": "push following PC; invoke PLI1.OVL+8380; child state/effects at the explicitly scoped contract",
+      "6C65": "D pair = literal A948H; flags preserved",
+      "6C68": "push following PC; invoke PLI.COM+1A43; child state/effects at the explicitly scoped contract",
+      "6C6B": "if CY=1: PC=8E71H; flags preserved",
+      "6C71": "A=fresh byte[A9DAH]; flags preserved",
+      "6C74": "flags=unsigned byte comparison A-2DH; A preserved",
+      "6C76": "if Z=0: PC=8E82H; flags preserved",
+      "6C82": "HL=fresh little_endian_word[A9DDH]; low then high read; flags preserved",
+      "6C85": "H=00H; flags preserved",
+      "6C87": "B pair = literal A62BH; flags preserved",
+      "6C8A": "HL=u16(HL+B); only CY changes to word overflow",
+      "6C8B": "A=07H; flags preserved",
+      "6C8D": "flags=CMP(07,fresh byte[A62B+selector]); final literalA01 preserves these independent flags",
+      "6C8E": "if CY=1: PC=8E99H; flags preserved",
+      "6C99": "H pair = literal A947H; flags preserved",
+      "6C9C": "publish two-byte result count02 atA947; no flags regenerated",
+      "6C9E": "A=01H; flags preserved",
+      "6CA0": "consume copied continuation at entrySP+8; final SP=entrySP+10; preserve literalA and final comparison flags"
+    }
+  },
+  "PLI1.OVL+28AA": {
+    "id": "PLI1.OVL+28AA",
+    "image": "PLI1.OVL",
+    "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+    "stable_label": "PLI1_28AA",
+    "runtime_entry": 19114,
+    "start_offset": 10410,
+    "end_offset": 11347,
+    "length": 937,
+    "byte_status_at_entry": "UNDERSTOOD",
+    "description": "Bounded indexed acquisition and separate mapped-channel publications",
+    "completeness": {
+      "bounds": "provisional",
+      "control_flow": "partial",
+      "contract": "partial"
+    },
+    "observed_paths": {
+      "invocations_by_run": {
+        "MINIMAL": 1,
+        "FIZZBUZ": 19,
+        "PICTURE": 3
+      },
+      "represented_bytes": 765,
+      "description": "Accumulated corrected ordinary CALL/return windows; prior selector05 own bytes retained; selector02 acquired-word/cache/control/auxiliary publications established separately."
+    },
+    "unresolved_paths": [
+      "Prior unexecuted alternatives remain unsupported; required E02/selector02 delegation now closed at the documented scope.",
+      "Unexecuted guards, index1 allocator path and other selected routes remain partial/RAW; prior selector05/E05 contract retained separately.",
+      "Native reproducibility claimed only for demonstrated selector02 state predicates and supported terminating child scopes; no general937-byte parent contract."
+    ],
+    "inputs": "Actual entry registers and selected shared byte-addressed memory; child scopes inherited; executable code, selected scratch/publications/read carriers and active return/save slots nonaliasing where their operation requires it. No table capacity or ownership assumption.",
+    "outputs": "Path-specific A/BC/DE/HL and flags as documented below and in correlated natural cases; SP=entry_SP+2; PC=original CALL continuation.",
+    "clobbers": "Path-specific A/BC/DE/HL/flags; local scratch/publications stated below; delegated child effects; proven CALL/PUSH stack residue.",
+    "memory_state": [
+      "All numerical addresses denote historical runtime bytes, not separate host arrays.",
+      "F=entry_SP; original hardware CALL word at F; body CALL/save traffic below F; preserved per-invocation last writers."
+    ],
+    "data_role_ids": [],
+    "callers": [
+      {
+        "coordinate": "PLI1.OVL+2C55",
+        "counts_by_run": {
+          "MINIMAL": 1,
+          "FIZZBUZ": 17,
+          "PICTURE": 2
+        }
+      },
+      {
+        "coordinate": "PLI1.OVL+3383",
+        "counts_by_run": {
+          "FIZZBUZ": 2,
+          "PICTURE": 1
+        }
+      }
+    ],
+    "returns": {
+      "convention": "ordinary hardware CALL word; original slot unchanged; SP after RET=entry_SP+2",
+      "observed_file_offsets": [
+        11346
+      ],
+      "sites_description": "PLI1.OVL+2C52"
+    },
+    "direct_callees": [
+      {
+        "callsite_offset": 10579,
+        "coordinate": "PLI1.OVL+2185",
+        "runtime_address": 17285
+      },
+      {
+        "callsite_offset": 10629,
+        "coordinate": "PLI1.OVL+6708",
+        "runtime_address": 35080
+      },
+      {
+        "callsite_offset": 10932,
+        "coordinate": "PLI1.OVL+6708",
+        "runtime_address": 35080
+      },
+      {
+        "callsite_offset": 11046,
+        "coordinate": "PLI1.OVL+46ED",
+        "runtime_address": 26861
+      },
+      {
+        "callsite_offset": 11054,
+        "coordinate": "PLI.COM+1A40",
+        "runtime_address": 6976
+      },
+      {
+        "callsite_offset": 11071,
+        "coordinate": "PLI1.OVL+4738",
+        "runtime_address": 26936
+      },
+      {
+        "callsite_offset": 11131,
+        "coordinate": "PLI1.OVL+666E",
+        "runtime_address": 34926
+      },
+      {
+        "callsite_offset": 11157,
+        "coordinate": "PLI1.OVL+7B7A",
+        "runtime_address": 40314
+      },
+      {
+        "callsite_offset": 11190,
+        "coordinate": "PLI1.OVL+7AF0",
+        "runtime_address": 40176
+      },
+      {
+        "callsite_offset": 11207,
+        "coordinate": "PLI1.OVL+7B13",
+        "runtime_address": 40211
+      },
+      {
+        "callsite_offset": 11224,
+        "coordinate": "PLI1.OVL+7B2E",
+        "runtime_address": 40238
+      },
+      {
+        "callsite_offset": 11241,
+        "coordinate": "PLI1.OVL+7B49",
+        "runtime_address": 40265
+      },
+      {
+        "callsite_offset": 11256,
+        "coordinate": "PLI1.OVL+2355",
+        "runtime_address": 17749
+      },
+      {
+        "callsite_offset": 11271,
+        "coordinate": "PLI1.OVL+7AD5",
+        "runtime_address": 40149
+      },
+      {
+        "callsite_offset": 11292,
+        "coordinate": "PLI1.OVL+7B13",
+        "runtime_address": 40211
+      },
+      {
+        "callsite_offset": 11309,
+        "coordinate": "PLI1.OVL+7B2E",
+        "runtime_address": 40238
+      },
+      {
+        "callsite_offset": 11326,
+        "coordinate": "PLI1.OVL+7B49",
+        "runtime_address": 40265
+      },
+      {
+        "callsite_offset": 11333,
+        "coordinate": "PLI1.OVL+2355",
+        "runtime_address": 17749
+      },
+      {
+        "callsite_offset": 11343,
+        "coordinate": "PLI1.OVL+7AD5",
+        "runtime_address": 40149
+      },
+      {
+        "callsite_offset": 11014,
+        "coordinate": "PLI1.OVL+8380",
+        "runtime_address": 42368
+      },
+      {
+        "callsite_offset": 11020,
+        "coordinate": "PLI1.OVL+834F",
+        "runtime_address": 42319
+      }
+    ],
+    "overlapping_entries": [],
+    "contract_scope": "Bounded accumulated-natural routes and exact represented local operations; delegated partial/opaque children and unexecuted local arms are not silently implemented.",
+    "contract": "Save incoming C at A65F. With i=unsigned byte[A634], read v=byte[A628+i]; compute exact 0B/0C/0D equality masks and the unsigned 0A>=v guard. Load p=word[A63B+2*i] into A863. The observed i=2/v=05 path takes each skip guard and caches 2B at A662. Partial +2185(C=byte[A628]=28) returns 00; save its PSW separately below four later caller argument words. The first +6708 receives C=byte[p]-0A=7, E=v=05 and arguments in consumption order p+10, selector low 0, selected cursor p, cached 2B. Proven cleanup consumes eight bytes; caller POP B at +2988 recovers saved +2185.A. ANA/RAR/JNC takes the branch iff NOT(saved_A.bit0 AND copy_A.bit0): observed 00 AND FF gives clear CY and JNC taken. Reload selected v into A661; reject the 02/03/04 cases, match 05, test base byte[A628] against 28/2A and write 28 to byte[A628+i]. The second +6708 receives C=7, E=saved 05 and selector low i=2. Its returned FF makes RAR/JC +2AB8 taken, independent of returned CY=0. The selected-byte 15/25/24 equality OR, AND saved incoming C.bit0, is clear and selects +2B17. Set A661=0. Scoped +46ED computes sum7, selects FBE1 from the A761 word slots, follows its+8 successor to FBC6 below referenceFBE1, matches the seven payload bytes but rejects field05 against28, follows successor0, and ends with A863=0; complete resident +1A40 and ORA L confirm that null pointer. Partial +4738(C=28) executes its scoped constructor and two-word repair, yielding p=FBB5. Publish byte[p+3]=29, byte[p+4]=byte[A62B+i]=7 and byte[p+5]=byte[A62E+i]=0. Scoped +666E(BC=p,DE=0) caches those input words, selects field low5=9, processes seven setup bits, adds word[p+6] to cachedDE through actual+82BB, passes the sum to resident+1207 for prefix10 and low/high word bytes, then processes seven zero-bit/payload-byte frames through +66C6. The caller ignores returned A and reloads A863, then publishes the pointer to word[A63B+2*i]. Complete +7B7A(C=byte[AE32]=1) returns stopping position 0; cache it at A660. With i!=1, complete +7AF0 publishes the pointer to the mapped word table. Complete +7B13/+7B2E/+7B49 publish selected bytes 28/7/0 to distinct AC73/AD08/AD9D tables through position_map. With A661=0, partial +2355(i) returns 01 at its selected-byte-28 scope; caller INR forms 02 for +7AD5 publication to AAB4+position_map[0]. Increment the cached position to 1; publish the same selected control and auxiliary bytes at that separately mapped slot. A second +2355(i) returns 01, and ADI 13 forms 14 for +7AD5 publication. RET +2C52 consumes the original outer hardware slot. The observed operation is now coherent at the stated lookup/construction/processing/publication scope. +4584 alternative traversal, +4468 allocator/emptybucket andchain alias/termination, resident writer flush/error behavior and 253 unexecuted enclosing bytes still prevent a complete procedure contract. ADDITIONAL SELECTOR02 SCOPE: saveinputC atA65F; fresh indexA634 and selectedA628+index02 skip0B/0C/0D guards and pass0A>=selector. Fresh pointer wordA63B+2*index ->A863/A864; fresh mask selects prefix2B atA662. Fresh baseA628 ->2185; preserve childPSW separately below four caller argument words. Push prefix pairA662/A663, fresh selected pointer, selectorlow0 with inheritedhigh, fresh pointer+0A; derive sourcecount from fresh pointer header minus0A. Invoke6708 E02; its eight-byte cleanup leaves savedPSW intact. POP B restores saved gate; ANA/RAR combines actual saved gate with childA. Supported setbit independently copies fresh baseA628/A62B/A62E into selected channels. Fresh selected15/25/24 OR and savedinputbit selects literal0A atA661. Fresh lowA948 zeroextended ->A863; fresh A947==02 selects independently read A949/A94A lowbyte shifted8 by8380; complete834F OR combines the separately published low channel; publish assembledA863/A864 low then high. Fresh index selects pointer-table slot; PUSH destination, fresh assembledword, POP destination then low/high publish. Fresh AE32 ->Balance_scan; cache its DIRECT returnedA atA660. Supported nonindex1 route: fresh cache+word ->7AF0. Three independent selected source channels with freshly read A660 pair feed control7B13, primary7B2E, secondary7B49. Fresh A661 nonzero route publishes mapped0A through7AD5 using pairedA661/A662 (neighbor high retained inDE). INR A660; repeat independent control/primary/secondary channels at fresh incremented position. Fresh index ->2355 classifier; ADI13 wraps; fresh cached position ->final7AD5. Exact final machine state delegated to final mapped publication, not6708A01 or assembledword. All natural selected02 calls have callerinput1/index2, but these observations are not snapshot/index whitelist semantics. Alias/interference restrictions and all inherited bounded child domains remain required.",
+    "semantic_hypothesis": null,
+    "pseudocode": "i=byte[A634]; byte[A65F]=entry_C; follow the exact guard cascade; p=word[A63B+2*i]; word[A863]=p; byte[A662]=2B; saved=partial_2185(byte[A628]).A; PUSH PSW(saved); partial_6708(count=byte[p]-0A,E=byte[A628+i],args=[p+10,selector_low0,p,2B]); resume +2988: JNC iff !(saved.bit0 && copy_A.bit0); saved_v=byte[A628+i]; at the observed v=5/base=28-or-2A scope: byte[A628+i]=28; partial_6708(count=7,E=saved_v,args=[p+10,selector_low_i,p,2B]); resume +2AB7: JC iff copy_A.bit0; on the observed compound-guard skip: byte[A661]=0; scoped_46ED(sum_indexed_lookup_and_payload_field_match); when A863==0: partial_4738(selected_byte); p=word[A863]; byte[p+3]=29; byte[p+4]=byte[A62B+i]; byte[p+5]=byte[A62E+i]; scoped_666E(BC=p,DE=0: setup7bits; field6+cache_word; word_protocol18bits; payload_frames9bits_each); word[A63B+2*i]=word[A863]; pos=complete_7B7A(byte[AE32]).A; byte[A660]=pos; complete_7AF0(pos,word[A863]); publish selected bytes through 7B13/7B2E/7B49 at pos then pos+1; publish partial_2355(i).A+1 then partial_2355(i).A+13 through 7AD5; RET; saveinputC; fresh index/selector guards; acquire pointer; selected02 skips equality0B/0C/0D; fresh pointer ->A863; prefix2B; fresh base ->2185; PUSH gatePSW separately; push four arguments; fresh header-derived count; call6708(E02); software cleanup thenPOP gatePSW; combine actual gateA AND childA; three independent fresh base ->selected channel publications; fresh selected masks AND savedinput selects word assembly; cache0A; fresh low result; fresh high shifted8; OR low via834F; publish assembled word to fresh indexed pointer slot low/high; freshAE32 ->Balance_scan; direct returnedA ->A660; fresh cached cursor and word ->7AF0; three independent source/position rereads ->control/primary/secondary publication; fresh nonzeroA661 ->mapped publication; INR A660; repeat independent control/primary/secondary publications; fresh index ->2355; wrapping ADI13; fresh cursor ->mapped publication; RET delegates exact final7AD5 state",
+    "evidence_refs": [
+      "evidence.json#seeds/PLI1.OVL+28AA",
+      "../host-compiler/pass-40/README.md",
+      "../host-compiler/pass-40/route-distribution.json"
+    ],
+    "blocks": [
+      {
+        "offset": 10410,
+        "pseudocode": [
+          "saveinputC; fresh index/selector guards; acquire pointer",
+          "selected02 skips equality0B/0C/0D; fresh pointer ->A863"
+        ]
+      },
+      {
+        "offset": 10450,
+        "pseudocode": [
+          "exact0C equality mask; JNC 28E5 iffv!=0C"
+        ]
+      },
+      {
+        "offset": 10486,
+        "pseudocode": [
+          "exact0D equality mask savedatA662; JNC 2909 iffv!=0D"
+        ]
+      },
+      {
+        "offset": 10522,
+        "pseudocode": [
+          "CMP withA=0A; JNC 2926 iffunsignedv<=0A"
+        ]
+      },
+      {
+        "offset": 10538,
+        "pseudocode": [
+          "A863=word[A63B+2*index]; JNC 293F iffretained0Dmask bit clear"
+        ]
+      },
+      {
+        "offset": 10570,
+        "pseudocode": [
+          "prefix2B; fresh base ->2185; PUSH gatePSW separately",
+          "push four arguments; fresh header-derived count; call6708(E02)",
+          "software cleanup thenPOP gatePSW; combine actual gateA AND childA"
+        ]
+      },
+      {
+        "offset": 10582,
+        "pseudocode": [
+          "save2185PSW separately; pushfourcallerargumentsfor6708"
+        ]
+      },
+      {
+        "offset": 10632,
+        "pseudocode": [
+          "callerPOP BreadsoriginalsavedPSW; ANA/RAR/JNC selectsiff!(saved2185bit ANDcopyreturnbit)"
+        ]
+      },
+      {
+        "offset": 10639,
+        "pseudocode": [
+          "three independent fresh base ->selected channel publications"
+        ]
+      },
+      {
+        "offset": 10675,
+        "pseudocode": [
+          "savecurrentselected byteA661; exact2/3 masksOR; JNC 29D7 iffneither"
+        ]
+      },
+      {
+        "offset": 10728,
+        "pseudocode": [
+          "CPI 04/JNZ 29F4 skipsarm iffselected byte!=4"
+        ]
+      },
+      {
+        "offset": 10788,
+        "pseudocode": [
+          "CPI 05/JNZ 2A30 skipsarm iffselected byte!=5"
+        ]
+      },
+      {
+        "offset": 10803,
+        "pseudocode": [
+          "base byteA628 exact28/2A masks; JNC 2A48 iffneither"
+        ]
+      },
+      {
+        "offset": 10827,
+        "pseudocode": [
+          "publish28 tobyte[A628+index]; selectedstate mutationseparatefrommappedtables"
+        ]
+      },
+      {
+        "offset": 10860,
+        "pseudocode": [
+          "continueownsecond argument region"
+        ]
+      },
+      {
+        "offset": 10891,
+        "pseudocode": [
+          "fourarguments:sourcepointer+10,lowindexselector,selectedcursorword,cached2B; savedA661suppliesE"
+        ]
+      },
+      {
+        "offset": 10935,
+        "pseudocode": [
+          "software childends; RAR/JC testsreturned A.bit0, ignoringreturned CY"
+        ]
+      },
+      {
+        "offset": 10943,
+        "pseudocode": [
+          "fresh selected masks AND savedinput selects word assembly",
+          "cache0A; fresh low result; fresh high shifted8; OR low via834F"
+        ]
+      },
+      {
+        "offset": 11031,
+        "pseudocode": [
+          "zeroA661;46ED sum &7F selects word slot, skips p>=reference, matchespayload andcomparesfield; observed fieldmismatchendsnull"
+        ]
+      },
+      {
+        "offset": 11049,
+        "pseudocode": [
+          "complete +1A40 loadsword[A863]; ORALtestswholewordzero; JNZ 2B32 iffnonzero"
+        ]
+      },
+      {
+        "offset": 11061,
+        "pseudocode": [
+          "null lookup result: scoped +4738 constructor anddistincthead/newword repairs"
+        ]
+      },
+      {
+        "offset": 11074,
+        "pseudocode": [
+          "publishfields29/7/0;666E requestedbitcounts7+18+63 atpartial writer/no-flush scope"
+        ]
+      },
+      {
+        "offset": 11134,
+        "pseudocode": [
+          "publish assembled word to fresh indexed pointer slot low/high",
+          "freshAE32 ->Balance_scan; direct returnedA ->A660"
+        ]
+      },
+      {
+        "offset": 11160,
+        "pseudocode": [
+          "cacheposition; CPIindex1/JNZ 2BA0 takeniffindex!=1"
+        ]
+      },
+      {
+        "offset": 11182,
+        "pseudocode": [
+          "fresh cached cursor and word ->7AF0",
+          "three independent source/position rereads ->control/primary/secondary publication",
+          "fresh nonzeroA661 ->mapped publication; INR A660"
+        ]
+      },
+      {
+        "offset": 11193,
+        "pseudocode": [
+          "7B13 writesselectedcontrolbyte toAC73+mappedslot; notfixed1B4Battribute-tablewrite"
+        ]
+      },
+      {
+        "offset": 11210,
+        "pseudocode": [
+          "7B2E writesselectedA62Bbyte toAD08+mappedslot"
+        ]
+      },
+      {
+        "offset": 11227,
+        "pseudocode": [
+          "7B49 writesselectedA62Ebyte toAD9D+mappedslot"
+        ]
+      },
+      {
+        "offset": 11244,
+        "pseudocode": [
+          "CPI 00/JNZ 2BF1 takeniffsaved byteA661!=0"
+        ]
+      },
+      {
+        "offset": 11252,
+        "pseudocode": [
+          "2355 selected28 returns1; selected05 path nowknown22CB2+INR+INR=4 but notthis invocation"
+        ]
+      },
+      {
+        "offset": 11259,
+        "pseudocode": [
+          "result+1 cachedA661;7AD5 publishes02atfirst mapped position"
+        ]
+      },
+      {
+        "offset": 11274,
+        "pseudocode": [
+          "incrementposition;7B13 publishselectedcontrolbyteatnew mapped slot"
+        ]
+      },
+      {
+        "offset": 11278,
+        "pseudocode": [
+          "repeat independent control/primary/secondary publications",
+          "fresh index ->2355; wrapping ADI13; fresh cursor ->mapped publication",
+          "RET delegates exact final7AD5 state"
+        ]
+      },
+      {
+        "offset": 11295,
+        "pseudocode": [
+          "7B2E publishprimaryauxiliarybyteatnew mapped slot"
+        ]
+      },
+      {
+        "offset": 11312,
+        "pseudocode": [
+          "7B49 publishsecondauxiliarybyteatnew mapped slot"
+        ]
+      },
+      {
+        "offset": 11329,
+        "pseudocode": [
+          "repeat selected28 dispatcher independently; retain its correlated call result"
+        ]
+      },
+      {
+        "offset": 11336,
+        "pseudocode": [
+          "returned A+13=14;7AD5 publishesmappedbyteatnew position"
+        ]
+      },
+      {
+        "offset": 11346,
+        "pseudocode": [
+          "RETconsumesoriginalouterhardwareword; software childrenexcluded"
+        ]
+      }
+    ],
+    "local_comments": {
+      "28AA": "H pair = literal A65FH; flags preserved",
+      "28AD": "byte[HL]=C; flags preserved",
+      "28AE": "HL=fresh little_endian_word[A634H]; low then high read; flags preserved",
+      "28B1": "H=00H; flags preserved",
+      "28B3": "B pair = literal A628H; flags preserved",
+      "28B6": "HL=u16(HL+B); only CY changes to word overflow",
+      "28B7": "A=fresh byte[HL]; flags preserved",
+      "28B8": "A=u8(A-0BH); arithmetic flags; CY=borrow of this subtraction only",
+      "28BA": "A=u8(A-01H); arithmetic flags; CY=borrow of this subtraction only",
+      "28BC": "A=old_CY?FFH:00H for self subtraction; exact S/Z/AC/P/CY arithmetic flags",
+      "28BD": "unconditionally publish A to byte[A662H]; flags preserved",
+      "28C0": "A=(incoming_CY<<7)|(old_A>>1); CY=old_A.bit0; NZPA preserved",
+      "28C1": "if CY=0: PC=4AD2H; flags preserved",
+      "28D2": "HL=fresh little_endian_word[A634H]; low then high read; flags preserved",
+      "28D5": "H=00H; flags preserved",
+      "28D7": "B pair = literal A628H; flags preserved",
+      "28DA": "HL=u16(HL+B); only CY changes to word overflow",
+      "28DB": "A=fresh byte[HL]; flags preserved",
+      "28DC": "A=u8(A-0CH); arithmetic flags; CY=borrow of this subtraction only",
+      "28DE": "A=u8(A-01H); arithmetic flags; CY=borrow of this subtraction only",
+      "28E0": "A=old_CY?FFH:00H for self subtraction; exact S/Z/AC/P/CY arithmetic flags",
+      "28E1": "unconditionally publish A to byte[A662H]; flags preserved",
+      "28E4": "A=(incoming_CY<<7)|(old_A>>1); CY=old_A.bit0; NZPA preserved",
+      "28E5": "if CY=0: PC=4AF6H; flags preserved",
+      "28F6": "HL=fresh little_endian_word[A634H]; low then high read; flags preserved",
+      "28F9": "H=00H; flags preserved",
+      "28FB": "B pair = literal A628H; flags preserved",
+      "28FE": "HL=u16(HL+B); only CY changes to word overflow",
+      "28FF": "A=fresh byte[HL]; flags preserved",
+      "2900": "A=u8(A-0DH); arithmetic flags; CY=borrow of this subtraction only",
+      "2902": "A=u8(A-01H); arithmetic flags; CY=borrow of this subtraction only",
+      "2904": "A=old_CY?FFH:00H for self subtraction; exact S/Z/AC/P/CY arithmetic flags",
+      "2905": "unconditionally publish A to byte[A662H]; flags preserved",
+      "2908": "A=(incoming_CY<<7)|(old_A>>1); CY=old_A.bit0; NZPA preserved",
+      "2909": "if CY=0: PC=4B1AH; flags preserved",
+      "291A": "HL=fresh little_endian_word[A634H]; low then high read; flags preserved",
+      "291D": "H=00H; flags preserved",
+      "291F": "B pair = literal A628H; flags preserved",
+      "2922": "HL=u16(HL+B); only CY changes to word overflow",
+      "2923": "A=0AH; flags preserved",
+      "2925": "flags=unsigned byte comparison A against M; operands preserved",
+      "2926": "if CY=0: PC=4B2AH; flags preserved",
+      "292A": "HL=fresh little_endian_word[A634H]; low then high read; flags preserved",
+      "292D": "H=00H; flags preserved",
+      "292F": "B pair = literal A63BH; flags preserved",
+      "2932": "HL=u16(HL+H); only CY changes to word overflow",
+      "2933": "HL=u16(HL+B); only CY changes to word overflow",
+      "2934": "E=fresh byte[HL]; flags preserved",
+      "2935": "H=u16(H +1); flags preserved",
+      "2936": "D=fresh byte[HL]; flags preserved",
+      "2937": "exchange DE and HL; flags preserved",
+      "2938": "byte[A863H]=L then byte[address+1]=H; flags preserved",
+      "293B": "A=fresh byte[A662H]; flags preserved",
+      "293E": "A=(incoming_CY<<7)|(old_A>>1); CY=old_A.bit0; NZPA preserved",
+      "293F": "if CY=0: PC=4B4AH; flags preserved",
+      "294A": "H pair = literal A662H; flags preserved",
+      "294D": "byte[HL]=2BH; flags preserved",
+      "294F": "HL=fresh little_endian_word[A628H]; low then high read; flags preserved",
+      "2952": "C=L; flags preserved",
+      "2953": "push following PC; invoke PLI1.OVL+2185; child state/effects at the explicitly scoped contract",
+      "2956": "write high then low PSW below SP; SP-=2; preserve flags; compatibility residue retained",
+      "2957": "HL=fresh little_endian_word[A662H]; low then high read; flags preserved",
+      "295A": "write high then low H below SP; SP-=2; preserve flags; compatibility residue retained",
+      "295B": "HL=fresh little_endian_word[A634H]; low then high read; flags preserved",
+      "295E": "H=00H; flags preserved",
+      "2960": "B pair = literal A63BH; flags preserved",
+      "2963": "HL=u16(HL+H); only CY changes to word overflow",
+      "2964": "HL=u16(HL+B); only CY changes to word overflow",
+      "2965": "C=fresh byte[HL]; flags preserved",
+      "2966": "H=u16(H +1); flags preserved",
+      "2967": "B=fresh byte[HL]; flags preserved",
+      "2968": "write high then low B below SP; SP-=2; preserve flags; compatibility residue retained",
+      "2969": "C=00H; flags preserved",
+      "296B": "write high then low B below SP; SP-=2; preserve flags; compatibility residue retained",
+      "296C": "B pair = literal 000AH; flags preserved",
+      "296F": "HL=fresh little_endian_word[A863H]; low then high read; flags preserved",
+      "2972": "HL=u16(HL+B); only CY changes to word overflow",
+      "2973": "write high then low H below SP; SP-=2; preserve flags; compatibility residue retained",
+      "2974": "HL=fresh little_endian_word[A863H]; low then high read; flags preserved",
+      "2977": "A=fresh byte[HL]; flags preserved",
+      "2978": "A=u8(A-0AH); arithmetic flags; CY=borrow of this subtraction only",
+      "297A": "HL=fresh little_endian_word[A634H]; low then high read; flags preserved",
+      "297D": "H=00H; flags preserved",
+      "297F": "B pair = literal A628H; flags preserved",
+      "2982": "HL=u16(HL+B); only CY changes to word overflow",
+      "2983": "E=fresh byte[HL]; flags preserved",
+      "2984": "C=A; flags preserved",
+      "2985": "push following PC; invoke PLI1.OVL+6708; child state/effects at the explicitly scoped contract",
+      "2988": "consume separately saved2185 PSW intoBC after child6708 consumes eight argument bytes; software copied continuation is distinct",
+      "2989": "C=B; flags preserved",
+      "298A": "A=A AND C; Intel8080 logical flags/CY0",
+      "298B": "A=(incoming_CY<<7)|(old_A>>1); CY=old_A.bit0; NZPA preserved",
+      "298C": "if CY=0: PC=4BB3H; flags preserved",
+      "29B3": "HL = little_endian_word[orchestration_context_byte (A634H)]; low byte then high byte, flags preserved",
+      "29B6": "H = 00H; flags preserved",
+      "29B8": "BC = indexed_state_bytes (A628H) (literal address/value)",
+      "29BB": "HL=u16(HL+BC); only CY changes (word overflow)",
+      "29BC": "A = byte[HL]; flags preserved",
+      "29BD": "byte[orchestration_saved_byte (A661H)] = A; flags preserved",
+      "29C0": "HL = little_endian_word[orchestration_context_byte (A634H)]; low byte then high byte, flags preserved",
+      "29C3": "H = 00H; flags preserved",
+      "29C5": "HL=u16(HL+BC); only CY changes (word overflow)",
+      "29C6": "A = byte[HL]; flags preserved",
+      "29C7": "A=u8(A-02H); arithmetic flags including CY=borrow",
+      "29C9": "A=u8(A-01H); arithmetic flags including CY=borrow",
+      "29CB": "A=CY?FFH:00H; self-subtraction cancels old A; CY is retained Boolean borrow",
+      "29CC": "push A/packed flags below SP; flags unchanged",
+      "29CD": "A = byte[HL]; flags preserved",
+      "29CE": "A=u8(A-03H); arithmetic flags including CY=borrow",
+      "29D0": "A=u8(A-01H); arithmetic flags including CY=borrow",
+      "29D2": "A=CY?FFH:00H; self-subtraction cancels old A; CY is retained Boolean borrow",
+      "29D3": "pop B pair, low byte then high; SP+=2; flags unchanged",
+      "29D4": "C = B; flags preserved",
+      "29D5": "A=A  | C; logical flags, CY=0",
+      "29D6": "A=(old_CY<<7)|(old_A>>1); CY=old_A.bit0; NZPA preserved",
+      "29D7": "if CY=0: PC=4BE8H; flags preserved",
+      "29E8": "HL = little_endian_word[orchestration_context_byte (A634H)]; low byte then high byte, flags preserved",
+      "29EB": "H = 00H; flags preserved",
+      "29ED": "BC = indexed_state_bytes (A628H) (literal address/value)",
+      "29F0": "HL=u16(HL+BC); only CY changes (word overflow)",
+      "29F1": "A = byte[HL]; flags preserved",
+      "29F2": "flags = unsigned byte comparison A-04H; A unchanged",
+      "29F4": "if Z=0: PC=4C24H; flags preserved",
+      "2A24": "HL = little_endian_word[orchestration_context_byte (A634H)]; low byte then high byte, flags preserved",
+      "2A27": "H = 00H; flags preserved",
+      "2A29": "BC = indexed_state_bytes (A628H) (literal address/value)",
+      "2A2C": "HL=u16(HL+BC); only CY changes (word overflow)",
+      "2A2D": "A = byte[HL]; flags preserved",
+      "2A2E": "flags = unsigned byte comparison A-05H; A unchanged",
+      "2A30": "if Z=0: PC=4C6FH; flags preserved",
+      "2A33": "A = byte[indexed_state_bytes (A628H)]; flags preserved",
+      "2A36": "A=u8(A-28H); arithmetic flags including CY=borrow",
+      "2A38": "A=u8(A-01H); arithmetic flags including CY=borrow",
+      "2A3A": "A=CY?FFH:00H; self-subtraction cancels old A; CY is retained Boolean borrow",
+      "2A3B": "push A/packed flags below SP; flags unchanged",
+      "2A3C": "A = byte[indexed_state_bytes (A628H)]; flags preserved",
+      "2A3F": "A=u8(A-2AH); arithmetic flags including CY=borrow",
+      "2A41": "A=u8(A-01H); arithmetic flags including CY=borrow",
+      "2A43": "A=CY?FFH:00H; self-subtraction cancels old A; CY is retained Boolean borrow",
+      "2A44": "pop B pair, low byte then high; SP+=2; flags unchanged",
+      "2A45": "C = B; flags preserved",
+      "2A46": "A=A  | C; logical flags, CY=0",
+      "2A47": "A=(old_CY<<7)|(old_A>>1); CY=old_A.bit0; NZPA preserved",
+      "2A48": "if CY=0: PC=4C59H; flags preserved",
+      "2A4B": "HL = little_endian_word[orchestration_context_byte (A634H)]; low byte then high byte, flags preserved",
+      "2A4E": "H = 00H; flags preserved",
+      "2A50": "BC = indexed_state_bytes (A628H) (literal address/value)",
+      "2A53": "HL=u16(HL+BC); only CY changes (word overflow)",
+      "2A54": "byte[HL] = 28H; flags preserved",
+      "2A56": "if always: PC=4C6CH; flags preserved",
+      "2A6C": "if always: PC=4C8BH; flags preserved",
+      "2A8B": "HL = little_endian_word[orchestration_cached_byte (A662H)]; low byte then high byte, flags preserved",
+      "2A8E": "push H register pair below SP; flags unchanged",
+      "2A8F": "HL = little_endian_word[orchestration_context_byte (A634H)]; low byte then high byte, flags preserved",
+      "2A92": "H = 00H; flags preserved",
+      "2A94": "BC = orchestration_word_table (A63BH) (literal address/value)",
+      "2A97": "HL=u16(HL+HL); only CY changes (word overflow)",
+      "2A98": "HL=u16(HL+BC); only CY changes (word overflow)",
+      "2A99": "C = byte[HL]; flags preserved",
+      "2A9A": "HL=u16(HL+1); flags preserved",
+      "2A9B": "B = byte[HL]; flags preserved",
+      "2A9C": "push B register pair below SP; flags unchanged",
+      "2A9D": "HL = little_endian_word[orchestration_context_byte (A634H)]; low byte then high byte, flags preserved",
+      "2AA0": "push H register pair below SP; flags unchanged",
+      "2AA1": "BC = 000AH (literal address/value)",
+      "2AA4": "HL = little_endian_word[copy_work_pointer (A863H)]; low byte then high byte, flags preserved",
+      "2AA7": "HL=u16(HL+BC); only CY changes (word overflow)",
+      "2AA8": "push H register pair below SP; flags unchanged",
+      "2AA9": "HL = little_endian_word[copy_work_pointer (A863H)]; low byte then high byte, flags preserved",
+      "2AAC": "A = byte[HL]; flags preserved",
+      "2AAD": "A=u8(A-0AH); arithmetic flags including CY=borrow",
+      "2AAF": "HL = little_endian_word[orchestration_saved_byte (A661H)]; low byte then high byte, flags preserved",
+      "2AB2": "swap HL and DE; flags preserved",
+      "2AB3": "C = A; flags preserved",
+      "2AB4": "partial +6708 consumes8callerbytes; copied continuationFFCE; resumeown2AB7",
+      "2AB7": "A=(old_CY<<7)|(old_A>>1); CY=old_A.bit0; NZPA preserved",
+      "2AB8": "if CY=1: PC=4CBFH; flags preserved",
+      "2ABF": "HL=fresh little_endian_word[A634H]; low then high read; flags preserved",
+      "2AC2": "H=00H; flags preserved",
+      "2AC4": "B pair = literal A628H; flags preserved",
+      "2AC7": "HL=u16(HL+B); only CY changes to word overflow",
+      "2AC8": "A=fresh byte[HL]; flags preserved",
+      "2AC9": "A=u8(A-15H); arithmetic flags; CY=borrow of this subtraction only",
+      "2ACB": "A=u8(A-01H); arithmetic flags; CY=borrow of this subtraction only",
+      "2ACD": "A=old_CY?FFH:00H for self subtraction; exact S/Z/AC/P/CY arithmetic flags",
+      "2ACE": "write high then low PSW below SP; SP-=2; preserve flags; compatibility residue retained",
+      "2ACF": "A=fresh byte[HL]; flags preserved",
+      "2AD0": "A=u8(A-25H); arithmetic flags; CY=borrow of this subtraction only",
+      "2AD2": "A=u8(A-01H); arithmetic flags; CY=borrow of this subtraction only",
+      "2AD4": "A=old_CY?FFH:00H for self subtraction; exact S/Z/AC/P/CY arithmetic flags",
+      "2AD5": "read low then high into B pair; SP+=2; flags preserved; residue remains",
+      "2AD6": "C=B; flags preserved",
+      "2AD7": "A=A OR C; logical flags; CY=0",
+      "2AD8": "write high then low PSW below SP; SP-=2; preserve flags; compatibility residue retained",
+      "2AD9": "A=fresh byte[HL]; flags preserved",
+      "2ADA": "A=u8(A-24H); arithmetic flags; CY=borrow of this subtraction only",
+      "2ADC": "A=u8(A-01H); arithmetic flags; CY=borrow of this subtraction only",
+      "2ADE": "A=old_CY?FFH:00H for self subtraction; exact S/Z/AC/P/CY arithmetic flags",
+      "2ADF": "read low then high into B pair; SP+=2; flags preserved; residue remains",
+      "2AE0": "C=B; flags preserved",
+      "2AE1": "A=A OR C; logical flags; CY=0",
+      "2AE2": "H pair = literal A65FH; flags preserved",
+      "2AE5": "A=A AND M; Intel8080 logical flags/CY0",
+      "2AE6": "A=(incoming_CY<<7)|(old_A>>1); CY=old_A.bit0; NZPA preserved",
+      "2AE7": "if CY=0: PC=4D17H; flags preserved",
+      "2B17": "HL = orchestration_saved_byte (A661H) (literal address/value)",
+      "2B1A": "byte[HL] = 00H; flags preserved",
+      "2B1C": "HL = little_endian_word[orchestration_context_byte (A634H)]; low byte then high byte, flags preserved",
+      "2B1F": "H = 00H; flags preserved",
+      "2B21": "BC = indexed_state_bytes (A628H) (literal address/value)",
+      "2B24": "HL=u16(HL+BC); only CY changes (word overflow)",
+      "2B25": "C = byte[HL]; flags preserved",
+      "2B26": "scoped +46ED sum-indexed payload/field lookup; observed field05!=C28 thenpointer0",
+      "2B29": "A = 00H; flags preserved",
+      "2B2B": "DE = copy_work_pointer (A863H) (literal address/value)",
+      "2B2E": "push following PC; invoke PLI.COM+1A40; established complete contract at declared scope",
+      "2B31": "A=A  | L; logical flags, CY=0",
+      "2B32": "if Z=0: PC=4D7EH; flags preserved",
+      "2B35": "HL = little_endian_word[orchestration_context_byte (A634H)]; low byte then high byte, flags preserved",
+      "2B38": "H = 00H; flags preserved",
+      "2B3A": "BC = indexed_state_bytes (A628H) (literal address/value)",
+      "2B3D": "HL=u16(HL+BC); only CY changes (word overflow)",
+      "2B3E": "C = byte[HL]; flags preserved",
+      "2B3F": "partial +4738 atC28/46ED-null/4468-normalscope; savedoldwordandwordaddition remainseparate",
+      "2B42": "BC = 0003H (literal address/value)",
+      "2B45": "HL = little_endian_word[copy_work_pointer (A863H)]; low byte then high byte, flags preserved",
+      "2B48": "HL=u16(HL+BC); only CY changes (word overflow)",
+      "2B49": "byte[HL] = 29H; flags preserved",
+      "2B4B": "HL = little_endian_word[orchestration_context_byte (A634H)]; low byte then high byte, flags preserved",
+      "2B4E": "H = 00H; flags preserved",
+      "2B50": "BC = A62BH (literal address/value)",
+      "2B53": "HL=u16(HL+BC); only CY changes (word overflow)",
+      "2B54": "BC = 0004H (literal address/value)",
+      "2B57": "push H register pair below SP; flags unchanged",
+      "2B58": "HL = little_endian_word[copy_work_pointer (A863H)]; low byte then high byte, flags preserved",
+      "2B5B": "HL=u16(HL+BC); only CY changes (word overflow)",
+      "2B5C": "pop D pair, low byte then high; SP+=2; flags unchanged",
+      "2B5D": "A=byte[DE]; flags preserved",
+      "2B5E": "byte[HL] = A; flags preserved",
+      "2B5F": "HL = little_endian_word[orchestration_context_byte (A634H)]; low byte then high byte, flags preserved",
+      "2B62": "H = 00H; flags preserved",
+      "2B64": "BC = A62EH (literal address/value)",
+      "2B67": "HL=u16(HL+BC); only CY changes (word overflow)",
+      "2B68": "BC = 0005H (literal address/value)",
+      "2B6B": "push H register pair below SP; flags unchanged",
+      "2B6C": "HL = little_endian_word[copy_work_pointer (A863H)]; low byte then high byte, flags preserved",
+      "2B6F": "HL=u16(HL+BC); only CY changes (word overflow)",
+      "2B70": "pop D pair, low byte then high; SP+=2; flags unchanged",
+      "2B71": "A=byte[DE]; flags preserved",
+      "2B72": "byte[HL] = A; flags preserved",
+      "2B73": "HL = little_endian_word[copy_work_pointer (A863H)]; low byte then high byte, flags preserved",
+      "2B76": "B = H; flags preserved",
+      "2B77": "C = L; flags preserved",
+      "2B78": "DE = 0000H (literal address/value)",
+      "2B7B": "scoped +666E field09 bit pipeline; word[p+6]+DE usesactual82BB; caller ignoresreturned A",
+      "2B7E": "HL=fresh little_endian_word[A634H]; low then high read; flags preserved",
+      "2B81": "H=00H; flags preserved",
+      "2B83": "B pair = literal A63BH; flags preserved",
+      "2B86": "HL=u16(HL+H); only CY changes to word overflow",
+      "2B87": "HL=u16(HL+B); only CY changes to word overflow",
+      "2B88": "write high then low H below SP; SP-=2; preserve flags; compatibility residue retained",
+      "2B89": "HL=fresh little_endian_word[A863H]; low then high read; flags preserved",
+      "2B8C": "exchange DE and HL; flags preserved",
+      "2B8D": "read low then high into H pair; SP+=2; flags preserved; residue remains",
+      "2B8E": "fresh assembled word low -> separately PUSH/POP preserved indexed pointer destination",
+      "2B8F": "H=u16(H +1); flags preserved",
+      "2B90": "fresh assembled word high -> incremented indexed pointer destination; independent channel order retained",
+      "2B91": "HL=fresh little_endian_word[AE32H]; low then high read; flags preserved",
+      "2B94": "C=L; flags preserved",
+      "2B95": "push following PC; invoke PLI1.OVL+7B7A; child state/effects at the explicitly scoped contract",
+      "2B98": "unconditionally publish A to byte[A660H]; flags preserved",
+      "2B9B": "A=fresh byte[A634H]; flags preserved",
+      "2B9E": "flags=unsigned byte comparison A-01H; A preserved",
+      "2BA0": "if Z=0: PC=4DAEH; flags preserved",
+      "2BAE": "HL=fresh little_endian_word[A660H]; low then high read; flags preserved",
+      "2BB1": "C=L; flags preserved",
+      "2BB2": "HL=fresh little_endian_word[A863H]; low then high read; flags preserved",
+      "2BB5": "exchange DE and HL; flags preserved",
+      "2BB6": "push following PC; invoke PLI1.OVL+7AF0; child state/effects at the explicitly scoped contract",
+      "2BB9": "HL=fresh little_endian_word[A634H]; low then high read; flags preserved",
+      "2BBC": "H=00H; flags preserved",
+      "2BBE": "B pair = literal A628H; flags preserved",
+      "2BC1": "HL=u16(HL+B); only CY changes to word overflow",
+      "2BC2": "E=fresh byte[HL]; flags preserved",
+      "2BC3": "HL=fresh little_endian_word[A660H]; low then high read; flags preserved",
+      "2BC6": "C=L; flags preserved",
+      "2BC7": "push following PC; invoke PLI1.OVL+7B13; child state/effects at the explicitly scoped contract",
+      "2BCA": "HL=fresh little_endian_word[A634H]; low then high read; flags preserved",
+      "2BCD": "H=00H; flags preserved",
+      "2BCF": "B pair = literal A62BH; flags preserved",
+      "2BD2": "HL=u16(HL+B); only CY changes to word overflow",
+      "2BD3": "E=fresh byte[HL]; flags preserved",
+      "2BD4": "HL=fresh little_endian_word[A660H]; low then high read; flags preserved",
+      "2BD7": "C=L; flags preserved",
+      "2BD8": "push following PC; invoke PLI1.OVL+7B2E; child state/effects at the explicitly scoped contract",
+      "2BDB": "HL=fresh little_endian_word[A634H]; low then high read; flags preserved",
+      "2BDE": "H=00H; flags preserved",
+      "2BE0": "B pair = literal A62EH; flags preserved",
+      "2BE3": "HL=u16(HL+B); only CY changes to word overflow",
+      "2BE4": "E=fresh byte[HL]; flags preserved",
+      "2BE5": "HL=fresh little_endian_word[A660H]; low then high read; flags preserved",
+      "2BE8": "C=L; flags preserved",
+      "2BE9": "push following PC; invoke PLI1.OVL+7B49; child state/effects at the explicitly scoped contract",
+      "2BEC": "A=fresh byte[A661H]; flags preserved",
+      "2BEF": "flags=unsigned byte comparison A-00H; A preserved",
+      "2BF1": "if Z=0: PC=4DFFH; flags preserved",
+      "2BF4": "HL = little_endian_word[orchestration_context_byte (A634H)]; low byte then high byte, flags preserved",
+      "2BF7": "C = L; flags preserved",
+      "2BF8": "partial +2355(index2,selected28) returns 01; caller INRforms02",
+      "2BFB": "A=u8(A+1); NZPA updated, CY preserved",
+      "2BFC": "byte[orchestration_saved_byte (A661H)] = A; flags preserved",
+      "2BFF": "HL=fresh little_endian_word[A660H]; low then high read; flags preserved",
+      "2C02": "C=L; flags preserved",
+      "2C03": "read both A661 and neighboringA662; low0A becomes mapped publication E; high prefix remainsD",
+      "2C06": "exchange DE and HL; flags preserved",
+      "2C07": "push following PC; invoke PLI1.OVL+7AD5; child state/effects at the explicitly scoped contract",
+      "2C0A": "H pair = literal A660H; flags preserved",
+      "2C0D": "increment current byte[A660] modulo256; NZPA from INR and CY preserved",
+      "2C0E": "HL=fresh little_endian_word[A634H]; low then high read; flags preserved",
+      "2C11": "H=00H; flags preserved",
+      "2C13": "B pair = literal A628H; flags preserved",
+      "2C16": "HL=u16(HL+B); only CY changes to word overflow",
+      "2C17": "E=fresh byte[HL]; flags preserved",
+      "2C18": "HL=fresh little_endian_word[A660H]; low then high read; flags preserved",
+      "2C1B": "C=L; flags preserved",
+      "2C1C": "push following PC; invoke PLI1.OVL+7B13; child state/effects at the explicitly scoped contract",
+      "2C1F": "HL=fresh little_endian_word[A634H]; low then high read; flags preserved",
+      "2C22": "H=00H; flags preserved",
+      "2C24": "B pair = literal A62BH; flags preserved",
+      "2C27": "HL=u16(HL+B); only CY changes to word overflow",
+      "2C28": "E=fresh byte[HL]; flags preserved",
+      "2C29": "HL=fresh little_endian_word[A660H]; low then high read; flags preserved",
+      "2C2C": "C=L; flags preserved",
+      "2C2D": "push following PC; invoke PLI1.OVL+7B2E; child state/effects at the explicitly scoped contract",
+      "2C30": "HL=fresh little_endian_word[A634H]; low then high read; flags preserved",
+      "2C33": "H=00H; flags preserved",
+      "2C35": "B pair = literal A62EH; flags preserved",
+      "2C38": "HL=u16(HL+B); only CY changes to word overflow",
+      "2C39": "E=fresh byte[HL]; flags preserved",
+      "2C3A": "HL=fresh little_endian_word[A660H]; low then high read; flags preserved",
+      "2C3D": "C=L; flags preserved",
+      "2C3E": "push following PC; invoke PLI1.OVL+7B49; child state/effects at the explicitly scoped contract",
+      "2C41": "HL=fresh little_endian_word[A634H]; low then high read; flags preserved",
+      "2C44": "C=L; flags preserved",
+      "2C45": "push following PC; invoke PLI1.OVL+2355; child state/effects at the explicitly scoped contract",
+      "2C48": "A=u8(actual classifier2355 result +13); arithmetic flags precede final fresh mapped publication",
+      "2C4A": "HL=fresh little_endian_word[A660H]; low then high read; flags preserved",
+      "2C4D": "E=A; flags preserved",
+      "2C4E": "C=L; flags preserved",
+      "2C4F": "push following PC; invoke PLI1.OVL+7AD5; child state/effects at the explicitly scoped contract",
+      "2C52": "consume original hardware return word; SP=entry_SP+2; preserve final path flags and registers",
+      "298F": "HL=fresh little_endian_word[A634H]; low then high read; flags preserved",
+      "2992": "H=00H; flags preserved",
+      "2994": "B pair = literal A628H; flags preserved",
+      "2997": "HL=u16(HL+B); only CY changes to word overflow",
+      "2998": "A=fresh byte[B pair]; flags preserved",
+      "2999": "byte[HL]=A; flags preserved",
+      "299A": "HL=fresh little_endian_word[A634H]; low then high read; flags preserved",
+      "299D": "H=00H; flags preserved",
+      "299F": "B pair = literal A62BH; flags preserved",
+      "29A2": "HL=u16(HL+B); only CY changes to word overflow",
+      "29A3": "A=fresh byte[B pair]; flags preserved",
+      "29A4": "byte[HL]=A; flags preserved",
+      "29A5": "HL=fresh little_endian_word[A634H]; low then high read; flags preserved",
+      "29A8": "H=00H; flags preserved",
+      "29AA": "B pair = literal A62EH; flags preserved",
+      "29AD": "HL=u16(HL+B); only CY changes to word overflow",
+      "29AE": "A=fresh byte[B pair]; flags preserved",
+      "29AF": "byte[HL]=A; flags preserved",
+      "29B0": "unconditionally: PC=4CBFH; flags preserved",
+      "2AEA": "H pair = literal A661H; flags preserved",
+      "2AED": "byte[HL]=0AH; flags preserved",
+      "2AEF": "HL=fresh little_endian_word[A948H]; low then high read; flags preserved",
+      "2AF2": "H=00H; flags preserved",
+      "2AF4": "byte[A863H]=L then byte[address+1]=H; flags preserved",
+      "2AF7": "A=fresh byte[A947H]; flags preserved",
+      "2AFA": "flags=unsigned byte comparison A-02H; A preserved",
+      "2AFC": "if Z=0: PC=4D14H; flags preserved",
+      "2AFF": "HL=fresh little_endian_word[A949H]; low then high read; flags preserved",
+      "2B02": "H=00H; flags preserved",
+      "2B04": "C=08H; flags preserved",
+      "2B06": "push following PC; invoke PLI1.OVL+8380; child state/effects at the explicitly scoped contract",
+      "2B09": "D pair = literal A863H; flags preserved",
+      "2B0C": "push following PC; invoke PLI1.OVL+834F; child state/effects at the explicitly scoped contract",
+      "2B0F": "exchange DE and HL; flags preserved",
+      "2B10": "H=u16(H -1); flags preserved",
+      "2B11": "publish assembled word low to freshly selected A863 address before high publication at2B13",
+      "2B12": "H=u16(H +1); flags preserved",
+      "2B13": "byte[HL]=D; flags preserved",
+      "2B14": "unconditionally: PC=4D7EH; flags preserved"
+    }
+  }
+}
