@@ -1,0 +1,123 @@
+{
+  "routes": {
+    "B": "020E -> RAR/JNC ->5929 ->fresh239A ->ADI13/MOV C,A ->2511",
+    "A_process": "020E ->RAR/JNC ->620C ->RAR/JNC ->01E8 ->fresh239A ->ADI13/MOV C,A ->256C",
+    "A_early": "020E ->620C ->second RAR/JNC ->JMP commonRET"
+  },
+  "contracts": {
+    "PLI1.OVL+6223": {
+      "extent": [
+        25123,
+        25165
+      ],
+      "completeness": {
+        "bounds": "stable",
+        "control_flow": "complete",
+        "contract": "partial"
+      },
+      "contract": "Call complete +020E, RAR its returned A (incoming CY contributes bit7; outgoing CY is old A.bit0). JNC +6227 selects route B when that bit is clear: partial +5929, fresh +239A, ADI13 modulo256, MOV C,A, complete-at-bounded-scope +2511. Set bit calls partial +620C and independently RARs its result. Clear second bit jumps through +623D to the common RET with the RAR machine state and no +01E8/+239A/+256C. Set second bit calls partial +01E8, fresh +239A, ADI13/MOV C,A, partial +256C. Both processing paths delegate final machine state to their last child. OBSERVED: +239A returns04, so subsequent C=17H on both routes; this is a correlated observation, not a constant implementation. No local frame or scratch publication; actual child CALL words overlap below entry SP. OBSERVED indirect re-entry: six FIZZBUZ6223 windows occur beneath620C/61A4/60E5 inside three early-route6223 windows. Local route classification excludes delegated descendant calls;21 corrected windows are not21 independent outer roots.",
+      "unsupported": [
+        "Child contracts +61A4/+60E5, +2355, +5929/+46A7/+784E remain partial or opaque; captured outputs cannot replace them.",
+        "Broader child predicates/aliases/termination and state producers are unestablished."
+      ]
+    },
+    "PLI1.OVL+620C": {
+      "extent": [
+        25100,
+        25123
+      ],
+      "completeness": {
+        "bounds": "stable",
+        "control_flow": "complete",
+        "contract": "partial"
+      },
+      "contract": "Call partial +61A4; publish its returned A to A945 before CPI00. For zero reload is unnecessary: MVI A,01 preserves comparison flags and RET +6219. For nonzero, freshly reload A945, subtract04 modulo256, then subtract01 modulo256, then SBB A expands ONLY the second subtraction borrow into FF/00. It is not one combined subtraction by5. OBSERVED child A=0 four FIZZBUZ and one PICTURE calls -> result01; child A=1 three FIZZBUZ -> result00. NZPA/CY on nonzero return come from SBB A; BC/DE/HL delegated61A4 remain untouched locally. Caller RAR tests result.bit0, not the incoming returned CY.",
+      "unsupported": [
+        "+61A4 delegates substantial +60E5 behavior; its general result/effects remain opaque.",
+        "Child values other than0/1 are STATIC / UNOBSERVED; no Boolean/source meaning inferred."
+      ]
+    },
+    "PLI1.OVL+239A": {
+      "extent": [
+        9114,
+        9120
+      ],
+      "completeness": {
+        "bounds": "stable",
+        "control_flow": "complete",
+        "contract": "partial"
+      },
+      "contract": "MVI C,00 preserves incoming A/other registers/flags, then invoke partial +2355 and return its machine state unchanged except original outer SP/continuation. Every invocation performs a fresh child call. OBSERVED +6223 and +5929 children return04 with selected A628[0]=02/05/15H and delegated +230E/+22CB scope; the returned flags differ by path even where A matches; independently retained wider calls also return05 or06; no constant04 generalization. +6223 applies ADI13 while +5929 independently applies INR A.",
+      "unsupported": [
+        "Wider +2355 indexed dispatch and delegated helper paths remain partial. Its literal31 ->06 arm is observed incidentally outside +6223/+5929 here but not promoted or separately decompiled. Literal2A remains outside this investigation."
+      ]
+    },
+    "PLI1.OVL+256C": {
+      "extent": [
+        9580,
+        9641
+      ],
+      "completeness": {
+        "bounds": "stable",
+        "control_flow": "complete",
+        "contract": "partial"
+      },
+      "contract": "MOV B,C; PUSH B; INX SP leaves one private input byte at entry_SP-1 and residue of the duplicated C below it. Freshly read that frame byte for complete +7B64. CPI06/JNZ chooses non6 -> reload frame byte -> bounded +2511. For attr6 reload frame byte -> bounded +8048; fresh AE32/AE33 carrier supplies low position to complete +7AF0, while fresh A5B0/A5B1 supplies DE. Then explicit C=0 -> complete +23D2; fresh frame byte -> partial +7EC0. Both paths INX SP/RET; final state delegated last child, no invented common flag convention. OBSERVED FIZZBUZ seven attr4; PICTURE two attr4 and one attr6. All local bytes and both routes represented; child unsupported domains remain inherited.",
+      "unsupported": [
+        "Bounded +2511/+8048/+7EC0 restrictions and source/cache/destination/stack aliases remain explicit; arbitrary attribute/state combinations not established."
+      ]
+    },
+    "PLI1.OVL+5929": {
+      "extent": [
+        22825,
+        23110
+      ],
+      "completeness": {
+        "bounds": "provisional",
+        "control_flow": "partial",
+        "contract": "partial"
+      },
+      "contract": "Call complete +57B7 with BC=7923H; RAR its result; JNC clear bit selects an unobserved RAW alternative. OBSERVED result01 enters work. Fresh20C3 low from paired20C3/20C4 read is C to opaque +46A7. Fresh word[A863] is copied low/high to A63B/A63C then A635/A636. Clear A631; fresh20C3 -> A628; fresh20C5 -> A62B; clear A62E. Preserve separate SUI03/SUI01/SBB and SUI04/SUI01/SBB masks through PUSH PSW/POP B/ORA C/RAR. Natural selectors02/05 skip the RAW3/4,7,8,9 alternatives. Fresh word[A863]+4 receives fresh A62B; a second fresh pointer read+5 receives fresh A62E. Fresh +239A, INR A, MOV C,A -> bounded +2511; partial +784E then RET through +5A45. OBSERVED +239A returns04 and child2511 receives05; final machine state delegated784E. +46A7 returns00 orFF but its return A is not used as the later selector; the caller freshly rereads20C3.",
+      "unsupported": [
+        "RAW scan-miss +5A42, selector3/4 handling +5971..+59DB and selector7/8/9 publication arms remain STATIC / UNOBSERVED.",
+        "Opaque +46A7 and partial +784E acquisition/classification prevent faithful whole-parent native composition; scoped child chronology is not a child implementation.",
+        "Pointer producers, aliases and conditional termination remain unproved beyond actual natural windows."
+      ]
+    },
+    "PLI1.OVL+01E8": {
+      "extent": [
+        488,
+        526
+      ],
+      "completeness": {
+        "bounds": "provisional",
+        "control_flow": "partial",
+        "contract": "partial"
+      },
+      "contract": "LXI H,0002; SHLD A5B0 writes02 then00 to A5B0/A5B1. Fresh A628 into A; CPI70; JZ to RAW +01F7 iff equality. All nine natural calls observe selector15H or02 and return at +01F6 with A=selected byte, HL=0002, BC/DE preserved and exact CPI70 flags. Do not infer behavior of the unexecuted equality arm or shrink its extent to the observed RET.",
+      "unsupported": [
+        "STATIC / UNOBSERVED selected70 -> +01F7 RAW arm; enclosing [01E8,020E) boundary remains provisional."
+      ]
+    },
+    "PLI1.OVL+61A4": {
+      "extent": [
+        24996,
+        25005
+      ],
+      "completeness": {
+        "bounds": "stable",
+        "control_flow": "complete",
+        "contract": "partial"
+      },
+      "contract": "LXI H,A941; unconditionally write00 to A941; call opaque +60E5; RET with exact child state except outer SP/continuation. OBSERVED ten calls return A00 seven times and A01 three times; eight are620C children, two from61B6. These values are not a general child contract. No local frame; child CALL residue below entry SP.",
+      "unsupported": [
+        "Substantial opaque +60E5 branch/read/publication/acquisition behavior is delegated; returned byte cannot be fabricated from invocation identity."
+      ]
+    }
+  },
+  "hypotheses": "No source-language token/opcode/type meanings established; no table ownership/capacity/global immutability claim.",
+  "scope": "Nonaliasing code, original return/save words, local scratch and selected publications/read carriers at the existing complete-child scopes. Intentional local rereads and scratch reuse remain ordered; opaque child alias/precondition contracts still missing. These are requirements for later implementation, not a completed global alias proof.",
+  "newly_understood_bytes": 287,
+  "new_procedure_hypotheses": 7,
+  "unexecuted": "5929 scan miss, selector3/4/7/8/9 arms and01E8 selector70 branch remain RAW. No custom fixture or fresh compiler run."
+}

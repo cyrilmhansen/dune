@@ -94,7 +94,11 @@ class HostBoundaryPassSixteenTests(unittest.TestCase):
         later=load(ROOT/'research/host-compiler/pass-22/catalog-refinement.json')
         prior30=load(ROOT/'research/host-compiler/pass-30/before.json')
         self.assertEqual(later['new_entries'],['PLI.COM+0328'])
-        self.assertEqual({p['entry'] for p in audit['established']},{k for k in actual if k in self.catalog and k not in later['new_entries']})
+        # Pass32 adds bounded dispatcher/dependency hypotheses; the frozen Pass16
+        # audit still compares its original catalog membership.
+        prior32=load(ROOT/'research/host-compiler/pass-32/before.json')
+        added32={k for k,v in prior32.items()if v is None}
+        self.assertEqual({p['entry'] for p in audit['established']},{k for k in actual if k in self.catalog and k not in set(later['new_entries'])|added32})
         for p in audit['established']:
             self.assertEqual(p['FIZZBUZ_calls'],actual[p['entry']]['count'])
             previous=later['previous'].get(p['entry'],prior30.get(p['entry'],self.catalog[p['entry']]))

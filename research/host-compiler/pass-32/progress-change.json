@@ -1,0 +1,137 @@
+{
+  "note": "Incidental global byte-annotation change; no compiler execution or native semantics changed.",
+  "before": {
+    "metric": "MINIMAL canonical instruction occurrences by current annotation status",
+    "denominator": "historical image instructions; modeled host instructions excluded",
+    "per_image": [
+      {
+        "image": "PLI.COM",
+        "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+        "instruction_occurrences": 266524,
+        "occurrences_by_status": {
+          "RAW": 33204,
+          "DECODED": 60688,
+          "STRUCTURED": 43210,
+          "UNDERSTOOD": 129422
+        },
+        "understood_percent": 48.559229
+      },
+      {
+        "image": "PLI0.OVL",
+        "image_sha256": "e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff",
+        "instruction_occurrences": 94418,
+        "occurrences_by_status": {
+          "RAW": 44567,
+          "DECODED": 0,
+          "STRUCTURED": 11322,
+          "UNDERSTOOD": 38529
+        },
+        "understood_percent": 40.806838
+      },
+      {
+        "image": "PLI1.OVL",
+        "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+        "instruction_occurrences": 42875,
+        "occurrences_by_status": {
+          "RAW": 2291,
+          "DECODED": 0,
+          "STRUCTURED": 0,
+          "UNDERSTOOD": 40584
+        },
+        "understood_percent": 94.65656
+      },
+      {
+        "image": "PLI2.OVL",
+        "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+        "instruction_occurrences": 36181,
+        "occurrences_by_status": {
+          "RAW": 23127,
+          "DECODED": 1302,
+          "STRUCTURED": 3649,
+          "UNDERSTOOD": 8103
+        },
+        "understood_percent": 22.395733
+      }
+    ],
+    "total": {
+      "instruction_occurrences": 439998,
+      "occurrences_by_status": {
+        "RAW": 103189,
+        "DECODED": 61990,
+        "STRUCTURED": 58181,
+        "UNDERSTOOD": 216638
+      },
+      "understood_percent": 49.236133
+    },
+    "full_run_instruction_occurrences": 441855,
+    "outside_historical_images": 1857,
+    "understood_percent_of_full_run": 49.029206
+  },
+  "after": {
+    "metric": "MINIMAL canonical instruction occurrences by current annotation status",
+    "denominator": "historical image instructions; modeled host instructions excluded",
+    "per_image": [
+      {
+        "image": "PLI.COM",
+        "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+        "instruction_occurrences": 266524,
+        "occurrences_by_status": {
+          "RAW": 33204,
+          "DECODED": 60688,
+          "STRUCTURED": 43210,
+          "UNDERSTOOD": 129422
+        },
+        "understood_percent": 48.559229
+      },
+      {
+        "image": "PLI0.OVL",
+        "image_sha256": "e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff",
+        "instruction_occurrences": 94418,
+        "occurrences_by_status": {
+          "RAW": 44567,
+          "DECODED": 0,
+          "STRUCTURED": 11322,
+          "UNDERSTOOD": 38529
+        },
+        "understood_percent": 40.806838
+      },
+      {
+        "image": "PLI1.OVL",
+        "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+        "instruction_occurrences": 42875,
+        "occurrences_by_status": {
+          "RAW": 2215,
+          "DECODED": 0,
+          "STRUCTURED": 0,
+          "UNDERSTOOD": 40660
+        },
+        "understood_percent": 94.833819
+      },
+      {
+        "image": "PLI2.OVL",
+        "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+        "instruction_occurrences": 36181,
+        "occurrences_by_status": {
+          "RAW": 23127,
+          "DECODED": 1302,
+          "STRUCTURED": 3649,
+          "UNDERSTOOD": 8103
+        },
+        "understood_percent": 22.395733
+      }
+    ],
+    "total": {
+      "instruction_occurrences": 439998,
+      "occurrences_by_status": {
+        "RAW": 103113,
+        "DECODED": 61990,
+        "STRUCTURED": 58181,
+        "UNDERSTOOD": 216714
+      },
+      "understood_percent": 49.253406
+    },
+    "full_run_instruction_occurrences": 441855,
+    "outside_historical_images": 1857,
+    "understood_percent_of_full_run": 49.046407
+  }
+}

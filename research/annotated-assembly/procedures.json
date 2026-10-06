@@ -22255,6 +22255,942 @@
         "0334": "CALL guarded bridge +19BB; witnessed jump to runtime0005, real host write and RET; results delegated",
         "0337": "consume original wrapper CALL word; retain BDOS returned machine state"
       }
+    },
+    {
+      "id": "PLI1.OVL+6223",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "stable_label": "PLI1_6223",
+      "runtime_entry": 33827,
+      "start_offset": 25123,
+      "end_offset": 25165,
+      "length": 42,
+      "byte_status_at_entry": "UNDERSTOOD",
+      "description": "mask-dispatched composition with two RAR decisions",
+      "completeness": {
+        "bounds": "stable",
+        "control_flow": "complete",
+        "contract": "partial"
+      },
+      "observed_paths": {
+        "invocations_by_run": {
+          "MINIMAL": 1,
+          "FIZZBUZ": 18,
+          "PICTURE": 2
+        },
+        "represented_bytes": 42,
+        "description": "OBSERVED corrected ordinary CALL/return windows independently retained for MINIMAL/FIZZBUZ/PICTURE; union of own bytes excludes child bodies."
+      },
+      "unresolved_paths": [
+        "Child contracts +61A4/+60E5, +2355, +5929/+46A7/+784E remain partial or opaque; captured outputs cannot replace them.",
+        "Broader child predicates/aliases/termination and state producers are unestablished."
+      ],
+      "inputs": "Actual entry registers and selected shared byte-addressed memory; child scopes inherited; executable code, selected scratch/publications/read carriers and active return/save slots nonaliasing where their operation requires it. No table capacity or ownership assumption.",
+      "outputs": "Path-specific A/BC/DE/HL and flags as documented below and in correlated natural cases; SP=entry_SP+2; PC=original CALL continuation.",
+      "clobbers": "Path-specific A/BC/DE/HL/flags; local scratch/publications stated below; delegated child effects; proven CALL/PUSH stack residue.",
+      "memory_state": [
+        "All numerical addresses denote historical runtime bytes, not separate host arrays.",
+        "F=entry_SP; original hardware CALL word at F; body CALL/save traffic below F; preserved per-invocation last writers."
+      ],
+      "data_role_ids": [],
+      "callers": [
+        {
+          "coordinate": "PLI1.OVL+6273",
+          "counts_by_run": {
+            "MINIMAL": 1,
+            "FIZZBUZ": 18,
+            "PICTURE": 2
+          }
+        }
+      ],
+      "returns": {
+        "convention": "ordinary hardware CALL word; original slot unchanged; SP after RET=entry_SP+2",
+        "observed_file_offsets": [
+          25164
+        ],
+        "sites_description": "PLI1.OVL+624C"
+      },
+      "direct_callees": [
+        {
+          "callsite_offset": 25123,
+          "coordinate": "PLI1.OVL+020E",
+          "runtime_address": 9230
+        },
+        {
+          "callsite_offset": 25152,
+          "coordinate": "PLI1.OVL+5929",
+          "runtime_address": 31529
+        },
+        {
+          "callsite_offset": 25155,
+          "coordinate": "PLI1.OVL+239A",
+          "runtime_address": 17818
+        },
+        {
+          "callsite_offset": 25161,
+          "coordinate": "PLI1.OVL+2511",
+          "runtime_address": 18193
+        },
+        {
+          "callsite_offset": 25130,
+          "coordinate": "PLI1.OVL+620C",
+          "runtime_address": 33804
+        },
+        {
+          "callsite_offset": 25137,
+          "coordinate": "PLI1.OVL+01E8",
+          "runtime_address": 9192
+        },
+        {
+          "callsite_offset": 25140,
+          "coordinate": "PLI1.OVL+239A",
+          "runtime_address": 17818
+        },
+        {
+          "callsite_offset": 25146,
+          "coordinate": "PLI1.OVL+256C",
+          "runtime_address": 18284
+        }
+      ],
+      "overlapping_entries": [],
+      "contract_scope": "Bounded accumulated-natural routes and exact represented local operations; delegated partial/opaque children and unexecuted local arms are not silently implemented.",
+      "contract": "Call complete +020E, RAR its returned A (incoming CY contributes bit7; outgoing CY is old A.bit0). JNC +6227 selects route B when that bit is clear: partial +5929, fresh +239A, ADI13 modulo256, MOV C,A, complete-at-bounded-scope +2511. Set bit calls partial +620C and independently RARs its result. Clear second bit jumps through +623D to the common RET with the RAR machine state and no +01E8/+239A/+256C. Set second bit calls partial +01E8, fresh +239A, ADI13/MOV C,A, partial +256C. Both processing paths delegate final machine state to their last child. OBSERVED: +239A returns04, so subsequent C=17H on both routes; this is a correlated observation, not a constant implementation. No local frame or scratch publication; actual child CALL words overlap below entry SP. OBSERVED indirect re-entry: six FIZZBUZ6223 windows occur beneath620C/61A4/60E5 inside three early-route6223 windows. Local route classification excludes delegated descendant calls;21 corrected windows are not21 independent outer roots.",
+      "semantic_hypothesis": null,
+      "pseudocode": "call020E; RAR; JNC iff returned A.bit0 clear; call620C; independent RAR; clear bit -> common RET without processing children; 01E8; fresh239A; A=u8(A+13H); C=A;256C; common RET; 5929; fresh239A; A=u8(A+13H); C=A;2511; common RET",
+      "evidence_refs": [
+        "evidence.json#seeds/PLI1.OVL+6223",
+        "../host-compiler/pass-32/README.md",
+        "../host-compiler/pass-32/child-correlations.json"
+      ],
+      "blocks": [
+        {
+          "offset": 25123,
+          "pseudocode": [
+            "call020E; RAR; JNC iff returned A.bit0 clear"
+          ]
+        },
+        {
+          "offset": 25130,
+          "pseudocode": [
+            "call620C; independent RAR; clear bit -> common RET without processing children"
+          ]
+        },
+        {
+          "offset": 25137,
+          "pseudocode": [
+            "01E8; fresh239A; A=u8(A+13H); C=A;256C; common RET"
+          ]
+        },
+        {
+          "offset": 25152,
+          "pseudocode": [
+            "5929; fresh239A; A=u8(A+13H); C=A;2511; common RET"
+          ]
+        }
+      ],
+      "local_comments": {
+        "6223": "push following PC; invoke PLI1.OVL+020E; child state/effects at the explicitly scoped contract",
+        "6226": "A=(incoming_CY<<7)|(old_A>>1); CY=old_A.bit0; NZPA preserved",
+        "6227": "if CY=0: PC=8440H; flags preserved",
+        "622A": "push following PC; invoke PLI1.OVL+620C; child state/effects at the explicitly scoped contract",
+        "622D": "A=(incoming_CY<<7)|(old_A>>1); CY=old_A.bit0; NZPA preserved",
+        "622E": "if CY=0: PC=843DH; flags preserved",
+        "6231": "push following PC; invoke PLI1.OVL+01E8; child state/effects at the explicitly scoped contract",
+        "6234": "push following PC; invoke PLI1.OVL+239A; child state/effects at the explicitly scoped contract",
+        "6237": "A=u8(A+13H); arithmetic flags; adjusted byte remains a distinct result",
+        "6239": "C=A; flags preserved",
+        "623A": "push following PC; invoke PLI1.OVL+256C; child state/effects at the explicitly scoped contract",
+        "623D": "unconditionally: PC=844CH; flags preserved",
+        "6240": "push following PC; invoke PLI1.OVL+5929; child state/effects at the explicitly scoped contract",
+        "6243": "push following PC; invoke PLI1.OVL+239A; child state/effects at the explicitly scoped contract",
+        "6246": "A=u8(A+13H); arithmetic flags; adjusted byte remains a distinct result",
+        "6248": "C=A; flags preserved",
+        "6249": "push following PC; invoke PLI1.OVL+2511; child state/effects at the explicitly scoped contract",
+        "624C": "consume original hardware return word; SP=entry_SP+2; preserve final path flags and registers"
+      }
+    },
+    {
+      "id": "PLI1.OVL+620C",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "stable_label": "PLI1_620C",
+      "runtime_entry": 33804,
+      "start_offset": 25100,
+      "end_offset": 25123,
+      "length": 23,
+      "byte_status_at_entry": "UNDERSTOOD",
+      "description": "cached child byte with literal-one or wrapping borrow mask",
+      "completeness": {
+        "bounds": "stable",
+        "control_flow": "complete",
+        "contract": "partial"
+      },
+      "observed_paths": {
+        "invocations_by_run": {
+          "MINIMAL": 0,
+          "FIZZBUZ": 7,
+          "PICTURE": 1
+        },
+        "represented_bytes": 23,
+        "description": "OBSERVED corrected ordinary CALL/return windows independently retained for MINIMAL/FIZZBUZ/PICTURE; union of own bytes excludes child bodies."
+      },
+      "unresolved_paths": [
+        "+61A4 delegates substantial +60E5 behavior; its general result/effects remain opaque.",
+        "Child values other than0/1 are STATIC / UNOBSERVED; no Boolean/source meaning inferred."
+      ],
+      "inputs": "Actual entry registers and selected shared byte-addressed memory; child scopes inherited; executable code, selected scratch/publications/read carriers and active return/save slots nonaliasing where their operation requires it. No table capacity or ownership assumption.",
+      "outputs": "Path-specific A/BC/DE/HL and flags as documented below and in correlated natural cases; SP=entry_SP+2; PC=original CALL continuation.",
+      "clobbers": "Path-specific A/BC/DE/HL/flags; local scratch/publications stated below; delegated child effects; proven CALL/PUSH stack residue.",
+      "memory_state": [
+        "All numerical addresses denote historical runtime bytes, not separate host arrays.",
+        "F=entry_SP; original hardware CALL word at F; body CALL/save traffic below F; preserved per-invocation last writers."
+      ],
+      "data_role_ids": [],
+      "callers": [
+        {
+          "coordinate": "PLI1.OVL+622A",
+          "counts_by_run": {
+            "FIZZBUZ": 7,
+            "PICTURE": 1
+          }
+        }
+      ],
+      "returns": {
+        "convention": "ordinary hardware CALL word; original slot unchanged; SP after RET=entry_SP+2",
+        "observed_file_offsets": [
+          25113,
+          25122
+        ],
+        "sites_description": "PLI1.OVL+6219; PLI1.OVL+6222"
+      },
+      "direct_callees": [
+        {
+          "callsite_offset": 25100,
+          "coordinate": "PLI1.OVL+61A4",
+          "runtime_address": 33700
+        }
+      ],
+      "overlapping_entries": [],
+      "contract_scope": "Bounded accumulated-natural routes and exact represented local operations; delegated partial/opaque children and unexecuted local arms are not silently implemented.",
+      "contract": "Call partial +61A4; publish its returned A to A945 before CPI00. For zero reload is unnecessary: MVI A,01 preserves comparison flags and RET +6219. For nonzero, freshly reload A945, subtract04 modulo256, then subtract01 modulo256, then SBB A expands ONLY the second subtraction borrow into FF/00. It is not one combined subtraction by5. OBSERVED child A=0 four FIZZBUZ and one PICTURE calls -> result01; child A=1 three FIZZBUZ -> result00. NZPA/CY on nonzero return come from SBB A; BC/DE/HL delegated61A4 remain untouched locally. Caller RAR tests result.bit0, not the incoming returned CY.",
+      "semantic_hypothesis": null,
+      "pseudocode": "61A4; A945=A; CPI00; zero -> literal01 with compare flags; fresh A945; SUI04; SUI01; SBB A; RET with mask arithmetic flags",
+      "evidence_refs": [
+        "evidence.json#seeds/PLI1.OVL+620C",
+        "../host-compiler/pass-32/README.md",
+        "../host-compiler/pass-32/child-correlations.json"
+      ],
+      "blocks": [
+        {
+          "offset": 25100,
+          "pseudocode": [
+            "61A4; A945=A; CPI00; zero -> literal01 with compare flags"
+          ]
+        },
+        {
+          "offset": 25114,
+          "pseudocode": [
+            "fresh A945; SUI04; SUI01; SBB A; RET with mask arithmetic flags"
+          ]
+        }
+      ],
+      "local_comments": {
+        "620C": "push following PC; invoke PLI1.OVL+61A4; child state/effects at the explicitly scoped contract",
+        "620F": "unconditionally publish A to byte[A945H]; flags preserved",
+        "6212": "flags=unsigned byte comparison A-00H; A preserved",
+        "6214": "if Z=0: PC=841AH; flags preserved",
+        "6217": "A=01H; flags preserved",
+        "6219": "consume original hardware return word; SP=entry_SP+2; preserve final path flags and registers",
+        "621A": "A=fresh byte[A945H]; flags preserved",
+        "621D": "A=u8(A-04H); arithmetic flags; CY=borrow of this subtraction only",
+        "621F": "A=u8(A-01H); arithmetic flags; CY=borrow of this subtraction only",
+        "6221": "A=old_CY?FFH:00H for self subtraction; exact S/Z/AC/P/CY arithmetic flags",
+        "6222": "consume original hardware return word; SP=entry_SP+2; preserve final path flags and registers"
+      }
+    },
+    {
+      "id": "PLI1.OVL+239A",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "stable_label": "PLI1_239A",
+      "runtime_entry": 17818,
+      "start_offset": 9114,
+      "end_offset": 9120,
+      "length": 6,
+      "byte_status_at_entry": "UNDERSTOOD",
+      "description": "fresh index-zero result dispatcher wrapper",
+      "completeness": {
+        "bounds": "stable",
+        "control_flow": "complete",
+        "contract": "partial"
+      },
+      "observed_paths": {
+        "invocations_by_run": {
+          "MINIMAL": 3,
+          "FIZZBUZ": 49,
+          "PICTURE": 10
+        },
+        "represented_bytes": 6,
+        "description": "OBSERVED corrected ordinary CALL/return windows independently retained for MINIMAL/FIZZBUZ/PICTURE; union of own bytes excludes child bodies."
+      },
+      "unresolved_paths": [
+        "Wider +2355 indexed dispatch and delegated helper paths remain partial. Its literal31 ->06 arm is observed incidentally outside +6223/+5929 here but not promoted or separately decompiled. Literal2A remains outside this investigation."
+      ],
+      "inputs": "Actual entry registers and selected shared byte-addressed memory; child scopes inherited; executable code, selected scratch/publications/read carriers and active return/save slots nonaliasing where their operation requires it. No table capacity or ownership assumption.",
+      "outputs": "Path-specific A/BC/DE/HL and flags as documented below and in correlated natural cases; SP=entry_SP+2; PC=original CALL continuation.",
+      "clobbers": "Path-specific A/BC/DE/HL/flags; local scratch/publications stated below; delegated child effects; proven CALL/PUSH stack residue.",
+      "memory_state": [
+        "All numerical addresses denote historical runtime bytes, not separate host arrays.",
+        "F=entry_SP; original hardware CALL word at F; body CALL/save traffic below F; preserved per-invocation last writers."
+      ],
+      "data_role_ids": [],
+      "callers": [
+        {
+          "coordinate": "PLI1.OVL+02D0",
+          "counts_by_run": {
+            "PICTURE": 1
+          }
+        },
+        {
+          "coordinate": "PLI1.OVL+0EE7",
+          "counts_by_run": {
+            "FIZZBUZ": 1
+          }
+        },
+        {
+          "coordinate": "PLI1.OVL+1094",
+          "counts_by_run": {
+            "FIZZBUZ": 1
+          }
+        },
+        {
+          "coordinate": "PLI1.OVL+12CB",
+          "counts_by_run": {
+            "FIZZBUZ": 1
+          }
+        },
+        {
+          "coordinate": "PLI1.OVL+3FB7",
+          "counts_by_run": {
+            "FIZZBUZ": 9,
+            "PICTURE": 4
+          }
+        },
+        {
+          "coordinate": "PLI1.OVL+58E4",
+          "counts_by_run": {
+            "MINIMAL": 1,
+            "FIZZBUZ": 5,
+            "PICTURE": 2
+          }
+        },
+        {
+          "coordinate": "PLI1.OVL+591F",
+          "counts_by_run": {
+            "FIZZBUZ": 3
+          }
+        },
+        {
+          "coordinate": "PLI1.OVL+5A34",
+          "counts_by_run": {
+            "MINIMAL": 1,
+            "FIZZBUZ": 11,
+            "PICTURE": 1
+          }
+        },
+        {
+          "coordinate": "PLI1.OVL+6234",
+          "counts_by_run": {
+            "FIZZBUZ": 4,
+            "PICTURE": 1
+          }
+        },
+        {
+          "coordinate": "PLI1.OVL+6243",
+          "counts_by_run": {
+            "MINIMAL": 1,
+            "FIZZBUZ": 11,
+            "PICTURE": 1
+          }
+        },
+        {
+          "coordinate": "PLI1.OVL+65CE",
+          "counts_by_run": {
+            "FIZZBUZ": 3
+          }
+        }
+      ],
+      "returns": {
+        "convention": "ordinary hardware CALL word; original slot unchanged; SP after RET=entry_SP+2",
+        "observed_file_offsets": [
+          9119
+        ],
+        "sites_description": "PLI1.OVL+239F"
+      },
+      "direct_callees": [
+        {
+          "callsite_offset": 9116,
+          "coordinate": "PLI1.OVL+2355",
+          "runtime_address": 17749
+        }
+      ],
+      "overlapping_entries": [],
+      "contract_scope": "Bounded accumulated-natural routes and exact represented local operations; delegated partial/opaque children and unexecuted local arms are not silently implemented.",
+      "contract": "MVI C,00 preserves incoming A/other registers/flags, then invoke partial +2355 and return its machine state unchanged except original outer SP/continuation. Every invocation performs a fresh child call. OBSERVED +6223 and +5929 children return04 with selected A628[0]=02/05/15H and delegated +230E/+22CB scope; the returned flags differ by path even where A matches; independently retained wider calls also return05 or06; no constant04 generalization. +6223 applies ADI13 while +5929 independently applies INR A.",
+      "semantic_hypothesis": null,
+      "pseudocode": "C=0; fresh2355; return delegated machine state",
+      "evidence_refs": [
+        "evidence.json#seeds/PLI1.OVL+239A",
+        "../host-compiler/pass-32/README.md",
+        "../host-compiler/pass-32/child-correlations.json"
+      ],
+      "blocks": [
+        {
+          "offset": 9114,
+          "pseudocode": [
+            "C=0; fresh2355; return delegated machine state"
+          ]
+        }
+      ],
+      "local_comments": {
+        "239A": "C=00H; flags preserved",
+        "239C": "push following PC; invoke PLI1.OVL+2355; child state/effects at the explicitly scoped contract",
+        "239F": "consume original hardware return word; SP=entry_SP+2; preserve final path flags and registers"
+      }
+    },
+    {
+      "id": "PLI1.OVL+256C",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "stable_label": "PLI1_256C",
+      "runtime_entry": 18284,
+      "start_offset": 9580,
+      "end_offset": 9641,
+      "length": 61,
+      "byte_status_at_entry": "UNDERSTOOD",
+      "description": "one-byte-frame high-attribute dispatch and publication composition",
+      "completeness": {
+        "bounds": "stable",
+        "control_flow": "complete",
+        "contract": "partial"
+      },
+      "observed_paths": {
+        "invocations_by_run": {
+          "MINIMAL": 0,
+          "FIZZBUZ": 7,
+          "PICTURE": 3
+        },
+        "represented_bytes": 61,
+        "description": "OBSERVED corrected ordinary CALL/return windows independently retained for MINIMAL/FIZZBUZ/PICTURE; union of own bytes excludes child bodies."
+      },
+      "unresolved_paths": [
+        "Bounded +2511/+8048/+7EC0 restrictions and source/cache/destination/stack aliases remain explicit; arbitrary attribute/state combinations not established."
+      ],
+      "inputs": "Actual entry registers and selected shared byte-addressed memory; child scopes inherited; executable code, selected scratch/publications/read carriers and active return/save slots nonaliasing where their operation requires it. No table capacity or ownership assumption.",
+      "outputs": "Path-specific A/BC/DE/HL and flags as documented below and in correlated natural cases; SP=entry_SP+2; PC=original CALL continuation.",
+      "clobbers": "Path-specific A/BC/DE/HL/flags; local scratch/publications stated below; delegated child effects; proven CALL/PUSH stack residue.",
+      "memory_state": [
+        "All numerical addresses denote historical runtime bytes, not separate host arrays.",
+        "F=entry_SP; original hardware CALL word at F; body CALL/save traffic below F; preserved per-invocation last writers."
+      ],
+      "data_role_ids": [],
+      "callers": [
+        {
+          "coordinate": "PLI1.OVL+02D6",
+          "counts_by_run": {
+            "PICTURE": 1
+          }
+        },
+        {
+          "coordinate": "PLI1.OVL+1C8B",
+          "counts_by_run": {
+            "PICTURE": 1
+          }
+        },
+        {
+          "coordinate": "PLI1.OVL+5925",
+          "counts_by_run": {
+            "FIZZBUZ": 3
+          }
+        },
+        {
+          "coordinate": "PLI1.OVL+623A",
+          "counts_by_run": {
+            "FIZZBUZ": 4,
+            "PICTURE": 1
+          }
+        }
+      ],
+      "returns": {
+        "convention": "ordinary hardware CALL word; original slot unchanged; SP after RET=entry_SP+2",
+        "observed_file_offsets": [
+          9640
+        ],
+        "sites_description": "PLI1.OVL+25A8"
+      },
+      "direct_callees": [
+        {
+          "callsite_offset": 9588,
+          "coordinate": "PLI1.OVL+7B64",
+          "runtime_address": 40292
+        },
+        {
+          "callsite_offset": 9636,
+          "coordinate": "PLI1.OVL+2511",
+          "runtime_address": 18193
+        },
+        {
+          "callsite_offset": 9601,
+          "coordinate": "PLI1.OVL+8048",
+          "runtime_address": 41544
+        },
+        {
+          "callsite_offset": 9612,
+          "coordinate": "PLI1.OVL+7AF0",
+          "runtime_address": 40176
+        },
+        {
+          "callsite_offset": 9617,
+          "coordinate": "PLI1.OVL+23D2",
+          "runtime_address": 17874
+        },
+        {
+          "callsite_offset": 9625,
+          "coordinate": "PLI1.OVL+7EC0",
+          "runtime_address": 41152
+        }
+      ],
+      "overlapping_entries": [],
+      "contract_scope": "Bounded accumulated-natural routes and exact represented local operations; delegated partial/opaque children and unexecuted local arms are not silently implemented.",
+      "contract": "MOV B,C; PUSH B; INX SP leaves one private input byte at entry_SP-1 and residue of the duplicated C below it. Freshly read that frame byte for complete +7B64. CPI06/JNZ chooses non6 -> reload frame byte -> bounded +2511. For attr6 reload frame byte -> bounded +8048; fresh AE32/AE33 carrier supplies low position to complete +7AF0, while fresh A5B0/A5B1 supplies DE. Then explicit C=0 -> complete +23D2; fresh frame byte -> partial +7EC0. Both paths INX SP/RET; final state delegated last child, no invented common flag convention. OBSERVED FIZZBUZ seven attr4; PICTURE two attr4 and one attr6. All local bytes and both routes represented; child unsupported domains remain inherited.",
+      "semantic_hypothesis": null,
+      "pseudocode": "construct one-byte historical frame; high_attribute(fresh frame); CPI06; attr6:8048;7AF0(fresh AE32,word[A5B0]);23D2(0);7EC0(fresh frame); attr!=6:2511(fresh frame); discard frame; RET",
+      "evidence_refs": [
+        "evidence.json#seeds/PLI1.OVL+256C",
+        "../host-compiler/pass-32/README.md",
+        "../host-compiler/pass-32/child-correlations.json"
+      ],
+      "blocks": [
+        {
+          "offset": 9580,
+          "pseudocode": [
+            "construct one-byte historical frame; high_attribute(fresh frame); CPI06"
+          ]
+        },
+        {
+          "offset": 9596,
+          "pseudocode": [
+            "attr6:8048;7AF0(fresh AE32,word[A5B0]);23D2(0);7EC0(fresh frame)"
+          ]
+        },
+        {
+          "offset": 9631,
+          "pseudocode": [
+            "attr!=6:2511(fresh frame); discard frame; RET"
+          ]
+        }
+      ],
+      "local_comments": {
+        "256C": "B=C; flags preserved",
+        "256D": "write high then low B below SP; SP-=2; preserve flags; compatibility residue retained",
+        "256E": "SP=u16(SP +1); flags preserved",
+        "256F": "H pair = literal 0000H; flags preserved",
+        "2572": "HL=u16(HL+SP); only CY changes to word overflow",
+        "2573": "C=fresh byte[HL]; flags preserved",
+        "2574": "push following PC; invoke PLI1.OVL+7B64; child state/effects at the explicitly scoped contract",
+        "2577": "flags=unsigned byte comparison A-06H; A preserved",
+        "2579": "if Z=0: PC=479FH; flags preserved",
+        "257C": "H pair = literal 0000H; flags preserved",
+        "257F": "HL=u16(HL+SP); only CY changes to word overflow",
+        "2580": "C=fresh byte[HL]; flags preserved",
+        "2581": "push following PC; invoke PLI1.OVL+8048; child state/effects at the explicitly scoped contract",
+        "2584": "HL=fresh little_endian_word[AE32H]; low then high read; flags preserved",
+        "2587": "C=L; flags preserved",
+        "2588": "HL=fresh little_endian_word[A5B0H]; low then high read; flags preserved",
+        "258B": "exchange DE and HL; flags preserved",
+        "258C": "push following PC; invoke PLI1.OVL+7AF0; child state/effects at the explicitly scoped contract",
+        "258F": "C=00H; flags preserved",
+        "2591": "push following PC; invoke PLI1.OVL+23D2; child state/effects at the explicitly scoped contract",
+        "2594": "H pair = literal 0000H; flags preserved",
+        "2597": "HL=u16(HL+SP); only CY changes to word overflow",
+        "2598": "C=fresh byte[HL]; flags preserved",
+        "2599": "push following PC; invoke PLI1.OVL+7EC0; child state/effects at the explicitly scoped contract",
+        "259C": "unconditionally: PC=47A7H; flags preserved",
+        "259F": "H pair = literal 0000H; flags preserved",
+        "25A2": "HL=u16(HL+SP); only CY changes to word overflow",
+        "25A3": "C=fresh byte[HL]; flags preserved",
+        "25A4": "push following PC; invoke PLI1.OVL+2511; child state/effects at the explicitly scoped contract",
+        "25A7": "SP=u16(SP +1); flags preserved",
+        "25A8": "consume original hardware return word; SP=entry_SP+2; preserve final path flags and registers"
+      }
+    },
+    {
+      "id": "PLI1.OVL+5929",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "stable_label": "PLI1_5929",
+      "runtime_entry": 31529,
+      "start_offset": 22825,
+      "end_offset": 23110,
+      "length": 285,
+      "byte_status_at_entry": "UNDERSTOOD",
+      "description": "scanned selector state and pointer publications before two delegated children",
+      "completeness": {
+        "bounds": "provisional",
+        "control_flow": "partial",
+        "contract": "partial"
+      },
+      "observed_paths": {
+        "invocations_by_run": {
+          "MINIMAL": 1,
+          "FIZZBUZ": 11,
+          "PICTURE": 1
+        },
+        "represented_bytes": 131,
+        "description": "OBSERVED corrected ordinary CALL/return windows independently retained for MINIMAL/FIZZBUZ/PICTURE; union of own bytes excludes child bodies."
+      },
+      "unresolved_paths": [
+        "RAW scan-miss +5A42, selector3/4 handling +5971..+59DB and selector7/8/9 publication arms remain STATIC / UNOBSERVED.",
+        "Opaque +46A7 and partial +784E acquisition/classification prevent faithful whole-parent native composition; scoped child chronology is not a child implementation.",
+        "Pointer producers, aliases and conditional termination remain unproved beyond actual natural windows."
+      ],
+      "inputs": "Actual entry registers and selected shared byte-addressed memory; child scopes inherited; executable code, selected scratch/publications/read carriers and active return/save slots nonaliasing where their operation requires it. No table capacity or ownership assumption.",
+      "outputs": "Path-specific A/BC/DE/HL and flags as documented below and in correlated natural cases; SP=entry_SP+2; PC=original CALL continuation.",
+      "clobbers": "Path-specific A/BC/DE/HL/flags; local scratch/publications stated below; delegated child effects; proven CALL/PUSH stack residue.",
+      "memory_state": [
+        "All numerical addresses denote historical runtime bytes, not separate host arrays.",
+        "F=entry_SP; original hardware CALL word at F; body CALL/save traffic below F; preserved per-invocation last writers."
+      ],
+      "data_role_ids": [],
+      "callers": [
+        {
+          "coordinate": "PLI1.OVL+6240",
+          "counts_by_run": {
+            "MINIMAL": 1,
+            "FIZZBUZ": 11,
+            "PICTURE": 1
+          }
+        }
+      ],
+      "returns": {
+        "convention": "ordinary hardware CALL word; original slot unchanged; SP after RET=entry_SP+2",
+        "observed_file_offsets": [
+          23109
+        ],
+        "sites_description": "PLI1.OVL+5A45"
+      },
+      "direct_callees": [
+        {
+          "callsite_offset": 22828,
+          "coordinate": "PLI1.OVL+57B7",
+          "runtime_address": 31159
+        },
+        {
+          "callsite_offset": 22839,
+          "coordinate": "PLI1.OVL+46A7",
+          "runtime_address": 26791
+        },
+        {
+          "callsite_offset": 23092,
+          "coordinate": "PLI1.OVL+239A",
+          "runtime_address": 17818
+        },
+        {
+          "callsite_offset": 23097,
+          "coordinate": "PLI1.OVL+2511",
+          "runtime_address": 18193
+        },
+        {
+          "callsite_offset": 23100,
+          "coordinate": "PLI1.OVL+784E",
+          "runtime_address": 39502
+        }
+      ],
+      "overlapping_entries": [],
+      "contract_scope": "Bounded accumulated-natural routes and exact represented local operations; delegated partial/opaque children and unexecuted local arms are not silently implemented.",
+      "contract": "Call complete +57B7 with BC=7923H; RAR its result; JNC clear bit selects an unobserved RAW alternative. OBSERVED result01 enters work. Fresh20C3 low from paired20C3/20C4 read is C to opaque +46A7. Fresh word[A863] is copied low/high to A63B/A63C then A635/A636. Clear A631; fresh20C3 -> A628; fresh20C5 -> A62B; clear A62E. Preserve separate SUI03/SUI01/SBB and SUI04/SUI01/SBB masks through PUSH PSW/POP B/ORA C/RAR. Natural selectors02/05 skip the RAW3/4,7,8,9 alternatives. Fresh word[A863]+4 receives fresh A62B; a second fresh pointer read+5 receives fresh A62E. Fresh +239A, INR A, MOV C,A -> bounded +2511; partial +784E then RET through +5A45. OBSERVED +239A returns04 and child2511 receives05; final machine state delegated784E. +46A7 returns00 orFF but its return A is not used as the later selector; the caller freshly rereads20C3.",
+      "semantic_hypothesis": null,
+      "pseudocode": "57B7(7923H); RAR; observed found route; opaque46A7(fresh20C3); publish fresh pointer twice; clear extra; independently copy20C3/20C5; two wrapping masks, saved PSW, OR/RAR; natural02/05 skip special arms; fresh selector comparisons against7,8,9; natural02/05 skip RAW alternatives; fresh pointer+4 <-primary; fresh pointer+5 <-extra;239A;INR;2511;784E;RET",
+      "evidence_refs": [
+        "evidence.json#seeds/PLI1.OVL+5929",
+        "../host-compiler/pass-32/README.md",
+        "../host-compiler/pass-32/child-correlations.json"
+      ],
+      "blocks": [
+        {
+          "offset": 22825,
+          "pseudocode": [
+            "57B7(7923H); RAR; observed found route; opaque46A7(fresh20C3)"
+          ]
+        },
+        {
+          "offset": 22842,
+          "pseudocode": [
+            "publish fresh pointer twice; clear extra; independently copy20C3/20C5"
+          ]
+        },
+        {
+          "offset": 22873,
+          "pseudocode": [
+            "two wrapping masks, saved PSW, OR/RAR; natural02/05 skip special arms"
+          ]
+        },
+        {
+          "offset": 23003,
+          "pseudocode": [
+            "fresh selector comparisons against7,8,9; natural02/05 skip RAW alternatives"
+          ]
+        },
+        {
+          "offset": 23072,
+          "pseudocode": [
+            "fresh pointer+4 <-primary; fresh pointer+5 <-extra;239A;INR;2511;784E;RET"
+          ]
+        }
+      ],
+      "local_comments": {
+        "5929": "B pair = literal 7923H; flags preserved",
+        "592C": "push following PC; invoke PLI1.OVL+57B7; child state/effects at the explicitly scoped contract",
+        "592F": "A=(incoming_CY<<7)|(old_A>>1); CY=old_A.bit0; NZPA preserved",
+        "5930": "if CY=0: PC=7C42H; flags preserved",
+        "5933": "HL=fresh little_endian_word[20C3H]; low then high read; flags preserved",
+        "5936": "C=L; flags preserved",
+        "5937": "push following PC; invoke PLI1.OVL+46A7; child state/effects at the explicitly scoped contract",
+        "593A": "HL=fresh little_endian_word[A863H]; low then high read; flags preserved",
+        "593D": "byte[A63BH]=L then byte[address+1]=H; flags preserved",
+        "5940": "byte[A635H]=L then byte[address+1]=H; flags preserved",
+        "5943": "H pair = literal A631H; flags preserved",
+        "5946": "byte[HL]=00H; flags preserved",
+        "5948": "A=fresh byte[20C3H]; flags preserved",
+        "594B": "unconditionally publish A to byte[A628H]; flags preserved",
+        "594E": "A=fresh byte[20C5H]; flags preserved",
+        "5951": "unconditionally publish A to byte[A62BH]; flags preserved",
+        "5954": "H pair = literal A62EH; flags preserved",
+        "5957": "byte[HL]=00H; flags preserved",
+        "5959": "A=fresh byte[20C3H]; flags preserved",
+        "595C": "A=u8(A-03H); arithmetic flags; CY=borrow of this subtraction only",
+        "595E": "A=u8(A-01H); arithmetic flags; CY=borrow of this subtraction only",
+        "5960": "A=old_CY?FFH:00H for self subtraction; exact S/Z/AC/P/CY arithmetic flags",
+        "5961": "write high then low PSW below SP; SP-=2; preserve flags; compatibility residue retained",
+        "5962": "A=fresh byte[20C3H]; flags preserved",
+        "5965": "A=u8(A-04H); arithmetic flags; CY=borrow of this subtraction only",
+        "5967": "A=u8(A-01H); arithmetic flags; CY=borrow of this subtraction only",
+        "5969": "A=old_CY?FFH:00H for self subtraction; exact S/Z/AC/P/CY arithmetic flags",
+        "596A": "read low then high into B pair; SP+=2; flags preserved; residue remains",
+        "596B": "C=B; flags preserved",
+        "596C": "A=A OR C; logical flags; CY=0",
+        "596D": "A=(incoming_CY<<7)|(old_A>>1); CY=old_A.bit0; NZPA preserved",
+        "596E": "if CY=0: PC=7BDBH; flags preserved",
+        "59DB": "A=fresh byte[20C3H]; flags preserved",
+        "59DE": "flags=unsigned byte comparison A-07H; A preserved",
+        "59E0": "if Z=0: PC=7BF1H; flags preserved",
+        "59F1": "A=fresh byte[20C3H]; flags preserved",
+        "59F4": "flags=unsigned byte comparison A-08H; A preserved",
+        "59F6": "if Z=0: PC=7C0CH; flags preserved",
+        "5A0C": "A=fresh byte[20C3H]; flags preserved",
+        "5A0F": "flags=unsigned byte comparison A-09H; A preserved",
+        "5A11": "if Z=0: PC=7C20H; flags preserved",
+        "5A20": "B pair = literal 0004H; flags preserved",
+        "5A23": "HL=fresh little_endian_word[A863H]; low then high read; flags preserved",
+        "5A26": "HL=u16(HL+B); only CY changes to word overflow",
+        "5A27": "A=fresh byte[A62BH]; flags preserved",
+        "5A2A": "byte[HL]=A; flags preserved",
+        "5A2B": "HL=fresh little_endian_word[A863H]; low then high read; flags preserved",
+        "5A2E": "B=u16(B +1); flags preserved",
+        "5A2F": "HL=u16(HL+B); only CY changes to word overflow",
+        "5A30": "A=fresh byte[A62EH]; flags preserved",
+        "5A33": "byte[HL]=A; flags preserved",
+        "5A34": "push following PC; invoke PLI1.OVL+239A; child state/effects at the explicitly scoped contract",
+        "5A37": "A=u8(A+1); NZPA from byte increment; CY preserved",
+        "5A38": "C=A; flags preserved",
+        "5A39": "push following PC; invoke PLI1.OVL+2511; child state/effects at the explicitly scoped contract",
+        "5A3C": "push following PC; invoke PLI1.OVL+784E; child state/effects at the explicitly scoped contract",
+        "5A3F": "unconditionally: PC=7C45H; flags preserved",
+        "5A45": "consume original hardware return word; SP=entry_SP+2; preserve final path flags and registers"
+      }
+    },
+    {
+      "id": "PLI1.OVL+01E8",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "stable_label": "PLI1_01E8",
+      "runtime_entry": 9192,
+      "start_offset": 488,
+      "end_offset": 526,
+      "length": 38,
+      "byte_status_at_entry": "UNDERSTOOD",
+      "description": "word-two publication and fresh indexed selector comparison",
+      "completeness": {
+        "bounds": "provisional",
+        "control_flow": "partial",
+        "contract": "partial"
+      },
+      "observed_paths": {
+        "invocations_by_run": {
+          "MINIMAL": 0,
+          "FIZZBUZ": 7,
+          "PICTURE": 2
+        },
+        "represented_bytes": 15,
+        "description": "OBSERVED corrected ordinary CALL/return windows independently retained for MINIMAL/FIZZBUZ/PICTURE; union of own bytes excludes child bodies."
+      },
+      "unresolved_paths": [
+        "STATIC / UNOBSERVED selected70 -> +01F7 RAW arm; enclosing [01E8,020E) boundary remains provisional."
+      ],
+      "inputs": "Actual entry registers and selected shared byte-addressed memory; child scopes inherited; executable code, selected scratch/publications/read carriers and active return/save slots nonaliasing where their operation requires it. No table capacity or ownership assumption.",
+      "outputs": "Path-specific A/BC/DE/HL and flags as documented below and in correlated natural cases; SP=entry_SP+2; PC=original CALL continuation.",
+      "clobbers": "Path-specific A/BC/DE/HL/flags; local scratch/publications stated below; delegated child effects; proven CALL/PUSH stack residue.",
+      "memory_state": [
+        "All numerical addresses denote historical runtime bytes, not separate host arrays.",
+        "F=entry_SP; original hardware CALL word at F; body CALL/save traffic below F; preserved per-invocation last writers."
+      ],
+      "data_role_ids": [],
+      "callers": [
+        {
+          "coordinate": "PLI1.OVL+02CD",
+          "counts_by_run": {
+            "PICTURE": 1
+          }
+        },
+        {
+          "coordinate": "PLI1.OVL+591C",
+          "counts_by_run": {
+            "FIZZBUZ": 3
+          }
+        },
+        {
+          "coordinate": "PLI1.OVL+6231",
+          "counts_by_run": {
+            "FIZZBUZ": 4,
+            "PICTURE": 1
+          }
+        }
+      ],
+      "returns": {
+        "convention": "ordinary hardware CALL word; original slot unchanged; SP after RET=entry_SP+2",
+        "observed_file_offsets": [
+          502
+        ],
+        "sites_description": "PLI1.OVL+01F6"
+      },
+      "direct_callees": [],
+      "overlapping_entries": [],
+      "contract_scope": "Bounded accumulated-natural routes and exact represented local operations; delegated partial/opaque children and unexecuted local arms are not silently implemented.",
+      "contract": "LXI H,0002; SHLD A5B0 writes02 then00 to A5B0/A5B1. Fresh A628 into A; CPI70; JZ to RAW +01F7 iff equality. All nine natural calls observe selector15H or02 and return at +01F6 with A=selected byte, HL=0002, BC/DE preserved and exact CPI70 flags. Do not infer behavior of the unexecuted equality arm or shrink its extent to the observed RET.",
+      "semantic_hypothesis": null,
+      "pseudocode": "word[A5B0]=2; A=fresh A628; CPI70; observed inequality RET; equality arm RAW",
+      "evidence_refs": [
+        "evidence.json#seeds/PLI1.OVL+01E8",
+        "../host-compiler/pass-32/README.md",
+        "../host-compiler/pass-32/child-correlations.json"
+      ],
+      "blocks": [
+        {
+          "offset": 488,
+          "pseudocode": [
+            "word[A5B0]=2; A=fresh A628; CPI70; observed inequality RET; equality arm RAW"
+          ]
+        }
+      ],
+      "local_comments": {
+        "01E8": "H pair = literal 0002H; flags preserved",
+        "01EB": "byte[A5B0H]=L then byte[address+1]=H; flags preserved",
+        "01EE": "A=fresh byte[A628H]; flags preserved",
+        "01F1": "flags=unsigned byte comparison A-70H; A preserved",
+        "01F3": "if Z=1: PC=23F7H; flags preserved",
+        "01F6": "consume original hardware return word; SP=entry_SP+2; preserve final path flags and registers"
+      }
+    },
+    {
+      "id": "PLI1.OVL+61A4",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "stable_label": "PLI1_61A4",
+      "runtime_entry": 33700,
+      "start_offset": 24996,
+      "end_offset": 25005,
+      "length": 9,
+      "byte_status_at_entry": "UNDERSTOOD",
+      "description": "zero-byte publication before delegated local child",
+      "completeness": {
+        "bounds": "stable",
+        "control_flow": "complete",
+        "contract": "partial"
+      },
+      "observed_paths": {
+        "invocations_by_run": {
+          "MINIMAL": 0,
+          "FIZZBUZ": 8,
+          "PICTURE": 2
+        },
+        "represented_bytes": 9,
+        "description": "OBSERVED corrected ordinary CALL/return windows independently retained for MINIMAL/FIZZBUZ/PICTURE; union of own bytes excludes child bodies."
+      },
+      "unresolved_paths": [
+        "Substantial opaque +60E5 branch/read/publication/acquisition behavior is delegated; returned byte cannot be fabricated from invocation identity."
+      ],
+      "inputs": "Actual entry registers and selected shared byte-addressed memory; child scopes inherited; executable code, selected scratch/publications/read carriers and active return/save slots nonaliasing where their operation requires it. No table capacity or ownership assumption.",
+      "outputs": "Path-specific A/BC/DE/HL and flags as documented below and in correlated natural cases; SP=entry_SP+2; PC=original CALL continuation.",
+      "clobbers": "Path-specific A/BC/DE/HL/flags; local scratch/publications stated below; delegated child effects; proven CALL/PUSH stack residue.",
+      "memory_state": [
+        "All numerical addresses denote historical runtime bytes, not separate host arrays.",
+        "F=entry_SP; original hardware CALL word at F; body CALL/save traffic below F; preserved per-invocation last writers."
+      ],
+      "data_role_ids": [],
+      "callers": [
+        {
+          "coordinate": "PLI1.OVL+61B6",
+          "counts_by_run": {
+            "FIZZBUZ": 1,
+            "PICTURE": 1
+          }
+        },
+        {
+          "coordinate": "PLI1.OVL+620C",
+          "counts_by_run": {
+            "FIZZBUZ": 7,
+            "PICTURE": 1
+          }
+        }
+      ],
+      "returns": {
+        "convention": "ordinary hardware CALL word; original slot unchanged; SP after RET=entry_SP+2",
+        "observed_file_offsets": [
+          25004
+        ],
+        "sites_description": "PLI1.OVL+61AC"
+      },
+      "direct_callees": [
+        {
+          "callsite_offset": 25001,
+          "coordinate": "PLI1.OVL+60E5",
+          "runtime_address": 33509
+        }
+      ],
+      "overlapping_entries": [],
+      "contract_scope": "Bounded accumulated-natural routes and exact represented local operations; delegated partial/opaque children and unexecuted local arms are not silently implemented.",
+      "contract": "LXI H,A941; unconditionally write00 to A941; call opaque +60E5; RET with exact child state except outer SP/continuation. OBSERVED ten calls return A00 seven times and A01 three times; eight are620C children, two from61B6. These values are not a general child contract. No local frame; child CALL residue below entry SP.",
+      "semantic_hypothesis": null,
+      "pseudocode": "A941=0; opaque60E5; RET delegated machine state",
+      "evidence_refs": [
+        "evidence.json#seeds/PLI1.OVL+61A4",
+        "../host-compiler/pass-32/README.md",
+        "../host-compiler/pass-32/child-correlations.json"
+      ],
+      "blocks": [
+        {
+          "offset": 24996,
+          "pseudocode": [
+            "A941=0; opaque60E5; RET delegated machine state"
+          ]
+        }
+      ],
+      "local_comments": {
+        "61A4": "H pair = literal A941H; flags preserved",
+        "61A7": "byte[HL]=00H; flags preserved",
+        "61A9": "push following PC; invoke PLI1.OVL+60E5; child state/effects at the explicitly scoped contract",
+        "61AC": "consume original hardware return word; SP=entry_SP+2; preserve final path flags and registers"
+      }
     }
   ]
 }
