@@ -1,0 +1,437 @@
+{
+  "categories": {
+    "project": {
+      "command": [
+        "dune",
+        "runtest",
+        "-j",
+        "4"
+      ],
+      "return_code": 0,
+      "elapsed_seconds": 0.599
+    },
+    "pass39": {
+      "command": [
+        "python3",
+        "tools/annotated-assembly/test_state_transformation_pass_39.py",
+        "--images",
+        "/home/john/pli/cpm/pli80/DISK1",
+        "-q"
+      ],
+      "return_code": 0,
+      "elapsed_seconds": 40.178
+    },
+    "pass38": {
+      "command": [
+        "python3",
+        "tools/annotated-assembly/test_acquisition_reentry_pass_38.py",
+        "--images",
+        "/home/john/pli/cpm/pli80/DISK1",
+        "-q"
+      ],
+      "return_code": 0,
+      "elapsed_seconds": 48.104
+    },
+    "V1": {
+      "command": [
+        "python3",
+        "tools/annotated-assembly/test_decompilation_annotations.py",
+        "-q"
+      ],
+      "return_code": 0,
+      "elapsed_seconds": 17.232
+    },
+    "roundtrip-tests": {
+      "command": [
+        "python3",
+        "tools/annotated-assembly/test_verify.py",
+        "--images",
+        "/home/john/pli/cpm/pli80/DISK1",
+        "-q"
+      ],
+      "return_code": 0,
+      "elapsed_seconds": 22.818
+    },
+    "roundtrip": {
+      "command": [
+        "python3",
+        "tools/annotated-assembly/verify.py",
+        "--images",
+        "/home/john/pli/cpm/pli80/DISK1"
+      ],
+      "return_code": 0,
+      "elapsed_seconds": 11.408
+    },
+    "diff-check": {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "return_code": 0,
+      "elapsed_seconds": 0.03
+    }
+  },
+  "wall_seconds": 71.523,
+  "read_only_workers": 2,
+  "validation_tier": "incremental",
+  "full_checkpoint_base": "fe6e25bdae01f787731cb45e1bef17296d7d3b2e",
+  "full_checkpoint_due": "At most Pass40, or before native +5E98-family migration",
+  "full_wave_triggers": {
+    "runtime_changed": false,
+    "schema_changed": false,
+    "established_shared_contract_corrected": false,
+    "native_implementation_changed": false,
+    "unexplained_cross_boundary_failure": false
+  },
+  "all_passed": true,
+  "aggregate_validation_commands": 2,
+  "targeted_validation_wall_seconds": 83.058,
+  "sum_category_seconds": 140.369,
+  "python_test_counts": {
+    "pass39": 19,
+    "pass38": 19,
+    "V1": 9,
+    "roundtrip-tests": 11
+  },
+  "python_tests": 58,
+  "dune_test_stanzas": 35,
+  "dune_note": "Cheap Dune runtest uses ordinary content-hash incremental scheduling; unchanged native/CPM tests are not claimed as forced reruns.",
+  "deferred_checkpoint_categories": {
+    "build": [
+      "dune",
+      "build",
+      "@all",
+      "-j",
+      "4"
+    ],
+    "pass17-native": [
+      "python3",
+      "tools/annotated-assembly/test_native_7bbf_pass_17.py",
+      "--images",
+      "/home/john/pli/cpm/pli80/DISK1",
+      "-v"
+    ],
+    "native-unit": [
+      "_build/default/test/native_packed_scan.exe"
+    ],
+    "pass19-native": [
+      "python3",
+      "tools/annotated-assembly/test_native_7c1b_pass_19.py",
+      "--images",
+      "/home/john/pli/cpm/pli80/DISK1",
+      "-v"
+    ],
+    "pass20-native": [
+      "python3",
+      "tools/annotated-assembly/test_native_mapped_publication_pass_20.py",
+      "--images",
+      "/home/john/pli/cpm/pli80/DISK1",
+      "-v"
+    ],
+    "pass15": [
+      "python3",
+      "tools/annotated-assembly/test_attribute_discriminator_pass_15.py",
+      "--images",
+      "/home/john/pli/cpm/pli80/DISK1",
+      "-v"
+    ],
+    "pass18-native": [
+      "python3",
+      "tools/annotated-assembly/test_native_7b7a_pass_18.py",
+      "--images",
+      "/home/john/pli/cpm/pli80/DISK1",
+      "-v"
+    ],
+    "baseline": [
+      "python3",
+      "tools/annotated-assembly/test_minimal_baseline.py",
+      "--images",
+      "/home/john/pli/cpm/pli80/DISK1",
+      "-v"
+    ],
+    "minimal-pass-1": [
+      "python3",
+      "tools/annotated-assembly/test_minimal_pass_1.py",
+      "--images",
+      "/home/john/pli/cpm/pli80/DISK1",
+      "-v"
+    ],
+    "minimal-pass-2": [
+      "python3",
+      "tools/annotated-assembly/test_minimal_pass_2.py",
+      "--images",
+      "/home/john/pli/cpm/pli80/DISK1",
+      "-v"
+    ],
+    "minimal-pass-3": [
+      "python3",
+      "tools/annotated-assembly/test_minimal_pass_3.py",
+      "--images",
+      "/home/john/pli/cpm/pli80/DISK1",
+      "-v"
+    ],
+    "minimal-pass-4": [
+      "python3",
+      "tools/annotated-assembly/test_minimal_pass_4.py",
+      "--images",
+      "/home/john/pli/cpm/pli80/DISK1",
+      "-v"
+    ],
+    "pass16": [
+      "python3",
+      "tools/annotated-assembly/test_host_boundary_pass_16.py",
+      "--images",
+      "/home/john/pli/cpm/pli80/DISK1",
+      "-v"
+    ],
+    "minimal-pass-5": [
+      "python3",
+      "tools/annotated-assembly/test_minimal_pass_5.py",
+      "--images",
+      "/home/john/pli/cpm/pli80/DISK1",
+      "-v"
+    ],
+    "pass14": [
+      "python3",
+      "tools/annotated-assembly/test_fizzbuz_pass_14.py",
+      "--images",
+      "/home/john/pli/cpm/pli80/DISK1",
+      "-v"
+    ],
+    "minimal-pass-6": [
+      "python3",
+      "tools/annotated-assembly/test_minimal_pass_6.py",
+      "--images",
+      "/home/john/pli/cpm/pli80/DISK1",
+      "-v"
+    ],
+    "minimal-pass-8": [
+      "python3",
+      "tools/annotated-assembly/test_minimal_pass_8.py",
+      "--capture",
+      "_build/minimal-baseline/capture",
+      "-v"
+    ],
+    "minimal-pass-7": [
+      "python3",
+      "tools/annotated-assembly/test_minimal_pass_7.py",
+      "--images",
+      "/home/john/pli/cpm/pli80/DISK1",
+      "-v"
+    ],
+    "pass13": [
+      "python3",
+      "tools/annotated-assembly/test_fizzbuz_pass_13.py",
+      "--images",
+      "/home/john/pli/cpm/pli80/DISK1",
+      "-v"
+    ],
+    "minimal-pass-11": [
+      "python3",
+      "tools/annotated-assembly/test_minimal_pass_11.py",
+      "--images",
+      "/home/john/pli/cpm/pli80/DISK1",
+      "-v"
+    ],
+    "recursive-unit": [
+      "_build/default/test/native_recursive_mapped.exe"
+    ],
+    "balance-unit": [
+      "_build/default/test/native_balance_scan.exe"
+    ],
+    "minimal-pass-12": [
+      "python3",
+      "tools/annotated-assembly/test_minimal_pass_12.py",
+      "--images",
+      "/home/john/pli/cpm/pli80/DISK1",
+      "-v"
+    ],
+    "minimal-pass-9": [
+      "python3",
+      "tools/annotated-assembly/test_minimal_pass_9.py",
+      "--images",
+      "/home/john/pli/cpm/pli80/DISK1",
+      "-v"
+    ],
+    "mapped-unit": [
+      "_build/default/test/native_mapped_publication.exe"
+    ],
+    "attribute-unit": [
+      "_build/default/test/native_attribute_auxiliary.exe"
+    ],
+    "emitter-unit": [
+      "_build/default/test/resident_int_emitter.exe"
+    ],
+    "minimal-pass-10": [
+      "python3",
+      "tools/annotated-assembly/test_minimal_pass_10.py",
+      "--images",
+      "/home/john/pli/cpm/pli80/DISK1",
+      "-v"
+    ],
+    "pass23": [
+      "python3",
+      "tools/annotated-assembly/test_native_int_emitter_pass_23.py",
+      "--images",
+      "/home/john/pli/cpm/pli80/DISK1",
+      "-v"
+    ],
+    "native-emitter-unit": [
+      "_build/default/test/native_int_emitter.exe"
+    ],
+    "word-emitter-unit": [
+      "_build/default/test/native_word_emitters.exe"
+    ],
+    "pass24": [
+      "python3",
+      "tools/annotated-assembly/test_native_word_emitters_pass_24.py",
+      "--images",
+      "/home/john/pli/cpm/pli80/DISK1",
+      "-v"
+    ],
+    "range-unit": [
+      "_build/default/test/native_range_processing.exe"
+    ],
+    "pass22": [
+      "python3",
+      "tools/annotated-assembly/test_int_emitter_pass_22.py",
+      "--images",
+      "/home/john/pli/cpm/pli80/DISK1",
+      "-v"
+    ],
+    "publication-unit": [
+      "_build/default/test/native_publication_primitives.exe"
+    ],
+    "pass21-native": [
+      "python3",
+      "tools/annotated-assembly/test_native_attribute_auxiliary_pass_21.py",
+      "--images",
+      "/home/john/pli/cpm/pli80/DISK1",
+      "-v"
+    ],
+    "range-publication-unit": [
+      "_build/default/test/native_range_publication.exe"
+    ],
+    "packet-continuation": [
+      "python3",
+      "tools/annotated-assembly/test_procedure_evidence_packet.py",
+      "--images",
+      "/home/john/pli/cpm/pli80/DISK1",
+      "-v"
+    ],
+    "control-unit": [
+      "_build/default/test/native_mapped_control.exe"
+    ],
+    "input-unit": [
+      "_build/default/test/native_input_processing.exe"
+    ],
+    "pass25": [
+      "python3",
+      "tools/annotated-assembly/test_native_7d53_pass_25.py",
+      "--images",
+      "/home/john/pli/cpm/pli80/DISK1",
+      "-v"
+    ],
+    "gate-unit": [
+      "_build/default/test/native_attribute_gate.exe"
+    ],
+    "pass26": [
+      "python3",
+      "tools/annotated-assembly/test_native_publication_primitives_pass_26.py",
+      "--images",
+      "/home/john/pli/cpm/pli80/DISK1",
+      "-v"
+    ],
+    "pass27": [
+      "python3",
+      "tools/annotated-assembly/test_native_7e5f_pass_27.py",
+      "--images",
+      "/home/john/pli/cpm/pli80/DISK1",
+      "-v"
+    ],
+    "pass28": [
+      "python3",
+      "tools/annotated-assembly/test_native_8048_pass_28.py",
+      "--images",
+      "/home/john/pli/cpm/pli80/DISK1",
+      "-v"
+    ],
+    "pass29": [
+      "python3",
+      "tools/annotated-assembly/test_native_80b7_pass_29.py",
+      "--images",
+      "/home/john/pli/cpm/pli80/DISK1",
+      "-v"
+    ],
+    "pass32": [
+      "python3",
+      "tools/annotated-assembly/test_6223_pass_32.py",
+      "--images",
+      "/home/john/pli/cpm/pli80/DISK1",
+      "-q"
+    ],
+    "pass30": [
+      "python3",
+      "tools/annotated-assembly/test_240a_pass_30.py",
+      "--images",
+      "/home/john/pli/cpm/pli80/DISK1",
+      "-q"
+    ],
+    "historical-leaf-queries": [
+      "_build/default/test/archaeology_60e5_leaves.exe"
+    ],
+    "pass34": [
+      "python3",
+      "tools/annotated-assembly/test_5a46_pass_34.py",
+      "--images",
+      "/home/john/pli/cpm/pli80/DISK1",
+      "-q"
+    ],
+    "pass35": [
+      "python3",
+      "tools/annotated-assembly/test_3dd9_pass_35.py",
+      "--images",
+      "/home/john/pli/cpm/pli80/DISK1",
+      "-q"
+    ],
+    "pass31": [
+      "python3",
+      "tools/annotated-assembly/test_native_2511_pass_31.py",
+      "--images",
+      "/home/john/pli/cpm/pli80/DISK1",
+      "-q"
+    ],
+    "pass33": [
+      "python3",
+      "tools/annotated-assembly/test_60e5_pass_33.py",
+      "--images",
+      "/home/john/pli/cpm/pli80/DISK1",
+      "-q"
+    ],
+    "pass36": [
+      "python3",
+      "tools/annotated-assembly/test_3a76_pass_36.py",
+      "--images",
+      "/home/john/pli/cpm/pli80/DISK1",
+      "-q"
+    ],
+    "pass37": [
+      "python3",
+      "tools/annotated-assembly/test_small_gates_pass_37.py",
+      "--images",
+      "/home/john/pli/cpm/pli80/DISK1",
+      "-q"
+    ]
+  },
+  "exact_historical_bytes": 94720,
+  "all_four_images_exact": true,
+  "RAW_to_UNDERSTOOD_bytes": 712,
+  "new_hypotheses": 8,
+  "old_contracts_and_seeds_unchanged": true,
+  "stable_labels_preserved": true,
+  "oracle_queries_new": 0,
+  "corrections": [],
+  "divergences": [],
+  "fidelity_debt": []
+}

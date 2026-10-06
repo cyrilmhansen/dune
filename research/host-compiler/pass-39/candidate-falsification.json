@@ -1,0 +1,15 @@
+{
+  "oracle_queries_new": 0,
+  "method": "Immutable byte/instruction/dataflow proof, independently calculated arithmetic/flags, then every correlated natural invocation. No corpus/step/hash output selection.",
+  "laws": [
+    {"operation": "+21D4", "law": "AND of independent zero equality masks from fresh A632/A633; first mask through PSW carrier", "natural_calls": 14, "result": "All pass. Full local instruction graph supports this byte law, including independent ANA flags; no new binary sweep needed."},
+    {"operation": "+25D6", "law": "min(C,16) then fresh byte[42DC+index]; flags from minimum then DAD", "natural_calls": 7, "result": "All pass; input2 ->7 twice, input1 ->4 five times. Table values are read, not a memorized affine expression."},
+    {"operation": "+834F", "law": "Low OR then increment DE then high OR, final flags from high OR", "natural_calls": 27, "result": "All pass; exact B5/B4 OR opcodes exclude addition. Low/high source reads remain distinct."},
+    {"operation": "+2FC2", "law": "State-predicate optional conversion, two fresh maxima, wrapping addition and limiter", "natural_calls": 8, "result": "Seven conversion, one no-conversion; all write order and returned state checked independently."},
+    {"operation": "+30C1", "law": "Fresh equality/range masks publish15; two caches republished before2FC2", "natural_calls": 8, "result": "All pass; final BC differs in an independent call despite same A15, excluding fixed return tuples."},
+    {"operation": "+2C59", "law": "Acquisition before fresh selector classifier and state-dependent skip graph", "natural_calls": 11, "result": "Local law passes; no claim that local no-write path implies acquisition no-write. Selected02 producer -> post-selector15 and field publications remain delegated."},
+    {"operation": "required +6708", "candidate": "Reuse old E05 copy law", "result": "Rejected by actual E02 entry and executed alternate67BE; calls six arithmetic helpers and consumes eight argument bytes. Substantial boundary retained."}
+  ],
+  "corruption_tests": ["equal-valued wrong read address", "changed publication", "changed returned flags", "changed PSW residue", "altered canonical code bytes"],
+  "scope": "No general termination, arbitrary alias safety, table capacity, source type or ownership inferred."
+}

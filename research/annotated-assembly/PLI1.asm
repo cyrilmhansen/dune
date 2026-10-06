@@ -1086,9 +1086,70 @@ PLI1_21CC: LHLD 0A647H ; HL=fresh little_endian_word[A647H]; low then high read;
 PLI1_21CF: MOV C,L ; C=L; flags preserved ; +21CF runtime=43CFH OBSERVED
 PLI1_21D0: CALL 433CH ; push following PC; invoke PLI1.OVL+213C; child state/effects at the explicitly scoped contract ; +21D0 runtime=43D0H OBSERVED
 PLI1_21D3: RET ; consume original hardware return word; SP=entry_SP+2; preserve final path flags and registers ; +21D3 runtime=43D3H OBSERVED
-; SECTION [21D4,2221) RAW
-PLI1_21D4: DB 03AH,032H,0A6H,0D6H,000H,0D6H,001H,09FH,0F5H,03AH,033H,0A6H ; +21D4 runtime=43D4H RAW
-PLI1_21E0: DB 0D6H,000H,0D6H,001H,09FH,0C1H,048H,0A1H,0C9H,021H,048H,0A6H,071H,02AH,048H,0A6H ; +21E0 runtime=43E0H RAW
+
+; @procedure-v1 PLI1.OVL+21D4
+; ProcedureHypothesis: Fresh two-byte zero equality masks and conjunction
+; Entry: PLI1_21D4 = PLI1.OVL+21D4 @ 43D4H; SHA-256
+;   1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564
+; Extent: HYPOTHESIS [21D4,21E9) file offsets; overlapping entries: none established
+; Callers: OBSERVED PLI1.OVL+2259 (FIZZBUZ=5, PICTURE=1); PLI1.OVL+22C0 (FIZZBUZ=8)
+; Returns: OBSERVED/DEDUCED ordinary hardware CALL word; original slot unchanged; SP after
+;   RET=entry_SP+2; PLI1.OVL+21E8
+; Inputs: DEDUCED Actual entry registers and selected shared byte-addressed memory; child scopes
+;   inherited; executable code, selected scratch/publications/read carriers and active
+;   return/save slots nonaliasing where their operation requires it. No table capacity or
+;   ownership assumption.
+; Outputs: DEDUCED Path-specific A/BC/DE/HL and flags as documented below and in correlated
+;   natural cases; SP=entry_SP+2; PC=original CALL continuation.
+; Clobbers: DEDUCED Path-specific A/BC/DE/HL/flags; local scratch/publications stated below;
+;   delegated child effects; proven CALL/PUSH stack residue.
+; Memory: DEDUCED All numerical addresses denote historical runtime bytes, not separate host
+;   arrays.; F=entry_SP; original hardware CALL word at F; body CALL/save traffic below F;
+;   preserved per-invocation last writers.
+; Direct callees: OBSERVED none
+; Coverage: OBSERVED FIZZBUZ: 13 CALLs; MINIMAL: 0 CALLs; PICTURE: 1 CALLs; 21/21 bytes
+;   represented as instructions; OBSERVED corrected ordinary CALL/return windows
+;   independently retained for MINIMAL/FIZZBUZ/PICTURE; union of own bytes excludes child
+;   bodies.
+; Unresolved: none at the stated low-level scope; execution is not exhaustive
+; Contract: DEDUCED (complete; scope: Bounded accumulated-natural routes and exact represented
+;   local operations; delegated partial/opaque children and unexecuted local arms are not
+;   silently implemented.) Independently read A632 and A633. For each, wrapping
+;   SUI00/SUI01/selfSBB forms FF iff the byte is zero. Save the first result/PSW through
+;   PUSH PSW; POP B/MOV C,B then ANA C computes their conjunction. A=FF iff both fresh
+;   bytes are zero, else00; B=C=first zero mask; DE/HL preserved. Final S/Z/P from A,
+;   AC=bit3 of either mask, CY0. No data writes. Final below-entry word is first mask/PSW
+;   from +21DC; no nested CALL. Contract requires code/data/active stack noninterference,
+;   not arbitrary aliases.
+; Hypothesis: none beyond the low-level operational description
+; Completeness: bounds=stable; control_flow=complete; contract=complete
+; Evidence: evidence.json#seeds/PLI1.OVL+21D4; ../host-compiler/pass-39/README.md;
+;   ../host-compiler/pass-39/natural-summary.json
+; Procedure pseudo (operational; byte/word arithmetic wraps):
+;   first=zero_mask(fresh byte[A632]); PUSH PSW; second=zero_mask(fresh byte[A633]); POP B; C=B;
+;   A=second AND first; preserve final ANA flags; RET
+; @end-procedure-v1 PLI1.OVL+21D4
+; SECTION [21D4,21E9) UNDERSTOOD
+; @block-pseudo 21D4
+; pseudo:
+; | first=zero_mask(fresh byte[A632]); PUSH PSW
+; | second=zero_mask(fresh byte[A633]); POP B; C=B
+; | A=second AND first; preserve final ANA flags; RET
+PLI1_21D4: LDA 0A632H ; A=fresh byte[A632H]; flags preserved ; +21D4 runtime=43D4H OBSERVED
+PLI1_21D7: SUI 00H ; A=u8(A-00H); arithmetic flags; CY=borrow of this subtraction only ; +21D7 runtime=43D7H OBSERVED
+PLI1_21D9: SUI 01H ; A=u8(A-01H); arithmetic flags; CY=borrow of this subtraction only ; +21D9 runtime=43D9H OBSERVED
+PLI1_21DB: SBB A ; A=old_CY?FFH:00H for self subtraction; exact S/Z/AC/P/CY arithmetic flags ; +21DB runtime=43DBH OBSERVED
+PLI1_21DC: PUSH PSW ; write high then low PSW below SP; SP-=2; preserve flags; compatibility residue retained ; +21DC runtime=43DCH OBSERVED
+PLI1_21DD: LDA 0A633H ; A=fresh byte[A633H]; flags preserved ; +21DD runtime=43DDH OBSERVED
+PLI1_21E0: SUI 00H ; A=u8(A-00H); arithmetic flags; CY=borrow of this subtraction only ; +21E0 runtime=43E0H OBSERVED
+PLI1_21E2: SUI 01H ; A=u8(A-01H); arithmetic flags; CY=borrow of this subtraction only ; +21E2 runtime=43E2H OBSERVED
+PLI1_21E4: SBB A ; A=old_CY?FFH:00H for self subtraction; exact S/Z/AC/P/CY arithmetic flags ; +21E4 runtime=43E4H OBSERVED
+PLI1_21E5: POP B ; read low then high into B pair; SP+=2; flags preserved; residue remains ; +21E5 runtime=43E5H OBSERVED
+PLI1_21E6: MOV C,B ; C=B; flags preserved ; +21E6 runtime=43E6H OBSERVED
+PLI1_21E7: ANA C ; A=A AND C; Intel8080 logical flags/CY0 ; +21E7 runtime=43E7H OBSERVED
+PLI1_21E8: RET ; consume original hardware return word; SP=entry_SP+2; preserve final path flags and registers ; +21E8 runtime=43E8H OBSERVED
+; SECTION [21E9,2221) RAW
+PLI1_21E9: DB 021H,048H,0A6H,071H,02AH,048H,0A6H ; +21E9 runtime=43E9H RAW
 PLI1_21F0: DB 026H,000H,001H,028H,0A6H,009H,07EH,0FEH,028H,0C2H,0FFH,043H,03EH,001H,0C9H,02AH ; +21F0 runtime=43F0H RAW
 PLI1_2200: DB 048H,0A6H,026H,000H,001H,028H,0A6H,009H,07EH,0FEH,02AH,0C2H,011H,044H,03EH,001H ; +2200 runtime=4400H RAW
 PLI1_2210: DB 0C9H,02AH,048H,0A6H,026H,000H,001H,028H,0A6H,009H,07EH,0D6H,005H,0D6H,001H,09FH ; +2210 runtime=4410H RAW
@@ -1171,7 +1232,7 @@ PLI1_2253: SUI 06H ; A=u8(A-06H); arithmetic flags including CY=borrow ; +2253 r
 PLI1_2255: SUI 04H ; A=u8(A-04H); arithmetic flags including CY=borrow ; +2255 runtime=4455H OBSERVED
 PLI1_2257: SBB A ; A=CY?FFH:00H; self-subtraction cancels old A; CY is retained Boolean borrow ; +2257 runtime=4457H OBSERVED
 PLI1_2258: RET ; consume original hardware return word at entry SP; SP=entry_SP+2; flags preserved ; +2258 runtime=4458H OBSERVED
-; SECTION [2259,22CB) RAW
+; SECTION [2259,22C0) RAW
 PLI1_2259: DB 0CDH,0D4H,043H,032H,04AH,0A6H,02AH ; +2259 runtime=4459H RAW
 PLI1_2260: DB 029H,0A6H,04DH,0CDH,0ADH,043H,01FH,0D2H,07FH,044H,02AH,02AH,0A6H,04DH,0CDH,0ADH ; +2260 runtime=4460H RAW
 PLI1_2270: DB 043H,01FH,0D2H,07FH,044H,03AH,04AH,0A6H,01FH,0D2H,07FH,044H,03EH,000H,0C9H,021H ; +2270 runtime=4470H RAW
@@ -1179,7 +1240,57 @@ PLI1_2280: DB 02AH,0A6H,03AH,029H,0A6H,0BEH,0C2H,0AAH,044H,03AH,029H,0A6H,0D6H,0
 PLI1_2290: DB 09FH,0F5H,02AH,029H,0A6H,04DH,0CDH,0EDH,079H,0C1H,048H,0B1H,01FH,0D2H,0AAH,044H ; +2290 runtime=4490H RAW
 PLI1_22A0: DB 03AH,04AH,0A6H,01FH,0D2H,0AAH,044H,03EH,001H,0C9H,02AH,037H,0A6H,044H,04DH,02AH ; +22A0 runtime=44A0H RAW
 PLI1_22B0: DB 039H,0A6H,0EBH,0CDH,015H,058H,01FH,0DAH,0BDH,044H,0CDH,02EH,043H,03EH,001H,0C9H ; +22B0 runtime=44B0H RAW
-PLI1_22C0: DB 0CDH,0D4H,043H,01FH,0DAH,0CAH,044H,0CDH,027H,043H,0C9H ; +22C0 runtime=44C0H RAW
+
+; @procedure-v1 PLI1.OVL+22C0
+; ProcedureHypothesis: Zero-mask composition with exact rotate and set-bit return
+; Entry: PLI1_22C0 = PLI1.OVL+22C0 @ 44C0H; SHA-256
+;   1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564
+; Extent: HYPOTHESIS [22C0,22CB) file offsets; overlapping entries: none established
+; Callers: OBSERVED PLI1.OVL+30C1 (FIZZBUZ=8)
+; Returns: OBSERVED/DEDUCED ordinary hardware CALL word; original slot unchanged; SP after
+;   RET=entry_SP+2; PLI1.OVL+22CA
+; Inputs: DEDUCED Actual entry registers and selected shared byte-addressed memory; child scopes
+;   inherited; executable code, selected scratch/publications/read carriers and active
+;   return/save slots nonaliasing where their operation requires it. No table capacity or
+;   ownership assumption.
+; Outputs: DEDUCED Path-specific A/BC/DE/HL and flags as documented below and in correlated
+;   natural cases; SP=entry_SP+2; PC=original CALL continuation.
+; Clobbers: DEDUCED Path-specific A/BC/DE/HL/flags; local scratch/publications stated below;
+;   delegated child effects; proven CALL/PUSH stack residue.
+; Memory: DEDUCED All numerical addresses denote historical runtime bytes, not separate host
+;   arrays.; F=entry_SP; original hardware CALL word at F; body CALL/save traffic below F;
+;   preserved per-invocation last writers.
+; Direct callees: OBSERVED PLI1.OVL+21D4 @43D4H
+; Coverage: OBSERVED FIZZBUZ: 8 CALLs; MINIMAL: 0 CALLs; PICTURE: 0 CALLs; 8/11 bytes represented
+;   as instructions; OBSERVED corrected ordinary CALL/return windows independently
+;   retained for MINIMAL/FIZZBUZ/PICTURE; union of own bytes excludes child bodies.
+; Unresolved: STATIC / UNOBSERVED clear-bit arm [22C7,22CA) remains RAW.
+; Contract: DEDUCED (partial; scope: Bounded accumulated-natural routes and exact represented
+;   local operations; delegated partial/opaque children and unexecuted local arms are not
+;   silently implemented.) Invoke complete21D4; RAR uses its incoming CY and A, retains
+;   NZPA/AC, outgoing CY=child A.bit0. Demonstrated childFF/CY0 yields rotated7F, CY1 and
+;   JC to shared RET22CA. All other registers delegated. No local data writes.
+;   Clear-bit22C7..22CA remains RAW; no unsupported literal result is inferred.
+; Hypothesis: none beyond the low-level operational description
+; Completeness: bounds=provisional; control_flow=partial; contract=partial
+; Evidence: evidence.json#seeds/PLI1.OVL+22C0; ../host-compiler/pass-39/README.md;
+;   ../host-compiler/pass-39/natural-summary.json
+; Procedure pseudo (operational; byte/word arithmetic wraps):
+;   child=21D4(); RAR actual child A/CY; set bit0: shared RET preserving rotate ABI; otherwise
+;   unsupported RAW arm
+; @end-procedure-v1 PLI1.OVL+22C0
+; SECTION [22C0,22C7) UNDERSTOOD
+; @block-pseudo 22C0
+; pseudo:
+; | child=21D4(); RAR actual child A/CY
+; | set bit0: shared RET preserving rotate ABI; otherwise unsupported RAW arm
+PLI1_22C0: CALL 43D4H ; push following PC; invoke PLI1.OVL+21D4; child state/effects at the explicitly scoped contract ; +22C0 runtime=44C0H OBSERVED
+PLI1_22C3: RAR ; A=(incoming_CY<<7)|(old_A>>1); CY=old_A.bit0; NZPA preserved ; +22C3 runtime=44C3H OBSERVED
+PLI1_22C4: JC 44CAH ; if CY=1: PC=44CAH; flags preserved ; +22C4 runtime=44C4H OBSERVED
+; SECTION [22C7,22CA) RAW
+PLI1_22C7: DB 0CDH,027H,043H ; +22C7 runtime=44C7H RAW
+; SECTION [22CA,22CB) UNDERSTOOD
+PLI1_22CA: RET ; consume original hardware return word; SP=entry_SP+2; preserve final path flags and registers ; +22CA runtime=44CAH OBSERVED
 
 ; @procedure-v1 PLI1.OVL+22CB
 ; ProcedureHypothesis: bounded fresh indexed literal dispatch with distinct comparison provenance
@@ -2139,12 +2250,73 @@ PLI1_25A3: MOV C,M ; C=fresh byte[HL]; flags preserved ; +25A3 runtime=47A3H OBS
 PLI1_25A4: CALL 4711H ; push following PC; invoke PLI1.OVL+2511; child state/effects at the explicitly scoped contract ; +25A4 runtime=47A4H OBSERVED
 PLI1_25A7: INX SP ; SP=u16(SP +1); flags preserved ; +25A7 runtime=47A7H OBSERVED
 PLI1_25A8: RET ; consume original hardware return word; SP=entry_SP+2; preserve final path flags and registers ; +25A8 runtime=47A8H OBSERVED
-; SECTION [25A9,2705) RAW
+; SECTION [25A9,25D6) RAW
 PLI1_25A9: DB 021H,05AH,0A6H,072H,02BH,073H,02BH ; +25A9 runtime=47A9H RAW
 PLI1_25B0: DB 071H,02AH,058H,0A6H,026H,000H,0EBH,02AH,059H,0A6H,019H,04EH,0CDH,011H,047H,0C9H ; +25B0 runtime=47B0H RAW
 PLI1_25C0: DB 021H,05BH,0A6H,071H,02AH,05BH,0A6H,04DH,01EH,036H,0CDH,0A0H,045H,04FH,006H,000H ; +25C0 runtime=47C0H RAW
-PLI1_25D0: DB 021H,0A6H,042H,009H,07EH,0C9H,021H,05CH,0A6H,071H,02AH,05CH,0A6H,04DH,01EH,010H ; +25D0 runtime=47D0H RAW
-PLI1_25E0: DB 0CDH,0A0H,045H,04FH,006H,000H,021H,0DCH,042H,009H,07EH,0C9H,021H,05DH,0A6H,071H ; +25E0 runtime=47E0H RAW
+PLI1_25D0: DB 021H,0A6H,042H,009H,07EH,0C9H ; +25D0 runtime=47D0H RAW
+
+; @procedure-v1 PLI1.OVL+25D6
+; ProcedureHypothesis: Saved byte clamped to16 then direct byte lookup
+; Entry: PLI1_25D6 = PLI1.OVL+25D6 @ 47D6H; SHA-256
+;   1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564
+; Extent: HYPOTHESIS [25D6,25EC) file offsets; overlapping entries: none established
+; Callers: OBSERVED PLI1.OVL+2FF7 (FIZZBUZ=7)
+; Returns: OBSERVED/DEDUCED ordinary hardware CALL word; original slot unchanged; SP after
+;   RET=entry_SP+2; PLI1.OVL+25EB
+; Inputs: DEDUCED Actual entry registers and selected shared byte-addressed memory; child scopes
+;   inherited; executable code, selected scratch/publications/read carriers and active
+;   return/save slots nonaliasing where their operation requires it. No table capacity or
+;   ownership assumption.
+; Outputs: DEDUCED Path-specific A/BC/DE/HL and flags as documented below and in correlated
+;   natural cases; SP=entry_SP+2; PC=original CALL continuation.
+; Clobbers: DEDUCED Path-specific A/BC/DE/HL/flags; local scratch/publications stated below;
+;   delegated child effects; proven CALL/PUSH stack residue.
+; Memory: DEDUCED All numerical addresses denote historical runtime bytes, not separate host
+;   arrays.; F=entry_SP; original hardware CALL word at F; body CALL/save traffic below F;
+;   preserved per-invocation last writers.
+; Direct callees: OBSERVED PLI1.OVL+23A0 @45A0H
+; Coverage: OBSERVED FIZZBUZ: 7 CALLs; MINIMAL: 0 CALLs; PICTURE: 0 CALLs; 22/22 bytes represented
+;   as instructions; OBSERVED corrected ordinary CALL/return windows independently
+;   retained for MINIMAL/FIZZBUZ/PICTURE; union of own bytes excludes child bodies.
+; Unresolved: none at the stated low-level scope; execution is not exhaustive
+; Contract: DEDUCED (complete; scope: Bounded accumulated-natural routes and exact represented
+;   local operations; delegated partial/opaque children and unexecuted local arms are not
+;   silently implemented.) C->A65C unconditionally. Read paired A65C/A65D, pass only low
+;   byte as C; set E=10 without discarding inherited D. Complete23A0 returns unsigned
+;   min(C,10) with C-10 comparison flags. C=result; B=0; HL=42DC+zero_extend(result);
+;   A=fresh byte[HL]. DE=entry D:10; NZPA/AC remain23A0 comparison; CY from final DAD B
+;   (zero in this address range). Only local data write A65C. Body CALL23A0 continuation
+;   leaves25E3+2200 below entry SP; no child PUSH. Code/read carriers/scratch/stack
+;   nonaliasing scope; no table-capacity inference.
+; Hypothesis: none beyond the low-level operational description
+; Completeness: bounds=stable; control_flow=complete; contract=complete
+; Evidence: evidence.json#seeds/PLI1.OVL+25D6; ../host-compiler/pass-39/README.md;
+;   ../host-compiler/pass-39/natural-summary.json
+; Procedure pseudo (operational; byte/word arithmetic wraps):
+;   save C at A65C; read A65C/A65D independently; only low ->C; E=10; j=23A0(C,E); B=0; C=j;
+;   HL=42DC+j; A=fresh byte[HL]; preserve child NZPA/AC, CY from DAD; RET
+; @end-procedure-v1 PLI1.OVL+25D6
+; SECTION [25D6,25EC) UNDERSTOOD
+; @block-pseudo 25D6
+; pseudo:
+; | save C at A65C; read A65C/A65D independently; only low ->C; E=10
+; | j=23A0(C,E); B=0; C=j; HL=42DC+j
+; | A=fresh byte[HL]; preserve child NZPA/AC, CY from DAD; RET
+PLI1_25D6: LXI H,0A65CH ; H pair = literal A65CH; flags preserved ; +25D6 runtime=47D6H OBSERVED
+PLI1_25D9: MOV M,C ; byte[HL]=C; flags preserved ; +25D9 runtime=47D9H OBSERVED
+PLI1_25DA: LHLD 0A65CH ; HL=fresh little_endian_word[A65CH]; low then high read; flags preserved ; +25DA runtime=47DAH OBSERVED
+PLI1_25DD: MOV C,L ; C=L; flags preserved ; +25DD runtime=47DDH OBSERVED
+PLI1_25DE: MVI E,10H ; E=10H; flags preserved ; +25DE runtime=47DEH OBSERVED
+PLI1_25E0: CALL 45A0H ; push following PC; invoke PLI1.OVL+23A0; child state/effects at the explicitly scoped contract ; +25E0 runtime=47E0H OBSERVED
+PLI1_25E3: MOV C,A ; C=A; flags preserved ; +25E3 runtime=47E3H OBSERVED
+PLI1_25E4: MVI B,00H ; B=00H; flags preserved ; +25E4 runtime=47E4H OBSERVED
+PLI1_25E6: LXI H,42DCH ; H pair = literal 42DCH; flags preserved ; +25E6 runtime=47E6H OBSERVED
+PLI1_25E9: DAD B ; HL=u16(HL+B); only CY changes to word overflow ; +25E9 runtime=47E9H OBSERVED
+PLI1_25EA: MOV A,M ; A=fresh byte[HL]; flags preserved ; +25EA runtime=47EAH OBSERVED
+PLI1_25EB: RET ; consume original hardware return word; SP=entry_SP+2; preserve final path flags and registers ; +25EB runtime=47EBH OBSERVED
+; SECTION [25EC,2705) RAW
+PLI1_25EC: DB 021H,05DH,0A6H,071H ; +25EC runtime=47ECH RAW
 PLI1_25F0: DB 03EH,018H,021H,05DH,0A6H,0BEH,0DAH,00BH,048H,02AH,043H,0A6H,04DH,02AH,05DH,0A6H ; +25F0 runtime=47F0H RAW
 PLI1_2600: DB 0EBH,0CDH,0A0H,045H,04FH,0CDH,0C0H,047H,0C6H,006H,0C9H,02AH,043H,0A6H,04DH,02AH ; +2600 runtime=4800H RAW
 PLI1_2610: DB 05DH,0A6H,0EBH,0CDH,0A0H,045H,04FH,0CDH,0C0H,047H,0C6H,007H,0C9H,0C9H,021H,05EH ; +2610 runtime=4810H RAW
@@ -2873,31 +3045,320 @@ PLI1_2C4F: CALL 9CD5H ; push following PC; invoke PLI1.OVL+7AD5; established com
 ; pseudo:
 ; | RETconsumesoriginalouterhardwareword; software childrenexcluded
 PLI1_2C52: RET ; consume original hardware return word at entry SP; SP=entry_SP+2; flags preserved ; +2C52 runtime=4E52H OBSERVED
-; SECTION [2C53,31FB) RAW
-PLI1_2C53: DB 00EH,001H,0CDH,0AAH,04AH,0C9H,0CDH,053H,04EH,02AH,034H,0A6H,026H ; +2C53 runtime=4E53H RAW
-PLI1_2C60: DB 000H,001H,028H,0A6H,009H,04EH,0CDH,0ADH,043H,01FH,0D2H,0BFH,04FH,02AH,034H,0A6H ; +2C60 runtime=4E60H RAW
-PLI1_2C70: DB 026H,000H,001H,028H,0A6H,009H,07EH,0FEH,02AH,0C2H,07FH,04EH,0CDH,099H,04AH,02AH ; +2C70 runtime=4E70H RAW
-PLI1_2C80: DB 034H,0A6H,026H,000H,001H,028H,0A6H,009H,07EH,0D6H,016H,0D6H,001H,09FH,0F5H,00AH ; +2C80 runtime=4E80H RAW
-PLI1_2C90: DB 0D6H,019H,0D6H,001H,09FH,0C1H,048H,0A1H,01FH,0D2H,09FH,04EH,0CDH,0C8H,048H,02AH ; +2C90 runtime=4E90H RAW
-PLI1_2CA0: DB 034H,0A6H,026H,000H,001H,028H,0A6H,009H,07EH,0D6H,028H,0D6H,001H,09FH,0F5H,00AH ; +2CA0 runtime=4EA0H RAW
-PLI1_2CB0: DB 0D6H,019H,0D6H,001H,09FH,0C1H,048H,0A1H,01FH,0D2H,0C2H,04EH,0CDH,08FH,048H,0C3H ; +2CB0 runtime=4EB0H RAW
-PLI1_2CC0: DB 0BCH,04FH,03AH,028H,0A6H,0D6H,016H,0D6H,001H,09FH,02AH,034H,0A6H,026H,000H,001H ; +2CC0 runtime=4EC0H RAW
-PLI1_2CD0: DB 028H,0A6H,009H,0F5H,07EH,0D6H,019H,0D6H,001H,09FH,0C1H,048H,0A1H,01FH,0D2H,0E4H ; +2CD0 runtime=4ED0H RAW
-PLI1_2CE0: DB 04EH,0CDH,06CH,049H,02AH,034H,0A6H,026H,000H,001H,028H,0A6H,009H,07EH,0FEH,028H ; +2CE0 runtime=4EE0H RAW
-PLI1_2CF0: DB 0C2H,0F6H,04EH,0CDH,066H,048H,02AH,034H,0A6H,026H,000H,001H,028H,0A6H,009H,07EH ; +2CF0 runtime=4EF0H RAW
-PLI1_2D00: DB 0D6H,024H,0D6H,001H,09FH,0F5H,07EH,0D6H,025H,0D6H,001H,09FH,0C1H,048H,0B1H,01FH ; +2D00 runtime=4F00H RAW
-PLI1_2D10: DB 0D2H,016H,04FH,0CDH,037H,048H,02AH,034H,0A6H,026H,000H,001H,028H,0A6H,009H,07EH ; +2D10 runtime=4F10H RAW
-PLI1_2D20: DB 0FEH,031H,0C2H,028H,04FH,0CDH,088H,04AH,03AH,028H,0A6H,0E6H,011H,0D6H,011H,0D6H ; +2D20 runtime=4F20H RAW
-PLI1_2D30: DB 001H,09FH,02AH,034H,0A6H,026H,000H,001H,028H,0A6H,009H,0F5H,03EH,012H,0A6H,0D6H ; +2D30 runtime=4F30H RAW
-PLI1_2D40: DB 012H,0D6H,001H,09FH,0C1H,048H,0A1H,01FH,0D2H,04EH,04FH,0CDH,011H,049H,03AH,028H ; +2D40 runtime=4F40H RAW
-PLI1_2D50: DB 0A6H,0E6H,018H,0D6H,018H,0D6H,001H,09FH,02AH,034H,0A6H,026H,000H,001H,028H,0A6H ; +2D50 runtime=4F50H RAW
-PLI1_2D60: DB 009H,0F5H,03EH,014H,0A6H,0D6H,014H,0D6H,001H,09FH,0C1H,048H,0A1H,01FH,0D2H,074H ; +2D60 runtime=4F60H RAW
-PLI1_2D70: DB 04FH,0CDH,035H,04AH,03AH,028H,0A6H,0E6H,014H,0FEH,014H,0C2H,0BCH,04FH,02AH,034H ; +2D70 runtime=4F70H RAW
-PLI1_2D80: DB 0A6H,026H,000H,001H,028H,0A6H,009H,07EH,0FEH,019H,0C2H,090H,04FH,0CDH,094H,049H ; +2D80 runtime=4F80H RAW
-PLI1_2D90: DB 03AH,028H,0A6H,0FEH,016H,0C2H,0BCH,04FH,02AH,034H,0A6H,026H,000H,001H,028H,0A6H ; +2D90 runtime=4F90H RAW
+
+; @procedure-v1 PLI1.OVL+2C53
+; ProcedureHypothesis: C1 acquisition composition wrapper
+; Entry: PLI1_2C53 = PLI1.OVL+2C53 @ 4E53H; SHA-256
+;   1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564
+; Extent: HYPOTHESIS [2C53,2C59) file offsets; overlapping entries: none established
+; Callers: OBSERVED PLI1.OVL+2C59 (FIZZBUZ=10, PICTURE=1); PLI1.OVL+2F1C (FIZZBUZ=4, MINIMAL=1,
+;   PICTURE=1); PLI1.OVL+343C (FIZZBUZ=3)
+; Returns: OBSERVED/DEDUCED ordinary hardware CALL word; original slot unchanged; SP after
+;   RET=entry_SP+2; PLI1.OVL+2C58
+; Inputs: DEDUCED Actual entry registers and selected shared byte-addressed memory; child scopes
+;   inherited; executable code, selected scratch/publications/read carriers and active
+;   return/save slots nonaliasing where their operation requires it. No table capacity or
+;   ownership assumption.
+; Outputs: DEDUCED Path-specific A/BC/DE/HL and flags as documented below and in correlated
+;   natural cases; SP=entry_SP+2; PC=original CALL continuation.
+; Clobbers: DEDUCED Path-specific A/BC/DE/HL/flags; local scratch/publications stated below;
+;   delegated child effects; proven CALL/PUSH stack residue.
+; Memory: DEDUCED All numerical addresses denote historical runtime bytes, not separate host
+;   arrays.; F=entry_SP; original hardware CALL word at F; body CALL/save traffic below F;
+;   preserved per-invocation last writers.
+; Direct callees: OBSERVED PLI1.OVL+28AA @4AAAH
+; Coverage: OBSERVED FIZZBUZ: 17 CALLs; MINIMAL: 1 CALLs; PICTURE: 2 CALLs; 6/6 bytes represented
+;   as instructions; OBSERVED corrected ordinary CALL/return windows independently
+;   retained for MINIMAL/FIZZBUZ/PICTURE; union of own bytes excludes child bodies.
+; Unresolved: Partial28AA acquisition/copy/publication semantics inherited, notably6708
+;   alternate67BE selected by E02.
+; Contract: DEDUCED (partial; scope: Bounded accumulated-natural routes and exact represented
+;   local operations; delegated partial/opaque children and unexecuted local arms are not
+;   silently implemented.) Set C=01 then CALL partial28AA and RET, delegating all returned
+;   registers/flags and memory/host effects. No local data writes or semantic
+;   constant-result substitution. Child original continuation2C58+2200 remains below
+;   wrapperSP; software child6708 ancestry within28AA proved independently. Required
+;   selector02 acquisition scope remains delegated, not native-ready.
+; Hypothesis: none beyond the low-level operational description
+; Completeness: bounds=stable; control_flow=complete; contract=partial
+; Evidence: evidence.json#seeds/PLI1.OVL+2C53; ../host-compiler/pass-39/README.md;
+;   ../host-compiler/pass-39/natural-summary.json
+; Procedure pseudo (operational; byte/word arithmetic wraps):
+;   C=1; invoke partial28AA acquisition; RET preserves actual child state
+; @end-procedure-v1 PLI1.OVL+2C53
+; SECTION [2C53,2C59) UNDERSTOOD
+; @block-pseudo 2C53
+; pseudo:
+; | C=1; invoke partial28AA acquisition; RET preserves actual child state
+PLI1_2C53: MVI C,01H ; C=01H; flags preserved ; +2C53 runtime=4E53H OBSERVED
+PLI1_2C55: CALL 4AAAH ; push following PC; invoke PLI1.OVL+28AA; child state/effects at the explicitly scoped contract ; +2C55 runtime=4E55H OBSERVED
+PLI1_2C58: RET ; consume original hardware return word; SP=entry_SP+2; preserve final path flags and registers ; +2C58 runtime=4E58H OBSERVED
+
+; @procedure-v1 PLI1.OVL+2C59
+; ProcedureHypothesis: Acquisition followed by fresh state-dependent guarded transformations
+; Entry: PLI1_2C59 = PLI1.OVL+2C59 @ 4E59H; SHA-256
+;   1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564
+; Extent: HYPOTHESIS [2C59,2DC3) file offsets; overlapping entries: none established
+; Callers: OBSERVED PLI1.OVL+2DC3 (FIZZBUZ=3, PICTURE=1); PLI1.OVL+3329 (FIZZBUZ=4); PLI1.OVL+34A3
+;   (FIZZBUZ=3)
+; Returns: OBSERVED/DEDUCED ordinary hardware CALL word; original slot unchanged; SP after
+;   RET=entry_SP+2; PLI1.OVL+2DC2
+; Inputs: DEDUCED Actual entry registers and selected shared byte-addressed memory; child scopes
+;   inherited; executable code, selected scratch/publications/read carriers and active
+;   return/save slots nonaliasing where their operation requires it. No table capacity or
+;   ownership assumption.
+; Outputs: DEDUCED Path-specific A/BC/DE/HL and flags as documented below and in correlated
+;   natural cases; SP=entry_SP+2; PC=original CALL continuation.
+; Clobbers: DEDUCED Path-specific A/BC/DE/HL/flags; local scratch/publications stated below;
+;   delegated child effects; proven CALL/PUSH stack residue.
+; Memory: DEDUCED All numerical addresses denote historical runtime bytes, not separate host
+;   arrays.; F=entry_SP; original hardware CALL word at F; body CALL/save traffic below F;
+;   preserved per-invocation last writers.
+; Direct callees: OBSERVED PLI1.OVL+2C53 @4E53H; PLI1.OVL+21AD @43ADH
+; Coverage: OBSERVED FIZZBUZ: 10 CALLs; MINIMAL: 0 CALLs; PICTURE: 1 CALLs; 290/362 bytes
+;   represented as instructions; OBSERVED corrected ordinary CALL/return windows
+;   independently retained for MINIMAL/FIZZBUZ/PICTURE; union of own bytes excludes child
+;   bodies.
+; Unresolved: Unexecuted local mutation/early branches remain RAW; only represented guard-skip
+;   route established. / Required28AA selector02 reaches substantial6708 alternate67BE
+;   graph with real software eight-byte caller-argument cleanup; old E05 copy scope does
+;   not cover it.
+; Contract: DEDUCED (partial; scope: Bounded accumulated-natural routes and exact represented
+;   local operations; delegated partial/opaque children and unexecuted local arms are not
+;   silently implemented.) Invoke2C53 first; then read pairedA634/A635, discard adjacent
+;   high, freshly read A628+low index and call complete21AD. Demonstrated setbit enters
+;   the represented comparisons. Fresh indexed selectors and independent baseA628 are
+;   tested through exact wrapping equality masks/PSW/ANA/ORA/RAR, not Boolean flags
+;   replacement. Demonstrated post-acquisition index2, selector15, base15 skip all local
+;   transformation arms; local body writes no nonstack bytes. Final fresh base15 CPI16
+;   comparison passes JNZ to JMP sharedRET2DC2. A=fresh baseA628; BC=A628; HL=A628+fresh
+;   index left by preceding indexed carrier; DE from21AD/acquisition; NZPA/AC/CY=last
+;   CMP(base,16), not returned A. All acquisition publications and residue precede these
+;   tests. Unknown28AA selected02 copy state is explicitly delegated; cannot reproduce
+;   required3304 subtree yet. No local loop; child termination delegated.
+; Hypothesis: none beyond the low-level operational description
+; Completeness: bounds=provisional; control_flow=partial; contract=partial
+; Evidence: evidence.json#seeds/PLI1.OVL+2C59; ../host-compiler/pass-39/README.md;
+;   ../host-compiler/pass-39/natural-summary.json
+; Procedure pseudo (operational; byte/word arithmetic wraps):
+;   2C53(): complete acquisition precedes fresh index/selected-byte classifier; 21AD actual result
+;   ->RAR; demonstrated setbit enters guarded graph; fresh indexed/base comparisons with PSW saved
+;   masks; demonstrated selected15/base15 skips every local mutation arm; fresh base mask14
+;   matches; indexed selector !=19; fresh base !=16; shared RET preserving final CPI16 state
+; @end-procedure-v1 PLI1.OVL+2C59
+; SECTION [2C59,2C7C) UNDERSTOOD
+; @block-pseudo 2C59
+; pseudo:
+; | 2C53(): complete acquisition precedes fresh index/selected-byte classifier
+; | 21AD actual result ->RAR; demonstrated setbit enters guarded graph
+PLI1_2C59: CALL 4E53H ; push following PC; invoke PLI1.OVL+2C53; child state/effects at the explicitly scoped contract ; +2C59 runtime=4E59H OBSERVED
+PLI1_2C5C: LHLD 0A634H ; HL=fresh little_endian_word[A634H]; low then high read; flags preserved ; +2C5C runtime=4E5CH OBSERVED
+PLI1_2C5F: MVI H,00H ; H=00H; flags preserved ; +2C5F runtime=4E5FH OBSERVED
+PLI1_2C61: LXI B,0A628H ; B pair = literal A628H; flags preserved ; +2C61 runtime=4E61H OBSERVED
+PLI1_2C64: DAD B ; HL=u16(HL+B); only CY changes to word overflow ; +2C64 runtime=4E64H OBSERVED
+PLI1_2C65: MOV C,M ; C=fresh byte[HL]; flags preserved ; +2C65 runtime=4E65H OBSERVED
+PLI1_2C66: CALL 43ADH ; push following PC; invoke PLI1.OVL+21AD; child state/effects at the explicitly scoped contract ; +2C66 runtime=4E66H OBSERVED
+PLI1_2C69: RAR ; A=(incoming_CY<<7)|(old_A>>1); CY=old_A.bit0; NZPA preserved ; +2C69 runtime=4E69H OBSERVED
+PLI1_2C6A: JNC 4FBFH ; if CY=0: PC=4FBFH; flags preserved ; +2C6A runtime=4E6AH OBSERVED
+PLI1_2C6D: LHLD 0A634H ; HL=fresh little_endian_word[A634H]; low then high read; flags preserved ; +2C6D runtime=4E6DH OBSERVED
+PLI1_2C70: MVI H,00H ; H=00H; flags preserved ; +2C70 runtime=4E70H OBSERVED
+PLI1_2C72: LXI B,0A628H ; B pair = literal A628H; flags preserved ; +2C72 runtime=4E72H OBSERVED
+PLI1_2C75: DAD B ; HL=u16(HL+B); only CY changes to word overflow ; +2C75 runtime=4E75H OBSERVED
+PLI1_2C76: MOV A,M ; A=fresh byte[HL]; flags preserved ; +2C76 runtime=4E76H OBSERVED
+PLI1_2C77: CPI 2AH ; flags=unsigned byte comparison A-2AH; A preserved ; +2C77 runtime=4E77H OBSERVED
+PLI1_2C79: JNZ 4E7FH ; if Z=0: PC=4E7FH; flags preserved ; +2C79 runtime=4E79H OBSERVED
+; SECTION [2C7C,2C7F) RAW
+PLI1_2C7C: DB 0CDH,099H,04AH ; +2C7C runtime=4E7CH RAW
+; SECTION [2C7F,2C9C) UNDERSTOOD
+; @block-pseudo 2C7F
+; pseudo:
+; | fresh indexed/base comparisons with PSW saved masks
+; | demonstrated selected15/base15 skips every local mutation arm
+PLI1_2C7F: LHLD 0A634H ; HL=fresh little_endian_word[A634H]; low then high read; flags preserved ; +2C7F runtime=4E7FH OBSERVED
+PLI1_2C82: MVI H,00H ; H=00H; flags preserved ; +2C82 runtime=4E82H OBSERVED
+PLI1_2C84: LXI B,0A628H ; B pair = literal A628H; flags preserved ; +2C84 runtime=4E84H OBSERVED
+PLI1_2C87: DAD B ; HL=u16(HL+B); only CY changes to word overflow ; +2C87 runtime=4E87H OBSERVED
+PLI1_2C88: MOV A,M ; A=fresh byte[HL]; flags preserved ; +2C88 runtime=4E88H OBSERVED
+PLI1_2C89: SUI 16H ; A=u8(A-16H); arithmetic flags; CY=borrow of this subtraction only ; +2C89 runtime=4E89H OBSERVED
+PLI1_2C8B: SUI 01H ; A=u8(A-01H); arithmetic flags; CY=borrow of this subtraction only ; +2C8B runtime=4E8BH OBSERVED
+PLI1_2C8D: SBB A ; A=old_CY?FFH:00H for self subtraction; exact S/Z/AC/P/CY arithmetic flags ; +2C8D runtime=4E8DH OBSERVED
+PLI1_2C8E: PUSH PSW ; write high then low PSW below SP; SP-=2; preserve flags; compatibility residue retained ; +2C8E runtime=4E8EH OBSERVED
+PLI1_2C8F: LDAX B ; A=fresh byte[B pair]; flags preserved ; +2C8F runtime=4E8FH OBSERVED
+PLI1_2C90: SUI 19H ; A=u8(A-19H); arithmetic flags; CY=borrow of this subtraction only ; +2C90 runtime=4E90H OBSERVED
+PLI1_2C92: SUI 01H ; A=u8(A-01H); arithmetic flags; CY=borrow of this subtraction only ; +2C92 runtime=4E92H OBSERVED
+PLI1_2C94: SBB A ; A=old_CY?FFH:00H for self subtraction; exact S/Z/AC/P/CY arithmetic flags ; +2C94 runtime=4E94H OBSERVED
+PLI1_2C95: POP B ; read low then high into B pair; SP+=2; flags preserved; residue remains ; +2C95 runtime=4E95H OBSERVED
+PLI1_2C96: MOV C,B ; C=B; flags preserved ; +2C96 runtime=4E96H OBSERVED
+PLI1_2C97: ANA C ; A=A AND C; Intel8080 logical flags/CY0 ; +2C97 runtime=4E97H OBSERVED
+PLI1_2C98: RAR ; A=(incoming_CY<<7)|(old_A>>1); CY=old_A.bit0; NZPA preserved ; +2C98 runtime=4E98H OBSERVED
+PLI1_2C99: JNC 4E9FH ; if CY=0: PC=4E9FH; flags preserved ; +2C99 runtime=4E99H OBSERVED
+; SECTION [2C9C,2C9F) RAW
+PLI1_2C9C: DB 0CDH,0C8H,048H ; +2C9C runtime=4E9CH RAW
+; SECTION [2C9F,2CBC) UNDERSTOOD
+PLI1_2C9F: LHLD 0A634H ; HL=fresh little_endian_word[A634H]; low then high read; flags preserved ; +2C9F runtime=4E9FH OBSERVED
+PLI1_2CA2: MVI H,00H ; H=00H; flags preserved ; +2CA2 runtime=4EA2H OBSERVED
+PLI1_2CA4: LXI B,0A628H ; B pair = literal A628H; flags preserved ; +2CA4 runtime=4EA4H OBSERVED
+PLI1_2CA7: DAD B ; HL=u16(HL+B); only CY changes to word overflow ; +2CA7 runtime=4EA7H OBSERVED
+PLI1_2CA8: MOV A,M ; A=fresh byte[HL]; flags preserved ; +2CA8 runtime=4EA8H OBSERVED
+PLI1_2CA9: SUI 28H ; A=u8(A-28H); arithmetic flags; CY=borrow of this subtraction only ; +2CA9 runtime=4EA9H OBSERVED
+PLI1_2CAB: SUI 01H ; A=u8(A-01H); arithmetic flags; CY=borrow of this subtraction only ; +2CAB runtime=4EABH OBSERVED
+PLI1_2CAD: SBB A ; A=old_CY?FFH:00H for self subtraction; exact S/Z/AC/P/CY arithmetic flags ; +2CAD runtime=4EADH OBSERVED
+PLI1_2CAE: PUSH PSW ; write high then low PSW below SP; SP-=2; preserve flags; compatibility residue retained ; +2CAE runtime=4EAEH OBSERVED
+PLI1_2CAF: LDAX B ; A=fresh byte[B pair]; flags preserved ; +2CAF runtime=4EAFH OBSERVED
+PLI1_2CB0: SUI 19H ; A=u8(A-19H); arithmetic flags; CY=borrow of this subtraction only ; +2CB0 runtime=4EB0H OBSERVED
+PLI1_2CB2: SUI 01H ; A=u8(A-01H); arithmetic flags; CY=borrow of this subtraction only ; +2CB2 runtime=4EB2H OBSERVED
+PLI1_2CB4: SBB A ; A=old_CY?FFH:00H for self subtraction; exact S/Z/AC/P/CY arithmetic flags ; +2CB4 runtime=4EB4H OBSERVED
+PLI1_2CB5: POP B ; read low then high into B pair; SP+=2; flags preserved; residue remains ; +2CB5 runtime=4EB5H OBSERVED
+PLI1_2CB6: MOV C,B ; C=B; flags preserved ; +2CB6 runtime=4EB6H OBSERVED
+PLI1_2CB7: ANA C ; A=A AND C; Intel8080 logical flags/CY0 ; +2CB7 runtime=4EB7H OBSERVED
+PLI1_2CB8: RAR ; A=(incoming_CY<<7)|(old_A>>1); CY=old_A.bit0; NZPA preserved ; +2CB8 runtime=4EB8H OBSERVED
+PLI1_2CB9: JNC 4EC2H ; if CY=0: PC=4EC2H; flags preserved ; +2CB9 runtime=4EB9H OBSERVED
+; SECTION [2CBC,2CC2) RAW
+PLI1_2CBC: DB 0CDH,08FH,048H,0C3H ; +2CBC runtime=4EBCH RAW
+PLI1_2CC0: DB 0BCH,04FH ; +2CC0 runtime=4EC0H RAW
+; SECTION [2CC2,2CE1) UNDERSTOOD
+PLI1_2CC2: LDA 0A628H ; A=fresh byte[A628H]; flags preserved ; +2CC2 runtime=4EC2H OBSERVED
+PLI1_2CC5: SUI 16H ; A=u8(A-16H); arithmetic flags; CY=borrow of this subtraction only ; +2CC5 runtime=4EC5H OBSERVED
+PLI1_2CC7: SUI 01H ; A=u8(A-01H); arithmetic flags; CY=borrow of this subtraction only ; +2CC7 runtime=4EC7H OBSERVED
+PLI1_2CC9: SBB A ; A=old_CY?FFH:00H for self subtraction; exact S/Z/AC/P/CY arithmetic flags ; +2CC9 runtime=4EC9H OBSERVED
+PLI1_2CCA: LHLD 0A634H ; HL=fresh little_endian_word[A634H]; low then high read; flags preserved ; +2CCA runtime=4ECAH OBSERVED
+PLI1_2CCD: MVI H,00H ; H=00H; flags preserved ; +2CCD runtime=4ECDH OBSERVED
+PLI1_2CCF: LXI B,0A628H ; B pair = literal A628H; flags preserved ; +2CCF runtime=4ECFH OBSERVED
+PLI1_2CD2: DAD B ; HL=u16(HL+B); only CY changes to word overflow ; +2CD2 runtime=4ED2H OBSERVED
+PLI1_2CD3: PUSH PSW ; write high then low PSW below SP; SP-=2; preserve flags; compatibility residue retained ; +2CD3 runtime=4ED3H OBSERVED
+PLI1_2CD4: MOV A,M ; A=fresh byte[HL]; flags preserved ; +2CD4 runtime=4ED4H OBSERVED
+PLI1_2CD5: SUI 19H ; A=u8(A-19H); arithmetic flags; CY=borrow of this subtraction only ; +2CD5 runtime=4ED5H OBSERVED
+PLI1_2CD7: SUI 01H ; A=u8(A-01H); arithmetic flags; CY=borrow of this subtraction only ; +2CD7 runtime=4ED7H OBSERVED
+PLI1_2CD9: SBB A ; A=old_CY?FFH:00H for self subtraction; exact S/Z/AC/P/CY arithmetic flags ; +2CD9 runtime=4ED9H OBSERVED
+PLI1_2CDA: POP B ; read low then high into B pair; SP+=2; flags preserved; residue remains ; +2CDA runtime=4EDAH OBSERVED
+PLI1_2CDB: MOV C,B ; C=B; flags preserved ; +2CDB runtime=4EDBH OBSERVED
+PLI1_2CDC: ANA C ; A=A AND C; Intel8080 logical flags/CY0 ; +2CDC runtime=4EDCH OBSERVED
+PLI1_2CDD: RAR ; A=(incoming_CY<<7)|(old_A>>1); CY=old_A.bit0; NZPA preserved ; +2CDD runtime=4EDDH OBSERVED
+PLI1_2CDE: JNC 4EE4H ; if CY=0: PC=4EE4H; flags preserved ; +2CDE runtime=4EDEH OBSERVED
+; SECTION [2CE1,2CE4) RAW
+PLI1_2CE1: DB 0CDH,06CH,049H ; +2CE1 runtime=4EE1H RAW
+; SECTION [2CE4,2CF3) UNDERSTOOD
+PLI1_2CE4: LHLD 0A634H ; HL=fresh little_endian_word[A634H]; low then high read; flags preserved ; +2CE4 runtime=4EE4H OBSERVED
+PLI1_2CE7: MVI H,00H ; H=00H; flags preserved ; +2CE7 runtime=4EE7H OBSERVED
+PLI1_2CE9: LXI B,0A628H ; B pair = literal A628H; flags preserved ; +2CE9 runtime=4EE9H OBSERVED
+PLI1_2CEC: DAD B ; HL=u16(HL+B); only CY changes to word overflow ; +2CEC runtime=4EECH OBSERVED
+PLI1_2CED: MOV A,M ; A=fresh byte[HL]; flags preserved ; +2CED runtime=4EEDH OBSERVED
+PLI1_2CEE: CPI 28H ; flags=unsigned byte comparison A-28H; A preserved ; +2CEE runtime=4EEEH OBSERVED
+PLI1_2CF0: JNZ 4EF6H ; if Z=0: PC=4EF6H; flags preserved ; +2CF0 runtime=4EF0H OBSERVED
+; SECTION [2CF3,2CF6) RAW
+PLI1_2CF3: DB 0CDH,066H,048H ; +2CF3 runtime=4EF3H RAW
+; SECTION [2CF6,2D13) UNDERSTOOD
+PLI1_2CF6: LHLD 0A634H ; HL=fresh little_endian_word[A634H]; low then high read; flags preserved ; +2CF6 runtime=4EF6H OBSERVED
+PLI1_2CF9: MVI H,00H ; H=00H; flags preserved ; +2CF9 runtime=4EF9H OBSERVED
+PLI1_2CFB: LXI B,0A628H ; B pair = literal A628H; flags preserved ; +2CFB runtime=4EFBH OBSERVED
+PLI1_2CFE: DAD B ; HL=u16(HL+B); only CY changes to word overflow ; +2CFE runtime=4EFEH OBSERVED
+PLI1_2CFF: MOV A,M ; A=fresh byte[HL]; flags preserved ; +2CFF runtime=4EFFH OBSERVED
+PLI1_2D00: SUI 24H ; A=u8(A-24H); arithmetic flags; CY=borrow of this subtraction only ; +2D00 runtime=4F00H OBSERVED
+PLI1_2D02: SUI 01H ; A=u8(A-01H); arithmetic flags; CY=borrow of this subtraction only ; +2D02 runtime=4F02H OBSERVED
+PLI1_2D04: SBB A ; A=old_CY?FFH:00H for self subtraction; exact S/Z/AC/P/CY arithmetic flags ; +2D04 runtime=4F04H OBSERVED
+PLI1_2D05: PUSH PSW ; write high then low PSW below SP; SP-=2; preserve flags; compatibility residue retained ; +2D05 runtime=4F05H OBSERVED
+PLI1_2D06: MOV A,M ; A=fresh byte[HL]; flags preserved ; +2D06 runtime=4F06H OBSERVED
+PLI1_2D07: SUI 25H ; A=u8(A-25H); arithmetic flags; CY=borrow of this subtraction only ; +2D07 runtime=4F07H OBSERVED
+PLI1_2D09: SUI 01H ; A=u8(A-01H); arithmetic flags; CY=borrow of this subtraction only ; +2D09 runtime=4F09H OBSERVED
+PLI1_2D0B: SBB A ; A=old_CY?FFH:00H for self subtraction; exact S/Z/AC/P/CY arithmetic flags ; +2D0B runtime=4F0BH OBSERVED
+PLI1_2D0C: POP B ; read low then high into B pair; SP+=2; flags preserved; residue remains ; +2D0C runtime=4F0CH OBSERVED
+PLI1_2D0D: MOV C,B ; C=B; flags preserved ; +2D0D runtime=4F0DH OBSERVED
+PLI1_2D0E: ORA C ; A=A OR C; logical flags; CY=0 ; +2D0E runtime=4F0EH OBSERVED
+PLI1_2D0F: RAR ; A=(incoming_CY<<7)|(old_A>>1); CY=old_A.bit0; NZPA preserved ; +2D0F runtime=4F0FH OBSERVED
+PLI1_2D10: JNC 4F16H ; if CY=0: PC=4F16H; flags preserved ; +2D10 runtime=4F10H OBSERVED
+; SECTION [2D13,2D16) RAW
+PLI1_2D13: DB 0CDH,037H,048H ; +2D13 runtime=4F13H RAW
+; SECTION [2D16,2D25) UNDERSTOOD
+PLI1_2D16: LHLD 0A634H ; HL=fresh little_endian_word[A634H]; low then high read; flags preserved ; +2D16 runtime=4F16H OBSERVED
+PLI1_2D19: MVI H,00H ; H=00H; flags preserved ; +2D19 runtime=4F19H OBSERVED
+PLI1_2D1B: LXI B,0A628H ; B pair = literal A628H; flags preserved ; +2D1B runtime=4F1BH OBSERVED
+PLI1_2D1E: DAD B ; HL=u16(HL+B); only CY changes to word overflow ; +2D1E runtime=4F1EH OBSERVED
+PLI1_2D1F: MOV A,M ; A=fresh byte[HL]; flags preserved ; +2D1F runtime=4F1FH OBSERVED
+PLI1_2D20: CPI 31H ; flags=unsigned byte comparison A-31H; A preserved ; +2D20 runtime=4F20H OBSERVED
+PLI1_2D22: JNZ 4F28H ; if Z=0: PC=4F28H; flags preserved ; +2D22 runtime=4F22H OBSERVED
+; SECTION [2D25,2D28) RAW
+PLI1_2D25: DB 0CDH,088H,04AH ; +2D25 runtime=4F25H RAW
+; SECTION [2D28,2D4B) UNDERSTOOD
+PLI1_2D28: LDA 0A628H ; A=fresh byte[A628H]; flags preserved ; +2D28 runtime=4F28H OBSERVED
+PLI1_2D2B: ANI 11H ; A=A AND 11H; Intel8080 logical flags/CY0 ; +2D2B runtime=4F2BH OBSERVED
+PLI1_2D2D: SUI 11H ; A=u8(A-11H); arithmetic flags; CY=borrow of this subtraction only ; +2D2D runtime=4F2DH OBSERVED
+PLI1_2D2F: SUI 01H ; A=u8(A-01H); arithmetic flags; CY=borrow of this subtraction only ; +2D2F runtime=4F2FH OBSERVED
+PLI1_2D31: SBB A ; A=old_CY?FFH:00H for self subtraction; exact S/Z/AC/P/CY arithmetic flags ; +2D31 runtime=4F31H OBSERVED
+PLI1_2D32: LHLD 0A634H ; HL=fresh little_endian_word[A634H]; low then high read; flags preserved ; +2D32 runtime=4F32H OBSERVED
+PLI1_2D35: MVI H,00H ; H=00H; flags preserved ; +2D35 runtime=4F35H OBSERVED
+PLI1_2D37: LXI B,0A628H ; B pair = literal A628H; flags preserved ; +2D37 runtime=4F37H OBSERVED
+PLI1_2D3A: DAD B ; HL=u16(HL+B); only CY changes to word overflow ; +2D3A runtime=4F3AH OBSERVED
+PLI1_2D3B: PUSH PSW ; write high then low PSW below SP; SP-=2; preserve flags; compatibility residue retained ; +2D3B runtime=4F3BH OBSERVED
+PLI1_2D3C: MVI A,12H ; A=12H; flags preserved ; +2D3C runtime=4F3CH OBSERVED
+PLI1_2D3E: ANA M ; A=A AND M; Intel8080 logical flags/CY0 ; +2D3E runtime=4F3EH OBSERVED
+PLI1_2D3F: SUI 12H ; A=u8(A-12H); arithmetic flags; CY=borrow of this subtraction only ; +2D3F runtime=4F3FH OBSERVED
+PLI1_2D41: SUI 01H ; A=u8(A-01H); arithmetic flags; CY=borrow of this subtraction only ; +2D41 runtime=4F41H OBSERVED
+PLI1_2D43: SBB A ; A=old_CY?FFH:00H for self subtraction; exact S/Z/AC/P/CY arithmetic flags ; +2D43 runtime=4F43H OBSERVED
+PLI1_2D44: POP B ; read low then high into B pair; SP+=2; flags preserved; residue remains ; +2D44 runtime=4F44H OBSERVED
+PLI1_2D45: MOV C,B ; C=B; flags preserved ; +2D45 runtime=4F45H OBSERVED
+PLI1_2D46: ANA C ; A=A AND C; Intel8080 logical flags/CY0 ; +2D46 runtime=4F46H OBSERVED
+PLI1_2D47: RAR ; A=(incoming_CY<<7)|(old_A>>1); CY=old_A.bit0; NZPA preserved ; +2D47 runtime=4F47H OBSERVED
+PLI1_2D48: JNC 4F4EH ; if CY=0: PC=4F4EH; flags preserved ; +2D48 runtime=4F48H OBSERVED
+; SECTION [2D4B,2D4E) RAW
+PLI1_2D4B: DB 0CDH,011H,049H ; +2D4B runtime=4F4BH RAW
+; SECTION [2D4E,2D71) UNDERSTOOD
+PLI1_2D4E: LDA 0A628H ; A=fresh byte[A628H]; flags preserved ; +2D4E runtime=4F4EH OBSERVED
+PLI1_2D51: ANI 18H ; A=A AND 18H; Intel8080 logical flags/CY0 ; +2D51 runtime=4F51H OBSERVED
+PLI1_2D53: SUI 18H ; A=u8(A-18H); arithmetic flags; CY=borrow of this subtraction only ; +2D53 runtime=4F53H OBSERVED
+PLI1_2D55: SUI 01H ; A=u8(A-01H); arithmetic flags; CY=borrow of this subtraction only ; +2D55 runtime=4F55H OBSERVED
+PLI1_2D57: SBB A ; A=old_CY?FFH:00H for self subtraction; exact S/Z/AC/P/CY arithmetic flags ; +2D57 runtime=4F57H OBSERVED
+PLI1_2D58: LHLD 0A634H ; HL=fresh little_endian_word[A634H]; low then high read; flags preserved ; +2D58 runtime=4F58H OBSERVED
+PLI1_2D5B: MVI H,00H ; H=00H; flags preserved ; +2D5B runtime=4F5BH OBSERVED
+PLI1_2D5D: LXI B,0A628H ; B pair = literal A628H; flags preserved ; +2D5D runtime=4F5DH OBSERVED
+PLI1_2D60: DAD B ; HL=u16(HL+B); only CY changes to word overflow ; +2D60 runtime=4F60H OBSERVED
+PLI1_2D61: PUSH PSW ; write high then low PSW below SP; SP-=2; preserve flags; compatibility residue retained ; +2D61 runtime=4F61H OBSERVED
+PLI1_2D62: MVI A,14H ; A=14H; flags preserved ; +2D62 runtime=4F62H OBSERVED
+PLI1_2D64: ANA M ; A=A AND M; Intel8080 logical flags/CY0 ; +2D64 runtime=4F64H OBSERVED
+PLI1_2D65: SUI 14H ; A=u8(A-14H); arithmetic flags; CY=borrow of this subtraction only ; +2D65 runtime=4F65H OBSERVED
+PLI1_2D67: SUI 01H ; A=u8(A-01H); arithmetic flags; CY=borrow of this subtraction only ; +2D67 runtime=4F67H OBSERVED
+PLI1_2D69: SBB A ; A=old_CY?FFH:00H for self subtraction; exact S/Z/AC/P/CY arithmetic flags ; +2D69 runtime=4F69H OBSERVED
+PLI1_2D6A: POP B ; read low then high into B pair; SP+=2; flags preserved; residue remains ; +2D6A runtime=4F6AH OBSERVED
+PLI1_2D6B: MOV C,B ; C=B; flags preserved ; +2D6B runtime=4F6BH OBSERVED
+PLI1_2D6C: ANA C ; A=A AND C; Intel8080 logical flags/CY0 ; +2D6C runtime=4F6CH OBSERVED
+PLI1_2D6D: RAR ; A=(incoming_CY<<7)|(old_A>>1); CY=old_A.bit0; NZPA preserved ; +2D6D runtime=4F6DH OBSERVED
+PLI1_2D6E: JNC 4F74H ; if CY=0: PC=4F74H; flags preserved ; +2D6E runtime=4F6EH OBSERVED
+; SECTION [2D71,2D74) RAW
+PLI1_2D71: DB 0CDH,035H,04AH ; +2D71 runtime=4F71H RAW
+; SECTION [2D74,2D8D) UNDERSTOOD
+; @block-pseudo 2D74
+; pseudo:
+; | fresh base mask14 matches; indexed selector !=19
+; | fresh base !=16; shared RET preserving final CPI16 state
+PLI1_2D74: LDA 0A628H ; A=fresh byte[A628H]; flags preserved ; +2D74 runtime=4F74H OBSERVED
+PLI1_2D77: ANI 14H ; A=A AND 14H; Intel8080 logical flags/CY0 ; +2D77 runtime=4F77H OBSERVED
+PLI1_2D79: CPI 14H ; flags=unsigned byte comparison A-14H; A preserved ; +2D79 runtime=4F79H OBSERVED
+PLI1_2D7B: JNZ 4FBCH ; if Z=0: PC=4FBCH; flags preserved ; +2D7B runtime=4F7BH OBSERVED
+PLI1_2D7E: LHLD 0A634H ; HL=fresh little_endian_word[A634H]; low then high read; flags preserved ; +2D7E runtime=4F7EH OBSERVED
+PLI1_2D81: MVI H,00H ; H=00H; flags preserved ; +2D81 runtime=4F81H OBSERVED
+PLI1_2D83: LXI B,0A628H ; B pair = literal A628H; flags preserved ; +2D83 runtime=4F83H OBSERVED
+PLI1_2D86: DAD B ; HL=u16(HL+B); only CY changes to word overflow ; +2D86 runtime=4F86H OBSERVED
+PLI1_2D87: MOV A,M ; A=fresh byte[HL]; flags preserved ; +2D87 runtime=4F87H OBSERVED
+PLI1_2D88: CPI 19H ; flags=unsigned byte comparison A-19H; A preserved ; +2D88 runtime=4F88H OBSERVED
+PLI1_2D8A: JNZ 4F90H ; if Z=0: PC=4F90H; flags preserved ; +2D8A runtime=4F8AH OBSERVED
+; SECTION [2D8D,2D90) RAW
+PLI1_2D8D: DB 0CDH,094H,049H ; +2D8D runtime=4F8DH RAW
+; SECTION [2D90,2D98) UNDERSTOOD
+PLI1_2D90: LDA 0A628H ; A=fresh byte[A628H]; flags preserved ; +2D90 runtime=4F90H OBSERVED
+PLI1_2D93: CPI 16H ; flags=unsigned byte comparison A-16H; A preserved ; +2D93 runtime=4F93H OBSERVED
+PLI1_2D95: JNZ 4FBCH ; if Z=0: PC=4FBCH; flags preserved ; +2D95 runtime=4F95H OBSERVED
+; SECTION [2D98,2DBC) RAW
+PLI1_2D98: DB 02AH,034H,0A6H,026H,000H,001H,028H,0A6H ; +2D98 runtime=4F98H RAW
 PLI1_2DA0: DB 009H,07EH,0FEH,015H,0C2H,0AAH,04FH,0CDH,004H,04AH,02AH,034H,0A6H,026H,000H,001H ; +2DA0 runtime=4FA0H RAW
-PLI1_2DB0: DB 028H,0A6H,009H,07EH,0FEH,016H,0C2H,0BCH,04FH,0CDH,0E6H,048H,0C3H,0C2H,04FH,0CDH ; +2DB0 runtime=4FB0H RAW
-PLI1_2DC0: DB 027H,043H,0C9H,0CDH,059H,04EH,0CDH,005H,049H,0C9H,03AH,02AH,0A6H,0FEH,02AH,0C2H ; +2DC0 runtime=4FC0H RAW
+PLI1_2DB0: DB 028H,0A6H,009H,07EH,0FEH,016H,0C2H,0BCH,04FH,0CDH,0E6H,048H ; +2DB0 runtime=4FB0H RAW
+; SECTION [2DBC,2DBF) UNDERSTOOD
+PLI1_2DBC: JMP 4FC2H ; unconditionally: PC=4FC2H; flags preserved ; +2DBC runtime=4FBCH OBSERVED
+; SECTION [2DBF,2DC2) RAW
+PLI1_2DBF: DB 0CDH ; +2DBF runtime=4FBFH RAW
+PLI1_2DC0: DB 027H,043H ; +2DC0 runtime=4FC0H RAW
+; SECTION [2DC2,2DC3) UNDERSTOOD
+PLI1_2DC2: RET ; consume original hardware return word; SP=entry_SP+2; preserve final path flags and registers ; +2DC2 runtime=4FC2H OBSERVED
+; SECTION [2DC3,2FC2) RAW
+PLI1_2DC3: DB 0CDH,059H,04EH,0CDH,005H,049H,0C9H,03AH,02AH,0A6H,0FEH,02AH,0C2H ; +2DC3 runtime=4FC3H RAW
 PLI1_2DD0: DB 0D5H,04FH,0CDH,099H,04AH,03AH,02AH,0A6H,0FEH,028H,0C2H,01DH,050H,03AH,029H,0A6H ; +2DD0 runtime=4FD0H RAW
 PLI1_2DE0: DB 0FEH,015H,0C2H,0F3H,04FH,03AH,042H,0A6H,032H,02DH,0A6H,00EH,09DH,0CDH,0F1H,046H ; +2DE0 runtime=4FE0H RAW
 PLI1_2DF0: DB 0C3H,01AH,050H,03AH,029H,0A6H,0FEH,016H,0C2H,009H,050H,03AH,02FH,0A6H,032H,030H ; +2DF0 runtime=4FF0H RAW
@@ -2929,37 +3390,361 @@ PLI1_2F80: DB 0CDH,06CH,049H,02AH,034H,0A6H,026H,000H,001H,028H,0A6H,009H,07EH,0
 PLI1_2F90: DB 095H,051H,0CDH,0D1H,049H,02AH,034H,0A6H,026H,000H,001H,028H,0A6H,009H,07EH,0FEH ; +2F90 runtime=5190H RAW
 PLI1_2FA0: DB 031H,0C2H,0A7H,051H,0CDH,061H,04AH,0C3H,0ADH,051H,0CDH,027H,043H,0C9H,03AH,028H ; +2FA0 runtime=51A0H RAW
 PLI1_2FB0: DB 0A6H,0E6H,028H,0FEH,028H,0C2H,0BEH,051H,0CDH,01CH,051H,0C3H,0C1H,051H,0CDH,098H ; +2FB0 runtime=51B0H RAW
-PLI1_2FC0: DB 050H,0C9H,03AH,02DH,0A6H,032H,063H,0A6H,03AH,030H,0A6H,032H,064H,0A6H,03AH,028H ; +2FC0 runtime=51C0H RAW
-PLI1_2FD0: DB 0A6H,0E6H,011H,0D6H,011H,0D6H,001H,09FH,0F5H,03AH,02AH,0A6H,0D6H,016H,0D6H,001H ; +2FD0 runtime=51D0H RAW
-PLI1_2FE0: DB 09FH,0F5H,02AH,02AH,0A6H,04DH,0CDH,03CH,043H,0C1H,048H,0B1H,0C1H,048H,0A1H,01FH ; +2FE0 runtime=51E0H RAW
-PLI1_2FF0: DB 0D2H,00FH,052H,02AH,063H,0A6H,04DH,0CDH,0D6H,047H,032H,063H,0A6H,03AH,064H,0A6H ; +2FF0 runtime=51F0H RAW
-PLI1_3000: DB 0FEH,000H,0CAH,00FH,052H,02AH,064H,0A6H,04DH,0CDH,0D6H,047H,032H,064H,0A6H,03AH ; +3000 runtime=5200H RAW
-PLI1_3010: DB 028H,0A6H,0E6H,011H,0FEH,011H,0C2H,01EH,052H,021H,02EH,0A6H,036H,000H,03AH,028H ; +3010 runtime=5210H RAW
-PLI1_3020: DB 0A6H,0FEH,019H,0C2H,037H,052H,02AH,02BH,0A6H,04DH,02AH,063H,0A6H,0EBH,0CDH,0B9H ; +3020 runtime=5220H RAW
-PLI1_3030: DB 045H,032H,02BH,0A6H,0C3H,06AH,052H,021H,02EH,0A6H,03AH,02BH,0A6H,096H,032H,02BH ; +3030 runtime=5230H RAW
-PLI1_3040: DB 0A6H,021H,064H,0A6H,03AH,063H,0A6H,096H,02BH,077H,02AH,02EH,0A6H,04DH,02AH,064H ; +3040 runtime=5240H RAW
-PLI1_3050: DB 0A6H,0EBH,0CDH,0B9H,045H,032H,02EH,0A6H,02AH,02BH,0A6H,04DH,02AH,063H,0A6H,0EBH ; +3050 runtime=5250H RAW
-PLI1_3060: DB 0CDH,0B9H,045H,021H,02EH,0A6H,086H,032H,02BH,0A6H,03AH,028H,0A6H,0FEH,015H,0C2H ; +3060 runtime=5260H RAW
-PLI1_3070: DB 083H,052H,02AH,02BH,0A6H,04DH,02AH,042H,0A6H,0EBH,0CDH,0A0H,045H,032H,02BH,0A6H ; +3070 runtime=5270H RAW
-PLI1_3080: DB 0C3H,0C0H,052H,03AH,028H,0A6H,0FEH,016H,0C2H,0AAH,052H,02AH,02BH,0A6H,04DH,02AH ; +3080 runtime=5280H RAW
+PLI1_2FC0: DB 050H,0C9H ; +2FC0 runtime=51C0H RAW
+
+; @procedure-v1 PLI1.OVL+2FC2
+; ProcedureHypothesis: Bounded cached channel subtraction, maxima and limiter publication
+; Entry: PLI1_2FC2 = PLI1.OVL+2FC2 @ 51C2H; SHA-256
+;   1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564
+; Extent: HYPOTHESIS [2FC2,30C1) file offsets; overlapping entries: none established
+; Callers: OBSERVED PLI1.OVL+31A4 (FIZZBUZ=8)
+; Returns: OBSERVED/DEDUCED ordinary hardware CALL word; original slot unchanged; SP after
+;   RET=entry_SP+2; PLI1.OVL+30C0
+; Inputs: DEDUCED Actual entry registers and selected shared byte-addressed memory; child scopes
+;   inherited; executable code, selected scratch/publications/read carriers and active
+;   return/save slots nonaliasing where their operation requires it. No table capacity or
+;   ownership assumption.
+; Outputs: DEDUCED Path-specific A/BC/DE/HL and flags as documented below and in correlated
+;   natural cases; SP=entry_SP+2; PC=original CALL continuation.
+; Clobbers: DEDUCED Path-specific A/BC/DE/HL/flags; local scratch/publications stated below;
+;   delegated child effects; proven CALL/PUSH stack residue.
+; Memory: DEDUCED All numerical addresses denote historical runtime bytes, not separate host
+;   arrays.; F=entry_SP; original hardware CALL word at F; body CALL/save traffic below F;
+;   preserved per-invocation last writers.
+; Direct callees: OBSERVED PLI1.OVL+213C @433CH; PLI1.OVL+25D6 @47D6H; PLI1.OVL+23B9 @45B9H;
+;   PLI1.OVL+23B9 @45B9H; PLI1.OVL+23A0 @45A0H
+; Coverage: OBSERVED FIZZBUZ: 8 CALLs; MINIMAL: 0 CALLs; PICTURE: 0 CALLs; 167/255 bytes
+;   represented as instructions; OBSERVED corrected ordinary CALL/return windows
+;   independently retained for MINIMAL/FIZZBUZ/PICTURE; union of own bytes excludes child
+;   bodies.
+; Unresolved: RAW nonzero conversion [3005,300F); selector19 [3026,3037); non15 tail [3083,30C0);
+;   unexecuted outcomes unsupported. / Only observed terminating helper states and
+;   nonaliasing scratch/selected fields/stack scope; no general parent contract.
+; Contract: DEDUCED (partial; scope: Bounded accumulated-natural routes and exact represented
+;   local operations; delegated partial/opaque children and unexecuted local arms are not
+;   silently implemented.) Cache fresh A62D->A663, A630->A664 separately. Conjoin (fresh
+;   A628&11)==11 with (fresh A62A==16 OR actual213C(fresh low A62A).bit0). Demonstrated
+;   true invokes25D6 on freshly reread A663 low, publishing its result toA663; require
+;   fresh A664==0. Demonstrated false skips conversion entirely. At supported fresh
+;   selector15, resetA62E=0; selector19 alternative unsupported. Fresh A62B minus fresh
+;   A62E wraps then publishesA62B; fresh A663 minus fresh A664 wraps and publishesA663.
+;   Independently pairedA62E/A62F andA664/A665 feed23B9; publish max toA62E. Independently
+;   pairedA62B/A62C andA663/A664 feed23B9; add freshA62E modulo256, publishA62B. Fresh
+;   selector15 selects final23A0 using pairedA62B/A62C andA642/A643; publish resultA62B,
+;   sharedRET30C0. Exact return ABI/flags delegated to final23A0; DE preserves actual A643
+;   high in limiter argument. PSW stack words and childCALLs retained; no normalized
+;   saturation/type interpretation.
+; Hypothesis: none beyond the low-level operational description
+; Completeness: bounds=provisional; control_flow=partial; contract=partial
+; Evidence: evidence.json#seeds/PLI1.OVL+2FC2; ../host-compiler/pass-39/README.md;
+;   ../host-compiler/pass-39/natural-summary.json
+; Procedure pseudo (operational; byte/word arithmetic wraps):
+;   cache fresh primary A62D and secondary A630 separately; test cached masks and fresh213C result
+;   through PSW; optional25D6 primary conversion; supported conversion requires fresh secondary
+;   cache zero; supported selector15: clear extra; fresh wrapping subtraction of extra from
+;   primary; subtract independent secondary cache from transformed primary cache; fresh paired
+;   extra/cached secondary ->23B9; publish extra; fresh paired primary/cached primary ->23B9; add
+;   fresh extra; publish primary; fresh selector15: fresh primary/limiter ->23A0; publish limited
+;   primary; return exact final minimum ABI and flags via shared RET30C0
+; @end-procedure-v1 PLI1.OVL+2FC2
+; SECTION [2FC2,3005) UNDERSTOOD
+; @block-pseudo 2FC2
+; pseudo:
+; | cache fresh primary A62D and secondary A630 separately
+; | test cached masks and fresh213C result through PSW; optional25D6 primary conversion
+; | supported conversion requires fresh secondary cache zero
+PLI1_2FC2: LDA 0A62DH ; A=fresh byte[A62DH]; flags preserved ; +2FC2 runtime=51C2H OBSERVED
+PLI1_2FC5: STA 0A663H ; unconditionally publish A to byte[A663H]; flags preserved ; +2FC5 runtime=51C5H OBSERVED
+PLI1_2FC8: LDA 0A630H ; A=fresh byte[A630H]; flags preserved ; +2FC8 runtime=51C8H OBSERVED
+PLI1_2FCB: STA 0A664H ; unconditionally publish A to byte[A664H]; flags preserved ; +2FCB runtime=51CBH OBSERVED
+PLI1_2FCE: LDA 0A628H ; A=fresh byte[A628H]; flags preserved ; +2FCE runtime=51CEH OBSERVED
+PLI1_2FD1: ANI 11H ; A=A AND 11H; Intel8080 logical flags/CY0 ; +2FD1 runtime=51D1H OBSERVED
+PLI1_2FD3: SUI 11H ; A=u8(A-11H); arithmetic flags; CY=borrow of this subtraction only ; +2FD3 runtime=51D3H OBSERVED
+PLI1_2FD5: SUI 01H ; A=u8(A-01H); arithmetic flags; CY=borrow of this subtraction only ; +2FD5 runtime=51D5H OBSERVED
+PLI1_2FD7: SBB A ; A=old_CY?FFH:00H for self subtraction; exact S/Z/AC/P/CY arithmetic flags ; +2FD7 runtime=51D7H OBSERVED
+PLI1_2FD8: PUSH PSW ; write high then low PSW below SP; SP-=2; preserve flags; compatibility residue retained ; +2FD8 runtime=51D8H OBSERVED
+PLI1_2FD9: LDA 0A62AH ; A=fresh byte[A62AH]; flags preserved ; +2FD9 runtime=51D9H OBSERVED
+PLI1_2FDC: SUI 16H ; A=u8(A-16H); arithmetic flags; CY=borrow of this subtraction only ; +2FDC runtime=51DCH OBSERVED
+PLI1_2FDE: SUI 01H ; A=u8(A-01H); arithmetic flags; CY=borrow of this subtraction only ; +2FDE runtime=51DEH OBSERVED
+PLI1_2FE0: SBB A ; A=old_CY?FFH:00H for self subtraction; exact S/Z/AC/P/CY arithmetic flags ; +2FE0 runtime=51E0H OBSERVED
+PLI1_2FE1: PUSH PSW ; write high then low PSW below SP; SP-=2; preserve flags; compatibility residue retained ; +2FE1 runtime=51E1H OBSERVED
+PLI1_2FE2: LHLD 0A62AH ; HL=fresh little_endian_word[A62AH]; low then high read; flags preserved ; +2FE2 runtime=51E2H OBSERVED
+PLI1_2FE5: MOV C,L ; C=L; flags preserved ; +2FE5 runtime=51E5H OBSERVED
+PLI1_2FE6: CALL 433CH ; push following PC; invoke PLI1.OVL+213C; child state/effects at the explicitly scoped contract ; +2FE6 runtime=51E6H OBSERVED
+PLI1_2FE9: POP B ; read low then high into B pair; SP+=2; flags preserved; residue remains ; +2FE9 runtime=51E9H OBSERVED
+PLI1_2FEA: MOV C,B ; C=B; flags preserved ; +2FEA runtime=51EAH OBSERVED
+PLI1_2FEB: ORA C ; A=A OR C; logical flags; CY=0 ; +2FEB runtime=51EBH OBSERVED
+PLI1_2FEC: POP B ; read low then high into B pair; SP+=2; flags preserved; residue remains ; +2FEC runtime=51ECH OBSERVED
+PLI1_2FED: MOV C,B ; C=B; flags preserved ; +2FED runtime=51EDH OBSERVED
+PLI1_2FEE: ANA C ; A=A AND C; Intel8080 logical flags/CY0 ; +2FEE runtime=51EEH OBSERVED
+PLI1_2FEF: RAR ; A=(incoming_CY<<7)|(old_A>>1); CY=old_A.bit0; NZPA preserved ; +2FEF runtime=51EFH OBSERVED
+PLI1_2FF0: JNC 520FH ; if CY=0: PC=520FH; flags preserved ; +2FF0 runtime=51F0H OBSERVED
+PLI1_2FF3: LHLD 0A663H ; HL=fresh little_endian_word[A663H]; low then high read; flags preserved ; +2FF3 runtime=51F3H OBSERVED
+PLI1_2FF6: MOV C,L ; C=L; flags preserved ; +2FF6 runtime=51F6H OBSERVED
+PLI1_2FF7: CALL 47D6H ; push following PC; invoke PLI1.OVL+25D6; child state/effects at the explicitly scoped contract ; +2FF7 runtime=51F7H OBSERVED
+PLI1_2FFA: STA 0A663H ; unconditionally publish A to byte[A663H]; flags preserved ; +2FFA runtime=51FAH OBSERVED
+PLI1_2FFD: LDA 0A664H ; A=fresh byte[A664H]; flags preserved ; +2FFD runtime=51FDH OBSERVED
+PLI1_3000: CPI 00H ; flags=unsigned byte comparison A-00H; A preserved ; +3000 runtime=5200H OBSERVED
+PLI1_3002: JZ 520FH ; if Z=1: PC=520FH; flags preserved ; +3002 runtime=5202H OBSERVED
+; SECTION [3005,300F) RAW
+PLI1_3005: DB 02AH,064H,0A6H,04DH,0CDH,0D6H,047H,032H,064H,0A6H ; +3005 runtime=5205H RAW
+; SECTION [300F,3026) UNDERSTOOD
+; @block-pseudo 300F
+; pseudo:
+; | supported selector15: clear extra; fresh wrapping subtraction of extra from primary
+; | subtract independent secondary cache from transformed primary cache
+PLI1_300F: LDA 0A628H ; A=fresh byte[A628H]; flags preserved ; +300F runtime=520FH OBSERVED
+PLI1_3012: ANI 11H ; A=A AND 11H; Intel8080 logical flags/CY0 ; +3012 runtime=5212H OBSERVED
+PLI1_3014: CPI 11H ; flags=unsigned byte comparison A-11H; A preserved ; +3014 runtime=5214H OBSERVED
+PLI1_3016: JNZ 521EH ; if Z=0: PC=521EH; flags preserved ; +3016 runtime=5216H OBSERVED
+PLI1_3019: LXI H,0A62EH ; H pair = literal A62EH; flags preserved ; +3019 runtime=5219H OBSERVED
+PLI1_301C: MVI M,00H ; byte[HL]=00H; flags preserved ; +301C runtime=521CH OBSERVED
+PLI1_301E: LDA 0A628H ; A=fresh byte[A628H]; flags preserved ; +301E runtime=521EH OBSERVED
+PLI1_3021: CPI 19H ; flags=unsigned byte comparison A-19H; A preserved ; +3021 runtime=5221H OBSERVED
+PLI1_3023: JNZ 5237H ; if Z=0: PC=5237H; flags preserved ; +3023 runtime=5223H OBSERVED
+; SECTION [3026,3037) RAW
+PLI1_3026: DB 02AH,02BH,0A6H,04DH,02AH,063H,0A6H,0EBH,0CDH,0B9H ; +3026 runtime=5226H RAW
+PLI1_3030: DB 045H,032H,02BH,0A6H,0C3H,06AH,052H ; +3030 runtime=5230H RAW
+; SECTION [3037,3083) UNDERSTOOD
+PLI1_3037: LXI H,0A62EH ; H pair = literal A62EH; flags preserved ; +3037 runtime=5237H OBSERVED
+PLI1_303A: LDA 0A62BH ; A=fresh byte[A62BH]; flags preserved ; +303A runtime=523AH OBSERVED
+PLI1_303D: SUB M ; A=u8(A - fresh byte[HL]); exact subtraction NZPA/CY; operands remain distinct channels ; +303D runtime=523DH OBSERVED
+PLI1_303E: STA 0A62BH ; unconditionally publish A to byte[A62BH]; flags preserved ; +303E runtime=523EH OBSERVED
+PLI1_3041: LXI H,0A664H ; H pair = literal A664H; flags preserved ; +3041 runtime=5241H OBSERVED
+PLI1_3044: LDA 0A663H ; A=fresh byte[A663H]; flags preserved ; +3044 runtime=5244H OBSERVED
+PLI1_3047: SUB M ; A=u8(A - fresh byte[HL]); exact subtraction NZPA/CY; operands remain distinct channels ; +3047 runtime=5247H OBSERVED
+PLI1_3048: DCX H ; H=u16(H -1); flags preserved ; +3048 runtime=5248H OBSERVED
+PLI1_3049: MOV M,A ; byte[HL]=A; flags preserved ; +3049 runtime=5249H OBSERVED
+; @block-pseudo 304A
+; pseudo:
+; | fresh paired extra/cached secondary ->23B9; publish extra
+; | fresh paired primary/cached primary ->23B9; add fresh extra; publish primary
+PLI1_304A: LHLD 0A62EH ; HL=fresh little_endian_word[A62EH]; low then high read; flags preserved ; +304A runtime=524AH OBSERVED
+PLI1_304D: MOV C,L ; C=L; flags preserved ; +304D runtime=524DH OBSERVED
+PLI1_304E: LHLD 0A664H ; HL=fresh little_endian_word[A664H]; low then high read; flags preserved ; +304E runtime=524EH OBSERVED
+PLI1_3051: XCHG ; exchange DE and HL; flags preserved ; +3051 runtime=5251H OBSERVED
+PLI1_3052: CALL 45B9H ; push following PC; invoke PLI1.OVL+23B9; child state/effects at the explicitly scoped contract ; +3052 runtime=5252H OBSERVED
+PLI1_3055: STA 0A62EH ; unconditionally publish A to byte[A62EH]; flags preserved ; +3055 runtime=5255H OBSERVED
+PLI1_3058: LHLD 0A62BH ; HL=fresh little_endian_word[A62BH]; low then high read; flags preserved ; +3058 runtime=5258H OBSERVED
+PLI1_305B: MOV C,L ; C=L; flags preserved ; +305B runtime=525BH OBSERVED
+PLI1_305C: LHLD 0A663H ; HL=fresh little_endian_word[A663H]; low then high read; flags preserved ; +305C runtime=525CH OBSERVED
+PLI1_305F: XCHG ; exchange DE and HL; flags preserved ; +305F runtime=525FH OBSERVED
+PLI1_3060: CALL 45B9H ; push following PC; invoke PLI1.OVL+23B9; child state/effects at the explicitly scoped contract ; +3060 runtime=5260H OBSERVED
+PLI1_3063: LXI H,0A62EH ; H pair = literal A62EH; flags preserved ; +3063 runtime=5263H OBSERVED
+PLI1_3066: ADD M ; A=u8(A+fresh M); exact byte addition flags; independent channels retained ; +3066 runtime=5266H OBSERVED
+PLI1_3067: STA 0A62BH ; unconditionally publish A to byte[A62BH]; flags preserved ; +3067 runtime=5267H OBSERVED
+; @block-pseudo 306A
+; pseudo:
+; | fresh selector15: fresh primary/limiter ->23A0; publish limited primary
+; | return exact final minimum ABI and flags via shared RET30C0
+PLI1_306A: LDA 0A628H ; A=fresh byte[A628H]; flags preserved ; +306A runtime=526AH OBSERVED
+PLI1_306D: CPI 15H ; flags=unsigned byte comparison A-15H; A preserved ; +306D runtime=526DH OBSERVED
+PLI1_306F: JNZ 5283H ; if Z=0: PC=5283H; flags preserved ; +306F runtime=526FH OBSERVED
+PLI1_3072: LHLD 0A62BH ; HL=fresh little_endian_word[A62BH]; low then high read; flags preserved ; +3072 runtime=5272H OBSERVED
+PLI1_3075: MOV C,L ; C=L; flags preserved ; +3075 runtime=5275H OBSERVED
+PLI1_3076: LHLD 0A642H ; HL=fresh little_endian_word[A642H]; low then high read; flags preserved ; +3076 runtime=5276H OBSERVED
+PLI1_3079: XCHG ; exchange DE and HL; flags preserved ; +3079 runtime=5279H OBSERVED
+PLI1_307A: CALL 45A0H ; push following PC; invoke PLI1.OVL+23A0; child state/effects at the explicitly scoped contract ; +307A runtime=527AH OBSERVED
+PLI1_307D: STA 0A62BH ; unconditionally publish A to byte[A62BH]; flags preserved ; +307D runtime=527DH OBSERVED
+PLI1_3080: JMP 52C0H ; unconditionally: PC=52C0H; flags preserved ; +3080 runtime=5280H OBSERVED
+; SECTION [3083,30C0) RAW
+PLI1_3083: DB 03AH,028H,0A6H,0FEH,016H,0C2H,0AAH,052H,02AH,02BH,0A6H,04DH,02AH ; +3083 runtime=5283H RAW
 PLI1_3090: DB 041H,0A6H,0EBH,0CDH,0A0H,045H,032H,02BH,0A6H,02AH,02EH,0A6H,04DH,02AH,041H,0A6H ; +3090 runtime=5290H RAW
 PLI1_30A0: DB 0EBH,0CDH,0A0H,045H,032H,02EH,0A6H,0C3H,0C0H,052H,03AH,028H,0A6H,0FEH,019H,0C2H ; +30A0 runtime=52A0H RAW
 PLI1_30B0: DB 0C0H,052H,02AH,02BH,0A6H,04DH,02AH,043H,0A6H,0EBH,0CDH,0A0H,045H,032H,02BH,0A6H ; +30B0 runtime=52B0H RAW
-PLI1_30C0: DB 0C9H,0CDH,0C0H,044H,03AH,029H,0A6H,0D6H,019H,0D6H,001H,09FH,0F5H,03AH,029H,0A6H ; +30C0 runtime=52C0H RAW
-PLI1_30D0: DB 0D6H,004H,0D6H,001H,09FH,0C1H,048H,0B1H,0F5H,03AH,029H,0A6H,0D6H,00DH,0D6H,001H ; +30D0 runtime=52D0H RAW
-PLI1_30E0: DB 09FH,0C1H,048H,0B1H,0F5H,03AH,02AH,0A6H,0D6H,019H,0D6H,001H,09FH,0C1H,048H,0B1H ; +30E0 runtime=52E0H RAW
-PLI1_30F0: DB 0F5H,03AH,02AH,0A6H,0D6H,004H,0D6H,001H,09FH,0C1H,048H,0B1H,0F5H,03AH,02AH,0A6H ; +30F0 runtime=52F0H RAW
-PLI1_3100: DB 0D6H,00DH,0D6H,001H,09FH,0C1H,048H,0B1H,01FH,0D2H,014H,053H,021H,028H,0A6H,036H ; +3100 runtime=5300H RAW
-PLI1_3110: DB 019H,0C3H,04BH,053H,03AH,029H,0A6H,0D6H,015H,0D6H,001H,09FH,0F5H,00EH,001H,0CDH ; +3110 runtime=5310H RAW
-PLI1_3120: DB 021H,044H,0C1H,048H,0B1H,0F5H,03AH,02AH,0A6H,0D6H,015H,0D6H,001H,09FH,0C1H,048H ; +3120 runtime=5320H RAW
-PLI1_3130: DB 0B1H,0F5H,00EH,002H,0CDH,021H,044H,0C1H,048H,0B1H,01FH,0D2H,046H,053H,021H,028H ; +3130 runtime=5330H RAW
-PLI1_3140: DB 0A6H,036H,015H,0C3H,04BH,053H,021H,028H,0A6H,036H,016H,03AH,02CH,0A6H,032H,065H ; +3140 runtime=5340H RAW
-PLI1_3150: DB 0A6H,03AH,02FH,0A6H,032H,066H,0A6H,03AH,028H,0A6H,0E6H,011H,0D6H,011H,0D6H,001H ; +3150 runtime=5350H RAW
-PLI1_3160: DB 09FH,0F5H,03AH,029H,0A6H,0D6H,016H,0D6H,001H,09FH,0F5H,02AH,029H,0A6H,04DH,0CDH ; +3160 runtime=5360H RAW
-PLI1_3170: DB 03CH,043H,0C1H,048H,0B1H,0C1H,048H,0A1H,01FH,0D2H,098H,053H,02AH,065H,0A6H,04DH ; +3170 runtime=5370H RAW
+; SECTION [30C0,30C1) UNDERSTOOD
+PLI1_30C0: RET ; consume original hardware return word; SP=entry_SP+2; preserve final path flags and registers ; +30C0 runtime=52C0H OBSERVED
+
+; @procedure-v1 PLI1.OVL+30C1
+; ProcedureHypothesis: Bounded selector publication and cached channel normalization
+; Entry: PLI1_30C1 = PLI1.OVL+30C1 @ 52C1H; SHA-256
+;   1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564
+; Extent: HYPOTHESIS [30C1,31A8) file offsets; overlapping entries: none established
+; Callers: OBSERVED PLI1.OVL+3307 (FIZZBUZ=5); PLI1.OVL+3481 (FIZZBUZ=3)
+; Returns: OBSERVED/DEDUCED ordinary hardware CALL word; original slot unchanged; SP after
+;   RET=entry_SP+2; PLI1.OVL+31A7
+; Inputs: DEDUCED Actual entry registers and selected shared byte-addressed memory; child scopes
+;   inherited; executable code, selected scratch/publications/read carriers and active
+;   return/save slots nonaliasing where their operation requires it. No table capacity or
+;   ownership assumption.
+; Outputs: DEDUCED Path-specific A/BC/DE/HL and flags as documented below and in correlated
+;   natural cases; SP=entry_SP+2; PC=original CALL continuation.
+; Clobbers: DEDUCED Path-specific A/BC/DE/HL/flags; local scratch/publications stated below;
+;   delegated child effects; proven CALL/PUSH stack residue.
+; Memory: DEDUCED All numerical addresses denote historical runtime bytes, not separate host
+;   arrays.; F=entry_SP; original hardware CALL word at F; body CALL/save traffic below F;
+;   preserved per-invocation last writers.
+; Direct callees: OBSERVED PLI1.OVL+22C0 @44C0H; PLI1.OVL+2221 @4421H; PLI1.OVL+2221 @4421H;
+;   PLI1.OVL+213C @433CH; PLI1.OVL+2FC2 @51C2H
+; Coverage: OBSERVED FIZZBUZ: 8 CALLs; MINIMAL: 0 CALLs; PICTURE: 0 CALLs; 190/231 bytes
+;   represented as instructions; OBSERVED corrected ordinary CALL/return windows
+;   independently retained for MINIMAL/FIZZBUZ/PICTURE; union of own bytes excludes child
+;   bodies.
+; Unresolved: RAW alternatives [310C,3114), [3146,314B), [317C,3198) remain unsupported. /
+;   Bounded22C0/2221/213C/2FC2 helper domains required; not globally complete.
+; Contract: DEDUCED (partial; scope: Bounded accumulated-natural routes and exact represented
+;   local operations; delegated partial/opaque children and unexecuted local arms are not
+;   silently implemented.) Call bounded22C0 first. Independently reread A629/A62A for six
+;   wrapping equality masks19/04/0D, OR with PUSH PSW/POP B carriers. Demonstrated clear
+;   bit skips RAW19 publication. Fresh A629==15,2221(index1),freshA62A==15,2221(index2) OR
+;   select literal15->A628; RAW clear alternative unsupported. Fresh A62C->A665
+;   andA62F->A666 cache independent channels. Conjoin (freshA628&11)==11 with
+;   (freshA629==16 OR213C(freshA629).bit0); demonstrated clear skips RAW conversion. Fresh
+;   cachedA665->A62B thenA666->A62E. Invoke bounded2FC2 and return its exact
+;   registers/flags. No local traversal loop; termination inherited from finite scoped
+;   children. Actual child flags remain independent of literal selectors/results.
+;   Code/selected fields/caches/active stack nonaliasing scope; no index or snapshot
+;   whitelist.
+; Hypothesis: none beyond the low-level operational description
+; Completeness: bounds=provisional; control_flow=partial; contract=partial
+; Evidence: evidence.json#seeds/PLI1.OVL+30C1; ../host-compiler/pass-39/README.md;
+;   ../host-compiler/pass-39/natural-summary.json
+; Procedure pseudo (operational; byte/word arithmetic wraps):
+;   22C0(); fresh six equality masks with PSW carriers; demonstrated no19/04/0D match: skip RAW
+;   branch; OR fresh15 comparisons and independent2221(1),2221(2) masks; demonstrated set bit:
+;   publish literal15 toA628; cache fresh A62C->A665; fresh A62F->A666; fresh selector/membership
+;   conjunction; demonstrated clear: skip RAW conversion; fresh cache reads publish primaryA62B
+;   thenextraA62E; 2FC2(); RET delegates exact helper ABI
+; @end-procedure-v1 PLI1.OVL+30C1
+; SECTION [30C1,310C) UNDERSTOOD
+; @block-pseudo 30C1
+; pseudo:
+; | 22C0(); fresh six equality masks with PSW carriers
+; | demonstrated no19/04/0D match: skip RAW branch
+PLI1_30C1: CALL 44C0H ; push following PC; invoke PLI1.OVL+22C0; child state/effects at the explicitly scoped contract ; +30C1 runtime=52C1H OBSERVED
+PLI1_30C4: LDA 0A629H ; A=fresh byte[A629H]; flags preserved ; +30C4 runtime=52C4H OBSERVED
+PLI1_30C7: SUI 19H ; A=u8(A-19H); arithmetic flags; CY=borrow of this subtraction only ; +30C7 runtime=52C7H OBSERVED
+PLI1_30C9: SUI 01H ; A=u8(A-01H); arithmetic flags; CY=borrow of this subtraction only ; +30C9 runtime=52C9H OBSERVED
+PLI1_30CB: SBB A ; A=old_CY?FFH:00H for self subtraction; exact S/Z/AC/P/CY arithmetic flags ; +30CB runtime=52CBH OBSERVED
+PLI1_30CC: PUSH PSW ; write high then low PSW below SP; SP-=2; preserve flags; compatibility residue retained ; +30CC runtime=52CCH OBSERVED
+PLI1_30CD: LDA 0A629H ; A=fresh byte[A629H]; flags preserved ; +30CD runtime=52CDH OBSERVED
+PLI1_30D0: SUI 04H ; A=u8(A-04H); arithmetic flags; CY=borrow of this subtraction only ; +30D0 runtime=52D0H OBSERVED
+PLI1_30D2: SUI 01H ; A=u8(A-01H); arithmetic flags; CY=borrow of this subtraction only ; +30D2 runtime=52D2H OBSERVED
+PLI1_30D4: SBB A ; A=old_CY?FFH:00H for self subtraction; exact S/Z/AC/P/CY arithmetic flags ; +30D4 runtime=52D4H OBSERVED
+PLI1_30D5: POP B ; read low then high into B pair; SP+=2; flags preserved; residue remains ; +30D5 runtime=52D5H OBSERVED
+PLI1_30D6: MOV C,B ; C=B; flags preserved ; +30D6 runtime=52D6H OBSERVED
+PLI1_30D7: ORA C ; A=A OR C; logical flags; CY=0 ; +30D7 runtime=52D7H OBSERVED
+PLI1_30D8: PUSH PSW ; write high then low PSW below SP; SP-=2; preserve flags; compatibility residue retained ; +30D8 runtime=52D8H OBSERVED
+PLI1_30D9: LDA 0A629H ; A=fresh byte[A629H]; flags preserved ; +30D9 runtime=52D9H OBSERVED
+PLI1_30DC: SUI 0DH ; A=u8(A-0DH); arithmetic flags; CY=borrow of this subtraction only ; +30DC runtime=52DCH OBSERVED
+PLI1_30DE: SUI 01H ; A=u8(A-01H); arithmetic flags; CY=borrow of this subtraction only ; +30DE runtime=52DEH OBSERVED
+PLI1_30E0: SBB A ; A=old_CY?FFH:00H for self subtraction; exact S/Z/AC/P/CY arithmetic flags ; +30E0 runtime=52E0H OBSERVED
+PLI1_30E1: POP B ; read low then high into B pair; SP+=2; flags preserved; residue remains ; +30E1 runtime=52E1H OBSERVED
+PLI1_30E2: MOV C,B ; C=B; flags preserved ; +30E2 runtime=52E2H OBSERVED
+PLI1_30E3: ORA C ; A=A OR C; logical flags; CY=0 ; +30E3 runtime=52E3H OBSERVED
+PLI1_30E4: PUSH PSW ; write high then low PSW below SP; SP-=2; preserve flags; compatibility residue retained ; +30E4 runtime=52E4H OBSERVED
+PLI1_30E5: LDA 0A62AH ; A=fresh byte[A62AH]; flags preserved ; +30E5 runtime=52E5H OBSERVED
+PLI1_30E8: SUI 19H ; A=u8(A-19H); arithmetic flags; CY=borrow of this subtraction only ; +30E8 runtime=52E8H OBSERVED
+PLI1_30EA: SUI 01H ; A=u8(A-01H); arithmetic flags; CY=borrow of this subtraction only ; +30EA runtime=52EAH OBSERVED
+PLI1_30EC: SBB A ; A=old_CY?FFH:00H for self subtraction; exact S/Z/AC/P/CY arithmetic flags ; +30EC runtime=52ECH OBSERVED
+PLI1_30ED: POP B ; read low then high into B pair; SP+=2; flags preserved; residue remains ; +30ED runtime=52EDH OBSERVED
+PLI1_30EE: MOV C,B ; C=B; flags preserved ; +30EE runtime=52EEH OBSERVED
+PLI1_30EF: ORA C ; A=A OR C; logical flags; CY=0 ; +30EF runtime=52EFH OBSERVED
+PLI1_30F0: PUSH PSW ; write high then low PSW below SP; SP-=2; preserve flags; compatibility residue retained ; +30F0 runtime=52F0H OBSERVED
+PLI1_30F1: LDA 0A62AH ; A=fresh byte[A62AH]; flags preserved ; +30F1 runtime=52F1H OBSERVED
+PLI1_30F4: SUI 04H ; A=u8(A-04H); arithmetic flags; CY=borrow of this subtraction only ; +30F4 runtime=52F4H OBSERVED
+PLI1_30F6: SUI 01H ; A=u8(A-01H); arithmetic flags; CY=borrow of this subtraction only ; +30F6 runtime=52F6H OBSERVED
+PLI1_30F8: SBB A ; A=old_CY?FFH:00H for self subtraction; exact S/Z/AC/P/CY arithmetic flags ; +30F8 runtime=52F8H OBSERVED
+PLI1_30F9: POP B ; read low then high into B pair; SP+=2; flags preserved; residue remains ; +30F9 runtime=52F9H OBSERVED
+PLI1_30FA: MOV C,B ; C=B; flags preserved ; +30FA runtime=52FAH OBSERVED
+PLI1_30FB: ORA C ; A=A OR C; logical flags; CY=0 ; +30FB runtime=52FBH OBSERVED
+PLI1_30FC: PUSH PSW ; write high then low PSW below SP; SP-=2; preserve flags; compatibility residue retained ; +30FC runtime=52FCH OBSERVED
+PLI1_30FD: LDA 0A62AH ; A=fresh byte[A62AH]; flags preserved ; +30FD runtime=52FDH OBSERVED
+PLI1_3100: SUI 0DH ; A=u8(A-0DH); arithmetic flags; CY=borrow of this subtraction only ; +3100 runtime=5300H OBSERVED
+PLI1_3102: SUI 01H ; A=u8(A-01H); arithmetic flags; CY=borrow of this subtraction only ; +3102 runtime=5302H OBSERVED
+PLI1_3104: SBB A ; A=old_CY?FFH:00H for self subtraction; exact S/Z/AC/P/CY arithmetic flags ; +3104 runtime=5304H OBSERVED
+PLI1_3105: POP B ; read low then high into B pair; SP+=2; flags preserved; residue remains ; +3105 runtime=5305H OBSERVED
+PLI1_3106: MOV C,B ; C=B; flags preserved ; +3106 runtime=5306H OBSERVED
+PLI1_3107: ORA C ; A=A OR C; logical flags; CY=0 ; +3107 runtime=5307H OBSERVED
+PLI1_3108: RAR ; A=(incoming_CY<<7)|(old_A>>1); CY=old_A.bit0; NZPA preserved ; +3108 runtime=5308H OBSERVED
+PLI1_3109: JNC 5314H ; if CY=0: PC=5314H; flags preserved ; +3109 runtime=5309H OBSERVED
+; SECTION [310C,3114) RAW
+PLI1_310C: DB 021H,028H,0A6H,036H ; +310C runtime=530CH RAW
+PLI1_3110: DB 019H,0C3H,04BH,053H ; +3110 runtime=5310H RAW
+; SECTION [3114,3146) UNDERSTOOD
+; @block-pseudo 3114
+; pseudo:
+; | OR fresh15 comparisons and independent2221(1),2221(2) masks
+; | demonstrated set bit: publish literal15 toA628
+PLI1_3114: LDA 0A629H ; A=fresh byte[A629H]; flags preserved ; +3114 runtime=5314H OBSERVED
+PLI1_3117: SUI 15H ; A=u8(A-15H); arithmetic flags; CY=borrow of this subtraction only ; +3117 runtime=5317H OBSERVED
+PLI1_3119: SUI 01H ; A=u8(A-01H); arithmetic flags; CY=borrow of this subtraction only ; +3119 runtime=5319H OBSERVED
+PLI1_311B: SBB A ; A=old_CY?FFH:00H for self subtraction; exact S/Z/AC/P/CY arithmetic flags ; +311B runtime=531BH OBSERVED
+PLI1_311C: PUSH PSW ; write high then low PSW below SP; SP-=2; preserve flags; compatibility residue retained ; +311C runtime=531CH OBSERVED
+PLI1_311D: MVI C,01H ; C=01H; flags preserved ; +311D runtime=531DH OBSERVED
+PLI1_311F: CALL 4421H ; push following PC; invoke PLI1.OVL+2221; child state/effects at the explicitly scoped contract ; +311F runtime=531FH OBSERVED
+PLI1_3122: POP B ; read low then high into B pair; SP+=2; flags preserved; residue remains ; +3122 runtime=5322H OBSERVED
+PLI1_3123: MOV C,B ; C=B; flags preserved ; +3123 runtime=5323H OBSERVED
+PLI1_3124: ORA C ; A=A OR C; logical flags; CY=0 ; +3124 runtime=5324H OBSERVED
+PLI1_3125: PUSH PSW ; write high then low PSW below SP; SP-=2; preserve flags; compatibility residue retained ; +3125 runtime=5325H OBSERVED
+PLI1_3126: LDA 0A62AH ; A=fresh byte[A62AH]; flags preserved ; +3126 runtime=5326H OBSERVED
+PLI1_3129: SUI 15H ; A=u8(A-15H); arithmetic flags; CY=borrow of this subtraction only ; +3129 runtime=5329H OBSERVED
+PLI1_312B: SUI 01H ; A=u8(A-01H); arithmetic flags; CY=borrow of this subtraction only ; +312B runtime=532BH OBSERVED
+PLI1_312D: SBB A ; A=old_CY?FFH:00H for self subtraction; exact S/Z/AC/P/CY arithmetic flags ; +312D runtime=532DH OBSERVED
+PLI1_312E: POP B ; read low then high into B pair; SP+=2; flags preserved; residue remains ; +312E runtime=532EH OBSERVED
+PLI1_312F: MOV C,B ; C=B; flags preserved ; +312F runtime=532FH OBSERVED
+PLI1_3130: ORA C ; A=A OR C; logical flags; CY=0 ; +3130 runtime=5330H OBSERVED
+PLI1_3131: PUSH PSW ; write high then low PSW below SP; SP-=2; preserve flags; compatibility residue retained ; +3131 runtime=5331H OBSERVED
+PLI1_3132: MVI C,02H ; C=02H; flags preserved ; +3132 runtime=5332H OBSERVED
+PLI1_3134: CALL 4421H ; push following PC; invoke PLI1.OVL+2221; child state/effects at the explicitly scoped contract ; +3134 runtime=5334H OBSERVED
+PLI1_3137: POP B ; read low then high into B pair; SP+=2; flags preserved; residue remains ; +3137 runtime=5337H OBSERVED
+PLI1_3138: MOV C,B ; C=B; flags preserved ; +3138 runtime=5338H OBSERVED
+PLI1_3139: ORA C ; A=A OR C; logical flags; CY=0 ; +3139 runtime=5339H OBSERVED
+PLI1_313A: RAR ; A=(incoming_CY<<7)|(old_A>>1); CY=old_A.bit0; NZPA preserved ; +313A runtime=533AH OBSERVED
+PLI1_313B: JNC 5346H ; if CY=0: PC=5346H; flags preserved ; +313B runtime=533BH OBSERVED
+PLI1_313E: LXI H,0A628H ; H pair = literal A628H; flags preserved ; +313E runtime=533EH OBSERVED
+PLI1_3141: MVI M,15H ; byte[HL]=15H; flags preserved ; +3141 runtime=5341H OBSERVED
+PLI1_3143: JMP 534BH ; unconditionally: PC=534BH; flags preserved ; +3143 runtime=5343H OBSERVED
+; SECTION [3146,314B) RAW
+PLI1_3146: DB 021H,028H,0A6H,036H,016H ; +3146 runtime=5346H RAW
+; SECTION [314B,317C) UNDERSTOOD
+; @block-pseudo 314B
+; pseudo:
+; | cache fresh A62C->A665; fresh A62F->A666
+; | fresh selector/membership conjunction; demonstrated clear: skip RAW conversion
+PLI1_314B: LDA 0A62CH ; A=fresh byte[A62CH]; flags preserved ; +314B runtime=534BH OBSERVED
+PLI1_314E: STA 0A665H ; unconditionally publish A to byte[A665H]; flags preserved ; +314E runtime=534EH OBSERVED
+PLI1_3151: LDA 0A62FH ; A=fresh byte[A62FH]; flags preserved ; +3151 runtime=5351H OBSERVED
+PLI1_3154: STA 0A666H ; unconditionally publish A to byte[A666H]; flags preserved ; +3154 runtime=5354H OBSERVED
+PLI1_3157: LDA 0A628H ; A=fresh byte[A628H]; flags preserved ; +3157 runtime=5357H OBSERVED
+PLI1_315A: ANI 11H ; A=A AND 11H; Intel8080 logical flags/CY0 ; +315A runtime=535AH OBSERVED
+PLI1_315C: SUI 11H ; A=u8(A-11H); arithmetic flags; CY=borrow of this subtraction only ; +315C runtime=535CH OBSERVED
+PLI1_315E: SUI 01H ; A=u8(A-01H); arithmetic flags; CY=borrow of this subtraction only ; +315E runtime=535EH OBSERVED
+PLI1_3160: SBB A ; A=old_CY?FFH:00H for self subtraction; exact S/Z/AC/P/CY arithmetic flags ; +3160 runtime=5360H OBSERVED
+PLI1_3161: PUSH PSW ; write high then low PSW below SP; SP-=2; preserve flags; compatibility residue retained ; +3161 runtime=5361H OBSERVED
+PLI1_3162: LDA 0A629H ; A=fresh byte[A629H]; flags preserved ; +3162 runtime=5362H OBSERVED
+PLI1_3165: SUI 16H ; A=u8(A-16H); arithmetic flags; CY=borrow of this subtraction only ; +3165 runtime=5365H OBSERVED
+PLI1_3167: SUI 01H ; A=u8(A-01H); arithmetic flags; CY=borrow of this subtraction only ; +3167 runtime=5367H OBSERVED
+PLI1_3169: SBB A ; A=old_CY?FFH:00H for self subtraction; exact S/Z/AC/P/CY arithmetic flags ; +3169 runtime=5369H OBSERVED
+PLI1_316A: PUSH PSW ; write high then low PSW below SP; SP-=2; preserve flags; compatibility residue retained ; +316A runtime=536AH OBSERVED
+PLI1_316B: LHLD 0A629H ; HL=fresh little_endian_word[A629H]; low then high read; flags preserved ; +316B runtime=536BH OBSERVED
+PLI1_316E: MOV C,L ; C=L; flags preserved ; +316E runtime=536EH OBSERVED
+PLI1_316F: CALL 433CH ; push following PC; invoke PLI1.OVL+213C; child state/effects at the explicitly scoped contract ; +316F runtime=536FH OBSERVED
+PLI1_3172: POP B ; read low then high into B pair; SP+=2; flags preserved; residue remains ; +3172 runtime=5372H OBSERVED
+PLI1_3173: MOV C,B ; C=B; flags preserved ; +3173 runtime=5373H OBSERVED
+PLI1_3174: ORA C ; A=A OR C; logical flags; CY=0 ; +3174 runtime=5374H OBSERVED
+PLI1_3175: POP B ; read low then high into B pair; SP+=2; flags preserved; residue remains ; +3175 runtime=5375H OBSERVED
+PLI1_3176: MOV C,B ; C=B; flags preserved ; +3176 runtime=5376H OBSERVED
+PLI1_3177: ANA C ; A=A AND C; Intel8080 logical flags/CY0 ; +3177 runtime=5377H OBSERVED
+PLI1_3178: RAR ; A=(incoming_CY<<7)|(old_A>>1); CY=old_A.bit0; NZPA preserved ; +3178 runtime=5378H OBSERVED
+PLI1_3179: JNC 5398H ; if CY=0: PC=5398H; flags preserved ; +3179 runtime=5379H OBSERVED
+; SECTION [317C,3198) RAW
+PLI1_317C: DB 02AH,065H,0A6H,04DH ; +317C runtime=537CH RAW
 PLI1_3180: DB 0CDH,0D6H,047H,032H,065H,0A6H,03AH,066H,0A6H,0FEH,000H,0CAH,098H,053H,02AH,066H ; +3180 runtime=5380H RAW
-PLI1_3190: DB 0A6H,04DH,0CDH,0D6H,047H,032H,066H,0A6H,03AH,065H,0A6H,032H,02BH,0A6H,03AH,066H ; +3190 runtime=5390H RAW
-PLI1_31A0: DB 0A6H,032H,02EH,0A6H,0CDH,0C2H,051H,0C9H,00EH,001H,0CDH,021H,044H,0F5H,00EH,002H ; +31A0 runtime=53A0H RAW
+PLI1_3190: DB 0A6H,04DH,0CDH,0D6H,047H,032H,066H,0A6H ; +3190 runtime=5390H RAW
+; SECTION [3198,31A8) UNDERSTOOD
+; @block-pseudo 3198
+; pseudo:
+; | fresh cache reads publish primaryA62B thenextraA62E
+; | 2FC2(); RET delegates exact helper ABI
+PLI1_3198: LDA 0A665H ; A=fresh byte[A665H]; flags preserved ; +3198 runtime=5398H OBSERVED
+PLI1_319B: STA 0A62BH ; unconditionally publish A to byte[A62BH]; flags preserved ; +319B runtime=539BH OBSERVED
+PLI1_319E: LDA 0A666H ; A=fresh byte[A666H]; flags preserved ; +319E runtime=539EH OBSERVED
+PLI1_31A1: STA 0A62EH ; unconditionally publish A to byte[A62EH]; flags preserved ; +31A1 runtime=53A1H OBSERVED
+PLI1_31A4: CALL 51C2H ; push following PC; invoke PLI1.OVL+2FC2; child state/effects at the explicitly scoped contract ; +31A4 runtime=53A4H OBSERVED
+PLI1_31A7: RET ; consume original hardware return word; SP=entry_SP+2; preserve final path flags and registers ; +31A7 runtime=53A7H OBSERVED
+; SECTION [31A8,31FB) RAW
+PLI1_31A8: DB 00EH,001H,0CDH,021H,044H,0F5H,00EH,002H ; +31A8 runtime=53A8H RAW
 PLI1_31B0: DB 0CDH,021H,044H,0C1H,048H,0A1H,01FH,0D2H,0C2H,053H,021H,028H,0A6H,036H,024H,0C3H ; +31B0 runtime=53B0H RAW
 PLI1_31C0: DB 0FAH,053H,021H,02AH,0A6H,03AH,029H,0A6H,0BEH,0C2H,0F5H,053H,03AH,029H,0A6H,0D6H ; +31C0 runtime=53C0H RAW
 PLI1_31D0: DB 005H,0D6H,001H,09FH,0F5H,03AH,029H,0A6H,0D6H,028H,0D6H,001H,09FH,0C1H,048H,0B1H ; +31D0 runtime=53D0H RAW
@@ -13412,15 +14197,71 @@ PLI1_82E6: LDAX D ; A=byte[DE]; flags preserved ; +82E6 runtime=A4E6H OBSERVED
 PLI1_82E7: ANA H ; A=A & H; logical flags, CY=0 ; +82E7 runtime=A4E7H OBSERVED
 PLI1_82E8: MOV H,A ; H = A; flags preserved ; +82E8 runtime=A4E8H OBSERVED
 PLI1_82E9: RET ; consume original hardware return word at entry SP; SP=entry_SP+2; flags preserved ; +82E9 runtime=A4E9H OBSERVED
-; SECTION [82EA,8380) RAW
+; SECTION [82EA,834F) RAW
 PLI1_82EA: DB 044H,04DH,021H,000H,000H,03EH ; +82EA runtime=A4EAH RAW
 PLI1_82F0: DB 010H,0F5H,029H,0EBH,097H,029H,0EBH,08DH,091H,06FH,07CH,098H,067H,013H,0D2H,003H ; +82F0 runtime=A4F0H RAW
 PLI1_8300: DB 0A5H,009H,01BH,0F1H,03DH,0C2H,0F1H,0A4H,0C9H,05EH,023H,056H,0EBH,029H,0E5H,029H ; +8300 runtime=A500H RAW
 PLI1_8310: DB 029H,0C1H,009H,0C9H,044H,04DH,021H,000H,000H,03EH,010H,029H,0EBH,029H,0EBH,0D2H ; +8310 runtime=A510H RAW
 PLI1_8320: DB 023H,0A5H,009H,03DH,0C2H,01BH,0A5H,0C9H,059H,050H,0EBH,097H,095H,06FH,03EH,000H ; +8320 runtime=A520H RAW
 PLI1_8330: DB 09CH,067H,0C9H,05FH,016H,000H,07BH,0B5H,06FH,07AH,0B4H,067H,0C9H,069H,060H,04EH ; +8330 runtime=A530H RAW
-PLI1_8340: DB 023H,046H,01AH,0B1H,06FH,013H,01AH,0B0H,067H,0C9H,0EBH,05FH,016H,000H,0EBH,01AH ; +8340 runtime=A540H RAW
-PLI1_8350: DB 0B5H,06FH,013H,01AH,0B4H,067H,0C9H,05EH,023H,056H,0EBH,07DH,017H,06FH,07CH,017H ; +8350 runtime=A550H RAW
+PLI1_8340: DB 023H,046H,01AH,0B1H,06FH,013H,01AH,0B0H,067H,0C9H,0EBH,05FH,016H,000H,0EBH ; +8340 runtime=A540H RAW
+
+; @procedure-v1 PLI1.OVL+834F
+; ProcedureHypothesis: Little-endian memory word OR into HL
+; Entry: PLI1_834F = PLI1.OVL+834F @ A54FH; SHA-256
+;   1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564
+; Extent: HYPOTHESIS [834F,8357) file offsets; overlapping entries: none established
+; Callers: OBSERVED PLI1.OVL+1507 (FIZZBUZ=12, MINIMAL=3, PICTURE=2); PLI1.OVL+2B0C (FIZZBUZ=9,
+;   PICTURE=1)
+; Returns: OBSERVED/DEDUCED ordinary hardware CALL word; original slot unchanged; SP after
+;   RET=entry_SP+2; PLI1.OVL+8356
+; Inputs: DEDUCED Actual entry registers and selected shared byte-addressed memory; child scopes
+;   inherited; executable code, selected scratch/publications/read carriers and active
+;   return/save slots nonaliasing where their operation requires it. No table capacity or
+;   ownership assumption.
+; Outputs: DEDUCED Path-specific A/BC/DE/HL and flags as documented below and in correlated
+;   natural cases; SP=entry_SP+2; PC=original CALL continuation.
+; Clobbers: DEDUCED Path-specific A/BC/DE/HL/flags; local scratch/publications stated below;
+;   delegated child effects; proven CALL/PUSH stack residue.
+; Memory: DEDUCED All numerical addresses denote historical runtime bytes, not separate host
+;   arrays.; F=entry_SP; original hardware CALL word at F; body CALL/save traffic below F;
+;   preserved per-invocation last writers.
+; Direct callees: OBSERVED none
+; Coverage: OBSERVED FIZZBUZ: 21 CALLs; MINIMAL: 3 CALLs; PICTURE: 3 CALLs; 8/8 bytes represented
+;   as instructions; OBSERVED corrected ordinary CALL/return windows independently
+;   retained for MINIMAL/FIZZBUZ/PICTURE; union of own bytes excludes child bodies.
+; Unresolved: none at the stated low-level scope; execution is not exhaustive
+; Contract: DEDUCED (complete; scope: Bounded accumulated-natural routes and exact represented
+;   local operations; delegated partial/opaque children and unexecuted local arms are not
+;   silently implemented.) Read low byte at entryDE, OR with entryL, put result in L. INX
+;   D wraps16; read high byte at updatedDE, OR with entryH, put result in H. A=final high
+;   OR result; BC preserved; DE=u16(entryDE+1); HL=entryHL OR little_endian_word[entryDE].
+;   Final NZP from high OR result, AC0/CY0 from ORA H. No data writes, CALL or PUSH; no
+;   invented body residue. Active stack/code/input read noninterference scope.
+; Hypothesis: none beyond the low-level operational description
+; Completeness: bounds=stable; control_flow=complete; contract=complete
+; Evidence: evidence.json#seeds/PLI1.OVL+834F; ../host-compiler/pass-39/README.md;
+;   ../host-compiler/pass-39/natural-summary.json
+; Procedure pseudo (operational; byte/word arithmetic wraps):
+;   L=entryL OR fresh byte[DE]; DE=u16(DE+1); H=entryH OR fresh byte[DE]; A=H; final flags from
+;   high-byte OR, independent of low OR; RET
+; @end-procedure-v1 PLI1.OVL+834F
+; SECTION [834F,8357) UNDERSTOOD
+; @block-pseudo 834F
+; pseudo:
+; | L=entryL OR fresh byte[DE]
+; | DE=u16(DE+1); H=entryH OR fresh byte[DE]
+; | A=H; final flags from high-byte OR, independent of low OR; RET
+PLI1_834F: LDAX D ; A=fresh byte[D pair]; flags preserved ; +834F runtime=A54FH OBSERVED
+PLI1_8350: ORA L ; A=A OR L; logical flags; CY=0 ; +8350 runtime=A550H OBSERVED
+PLI1_8351: MOV L,A ; L=A; flags preserved ; +8351 runtime=A551H OBSERVED
+PLI1_8352: INX D ; D=u16(D +1); flags preserved ; +8352 runtime=A552H OBSERVED
+PLI1_8353: LDAX D ; A=fresh byte[D pair]; flags preserved ; +8353 runtime=A553H OBSERVED
+PLI1_8354: ORA H ; A=A OR H; logical flags; CY=0 ; +8354 runtime=A554H OBSERVED
+PLI1_8355: MOV H,A ; H=A; flags preserved ; +8355 runtime=A555H OBSERVED
+PLI1_8356: RET ; consume original hardware return word; SP=entry_SP+2; preserve final path flags and registers ; +8356 runtime=A556H OBSERVED
+; SECTION [8357,8380) RAW
+PLI1_8357: DB 05EH,023H,056H,0EBH,07DH,017H,06FH,07CH,017H ; +8357 runtime=A557H RAW
 PLI1_8360: DB 067H,00DH,0C2H,05BH,0A5H,0C9H,05EH,023H,056H,0EBH,07CH,01FH,067H,07DH,01FH,06FH ; +8360 runtime=A560H RAW
 PLI1_8370: DB 00DH,0C2H,06AH,0A5H,0C9H,07EH,087H,00DH,0C2H,076H,0A5H,0C9H,05EH,023H,056H,0EBH ; +8370 runtime=A570H RAW
 
@@ -13939,4 +14780,25 @@ PLI1_6410: EQU 08610H ; +6410 runtime=8610H coordinate-only preserved label
 PLI1_6480: EQU 08680H ; +6480 runtime=8680H coordinate-only preserved label
 PLI1_6600: EQU 08800H ; +6600 runtime=8800H coordinate-only preserved label
 PLI1_6620: EQU 08820H ; +6620 runtime=8820H coordinate-only preserved label
+PLI1_2C60: EQU 04E60H ; +2C60 runtime=4E60H coordinate-only preserved label
+PLI1_2C80: EQU 04E80H ; +2C80 runtime=4E80H coordinate-only preserved label
+PLI1_2CA0: EQU 04EA0H ; +2CA0 runtime=4EA0H coordinate-only preserved label
+PLI1_2CD0: EQU 04ED0H ; +2CD0 runtime=4ED0H coordinate-only preserved label
+PLI1_2CE0: EQU 04EE0H ; +2CE0 runtime=4EE0H coordinate-only preserved label
+PLI1_2D30: EQU 04F30H ; +2D30 runtime=4F30H coordinate-only preserved label
+PLI1_2D40: EQU 04F40H ; +2D40 runtime=4F40H coordinate-only preserved label
+PLI1_2D50: EQU 04F50H ; +2D50 runtime=4F50H coordinate-only preserved label
+PLI1_2D70: EQU 04F70H ; +2D70 runtime=4F70H coordinate-only preserved label
+PLI1_2D80: EQU 04F80H ; +2D80 runtime=4F80H coordinate-only preserved label
+PLI1_2FD0: EQU 051D0H ; +2FD0 runtime=51D0H coordinate-only preserved label
+PLI1_3010: EQU 05210H ; +3010 runtime=5210H coordinate-only preserved label
+PLI1_3020: EQU 05220H ; +3020 runtime=5220H coordinate-only preserved label
+PLI1_3040: EQU 05240H ; +3040 runtime=5240H coordinate-only preserved label
+PLI1_3050: EQU 05250H ; +3050 runtime=5250H coordinate-only preserved label
+PLI1_3070: EQU 05270H ; +3070 runtime=5270H coordinate-only preserved label
+PLI1_3120: EQU 05320H ; +3120 runtime=5320H coordinate-only preserved label
+PLI1_3140: EQU 05340H ; +3140 runtime=5340H coordinate-only preserved label
+PLI1_3150: EQU 05350H ; +3150 runtime=5350H coordinate-only preserved label
+PLI1_3170: EQU 05370H ; +3170 runtime=5370H coordinate-only preserved label
+PLI1_31A0: EQU 053A0H ; +31A0 runtime=53A0H coordinate-only preserved label
     END

@@ -1,0 +1,48 @@
+{
+  "3304_reproducible": false,
+  "30C1_bounded_reproducible": true,
+  "2C59_local_skip_route_reproducible": true,
+  "2C59_complete_required_subtree_reproducible": false,
+  "784E_sole_blocker": false,
+  "next_causal_blocker": "PLI1.OVL+28AA selected02 / +6708 alternate67BE",
+  "required_vs_global": {
+    "required": [
+      "Four natural +3304 calls need +28AA selected02 via +2C59, including the +4F54 scope. That route calls +6708 with E02, actually entering the alternate +67BE graph; existing E05 copy law cannot substitute.",
+      "Input acquisition +784E remains required beneath +01AF.",
+      "Required +6223 Route B still delegates +5929 -> opaque +46A7 plus input acquisition +784E. Those actual natural operations remain blockers, unlike unexecuted selector arms."
+    ],
+    "global_only": [
+      "Unexecuted +30C1/+2FC2 transformation alternatives need not block bounded implementation of the demonstrated routes.",
+      "Unexecuted +2C59 mutation arms and unrelated +28AA selector routes need not block bounded selected02 reconstruction.",
+      "+256C is globally partial, but its entire demonstrated local composition and both routes are established; its +2511/+8048/+7EC0/+7AF0/+23D2/+7B64 children are now native. No additional +256C archaeology is required merely for global completeness."
+    ]
+  },
+  "deferred_native_ready": [
+    "+21D4",
+    "+25D6",
+    "+834F",
+    "bounded +22C0",
+    "bounded +2FC2",
+    "bounded +30C1",
+    "existing Pass38 +31FB/+2705/+329F/+23B9",
+    "bounded +256C composition (all demonstrated descendants available)"
+  ],
+  "not_native_ready": [
+    "+2C53 required selected02 scope",
+    "+2C59 required subtree",
+    "+3304",
+    "+4F54",
+    "+500F",
+    "+506E",
+    "+5E98",
+    "+60E5",
+    "+61A4/+620C"
+  ],
+  "Pass40": "Reconstruct +28AA selected02 acquisition/publication and its +6708 alternate67BE arithmetic/copy subtree as one operation; reuse already-complete arithmetic helpers and close mechanical leaves. Full regression checkpoint is required by Pass40, or before any +5E98-family migration.",
+  "native_migration": "None; maintain the queue rather than leaf-by-leaf migration.",
+  "remaining_required_causal_blockers": [
+    "+28AA selected02 / +6708 alternate67BE",
+    "+784E required acquisition producer/refill scope",
+    "+5929 required opaque +46A7"
+  ]
+}
