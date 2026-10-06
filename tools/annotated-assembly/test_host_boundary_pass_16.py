@@ -103,6 +103,8 @@ class HostBoundaryPassSixteenTests(unittest.TestCase):
         prior34=load(ROOT/'research/host-compiler/pass-34/before.json')
         added32|={k for k,v in prior34.items()if v is None}
         prior37=load(ROOT/'research/host-compiler/pass-37/before.json')
+        prior38=load(ROOT/'research/host-compiler/pass-38/before.json')
+        added32|={k for k,v in prior38.items()if v is None}
         added32|={k for k,v in prior37.items()if v is None}
         prior36=load(ROOT/'research/host-compiler/pass-36/before.json')
         added32|={k for k,v in prior36.items()if v is None}

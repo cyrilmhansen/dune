@@ -15,7 +15,8 @@ class PassThirtyThreeTests(unittest.TestCase):
   self.assertEqual([len(a['cases'])for a in self.analyses],[0,8,2]);self.assertEqual([counts(str(c['output']['a'])for c in a['cases'])for a in self.analyses],[{},{'0':5,'1':3},{'0':2}])
  def test_catalog_counts_callers_and_represented_byte_union(self):
   for key,p in load(REPORT/'after.json').items():
-   self.assertEqual(p,self.catalog[key]);rs={s:g[key]for s,g in self.rows.items()if key in g}
+   prior38=load(ROOT/'research/host-compiler/pass-38/before.json')
+   self.assertEqual(p,prior38.get(key) or self.catalog[key]);rs={s:g[key]for s,g in self.rows.items()if key in g}
    if not rs:continue
    self.assertEqual(p['observed_paths']['invocations_by_run'],{s:len(v)for s,v in rs.items()})
    for s,v in rs.items():self.assertEqual(Counter(coord(r['call']['origin'])for r in v),{c['coordinate']:c['counts_by_run'][s]for c in p['callers']if s in c['counts_by_run']})

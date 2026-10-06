@@ -1,0 +1,40 @@
+{
+  "new_oracle_queries": 0,
+  "laws": [
+    {
+      "target": "506E",
+      "rejected": "dispatch index is inputC",
+      "evidence": "Fresh frameF1=inputE14 selects78C7; inputC1 would select78A1"
+    },
+    {
+      "target": "506E",
+      "rejected": "returnedDE is saved pointer",
+      "evidence": "XCHG returns framehighbyte addressF+3; savedpointer is separately restored toA635"
+    },
+    {
+      "target": "500F",
+      "rejected": "2308 entryC is0",
+      "evidence": "EntryC15; wrapper itself setsC0 before22CB"
+    },
+    {
+      "target": "500F/506E",
+      "rejected": "published1, returned80 and freshA9321 are one channel",
+      "evidence": "5031 literalwriter and5706 freshreader bracket distinct4CD4/4F2A returns"
+    },
+    {
+      "target": "4F54",
+      "rejected": "direct recursion or fixed-result-only model",
+      "evidence": "two complete indirectCALLspines follow distinct01AF acquisitions;3304 effects precede literalA1"
+    },
+    {
+      "target": "23B9",
+      "rejected": "minimum or flags recomputed from returnedA",
+      "evidence": "both unsigned maximum routes retainCMP(E,C)"
+    },
+    {
+      "target": "31FB/329F",
+      "rejected": "merged or cached equal-valued channels",
+      "evidence": "independent paired carriers and mapped lookups, low/high publications and distinct scratch histories"
+    }
+  ]
+}
