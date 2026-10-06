@@ -102,6 +102,8 @@ class HostBoundaryPassSixteenTests(unittest.TestCase):
         added32|={k for k,v in prior33.items()if v is None}
         prior34=load(ROOT/'research/host-compiler/pass-34/before.json')
         added32|={k for k,v in prior34.items()if v is None}
+        prior36=load(ROOT/'research/host-compiler/pass-36/before.json')
+        added32|={k for k,v in prior36.items()if v is None}
         prior35=load(ROOT/'research/host-compiler/pass-35/before.json')
         added32|={k for k,v in prior35.items()if v is None}
         self.assertEqual({p['entry'] for p in audit['established']},{k for k in actual if k in self.catalog and k not in set(later['new_entries'])|added32})

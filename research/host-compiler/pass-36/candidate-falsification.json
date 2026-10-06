@@ -1,0 +1,59 @@
+{
+  "method": "Exact immutable instruction/dataflow laws tested against every corrected natural window; no source/step/hash keyed semantics",
+  "new_historical_binary_queries": 0,
+  "independent_windows": 122,
+  "candidates": [
+    {
+      "target": "+3A76",
+      "candidate": "HL always zero",
+      "result": "FALSIFIED",
+      "counterexample": "Final HL saved-input minus current: FBF3, FFF3, FFF0, FFEA naturally; +3C8A later returns its own zero frame word"
+    },
+    {
+      "target": "+3A76",
+      "candidate": "Returned zero means no mutation",
+      "result": "FALSIFIED",
+      "counterexample": "Input/cursor/scratch publications, classification caches, pointer advance or zero publication and stack writers precede literal zero return"
+    },
+    {
+      "target": "+4241",
+      "candidate": "Fresh size then fresh pointer plus size",
+      "result": "VALIDATED",
+      "natural_cases": 18
+    },
+    {
+      "target": "+424F",
+      "candidate": "Advance before unsigned boundary test, then field-mask match or repeat",
+      "result": "VALIDATED",
+      "natural_cases": 16,
+      "competing_shortcut": "Testing current pointer before advance or skipping the second mismatch iteration contradicts chronology"
+    },
+    {
+      "target": "+3963",
+      "candidate": "Ten-byte inherited frame, non70 classifier branch, final DE restored entry HL",
+      "result": "VALIDATED",
+      "natural_cases": 13
+    },
+    {
+      "target": "+429D",
+      "candidate": "Selector15 result is three shifts plus one, not masked high3",
+      "result": "VALIDATED",
+      "natural_cases": 9,
+      "finite_algebra_cases": 256,
+      "scope": "Finite algebra is instruction proof, not 256 binary oracle queries"
+    },
+    {
+      "target": "+429D",
+      "candidate": "Returned A determines final NZPA",
+      "result": "FALSIFIED",
+      "counterexample": "Fallback literal A0 retains nonzero CMP(selector,42) flags"
+    },
+    {
+      "target": "+83A3",
+      "candidate": "Reuse established high-SBB flag law independently of full-word zero",
+      "result": "VALIDATED",
+      "natural_cases": 46
+    }
+  ],
+  "unsupported": "Unexecuted alternatives RAW; no arbitrary alias or termination theorem"
+}

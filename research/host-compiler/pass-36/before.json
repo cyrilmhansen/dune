@@ -1,0 +1,296 @@
+{
+  "PLI1.OVL+3A76": null,
+  "PLI1.OVL+3963": null,
+  "PLI1.OVL+4241": null,
+  "PLI1.OVL+424F": null,
+  "PLI1.OVL+429D": {
+    "id": "PLI1.OVL+429D",
+    "image": "PLI1.OVL",
+    "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+    "stable_label": "PLI1_429D",
+    "runtime_entry": 25757,
+    "start_offset": 17053,
+    "end_offset": 17198,
+    "length": 145,
+    "byte_status_at_entry": "UNDERSTOOD",
+    "description": "scoped working-field selector dispatch returning two",
+    "completeness": {
+      "bounds": "provisional",
+      "control_flow": "partial",
+      "contract": "partial"
+    },
+    "observed_paths": {
+      "invocations_by_run": {
+        "MINIMAL": 1
+      },
+      "represented_bytes": 78,
+      "description": "Corrected matched hardware returns; no recursion, no reserved local frame; below-entry saves/CALL words only."
+    },
+    "unresolved_paths": [
+      "unobserved path: other field selector arms and escaping branch432E; full bounds/dispatch contract remain provisional/partial.",
+      "general provenance: meanings/producers of field bytes and helper return2 remain unassigned."
+    ],
+    "inputs": "working pointerA863; scope field+2=30; readable fields+3/+4",
+    "outputs": "A=2, BC=4, HL=p+4, DE preserved; NZPA/CY from final CPI30; cachesA8F3/4/5",
+    "clobbers": "A,BC,HL,flags; A8F3/4/5; nested CALL stack; DE and working pointer preserved at selector30 scope",
+    "memory_state": [
+      "current_record=A863H (record pointer used by reviewed construction/repair)",
+      "selector_field2_cache=A8F3H (working pointer+2 byte cached for numeric dispatch)",
+      "selector_field3_cache=A8F4H (working pointer+3 byte cached; unused in observed selector30 arm)",
+      "selector_field4_cache=A8F5H (working pointer+4 byte cached; unused in observed selector30 arm)",
+      "F=entry_SP; zero-byte reserved local frame; temporary saves/CALL words below F; original return word at F."
+    ],
+    "data_role_ids": [
+      "PLI1.OVL:current_record",
+      "PLI1.OVL:selector_field2_cache",
+      "PLI1.OVL:selector_field3_cache",
+      "PLI1.OVL:selector_field4_cache"
+    ],
+    "callers": [
+      {
+        "coordinate": "PLI1.OVL+4409",
+        "counts_by_run": {
+          "MINIMAL": 1
+        }
+      }
+    ],
+    "returns": {
+      "convention": "ordinary hardware CALL word; original slot unchanged, SP after RET=entry_SP+2",
+      "observed_file_offsets": [
+        17197
+      ],
+      "sites_description": "PLI1.OVL+432D"
+    },
+    "direct_callees": [
+      {
+        "callsite_offset": 17053,
+        "coordinate": "PLI1.OVL+419F",
+        "runtime_address": 25503
+      },
+      {
+        "callsite_offset": 17059,
+        "coordinate": "PLI1.OVL+41A6",
+        "runtime_address": 25510
+      }
+    ],
+    "overlapping_entries": [],
+    "contract_scope": "working field+2=30; adjacent fields/scratch/return stack nonaliasing; complete419F/41A6 field readers; alternative dispatch paths excluded",
+    "contract": "Read byte[working pointerA863+2] through complete419F intoA8F3; read byte[p+3] through41A6 intoA8F4; read byte[p+4] intoA8F5. Observed A8F3=30: equality15/16/19 tests and masked24/28 equality tests all fail, CPI30 matches and returns A=2 with flags still CPI30 (Z1,CY0). BC=4, HL=p+4, DE preserved; pointerA863 and tables unchanged in this scope. Other selector dispatch arms are unobserved RAW and may leave this provisional observed-path envelope; no algorithm claim there.",
+    "semantic_hypothesis": null,
+    "pseudocode": "p=word[A863]; byte[A8F3]=byte[p+2]; byte[A8F4]=byte[p+3]; byte[A8F5]=byte[p+4]; scope byte[A8F3]==30: fail15/16/19 and masked24/28 comparisons; RET A=2 (flags CPI30); other dispatch unresolved",
+    "evidence_refs": [
+      "evidence.json#seeds/PLI1.OVL+429D",
+      "../minimal-baseline/pass-8/structural.json#PLI1.OVL+429D"
+    ],
+    "blocks": [
+      {
+        "offset": 17053,
+        "pseudocode": [
+          "complete419F/41A6 read fields+2/+3; cache atA8F3/4; cache field+4 atA8F5"
+        ]
+      },
+      {
+        "offset": 17076,
+        "pseudocode": [
+          "CPI15/JNZ skips unobserved arm on observed30"
+        ]
+      },
+      {
+        "offset": 17094,
+        "pseudocode": [
+          "CPI16/JNZ skips unobserved arm"
+        ]
+      },
+      {
+        "offset": 17110,
+        "pseudocode": [
+          "CPI19/JNZ skips unobserved arm"
+        ]
+      },
+      {
+        "offset": 17133,
+        "pseudocode": [
+          "ANI24/CPI24 compares masked field; observed30 yields20, mismatch"
+        ]
+      },
+      {
+        "offset": 17158,
+        "pseudocode": [
+          "ANI28/CPI28 compares masked field; observed30 yields20, mismatch"
+        ]
+      },
+      {
+        "offset": 17187,
+        "pseudocode": [
+          "CPI30 equal; MVI A2 does not recompute flags; RET"
+        ]
+      }
+    ],
+    "local_comments": {
+      "429D": "push following PC; invoke PLI1.OVL+419F; established complete contract at declared scope",
+      "42A0": "byte[selector_field2_cache (A8F3H)] = A; flags preserved",
+      "42A3": "push following PC; invoke PLI1.OVL+41A6; established complete contract at declared scope",
+      "42A6": "byte[selector_field3_cache (A8F4H)] = A; flags preserved",
+      "42A9": "BC = 0004H (literal address/value)",
+      "42AC": "HL = little_endian_word[current_record (A863H)]; low byte then high byte, flags preserved",
+      "42AF": "HL=u16(HL+BC); only CY changes (word overflow)",
+      "42B0": "A = byte[HL]; flags preserved",
+      "42B1": "byte[selector_field4_cache (A8F5H)] = A; flags preserved",
+      "42B4": "A = byte[selector_field2_cache (A8F3H)]; flags preserved",
+      "42B7": "flags = unsigned byte comparison A-15H; A unchanged",
+      "42B9": "if Z=0: PC=64C6H; flags preserved",
+      "42C6": "A = byte[selector_field2_cache (A8F3H)]; flags preserved",
+      "42C9": "flags = unsigned byte comparison A-16H; A unchanged",
+      "42CB": "if Z=0: PC=64D6H; flags preserved",
+      "42D6": "A = byte[selector_field2_cache (A8F3H)]; flags preserved",
+      "42D9": "flags = unsigned byte comparison A-19H; A unchanged",
+      "42DB": "if Z=0: PC=64EDH; flags preserved",
+      "42ED": "A = byte[selector_field2_cache (A8F3H)]; flags preserved",
+      "42F0": "A=A  & 24H; logical flags, CY=0",
+      "42F2": "flags = unsigned byte comparison A-24H; A unchanged",
+      "42F4": "if Z=0: PC=6506H; flags preserved",
+      "4306": "A = byte[selector_field2_cache (A8F3H)]; flags preserved",
+      "4309": "A=A  & 28H; logical flags, CY=0",
+      "430B": "flags = unsigned byte comparison A-28H; A unchanged",
+      "430D": "if Z=0: PC=6523H; flags preserved",
+      "4323": "A = byte[selector_field2_cache (A8F3H)]; flags preserved",
+      "4326": "flags = unsigned byte comparison A-30H; A unchanged",
+      "4328": "if Z=0: PC=652EH; flags preserved",
+      "432B": "A = 02H; flags preserved",
+      "432D": "consume original hardware return word at entry SP; SP=entry_SP+2; flags preserved"
+    }
+  },
+  "PLI1.OVL+3C8A": {
+    "id": "PLI1.OVL+3C8A",
+    "image": "PLI1.OVL",
+    "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+    "stable_label": "PLI1_3C8A",
+    "runtime_entry": 24202,
+    "start_offset": 15498,
+    "end_offset": 15833,
+    "length": 335,
+    "byte_status_at_entry": "UNDERSTOOD",
+    "description": "six-byte frame with bounded zero-input child delegation and zero-result cleanup",
+    "completeness": {
+      "bounds": "provisional",
+      "control_flow": "partial",
+      "contract": "partial"
+    },
+    "observed_paths": {
+      "invocations_by_run": {
+        "MINIMAL": 0,
+        "FIZZBUZ": 9,
+        "PICTURE": 4
+      },
+      "represented_bytes": 63,
+      "description": "OBSERVED corrected ordinary CALL/return windows independently retained for MINIMAL/FIZZBUZ/PICTURE; union of own bytes excludes child bodies."
+    },
+    "unresolved_paths": [
+      "RAW positive-input body3CBD..3DCC remains STATIC / UNOBSERVED.",
+      "Required3A76 natural operation is substantial and uncontracted; returningHL0 only describes this local zero-input cleanup, not that child algorithm."
+    ],
+    "inputs": "Actual entry registers and selected shared byte-addressed memory; child scopes inherited; executable code, selected scratch/publications/read carriers and active return/save slots nonaliasing where their operation requires it. No table capacity or ownership assumption.",
+    "outputs": "Path-specific A/BC/DE/HL and flags as documented below and in correlated natural cases; SP=entry_SP+2; PC=original CALL continuation.",
+    "clobbers": "Path-specific A/BC/DE/HL/flags; local scratch/publications stated below; delegated child effects; proven CALL/PUSH stack residue.",
+    "memory_state": [
+      "All numerical addresses denote historical runtime bytes, not separate host arrays.",
+      "F=entry_SP; original hardware CALL word at F; body CALL/save traffic below F; preserved per-invocation last writers."
+    ],
+    "data_role_ids": [],
+    "callers": [
+      {
+        "coordinate": "PLI1.OVL+3F55",
+        "counts_by_run": {
+          "FIZZBUZ": 9,
+          "PICTURE": 4
+        }
+      }
+    ],
+    "returns": {
+      "convention": "ordinary hardware CALL word; original slot unchanged; SP after RET=entry_SP+2",
+      "observed_file_offsets": [
+        15832
+      ],
+      "sites_description": "PLI1.OVL+3DD8"
+    },
+    "direct_callees": [
+      {
+        "callsite_offset": 15509,
+        "coordinate": "PLI1.OVL+3A76",
+        "runtime_address": 23670
+      }
+    ],
+    "overlapping_entries": [],
+    "contract_scope": "Bounded accumulated-natural routes and exact represented local operations; delegated partial/opaque children and unexecuted local arms are not silently implemented.",
+    "contract": "Bounded natural inputC0. DCXSP reserves one inherited byte, PUSH H twice and MOV B,C/PUSH B/INXSP establishF=entrySP-6. F0=inputC; F1/F3=inheritedL, F2/F4=inheritedH, F5=unwrittenreservedbyte initially. FreshA635word ->BC; call substantial opaque3A76; retain its mutations/publications and BC (observed0 orFFFF, neverforced). Then publishA628=15, A62E=0; freshAE32 ->F1; zeroF4 thenF5. Literal0 CMP F0 selectsJNC3DCD fornaturalC0, preserving CMP0,0 flags; positivecount RAW3CBD..3DCC excluded. FreshF4/F5 ->HL0; threePOP D discardexactly6bytes andleaveDE=finalF4/F5=0. ReturnA0 HL0 DE0 BCchildreturned; flagsS0 Z1 AC1 P1 CY0. Frame/publication writes and childCALL residue observable. No interpretation of3A76 as a zero function; childinputBC=freshA635pointer, full child effects/stack delegated. Requires noninterfering code/active stack/frame/fixedscratch and child selected structures.",
+    "semantic_hypothesis": null,
+    "pseudocode": "reserve6-byteframe preserving inherited bytes; BC=freshword[A635];3A76() delegated; A628=15;A62E=0;F1=freshAE32;F4=0 thenF5=0; literal0 CMP savedF0; naturalzeroinput:HL=freshF4/F5; discard6 viaPOP Dthree times; RET retaining childBC andCMPflags",
+    "evidence_refs": [
+      "evidence.json#seeds/PLI1.OVL+3C8A",
+      "../host-compiler/pass-35/README.md",
+      "../host-compiler/pass-35/state-transition.json"
+    ],
+    "blocks": [
+      {
+        "offset": 15498,
+        "pseudocode": [
+          "reserve6-byteframe preserving inherited bytes; BC=freshword[A635];3A76() delegated"
+        ]
+      },
+      {
+        "offset": 15512,
+        "pseudocode": [
+          "A628=15;A62E=0;F1=freshAE32;F4=0 thenF5=0; literal0 CMP savedF0"
+        ]
+      },
+      {
+        "offset": 15821,
+        "pseudocode": [
+          "naturalzeroinput:HL=freshF4/F5; discard6 viaPOP Dthree times; RET retaining childBC andCMPflags"
+        ]
+      }
+    ],
+    "local_comments": {
+      "3C8A": "reserve one inherited byte below entry SP; following PUSHes form a six-byte local frame",
+      "3C8B": "write high then low H below SP; SP-=2; preserve flags; compatibility residue retained",
+      "3C8C": "write high then low H below SP; SP-=2; preserve flags; compatibility residue retained",
+      "3C8D": "B=C; flags preserved",
+      "3C8E": "write high then low B below SP; SP-=2; preserve flags; compatibility residue retained",
+      "3C8F": "SP=u16(SP +1); flags preserved",
+      "3C90": "HL=fresh little_endian_word[A635H]; low then high read; flags preserved",
+      "3C93": "B=H; flags preserved",
+      "3C94": "C=L; flags preserved",
+      "3C95": "call opaque substantial +3A76 with BC=fresh word[A635]; effects/BC delegated, not inferred from local zero return",
+      "3C98": "H pair = literal A628H; flags preserved",
+      "3C9B": "byte[HL]=15H; flags preserved",
+      "3C9D": "H pair = literal A62EH; flags preserved",
+      "3CA0": "byte[HL]=00H; flags preserved",
+      "3CA2": "A=fresh byte[AE32H]; flags preserved",
+      "3CA5": "H pair = literal 0001H; flags preserved",
+      "3CA8": "HL=u16(HL+SP); only CY changes to word overflow",
+      "3CA9": "byte[HL]=A; flags preserved",
+      "3CAA": "A=00H; flags preserved",
+      "3CAC": "H=u16(H +1); flags preserved",
+      "3CAD": "H=u16(H +1); flags preserved",
+      "3CAE": "H=u16(H +1); flags preserved",
+      "3CAF": "byte[HL]=A; flags preserved",
+      "3CB0": "H=u16(H +1); flags preserved",
+      "3CB1": "byte[HL]=00H; flags preserved",
+      "3CB3": "A=00H; flags preserved",
+      "3CB5": "H pair = literal 0000H; flags preserved",
+      "3CB8": "HL=u16(HL+SP); only CY changes to word overflow",
+      "3CB9": "CMP literal 0 against saved input frame byte; natural C=0 selects zero-count cleanup",
+      "3CBA": "if CY=0: PC=5FCDH; flags preserved",
+      "3DCD": "H pair = literal 0004H; flags preserved",
+      "3DD0": "HL=u16(HL+SP); only CY changes to word overflow",
+      "3DD1": "E=fresh byte[HL]; flags preserved",
+      "3DD2": "H=u16(H +1); flags preserved",
+      "3DD3": "D=fresh byte[HL]; flags preserved",
+      "3DD4": "exchange DE and HL; flags preserved",
+      "3DD5": "POP D discards first frame pair; final three POPs consume exactly six local bytes",
+      "3DD6": "read low then high into D pair; SP+=2; flags preserved; residue remains",
+      "3DD7": "read low then high into D pair; SP+=2; flags preserved; residue remains",
+      "3DD8": "consume original hardware return word; SP=entry_SP+2; preserve final path flags and registers"
+    }
+  }
+}

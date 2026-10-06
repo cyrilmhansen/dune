@@ -79068,443 +79068,1575 @@
       "image": "PLI1.OVL",
       "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
       "start_offset": 17053,
-      "end_offset": 17198,
-      "description": "scoped working-field selector dispatch returning two",
-      "inputs_and_effects": "Read byte[working pointerA863+2] through complete419F intoA8F3; read byte[p+3] through41A6 intoA8F4; read byte[p+4] intoA8F5. Observed A8F3=30: equality15/16/19 tests and masked24/28 equality tests all fail, CPI30 matches and returns A=2 with flags still CPI30 (Z1,CY0). BC=4, HL=p+4, DE preserved; pointerA863 and tables unchanged in this scope. Other selector dispatch arms are unobserved RAW and may leave this provisional observed-path envelope; no algorithm claim there.",
-      "downstream_helpers_runtime": "PLI1.OVL+419F@639F, PLI1.OVL+41A6@63A6",
-      "unresolved": "unobserved path: other field selector arms and escaping branch432E; full bounds/dispatch contract remain provisional/partial. / general provenance: meanings/producers of field bytes and helper return2 remain unassigned.",
+      "end_offset": 17300,
+      "description": "bounded fresh three-field classification with distinct shift and fallback returns",
+      "inputs_and_effects": "Actual entry registers and selected shared byte-addressed memory; child scopes inherited; executable code, selected scratch/publications/read carriers and active return/save slots nonaliasing where their operation requires it. No table capacity or ownership assumption.; Path-specific A/BC/DE/HL and flags as documented below and in correlated natural cases; SP=entry_SP+2; PC=original CALL continuation.",
+      "downstream_helpers_runtime": "PLI1.OVL+419F; PLI1.OVL+41A6",
+      "unresolved": "STATIC / UNOBSERVED RAW selector16/19, selector24/28 maskset routes, combinedmaskset handling, selector44/42 tails remainunrepresented.; Boundedfallback natural31/80; wider staticallyselectedvalues not claimed dynamicallyobserved.",
       "instructions": [
         {
           "offset": 17053,
+          "runtime_pc": 25757,
           "bytes": "CD9F63",
           "decoded": "CALL 639FH",
-          "runtime_pc": 25757,
           "runs": [
             {
               "run": "MINIMAL",
               "execution_count": 1,
               "first_step": 218136,
               "last_step": 218136
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 10,
+              "first_step": 321952,
+              "last_step": 605007
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 5,
+              "first_step": 254740,
+              "last_step": 330695
             }
           ]
         },
         {
           "offset": 17056,
+          "runtime_pc": 25760,
           "bytes": "32F3A8",
           "decoded": "STA A8F3H",
-          "runtime_pc": 25760,
           "runs": [
             {
               "run": "MINIMAL",
               "execution_count": 1,
               "first_step": 218142,
               "last_step": 218142
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 10,
+              "first_step": 321958,
+              "last_step": 605013
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 5,
+              "first_step": 254746,
+              "last_step": 330701
             }
           ]
         },
         {
           "offset": 17059,
+          "runtime_pc": 25763,
           "bytes": "CDA663",
           "decoded": "CALL 63A6H",
-          "runtime_pc": 25763,
           "runs": [
             {
               "run": "MINIMAL",
               "execution_count": 1,
               "first_step": 218143,
               "last_step": 218143
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 10,
+              "first_step": 321959,
+              "last_step": 605014
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 5,
+              "first_step": 254747,
+              "last_step": 330702
             }
           ]
         },
         {
           "offset": 17062,
+          "runtime_pc": 25766,
           "bytes": "32F4A8",
           "decoded": "STA A8F4H",
-          "runtime_pc": 25766,
           "runs": [
             {
               "run": "MINIMAL",
               "execution_count": 1,
               "first_step": 218149,
               "last_step": 218149
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 10,
+              "first_step": 321965,
+              "last_step": 605020
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 5,
+              "first_step": 254753,
+              "last_step": 330708
             }
           ]
         },
         {
           "offset": 17065,
+          "runtime_pc": 25769,
           "bytes": "010400",
           "decoded": "LXI B,0004H",
-          "runtime_pc": 25769,
           "runs": [
             {
               "run": "MINIMAL",
               "execution_count": 1,
               "first_step": 218150,
               "last_step": 218150
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 10,
+              "first_step": 321966,
+              "last_step": 605021
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 5,
+              "first_step": 254754,
+              "last_step": 330709
             }
           ]
         },
         {
           "offset": 17068,
+          "runtime_pc": 25772,
           "bytes": "2A63A8",
           "decoded": "LHLD A863H",
-          "runtime_pc": 25772,
           "runs": [
             {
               "run": "MINIMAL",
               "execution_count": 1,
               "first_step": 218151,
               "last_step": 218151
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 10,
+              "first_step": 321967,
+              "last_step": 605022
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 5,
+              "first_step": 254755,
+              "last_step": 330710
             }
           ]
         },
         {
           "offset": 17071,
+          "runtime_pc": 25775,
           "bytes": "09",
           "decoded": "DAD B",
-          "runtime_pc": 25775,
           "runs": [
             {
               "run": "MINIMAL",
               "execution_count": 1,
               "first_step": 218152,
               "last_step": 218152
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 10,
+              "first_step": 321968,
+              "last_step": 605023
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 5,
+              "first_step": 254756,
+              "last_step": 330711
             }
           ]
         },
         {
           "offset": 17072,
+          "runtime_pc": 25776,
           "bytes": "7E",
           "decoded": "MOV A,M",
-          "runtime_pc": 25776,
           "runs": [
             {
               "run": "MINIMAL",
               "execution_count": 1,
               "first_step": 218153,
               "last_step": 218153
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 10,
+              "first_step": 321969,
+              "last_step": 605024
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 5,
+              "first_step": 254757,
+              "last_step": 330712
             }
           ]
         },
         {
           "offset": 17073,
+          "runtime_pc": 25777,
           "bytes": "32F5A8",
           "decoded": "STA A8F5H",
-          "runtime_pc": 25777,
           "runs": [
             {
               "run": "MINIMAL",
               "execution_count": 1,
               "first_step": 218154,
               "last_step": 218154
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 10,
+              "first_step": 321970,
+              "last_step": 605025
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 5,
+              "first_step": 254758,
+              "last_step": 330713
             }
           ]
         },
         {
           "offset": 17076,
+          "runtime_pc": 25780,
           "bytes": "3AF3A8",
           "decoded": "LDA A8F3H",
-          "runtime_pc": 25780,
           "runs": [
             {
               "run": "MINIMAL",
               "execution_count": 1,
               "first_step": 218155,
               "last_step": 218155
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 10,
+              "first_step": 321971,
+              "last_step": 605026
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 5,
+              "first_step": 254759,
+              "last_step": 330714
             }
           ]
         },
         {
           "offset": 17079,
+          "runtime_pc": 25783,
           "bytes": "FE15",
           "decoded": "CPI 15H",
-          "runtime_pc": 25783,
           "runs": [
             {
               "run": "MINIMAL",
               "execution_count": 1,
               "first_step": 218156,
               "last_step": 218156
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 10,
+              "first_step": 321972,
+              "last_step": 605027
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 5,
+              "first_step": 254760,
+              "last_step": 330715
             }
           ]
         },
         {
           "offset": 17081,
+          "runtime_pc": 25785,
           "bytes": "C2C664",
           "decoded": "JNZ 64C6H",
-          "runtime_pc": 25785,
           "runs": [
             {
               "run": "MINIMAL",
               "execution_count": 1,
               "first_step": 218157,
               "last_step": 218157
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 10,
+              "first_step": 321973,
+              "last_step": 605028
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 5,
+              "first_step": 254761,
+              "last_step": 330716
+            }
+          ]
+        },
+        {
+          "offset": 17084,
+          "runtime_pc": 25788,
+          "bytes": "3AF5A8",
+          "decoded": "LDA A8F5H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 6,
+              "first_step": 344958,
+              "last_step": 605029
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 3,
+              "first_step": 280742,
+              "last_step": 330717
+            }
+          ]
+        },
+        {
+          "offset": 17087,
+          "runtime_pc": 25791,
+          "bytes": "E6FC",
+          "decoded": "ANI FCH",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 6,
+              "first_step": 344959,
+              "last_step": 605030
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 3,
+              "first_step": 280743,
+              "last_step": 330718
+            }
+          ]
+        },
+        {
+          "offset": 17089,
+          "runtime_pc": 25793,
+          "bytes": "1F",
+          "decoded": "RAR",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 6,
+              "first_step": 344960,
+              "last_step": 605031
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 3,
+              "first_step": 280744,
+              "last_step": 330719
+            }
+          ]
+        },
+        {
+          "offset": 17090,
+          "runtime_pc": 25794,
+          "bytes": "1F",
+          "decoded": "RAR",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 6,
+              "first_step": 344961,
+              "last_step": 605032
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 3,
+              "first_step": 280745,
+              "last_step": 330720
+            }
+          ]
+        },
+        {
+          "offset": 17091,
+          "runtime_pc": 25795,
+          "bytes": "1F",
+          "decoded": "RAR",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 6,
+              "first_step": 344962,
+              "last_step": 605033
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 3,
+              "first_step": 280746,
+              "last_step": 330721
+            }
+          ]
+        },
+        {
+          "offset": 17092,
+          "runtime_pc": 25796,
+          "bytes": "3C",
+          "decoded": "INR A",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 6,
+              "first_step": 344963,
+              "last_step": 605034
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 3,
+              "first_step": 280747,
+              "last_step": 330722
+            }
+          ]
+        },
+        {
+          "offset": 17093,
+          "runtime_pc": 25797,
+          "bytes": "C9",
+          "decoded": "RET",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 6,
+              "first_step": 344964,
+              "last_step": 605035
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 3,
+              "first_step": 280748,
+              "last_step": 330723
             }
           ]
         },
         {
           "offset": 17094,
+          "runtime_pc": 25798,
           "bytes": "3AF3A8",
           "decoded": "LDA A8F3H",
-          "runtime_pc": 25798,
           "runs": [
             {
               "run": "MINIMAL",
               "execution_count": 1,
               "first_step": 218158,
               "last_step": 218158
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 4,
+              "first_step": 321974,
+              "last_step": 523356
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 2,
+              "first_step": 254762,
+              "last_step": 292412
             }
           ]
         },
         {
           "offset": 17097,
+          "runtime_pc": 25801,
           "bytes": "FE16",
           "decoded": "CPI 16H",
-          "runtime_pc": 25801,
           "runs": [
             {
               "run": "MINIMAL",
               "execution_count": 1,
               "first_step": 218159,
               "last_step": 218159
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 4,
+              "first_step": 321975,
+              "last_step": 523357
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 2,
+              "first_step": 254763,
+              "last_step": 292413
             }
           ]
         },
         {
           "offset": 17099,
+          "runtime_pc": 25803,
           "bytes": "C2D664",
           "decoded": "JNZ 64D6H",
-          "runtime_pc": 25803,
           "runs": [
             {
               "run": "MINIMAL",
               "execution_count": 1,
               "first_step": 218160,
               "last_step": 218160
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 4,
+              "first_step": 321976,
+              "last_step": 523358
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 2,
+              "first_step": 254764,
+              "last_step": 292414
             }
           ]
         },
         {
           "offset": 17110,
+          "runtime_pc": 25814,
           "bytes": "3AF3A8",
           "decoded": "LDA A8F3H",
-          "runtime_pc": 25814,
           "runs": [
             {
               "run": "MINIMAL",
               "execution_count": 1,
               "first_step": 218161,
               "last_step": 218161
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 4,
+              "first_step": 321977,
+              "last_step": 523359
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 2,
+              "first_step": 254765,
+              "last_step": 292415
             }
           ]
         },
         {
           "offset": 17113,
+          "runtime_pc": 25817,
           "bytes": "FE19",
           "decoded": "CPI 19H",
-          "runtime_pc": 25817,
           "runs": [
             {
               "run": "MINIMAL",
               "execution_count": 1,
               "first_step": 218162,
               "last_step": 218162
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 4,
+              "first_step": 321978,
+              "last_step": 523360
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 2,
+              "first_step": 254766,
+              "last_step": 292416
             }
           ]
         },
         {
           "offset": 17115,
+          "runtime_pc": 25819,
           "bytes": "C2ED64",
           "decoded": "JNZ 64EDH",
-          "runtime_pc": 25819,
           "runs": [
             {
               "run": "MINIMAL",
               "execution_count": 1,
               "first_step": 218163,
               "last_step": 218163
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 4,
+              "first_step": 321979,
+              "last_step": 523361
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 2,
+              "first_step": 254767,
+              "last_step": 292417
             }
           ]
         },
         {
           "offset": 17133,
+          "runtime_pc": 25837,
           "bytes": "3AF3A8",
           "decoded": "LDA A8F3H",
-          "runtime_pc": 25837,
           "runs": [
             {
               "run": "MINIMAL",
               "execution_count": 1,
               "first_step": 218164,
               "last_step": 218164
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 4,
+              "first_step": 321980,
+              "last_step": 523362
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 2,
+              "first_step": 254768,
+              "last_step": 292418
             }
           ]
         },
         {
           "offset": 17136,
+          "runtime_pc": 25840,
           "bytes": "E624",
           "decoded": "ANI 24H",
-          "runtime_pc": 25840,
           "runs": [
             {
               "run": "MINIMAL",
               "execution_count": 1,
               "first_step": 218165,
               "last_step": 218165
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 4,
+              "first_step": 321981,
+              "last_step": 523363
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 2,
+              "first_step": 254769,
+              "last_step": 292419
             }
           ]
         },
         {
           "offset": 17138,
+          "runtime_pc": 25842,
           "bytes": "FE24",
           "decoded": "CPI 24H",
-          "runtime_pc": 25842,
           "runs": [
             {
               "run": "MINIMAL",
               "execution_count": 1,
               "first_step": 218166,
               "last_step": 218166
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 4,
+              "first_step": 321982,
+              "last_step": 523364
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 2,
+              "first_step": 254770,
+              "last_step": 292420
             }
           ]
         },
         {
           "offset": 17140,
+          "runtime_pc": 25844,
           "bytes": "C20665",
           "decoded": "JNZ 6506H",
-          "runtime_pc": 25844,
           "runs": [
             {
               "run": "MINIMAL",
               "execution_count": 1,
               "first_step": 218167,
               "last_step": 218167
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 4,
+              "first_step": 321983,
+              "last_step": 523365
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 2,
+              "first_step": 254771,
+              "last_step": 292421
             }
           ]
         },
         {
           "offset": 17158,
+          "runtime_pc": 25862,
           "bytes": "3AF3A8",
           "decoded": "LDA A8F3H",
-          "runtime_pc": 25862,
           "runs": [
             {
               "run": "MINIMAL",
               "execution_count": 1,
               "first_step": 218168,
               "last_step": 218168
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 4,
+              "first_step": 321984,
+              "last_step": 523366
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 2,
+              "first_step": 254772,
+              "last_step": 292422
             }
           ]
         },
         {
           "offset": 17161,
+          "runtime_pc": 25865,
           "bytes": "E628",
           "decoded": "ANI 28H",
-          "runtime_pc": 25865,
           "runs": [
             {
               "run": "MINIMAL",
               "execution_count": 1,
               "first_step": 218169,
               "last_step": 218169
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 4,
+              "first_step": 321985,
+              "last_step": 523367
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 2,
+              "first_step": 254773,
+              "last_step": 292423
             }
           ]
         },
         {
           "offset": 17163,
+          "runtime_pc": 25867,
           "bytes": "FE28",
           "decoded": "CPI 28H",
-          "runtime_pc": 25867,
           "runs": [
             {
               "run": "MINIMAL",
               "execution_count": 1,
               "first_step": 218170,
               "last_step": 218170
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 4,
+              "first_step": 321986,
+              "last_step": 523368
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 2,
+              "first_step": 254774,
+              "last_step": 292424
             }
           ]
         },
         {
           "offset": 17165,
+          "runtime_pc": 25869,
           "bytes": "C22365",
           "decoded": "JNZ 6523H",
-          "runtime_pc": 25869,
           "runs": [
             {
               "run": "MINIMAL",
               "execution_count": 1,
               "first_step": 218171,
               "last_step": 218171
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 4,
+              "first_step": 321987,
+              "last_step": 523369
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 2,
+              "first_step": 254775,
+              "last_step": 292425
             }
           ]
         },
         {
           "offset": 17187,
+          "runtime_pc": 25891,
           "bytes": "3AF3A8",
           "decoded": "LDA A8F3H",
-          "runtime_pc": 25891,
           "runs": [
             {
               "run": "MINIMAL",
               "execution_count": 1,
               "first_step": 218172,
               "last_step": 218172
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 4,
+              "first_step": 321988,
+              "last_step": 523370
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 2,
+              "first_step": 254776,
+              "last_step": 292426
             }
           ]
         },
         {
           "offset": 17190,
+          "runtime_pc": 25894,
           "bytes": "FE30",
           "decoded": "CPI 30H",
-          "runtime_pc": 25894,
           "runs": [
             {
               "run": "MINIMAL",
               "execution_count": 1,
               "first_step": 218173,
               "last_step": 218173
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 4,
+              "first_step": 321989,
+              "last_step": 523371
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 2,
+              "first_step": 254777,
+              "last_step": 292427
             }
           ]
         },
         {
           "offset": 17192,
+          "runtime_pc": 25896,
           "bytes": "C22E65",
           "decoded": "JNZ 652EH",
-          "runtime_pc": 25896,
           "runs": [
             {
               "run": "MINIMAL",
               "execution_count": 1,
               "first_step": 218174,
               "last_step": 218174
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 4,
+              "first_step": 321990,
+              "last_step": 523372
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 2,
+              "first_step": 254778,
+              "last_step": 292428
             }
           ]
         },
         {
           "offset": 17195,
+          "runtime_pc": 25899,
           "bytes": "3E02",
           "decoded": "MVI A,02H",
-          "runtime_pc": 25899,
           "runs": [
             {
               "run": "MINIMAL",
               "execution_count": 1,
               "first_step": 218175,
               "last_step": 218175
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 1,
+              "first_step": 321991,
+              "last_step": 321991
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 1,
+              "first_step": 254779,
+              "last_step": 254779
             }
           ]
         },
         {
           "offset": 17197,
+          "runtime_pc": 25901,
           "bytes": "C9",
           "decoded": "RET",
-          "runtime_pc": 25901,
           "runs": [
             {
               "run": "MINIMAL",
               "execution_count": 1,
               "first_step": 218176,
               "last_step": 218176
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 1,
+              "first_step": 321992,
+              "last_step": 321992
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 1,
+              "first_step": 254780,
+              "last_step": 254780
+            }
+          ]
+        },
+        {
+          "offset": 17198,
+          "runtime_pc": 25902,
+          "bytes": "3AF3A8",
+          "decoded": "LDA A8F3H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 3,
+              "first_step": 386655,
+              "last_step": 523373
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 1,
+              "first_step": 292429,
+              "last_step": 292429
+            }
+          ]
+        },
+        {
+          "offset": 17201,
+          "runtime_pc": 25905,
+          "bytes": "D640",
+          "decoded": "SUI 40H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 3,
+              "first_step": 386656,
+              "last_step": 523374
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 1,
+              "first_step": 292430,
+              "last_step": 292430
+            }
+          ]
+        },
+        {
+          "offset": 17203,
+          "runtime_pc": 25907,
+          "bytes": "D601",
+          "decoded": "SUI 01H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 3,
+              "first_step": 386657,
+              "last_step": 523375
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 1,
+              "first_step": 292431,
+              "last_step": 292431
+            }
+          ]
+        },
+        {
+          "offset": 17205,
+          "runtime_pc": 25909,
+          "bytes": "9F",
+          "decoded": "SBB A",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 3,
+              "first_step": 386658,
+              "last_step": 523376
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 1,
+              "first_step": 292432,
+              "last_step": 292432
+            }
+          ]
+        },
+        {
+          "offset": 17206,
+          "runtime_pc": 25910,
+          "bytes": "F5",
+          "decoded": "PUSH PSW",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 3,
+              "first_step": 386659,
+              "last_step": 523377
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 1,
+              "first_step": 292433,
+              "last_step": 292433
+            }
+          ]
+        },
+        {
+          "offset": 17207,
+          "runtime_pc": 25911,
+          "bytes": "3AF3A8",
+          "decoded": "LDA A8F3H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 3,
+              "first_step": 386660,
+              "last_step": 523378
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 1,
+              "first_step": 292434,
+              "last_step": 292434
+            }
+          ]
+        },
+        {
+          "offset": 17210,
+          "runtime_pc": 25914,
+          "bytes": "D641",
+          "decoded": "SUI 41H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 3,
+              "first_step": 386661,
+              "last_step": 523379
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 1,
+              "first_step": 292435,
+              "last_step": 292435
+            }
+          ]
+        },
+        {
+          "offset": 17212,
+          "runtime_pc": 25916,
+          "bytes": "D601",
+          "decoded": "SUI 01H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 3,
+              "first_step": 386662,
+              "last_step": 523380
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 1,
+              "first_step": 292436,
+              "last_step": 292436
+            }
+          ]
+        },
+        {
+          "offset": 17214,
+          "runtime_pc": 25918,
+          "bytes": "9F",
+          "decoded": "SBB A",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 3,
+              "first_step": 386663,
+              "last_step": 523381
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 1,
+              "first_step": 292437,
+              "last_step": 292437
+            }
+          ]
+        },
+        {
+          "offset": 17215,
+          "runtime_pc": 25919,
+          "bytes": "C1",
+          "decoded": "POP B",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 3,
+              "first_step": 386664,
+              "last_step": 523382
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 1,
+              "first_step": 292438,
+              "last_step": 292438
+            }
+          ]
+        },
+        {
+          "offset": 17216,
+          "runtime_pc": 25920,
+          "bytes": "48",
+          "decoded": "MOV C,B",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 3,
+              "first_step": 386665,
+              "last_step": 523383
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 1,
+              "first_step": 292439,
+              "last_step": 292439
+            }
+          ]
+        },
+        {
+          "offset": 17217,
+          "runtime_pc": 25921,
+          "bytes": "B1",
+          "decoded": "ORA C",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 3,
+              "first_step": 386666,
+              "last_step": 523384
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 1,
+              "first_step": 292440,
+              "last_step": 292440
+            }
+          ]
+        },
+        {
+          "offset": 17218,
+          "runtime_pc": 25922,
+          "bytes": "F5",
+          "decoded": "PUSH PSW",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 3,
+              "first_step": 386667,
+              "last_step": 523385
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 1,
+              "first_step": 292441,
+              "last_step": 292441
+            }
+          ]
+        },
+        {
+          "offset": 17219,
+          "runtime_pc": 25923,
+          "bytes": "3AF4A8",
+          "decoded": "LDA A8F4H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 3,
+              "first_step": 386668,
+              "last_step": 523386
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 1,
+              "first_step": 292442,
+              "last_step": 292442
+            }
+          ]
+        },
+        {
+          "offset": 17222,
+          "runtime_pc": 25926,
+          "bytes": "E640",
+          "decoded": "ANI 40H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 3,
+              "first_step": 386669,
+              "last_step": 523387
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 1,
+              "first_step": 292443,
+              "last_step": 292443
+            }
+          ]
+        },
+        {
+          "offset": 17224,
+          "runtime_pc": 25928,
+          "bytes": "D640",
+          "decoded": "SUI 40H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 3,
+              "first_step": 386670,
+              "last_step": 523388
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 1,
+              "first_step": 292444,
+              "last_step": 292444
+            }
+          ]
+        },
+        {
+          "offset": 17226,
+          "runtime_pc": 25930,
+          "bytes": "D601",
+          "decoded": "SUI 01H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 3,
+              "first_step": 386671,
+              "last_step": 523389
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 1,
+              "first_step": 292445,
+              "last_step": 292445
+            }
+          ]
+        },
+        {
+          "offset": 17228,
+          "runtime_pc": 25932,
+          "bytes": "9F",
+          "decoded": "SBB A",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 3,
+              "first_step": 386672,
+              "last_step": 523390
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 1,
+              "first_step": 292446,
+              "last_step": 292446
+            }
+          ]
+        },
+        {
+          "offset": 17229,
+          "runtime_pc": 25933,
+          "bytes": "C1",
+          "decoded": "POP B",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 3,
+              "first_step": 386673,
+              "last_step": 523391
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 1,
+              "first_step": 292447,
+              "last_step": 292447
+            }
+          ]
+        },
+        {
+          "offset": 17230,
+          "runtime_pc": 25934,
+          "bytes": "48",
+          "decoded": "MOV C,B",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 3,
+              "first_step": 386674,
+              "last_step": 523392
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 1,
+              "first_step": 292448,
+              "last_step": 292448
+            }
+          ]
+        },
+        {
+          "offset": 17231,
+          "runtime_pc": 25935,
+          "bytes": "A1",
+          "decoded": "ANA C",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 3,
+              "first_step": 386675,
+              "last_step": 523393
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 1,
+              "first_step": 292449,
+              "last_step": 292449
+            }
+          ]
+        },
+        {
+          "offset": 17232,
+          "runtime_pc": 25936,
+          "bytes": "1F",
+          "decoded": "RAR",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 3,
+              "first_step": 386676,
+              "last_step": 523394
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 1,
+              "first_step": 292450,
+              "last_step": 292450
+            }
+          ]
+        },
+        {
+          "offset": 17233,
+          "runtime_pc": 25937,
+          "bytes": "D25765",
+          "decoded": "JNC 6557H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 3,
+              "first_step": 386677,
+              "last_step": 523395
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 1,
+              "first_step": 292451,
+              "last_step": 292451
+            }
+          ]
+        },
+        {
+          "offset": 17239,
+          "runtime_pc": 25943,
+          "bytes": "3AF3A8",
+          "decoded": "LDA A8F3H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 3,
+              "first_step": 386678,
+              "last_step": 523396
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 1,
+              "first_step": 292452,
+              "last_step": 292452
+            }
+          ]
+        },
+        {
+          "offset": 17242,
+          "runtime_pc": 25946,
+          "bytes": "FE44",
+          "decoded": "CPI 44H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 3,
+              "first_step": 386679,
+              "last_step": 523397
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 1,
+              "first_step": 292453,
+              "last_step": 292453
+            }
+          ]
+        },
+        {
+          "offset": 17244,
+          "runtime_pc": 25948,
+          "bytes": "C26265",
+          "decoded": "JNZ 6562H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 3,
+              "first_step": 386680,
+              "last_step": 523398
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 1,
+              "first_step": 292454,
+              "last_step": 292454
+            }
+          ]
+        },
+        {
+          "offset": 17250,
+          "runtime_pc": 25954,
+          "bytes": "3AF3A8",
+          "decoded": "LDA A8F3H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 3,
+              "first_step": 386681,
+              "last_step": 523399
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 1,
+              "first_step": 292455,
+              "last_step": 292455
+            }
+          ]
+        },
+        {
+          "offset": 17253,
+          "runtime_pc": 25957,
+          "bytes": "FE42",
+          "decoded": "CPI 42H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 3,
+              "first_step": 386682,
+              "last_step": 523400
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 1,
+              "first_step": 292456,
+              "last_step": 292456
+            }
+          ]
+        },
+        {
+          "offset": 17255,
+          "runtime_pc": 25959,
+          "bytes": "C29165",
+          "decoded": "JNZ 6591H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 3,
+              "first_step": 386683,
+              "last_step": 523401
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 1,
+              "first_step": 292457,
+              "last_step": 292457
+            }
+          ]
+        },
+        {
+          "offset": 17297,
+          "runtime_pc": 26001,
+          "bytes": "3E00",
+          "decoded": "MVI A,00H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 3,
+              "first_step": 386684,
+              "last_step": 523402
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 1,
+              "first_step": 292458,
+              "last_step": 292458
+            }
+          ]
+        },
+        {
+          "offset": 17299,
+          "runtime_pc": 26003,
+          "bytes": "C9",
+          "decoded": "RET",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 3,
+              "first_step": 386685,
+              "last_step": 523403
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 1,
+              "first_step": 292459,
+              "last_step": 292459
             }
           ]
         }
@@ -79517,13 +80649,47 @@
           "bytes": "CD9D64",
           "execution_count": 1,
           "first_step": 218135
+        },
+        {
+          "run": "FIZZBUZ",
+          "image": "PLI1.OVL",
+          "offset": 17417,
+          "bytes": "CD9D64",
+          "execution_count": 1,
+          "first_step": 321951
+        },
+        {
+          "run": "PICTURE",
+          "image": "PLI1.OVL",
+          "offset": 17417,
+          "bytes": "CD9D64",
+          "execution_count": 1,
+          "first_step": 254739
+        },
+        {
+          "run": "FIZZBUZ",
+          "image": "PLI1.OVL",
+          "offset": 14715,
+          "bytes": "CD9D64",
+          "execution_count": 9,
+          "first_step": 344935
+        },
+        {
+          "run": "PICTURE",
+          "image": "PLI1.OVL",
+          "offset": 14715,
+          "bytes": "CD9D64",
+          "execution_count": 4,
+          "first_step": 280719
         }
       ],
       "observed_return_offsets": [
-        17197
+        17093,
+        17197,
+        17299
       ],
       "matched_return_sample": {
-        "relation": "OBSERVED corrected hardware-frame return with original concrete slot bytes",
+        "relation": "OBSERVED corrected original CALL word/RET ancestry",
         "call": {
           "step_index": 218135,
           "pc": 26121,
@@ -79691,14 +80857,7 @@
           }
         }
       },
-      "behavioral_contract": {
-        "classification": "DEDUCED",
-        "description": "Read byte[working pointerA863+2] through complete419F intoA8F3; read byte[p+3] through41A6 intoA8F4; read byte[p+4] intoA8F5. Observed A8F3=30: equality15/16/19 tests and masked24/28 equality tests all fail, CPI30 matches and returns A=2 with flags still CPI30 (Z1,CY0). BC=4, HL=p+4, DE preserved; pointerA863 and tables unchanged in this scope. Other selector dispatch arms are unobserved RAW and may leave this provisional observed-path envelope; no algorithm claim there.",
-        "pseudocode": "p=word[A863]; byte[A8F3]=byte[p+2]; byte[A8F4]=byte[p+3]; byte[A8F5]=byte[p+4]; scope byte[A8F3]==30: fail15/16/19 and masked24/28 comparisons; RET A=2 (flags CPI30); other dispatch unresolved",
-        "scope_and_limits": "working field+2=30; adjacent fields/scratch/return stack nonaliasing; complete419F/41A6 field readers; alternative dispatch paths excluded",
-        "basis": "corrected continuation/ordinary returns andper-invocationconcretecontractchecks",
-        "report_ref": "../minimal-baseline/pass-8/README.md"
-      }
+      "behavioral_contract": "Always419F()->A8F3 selector;41A6()->A8F4;freshworkingpointer+4 ->A8F5. Fields/cache carriers independently reread. Selector15: freshA8F5 ANI FC;threeRAR;INR;RET42C5. NoANI07: result=((primary AND FC)>>3)+1, range1..32; CY=primary.bit2 retainedbyINR; NZPA/AC fromincrement; BC4 HL=pointer+4 DEentry. Selector30 literalA2 RET432D retainsCPI30flags. Boundedfallback: selector!=15/16/19,(s AND24)!=24,(s AND28)!=28,s!=30; expand(s==40 OR s==41) ANDexpand(freshA8F4.bit6), RAR; clearroute requires s!=44 ands!=42, returnsliteralA0 at4393 whileflagsretainCMP(s,42). BC=257*saved selector40/41 mask (natural31/80 ->0), HL=pointer+4, DEpreserved. Natural15/30/31/80 independentlycorrelated; flagsnevergeneratedfromliteralreturnA. Calls/PUSHPSW residue retained. Exactbyte/table/scratch/active stacknoninterference; no source-language interpretation."
     },
     {
       "id": "PLI1.OVL+213C",
@@ -123039,7 +124198,7 @@
       "description": "six-byte frame with bounded zero-input child delegation and zero-result cleanup",
       "inputs_and_effects": "Actual entry registers and selected shared byte-addressed memory; child scopes inherited; executable code, selected scratch/publications/read carriers and active return/save slots nonaliasing where their operation requires it. No table capacity or ownership assumption.; Path-specific A/BC/DE/HL and flags as documented below and in correlated natural cases; SP=entry_SP+2; PC=original CALL continuation.",
       "downstream_helpers_runtime": "PLI1.OVL+3A76",
-      "unresolved": "RAW positive-input body3CBD..3DCC remains STATIC / UNOBSERVED.; Required3A76 natural operation is substantial and uncontracted; returningHL0 only describes this local zero-input cleanup, not that child algorithm.",
+      "unresolved": "RAW positive-input body3CBD..3DCC remains STATIC / UNOBSERVED.; Required3A76 is reproducible only at its Pass36 represented state predicates; its RAW initial/processing/nonzero-tail and classifier alternatives, alias and conditional-termination limitations remain inherited.",
       "instructions": [
         {
           "offset": 15498,
@@ -124032,7 +125191,7 @@
           }
         }
       },
-      "behavioral_contract": "Bounded natural inputC0. DCXSP reserves one inherited byte, PUSH H twice and MOV B,C/PUSH B/INXSP establishF=entrySP-6. F0=inputC; F1/F3=inheritedL, F2/F4=inheritedH, F5=unwrittenreservedbyte initially. FreshA635word ->BC; call substantial opaque3A76; retain its mutations/publications and BC (observed0 orFFFF, neverforced). Then publishA628=15, A62E=0; freshAE32 ->F1; zeroF4 thenF5. Literal0 CMP F0 selectsJNC3DCD fornaturalC0, preserving CMP0,0 flags; positivecount RAW3CBD..3DCC excluded. FreshF4/F5 ->HL0; threePOP D discardexactly6bytes andleaveDE=finalF4/F5=0. ReturnA0 HL0 DE0 BCchildreturned; flagsS0 Z1 AC1 P1 CY0. Frame/publication writes and childCALL residue observable. No interpretation of3A76 as a zero function; childinputBC=freshA635pointer, full child effects/stack delegated. Requires noninterfering code/active stack/frame/fixedscratch and child selected structures."
+      "behavioral_contract": "Bounded natural inputC0. DCXSP reserves one inherited byte, PUSH H twice and MOV B,C/PUSH B/INXSP establishF=entrySP-6. F0=inputC; F1/F3=inheritedL, F2/F4=inheritedH, F5=unwrittenreservedbyte initially. FreshA635word ->BC; call bounded3A76 atPass36 demonstrated scope; retain its mutations/publications and BC (observed0 orFFFF, neverforced). Then publishA628=15, A62E=0; freshAE32 ->F1; zeroF4 thenF5. Literal0 CMP F0 selectsJNC3DCD fornaturalC0, preserving CMP0,0 flags; positivecount RAW3CBD..3DCC excluded. FreshF4/F5 ->HL0; threePOP D discardexactly6bytes andleaveDE=finalF4/F5=0. ReturnA0 HL0 DE0 BCchildreturned; flagsS0 Z1 AC1 P1 CY0. Frame/publication writes and childCALL residue observable. No interpretation of3A76 as a zero function; childinputBC=freshA635pointer, full child effects/stack composed at the Pass36 bounded contract. Requires noninterfering code/active stack/frame/fixedscratch and child selected structures."
     },
     {
       "id": "PLI1.OVL+415E",
@@ -125357,6 +126516,3047 @@
         }
       },
       "behavioral_contract": "Call complete41A6: BC3, HL=u16(word[A863]+3), freshfieldA, DE preserved; NZPA preserved until following arithmetic and CY frompointeraddition isoverwritten. ANI80; SUI80; SUI01; SBB A. DEDUCED exact maskA=FF iff freshfield.bit7 set, otherwise00. Forbit7clear: ANI0 ->SUI80 gives80 ->SUI01 gives7F/CY0 ->selfSBB0; finalflagsS0 Z1 AC1 P1 CY0. Forbit7set: ANI80 ->SUI80 gives0 ->SUI01 givesFF/CY1 ->selfSBBFF; finalflagsS1 Z0 AC0 P1 CY1. BC3, HL=pointer+3, DEentrypreserved; SP=entrySP+2; originalCALLword unchanged. OnlybodyCALL residue atS-2/S-1=575BH, derivedfrom3558CALLcontinuation; no datawrites. Exactdeclaredscope code/workingpointer/selectedfield/return-stack nonaliasing; no PL/I interpretation. All29naturalfields00/4C havebit7clear; bit7set isSTATIC/UNOBSERVED algebra of the same fully represented instruction graph, not invented dynamic coverage."
+    },
+    {
+      "id": "PLI1.OVL+3963",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "start_offset": 14691,
+      "end_offset": 14966,
+      "description": "ten-byte inherited frame with bounded non70 field classification",
+      "inputs_and_effects": "Actual entry registers and selected shared byte-addressed memory; child scopes inherited; executable code, selected scratch/publications/read carriers and active return/save slots nonaliasing where their operation requires it. No table capacity or ownership assumption.; Path-specific A/BC/DE/HL and flags as documented below and in correlated natural cases; SP=entry_SP+2; PC=original CALL continuation.",
+      "downstream_helpers_runtime": "PLI1.OVL+419F; PLI1.OVL+429D",
+      "unresolved": "STATIC / UNOBSERVED field70 branch3987..3A75 remainsRAW andsubstantial.; 429D unsupportedselector routes remainpartial; arbitraryaliases outside declaredscope unestablished.",
+      "instructions": [
+        {
+          "offset": 14691,
+          "runtime_pc": 23395,
+          "bytes": "E5",
+          "decoded": "PUSH H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 344915,
+              "last_step": 604986
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 280699,
+              "last_step": 330674
+            }
+          ]
+        },
+        {
+          "offset": 14692,
+          "runtime_pc": 23396,
+          "bytes": "E5",
+          "decoded": "PUSH H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 344916,
+              "last_step": 604987
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 280700,
+              "last_step": 330675
+            }
+          ]
+        },
+        {
+          "offset": 14693,
+          "runtime_pc": 23397,
+          "bytes": "E5",
+          "decoded": "PUSH H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 344917,
+              "last_step": 604988
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 280701,
+              "last_step": 330676
+            }
+          ]
+        },
+        {
+          "offset": 14694,
+          "runtime_pc": 23398,
+          "bytes": "E5",
+          "decoded": "PUSH H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 344918,
+              "last_step": 604989
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 280702,
+              "last_step": 330677
+            }
+          ]
+        },
+        {
+          "offset": 14695,
+          "runtime_pc": 23399,
+          "bytes": "C5",
+          "decoded": "PUSH B",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 344919,
+              "last_step": 604990
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 280703,
+              "last_step": 330678
+            }
+          ]
+        },
+        {
+          "offset": 14696,
+          "runtime_pc": 23400,
+          "bytes": "210000",
+          "decoded": "LXI H,0000H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 344920,
+              "last_step": 604991
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 280704,
+              "last_step": 330679
+            }
+          ]
+        },
+        {
+          "offset": 14699,
+          "runtime_pc": 23403,
+          "bytes": "39",
+          "decoded": "DAD SP",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 344921,
+              "last_step": 604992
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 280705,
+              "last_step": 330680
+            }
+          ]
+        },
+        {
+          "offset": 14700,
+          "runtime_pc": 23404,
+          "bytes": "5E",
+          "decoded": "MOV E,M",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 344922,
+              "last_step": 604993
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 280706,
+              "last_step": 330681
+            }
+          ]
+        },
+        {
+          "offset": 14701,
+          "runtime_pc": 23405,
+          "bytes": "23",
+          "decoded": "INX H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 344923,
+              "last_step": 604994
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 280707,
+              "last_step": 330682
+            }
+          ]
+        },
+        {
+          "offset": 14702,
+          "runtime_pc": 23406,
+          "bytes": "56",
+          "decoded": "MOV D,M",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 344924,
+              "last_step": 604995
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 280708,
+              "last_step": 330683
+            }
+          ]
+        },
+        {
+          "offset": 14703,
+          "runtime_pc": 23407,
+          "bytes": "EB",
+          "decoded": "XCHG",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 344925,
+              "last_step": 604996
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 280709,
+              "last_step": 330684
+            }
+          ]
+        },
+        {
+          "offset": 14704,
+          "runtime_pc": 23408,
+          "bytes": "2263A8",
+          "decoded": "SHLD A863H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 344926,
+              "last_step": 604997
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 280710,
+              "last_step": 330685
+            }
+          ]
+        },
+        {
+          "offset": 14707,
+          "runtime_pc": 23411,
+          "bytes": "CD9F63",
+          "decoded": "CALL 639FH",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 344927,
+              "last_step": 604998
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 280711,
+              "last_step": 330686
+            }
+          ]
+        },
+        {
+          "offset": 14710,
+          "runtime_pc": 23414,
+          "bytes": "FE70",
+          "decoded": "CPI 70H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 344933,
+              "last_step": 605004
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 280717,
+              "last_step": 330692
+            }
+          ]
+        },
+        {
+          "offset": 14712,
+          "runtime_pc": 23416,
+          "bytes": "CA875B",
+          "decoded": "JZ 5B87H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 344934,
+              "last_step": 605005
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 280718,
+              "last_step": 330693
+            }
+          ]
+        },
+        {
+          "offset": 14715,
+          "runtime_pc": 23419,
+          "bytes": "CD9D64",
+          "decoded": "CALL 649DH",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 344935,
+              "last_step": 605006
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 280719,
+              "last_step": 330694
+            }
+          ]
+        },
+        {
+          "offset": 14718,
+          "runtime_pc": 23422,
+          "bytes": "6F",
+          "decoded": "MOV L,A",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 344965,
+              "last_step": 605036
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 280749,
+              "last_step": 330724
+            }
+          ]
+        },
+        {
+          "offset": 14719,
+          "runtime_pc": 23423,
+          "bytes": "2600",
+          "decoded": "MVI H,00H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 344966,
+              "last_step": 605037
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 280750,
+              "last_step": 330725
+            }
+          ]
+        },
+        {
+          "offset": 14721,
+          "runtime_pc": 23425,
+          "bytes": "D1",
+          "decoded": "POP D",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 344967,
+              "last_step": 605038
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 280751,
+              "last_step": 330726
+            }
+          ]
+        },
+        {
+          "offset": 14722,
+          "runtime_pc": 23426,
+          "bytes": "D1",
+          "decoded": "POP D",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 344968,
+              "last_step": 605039
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 280752,
+              "last_step": 330727
+            }
+          ]
+        },
+        {
+          "offset": 14723,
+          "runtime_pc": 23427,
+          "bytes": "D1",
+          "decoded": "POP D",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 344969,
+              "last_step": 605040
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 280753,
+              "last_step": 330728
+            }
+          ]
+        },
+        {
+          "offset": 14724,
+          "runtime_pc": 23428,
+          "bytes": "D1",
+          "decoded": "POP D",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 344970,
+              "last_step": 605041
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 280754,
+              "last_step": 330729
+            }
+          ]
+        },
+        {
+          "offset": 14725,
+          "runtime_pc": 23429,
+          "bytes": "D1",
+          "decoded": "POP D",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 344971,
+              "last_step": 605042
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 280755,
+              "last_step": 330730
+            }
+          ]
+        },
+        {
+          "offset": 14726,
+          "runtime_pc": 23430,
+          "bytes": "C9",
+          "decoded": "RET",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 344972,
+              "last_step": 605043
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 280756,
+              "last_step": 330731
+            }
+          ]
+        }
+      ],
+      "observed_callers": [
+        {
+          "run": "FIZZBUZ",
+          "image": "PLI1.OVL",
+          "offset": 15005,
+          "bytes": "CD635B",
+          "execution_count": 9,
+          "first_step": 344914
+        },
+        {
+          "run": "PICTURE",
+          "image": "PLI1.OVL",
+          "offset": 15005,
+          "bytes": "CD635B",
+          "execution_count": 4,
+          "first_step": 280698
+        }
+      ],
+      "observed_return_offsets": [
+        14726
+      ],
+      "matched_return_sample": {
+        "relation": "OBSERVED corrected original CALL word/RET ancestry",
+        "call": {
+          "step_index": 344914,
+          "pc": 23709,
+          "pc_after": 23395,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI1.OVL",
+              "identity": "0:0:PLI1.OVL"
+            },
+            "offset": 15005
+          },
+          "target_origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI1.OVL",
+              "identity": "0:0:PLI1.OVL"
+            },
+            "offset": 14691
+          },
+          "runtime_pc": 23709,
+          "bytes": "CD635B",
+          "disassembly": "CALL 5B63H",
+          "source": "memory",
+          "before": {
+            "a": 4,
+            "b": 251,
+            "c": 243,
+            "d": 166,
+            "e": 107,
+            "h": 251,
+            "l": 243,
+            "sp": 65493,
+            "pc": 23709,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 4,
+            "b": 251,
+            "c": 243,
+            "d": 166,
+            "e": 107,
+            "h": 251,
+            "l": 243,
+            "sp": 65491,
+            "pc": 23395,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "sp_before": 65493,
+          "sp_after": 65491,
+          "call_return_address": 23712,
+          "reads": [],
+          "writes": [
+            {
+              "address": 65492,
+              "old_value": null,
+              "new_value": 92
+            },
+            {
+              "address": 65491,
+              "old_value": null,
+              "new_value": 160
+            }
+          ],
+          "control": {
+            "kind": "call",
+            "target": 23395,
+            "taken": true
+          }
+        },
+        "ret": {
+          "step_index": 344972,
+          "pc": 23430,
+          "pc_after": 23712,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI1.OVL",
+              "identity": "0:0:PLI1.OVL"
+            },
+            "offset": 14726
+          },
+          "target_origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI1.OVL",
+              "identity": "0:0:PLI1.OVL"
+            },
+            "offset": 15008
+          },
+          "runtime_pc": 23430,
+          "bytes": "C9",
+          "disassembly": "RET",
+          "source": "memory",
+          "before": {
+            "a": 2,
+            "b": 0,
+            "c": 4,
+            "d": 251,
+            "e": 243,
+            "h": 0,
+            "l": 2,
+            "sp": 65491,
+            "pc": 23430,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": true
+            }
+          },
+          "after": {
+            "a": 2,
+            "b": 0,
+            "c": 4,
+            "d": 251,
+            "e": 243,
+            "h": 0,
+            "l": 2,
+            "sp": 65493,
+            "pc": 23712,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": true
+            }
+          },
+          "sp_before": 65491,
+          "sp_after": 65493,
+          "call_return_address": null,
+          "reads": [
+            {
+              "address": 65491,
+              "value": 160
+            },
+            {
+              "address": 65492,
+              "value": 92
+            }
+          ],
+          "writes": [],
+          "control": {
+            "kind": "return",
+            "target": 23712,
+            "taken": true
+          }
+        }
+      },
+      "behavioral_contract": "PUSH Hfourtimes thenPUSH B establishes F=entrySP-10, F0/F1=inputBC, remainingpairs inheritedHL. Freshframe low/high ->workingpointerA863;419F() reads field+2. Observedfield!=70 bypasses RAW3987..3A75. Call bounded429D; zeroextend its actualA intoHL, fivePOP D discardframe, RET3986. A/BC/flags from429D; DE=entryHL fromlastPOP, not a fixedpointer convention; HL=zeroextendedclassresult. Ownlogicalwrites A863low/high, inheritedframe andCALLresidue retained. Code/frame/scratch/selectedrecords noninterfering declaredscope; no PL/I classification meaning inferred."
+    },
+    {
+      "id": "PLI1.OVL+3A76",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "start_offset": 14966,
+      "end_offset": 15382,
+      "description": "bounded working-pointer acquisition/search with cached input and range-mask termination",
+      "inputs_and_effects": "Actual entry registers and selected shared byte-addressed memory; child scopes inherited; executable code, selected scratch/publications/read carriers and active return/save slots nonaliasing where their operation requires it. No table capacity or ownership assumption.; Path-specific A/BC/DE/HL and flags as documented below and in correlated natural cases; SP=entry_SP+2; PC=original CALL continuation.",
+      "downstream_helpers_runtime": "PLI1.OVL+41AF; PLI1.OVL+3963; PLI1.OVL+4275; PLI.COM+1A33; PLI.COM+1A33; PLI1.OVL+387F; PLI1.OVL+3558; PLI1.OVL+424F",
+      "unresolved": "STATIC / UNOBSERVED RAW: fieldlow3==2 initial3A8D..3A92; selectedbit7 processing3AED..3BE3; nonzeroA6E2 tail3C00..3C14.; 3963 field70 route and429D unrepresented selectors remain delegated/unsupported;387F alternatives remain partial.; Conditional loop termination and arbitrary aliases not established; native readiness is bounded to the represented state predicates, not snapshot membership.",
+      "instructions": [
+        {
+          "offset": 14966,
+          "runtime_pc": 23670,
+          "bytes": "2144A7",
+          "decoded": "LXI H,A744H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 344893,
+              "last_step": 604964
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 280677,
+              "last_step": 330652
+            }
+          ]
+        },
+        {
+          "offset": 14969,
+          "runtime_pc": 23673,
+          "bytes": "70",
+          "decoded": "MOV M,B",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 344894,
+              "last_step": 604965
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 280678,
+              "last_step": 330653
+            }
+          ]
+        },
+        {
+          "offset": 14970,
+          "runtime_pc": 23674,
+          "bytes": "2B",
+          "decoded": "DCX H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 344895,
+              "last_step": 604966
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 280679,
+              "last_step": 330654
+            }
+          ]
+        },
+        {
+          "offset": 14971,
+          "runtime_pc": 23675,
+          "bytes": "71",
+          "decoded": "MOV M,C",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 344896,
+              "last_step": 604967
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 280680,
+              "last_step": 330655
+            }
+          ]
+        },
+        {
+          "offset": 14972,
+          "runtime_pc": 23676,
+          "bytes": "2A43A7",
+          "decoded": "LHLD A743H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 344897,
+              "last_step": 604968
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 280681,
+              "last_step": 330656
+            }
+          ]
+        },
+        {
+          "offset": 14975,
+          "runtime_pc": 23679,
+          "bytes": "2245A7",
+          "decoded": "SHLD A745H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 344898,
+              "last_step": 604969
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 280682,
+              "last_step": 330657
+            }
+          ]
+        },
+        {
+          "offset": 14978,
+          "runtime_pc": 23682,
+          "bytes": "2263A8",
+          "decoded": "SHLD A863H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 344899,
+              "last_step": 604970
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 280683,
+              "last_step": 330658
+            }
+          ]
+        },
+        {
+          "offset": 14981,
+          "runtime_pc": 23685,
+          "bytes": "CDAF63",
+          "decoded": "CALL 63AFH",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 344900,
+              "last_step": 604971
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 280684,
+              "last_step": 330659
+            }
+          ]
+        },
+        {
+          "offset": 14984,
+          "runtime_pc": 23688,
+          "bytes": "FE02",
+          "decoded": "CPI 02H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 344907,
+              "last_step": 604978
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 280691,
+              "last_step": 330666
+            }
+          ]
+        },
+        {
+          "offset": 14986,
+          "runtime_pc": 23690,
+          "bytes": "C2935C",
+          "decoded": "JNZ 5C93H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 344908,
+              "last_step": 604979
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 280692,
+              "last_step": 330667
+            }
+          ]
+        },
+        {
+          "offset": 14995,
+          "runtime_pc": 23699,
+          "bytes": "21E2A6",
+          "decoded": "LXI H,A6E2H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 344909,
+              "last_step": 604980
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 280693,
+              "last_step": 330668
+            }
+          ]
+        },
+        {
+          "offset": 14998,
+          "runtime_pc": 23702,
+          "bytes": "3600",
+          "decoded": "MVI M,00H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 344910,
+              "last_step": 604981
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 280694,
+              "last_step": 330669
+            }
+          ]
+        },
+        {
+          "offset": 15000,
+          "runtime_pc": 23704,
+          "bytes": "2A43A7",
+          "decoded": "LHLD A743H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 344911,
+              "last_step": 604982
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 280695,
+              "last_step": 330670
+            }
+          ]
+        },
+        {
+          "offset": 15003,
+          "runtime_pc": 23707,
+          "bytes": "44",
+          "decoded": "MOV B,H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 344912,
+              "last_step": 604983
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 280696,
+              "last_step": 330671
+            }
+          ]
+        },
+        {
+          "offset": 15004,
+          "runtime_pc": 23708,
+          "bytes": "4D",
+          "decoded": "MOV C,L",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 344913,
+              "last_step": 604984
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 280697,
+              "last_step": 330672
+            }
+          ]
+        },
+        {
+          "offset": 15005,
+          "runtime_pc": 23709,
+          "bytes": "CD635B",
+          "decoded": "CALL 5B63H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 344914,
+              "last_step": 604985
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 280698,
+              "last_step": 330673
+            }
+          ]
+        },
+        {
+          "offset": 15008,
+          "runtime_pc": 23712,
+          "bytes": "2223A7",
+          "decoded": "SHLD A723H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 344973,
+              "last_step": 605044
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 280757,
+              "last_step": 330732
+            }
+          ]
+        },
+        {
+          "offset": 15011,
+          "runtime_pc": 23715,
+          "bytes": "2A45A7",
+          "decoded": "LHLD A745H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 344974,
+              "last_step": 605045
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 280758,
+              "last_step": 330733
+            }
+          ]
+        },
+        {
+          "offset": 15014,
+          "runtime_pc": 23718,
+          "bytes": "2263A8",
+          "decoded": "SHLD A863H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 344975,
+              "last_step": 605046
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 280759,
+              "last_step": 330734
+            }
+          ]
+        },
+        {
+          "offset": 15017,
+          "runtime_pc": 23721,
+          "bytes": "CD7564",
+          "decoded": "CALL 6475H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 18,
+              "first_step": 344976,
+              "last_step": 605208
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 8,
+              "first_step": 280760,
+              "last_step": 330903
+            }
+          ]
+        },
+        {
+          "offset": 15020,
+          "runtime_pc": 23724,
+          "bytes": "1143A7",
+          "decoded": "LXI D,A743H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 18,
+              "first_step": 344996,
+              "last_step": 605228
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 8,
+              "first_step": 280780,
+              "last_step": 330923
+            }
+          ]
+        },
+        {
+          "offset": 15023,
+          "runtime_pc": 23727,
+          "bytes": "0163A8",
+          "decoded": "LXI B,A863H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 18,
+              "first_step": 344997,
+              "last_step": 605229
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 8,
+              "first_step": 280781,
+              "last_step": 330924
+            }
+          ]
+        },
+        {
+          "offset": 15026,
+          "runtime_pc": 23730,
+          "bytes": "F5",
+          "decoded": "PUSH PSW",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 18,
+              "first_step": 344998,
+              "last_step": 605230
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 8,
+              "first_step": 280782,
+              "last_step": 330925
+            }
+          ]
+        },
+        {
+          "offset": 15027,
+          "runtime_pc": 23731,
+          "bytes": "CD331B",
+          "decoded": "CALL 1B33H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 18,
+              "first_step": 344999,
+              "last_step": 605231
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 8,
+              "first_step": 280783,
+              "last_step": 330926
+            }
+          ]
+        },
+        {
+          "offset": 15030,
+          "runtime_pc": 23734,
+          "bytes": "9F",
+          "decoded": "SBB A",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 18,
+              "first_step": 345013,
+              "last_step": 605245
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 8,
+              "first_step": 280797,
+              "last_step": 330940
+            }
+          ]
+        },
+        {
+          "offset": 15031,
+          "runtime_pc": 23735,
+          "bytes": "2F",
+          "decoded": "CMA",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 18,
+              "first_step": 345014,
+              "last_step": 605246
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 8,
+              "first_step": 280798,
+              "last_step": 330941
+            }
+          ]
+        },
+        {
+          "offset": 15032,
+          "runtime_pc": 23736,
+          "bytes": "C1",
+          "decoded": "POP B",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 18,
+              "first_step": 345015,
+              "last_step": 605247
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 8,
+              "first_step": 280799,
+              "last_step": 330942
+            }
+          ]
+        },
+        {
+          "offset": 15033,
+          "runtime_pc": 23737,
+          "bytes": "48",
+          "decoded": "MOV C,B",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 18,
+              "first_step": 345016,
+              "last_step": 605248
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 8,
+              "first_step": 280800,
+              "last_step": 330943
+            }
+          ]
+        },
+        {
+          "offset": 15034,
+          "runtime_pc": 23738,
+          "bytes": "A1",
+          "decoded": "ANA C",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 18,
+              "first_step": 345017,
+              "last_step": 605249
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 8,
+              "first_step": 280801,
+              "last_step": 330944
+            }
+          ]
+        },
+        {
+          "offset": 15035,
+          "runtime_pc": 23739,
+          "bytes": "1F",
+          "decoded": "RAR",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 18,
+              "first_step": 345018,
+              "last_step": 605250
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 8,
+              "first_step": 280802,
+              "last_step": 330945
+            }
+          ]
+        },
+        {
+          "offset": 15036,
+          "runtime_pc": 23740,
+          "bytes": "D2F85D",
+          "decoded": "JNC 5DF8H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 18,
+              "first_step": 345019,
+              "last_step": 605251
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 8,
+              "first_step": 280803,
+              "last_step": 330946
+            }
+          ]
+        },
+        {
+          "offset": 15039,
+          "runtime_pc": 23743,
+          "bytes": "0143A7",
+          "decoded": "LXI B,A743H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 345020,
+              "last_step": 605091
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 280804,
+              "last_step": 330779
+            }
+          ]
+        },
+        {
+          "offset": 15042,
+          "runtime_pc": 23746,
+          "bytes": "1145A7",
+          "decoded": "LXI D,A745H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 345021,
+              "last_step": 605092
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 280805,
+              "last_step": 330780
+            }
+          ]
+        },
+        {
+          "offset": 15045,
+          "runtime_pc": 23749,
+          "bytes": "CD331B",
+          "decoded": "CALL 1B33H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 345022,
+              "last_step": 605093
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 280806,
+              "last_step": 330781
+            }
+          ]
+        },
+        {
+          "offset": 15048,
+          "runtime_pc": 23752,
+          "bytes": "B5",
+          "decoded": "ORA L",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 345036,
+              "last_step": 605107
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 280820,
+              "last_step": 330795
+            }
+          ]
+        },
+        {
+          "offset": 15049,
+          "runtime_pc": 23753,
+          "bytes": "D601",
+          "decoded": "SUI 01H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 345037,
+              "last_step": 605108
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 280821,
+              "last_step": 330796
+            }
+          ]
+        },
+        {
+          "offset": 15051,
+          "runtime_pc": 23755,
+          "bytes": "9F",
+          "decoded": "SBB A",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 345038,
+              "last_step": 605109
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 280822,
+              "last_step": 330797
+            }
+          ]
+        },
+        {
+          "offset": 15052,
+          "runtime_pc": 23756,
+          "bytes": "F5",
+          "decoded": "PUSH PSW",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 345039,
+              "last_step": 605110
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 280823,
+              "last_step": 330798
+            }
+          ]
+        },
+        {
+          "offset": 15053,
+          "runtime_pc": 23757,
+          "bytes": "2A45A7",
+          "decoded": "LHLD A745H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 345040,
+              "last_step": 605111
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 280824,
+              "last_step": 330799
+            }
+          ]
+        },
+        {
+          "offset": 15056,
+          "runtime_pc": 23760,
+          "bytes": "44",
+          "decoded": "MOV B,H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 345041,
+              "last_step": 605112
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 280825,
+              "last_step": 330800
+            }
+          ]
+        },
+        {
+          "offset": 15057,
+          "runtime_pc": 23761,
+          "bytes": "4D",
+          "decoded": "MOV C,L",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 345042,
+              "last_step": 605113
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 280826,
+              "last_step": 330801
+            }
+          ]
+        },
+        {
+          "offset": 15058,
+          "runtime_pc": 23762,
+          "bytes": "2A43A7",
+          "decoded": "LHLD A743H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 345043,
+              "last_step": 605114
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 280827,
+              "last_step": 330802
+            }
+          ]
+        },
+        {
+          "offset": 15061,
+          "runtime_pc": 23765,
+          "bytes": "EB",
+          "decoded": "XCHG",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 345044,
+              "last_step": 605115
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 280828,
+              "last_step": 330803
+            }
+          ]
+        },
+        {
+          "offset": 15062,
+          "runtime_pc": 23766,
+          "bytes": "CD7F5A",
+          "decoded": "CALL 5A7FH",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 345045,
+              "last_step": 605116
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 280829,
+              "last_step": 330804
+            }
+          ]
+        },
+        {
+          "offset": 15065,
+          "runtime_pc": 23769,
+          "bytes": "C1",
+          "decoded": "POP B",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 345083,
+              "last_step": 605154
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 280867,
+              "last_step": 330842
+            }
+          ]
+        },
+        {
+          "offset": 15066,
+          "runtime_pc": 23770,
+          "bytes": "48",
+          "decoded": "MOV C,B",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 345084,
+              "last_step": 605155
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 280868,
+              "last_step": 330843
+            }
+          ]
+        },
+        {
+          "offset": 15067,
+          "runtime_pc": 23771,
+          "bytes": "B1",
+          "decoded": "ORA C",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 345085,
+              "last_step": 605156
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 280869,
+              "last_step": 330844
+            }
+          ]
+        },
+        {
+          "offset": 15068,
+          "runtime_pc": 23772,
+          "bytes": "1F",
+          "decoded": "RAR",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 345086,
+              "last_step": 605157
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 280870,
+              "last_step": 330845
+            }
+          ]
+        },
+        {
+          "offset": 15069,
+          "runtime_pc": 23773,
+          "bytes": "D2E45D",
+          "decoded": "JNC 5DE4H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 345087,
+              "last_step": 605158
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 280871,
+              "last_step": 330846
+            }
+          ]
+        },
+        {
+          "offset": 15072,
+          "runtime_pc": 23776,
+          "bytes": "2A45A7",
+          "decoded": "LHLD A745H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 345088,
+              "last_step": 605159
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 280872,
+              "last_step": 330847
+            }
+          ]
+        },
+        {
+          "offset": 15075,
+          "runtime_pc": 23779,
+          "bytes": "2263A8",
+          "decoded": "SHLD A863H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 345089,
+              "last_step": 605160
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 280873,
+              "last_step": 330848
+            }
+          ]
+        },
+        {
+          "offset": 15078,
+          "runtime_pc": 23782,
+          "bytes": "CD5857",
+          "decoded": "CALL 5758H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 345090,
+              "last_step": 605161
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 280874,
+              "last_step": 330849
+            }
+          ]
+        },
+        {
+          "offset": 15081,
+          "runtime_pc": 23785,
+          "bytes": "1F",
+          "decoded": "RAR",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 345102,
+              "last_step": 605173
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 280886,
+              "last_step": 330861
+            }
+          ]
+        },
+        {
+          "offset": 15082,
+          "runtime_pc": 23786,
+          "bytes": "D2E45D",
+          "decoded": "JNC 5DE4H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 345103,
+              "last_step": 605174
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 280887,
+              "last_step": 330862
+            }
+          ]
+        },
+        {
+          "offset": 15332,
+          "runtime_pc": 24036,
+          "bytes": "2A45A7",
+          "decoded": "LHLD A745H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 345104,
+              "last_step": 605175
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 280888,
+              "last_step": 330863
+            }
+          ]
+        },
+        {
+          "offset": 15335,
+          "runtime_pc": 24039,
+          "bytes": "2263A8",
+          "decoded": "SHLD A863H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 345105,
+              "last_step": 605176
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 280889,
+              "last_step": 330864
+            }
+          ]
+        },
+        {
+          "offset": 15338,
+          "runtime_pc": 24042,
+          "bytes": "0E00",
+          "decoded": "MVI C,00H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 345106,
+              "last_step": 605177
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 280890,
+              "last_step": 330865
+            }
+          ]
+        },
+        {
+          "offset": 15340,
+          "runtime_pc": 24044,
+          "bytes": "CD4F64",
+          "decoded": "CALL 644FH",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 345107,
+              "last_step": 605178
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 280891,
+              "last_step": 330866
+            }
+          ]
+        },
+        {
+          "offset": 15343,
+          "runtime_pc": 24047,
+          "bytes": "2A63A8",
+          "decoded": "LHLD A863H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 345134,
+              "last_step": 605205
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 280925,
+              "last_step": 330900
+            }
+          ]
+        },
+        {
+          "offset": 15346,
+          "runtime_pc": 24050,
+          "bytes": "2245A7",
+          "decoded": "SHLD A745H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 345135,
+              "last_step": 605206
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 280926,
+              "last_step": 330901
+            }
+          ]
+        },
+        {
+          "offset": 15349,
+          "runtime_pc": 24053,
+          "bytes": "C3A95C",
+          "decoded": "JMP 5CA9H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 345136,
+              "last_step": 605207
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 280927,
+              "last_step": 330902
+            }
+          ]
+        },
+        {
+          "offset": 15352,
+          "runtime_pc": 24056,
+          "bytes": "3AE2A6",
+          "decoded": "LDA A6E2H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 345181,
+              "last_step": 605252
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 280972,
+              "last_step": 330947
+            }
+          ]
+        },
+        {
+          "offset": 15355,
+          "runtime_pc": 24059,
+          "bytes": "FE00",
+          "decoded": "CPI 00H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 345182,
+              "last_step": 605253
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 280973,
+              "last_step": 330948
+            }
+          ]
+        },
+        {
+          "offset": 15357,
+          "runtime_pc": 24061,
+          "bytes": "CA155E",
+          "decoded": "JZ 5E15H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 345183,
+              "last_step": 605254
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 280974,
+              "last_step": 330949
+            }
+          ]
+        },
+        {
+          "offset": 15381,
+          "runtime_pc": 24085,
+          "bytes": "C9",
+          "decoded": "RET",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 345184,
+              "last_step": 605255
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 280975,
+              "last_step": 330950
+            }
+          ]
+        }
+      ],
+      "observed_callers": [
+        {
+          "run": "FIZZBUZ",
+          "image": "PLI1.OVL",
+          "offset": 15509,
+          "bytes": "CD765C",
+          "execution_count": 9,
+          "first_step": 344892
+        },
+        {
+          "run": "PICTURE",
+          "image": "PLI1.OVL",
+          "offset": 15509,
+          "bytes": "CD765C",
+          "execution_count": 4,
+          "first_step": 280676
+        }
+      ],
+      "observed_return_offsets": [
+        15381
+      ],
+      "matched_return_sample": {
+        "relation": "OBSERVED corrected original CALL word/RET ancestry",
+        "call": {
+          "step_index": 344892,
+          "pc": 24213,
+          "pc_after": 23670,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI1.OVL",
+              "identity": "0:0:PLI1.OVL"
+            },
+            "offset": 15509
+          },
+          "target_origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI1.OVL",
+              "identity": "0:0:PLI1.OVL"
+            },
+            "offset": 14966
+          },
+          "runtime_pc": 24213,
+          "bytes": "CD765C",
+          "disassembly": "CALL 5C76H",
+          "source": "memory",
+          "before": {
+            "a": 2,
+            "b": 251,
+            "c": 243,
+            "d": 166,
+            "e": 107,
+            "h": 251,
+            "l": 243,
+            "sp": 65495,
+            "pc": 24213,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 2,
+            "b": 251,
+            "c": 243,
+            "d": 166,
+            "e": 107,
+            "h": 251,
+            "l": 243,
+            "sp": 65493,
+            "pc": 23670,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "sp_before": 65495,
+          "sp_after": 65493,
+          "call_return_address": 24216,
+          "reads": [],
+          "writes": [
+            {
+              "address": 65494,
+              "old_value": null,
+              "new_value": 94
+            },
+            {
+              "address": 65493,
+              "old_value": null,
+              "new_value": 152
+            }
+          ],
+          "control": {
+            "kind": "call",
+            "target": 23670,
+            "taken": true
+          }
+        },
+        "ret": {
+          "step_index": 345184,
+          "pc": 24085,
+          "pc_after": 24216,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI1.OVL",
+              "identity": "0:0:PLI1.OVL"
+            },
+            "offset": 15381
+          },
+          "target_origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI1.OVL",
+              "identity": "0:0:PLI1.OVL"
+            },
+            "offset": 15512
+          },
+          "runtime_pc": 24085,
+          "bytes": "C9",
+          "disassembly": "RET",
+          "source": "memory",
+          "before": {
+            "a": 0,
+            "b": 0,
+            "c": 0,
+            "d": 167,
+            "e": 68,
+            "h": 251,
+            "l": 243,
+            "sp": 65493,
+            "pc": 24085,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 0,
+            "b": 0,
+            "c": 0,
+            "d": 167,
+            "e": 68,
+            "h": 251,
+            "l": 243,
+            "sp": 65495,
+            "pc": 24216,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "sp_before": 65493,
+          "sp_after": 65495,
+          "call_return_address": null,
+          "reads": [
+            {
+              "address": 65493,
+              "value": 152
+            },
+            {
+              "address": 65494,
+              "value": 94
+            }
+          ],
+          "writes": [],
+          "control": {
+            "kind": "return",
+            "target": 24216,
+            "taken": true
+          }
+        }
+      },
+      "behavioral_contract": "OBSERVED / DEDUCED bounded natural operation: save input BC high atA744 thenlow atA743; copy its fresh word low/high toA745 andA863. Complete41AF fieldlow3!=2 bypasses RAWinitialarm; zeroA6E2. Freshsavedpointer ->3963 bounded field!=70 path; publish actual returnedHL low/high atA723 (0 or2 naturally), then restore freshA745 toA863. Loop: complete4275 expands workingpointer>=freshreferenceword[A8AB]; PUSH its A/PSW while resident1A33 computes freshsavedinput-current. SelfSBB/CMA expands nonborrow, POP B/MOV C,B supplies the independently saved4275mask; ANA/RAR tests their conjunction. True route compares current againstsavedinput for equality, PUSHmask; bounded387F(current,savedinput) returns0 at pointer<=bound/field!=70 scope; POPmask/ORA/RAR selects3558. Observed fieldbit7clear skips RAWprocessingarm. RestorefreshA745 toA863; complete424F(controlmask0) advances/searches using freshrecordsize andA861limit; freshly reloadA863 and publishA745; repeat. Natural one search thenexit: sixFIZZBUZ searches reachlimit andclearcurrent ->belowreference; otherseven searchesadvancebeyondsavedinput ->upperborrow. FreshA6E2==0 selectsRET3C15; finalA0/flagsCMP0,0 independently ofpointerresult. BC=257*last4275mask, DE=A744, HL=u16(savedinput-current) from finalresident subtraction. No allocatedlocalframe; exactCALL/PUSHPSW residue retained. No tablecapacity/ownership/PLImeaning or arbitrarytermination theorem. Requires noninterference ofcode,active stack,scratch/readcarriers andselectedrecord/table destinations where the delegated contracts require it."
+    },
+    {
+      "id": "PLI1.OVL+4241",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "start_offset": 16961,
+      "end_offset": 16975,
+      "description": "fresh size-byte working-pointer advance",
+      "inputs_and_effects": "Actual entry registers and selected shared byte-addressed memory; child scopes inherited; executable code, selected scratch/publications/read carriers and active return/save slots nonaliasing where their operation requires it. No table capacity or ownership assumption.; Path-specific A/BC/DE/HL and flags as documented below and in correlated natural cases; SP=entry_SP+2; PC=original CALL continuation.",
+      "downstream_helpers_runtime": "",
+      "unresolved": "No arbitraryalias safety claim beyonddeclarednoninterference scope.",
+      "instructions": [
+        {
+          "offset": 16961,
+          "runtime_pc": 25665,
+          "bytes": "2A63A8",
+          "decoded": "LHLD A863H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 345111,
+              "last_step": 605182
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 9,
+              "first_step": 280895,
+              "last_step": 330870
+            }
+          ]
+        },
+        {
+          "offset": 16964,
+          "runtime_pc": 25668,
+          "bytes": "5E",
+          "decoded": "MOV E,M",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 345112,
+              "last_step": 605183
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 9,
+              "first_step": 280896,
+              "last_step": 330871
+            }
+          ]
+        },
+        {
+          "offset": 16965,
+          "runtime_pc": 25669,
+          "bytes": "1600",
+          "decoded": "MVI D,00H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 345113,
+              "last_step": 605184
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 9,
+              "first_step": 280897,
+              "last_step": 330872
+            }
+          ]
+        },
+        {
+          "offset": 16967,
+          "runtime_pc": 25671,
+          "bytes": "2A63A8",
+          "decoded": "LHLD A863H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 345114,
+              "last_step": 605185
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 9,
+              "first_step": 280898,
+              "last_step": 330873
+            }
+          ]
+        },
+        {
+          "offset": 16970,
+          "runtime_pc": 25674,
+          "bytes": "19",
+          "decoded": "DAD D",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 345115,
+              "last_step": 605186
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 9,
+              "first_step": 280899,
+              "last_step": 330874
+            }
+          ]
+        },
+        {
+          "offset": 16971,
+          "runtime_pc": 25675,
+          "bytes": "2263A8",
+          "decoded": "SHLD A863H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 345116,
+              "last_step": 605187
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 9,
+              "first_step": 280900,
+              "last_step": 330875
+            }
+          ]
+        },
+        {
+          "offset": 16974,
+          "runtime_pc": 25678,
+          "bytes": "C9",
+          "decoded": "RET",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 345117,
+              "last_step": 605188
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 9,
+              "first_step": 280901,
+              "last_step": 330876
+            }
+          ]
+        }
+      ],
+      "observed_callers": [
+        {
+          "run": "FIZZBUZ",
+          "image": "PLI1.OVL",
+          "offset": 16979,
+          "bytes": "CD4164",
+          "execution_count": 9,
+          "first_step": 345110
+        },
+        {
+          "run": "PICTURE",
+          "image": "PLI1.OVL",
+          "offset": 16979,
+          "bytes": "CD4164",
+          "execution_count": 9,
+          "first_step": 280894
+        }
+      ],
+      "observed_return_offsets": [
+        16974
+      ],
+      "matched_return_sample": {
+        "relation": "OBSERVED corrected original CALL word/RET ancestry",
+        "call": {
+          "step_index": 345110,
+          "pc": 25683,
+          "pc_after": 25665,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI1.OVL",
+              "identity": "0:0:PLI1.OVL"
+            },
+            "offset": 16979
+          },
+          "target_origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI1.OVL",
+              "identity": "0:0:PLI1.OVL"
+            },
+            "offset": 16961
+          },
+          "runtime_pc": 25683,
+          "bytes": "CD4164",
+          "disassembly": "CALL 6441H",
+          "source": "memory",
+          "before": {
+            "a": 0,
+            "b": 0,
+            "c": 0,
+            "d": 166,
+            "e": 224,
+            "h": 168,
+            "l": 242,
+            "sp": 65491,
+            "pc": 25683,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 0,
+            "b": 0,
+            "c": 0,
+            "d": 166,
+            "e": 224,
+            "h": 168,
+            "l": 242,
+            "sp": 65489,
+            "pc": 25665,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "sp_before": 65491,
+          "sp_after": 65489,
+          "call_return_address": 25686,
+          "reads": [],
+          "writes": [
+            {
+              "address": 65490,
+              "old_value": null,
+              "new_value": 100
+            },
+            {
+              "address": 65489,
+              "old_value": null,
+              "new_value": 86
+            }
+          ],
+          "control": {
+            "kind": "call",
+            "target": 25665,
+            "taken": true
+          }
+        },
+        "ret": {
+          "step_index": 345117,
+          "pc": 25678,
+          "pc_after": 25686,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI1.OVL",
+              "identity": "0:0:PLI1.OVL"
+            },
+            "offset": 16974
+          },
+          "target_origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI1.OVL",
+              "identity": "0:0:PLI1.OVL"
+            },
+            "offset": 16982
+          },
+          "runtime_pc": 25678,
+          "bytes": "C9",
+          "disassembly": "RET",
+          "source": "memory",
+          "before": {
+            "a": 0,
+            "b": 0,
+            "c": 0,
+            "d": 0,
+            "e": 11,
+            "h": 251,
+            "l": 254,
+            "sp": 65489,
+            "pc": 25678,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 0,
+            "b": 0,
+            "c": 0,
+            "d": 0,
+            "e": 11,
+            "h": 251,
+            "l": 254,
+            "sp": 65491,
+            "pc": 25686,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "sp_before": 65489,
+          "sp_after": 65491,
+          "call_return_address": null,
+          "reads": [
+            {
+              "address": 65489,
+              "value": 86
+            },
+            {
+              "address": 65490,
+              "value": 100
+            }
+          ],
+          "writes": [],
+          "control": {
+            "kind": "return",
+            "target": 25686,
+            "taken": true
+          }
+        }
+      },
+      "behavioral_contract": "Complete local law: firstfreshword[A863] selects anunsignedbyte size. Independently rereadword[A863]; zeroextendsize inDE; HL=u16(freshpointer+size), CY=wordoverflow. PublishA863low thenA864high unconditionally. A/BC/NZPA preserved; DE=size; HL=nextpointer; SP=entrySP+2, originalCALLcontinuation. LeafhasnoCALL/PUSH orbelowentryresidue. Scope excludes code/active stack/selectedsize andscratch interference required by these freshreads; no recordcapacity/ownership orglobalimmutability inference."
+    },
+    {
+      "id": "PLI1.OVL+424F",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "start_offset": 16975,
+      "end_offset": 17013,
+      "description": "advance-before-test working-pointer search by field mask and unsigned boundary",
+      "inputs_and_effects": "Actual entry registers and selected shared byte-addressed memory; child scopes inherited; executable code, selected scratch/publications/read carriers and active return/save slots nonaliasing where their operation requires it. No table capacity or ownership assumption.; Path-specific A/BC/DE/HL and flags as documented below and in correlated natural cases; SP=entry_SP+2; PC=original CALL continuation.",
+      "downstream_helpers_runtime": "PLI1.OVL+4241; PLI1.OVL+83A3; PLI1.OVL+421F",
+      "unresolved": "Conditional termination only: arbitraryrecord/table states can fail toreachboundary ormatchingmask; no newguard.; No arbitraryalias safety outsideexplicitchild scopes.",
+      "instructions": [
+        {
+          "offset": 16975,
+          "runtime_pc": 25679,
+          "bytes": "21F2A8",
+          "decoded": "LXI H,A8F2H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 345108,
+              "last_step": 605179
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 7,
+              "first_step": 280892,
+              "last_step": 330867
+            }
+          ]
+        },
+        {
+          "offset": 16978,
+          "runtime_pc": 25682,
+          "bytes": "71",
+          "decoded": "MOV M,C",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 345109,
+              "last_step": 605180
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 7,
+              "first_step": 280893,
+              "last_step": 330868
+            }
+          ]
+        },
+        {
+          "offset": 16979,
+          "runtime_pc": 25683,
+          "bytes": "CD4164",
+          "decoded": "CALL 6441H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 345110,
+              "last_step": 605181
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 9,
+              "first_step": 280894,
+              "last_step": 330869
+            }
+          ]
+        },
+        {
+          "offset": 16982,
+          "runtime_pc": 25686,
+          "bytes": "EB",
+          "decoded": "XCHG",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 345118,
+              "last_step": 605189
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 9,
+              "first_step": 280902,
+              "last_step": 330877
+            }
+          ]
+        },
+        {
+          "offset": 16983,
+          "runtime_pc": 25687,
+          "bytes": "2161A8",
+          "decoded": "LXI H,A861H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 345119,
+              "last_step": 605190
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 9,
+              "first_step": 280903,
+              "last_step": 330878
+            }
+          ]
+        },
+        {
+          "offset": 16986,
+          "runtime_pc": 25690,
+          "bytes": "CDA3A5",
+          "decoded": "CALL A5A3H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 345120,
+              "last_step": 605191
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 9,
+              "first_step": 280904,
+              "last_step": 330879
+            }
+          ]
+        },
+        {
+          "offset": 16989,
+          "runtime_pc": 25693,
+          "bytes": "D26E64",
+          "decoded": "JNC 646EH",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 9,
+              "first_step": 345130,
+              "last_step": 605201
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 9,
+              "first_step": 280914,
+              "last_step": 330889
+            }
+          ]
+        },
+        {
+          "offset": 16992,
+          "runtime_pc": 25696,
+          "bytes": "CD1F64",
+          "decoded": "CALL 641FH",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 3,
+              "first_step": 386852,
+              "last_step": 523570
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 9,
+              "first_step": 280915,
+              "last_step": 330890
+            }
+          ]
+        },
+        {
+          "offset": 16995,
+          "runtime_pc": 25699,
+          "bytes": "21F2A8",
+          "decoded": "LXI H,A8F2H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 3,
+              "first_step": 386858,
+              "last_step": 523576
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 9,
+              "first_step": 280921,
+              "last_step": 330896
+            }
+          ]
+        },
+        {
+          "offset": 16998,
+          "runtime_pc": 25702,
+          "bytes": "BE",
+          "decoded": "CMP M",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 3,
+              "first_step": 386859,
+              "last_step": 523577
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 9,
+              "first_step": 280922,
+              "last_step": 330897
+            }
+          ]
+        },
+        {
+          "offset": 16999,
+          "runtime_pc": 25703,
+          "bytes": "C26B64",
+          "decoded": "JNZ 646BH",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 3,
+              "first_step": 386860,
+              "last_step": 523578
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 9,
+              "first_step": 280923,
+              "last_step": 330898
+            }
+          ]
+        },
+        {
+          "offset": 17002,
+          "runtime_pc": 25706,
+          "bytes": "C9",
+          "decoded": "RET",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 3,
+              "first_step": 386861,
+              "last_step": 523579
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 7,
+              "first_step": 280924,
+              "last_step": 330899
+            }
+          ]
+        },
+        {
+          "offset": 17003,
+          "runtime_pc": 25707,
+          "bytes": "C35364",
+          "decoded": "JMP 6453H",
+          "runs": [
+            {
+              "run": "PICTURE",
+              "execution_count": 2,
+              "first_step": 292635,
+              "last_step": 324861
+            }
+          ]
+        },
+        {
+          "offset": 17006,
+          "runtime_pc": 25710,
+          "bytes": "210000",
+          "decoded": "LXI H,0000H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 6,
+              "first_step": 345131,
+              "last_step": 605202
+            }
+          ]
+        },
+        {
+          "offset": 17009,
+          "runtime_pc": 25713,
+          "bytes": "2263A8",
+          "decoded": "SHLD A863H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 6,
+              "first_step": 345132,
+              "last_step": 605203
+            }
+          ]
+        },
+        {
+          "offset": 17012,
+          "runtime_pc": 25716,
+          "bytes": "C9",
+          "decoded": "RET",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 6,
+              "first_step": 345133,
+              "last_step": 605204
+            }
+          ]
+        }
+      ],
+      "observed_callers": [
+        {
+          "run": "FIZZBUZ",
+          "image": "PLI1.OVL",
+          "offset": 15340,
+          "bytes": "CD4F64",
+          "execution_count": 9,
+          "first_step": 345107
+        },
+        {
+          "run": "PICTURE",
+          "image": "PLI1.OVL",
+          "offset": 15340,
+          "bytes": "CD4F64",
+          "execution_count": 4,
+          "first_step": 280891
+        },
+        {
+          "run": "PICTURE",
+          "image": "PLI1.OVL",
+          "offset": 19001,
+          "bytes": "CD4F64",
+          "execution_count": 3,
+          "first_step": 324696
+        }
+      ],
+      "observed_return_offsets": [
+        17002,
+        17012
+      ],
+      "matched_return_sample": {
+        "relation": "OBSERVED corrected original CALL word/RET ancestry",
+        "call": {
+          "step_index": 345107,
+          "pc": 24044,
+          "pc_after": 25679,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI1.OVL",
+              "identity": "0:0:PLI1.OVL"
+            },
+            "offset": 15340
+          },
+          "target_origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI1.OVL",
+              "identity": "0:0:PLI1.OVL"
+            },
+            "offset": 16975
+          },
+          "runtime_pc": 24044,
+          "bytes": "CD4F64",
+          "disassembly": "CALL 644FH",
+          "source": "memory",
+          "before": {
+            "a": 0,
+            "b": 0,
+            "c": 0,
+            "d": 166,
+            "e": 224,
+            "h": 251,
+            "l": 243,
+            "sp": 65493,
+            "pc": 24044,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 0,
+            "b": 0,
+            "c": 0,
+            "d": 166,
+            "e": 224,
+            "h": 251,
+            "l": 243,
+            "sp": 65491,
+            "pc": 25679,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "sp_before": 65493,
+          "sp_after": 65491,
+          "call_return_address": 24047,
+          "reads": [],
+          "writes": [
+            {
+              "address": 65492,
+              "old_value": null,
+              "new_value": 93
+            },
+            {
+              "address": 65491,
+              "old_value": null,
+              "new_value": 239
+            }
+          ],
+          "control": {
+            "kind": "call",
+            "target": 25679,
+            "taken": true
+          }
+        },
+        "ret": {
+          "step_index": 345133,
+          "pc": 25716,
+          "pc_after": 24047,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI1.OVL",
+              "identity": "0:0:PLI1.OVL"
+            },
+            "offset": 17012
+          },
+          "target_origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI1.OVL",
+              "identity": "0:0:PLI1.OVL"
+            },
+            "offset": 15343
+          },
+          "runtime_pc": 25716,
+          "bytes": "C9",
+          "disassembly": "RET",
+          "source": "memory",
+          "before": {
+            "a": 0,
+            "b": 0,
+            "c": 0,
+            "d": 168,
+            "e": 98,
+            "h": 0,
+            "l": 0,
+            "sp": 65491,
+            "pc": 25716,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 0,
+            "b": 0,
+            "c": 0,
+            "d": 168,
+            "e": 98,
+            "h": 0,
+            "l": 0,
+            "sp": 65493,
+            "pc": 24047,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "sp_before": 65491,
+          "sp_after": 65493,
+          "call_return_address": null,
+          "reads": [
+            {
+              "address": 65491,
+              "value": 239
+            },
+            {
+              "address": 65492,
+              "value": 93
+            }
+          ],
+          "writes": [],
+          "control": {
+            "kind": "return",
+            "target": 24047,
+            "taken": true
+          }
+        }
+      },
+      "behavioral_contract": "Complete local graph: saveinputC atA8F2. Each iteration invokescomplete4241 BEFORE comparison; XCHG putsnextpointer inDE; complete83A3(nextpointer,word[A861]) producesunsignedborrow. Ifnext>=limit, clearA863/A864lowthenhigh andreturnHL0, preserving subtractionA/flags andBCentry, DE=A862. Otherwisecomplete421F freshlyreadsfield+1 AND E0; CMPfreshbyte[A8F2]; mismatchrepeats, equalityRET426A withA=wanted, HL=A8F2, DE=A862, BCentry andCMPflags. No iterationlimit/cycleexit invented; conditionallyterminating historicalscan. Naturalbothunsignedoutcomes, matchandmismatch dynamicallyobserved. All38bytesrepresented. Code/stack/scratch/readcarriers/selectedrecord noninterference inherited fromcompletechildren; no tablecapacity/ownership theorem."
     }
   ]
 }

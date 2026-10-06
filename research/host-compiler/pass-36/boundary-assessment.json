@@ -1,0 +1,82 @@
+{
+  "native_implementation_added": false,
+  "native_ready_complete_leaves": [
+    "PLI1.OVL+4241",
+    "PLI1.OVL+424F"
+  ],
+  "bounded_native_ready": [
+    "PLI1.OVL+3963 field!=70 with represented classifier routes",
+    "PLI1.OVL+429D represented 15/30/fallback routes",
+    "PLI1.OVL+3A76 initial_low3!=2, represented classifier/bound/bit7-clear/zero-tail routes"
+  ],
+  "C0_3C8A": {
+    "reproducible": true,
+    "native_ready_at_demonstrated_scope": true,
+    "requires": "All bounded child predicates and noninterference scopes; inherited six-byte frame preserved; positive-input RAW body excluded",
+    "global_catalog_status_unchanged": true
+  },
+  "common_gate_3DD9": {
+    "native_ready": false,
+    "remaining": "Required +239A -> +2355 -> +21AD/+230E classifier scope remains partial; no constant-return replacement"
+  },
+  "parent_5E98": {
+    "native_ready": false,
+    "remaining": [
+      "+4601 cleanup",
+      "+506E/+500F with substantial +4F54/+4CD4",
+      "+784E resident acquisition scope",
+      "+3DD9 classifier dependency"
+    ]
+  },
+  "ranked_route_A_obligations": [
+    {
+      "rank": 1,
+      "target": "+506E/+500F",
+      "causal_leverage": "Three FIZZBUZ windows, indirect +6223 reentry under +4F54; largest remaining substantial subtree",
+      "expected_cost": "High: private frame and substantial delegated acquisition/transformation children",
+      "next_action": "Dedicated bounded subtree investigation after the smaller gates"
+    },
+    {
+      "rank": 2,
+      "target": "+4601",
+      "causal_leverage": "Required field15 cleanup: FIZZBUZ5 / PICTURE2",
+      "expected_cost": "Low at witnessed route: 31 retained nested witnesses per sample, direct +4227/+428E; inspect all routes before declaring complete",
+      "next_action": "Combine with the bounded classifier gate in Pass37"
+    },
+    {
+      "rank": 3,
+      "target": "+784E",
+      "causal_leverage": "FIZZBUZ20 / PICTURE2 calls inside retained +5E98 windows; required input acquisition",
+      "expected_cost": "Medium/high: partial resident +1376 plus counted buffer/EOF/refill state",
+      "next_action": "Retain bounded delegation; close the actual acquisition interface separately"
+    }
+  ],
+  "recommendation": "Pass37: combine +4601 cleanup and the +239A/+2355 classifier scope needed by +3DD9, following small mechanical leaves in-pass. Stop at substantial +21AD/+230E children if their needed laws cannot be locally closed. Do not migrate +5E98/+61A4/+620C until all required children are reproducible.",
+  "native_ready_61A4_620C": false,
+  "historical_instruction_occurrences": {
+    "MINIMAL": 0,
+    "FIZZBUZ": 2772,
+    "PICTURE": 1268
+  },
+  "selected_total": 4040,
+  "semantic_interpretation": "Machine-level pointer advance/search and field masks only",
+  "new_understood_bytes": 297,
+  "work_packet_bytes": 159994,
+  "model_facing_evidence": "Filtered coordinate/route/ABI summaries; the entire packet and raw captures were not printed into context",
+  "new_oracle_queries": 0,
+  "archaeology_corrections": [],
+  "pragmatic_divergences": [],
+  "fidelity_debt": [],
+  "classifier_dependency_sizes": {
+    "21AD": 39,
+    "2355": 68,
+    "230E": 64,
+    "239A": 6
+  },
+  "maximum_observed_stack_write_depth_bytes": {
+    "MINIMAL": 0,
+    "FIZZBUZ": 16,
+    "PICTURE": 16
+  },
+  "parent_contract_scope_refined": "3C8A points to the new bounded child contract; completeness unchanged"
+}
