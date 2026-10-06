@@ -177,7 +177,9 @@ class MinimalPassTenTests(unittest.TestCase):
         self.assertEqual(len(iv['local_steps']),351)
         self.assertEqual([c['return_convention']['resumed_coordinate'] for c in p['calls'].values() if c['target']=='PLI1.OVL+6708'],['PLI1.OVL+2988','PLI1.OVL+2AB7'])
         manifest=load(ROOT/'research/annotated-assembly/manifest.json');image=next(i for i in manifest['images'] if i['name']=='PLI1.OVL')
-        for a,b in [(0x45E1,0x45E6),(0x45E9,0x45F0)]:
+        # Pass34 observes only the floor RET; retry/mismatch bodies remain RAW.
+        self.assertEqual(status_at(image,0x45EF),'UNDERSTOOD')
+        for a,b in [(0x45E1,0x45E6),(0x45E9,0x45EF)]:
             self.assertTrue(all(status_at(image,o)=='RAW' for o in range(a,b)))
         rows=[json.loads(s) for s in (ROOT/'research/minimal-baseline/instructions.jsonl').read_text().splitlines()]
         dynamic=calculate(manifest,rows)
