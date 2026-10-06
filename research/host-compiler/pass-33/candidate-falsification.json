@@ -1,0 +1,99 @@
+{
+  "state_selection": "machine byte/register/memory law; no corpus/step/hash selection",
+  "historical_binary_query_cases": 32768,
+  "natural_cases_independent": true,
+  "oracle": "immutable PLI1.OVL bytes executed by existing concrete I8080; no historical code patch or PL/I fixture",
+  "oracle_test": "test/archaeology_60e5_leaves.ml",
+  "candidates": [
+    {
+      "entry": "PLI1.OVL+5E65",
+      "accepted": "A942=C; read/discard A943; select word[u16(word[A6CB]+2*C)]; publish low/high A863; A/BC/NZPA retained; DE=high-byte address; CY=address overflow",
+      "natural_counts": {
+        "MINIMAL": 0,
+        "FIZZBUZ": 29,
+        "PICTURE": 8
+      },
+      "binary_queries": 16384,
+      "query_domain": "256 indices x32 flag states x2 bases including overflow; varying A/B and adjacent discarded byte",
+      "rejected": [
+        {
+          "law": "offset=C instead of2*C",
+          "counterexample": "C1, distinct words at base+1 andbase+2"
+        },
+        {
+          "law": "BC=2*C",
+          "counterexample": "C1,B=5E returnsBC5E01, not0002"
+        },
+        {
+          "law": "CY always0",
+          "counterexample": "baseFF00,C80 selects0000 andreturnsCY1"
+        },
+        {
+          "law": "adjacent A943 participates in addressing",
+          "counterexample": "actual MVI H0 discards it; independent historical reads retained"
+        }
+      ]
+    },
+    {
+      "entry": "PLI1.OVL+5E48",
+      "accepted": "fresh pointer+3 field bit6 ->FF/00 via ANI40,SUI40,SUI1,SBB; flags from second-borrow expansion",
+      "natural_counts": {
+        "MINIMAL": 0,
+        "FIZZBUZ": 5,
+        "PICTURE": 2
+      },
+      "binary_queries": 8192,
+      "query_domain": "all256 field bytes x32 incoming flag states",
+      "rejected": [
+        {
+          "law": "bit7 mask",
+          "counterexample": "field40 returnsFF andfield80 returns00"
+        },
+        {
+          "law": "A0 has zero flags on caller5E53 return",
+          "counterexample": "literal0 retains S1/Z0 from prior mask arithmetic andRAR"
+        }
+      ]
+    },
+    {
+      "entry": "PLI1.OVL+81F1",
+      "accepted": "exact unsigned byte countdown; fresh AE32/end publication; native-known7BA2 shared-memory recycling; fresh AE32 decrement; finalCMP0,0",
+      "natural_counts": {
+        "MINIMAL": 0,
+        "FIZZBUZ": 4,
+        "PICTURE": 0
+      },
+      "binary_queries": 8192,
+      "query_domain": "all256 counters x32 entry flag states; legal j200 shared table state, destinationAB7C disjoint fromposition map; cursorwrap exercised",
+      "rejected": [
+        {
+          "law": "counter interpreted as one Boolean repetition",
+          "counterexample": "counter2 produces two child calls andtwo position decrements"
+        },
+        {
+          "law": "reset flags from returned data or preserve entry flags",
+          "counterexample": "all32 entryflags overwritten by finalCMP0,0"
+        }
+      ]
+    },
+    {
+      "entry": "PLI1.OVL+60E5",
+      "accepted": "same local route for returned0/1; fresh savedF1 from direct5E98 result",
+      "rejected": [
+        {
+          "law": "last field comparison produces returnedBoolean",
+          "counterexample": "allten return throughsame localbranches; flag/A channels differ"
+        },
+        {
+          "law": "initial pointer-base predicts return",
+          "counterexample": "oldbaseA66A/index0 occurs withbothreturned0and1; nestedpoststate distinguishes"
+        }
+      ]
+    },
+    {
+      "entry": "PLI1.OVL+5E98",
+      "accepted": "bounded observed field15 scan/cleanup versusfield80 two-predicate/506E composition; full acquisition delegated",
+      "not_established": "field alone is not a sufficient entry-state contract; producer/child results/aliases/termination remain required"
+    }
+  ]
+}

@@ -91,7 +91,8 @@ class PassThirtyTwoTests(unittest.TestCase):
   for a,b in [(0x01f7,0x020e),(0x5971,0x59db),(0x59e3,0x59f1),(0x59f9,0x5a0c),(0x5a14,0x5a20),(0x5a42,0x5a45)]:
    self.assertTrue(all(x['status']=='RAW'for x in im['sections']if x['start_offset']<b and x['end_offset']>a))
   for key,p in load(REPORT/'after.json').items():
-   self.assertEqual(p,self.catalog[key]);union={w['origin']['offset']+i for rs in self.rows.values()for r in rs[key]for w in r['own_witnesses']for i in range(len(bytes.fromhex(w['bytes'])))}
+   prior33=load(ROOT/'research/host-compiler/pass-33/before.json')
+   self.assertEqual(p,prior33.get(key,self.catalog[key]));union={w['origin']['offset']+i for rs in self.rows.values()for r in rs[key]for w in r['own_witnesses']for i in range(len(bytes.fromhex(w['bytes'])))}
    self.assertEqual(len(union),p['observed_paths']['represented_bytes']);self.assertEqual(p['completeness']['contract'],'partial')
   self.assertEqual(self.catalog['PLI1.OVL+6223']['completeness'],dict(bounds='stable',control_flow='complete',contract='partial'))
  def test_stack_ancestry_and_per_invocation_final_writers(self):

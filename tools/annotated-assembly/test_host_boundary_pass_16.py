@@ -98,6 +98,8 @@ class HostBoundaryPassSixteenTests(unittest.TestCase):
         # audit still compares its original catalog membership.
         prior32=load(ROOT/'research/host-compiler/pass-32/before.json')
         added32={k for k,v in prior32.items()if v is None}
+        prior33=load(ROOT/'research/host-compiler/pass-33/before.json')
+        added32|={k for k,v in prior33.items()if v is None}
         self.assertEqual({p['entry'] for p in audit['established']},{k for k in actual if k in self.catalog and k not in set(later['new_entries'])|added32})
         for p in audit['established']:
             self.assertEqual(p['FIZZBUZ_calls'],actual[p['entry']]['count'])
