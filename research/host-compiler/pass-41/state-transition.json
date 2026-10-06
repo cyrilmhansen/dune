@@ -1,0 +1,51 @@
+{
+  "required_parent_windows": 23,
+  "required_resident_routes": {
+    "selector01_zero_word": 4,
+    "selector0A_single_byte": 19
+  },
+  "required_reader_refills": 0,
+  "reader_algorithm": "Immediate counted reads: fresh index<count; increment index before buffer read; caller records raw following context then invokes complete0817 from paired context/previous carrier. Prefix append precedes following read; retained context is independent of accumulated prefix.",
+  "prefix_algorithm": "1627 writes current context to20C6+width; increments20C5; fresh context plus accumulator, ANI0F. No prefix clearing.",
+  "termination": "Selector0A required single-byte finish after false previous-dot/following-digit conjunction. Selector01 fresh15F9 bit terminates accumulation, fresh accumulator selects zero word. Descriptor traversal decrements count and reverse index; fresh width+1 advances pointer before match test.",
+  "carry_algorithm": "u8(selector-k)+FF overflows iff selector!=k; SBB A produces inequality mask from that exact CY, independently fork=0A and01.",
+  "return_states": {
+    "selector01_zero_word": {
+      "registers": {
+        "a": 180,
+        "b": 0,
+        "c": 0,
+        "d": 152,
+        "e": 14,
+        "h": 152,
+        "l": 14
+      },
+      "flags": {
+        "sign": false,
+        "zero": true,
+        "auxiliary_carry": true,
+        "parity": true,
+        "carry": false
+      }
+    },
+    "selector0A_single_byte": {
+      "registers": {
+        "a": 41,
+        "b": 0,
+        "c": 0,
+        "d": 251,
+        "e": 208,
+        "h": 32,
+        "l": 143
+      },
+      "flags": {
+        "sign": true,
+        "zero": false,
+        "auxiliary_carry": false,
+        "parity": false,
+        "carry": true
+      }
+    }
+  },
+  "stack": "Every CALL/PUSH actual source derives ordered stack byte writes; last-writer projection and chronology retained in full proof. No copied post-state residue or invented frame."
+}

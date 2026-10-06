@@ -1,0 +1,274 @@
+{
+  "validation_tier": "incremental",
+  "full_checkpoint_base": "22c38cf8d83b61e602523c48aacf5147a69835ba",
+  "all_passed": true,
+  "categories": {
+    "exact-reconstruction": {
+      "command": [
+        "python",
+        "tools/annotated-assembly/verify.py",
+        "--images",
+        "/home/john/pli/cpm/pli80/DISK1",
+        "--write-progress"
+      ],
+      "return_code": 0,
+      "elapsed_seconds": 11.559,
+      "tests": null,
+      "log": "_build/host-compiler-pass-41/validation/exact-reconstruction.log"
+    },
+    "dynamic-progress": {
+      "command": [
+        "python",
+        "tools/annotated-assembly/minimal_dynamic_progress.py",
+        "--output",
+        "research/minimal-baseline/dynamic-progress.json"
+      ],
+      "return_code": 0,
+      "elapsed_seconds": 0.067,
+      "tests": null,
+      "log": "_build/host-compiler-pass-41/validation/dynamic-progress.log"
+    },
+    "dune-build": {
+      "command": [
+        "dune",
+        "build",
+        "@all",
+        "-j",
+        "4"
+      ],
+      "return_code": 0,
+      "elapsed_seconds": 0.501,
+      "tests": null,
+      "log": "_build/host-compiler-pass-41/validation/dune-build.log"
+    },
+    "dune-project": {
+      "command": [
+        "dune",
+        "runtest",
+        "-j",
+        "4"
+      ],
+      "return_code": 0,
+      "elapsed_seconds": 0.262,
+      "tests": null,
+      "log": "_build/host-compiler-pass-41/validation/dune-project.log"
+    },
+    "pass41": {
+      "command": [
+        "python",
+        "tools/annotated-assembly/test_acquisition_pass_41.py",
+        "--images",
+        "/home/john/pli/cpm/pli80/DISK1"
+      ],
+      "return_code": 0,
+      "elapsed_seconds": 55.345,
+      "tests": 16,
+      "log": "_build/host-compiler-pass-41/validation/pass41.log"
+    },
+    "minimal-pass5": {
+      "command": [
+        "python",
+        "tools/annotated-assembly/test_minimal_pass_5.py",
+        "--images",
+        "/home/john/pli/cpm/pli80/DISK1"
+      ],
+      "return_code": 0,
+      "elapsed_seconds": 64.254,
+      "tests": 8,
+      "log": "_build/host-compiler-pass-41/validation/minimal-pass5.log"
+    },
+    "minimal-pass6": {
+      "command": [
+        "python",
+        "tools/annotated-assembly/test_minimal_pass_6.py",
+        "--images",
+        "/home/john/pli/cpm/pli80/DISK1"
+      ],
+      "return_code": 0,
+      "elapsed_seconds": 112.18,
+      "tests": 8,
+      "log": "_build/host-compiler-pass-41/validation/minimal-pass6.log"
+    },
+    "pass32-ancestry": {
+      "command": [
+        "python",
+        "tools/annotated-assembly/test_6223_pass_32.py",
+        "--images",
+        "/home/john/pli/cpm/pli80/DISK1"
+      ],
+      "return_code": 0,
+      "elapsed_seconds": 67.05,
+      "tests": 10,
+      "log": "_build/host-compiler-pass-41/validation/pass32-ancestry.log"
+    },
+    "V1": {
+      "command": [
+        "python",
+        "tools/annotated-assembly/test_decompilation_annotations.py"
+      ],
+      "return_code": 0,
+      "elapsed_seconds": 19.915,
+      "tests": 9,
+      "log": "_build/host-compiler-pass-41/validation/V1.log"
+    },
+    "pass33-ancestry": {
+      "command": [
+        "python",
+        "tools/annotated-assembly/test_60e5_pass_33.py",
+        "--images",
+        "/home/john/pli/cpm/pli80/DISK1"
+      ],
+      "return_code": 0,
+      "elapsed_seconds": 101.981,
+      "tests": 12,
+      "log": "_build/host-compiler-pass-41/validation/pass33-ancestry.log"
+    },
+    "final-catalog-scope": {
+      "command": [
+        "python",
+        "tools/annotated-assembly/test_acquisition_pass_41.py",
+        "--images",
+        "/home/john/pli/cpm/pli80/DISK1",
+        "PassFortyOneTests.test_only_documented_catalog_entries_changed",
+        "PassFortyOneTests.test_compact_packet_regenerates_exactly",
+        "PassFortyOneTests.test_existing_scopes_remain_partial_and_RAW"
+      ],
+      "return_code": 0,
+      "elapsed_seconds": 42.032,
+      "tests": 3,
+      "log": "_build/host-compiler-pass-41/validation/final-catalog-scope.log"
+    },
+    "final-V1": {
+      "command": [
+        "python",
+        "tools/annotated-assembly/test_decompilation_annotations.py"
+      ],
+      "return_code": 0,
+      "elapsed_seconds": 18.458,
+      "tests": 9,
+      "log": "_build/host-compiler-pass-41/validation/final-V1.log"
+    },
+    "final-exact-reconstruction": {
+      "command": [
+        "python",
+        "tools/annotated-assembly/verify.py",
+        "--images",
+        "/home/john/pli/cpm/pli80/DISK1"
+      ],
+      "return_code": 0,
+      "elapsed_seconds": 13.348,
+      "tests": null,
+      "log": "_build/host-compiler-pass-41/validation/final-exact-reconstruction.log"
+    },
+    "diff-check": {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "return_code": 0,
+      "elapsed_seconds": 0.038,
+      "tests": null,
+      "log": "_build/host-compiler-pass-41/validation/diff-check.log"
+    }
+  },
+  "wall_seconds": 178.628,
+  "sum_category_seconds": 506.99,
+  "safe_parallel_workers": 3,
+  "aggregate_final_validation_commands": 2,
+  "python_tests": 75,
+  "exact_historical_bytes": 94720,
+  "checkpoint_triggers": [],
+  "next_full_checkpoint_due": 43,
+  "deferred_categories": [
+    "pass17-native",
+    "native-unit",
+    "pass19-native",
+    "pass20-native",
+    "pass15",
+    "pass18-native",
+    "baseline",
+    "minimal-pass-1",
+    "minimal-pass-2",
+    "minimal-pass-3",
+    "minimal-pass-4",
+    "pass16",
+    "pass14",
+    "minimal-pass-8",
+    "minimal-pass-7",
+    "pass13",
+    "minimal-pass-12",
+    "recursive-unit",
+    "balance-unit",
+    "minimal-pass-11",
+    "minimal-pass-9",
+    "minimal-pass-10",
+    "mapped-unit",
+    "attribute-unit",
+    "emitter-unit",
+    "roundtrip",
+    "roundtrip-tests",
+    "pass23",
+    "native-emitter-unit",
+    "word-emitter-unit",
+    "pass22",
+    "range-unit",
+    "pass24",
+    "publication-unit",
+    "pass21-native",
+    "range-publication-unit",
+    "packet-continuation",
+    "control-unit",
+    "input-unit",
+    "pass25",
+    "gate-unit",
+    "pass26",
+    "pass27",
+    "pass28",
+    "pass29",
+    "historical-leaf-queries",
+    "pass30",
+    "pass34",
+    "pass35",
+    "pass31",
+    "pass36",
+    "pass37",
+    "pass39",
+    "pass38",
+    "pass40"
+  ],
+  "deferred_reason": "Pass40 checkpoint remains valid for unchanged runtime/schema/native/shared-contract inputs; targeted acquisition scopes and affected ancestry only. Historical epoch assertions16/39/40 updated for the new catalog epoch; their full suites remain deferred.",
+  "runtime_changed": false,
+  "schema_changed": false,
+  "native_changed": false,
+  "contract_corrections": [],
+  "divergences": [],
+  "fidelity_debt": [],
+  "oracle_queries": 0,
+  "RAW_to_UNDERSTOOD_bytes": 17,
+  "all_four_images_exact": true,
+  "historical_image_hashes": {
+    "PLI.COM": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+    "PLI0.OVL": "e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff",
+    "PLI1.OVL": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+    "PLI2.OVL": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a"
+  },
+  "aborted_preflight_commands": 1,
+  "preflight_note": "New1616 caller metadata initially used1538; exact verifier rejected it. Corrected to mechanically observed1534 before successful aggregate validation. No existing historical contract correction.",
+  "post_metadata_recheck": "Clarified an inherited global-helper blocker note; narrow catalog/packet/scope tests, V1 and exact reconstruction repeated. No semantic or runtime change.",
+  "final_audit_wall_seconds": 73.86,
+  "targeted_validation_wall_seconds": 252.488,
+  "temporary_files": "No task-owned temporary directories remain. Concurrent atlas-m4-time benchmark directories belong to an independent tools/bench_m4.py process and were left untouched.",
+  "development_tests": {
+    "initial_target": {
+      "tests": 16,
+      "seconds": 38.481,
+      "result": "two tooling failures (JSON list loader and record-order hash); corrected"
+    },
+    "target_after_correction": {
+      "tests": 16,
+      "seconds": 39.095,
+      "result": "passed"
+    }
+  }
+}

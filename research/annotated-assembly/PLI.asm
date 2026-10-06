@@ -1744,7 +1744,8 @@ PLI_1373: DB 043H,014H,0C9H ; +1373 runtime=1473H RAW
 ; Entry: PLI_1376 = PLI.COM+1376 @ 1476H; SHA-256
 ;   c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80
 ; Extent: HYPOTHESIS [1376,15DA) file offsets; overlapping entries: none established
-; Callers: OBSERVED PLI0.OVL+42D4 (MINIMAL=19); PLI1.OVL+784E (MINIMAL=19)
+; Callers: OBSERVED PLI0.OVL+42D4 (FIZZBUZ=86, MINIMAL=19, PICTURE=37); PLI1.OVL+784E (FIZZBUZ=86,
+;   MINIMAL=19, PICTURE=37)
 ; Returns: OBSERVED/DEDUCED ordinary hardware CALL word; original slot unchanged, SP after
 ;   RET=entry_SP+2; PLI.COM+14B5; PLI.COM+15AB; PLI.COM+15D5
 ; Inputs: DEDUCED retained context20C1, EOF2012.bit0/reuse20C4.bit0, counted reader1F06/1F08 and
@@ -1776,10 +1777,12 @@ PLI_1373: DB 043H,014H,0C9H ; +1373 runtime=1473H RAW
 ; Direct callees: OBSERVED PLI.COM+12D9 @13D9H; PLI.COM+15E3 @16E3H; PLI.COM+15DA @16DAH;
 ;   PLI.COM+1627 @1727H; PLI.COM+12AE @13AEH; PLI.COM+0817 @0917H; PLI.COM+15DA
 ;   @16DAH; PLI.COM+15F9 @16F9H; PLI.COM+1A40 @1B40H; PLI.COM+12D9 @13D9H
-; Coverage: OBSERVED MINIMAL: 38 CALLs; 328/612 bytes represented as instructions; 38 calls:19
-;   PLI0+42D4 and19 PLI1+784E; each ordered stream has9 selector1,9 selector0A,1
-;   selector5;128 appends,130 direct reader calls,28 adapter reads including2 extra reads;
-;   no recursion/frame.
+; Coverage: OBSERVED FIZZBUZ: 172 CALLs; MINIMAL: 38 CALLs; PICTURE: 74 CALLs; 328/612 bytes
+;   represented as instructions; 38 calls:19 PLI0+42D4 and19 PLI1+784E; each ordered
+;   stream has9 selector1,9 selector0A,1 selector5;128 appends,130 direct reader calls,28
+;   adapter reads including2 extra reads; no recursion/frame. Pass41 accumulated
+;   MINIMAL/FIZZBUZ/PICTURE inventory; required parent correlations retained
+;   independently.
 ; Unresolved: partial helper scope: +12AE/+0D40 refill tab/high-bit/capacity paths and +1627
 ;   overflow path; +15F9 range30..39 return arm RAW. / unobserved branch: EOF/reuse
 ;   entry arms, selector2/3/4 handling, selected-word nonzero handling, previous2E/range
@@ -1787,21 +1790,24 @@ PLI_1373: DB 043H,014H,0C9H ; +1373 runtime=1473H RAW
 ;   general provenance need: reader initialization, pointer-table word producers and
 ;   earlier context; host effects are not joined by V0.1. / arbitrary termination
 ;   concern: whitespace/acquisition retries depend on reader state/input; no
-;   arbitrary-input termination proof.
+;   arbitrary-input termination proof. / Pass41 required selector01/0A acquisition
+;   closed; global unexecuted rewrite/EOF/reuse/refill/other selector alternatives
+;   remain partial, not required causal blockers.
 ; Contract: DEDUCED (partial; scope: MINIMAL observed clear EOF2012/reuse20C4 bit0 paths;
 ;   selector1 with selected word zero, selector0A with previous2E/range predicate false,
 ;   selector5 plain accumulation and extra-read bytes not42/27; inherited partial
-;   reader/refill/append scopes; nonaliasing prefix/scratch/table/stack) Clear
-;   bytes2088/2087. On all38 observed entries EOF2012.bit0=0 and reuse20C4.bit0=0: clear
-;   modulo16 accumulator1C58, width20C5 and selector20C3. While selector==0, context20C1
-;   equal00 or20 triggers +12D9 (counted-reader +12AE then conditional mask0817) and
-;   replacement of context; otherwise +15E3.A.bit0 chooses selector1; observed false +15DA
-;   excludes30..39, context27 clears context and selects5, other observed bytes select0A.
-;   Once selector!=0, iterate: if context!=0, partial +1627 appends it to20C6+width,
-;   increments width, updates sum mod16. Save context to20C2; +12AE supplies fresh
-;   context. Unless selector==5, mask fresh context through0817. Selector0A tests
-;   previous-byte2E AND range30..39 mask; observed false then returns via15D5 (one
-;   appended byte). Selector1 calls15F9: CMA/RAR/JNC repeats iff original
+;   reader/refill/append scopes; nonaliasing prefix/scratch/table/stack; Pass41 closes
+;   required non-refill selector01/0A scopes, independently of unexecuted/refill
+;   alternatives.) Clear bytes2088/2087. On all38 observed entries EOF2012.bit0=0 and
+;   reuse20C4.bit0=0: clear modulo16 accumulator1C58, width20C5 and selector20C3. While
+;   selector==0, context20C1 equal00 or20 triggers +12D9 (counted-reader +12AE then
+;   conditional mask0817) and replacement of context; otherwise +15E3.A.bit0 chooses
+;   selector1; observed false +15DA excludes30..39, context27 clears context and selects5,
+;   other observed bytes select0A. Once selector!=0, iterate: if context!=0, partial +1627
+;   appends it to20C6+width, increments width, updates sum mod16. Save context to20C2;
+;   +12AE supplies fresh context. Unless selector==5, mask fresh context through0817.
+;   Selector0A tests previous-byte2E AND range30..39 mask; observed false then returns
+;   via15D5 (one appended byte). Selector1 calls15F9: CMA/RAR/JNC repeats iff original
 ;   returnedA.bit0==1; observed false selects word[1C38+2*accumulator], copies it to1C59
 ;   and subtracts0 via complete1A40; ORA L/JZ returns iff selected word==0 (18/18).
 ;   Selector5 does not apply mask: context!=1A, context!=27 and context!=5E repeat on
@@ -1813,10 +1819,28 @@ PLI_1373: DB 043H,014H,0C9H ; +1373 runtime=1473H RAW
 ;   overwritten before meaningful use on these paths; input dependence is durable
 ;   reader/context state. No direct BDOS call; buffer refill is delegated to existing
 ;   partial reader/build contracts; guest-only packet does not establish all host effects.
+;   Pass41 bounded required scope (23 independently correlated +784E calls): EOF2012.bit0
+;   and reuse20C4.bit0 clear; every counted read has freshindex1F06<count1F08, so no
+;   refill/host effects. Clear2088 then2087, accumulator1C58, width20C5 and selector20C3.
+;   Fresh zero/space context20C1 repeatedly calls12D9 then publishes its transformed byte.
+;   Complete15E3 selects01 for41..5A or3F; required remaining contexts are nondigit and
+;   not27, selecting0A. Each iteration calls bounded1627 before reading the following
+;   byte: prefix[20C6+oldwidth]=freshcontext, width increment,
+;   accumulator=(oldacc+freshcontext)&0F. Save fresh oldcontext20C2; immediate12AE
+;   increments the live reader index before returning the rawfollowing byte; publish
+;   raw20C1, independently paired-read20C1/20C2 lowC through0817, republish masked20C1.
+;   Selector0A required previous-dot/following-digit conjunction is false and returns
+;   at15D5, A=0A,BC=0,HL=208F,DEpreserved,flagsCPI(0A,05). Selector01 uses15F9
+;   actualA.bit0 viaCMA/RAR; continuation repeats. On termination freshaccumulator selects
+;   low/high word[1C38+2*acc], published1C59/1C5A; required selectedword0 yields
+;   A0,BC1C38,DE1C5A,HL0,flagsS0Z1AC0P1CY0 after subtract0/ORA. Following context remains
+;   physically stored separately from prefix. No buffer clear, arbitrary-input
+;   termination, refill, quoted, nonzero selectedword or wider selector claim.
 ; Hypothesis: none beyond the low-level operational description
 ; Completeness: bounds=provisional; control_flow=partial; contract=partial
 ; Evidence: evidence.json#seeds/PLI.COM+1376;
-;   ../minimal-baseline/pass-5/structural.json#PLI.COM+1376
+;   ../minimal-baseline/pass-5/structural.json#PLI.COM+1376;
+;   ../host-compiler/pass-41/README.md; ../host-compiler/pass-41/work-packet.json
 ; Procedure pseudo (operational; byte/word arithmetic wraps):
 ;   scope EOF.bit0=0,reuse.bit0=0: word[2087]=0; width=0; sum=0; selector=0; while selector==0 {
 ;   if context in {00,20}: context=read_mask12D9(); else if predicate15E3(context).bit0:
@@ -1933,6 +1957,12 @@ PLI_1406: JMP 14A5H ; if always: PC=14A5H; flags preserved ; +1406 runtime=1506H
 PLI_1409: LDA 20C1H ; A = byte[pattern_context (20C1H)]; flags preserved ; +1409 runtime=1509H OBSERVED
 PLI_140C: CPI 00H ; flags = unsigned byte comparison A-00H; A unchanged ; +140C runtime=150CH OBSERVED
 PLI_140E: JZ 1514H ; if Z=1: PC=1514H; flags preserved ; +140E runtime=150EH OBSERVED
+; @block-pseudo 1411
+; pseudo:
+; | required selector01/0A: append current context before counted following read
+; | publish raw following then independent0817 transform
+; | selector01: actual continuation bit; terminate at fresh zero selectedword
+; | selector0A: dot/digit conjunction false; retain following context
 PLI_1411: CALL 1727H ; push following PC; invoke PLI.COM+1627; established partial contract at declared scope ; +1411 runtime=1511H OBSERVED
 ; @block-pseudo 1414
 ; pseudo:
@@ -2275,9 +2305,63 @@ PLI_1610: SUI 5FH ; A=u8(A-5FH); arithmetic flags including CY=borrow ; +1610 ru
 PLI_1612: SUI 01H ; A=u8(A-01H); arithmetic flags including CY=borrow ; +1612 runtime=1712H OBSERVED
 PLI_1614: SBB A ; A=CY?FFH:00H; self-subtraction cancels old A; CY is retained Boolean borrow ; +1614 runtime=1714H OBSERVED
 PLI_1615: RET ; consume original hardware return word at entry SP; SP=entry_SP+2; flags preserved ; +1615 runtime=1715H OBSERVED
-; SECTION [1616,1627) RAW
-PLI_1616: DB 021H,049H,021H,071H,02AH,049H,021H,04DH,0CDH,017H,009H,0D6H,045H ; +1616 runtime=1716H RAW
-PLI_1623: DB 0D6H,001H,09FH,0C9H ; +1623 runtime=1723H RAW
+
+; @procedure-v1 PLI.COM+1616
+; ProcedureHypothesis: Saved-byte conditional mask / equality45 borrow mask
+; Entry: PLI_1616 = PLI.COM+1616 @ 1716H; SHA-256
+;   c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80
+; Extent: HYPOTHESIS [1616,1627) file offsets; overlapping entries: none established
+; Callers: OBSERVED PLI.COM+1534 (FIZZBUZ=20, PICTURE=4)
+; Returns: OBSERVED/DEDUCED ordinary hardware CALL word; SP=entrySP+2; RET after exact selfSBB
+;   flags
+; Inputs: DEDUCED C; neighboring214A genuinely read then discarded; complete0817 scope.
+;   Code,2149/214A,208F and active return/save stack cells nonaliasing.
+; Outputs: DEDUCED A equality mask,BC/DE preserved,HL208F; exact final selfSBB flags;
+;   SP=entrySP+2, original CALL continuation.
+; Clobbers: DEDUCED A,HL,flags;2149 and child208F; proven CALL continuation residue.
+; Memory: DEDUCED Scratch2149 low position;214A read and discarded; child scratch208F
+;   independently published.
+; Direct callees: OBSERVED PLI.COM+0817 @0917H
+; Coverage: OBSERVED FIZZBUZ: 20 CALLs; MINIMAL: 0 CALLs; PICTURE: 4 CALLs; 17/17 bytes
+;   represented as instructions; 24 natural calls; masked!=45 observed. Equality45
+;   statically complete, unobserved dynamically.
+; Unresolved: Equality45 outcome STATIC / UNOBSERVED; exact instructions establish it without an
+;   oracle sweep. Input ownership/capacity/source-language meaning unestablished.
+; Contract: DEDUCED (complete; scope: Exact complete local arithmetic and complete0817 composition
+;   with scratch/code/read/stack noninterference.) Save inputC at2149; genuinely read
+;   little-endian2149/214A; use onlylowC and call complete0817. Let m=(C>5F)?(C AND5F):C.
+;   SUI45;SUI01;selfSBBA givesA=FF iff m==45 else00. BC andDE preserved,HL208F; flags from
+;   finalselfSBB: FF gives S1Z0AC0P1CY1;00 gives S0Z1AC1P1CY0. Own scratch2149 and
+;   child208F remain distinct. Original outer CALL word consumed; below-entry word comes
+;   from CALL0817 continuation1721, not an invented callee-save slot. Complete at
+;   nonaliasing code/scratch/read/save scope; no semantic interpretation of45.
+; Hypothesis: none beyond the low-level operational description
+; Completeness: bounds=stable; control_flow=complete; contract=complete
+; Evidence: evidence.json#seeds/PLI.COM+1616; ../host-compiler/pass-41/README.md;
+;   ../host-compiler/pass-41/candidate-falsification.json
+; Procedure pseudo (operational; byte/word arithmetic wraps):
+;   Save inputC at2149; genuinely read little-endian2149/214A; use onlylowC and call complete0817.
+;   Let m=(C>5F)?(C AND5F):C. SUI45;SUI01;selfSBBA givesA=FF iff m==45 else00. BC andDE
+;   preserved,HL208F; flags from finalselfSBB: FF gives S1Z0AC0P1CY1;00 gives S0Z1AC1P1CY0. Own
+;   scratch2149 and child208F remain distinct. Original outer CALL word consumed; below-entry word
+;   comes from CALL0817 continuation1721, not an invented callee-save slot. Complete at
+;   nonaliasing code/scratch/read/save scope; no semantic interpretation of45.
+; @end-procedure-v1 PLI.COM+1616
+; SECTION [1616,1627) UNDERSTOOD
+; @block-pseudo 1616
+; pseudo:
+; | scratch2149=C; paired read2149/214A; low only ->0817
+; | SUI45; SUI01; selfSBB ->equality mask and independent flags
+; | ordinary RET; retain nested CALL0817 residue
+PLI_1616: LXI H,2149H ; HL=2149; flags preserved ; +1616 runtime=1716H OBSERVED
+PLI_1619: MOV M,C ; unconditionally save inputC ; +1619 runtime=1719H OBSERVED
+PLI_161A: LHLD 2149H ; read low2149 then neighboring214A; flags preserved ; +161A runtime=171AH OBSERVED
+PLI_161D: MOV C,L ; C=freshly read low scratch; adjacent high genuinely read but unused ; +161D runtime=171DH OBSERVED
+PLI_161E: CALL 0917H ; CALL complete0817; leave continuation1721 below entrySP ; +161E runtime=171EH OBSERVED
+PLI_1621: SUI 45H ; A=u8(masked_byte-45); exact subtraction flags ; +1621 runtime=1721H OBSERVED
+PLI_1623: SUI 01H ; subtract01; CY iff prior difference00 ; +1623 runtime=1723H OBSERVED
+PLI_1625: SBB A ; selfSBB returns equalityFF/00; exact S/Z/AC/P/CY ; +1625 runtime=1725H OBSERVED
+PLI_1626: RET ; ordinary RET; preserve final arithmetic flags ; +1626 runtime=1726H OBSERVED
 
 ; @procedure-v1 PLI.COM+1627
 ; ProcedureHypothesis: scoped byte-prefix append and modulo16 accumulation

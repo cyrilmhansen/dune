@@ -9653,16 +9653,18 @@
       },
       "observed_paths": {
         "invocations_by_run": {
-          "MINIMAL": 19
+          "MINIMAL": 19,
+          "FIZZBUZ": 86,
+          "PICTURE": 37
         },
         "represented_bytes": 268,
-        "description": "19 matched ordinary invocations; 18 correlated paths: 1 passthrough,9 literal,7 matched scans,2 exhausted scans; 117 descriptor advances,52 equal positive-index comparisons; scoped partial counted acquisition now substituted; caller paths unchanged."
+        "description": "19 matched ordinary invocations; 18 correlated paths: 1 passthrough,9 literal,7 matched scans,2 exhausted scans; 117 descriptor advances,52 equal positive-index comparisons; scoped partial counted acquisition now substituted; caller paths unchanged. Pass41 accumulated MINIMAL/FIZZBUZ/PICTURE inventory; required parent correlations retained independently."
       },
       "unresolved_paths": [
         "unobserved branch: triple-true arm +7875..+78A2, special 21/5C/2A/2D/3C/3E/5E rewrite arms, width>13 early RET (STATIC / UNOBSERVED) remain RAW.",
-        "unresolved producer: V0.1 does not propagate ADI carry into SBB at +78A8/+78B1; inequality polarity independently audited from selected packet states.",
         "general provenance: earlier producers of input/descriptor bytes and complete alias preconditions remain unjoined.",
-        "partial helper scope: +1376 acquisition now establishes consumed-prefix/following-context flow; its RAW branches and partial reader/refill/append paths remain blockers."
+        "Global partial helper alternatives: required non-refill selector01/0A acquisition is closed inPass41. EOF/reuse/refill, quoted/numeric and other unexecuted alternatives remain outside required bounded scope, not causal blockers.",
+        "Pass41 required selector01/0A acquisition closed; global unexecuted rewrite/EOF/reuse/refill/other selector alternatives remain partial, not required causal blockers."
       ],
       "inputs": "Initial state delegated to scoped partial +1376 counted acquisition. Subsequent selector[20C3], context[20C1], width[20C5], bytes at20C6,14 accessed pointer words at9A32 and descriptor bytes; nonaliasing controls/stack.",
       "outputs": "selector[20C3] is a distinct stored result; passthrough leaves it unchanged with A=7F, literal paths return copied byte, matches return byte at advanced pointer, exhaustion stores1 but returns A=0. Scan pointer/count/index updated on selector01 path; ordinary original-slot return.",
@@ -9692,49 +9694,98 @@
         {
           "coordinate": "PLI1.OVL+0118",
           "counts_by_run": {
-            "MINIMAL": 1
+            "MINIMAL": 1,
+            "FIZZBUZ": 1,
+            "PICTURE": 1
           }
         },
         {
           "coordinate": "PLI1.OVL+01BD",
           "counts_by_run": {
-            "MINIMAL": 9
+            "MINIMAL": 9,
+            "FIZZBUZ": 53,
+            "PICTURE": 16
           }
         },
         {
           "coordinate": "PLI1.OVL+01D4",
           "counts_by_run": {
-            "MINIMAL": 1
+            "MINIMAL": 1,
+            "FIZZBUZ": 1,
+            "PICTURE": 1
+          }
+        },
+        {
+          "coordinate": "PLI1.OVL+08C6",
+          "counts_by_run": {
+            "FIZZBUZ": 1,
+            "PICTURE": 1
+          }
+        },
+        {
+          "coordinate": "PLI1.OVL+09DF",
+          "counts_by_run": {
+            "FIZZBUZ": 1,
+            "PICTURE": 2
           }
         },
         {
           "coordinate": "PLI1.OVL+0B13",
           "counts_by_run": {
-            "MINIMAL": 1
+            "MINIMAL": 1,
+            "FIZZBUZ": 1,
+            "PICTURE": 1
           }
         },
         {
           "coordinate": "PLI1.OVL+0C64",
           "counts_by_run": {
-            "MINIMAL": 1
+            "MINIMAL": 1,
+            "FIZZBUZ": 1,
+            "PICTURE": 1
           }
         },
         {
           "coordinate": "PLI1.OVL+0C94",
           "counts_by_run": {
-            "MINIMAL": 1
+            "MINIMAL": 1,
+            "FIZZBUZ": 1,
+            "PICTURE": 1
           }
         },
         {
           "coordinate": "PLI1.OVL+0CCC",
           "counts_by_run": {
-            "MINIMAL": 4
+            "MINIMAL": 4,
+            "FIZZBUZ": 4,
+            "PICTURE": 4
+          }
+        },
+        {
+          "coordinate": "PLI1.OVL+1CA9",
+          "counts_by_run": {
+            "PICTURE": 6
           }
         },
         {
           "coordinate": "PLI1.OVL+5A3C",
           "counts_by_run": {
-            "MINIMAL": 1
+            "MINIMAL": 1,
+            "FIZZBUZ": 11,
+            "PICTURE": 1
+          }
+        },
+        {
+          "coordinate": "PLI1.OVL+5EC0",
+          "counts_by_run": {
+            "FIZZBUZ": 8,
+            "PICTURE": 2
+          }
+        },
+        {
+          "coordinate": "PLI1.OVL+6565",
+          "counts_by_run": {
+            "FIZZBUZ": 3
           }
         }
       ],
@@ -9761,14 +9812,16 @@
         }
       ],
       "overlapping_entries": [],
-      "contract_scope": "MINIMAL own paths after scoped partial +1376 acquisition; triple guard false; selector other/0A/01 paths with special rewrite bytes excluded and width<=13; nonaliasing input/descriptors/controls/stack",
-      "contract": "Call newly scoped resident +1376: at observed clear EOF/reuse gates it consumes counted-buffer bytes, publishes selector20C3/width20C5/prefix20C6 and retains following context20C1. Prefix acquisition uses numeric conditional mask0817 except selector5, and modulo16 accumulator/word probe on selector1; partial refill/RAW acquisition alternatives remain delegated. Then form FF/00 equality masks for selector[20C3]==0A, first input byte[20C6]==2F and context[20C1]==2A, combining all three (no short-circuit reads). RAR/JNC skips RAW handling when the AND is false, as in all nineteen calls. Next SUI k/ADI FF/SBB A produces an inequality mask: +78B8 JNC enters handling iff selector==0A OR selector==01; other selector returns at +78BB with A=7F/CY=1 and unchanged selector. On witnessed selector0A, copy first input byte into selector, test 21/5C/2A/2D/3C/3E/5E; all mismatch and RET +798B, flags from last CPI5E. For selector01, width[20C5]<=13 selects a word at9A32+2*width into scan_pointer[AA16]; first descriptor byte gives remaining[AA18]. While remaining!=0: decrement it, set j[AA19]=width, then always read input[20C6+u8(j-1)] and descriptor[scan_pointer+j]. Continue decrementing j exactly when j!=0 AND these bytes are equal. Even j=0 reads input21C5 and descriptor[scan_pointer] before the guard mask suppresses equality. Advance scan_pointer by width+1 through complete resident +1A1C before testing j. If j==0, publish byte[advanced pointer] to selector and RET +7A0B: seven matches, A=published byte, BC=0, HL=advanced pointer, DE=advanced pointer, Z=1/CY=0 from CPI j,0. Otherwise try next descriptor; two exhaustion paths publish selector=1 and RET +7A14 with A=0, Z=1/CY=0. Nine literal paths and one passthrough complete the nineteen correlated invocations. RAW special handling, wide inputs and partial +1376 paths prevent full control/contract completeness; no PL/I token/keyword meaning is assigned.",
+      "contract_scope": "MINIMAL own paths after scoped partial +1376 acquisition; triple guard false; selector other/0A/01 paths with special rewrite bytes excluded and width<=13; nonaliasing input/descriptors/controls/stack; Pass41 closes required non-refill selector01/0A scopes, independently of unexecuted/refill alternatives.",
+      "contract": "Call newly scoped resident +1376: at observed clear EOF/reuse gates it consumes counted-buffer bytes, publishes selector20C3/width20C5/prefix20C6 and retains following context20C1. Prefix acquisition uses numeric conditional mask0817 except selector5, and modulo16 accumulator/word probe on selector1; partial refill/RAW acquisition alternatives remain delegated. Then form FF/00 equality masks for selector[20C3]==0A, first input byte[20C6]==2F and context[20C1]==2A, combining all three (no short-circuit reads). RAR/JNC skips RAW handling when the AND is false, as in all nineteen calls. Next SUI k/ADI FF/SBB A produces an inequality mask: +78B8 JNC enters handling iff selector==0A OR selector==01; other selector returns at +78BB with A=7F/CY=1 and unchanged selector. On witnessed selector0A, copy first input byte into selector, test 21/5C/2A/2D/3C/3E/5E; all mismatch and RET +798B, flags from last CPI5E. For selector01, width[20C5]<=13 selects a word at9A32+2*width into scan_pointer[AA16]; first descriptor byte gives remaining[AA18]. While remaining!=0: decrement it, set j[AA19]=width, then always read input[20C6+u8(j-1)] and descriptor[scan_pointer+j]. Continue decrementing j exactly when j!=0 AND these bytes are equal. Even j=0 reads input21C5 and descriptor[scan_pointer] before the guard mask suppresses equality. Advance scan_pointer by width+1 through complete resident +1A1C before testing j. If j==0, publish byte[advanced pointer] to selector and RET +7A0B: seven matches, A=published byte, BC=0, HL=advanced pointer, DE=advanced pointer, Z=1/CY=0 from CPI j,0. Otherwise try next descriptor; two exhaustion paths publish selector=1 and RET +7A14 with A=0, Z=1/CY=0. Nine literal paths and one passthrough complete the nineteen correlated invocations. RAW special handling, wide inputs and partial +1376 paths prevent full control/contract completeness; no PL/I token/keyword meaning is assigned. Pass41 closes the required accumulated-natural acquisition scopes beneath +5E98 and +5929: selector01 with non-refilling counted reads, zero selected accumulator word and width<=0D, and selector0A single-byte acquisition without special rewrites. After complete bounded +1376 acquisition, fresh selector/first/context triple rewrite test is false. SUI(k); ADIFF has CY iff u8(selector-k)!=0; self SBB therefore builds the exact inequality masks for k=0A and01. The AND/RAR branch is not an unknown carry dependency. Selector0A publishes the fresh first prefix byte into20C3 and returns after the seven nonmatching literal comparisons; flags come from CPI5E. Selector01 reads the width-selected descriptor pointer, publishes AA16/AA17 low then high and header countAA18. Each attempt decrements count before copying fresh width toAA19. Reverse comparison reads prefix20C6+u8(j-1), descriptor[freshpointer+j] and the paired AA19/AA1A carrier even whenj=0; compares only after both sources were read. j!=0 AND equality selects decrement/repeat. Fresh width+1 feeds complete resident1A1C to advance the pointer; publish low/high before testing finalj. Match reads the byte at advanced pointer and publishes it20C3; A=that byte,BC=0,DE=HL=advancedpointer,flagsCMP0,0. Exhaustion publishes20C3=01 but returnsA=00;HL=20C3,flagsfinalCMP0,count0. Required acquisition preserves working/reference pointer words A863/A8AB. The following +4275 in +5E98 receives the exact child state; +5929 delegates final data registers/flags to +784E. No table capacity, ownership or arbitrary-input termination claim.",
       "semantic_hypothesis": null,
       "pseudocode": "acquire1376_at_partial_scope(): selector,width,prefix,following_context from counted reader; if selector==0A && input[0]==2F && context==2A: unresolved RAW arm; if selector not in {0A,01}: RET78BB; if selector==0A { selector=input[0]; if selector in {21,5C,2A,2D,3C,3E,5E}: unresolved RAW arm; RET798B; }; scope width<=13: p=word[9A32+2*width]; remaining=byte[p]; while remaining!=0 { remaining--; j=width; loop { positive=(j!=0); x=byte[20C6+u8(j-1)]; y=byte[u16(p+j)]; if !(positive && x==y): break; j--; }; p=u16(p+width+1); word[AA16]=p; if j==0 { selector=byte[p]; RET7A0B; }; }; selector=1; RET7A14",
       "evidence_refs": [
         "evidence.json#seeds/PLI1.OVL+784E",
         "../minimal-baseline/pass-5/structural.json#PLI1.OVL+784E",
-        "../minimal-baseline/pass-6/README.md (+1376 substitution)"
+        "../minimal-baseline/pass-6/README.md (+1376 substitution)",
+        "../host-compiler/pass-41/README.md",
+        "../host-compiler/pass-41/work-packet.json"
       ],
       "blocks": [
         {
@@ -9923,6 +9976,14 @@
           "pseudocode": [
             "exhaustion: selector[20C3]=1; RET with A=0 from 0 CMP remaining, not A=1"
           ]
+        },
+        {
+          "offset": 31220,
+          "pseudocode": [
+            "advance=fresh_descriptor_pointer+u8(fresh_width+1)",
+            "publish advance low/high before testing final reverse index",
+            "match: read advance byte; exhaustion: publish01 but retainA00"
+          ]
         }
       ],
       "local_comments": {
@@ -9951,13 +10012,13 @@
         "7872": "JNC skips RAW handling iff AND of the three original equality masks is false; observed19 taken",
         "78A3": "A = byte[pattern_selector (20C3H)]; flags preserved",
         "78A6": "A=u8(A-0AH); arithmetic flags including CY=borrow",
-        "78A8": "ADI FF carries iff wrapped(selector-0A)!=0; next SBB returns FF for inequality",
-        "78AA": "A=CY?FFH:00H; self-subtraction cancels old A; CY is retained Boolean borrow",
+        "78A8": "CY=(u8(selector-0A) != 0) from ADI FF; not inherited SUI carry",
+        "78AA": "A=FF iff selector !=0A from exact preceding ADI carry",
         "78AB": "push A/packed flags below SP; flags unchanged",
         "78AC": "A = byte[pattern_selector (20C3H)]; flags preserved",
         "78AF": "A=u8(A-01H); arithmetic flags including CY=borrow",
-        "78B1": "ADI FF carries iff wrapped(selector-01)!=0; next SBB returns FF for inequality",
-        "78B3": "A=CY?FFH:00H; self-subtraction cancels old A; CY is retained Boolean borrow",
+        "78B1": "CY=(u8(selector-01) != 0) from fresh selector difference + FF",
+        "78B3": "A=FF iff selector !=01 from exact preceding ADI carry",
         "78B4": "pop B pair, low byte then high; SP+=2; flags unchanged",
         "78B5": "C = B; flags preserved",
         "78B6": "A=A & C; logical flags, CY=0",
@@ -10920,16 +10981,19 @@
       },
       "observed_paths": {
         "invocations_by_run": {
-          "MINIMAL": 38
+          "MINIMAL": 38,
+          "FIZZBUZ": 172,
+          "PICTURE": 74
         },
         "represented_bytes": 328,
-        "description": "38 calls:19 PLI0+42D4 and19 PLI1+784E; each ordered stream has9 selector1,9 selector0A,1 selector5;128 appends,130 direct reader calls,28 adapter reads including2 extra reads; no recursion/frame."
+        "description": "38 calls:19 PLI0+42D4 and19 PLI1+784E; each ordered stream has9 selector1,9 selector0A,1 selector5;128 appends,130 direct reader calls,28 adapter reads including2 extra reads; no recursion/frame. Pass41 accumulated MINIMAL/FIZZBUZ/PICTURE inventory; required parent correlations retained independently."
       },
       "unresolved_paths": [
         "partial helper scope: +12AE/+0D40 refill tab/high-bit/capacity paths and +1627 overflow path; +15F9 range30..39 return arm RAW.",
         "unobserved branch: EOF/reuse entry arms, selector2/3/4 handling, selected-word nonzero handling, previous2E/range predicate true, selector5 1A/42/27/5E alternatives; bounds/CFG/contract partial.",
         "general provenance need: reader initialization, pointer-table word producers and earlier context; host effects are not joined by V0.1.",
-        "arbitrary termination concern: whitespace/acquisition retries depend on reader state/input; no arbitrary-input termination proof."
+        "arbitrary termination concern: whitespace/acquisition retries depend on reader state/input; no arbitrary-input termination proof.",
+        "Pass41 required selector01/0A acquisition closed; global unexecuted rewrite/EOF/reuse/refill/other selector alternatives remain partial, not required causal blockers."
       ],
       "inputs": "retained context20C1, EOF2012.bit0/reuse20C4.bit0, counted reader1F06/1F08 and refill state; writable prefix/count/accumulator; selected word table1C38; nonaliasing scratch/stack; no meaningful entry-register byte argument on observed scope",
       "outputs": "selector20C3, width20C5 and prefix20C6 established; context20C1 is fresh following/extra read, previous20C2 saved; accumulator1C58=sum mod16; selected-word1C59 on selector1;2087/88 cleared. RET14B5 A0 HL0 BC=selected table high address DE1C5A CY0; RET15D5 A0A flagsCPI05; RET15AB A=fresh context flagsCPI27; remaining registers helper-derived.",
@@ -10973,13 +11037,17 @@
         {
           "coordinate": "PLI0.OVL+42D4",
           "counts_by_run": {
-            "MINIMAL": 19
+            "MINIMAL": 19,
+            "FIZZBUZ": 86,
+            "PICTURE": 37
           }
         },
         {
           "coordinate": "PLI1.OVL+784E",
           "counts_by_run": {
-            "MINIMAL": 19
+            "MINIMAL": 19,
+            "FIZZBUZ": 86,
+            "PICTURE": 37
           }
         }
       ],
@@ -11045,13 +11113,15 @@
         }
       ],
       "overlapping_entries": [],
-      "contract_scope": "MINIMAL observed clear EOF2012/reuse20C4 bit0 paths; selector1 with selected word zero, selector0A with previous2E/range predicate false, selector5 plain accumulation and extra-read bytes not42/27; inherited partial reader/refill/append scopes; nonaliasing prefix/scratch/table/stack",
-      "contract": "Clear bytes2088/2087. On all38 observed entries EOF2012.bit0=0 and reuse20C4.bit0=0: clear modulo16 accumulator1C58, width20C5 and selector20C3. While selector==0, context20C1 equal00 or20 triggers +12D9 (counted-reader +12AE then conditional mask0817) and replacement of context; otherwise +15E3.A.bit0 chooses selector1; observed false +15DA excludes30..39, context27 clears context and selects5, other observed bytes select0A. Once selector!=0, iterate: if context!=0, partial +1627 appends it to20C6+width, increments width, updates sum mod16. Save context to20C2; +12AE supplies fresh context. Unless selector==5, mask fresh context through0817. Selector0A tests previous-byte2E AND range30..39 mask; observed false then returns via15D5 (one appended byte). Selector1 calls15F9: CMA/RAR/JNC repeats iff original returnedA.bit0==1; observed false selects word[1C38+2*accumulator], copies it to1C59 and subtracts0 via complete1A40; ORA L/JZ returns iff selected word==0 (18/18). Selector5 does not apply mask: context!=1A, context!=27 and context!=5E repeat on observed arms; context27 consumes one more masked read via12D9; observed returned byte!=42 and!=27 returns15AB. Other selector/special/error/EOF-entry/reuse alternatives remain RAW. The prefix is a distinct publication from the retained following context: nine selector1 prefixes, nine selector0A one-byte prefixes and one selector5 seven-byte prefix per overlay caller. Incoming general registers are overwritten before meaningful use on these paths; input dependence is durable reader/context state. No direct BDOS call; buffer refill is delegated to existing partial reader/build contracts; guest-only packet does not establish all host effects.",
+      "contract_scope": "MINIMAL observed clear EOF2012/reuse20C4 bit0 paths; selector1 with selected word zero, selector0A with previous2E/range predicate false, selector5 plain accumulation and extra-read bytes not42/27; inherited partial reader/refill/append scopes; nonaliasing prefix/scratch/table/stack; Pass41 closes required non-refill selector01/0A scopes, independently of unexecuted/refill alternatives.",
+      "contract": "Clear bytes2088/2087. On all38 observed entries EOF2012.bit0=0 and reuse20C4.bit0=0: clear modulo16 accumulator1C58, width20C5 and selector20C3. While selector==0, context20C1 equal00 or20 triggers +12D9 (counted-reader +12AE then conditional mask0817) and replacement of context; otherwise +15E3.A.bit0 chooses selector1; observed false +15DA excludes30..39, context27 clears context and selects5, other observed bytes select0A. Once selector!=0, iterate: if context!=0, partial +1627 appends it to20C6+width, increments width, updates sum mod16. Save context to20C2; +12AE supplies fresh context. Unless selector==5, mask fresh context through0817. Selector0A tests previous-byte2E AND range30..39 mask; observed false then returns via15D5 (one appended byte). Selector1 calls15F9: CMA/RAR/JNC repeats iff original returnedA.bit0==1; observed false selects word[1C38+2*accumulator], copies it to1C59 and subtracts0 via complete1A40; ORA L/JZ returns iff selected word==0 (18/18). Selector5 does not apply mask: context!=1A, context!=27 and context!=5E repeat on observed arms; context27 consumes one more masked read via12D9; observed returned byte!=42 and!=27 returns15AB. Other selector/special/error/EOF-entry/reuse alternatives remain RAW. The prefix is a distinct publication from the retained following context: nine selector1 prefixes, nine selector0A one-byte prefixes and one selector5 seven-byte prefix per overlay caller. Incoming general registers are overwritten before meaningful use on these paths; input dependence is durable reader/context state. No direct BDOS call; buffer refill is delegated to existing partial reader/build contracts; guest-only packet does not establish all host effects. Pass41 bounded required scope (23 independently correlated +784E calls): EOF2012.bit0 and reuse20C4.bit0 clear; every counted read has freshindex1F06<count1F08, so no refill/host effects. Clear2088 then2087, accumulator1C58, width20C5 and selector20C3. Fresh zero/space context20C1 repeatedly calls12D9 then publishes its transformed byte. Complete15E3 selects01 for41..5A or3F; required remaining contexts are nondigit and not27, selecting0A. Each iteration calls bounded1627 before reading the following byte: prefix[20C6+oldwidth]=freshcontext, width increment, accumulator=(oldacc+freshcontext)&0F. Save fresh oldcontext20C2; immediate12AE increments the live reader index before returning the rawfollowing byte; publish raw20C1, independently paired-read20C1/20C2 lowC through0817, republish masked20C1. Selector0A required previous-dot/following-digit conjunction is false and returns at15D5, A=0A,BC=0,HL=208F,DEpreserved,flagsCPI(0A,05). Selector01 uses15F9 actualA.bit0 viaCMA/RAR; continuation repeats. On termination freshaccumulator selects low/high word[1C38+2*acc], published1C59/1C5A; required selectedword0 yields A0,BC1C38,DE1C5A,HL0,flagsS0Z1AC0P1CY0 after subtract0/ORA. Following context remains physically stored separately from prefix. No buffer clear, arbitrary-input termination, refill, quoted, nonzero selectedword or wider selector claim.",
       "semantic_hypothesis": null,
       "pseudocode": "scope EOF.bit0=0,reuse.bit0=0: word[2087]=0; width=0; sum=0; selector=0; while selector==0 { if context in {00,20}: context=read_mask12D9(); else if predicate15E3(context).bit0: selector=1; else if predicate15DA(context).bit0: unresolved RAW arm; else if context==27 { context=0; selector=5; } else selector=0A; }; loop { if context!=0: append1627(context,width,sum); previous=context; context=read12AE(); if selector!=5: context=mask0817(context); if selector==0A { if previous==2E && predicate15DA(context).bit0: unresolved RAW arm; RET15D5; }; if selector==1 { if predicate15F9(context).bit0: continue; selected=word[1C38+2*sum]; word[1C59]=selected; if selected==0: RET14B5; unresolved RAW arm; }; if selector==5 { if context==1A: unresolved RAW arm; if context==27 { context=read_mask12D9(); if context in {42,27}: unresolved RAW arm; RET15AB; }; if context==5E: unresolved RAW arm; continue; }; unresolved RAW dispatch; }",
       "evidence_refs": [
         "evidence.json#seeds/PLI.COM+1376",
-        "../minimal-baseline/pass-5/structural.json#PLI.COM+1376"
+        "../minimal-baseline/pass-5/structural.json#PLI.COM+1376",
+        "../host-compiler/pass-41/README.md",
+        "../host-compiler/pass-41/work-packet.json"
       ],
       "blocks": [
         {
@@ -11232,6 +11302,15 @@
           "offset": 5590,
           "pseudocode": [
             "repeat at1409"
+          ]
+        },
+        {
+          "offset": 5137,
+          "pseudocode": [
+            "required selector01/0A: append current context before counted following read",
+            "publish raw following then independent0817 transform",
+            "selector01: actual continuation bit; terminate at fresh zero selectedword",
+            "selector0A: dot/digit conjunction false; retain following context"
           ]
         }
       ],
@@ -30340,6 +30419,96 @@
         "8311": "read low then high into B pair; SP+=2; flags preserved; residue remains",
         "8312": "HL=u16(HL+B); only CY changes to word overflow",
         "8313": "consume original hardware return word; SP=entry_SP+2; preserve final path flags and registers"
+      }
+    },
+    {
+      "id": "PLI.COM+1616",
+      "image": "PLI.COM",
+      "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+      "stable_label": "PLI_1616",
+      "runtime_entry": 5910,
+      "start_offset": 5654,
+      "end_offset": 5671,
+      "length": 17,
+      "byte_status_at_entry": "UNDERSTOOD",
+      "description": "Saved-byte conditional mask / equality45 borrow mask",
+      "completeness": {
+        "bounds": "stable",
+        "control_flow": "complete",
+        "contract": "complete"
+      },
+      "observed_paths": {
+        "invocations_by_run": {
+          "MINIMAL": 0,
+          "FIZZBUZ": 20,
+          "PICTURE": 4
+        },
+        "represented_bytes": 17,
+        "description": "24 natural calls; masked!=45 observed. Equality45 statically complete, unobserved dynamically."
+      },
+      "unresolved_paths": [
+        "Equality45 outcome STATIC / UNOBSERVED; exact instructions establish it without an oracle sweep. Input ownership/capacity/source-language meaning unestablished."
+      ],
+      "inputs": "C; neighboring214A genuinely read then discarded; complete0817 scope. Code,2149/214A,208F and active return/save stack cells nonaliasing.",
+      "outputs": "A equality mask,BC/DE preserved,HL208F; exact final selfSBB flags; SP=entrySP+2, original CALL continuation.",
+      "clobbers": "A,HL,flags;2149 and child208F; proven CALL continuation residue.",
+      "memory_state": [
+        "Scratch2149 low position;214A read and discarded; child scratch208F independently published."
+      ],
+      "data_role_ids": [],
+      "callers": [
+        {
+          "coordinate": "PLI.COM+1534",
+          "counts_by_run": {
+            "FIZZBUZ": 20,
+            "PICTURE": 4
+          }
+        }
+      ],
+      "returns": {
+        "convention": "ordinary hardware CALL word; SP=entrySP+2",
+        "observed_file_offsets": [
+          5670
+        ],
+        "sites_description": "RET after exact selfSBB flags"
+      },
+      "direct_callees": [
+        {
+          "callsite_offset": 5662,
+          "coordinate": "PLI.COM+0817",
+          "runtime_address": 2327
+        }
+      ],
+      "overlapping_entries": [],
+      "contract_scope": "Exact complete local arithmetic and complete0817 composition with scratch/code/read/stack noninterference.",
+      "contract": "Save inputC at2149; genuinely read little-endian2149/214A; use onlylowC and call complete0817. Let m=(C>5F)?(C AND5F):C. SUI45;SUI01;selfSBBA givesA=FF iff m==45 else00. BC andDE preserved,HL208F; flags from finalselfSBB: FF gives S1Z0AC0P1CY1;00 gives S0Z1AC1P1CY0. Own scratch2149 and child208F remain distinct. Original outer CALL word consumed; below-entry word comes from CALL0817 continuation1721, not an invented callee-save slot. Complete at nonaliasing code/scratch/read/save scope; no semantic interpretation of45.",
+      "semantic_hypothesis": null,
+      "pseudocode": "Save inputC at2149; genuinely read little-endian2149/214A; use onlylowC and call complete0817. Let m=(C>5F)?(C AND5F):C. SUI45;SUI01;selfSBBA givesA=FF iff m==45 else00. BC andDE preserved,HL208F; flags from finalselfSBB: FF gives S1Z0AC0P1CY1;00 gives S0Z1AC1P1CY0. Own scratch2149 and child208F remain distinct. Original outer CALL word consumed; below-entry word comes from CALL0817 continuation1721, not an invented callee-save slot. Complete at nonaliasing code/scratch/read/save scope; no semantic interpretation of45.",
+      "evidence_refs": [
+        "evidence.json#seeds/PLI.COM+1616",
+        "../host-compiler/pass-41/README.md",
+        "../host-compiler/pass-41/candidate-falsification.json"
+      ],
+      "blocks": [
+        {
+          "offset": 5654,
+          "pseudocode": [
+            "scratch2149=C; paired read2149/214A; low only ->0817",
+            "SUI45; SUI01; selfSBB ->equality mask and independent flags",
+            "ordinary RET; retain nested CALL0817 residue"
+          ]
+        }
+      ],
+      "local_comments": {
+        "1616": "HL=2149; flags preserved",
+        "1619": "unconditionally save inputC",
+        "161A": "read low2149 then neighboring214A; flags preserved",
+        "161D": "C=freshly read low scratch; adjacent high genuinely read but unused",
+        "161E": "CALL complete0817; leave continuation1721 below entrySP",
+        "1621": "A=u8(masked_byte-45); exact subtraction flags",
+        "1623": "subtract01; CY iff prior difference00",
+        "1625": "selfSBB returns equalityFF/00; exact S/Z/AC/P/CY",
+        "1626": "ordinary RET; preserve final arithmetic flags"
       }
     }
   ]

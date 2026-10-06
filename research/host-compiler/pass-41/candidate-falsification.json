@@ -1,0 +1,31 @@
+{
+  "oracle_queries": 0,
+  "method": "Exact instruction/dataflow laws plus every corrected natural window. No oracle sweep needed.",
+  "candidates": [
+    {
+      "target": "784E carry",
+      "law": "CY after ADIFF iff wrapped selector-k nonzero; selfSBB inequality mask",
+      "tested": 142,
+      "result": "all passed; old proof gap closed, no historical contract correction"
+    },
+    {
+      "target": "1376 required scope",
+      "law": "counted non-refill selector01 zero-word or selector0A single-byte routes",
+      "tested": 23,
+      "result": "all passed independently with read/append chronology"
+    },
+    {
+      "target": "1616",
+      "law": "conditional0817 mask then equality45 via SUI45/SUI01/selfSBB",
+      "tested": 24,
+      "result": "all matched; equality45 STATIC / UNOBSERVED but statically complete"
+    },
+    {
+      "target": "1627",
+      "law": "current prefix publication, wrapping width increment, fresh-context accumulator ANI0F",
+      "tested": 762,
+      "result": "all matched existing bounded law"
+    }
+  ],
+  "limitations": "Independent resident numeric/quoted/refill paths inventoried without claiming closure; digit-true15F9 arm remains RAW. No arbitrary-input termination proof."
+}

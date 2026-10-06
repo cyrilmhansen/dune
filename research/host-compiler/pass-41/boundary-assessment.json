@@ -1,0 +1,19 @@
+{
+  "procedure_784E_required_scopes_reproducible": true,
+  "required_1376_closed": true,
+  "procedure_5929_remaining_required_blockers": [
+    "PLI1.OVL+46A7"
+  ],
+  "procedure_5E98_remaining_required_blockers": [
+    "PLI1.OVL+46A7 transitively through5929/6223 reentry"
+  ],
+  "procedure_5E98_native_ready": false,
+  "procedure_5929_native_ready": false,
+  "procedure_60E5_native_ready": false,
+  "procedure_61A4_620C_native_ready": false,
+  "next_pass": 42,
+  "next_target": "PLI1.OVL+5929 -> PLI1.OVL+46A7",
+  "next_full_checkpoint_due": 43,
+  "recommendation": "Close46A7 causal subtree crossing small mechanical dependencies inPass42; then parent composition/native-readiness and full checkpoint inPass43.",
+  "global_unexecuted_alternatives_are_not_causal_blockers": true
+}

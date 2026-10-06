@@ -1,0 +1,189 @@
+{
+  "PLI1.OVL+784E": {
+    "counts": {
+      "MINIMAL": 19,
+      "FIZZBUZ": 86,
+      "PICTURE": 37
+    },
+    "callers": {
+      "PLI1.OVL+0118": 3,
+      "PLI1.OVL+01BD": 78,
+      "PLI1.OVL+01D4": 3,
+      "PLI1.OVL+08C6": 2,
+      "PLI1.OVL+09DF": 3,
+      "PLI1.OVL+0B13": 3,
+      "PLI1.OVL+0C64": 3,
+      "PLI1.OVL+0C94": 3,
+      "PLI1.OVL+0CCC": 12,
+      "PLI1.OVL+1CA9": 6,
+      "PLI1.OVL+5A3C": 13,
+      "PLI1.OVL+5EC0": 10,
+      "PLI1.OVL+6565": 3
+    },
+    "routes": {
+      "MINIMAL": {
+        "descriptor_exhausted": 2,
+        "descriptor_match": 7,
+        "literal_first_byte": 9,
+        "passthrough": 1
+      },
+      "FIZZBUZ": {
+        "descriptor_exhausted": 11,
+        "descriptor_match": 30,
+        "literal_first_byte": 34,
+        "passthrough": 11
+      },
+      "PICTURE": {
+        "descriptor_exhausted": 7,
+        "descriptor_match": 10,
+        "literal_first_byte": 17,
+        "passthrough": 3
+      }
+    }
+  },
+  "PLI.COM+1376": {
+    "counts": {
+      "MINIMAL": 38,
+      "FIZZBUZ": 172,
+      "PICTURE": 74
+    },
+    "callers": {
+      "PLI0.OVL+42D4": 142,
+      "PLI1.OVL+784E": 142
+    },
+    "routes": {
+      "MINIMAL": {
+        "independent_resident_scope": 38
+      },
+      "FIZZBUZ": {
+        "independent_resident_scope": 172
+      },
+      "PICTURE": {
+        "independent_resident_scope": 74
+      }
+    }
+  },
+  "PLI.COM+12D9": {
+    "counts": {
+      "MINIMAL": 28,
+      "FIZZBUZ": 282,
+      "PICTURE": 72
+    },
+    "callers": {
+      "PLI.COM+13C5": 372,
+      "PLI.COM+156D": 10
+    },
+    "routes": {}
+  },
+  "PLI.COM+12AE": {
+    "counts": {
+      "MINIMAL": 158,
+      "FIZZBUZ": 690,
+      "PICTURE": 306
+    },
+    "callers": {
+      "PLI.COM+12D9": 382,
+      "PLI.COM+141A": 772
+    },
+    "routes": {}
+  },
+  "PLI.COM+15DA": {
+    "counts": {
+      "MINIMAL": 56,
+      "FIZZBUZ": 260,
+      "PICTURE": 112
+    },
+    "callers": {
+      "PLI.COM+13DD": 150,
+      "PLI.COM+1443": 120,
+      "PLI.COM+1543": 24,
+      "PLI.COM+1603": 134
+    },
+    "routes": {}
+  },
+  "PLI.COM+15E3": {
+    "counts": {
+      "MINIMAL": 134,
+      "FIZZBUZ": 454,
+      "PICTURE": 262
+    },
+    "callers": {
+      "PLI.COM+13CE": 284,
+      "PLI.COM+15F9": 566
+    },
+    "routes": {}
+  },
+  "PLI.COM+15F9": {
+    "counts": {
+      "MINIMAL": 96,
+      "FIZZBUZ": 282,
+      "PICTURE": 188
+    },
+    "callers": {
+      "PLI.COM+145A": 566
+    },
+    "routes": {}
+  },
+  "PLI.COM+1616": {
+    "counts": {
+      "MINIMAL": 0,
+      "FIZZBUZ": 20,
+      "PICTURE": 4
+    },
+    "callers": {
+      "PLI.COM+1534": 24
+    },
+    "routes": {
+      "MINIMAL": {},
+      "FIZZBUZ": {
+        "masked_equal45": 20
+      },
+      "PICTURE": {
+        "masked_equal45": 4
+      }
+    }
+  },
+  "PLI.COM+1627": {
+    "counts": {
+      "MINIMAL": 128,
+      "FIZZBUZ": 402,
+      "PICTURE": 232
+    },
+    "callers": {
+      "PLI.COM+1411": 762
+    },
+    "routes": {
+      "MINIMAL": {
+        "bounded_append": 128
+      },
+      "FIZZBUZ": {
+        "bounded_append": 402
+      },
+      "PICTURE": {
+        "bounded_append": 232
+      }
+    }
+  },
+  "PLI1.OVL+5E98": {
+    "counts": {
+      "MINIMAL": 0,
+      "FIZZBUZ": 8,
+      "PICTURE": 2
+    },
+    "callers": {
+      "PLI1.OVL+610F": 10
+    },
+    "routes": {}
+  },
+  "PLI1.OVL+5929": {
+    "counts": {
+      "MINIMAL": 1,
+      "FIZZBUZ": 11,
+      "PICTURE": 1
+    },
+    "callers": {
+      "PLI1.OVL+6240": 13
+    },
+    "routes": {}
+  }
+}

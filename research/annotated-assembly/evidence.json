@@ -48619,7 +48619,8 @@
         "scope_and_limits": "MINIMAL own paths after scoped partial +1376 acquisition; triple guard false; selector other/0A/01 paths with special rewrite bytes excluded and width<=13; nonaliasing input/descriptors/controls/stack",
         "basis": "19 corrected concrete MINIMAL invocations checked",
         "report_ref": "../minimal-baseline/pass-6/README.md#caller-refinements"
-      }
+      },
+      "pass41_bounded_acquisition": "Pass41 closes the required accumulated-natural acquisition scopes beneath +5E98 and +5929: selector01 with non-refilling counted reads, zero selected accumulator word and width<=0D, and selector0A single-byte acquisition without special rewrites. After complete bounded +1376 acquisition, fresh selector/first/context triple rewrite test is false. SUI(k); ADIFF has CY iff u8(selector-k)!=0; self SBB therefore builds the exact inequality masks for k=0A and01. The AND/RAR branch is not an unknown carry dependency. Selector0A publishes the fresh first prefix byte into20C3 and returns after the seven nonmatching literal comparisons; flags come from CPI5E. Selector01 reads the width-selected descriptor pointer, publishes AA16/AA17 low then high and header countAA18. Each attempt decrements count before copying fresh width toAA19. Reverse comparison reads prefix20C6+u8(j-1), descriptor[freshpointer+j] and the paired AA19/AA1A carrier even whenj=0; compares only after both sources were read. j!=0 AND equality selects decrement/repeat. Fresh width+1 feeds complete resident1A1C to advance the pointer; publish low/high before testing finalj. Match reads the byte at advanced pointer and publishes it20C3; A=that byte,BC=0,DE=HL=advancedpointer,flagsCMP0,0. Exhaustion publishes20C3=01 but returnsA=00;HL=20C3,flagsfinalCMP0,count0. Required acquisition preserves working/reference pointer words A863/A8AB. The following +4275 in +5E98 receives the exact child state; +5929 delegates final data registers/flags to +784E. No table capacity, ownership or arbitrary-input termination claim."
     },
     {
       "id": "PLI1.OVL+4929",
@@ -55184,7 +55185,8 @@
         "scope_and_limits": "MINIMAL observed clear EOF2012/reuse20C4 bit0 paths; selector1 with selected word zero, selector0A with previous2E/range predicate false, selector5 plain accumulation and extra-read bytes not42/27; inherited partial reader/refill/append scopes; nonaliasing prefix/scratch/table/stack",
         "basis": "38 corrected concrete invocations with ordinary-slot proof; packet interface for complex targets",
         "report_ref": "../minimal-baseline/pass-6/regions.json#PLI.COM+1376"
-      }
+      },
+      "pass41_bounded_acquisition": "Pass41 bounded required scope (23 independently correlated +784E calls): EOF2012.bit0 and reuse20C4.bit0 clear; every counted read has freshindex1F06<count1F08, so no refill/host effects. Clear2088 then2087, accumulator1C58, width20C5 and selector20C3. Fresh zero/space context20C1 repeatedly calls12D9 then publishes its transformed byte. Complete15E3 selects01 for41..5A or3F; required remaining contexts are nondigit and not27, selecting0A. Each iteration calls bounded1627 before reading the following byte: prefix[20C6+oldwidth]=freshcontext, width increment, accumulator=(oldacc+freshcontext)&0F. Save fresh oldcontext20C2; immediate12AE increments the live reader index before returning the rawfollowing byte; publish raw20C1, independently paired-read20C1/20C2 lowC through0817, republish masked20C1. Selector0A required previous-dot/following-digit conjunction is false and returns at15D5, A=0A,BC=0,HL=208F,DEpreserved,flagsCPI(0A,05). Selector01 uses15F9 actualA.bit0 viaCMA/RAR; continuation repeats. On termination freshaccumulator selects low/high word[1C38+2*acc], published1C59/1C5A; required selectedword0 yields A0,BC1C38,DE1C5A,HL0,flagsS0Z1AC0P1CY0 after subtract0/ORA. Following context remains physically stored separately from prefix. No buffer clear, arbitrary-input termination, refill, quoted, nonzero selectedword or wider selector claim."
     },
     {
       "id": "PLI1.OVL+7C1B",
@@ -156053,6 +156055,390 @@
         }
       },
       "behavioral_contract": "Read low byte at entryHL, increment HL modulo65536, read high byte independently. XCHG gives the word inHL and source_high_address inDE. DAD H forms2w modulo65536; PUSH H saves2w high then low. Two more DAD H form4w then8w modulo65536. POP B restores2w; DAD B forms u16(8w+2w). A and NZPA preserved; BC=u16(2w), DE=u16(entryHL+1), HL=u16(10w); CY is overflow of the FINAL wrapped8w plus wrapped2w, not an unwrapped10w overflow test. Only temporary PUSH writes below entrySP; final residue is2w from830E. Ordinary RET; noninterfering code/input-word/active stack scope."
+    },
+    {
+      "id": "PLI.COM+1616",
+      "image": "PLI.COM",
+      "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+      "start_offset": 5654,
+      "end_offset": 5671,
+      "description": "Saved-byte conditional mask / equality45 borrow mask",
+      "inputs_and_effects": "C; neighboring214A genuinely read then discarded; complete0817 scope. Code,2149/214A,208F and active return/save stack cells nonaliasing.; A equality mask,BC/DE preserved,HL208F; exact final selfSBB flags; SP=entrySP+2, original CALL continuation.",
+      "downstream_helpers_runtime": "PLI.COM+0817",
+      "unresolved": "Equality45 is STATIC / UNOBSERVED; no guessed external semantics.",
+      "instructions": [
+        {
+          "offset": 5654,
+          "runtime_pc": 5910,
+          "bytes": "214921",
+          "decoded": "LXI H,2149H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 20,
+              "first_step": 106380,
+              "last_step": 533011
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 118793,
+              "last_step": 336829
+            }
+          ]
+        },
+        {
+          "offset": 5657,
+          "runtime_pc": 5913,
+          "bytes": "71",
+          "decoded": "MOV M,C",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 20,
+              "first_step": 106381,
+              "last_step": 533012
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 118794,
+              "last_step": 336830
+            }
+          ]
+        },
+        {
+          "offset": 5658,
+          "runtime_pc": 5914,
+          "bytes": "2A4921",
+          "decoded": "LHLD 2149H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 20,
+              "first_step": 106382,
+              "last_step": 533013
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 118795,
+              "last_step": 336831
+            }
+          ]
+        },
+        {
+          "offset": 5661,
+          "runtime_pc": 5917,
+          "bytes": "4D",
+          "decoded": "MOV C,L",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 20,
+              "first_step": 106383,
+              "last_step": 533014
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 118796,
+              "last_step": 336832
+            }
+          ]
+        },
+        {
+          "offset": 5662,
+          "runtime_pc": 5918,
+          "bytes": "CD1709",
+          "decoded": "CALL 0917H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 20,
+              "first_step": 106384,
+              "last_step": 533015
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 118797,
+              "last_step": 336833
+            }
+          ]
+        },
+        {
+          "offset": 5665,
+          "runtime_pc": 5921,
+          "bytes": "D645",
+          "decoded": "SUI 45H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 20,
+              "first_step": 106393,
+              "last_step": 533024
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 118806,
+              "last_step": 336842
+            }
+          ]
+        },
+        {
+          "offset": 5667,
+          "runtime_pc": 5923,
+          "bytes": "D601",
+          "decoded": "SUI 01H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 20,
+              "first_step": 106394,
+              "last_step": 533025
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 118807,
+              "last_step": 336843
+            }
+          ]
+        },
+        {
+          "offset": 5669,
+          "runtime_pc": 5925,
+          "bytes": "9F",
+          "decoded": "SBB A",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 20,
+              "first_step": 106395,
+              "last_step": 533026
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 118808,
+              "last_step": 336844
+            }
+          ]
+        },
+        {
+          "offset": 5670,
+          "runtime_pc": 5926,
+          "bytes": "C9",
+          "decoded": "RET",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 20,
+              "first_step": 106396,
+              "last_step": 533027
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 4,
+              "first_step": 118809,
+              "last_step": 336845
+            }
+          ]
+        }
+      ],
+      "observed_callers": [
+        {
+          "run": "FIZZBUZ",
+          "image": "PLI.COM",
+          "offset": 5428,
+          "bytes": "CD1617",
+          "execution_count": 20,
+          "first_step": 106379
+        },
+        {
+          "run": "PICTURE",
+          "image": "PLI.COM",
+          "offset": 5428,
+          "bytes": "CD1617",
+          "execution_count": 4,
+          "first_step": 118792
+        }
+      ],
+      "observed_return_offsets": [
+        5670
+      ],
+      "matched_return_sample": {
+        "relation": "OBSERVED corrected ordinary CALL/return",
+        "call": {
+          "step_index": 106379,
+          "pc": 5684,
+          "pc_after": 5910,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI.COM",
+              "identity": "0:0:PLI.COM"
+            },
+            "offset": 5428
+          },
+          "target_origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI.COM",
+              "identity": "0:0:PLI.COM"
+            },
+            "offset": 5654
+          },
+          "runtime_pc": 5684,
+          "bytes": "CD1617",
+          "disassembly": "CALL 1716H",
+          "source": "memory",
+          "before": {
+            "a": 32,
+            "b": 0,
+            "c": 32,
+            "d": 105,
+            "e": 198,
+            "h": 49,
+            "l": 32,
+            "sp": 65495,
+            "pc": 5684,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": true
+            }
+          },
+          "after": {
+            "a": 32,
+            "b": 0,
+            "c": 32,
+            "d": 105,
+            "e": 198,
+            "h": 49,
+            "l": 32,
+            "sp": 65493,
+            "pc": 5910,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": true
+            }
+          },
+          "sp_before": 65495,
+          "sp_after": 65493,
+          "call_return_address": 5687,
+          "reads": [],
+          "writes": [
+            {
+              "address": 65494,
+              "old_value": null,
+              "new_value": 22
+            },
+            {
+              "address": 65493,
+              "old_value": null,
+              "new_value": 55
+            }
+          ],
+          "control": {
+            "kind": "call",
+            "target": 5910,
+            "taken": true
+          }
+        },
+        "ret": {
+          "step_index": 106396,
+          "pc": 5926,
+          "pc_after": 5687,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI.COM",
+              "identity": "0:0:PLI.COM"
+            },
+            "offset": 5670
+          },
+          "target_origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI.COM",
+              "identity": "0:0:PLI.COM"
+            },
+            "offset": 5431
+          },
+          "runtime_pc": 5926,
+          "bytes": "C9",
+          "disassembly": "RET",
+          "source": "memory",
+          "before": {
+            "a": 0,
+            "b": 0,
+            "c": 32,
+            "d": 105,
+            "e": 198,
+            "h": 32,
+            "l": 143,
+            "sp": 65493,
+            "pc": 5926,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 0,
+            "b": 0,
+            "c": 32,
+            "d": 105,
+            "e": 198,
+            "h": 32,
+            "l": 143,
+            "sp": 65495,
+            "pc": 5687,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "sp_before": 65493,
+          "sp_after": 65495,
+          "call_return_address": null,
+          "reads": [
+            {
+              "address": 65493,
+              "value": 55
+            },
+            {
+              "address": 65494,
+              "value": 22
+            }
+          ],
+          "writes": [],
+          "control": {
+            "kind": "return",
+            "target": 5687,
+            "taken": true
+          }
+        }
+      },
+      "behavioral_contract": "Save inputC at2149; genuinely read little-endian2149/214A; use onlylowC and call complete0817. Let m=(C>5F)?(C AND5F):C. SUI45;SUI01;selfSBBA givesA=FF iff m==45 else00. BC andDE preserved,HL208F; flags from finalselfSBB: FF gives S1Z0AC0P1CY1;00 gives S0Z1AC1P1CY0. Own scratch2149 and child208F remain distinct. Original outer CALL word consumed; below-entry word comes from CALL0817 continuation1721, not an invented callee-save slot. Complete at nonaliasing code/scratch/read/save scope; no semantic interpretation of45."
     }
   ]
 }
