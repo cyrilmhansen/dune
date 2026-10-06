@@ -1,0 +1,37 @@
+{
+  "method": "Immutable instruction proof followed by every independent natural window; no source/step/hash laws.",
+  "historical_binary_queries": 0,
+  "finite_algebra_checks": 256,
+  "candidates": [
+    {
+      "operation": "3558",
+      "law": "A=FF iff fresh byte[word[A863]+3].bit7 else00; final SBB flags, BC3 HLpointer+3 DE preserved",
+      "natural_cases": 29,
+      "result": "All 29 match. The alternative constant-zero law is falsified statically by the same represented sequence for a field with bit7 set; the finite arithmetic sweep covers256 fields. No binary query is needed to distinguish it."
+    },
+    {
+      "operation": "387F",
+      "law": "Observed pointer<=end then fresh field!=70 -> literal A0 retaining CMP(field,70) flags",
+      "natural_cases": 29,
+      "result": "All match; constant zero-flags law rejected by every observed field comparison. Both carry polarities occur; zero flag is false even though A0."
+    },
+    {
+      "operation": "3C8A",
+      "law": "C0 skips positive-count loop after opaque3A76; final word/DE0, retained child BC, CMP0,0 flags",
+      "natural_cases": 13,
+      "result": "All match. Fixed-BC0 law falsified by childBCFFFF cases; child effects are delegated, never inferred from returned0."
+    },
+    {
+      "operation": "415E",
+      "law": "Fresh field ->A75F; saved C==A6E2 ->fresh cache ->A628, flags from CMP",
+      "natural_cases": 13,
+      "result": "All match. No field-as-flags law; unequal-comparison bytes remainRAW."
+    },
+    {
+      "operation": "3DD9",
+      "law": "State-derived optional E channels, one fresh size step, final field6 AND difference mask selects literal1",
+      "natural_cases": 16,
+      "result": "All match. No evidence of returned0; constant1 is not accepted as a general law. E0 skips13 optional child calls; E1 additionally takes a postcheck; E2 omits it."
+    }
+  ]
+}
