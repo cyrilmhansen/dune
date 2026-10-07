@@ -1,0 +1,106 @@
+{
+  "status": "resolved by authorized bounded numeric contract extension",
+  "operation": "PLI.COM+1376 digit-selected selector02 acquisition under the second +4F54 acquisition",
+  "ancestry": "4F54 -> 4CE1 -> 01AF(C=2C) -> 784E -> 1376",
+  "cases": [
+    {
+      "kind": "resident_numeric_entry",
+      "step": 390901,
+      "pc": 39502,
+      "sp": 65416,
+      "context": 49,
+      "selector": 44,
+      "reader_index": 18,
+      "reader_count": 30,
+      "memory_sha256": "3fffed6571bcb6cc5d3c38caa8332d0195a53f90390a4d8d6cb0abedd94348c8",
+      "ordered_writes": 626,
+      "final_writer_cells": 228,
+      "canonical_entry": "PLI1.OVL+784E",
+      "caller": "PLI1.OVL+01BD",
+      "calling_chain": [
+        "PLI1.OVL+4F54",
+        "PLI1.OVL+4CE1",
+        "PLI1.OVL+01AF",
+        "PLI1.OVL+784E",
+        "PLI.COM+1376"
+      ],
+      "hardware_continuation": 9152,
+      "resident_entry_sp": 65414,
+      "missing_scope": "digit-selected resident selector02 acquisition; not the proven selector01/selector0A operation"
+    },
+    {
+      "kind": "resident_numeric_entry",
+      "step": 460821,
+      "pc": 39502,
+      "sp": 65412,
+      "context": 51,
+      "selector": 44,
+      "reader_index": 23,
+      "reader_count": 34,
+      "memory_sha256": "1446deca4257905b1b76deae9bda792ebceff023507c6cb10857387b6669434f",
+      "ordered_writes": 626,
+      "final_writer_cells": 228,
+      "canonical_entry": "PLI1.OVL+784E",
+      "caller": "PLI1.OVL+01BD",
+      "calling_chain": [
+        "PLI1.OVL+4F54",
+        "PLI1.OVL+4CE1",
+        "PLI1.OVL+01AF",
+        "PLI1.OVL+784E",
+        "PLI.COM+1376"
+      ],
+      "hardware_continuation": 9152,
+      "resident_entry_sp": 65410,
+      "missing_scope": "digit-selected resident selector02 acquisition; not the proven selector01/selector0A operation"
+    },
+    {
+      "kind": "resident_numeric_entry",
+      "step": 527619,
+      "pc": 39502,
+      "sp": 65408,
+      "context": 53,
+      "selector": 44,
+      "reader_index": 23,
+      "reader_count": 34,
+      "memory_sha256": "bdb132b596a71d7dad4b0e573c24c6812c4aa3ee2cb9dcacc2e4500781f354d5",
+      "ordered_writes": 626,
+      "final_writer_cells": 228,
+      "canonical_entry": "PLI1.OVL+784E",
+      "caller": "PLI1.OVL+01BD",
+      "calling_chain": [
+        "PLI1.OVL+4F54",
+        "PLI1.OVL+4CE1",
+        "PLI1.OVL+01AF",
+        "PLI1.OVL+784E",
+        "PLI.COM+1376"
+      ],
+      "hardware_continuation": 9152,
+      "resident_entry_sp": 65406,
+      "missing_scope": "digit-selected resident selector02 acquisition; not the proven selector01/selector0A operation"
+    }
+  ],
+  "instruction_boundary": {
+    "predicate": "15DA returns true for fresh context31/33/35; 13E0 RAR sets CY, so 13E1 JNC is not taken",
+    "unrepresented_local_arm": "PLI.COM+13E4..13EC",
+    "existing_scope": [
+      "research/minimal-baseline/pass-6/README.md: +15DA true dispatch RAW; selectors2/3/4 unobserved",
+      "research/host-compiler/pass-41/README.md: required selector01/selector0A only; numeric alternatives unsupported"
+    ]
+  },
+  "proof_before_boundary": {
+    "all_registers_and_flags": true,
+    "actual_SP_and_continuation_ancestry": true,
+    "all_65536_RAM_bytes": true,
+    "ordered_logical_writes": true,
+    "final_stack_last_writers": true,
+    "first_internal_6223_composed": true,
+    "complete_recursive_root_proof": false
+  },
+  "action": "stop native generalization at this operation; do not guess or copy historical post-state",
+  "oracle_queries": 0,
+  "annotation_or_catalog_changes": false,
+  "committed": false,
+  "hybrid_controller_enabled": false,
+  "resolution": "numeric-contract.md and numeric-acquisition-cases.json; independently shadowed then integrated; both reentries and full roots now match",
+  "correction": false
+}

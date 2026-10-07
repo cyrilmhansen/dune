@@ -1,0 +1,496 @@
+{
+  "id": "PLI.COM+1376",
+  "image": "PLI.COM",
+  "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+  "stable_label": "PLI_1376",
+  "runtime_entry": 5238,
+  "start_offset": 4982,
+  "end_offset": 5594,
+  "length": 612,
+  "byte_status_at_entry": "UNDERSTOOD",
+  "description": "scoped counted-input prefix acquisition and retained following byte",
+  "completeness": {
+    "bounds": "provisional",
+    "control_flow": "partial",
+    "contract": "partial"
+  },
+  "observed_paths": {
+    "invocations_by_run": {
+      "MINIMAL": 38,
+      "FIZZBUZ": 172,
+      "PICTURE": 74
+    },
+    "represented_bytes": 328,
+    "description": "38 calls:19 PLI0+42D4 and19 PLI1+784E; each ordered stream has9 selector1,9 selector0A,1 selector5;128 appends,130 direct reader calls,28 adapter reads including2 extra reads; no recursion/frame. Pass41 accumulated MINIMAL/FIZZBUZ/PICTURE inventory; required parent correlations retained independently."
+  },
+  "unresolved_paths": [
+    "partial helper scope: +12AE/+0D40 refill tab/high-bit/capacity paths and +1627 overflow path; +15F9 range30..39 return arm RAW.",
+    "unobserved branch: EOF/reuse entry arms, selector2/3/4 handling, selected-word nonzero handling, previous2E/range predicate true, selector5 1A/42/27/5E alternatives; bounds/CFG/contract partial.",
+    "general provenance need: reader initialization, pointer-table word producers and earlier context; host effects are not joined by V0.1.",
+    "arbitrary termination concern: whitespace/acquisition retries depend on reader state/input; no arbitrary-input termination proof.",
+    "Pass41 required selector01/0A acquisition closed; global unexecuted rewrite/EOF/reuse/refill/other selector alternatives remain partial, not required causal blockers."
+  ],
+  "inputs": "retained context20C1, EOF2012.bit0/reuse20C4.bit0, counted reader1F06/1F08 and refill state; writable prefix/count/accumulator; selected word table1C38; nonaliasing scratch/stack; no meaningful entry-register byte argument on observed scope",
+  "outputs": "selector20C3, width20C5 and prefix20C6 established; context20C1 is fresh following/extra read, previous20C2 saved; accumulator1C58=sum mod16; selected-word1C59 on selector1;2087/88 cleared. RET14B5 A0 HL0 BC=selected table high address DE1C5A CY0; RET15D5 A0A flagsCPI05; RET15AB A=fresh context flagsCPI27; remaining registers helper-derived.",
+  "clobbers": "A,BC,DE,HL,flags; prefix/count/context/previous/selector/accumulator/selected-word/reset controls; transient PSW saves; reader/refill guest/host side effects at inherited partial scope",
+  "memory_state": [
+    "pattern_context=20C1H (retained current byte; repeatedly replaced by reader-derived values)",
+    "pattern_previous_byte=20C2H (context saved immediately before counted-buffer read)",
+    "pattern_selector=20C3H (numeric path selector published by prefix acquisition)",
+    "pattern_reuse_flags=20C4H (bit0 gates unobserved acquisition entry alternative)",
+    "pattern_width=20C5H (prefix byte count appended by +1627)",
+    "pattern_input_bytes=20C6H (prefix bytes; current observed widths1..9, normal append guard permits offsets0..127)",
+    "prefix_accumulator=1C58H (sum of appended bytes modulo16)",
+    "prefix_pointer_table=1C38H (16 word slots selected by modulo16 accumulator)",
+    "selected_prefix_word=1C59H (word copied from selected accumulator-indexed slot)",
+    "acquisition_reset_word=2087H (two bytes cleared at acquisition entry)",
+    "conditional_mask_byte=208FH (saved byte for threshold5F/mask5F transform)",
+    "text_buffer=1E8EH (bounded byte buffer ending before 1F06)",
+    "text_index=1F06H (last written/next read index, depending on existing caller)",
+    "text_count=1F08H (counted-buffer limit)",
+    "reader_eof_flags=2012H (bit0 gates 1A return)",
+    "F=entry_SP; zero-byte reserved local frame; temporary saves/CALL words below F; original return word at F."
+  ],
+  "data_role_ids": [
+    "PLI.COM:pattern_context",
+    "PLI.COM:pattern_previous_byte",
+    "PLI.COM:pattern_selector",
+    "PLI.COM:pattern_reuse_flags",
+    "PLI.COM:pattern_width",
+    "PLI.COM:pattern_input_bytes",
+    "PLI.COM:prefix_accumulator",
+    "PLI.COM:prefix_pointer_table",
+    "PLI.COM:selected_prefix_word",
+    "PLI.COM:acquisition_reset_word",
+    "PLI.COM:conditional_mask_byte",
+    "PLI.COM:text_buffer",
+    "PLI.COM:text_index",
+    "PLI.COM:text_count",
+    "PLI.COM:reader_eof_flags"
+  ],
+  "callers": [
+    {
+      "coordinate": "PLI0.OVL+42D4",
+      "counts_by_run": {
+        "MINIMAL": 19,
+        "FIZZBUZ": 86,
+        "PICTURE": 37
+      }
+    },
+    {
+      "coordinate": "PLI1.OVL+784E",
+      "counts_by_run": {
+        "MINIMAL": 19,
+        "FIZZBUZ": 86,
+        "PICTURE": 37
+      }
+    }
+  ],
+  "returns": {
+    "convention": "ordinary hardware CALL word; original slot unchanged, SP after RET=entry_SP+2",
+    "observed_file_offsets": [
+      5301,
+      5547,
+      5589
+    ],
+    "sites_description": "PLI.COM+14B5; PLI.COM+15AB; PLI.COM+15D5"
+  },
+  "direct_callees": [
+    {
+      "callsite_offset": 5061,
+      "coordinate": "PLI.COM+12D9",
+      "runtime_address": 5081
+    },
+    {
+      "callsite_offset": 5070,
+      "coordinate": "PLI.COM+15E3",
+      "runtime_address": 5859
+    },
+    {
+      "callsite_offset": 5085,
+      "coordinate": "PLI.COM+15DA",
+      "runtime_address": 5850
+    },
+    {
+      "callsite_offset": 5137,
+      "coordinate": "PLI.COM+1627",
+      "runtime_address": 5927
+    },
+    {
+      "callsite_offset": 5146,
+      "coordinate": "PLI.COM+12AE",
+      "runtime_address": 5038
+    },
+    {
+      "callsite_offset": 5164,
+      "coordinate": "PLI.COM+0817",
+      "runtime_address": 2327
+    },
+    {
+      "callsite_offset": 5187,
+      "coordinate": "PLI.COM+15DA",
+      "runtime_address": 5850
+    },
+    {
+      "callsite_offset": 5210,
+      "coordinate": "PLI.COM+15F9",
+      "runtime_address": 5881
+    },
+    {
+      "callsite_offset": 5240,
+      "coordinate": "PLI.COM+1A40",
+      "runtime_address": 6976
+    },
+    {
+      "callsite_offset": 5485,
+      "coordinate": "PLI.COM+12D9",
+      "runtime_address": 5081
+    }
+  ],
+  "overlapping_entries": [],
+  "contract_scope": "MINIMAL observed clear EOF2012/reuse20C4 bit0 paths; selector1 with selected word zero, selector0A with previous2E/range predicate false, selector5 plain accumulation and extra-read bytes not42/27; inherited partial reader/refill/append scopes; nonaliasing prefix/scratch/table/stack; Pass41 closes required non-refill selector01/0A scopes, independently of unexecuted/refill alternatives.",
+  "contract": "Clear bytes2088/2087. On all38 observed entries EOF2012.bit0=0 and reuse20C4.bit0=0: clear modulo16 accumulator1C58, width20C5 and selector20C3. While selector==0, context20C1 equal00 or20 triggers +12D9 (counted-reader +12AE then conditional mask0817) and replacement of context; otherwise +15E3.A.bit0 chooses selector1; observed false +15DA excludes30..39, context27 clears context and selects5, other observed bytes select0A. Once selector!=0, iterate: if context!=0, partial +1627 appends it to20C6+width, increments width, updates sum mod16. Save context to20C2; +12AE supplies fresh context. Unless selector==5, mask fresh context through0817. Selector0A tests previous-byte2E AND range30..39 mask; observed false then returns via15D5 (one appended byte). Selector1 calls15F9: CMA/RAR/JNC repeats iff original returnedA.bit0==1; observed false selects word[1C38+2*accumulator], copies it to1C59 and subtracts0 via complete1A40; ORA L/JZ returns iff selected word==0 (18/18). Selector5 does not apply mask: context!=1A, context!=27 and context!=5E repeat on observed arms; context27 consumes one more masked read via12D9; observed returned byte!=42 and!=27 returns15AB. Other selector/special/error/EOF-entry/reuse alternatives remain RAW. The prefix is a distinct publication from the retained following context: nine selector1 prefixes, nine selector0A one-byte prefixes and one selector5 seven-byte prefix per overlay caller. Incoming general registers are overwritten before meaningful use on these paths; input dependence is durable reader/context state. No direct BDOS call; buffer refill is delegated to existing partial reader/build contracts; guest-only packet does not establish all host effects. Pass41 bounded required scope (23 independently correlated +784E calls): EOF2012.bit0 and reuse20C4.bit0 clear; every counted read has freshindex1F06<count1F08, so no refill/host effects. Clear2088 then2087, accumulator1C58, width20C5 and selector20C3. Fresh zero/space context20C1 repeatedly calls12D9 then publishes its transformed byte. Complete15E3 selects01 for41..5A or3F; required remaining contexts are nondigit and not27, selecting0A. Each iteration calls bounded1627 before reading the following byte: prefix[20C6+oldwidth]=freshcontext, width increment, accumulator=(oldacc+freshcontext)&0F. Save fresh oldcontext20C2; immediate12AE increments the live reader index before returning the rawfollowing byte; publish raw20C1, independently paired-read20C1/20C2 lowC through0817, republish masked20C1. Selector0A required previous-dot/following-digit conjunction is false and returns at15D5, A=0A,BC=0,HL=208F,DEpreserved,flagsCPI(0A,05). Selector01 uses15F9 actualA.bit0 viaCMA/RAR; continuation repeats. On termination freshaccumulator selects low/high word[1C38+2*acc], published1C59/1C5A; required selectedword0 yields A0,BC1C38,DE1C5A,HL0,flagsS0Z1AC0P1CY0 after subtract0/ORA. Following context remains physically stored separately from prefix. No buffer clear, arbitrary-input termination, refill, quoted, nonzero selectedword or wider selector claim.",
+  "semantic_hypothesis": null,
+  "pseudocode": "scope EOF.bit0=0,reuse.bit0=0: word[2087]=0; width=0; sum=0; selector=0; while selector==0 { if context in {00,20}: context=read_mask12D9(); else if predicate15E3(context).bit0: selector=1; else if predicate15DA(context).bit0: unresolved RAW arm; else if context==27 { context=0; selector=5; } else selector=0A; }; loop { if context!=0: append1627(context,width,sum); previous=context; context=read12AE(); if selector!=5: context=mask0817(context); if selector==0A { if previous==2E && predicate15DA(context).bit0: unresolved RAW arm; RET15D5; }; if selector==1 { if predicate15F9(context).bit0: continue; selected=word[1C38+2*sum]; word[1C59]=selected; if selected==0: RET14B5; unresolved RAW arm; }; if selector==5 { if context==1A: unresolved RAW arm; if context==27 { context=read_mask12D9(); if context in {42,27}: unresolved RAW arm; RET15AB; }; if context==5E: unresolved RAW arm; continue; }; unresolved RAW dispatch; }",
+  "evidence_refs": [
+    "evidence.json#seeds/PLI.COM+1376",
+    "../minimal-baseline/pass-5/structural.json#PLI.COM+1376",
+    "../host-compiler/pass-41/README.md",
+    "../host-compiler/pass-41/work-packet.json"
+  ],
+  "blocks": [
+    {
+      "offset": 4982,
+      "pseudocode": [
+        "clear2088/2087; RAR/JNC proceeds iff EOF2012.bit0 clear (38); set-bit RAW arm"
+      ]
+    },
+    {
+      "offset": 5000,
+      "pseudocode": [
+        "clear accumulator1C58 and width20C5; JNC resets selector iff reuse20C4.bit0 clear (38)"
+      ]
+    },
+    {
+      "offset": 5024,
+      "pseudocode": [
+        "selector20C3=0"
+      ]
+    },
+    {
+      "offset": 5029,
+      "pseudocode": [
+        "nonzero selector starts acquisition loop; zero tests context"
+      ]
+    },
+    {
+      "offset": 5037,
+      "pseudocode": [
+        "FF/00 equality masks(context20)==OR==(context00); RAR/JNC classifies iff neither equality true"
+      ]
+    },
+    {
+      "offset": 5061,
+      "pseudocode": [
+        "+12D9 reads counted buffer then conditional mask; store context and retry"
+      ]
+    },
+    {
+      "offset": 5070,
+      "pseudocode": [
+        "+15E3: A.bit0 tests41..5A OR3F; set selects1"
+      ]
+    },
+    {
+      "offset": 5085,
+      "pseudocode": [
+        "+15DA: A.bit0 tests30..39; true alternative RAW; observed false goes to27 comparison"
+      ]
+    },
+    {
+      "offset": 5100,
+      "pseudocode": [
+        "context27 -> context0,selector5; otherwise selector0A"
+      ]
+    },
+    {
+      "offset": 5126,
+      "pseudocode": [
+        "retry selector loop"
+      ]
+    },
+    {
+      "offset": 5129,
+      "pseudocode": [
+        "context0 skips append; otherwise +1627 appends context and advances width/mod16 sum"
+      ]
+    },
+    {
+      "offset": 5140,
+      "pseudocode": [
+        "save context at20C2; +12AE returns next counted byte; store context20C1"
+      ]
+    },
+    {
+      "offset": 5160,
+      "pseudocode": [
+        "selector!=5: apply0817 numeric mask; replace context20C1"
+      ]
+    },
+    {
+      "offset": 5170,
+      "pseudocode": [
+        "selector0A tests previous2E AND new context30..39 via saved FF/00 mask; observedfalse skips RAW alternative"
+      ]
+    },
+    {
+      "offset": 5202,
+      "pseudocode": [
+        "selector1 ->15F9; otherwise dispatch4/3/2/5"
+      ]
+    },
+    {
+      "offset": 5210,
+      "pseudocode": [
+        "CMA/RAR/JNC repeats iff ORIGINAL15F9.A.bit0 set (78); clear bit selects word probe (18)"
+      ]
+    },
+    {
+      "offset": 5218,
+      "pseudocode": [
+        "copy word[1C38+2*mod16 sum] to1C59;1A40 subtracts0; ORA L/Z tests full word; all18 zero"
+      ]
+    },
+    {
+      "offset": 5301,
+      "pseudocode": [
+        "RET A0; separate prefix/width/selector versus following context publications"
+      ]
+    },
+    {
+      "offset": 5302,
+      "pseudocode": [
+        "repeat acquisition loop"
+      ]
+    },
+    {
+      "offset": 5305,
+      "pseudocode": [
+        "selector4 arm RAW; observed selector!=4 advances"
+      ]
+    },
+    {
+      "offset": 5361,
+      "pseudocode": [
+        "selector3 arm RAW; observed selector!=3 advances"
+      ]
+    },
+    {
+      "offset": 5400,
+      "pseudocode": [
+        "selector2 arm RAW; observed selector!=2 advances"
+      ]
+    },
+    {
+      "offset": 5455,
+      "pseudocode": [
+        "selector!=5 returns15D5 A0A; selector5 dispatches fresh context"
+      ]
+    },
+    {
+      "offset": 5463,
+      "pseudocode": [
+        "selector5 context1A arm RAW; observed mismatch"
+      ]
+    },
+    {
+      "offset": 5477,
+      "pseudocode": [
+        "context27 consumes another read via12D9; otherwise test5E"
+      ]
+    },
+    {
+      "offset": 5485,
+      "pseudocode": [
+        "masked extra read ->context; byte42 arm RAW; observed mismatch"
+      ]
+    },
+    {
+      "offset": 5539,
+      "pseudocode": [
+        "context27 continuation RAW; observed mismatch returns15AB"
+      ]
+    },
+    {
+      "offset": 5551,
+      "pseudocode": [
+        "context5E arm RAW; observed mismatch repeats"
+      ]
+    },
+    {
+      "offset": 5589,
+      "pseudocode": [
+        "RET A0A; flags from last selectorCPI05"
+      ]
+    },
+    {
+      "offset": 5590,
+      "pseudocode": [
+        "repeat at1409"
+      ]
+    },
+    {
+      "offset": 5137,
+      "pseudocode": [
+        "required selector01/0A: append current context before counted following read",
+        "publish raw following then independent0817 transform",
+        "selector01: actual continuation bit; terminate at fresh zero selectedword",
+        "selector0A: dot/digit conjunction false; retain following context"
+      ]
+    }
+  ],
+  "local_comments": {
+    "1376": "HL = 2088H (literal address/value)",
+    "1379": "byte[HL] = 00H; flags preserved",
+    "137B": "HL=u16(HL-1); flags preserved",
+    "137C": "byte[HL] = 00H; flags preserved",
+    "137E": "A = byte[reader_eof_flags (2012H)]; flags preserved",
+    "1381": "A=(old_CY<<7)|(old_A>>1); CY=old_A.bit0; NZPA preserved",
+    "1382": "if CY=0: PC=1488H; flags preserved",
+    "1388": "HL = prefix_accumulator (1C58H) (literal address/value)",
+    "138B": "byte[HL] = 00H; flags preserved",
+    "138D": "HL = pattern_width (20C5H) (literal address/value)",
+    "1390": "byte[HL] = 00H; flags preserved",
+    "1392": "HL=u16(HL-1); flags preserved",
+    "1393": "A = byte[HL]; flags preserved",
+    "1394": "A=(old_CY<<7)|(old_A>>1); CY=old_A.bit0; NZPA preserved",
+    "1395": "if CY=0: PC=14A0H; flags preserved",
+    "13A0": "HL = pattern_selector (20C3H) (literal address/value)",
+    "13A3": "byte[HL] = 00H; flags preserved",
+    "13A5": "A = byte[pattern_selector (20C3H)]; flags preserved",
+    "13A8": "flags = unsigned byte comparison A-00H; A unchanged",
+    "13AA": "if Z=0: PC=1509H; flags preserved",
+    "13AD": "A = byte[pattern_context (20C1H)]; flags preserved",
+    "13B0": "A=u8(A-20H); arithmetic flags including CY=borrow",
+    "13B2": "A=u8(A-01H); arithmetic flags including CY=borrow",
+    "13B4": "A=CY?FFH:00H; self-subtraction cancels old A; CY is retained Boolean borrow",
+    "13B5": "push A/packed flags below SP; flags unchanged",
+    "13B6": "A = byte[pattern_context (20C1H)]; flags preserved",
+    "13B9": "A=u8(A-00H); arithmetic flags including CY=borrow",
+    "13BB": "A=u8(A-01H); arithmetic flags including CY=borrow",
+    "13BD": "A=CY?FFH:00H; self-subtraction cancels old A; CY is retained Boolean borrow",
+    "13BE": "pop B pair, low byte then high; SP+=2; flags unchanged",
+    "13BF": "C = B; flags preserved",
+    "13C0": "A=A  | C; logical flags, CY=0",
+    "13C1": "A=(old_CY<<7)|(old_A>>1); CY=old_A.bit0; NZPA preserved",
+    "13C2": "OR equality masks00/20 thenRAR; JNC classifies iff context neither00 nor20",
+    "13C5": "push following PC; invoke PLI.COM+12D9; established partial contract at declared scope",
+    "13C8": "byte[pattern_context (20C1H)] = A; flags preserved",
+    "13CB": "if always: PC=1506H; flags preserved",
+    "13CE": "push following PC; invoke PLI.COM+15E3; established complete contract at declared scope",
+    "13D1": "A=(old_CY<<7)|(old_A>>1); CY=old_A.bit0; NZPA preserved",
+    "13D2": "if CY=0: PC=14DDH; flags preserved",
+    "13D5": "HL = pattern_selector (20C3H) (literal address/value)",
+    "13D8": "byte[HL] = 01H; flags preserved",
+    "13DA": "if always: PC=1506H; flags preserved",
+    "13DD": "push following PC; invoke PLI.COM+15DA; established complete contract at declared scope",
+    "13E0": "A=(old_CY<<7)|(old_A>>1); CY=old_A.bit0; NZPA preserved",
+    "13E1": "if CY=0: PC=14ECH; flags preserved",
+    "13EC": "A = byte[pattern_context (20C1H)]; flags preserved",
+    "13EF": "flags = unsigned byte comparison A-27H; A unchanged",
+    "13F1": "if Z=0: PC=1501H; flags preserved",
+    "13F4": "HL = pattern_context (20C1H) (literal address/value)",
+    "13F7": "byte[HL] = 00H; flags preserved",
+    "13F9": "HL = pattern_selector (20C3H) (literal address/value)",
+    "13FC": "byte[HL] = 05H; flags preserved",
+    "13FE": "if always: PC=1506H; flags preserved",
+    "1401": "HL = pattern_selector (20C3H) (literal address/value)",
+    "1404": "byte[HL] = 0AH; flags preserved",
+    "1406": "if always: PC=14A5H; flags preserved",
+    "1409": "A = byte[pattern_context (20C1H)]; flags preserved",
+    "140C": "flags = unsigned byte comparison A-00H; A unchanged",
+    "140E": "if Z=1: PC=1514H; flags preserved",
+    "1411": "push following PC; invoke PLI.COM+1627; established partial contract at declared scope",
+    "1414": "A = byte[pattern_context (20C1H)]; flags preserved",
+    "1417": "previous byte20C2=context immediately before next reader call; distinct from appended prefix",
+    "141A": "push following PC; invoke PLI.COM+12AE; established partial contract at declared scope",
+    "141D": "context20C1=fresh counted-reader byte, then optionally numeric masked by0817",
+    "1420": "A = byte[pattern_selector (20C3H)]; flags preserved",
+    "1423": "flags = unsigned byte comparison A-05H; A unchanged",
+    "1425": "if Z=1: PC=1532H; flags preserved",
+    "1428": "HL = little_endian_word[pattern_context (20C1H)]; low byte then high byte, flags preserved",
+    "142B": "C = L; flags preserved",
+    "142C": "push following PC; invoke PLI.COM+0817; established complete contract at declared scope",
+    "142F": "byte[pattern_context (20C1H)] = A; flags preserved",
+    "1432": "A = byte[pattern_selector (20C3H)]; flags preserved",
+    "1435": "flags = unsigned byte comparison A-0AH; A unchanged",
+    "1437": "if Z=0: PC=1552H; flags preserved",
+    "143A": "A = byte[pattern_previous_byte (20C2H)]; flags preserved",
+    "143D": "A=u8(A-2EH); arithmetic flags including CY=borrow",
+    "143F": "A=u8(A-01H); arithmetic flags including CY=borrow",
+    "1441": "A=CY?FFH:00H; self-subtraction cancels old A; CY is retained Boolean borrow",
+    "1442": "push A/packed flags below SP; flags unchanged",
+    "1443": "push following PC; invoke PLI.COM+15DA; established complete contract at declared scope",
+    "1446": "pop B pair, low byte then high; SP+=2; flags unchanged",
+    "1447": "C = B; flags preserved",
+    "1448": "A=A & C; logical flags, CY=0",
+    "1449": "A=(old_CY<<7)|(old_A>>1); CY=old_A.bit0; NZPA preserved",
+    "144A": "JNC skips RAW arm iff NOT(previous==2E AND current range30..39); packet saved mask leaf has opaque scope gap",
+    "1452": "A = byte[pattern_selector (20C3H)]; flags preserved",
+    "1455": "flags = unsigned byte comparison A-01H; A unchanged",
+    "1457": "if Z=0: PC=15B9H; flags preserved",
+    "145A": "push following PC; invoke PLI.COM+15F9; established partial contract at declared scope",
+    "145D": "A=~A & FFH; flags preserved",
+    "145E": "A=(old_CY<<7)|(old_A>>1); CY=old_A.bit0; NZPA preserved",
+    "145F": "CMA/RAR/JNC repeats iff original15F9.A.bit0 set; helper returnedCY is not this test",
+    "1462": "HL = little_endian_word[prefix_accumulator (1C58H)]; low byte then high byte, flags preserved",
+    "1465": "H = 00H; flags preserved",
+    "1467": "BC = prefix_pointer_table (1C38H) (literal address/value)",
+    "146A": "HL=u16(HL+HL); only CY changes (word overflow)",
+    "146B": "HL=u16(HL+BC); only CY changes (word overflow)",
+    "146C": "E = byte[HL]; flags preserved",
+    "146D": "HL=u16(HL+1); flags preserved",
+    "146E": "D = byte[HL]; flags preserved",
+    "146F": "swap HL and DE; flags preserved",
+    "1470": "little_endian_word[selected_prefix_word (1C59H)] = HL; low byte then high byte",
+    "1473": "A = 00H; flags preserved",
+    "1475": "DE = selected_prefix_word (1C59H) (literal address/value)",
+    "1478": "push following PC; invoke PLI.COM+1A40; established complete contract at declared scope",
+    "147B": "A=A  | L; logical flags, CY=0",
+    "147C": "A=high selected word after1A40; ORA L/Z tests full word zero;18 taken",
+    "14B5": "consume original hardware return word at entry SP; SP=entry_SP+2; flags preserved",
+    "14B6": "if always: PC=16D6H; flags preserved",
+    "14B9": "A = byte[pattern_selector (20C3H)]; flags preserved",
+    "14BC": "flags = unsigned byte comparison A-04H; A unchanged",
+    "14BE": "if Z=0: PC=15F1H; flags preserved",
+    "14F1": "A = byte[pattern_selector (20C3H)]; flags preserved",
+    "14F4": "flags = unsigned byte comparison A-03H; A unchanged",
+    "14F6": "if Z=0: PC=1618H; flags preserved",
+    "1518": "A = byte[pattern_selector (20C3H)]; flags preserved",
+    "151B": "flags = unsigned byte comparison A-02H; A unchanged",
+    "151D": "if Z=0: PC=164FH; flags preserved",
+    "154F": "A = byte[pattern_selector (20C3H)]; flags preserved",
+    "1552": "flags = unsigned byte comparison A-05H; A unchanged",
+    "1554": "if Z=0: PC=16D5H; flags preserved",
+    "1557": "A = byte[pattern_context (20C1H)]; flags preserved",
+    "155A": "flags = unsigned byte comparison A-1AH; A unchanged",
+    "155C": "if Z=0: PC=1665H; flags preserved",
+    "1565": "A = byte[pattern_context (20C1H)]; flags preserved",
+    "1568": "flags = unsigned byte comparison A-27H; A unchanged",
+    "156A": "if Z=0: PC=16AFH; flags preserved",
+    "156D": "push following PC; invoke PLI.COM+12D9; established partial contract at declared scope",
+    "1570": "byte[pattern_context (20C1H)] = A; flags preserved",
+    "1573": "flags = unsigned byte comparison A-42H; A unchanged",
+    "1575": "if Z=0: PC=16A3H; flags preserved",
+    "15A3": "A = byte[pattern_context (20C1H)]; flags preserved",
+    "15A6": "flags = unsigned byte comparison A-27H; A unchanged",
+    "15A8": "if Z=1: PC=16ACH; flags preserved",
+    "15AB": "consume original hardware return word at entry SP; SP=entry_SP+2; flags preserved",
+    "15AF": "A = byte[pattern_context (20C1H)]; flags preserved",
+    "15B2": "flags = unsigned byte comparison A-5EH; A unchanged",
+    "15B4": "if Z=0: PC=16D2H; flags preserved",
+    "15D2": "if always: PC=16D6H; flags preserved",
+    "15D5": "RET A0A; flags from selectorCPI05; context separately retains following byte",
+    "15D6": "if always: PC=1509H; flags preserved"
+  }
+}

@@ -1747,7 +1747,8 @@ PLI_1373: DB 043H,014H,0C9H ; +1373 runtime=1473H RAW
 ; Callers: OBSERVED PLI0.OVL+42D4 (FIZZBUZ=86, MINIMAL=19, PICTURE=37); PLI1.OVL+784E (FIZZBUZ=86,
 ;   MINIMAL=19, PICTURE=37)
 ; Returns: OBSERVED/DEDUCED ordinary hardware CALL word; original slot unchanged, SP after
-;   RET=entry_SP+2; PLI.COM+14B5; PLI.COM+15AB; PLI.COM+15D5
+;   RET=entry_SP+2; PLI.COM+14B5; PLI.COM+15AB; PLI.COM+15D5; Pass44 numeric
+;   ordinaryRET154B
 ; Inputs: DEDUCED retained context20C1, EOF2012.bit0/reuse20C4.bit0, counted reader1F06/1F08 and
 ;   refill state; writable prefix/count/accumulator; selected word table1C38; nonaliasing
 ;   scratch/stack; no meaningful entry-register byte argument on observed scope
@@ -1755,7 +1756,8 @@ PLI_1373: DB 043H,014H,0C9H ; +1373 runtime=1473H RAW
 ;   following/extra read, previous20C2 saved; accumulator1C58=sum mod16; selected-word1C59
 ;   on selector1;2087/88 cleared. RET14B5 A0 HL0 BC=selected table high address DE1C5A CY0;
 ;   RET15D5 A0A flagsCPI05; RET15AB A=fresh context flagsCPI27; remaining registers
-;   helper-derived.
+;   helper-derived. Pass44 selector02 digit accumulation ordinaryRET154B: A7F BC=normalized
+;   following-byte argument HL208F DEpreserved; flagsS0Z1AC1P1CY1.
 ; Clobbers: DEDUCED A,BC,DE,HL,flags;
 ;   prefix/count/context/previous/selector/accumulator/selected-word/reset controls;
 ;   transient PSW saves; reader/refill guest/host side effects at inherited partial scope
@@ -1776,38 +1778,44 @@ PLI_1373: DB 043H,014H,0C9H ; +1373 runtime=1473H RAW
 ;   local frame; temporary saves/CALL words below F; original return word at F.
 ; Direct callees: OBSERVED PLI.COM+12D9 @13D9H; PLI.COM+15E3 @16E3H; PLI.COM+15DA @16DAH;
 ;   PLI.COM+1627 @1727H; PLI.COM+12AE @13AEH; PLI.COM+0817 @0917H; PLI.COM+15DA
-;   @16DAH; PLI.COM+15F9 @16F9H; PLI.COM+1A40 @1B40H; PLI.COM+12D9 @13D9H
-; Coverage: OBSERVED FIZZBUZ: 172 CALLs; MINIMAL: 38 CALLs; PICTURE: 74 CALLs; 328/612 bytes
+;   @16DAH; PLI.COM+15F9 @16F9H; PLI.COM+1A40 @1B40H; PLI.COM+12D9 @13D9H;
+;   PLI.COM+1616 @1716H
+; Coverage: OBSERVED FIZZBUZ: 172 CALLs; MINIMAL: 38 CALLs; PICTURE: 74 CALLs; 367/612 bytes
 ;   represented as instructions; 38 calls:19 PLI0+42D4 and19 PLI1+784E; each ordered
 ;   stream has9 selector1,9 selector0A,1 selector5;128 appends,130 direct reader calls,28
 ;   adapter reads including2 extra reads; no recursion/frame. Pass41 accumulated
 ;   MINIMAL/FIZZBUZ/PICTURE inventory; required parent correlations retained
-;   independently.
+;   independently. Pass44 three correlated numeric selector02 invocations; required digit
+;   prefixes and ordinary return proved.
 ; Unresolved: partial helper scope: +12AE/+0D40 refill tab/high-bit/capacity paths and +1627
 ;   overflow path; +15F9 range30..39 return arm RAW. / unobserved branch: EOF/reuse
-;   entry arms, selector2/3/4 handling, selected-word nonzero handling, previous2E/range
-;   predicate true, selector5 1A/42/27/5E alternatives; bounds/CFG/contract partial. /
-;   general provenance need: reader initialization, pointer-table word producers and
-;   earlier context; host effects are not joined by V0.1. / arbitrary termination
-;   concern: whitespace/acquisition retries depend on reader state/input; no
-;   arbitrary-input termination proof. / Pass41 required selector01/0A acquisition
-;   closed; global unexecuted rewrite/EOF/reuse/refill/other selector alternatives
-;   remain partial, not required causal blockers.
+;   entry arms, selector3/4 handling and selector2 decimal/exponent alternatives,
+;   selected-word nonzero handling, previous2E/range predicate true, selector5
+;   1A/42/27/5E alternatives; bounds/CFG/contract partial. / general provenance need:
+;   reader initialization, pointer-table word producers and earlier context; host
+;   effects are not joined by V0.1. / arbitrary termination concern:
+;   whitespace/acquisition retries depend on reader state/input; no arbitrary-input
+;   termination proof. / Pass41 required selector01/0A acquisition closed; global
+;   unexecuted rewrite/EOF/reuse/refill/other selector alternatives remain partial, not
+;   required causal blockers. / Pass44 closes only digit-selected selector02
+;   accumulation/ordinary return; no global numeric completeness.
 ; Contract: DEDUCED (partial; scope: MINIMAL observed clear EOF2012/reuse20C4 bit0 paths;
 ;   selector1 with selected word zero, selector0A with previous2E/range predicate false,
 ;   selector5 plain accumulation and extra-read bytes not42/27; inherited partial
 ;   reader/refill/append scopes; nonaliasing prefix/scratch/table/stack; Pass41 closes
 ;   required non-refill selector01/0A scopes, independently of unexecuted/refill
-;   alternatives.) Clear bytes2088/2087. On all38 observed entries EOF2012.bit0=0 and
-;   reuse20C4.bit0=0: clear modulo16 accumulator1C58, width20C5 and selector20C3. While
-;   selector==0, context20C1 equal00 or20 triggers +12D9 (counted-reader +12AE then
-;   conditional mask0817) and replacement of context; otherwise +15E3.A.bit0 chooses
-;   selector1; observed false +15DA excludes30..39, context27 clears context and selects5,
-;   other observed bytes select0A. Once selector!=0, iterate: if context!=0, partial +1627
-;   appends it to20C6+width, increments width, updates sum mod16. Save context to20C2;
-;   +12AE supplies fresh context. Unless selector==5, mask fresh context through0817.
-;   Selector0A tests previous-byte2E AND range30..39 mask; observed false then returns
-;   via15D5 (one appended byte). Selector1 calls15F9: CMA/RAR/JNC repeats iff original
+;   alternatives.; Pass44 digit-selected selector02 with bounded immediate counted reads,
+;   no decimal-point/exponent transition, prefix<=127 and nonaliasing.) Clear
+;   bytes2088/2087. On all38 observed entries EOF2012.bit0=0 and reuse20C4.bit0=0: clear
+;   modulo16 accumulator1C58, width20C5 and selector20C3. While selector==0, context20C1
+;   equal00 or20 triggers +12D9 (counted-reader +12AE then conditional mask0817) and
+;   replacement of context; otherwise +15E3.A.bit0 chooses selector1; observed false +15DA
+;   excludes30..39, context27 clears context and selects5, other observed bytes select0A.
+;   Once selector!=0, iterate: if context!=0, partial +1627 appends it to20C6+width,
+;   increments width, updates sum mod16. Save context to20C2; +12AE supplies fresh
+;   context. Unless selector==5, mask fresh context through0817. Selector0A tests
+;   previous-byte2E AND range30..39 mask; observed false then returns via15D5 (one
+;   appended byte). Selector1 calls15F9: CMA/RAR/JNC repeats iff original
 ;   returnedA.bit0==1; observed false selects word[1C38+2*accumulator], copies it to1C59
 ;   and subtracts0 via complete1A40; ORA L/JZ returns iff selected word==0 (18/18).
 ;   Selector5 does not apply mask: context!=1A, context!=27 and context!=5E repeat on
@@ -1835,12 +1843,29 @@ PLI_1373: DB 043H,014H,0C9H ; +1373 runtime=1473H RAW
 ;   low/high word[1C38+2*acc], published1C59/1C5A; required selectedword0 yields
 ;   A0,BC1C38,DE1C5A,HL0,flagsS0Z1AC0P1CY0 after subtract0/ORA. Following context remains
 ;   physically stored separately from prefix. No buffer clear, arbitrary-input
-;   termination, refill, quoted, nonzero selectedword or wider selector claim.
+;   termination, refill, quoted, nonzero selectedword or wider selector claim. Pass44
+;   bounded numeric extension: fresh context20C1 in30..39 selects02 through
+;   complete15DA/RAR and publication13E7. Each current nonzero digit is appended by1627
+;   before12AE; save previous20C2, publish raw following20C1, then independently
+;   paired-read20C1/20C2 and normalize lowC through0817. Fresh selector
+;   comparisons04,03,02 select numeric handling. Fresh following context2E is unsupported;
+;   paired20C1/20C2 lowC invokes complete1616, whose actual returned bit must be clear
+;   (exponent45 route unsupported). Independently call15DA on current context, CMA
+;   thenRAR. If CYclear (digit true), JMP154C->15D6->1409 repeats accumulation without
+;   resetting selector or prefix. If CYset (digit false), ordinaryRET154B leaves A7F with
+;   S0Z1AC1P1CY1, BC from1616, HL208F, DEpreserved. Required prefixes are31,35 /33 /35
+;   with retained following29; widths2/1/1 and modulo16 accumulators6/3/5. Scope is
+;   non-refill, clear EOF/reuse, prefix width<=127, no decimal-point/exponent/other
+;   selector transition, and scratch/code/reader/stack nonaliasing. No numeric-value
+;   conversion or arbitrary-input termination claim. Pass41 selector01/0A evidence remains
+;   valid; this is a scope extension, not a correction.
 ; Hypothesis: none beyond the low-level operational description
 ; Completeness: bounds=provisional; control_flow=partial; contract=partial
 ; Evidence: evidence.json#seeds/PLI.COM+1376;
 ;   ../minimal-baseline/pass-5/structural.json#PLI.COM+1376;
-;   ../host-compiler/pass-41/README.md; ../host-compiler/pass-41/work-packet.json
+;   ../host-compiler/pass-41/README.md; ../host-compiler/pass-41/work-packet.json;
+;   ../host-compiler/pass-44/numeric-acquisition-cases.json;
+;   ../host-compiler/pass-44/numeric-contract.md
 ; Procedure pseudo (operational; byte/word arithmetic wraps):
 ;   scope EOF.bit0=0,reuse.bit0=0: word[2087]=0; width=0; sum=0; selector=0; while selector==0 {
 ;   if context in {00,20}: context=read_mask12D9(); else if predicate15E3(context).bit0:
@@ -1931,8 +1956,16 @@ PLI_13DA: JMP 1506H ; if always: PC=1506H; flags preserved ; +13DA runtime=14DAH
 PLI_13DD: CALL 16DAH ; push following PC; invoke PLI.COM+15DA; established complete contract at declared scope ; +13DD runtime=14DDH OBSERVED
 PLI_13E0: RAR ; A=(old_CY<<7)|(old_A>>1); CY=old_A.bit0; NZPA preserved ; +13E0 runtime=14E0H OBSERVED
 PLI_13E1: JNC 14ECH ; if CY=0: PC=14ECH; flags preserved ; +13E1 runtime=14E1H OBSERVED
-; SECTION [13E4,13EC) RAW
-PLI_13E4: DB 021H,0C3H,020H,036H,002H,0C3H,006H,015H ; +13E4 runtime=14E4H RAW
+; SECTION [13E4,13EC) UNDERSTOOD
+; @block-pseudo 13E4
+; pseudo:
+; | digit-true15DA/RAR publishes selector02
+; | append current digit before counted following read; independently normalize following
+; | reject decimal-point/exponent transition at bounded scope
+; | fresh digit predicate; CMA/RAR; digit continues via15D6, false ordinaryRET154B
+PLI_13E4: LXI H,20C3H ; LXI H,20C3H; bounded numeric dataflow established by Pass44 correlated natural windows ; +13E4 runtime=14E4H OBSERVED
+PLI_13E7: MVI M,02H ; MVI M,02H; bounded numeric dataflow established by Pass44 correlated natural windows ; +13E7 runtime=14E7H OBSERVED
+PLI_13E9: JMP 1506H ; JMP 1506H; bounded numeric dataflow established by Pass44 correlated natural windows ; +13E9 runtime=14E9H OBSERVED
 ; SECTION [13EC,144D) UNDERSTOOD
 ; @block-pseudo 13EC
 ; pseudo:
@@ -2076,11 +2109,27 @@ PLI_1513: DB 016H,0C9H,0C3H,0D6H,016H ; +1513 runtime=1613H RAW
 PLI_1518: LDA 20C3H ; A = byte[pattern_selector (20C3H)]; flags preserved ; +1518 runtime=1618H OBSERVED
 PLI_151B: CPI 02H ; flags = unsigned byte comparison A-02H; A unchanged ; +151B runtime=161BH OBSERVED
 PLI_151D: JNZ 164FH ; if Z=0: PC=164FH; flags preserved ; +151D runtime=161DH OBSERVED
-; SECTION [1520,154F) RAW
-PLI_1520: DB 03AH,0C1H,020H ; +1520 runtime=1620H RAW
-PLI_1523: DB 0FEH,02EH,0C2H,030H,016H,021H,0C3H,020H,036H,003H,0C3H,04CH,016H,02AH,0C1H,020H ; +1523 runtime=1623H RAW
-PLI_1533: DB 04DH,0CDH,016H,017H,01FH,0D2H,043H,016H,021H,0C3H,020H,036H,004H,0C3H,04CH,016H ; +1533 runtime=1633H RAW
-PLI_1543: DB 0CDH,0DAH,016H,02FH,01FH,0D2H,04CH,016H,0C9H,0C3H,0D6H,016H ; +1543 runtime=1643H RAW
+; SECTION [1520,1528) UNDERSTOOD
+PLI_1520: LDA 20C1H ; LDA 20C1H; bounded numeric dataflow established by Pass44 correlated natural windows ; +1520 runtime=1620H OBSERVED
+PLI_1523: CPI 2EH ; CPI 2EH; bounded numeric dataflow established by Pass44 correlated natural windows ; +1523 runtime=1623H OBSERVED
+PLI_1525: JNZ 1630H ; JNZ 1630H; bounded numeric dataflow established by Pass44 correlated natural windows ; +1525 runtime=1625H OBSERVED
+; SECTION [1528,1530) RAW
+PLI_1528: DB 021H,0C3H,020H,036H,003H,0C3H,04CH,016H ; +1528 runtime=1628H RAW
+; SECTION [1530,153B) UNDERSTOOD
+PLI_1530: LHLD 20C1H ; LHLD 20C1H; bounded numeric dataflow established by Pass44 correlated natural windows ; +1530 runtime=1630H OBSERVED
+PLI_1533: MOV C,L ; MOV C,L; bounded numeric dataflow established by Pass44 correlated natural windows ; +1533 runtime=1633H OBSERVED
+PLI_1534: CALL 1716H ; CALL 1716H; bounded numeric dataflow established by Pass44 correlated natural windows ; +1534 runtime=1634H OBSERVED
+PLI_1537: RAR ; RAR; bounded numeric dataflow established by Pass44 correlated natural windows ; +1537 runtime=1637H OBSERVED
+PLI_1538: JNC 1643H ; JNC 1643H; bounded numeric dataflow established by Pass44 correlated natural windows ; +1538 runtime=1638H OBSERVED
+; SECTION [153B,1543) RAW
+PLI_153B: DB 021H,0C3H,020H,036H,004H,0C3H,04CH,016H ; +153B runtime=163BH RAW
+; SECTION [1543,154F) UNDERSTOOD
+PLI_1543: CALL 16DAH ; CALL 16DAH; bounded numeric dataflow established by Pass44 correlated natural windows ; +1543 runtime=1643H OBSERVED
+PLI_1546: CMA ; CMA; bounded numeric dataflow established by Pass44 correlated natural windows ; +1546 runtime=1646H OBSERVED
+PLI_1547: RAR ; RAR; bounded numeric dataflow established by Pass44 correlated natural windows ; +1547 runtime=1647H OBSERVED
+PLI_1548: JNC 164CH ; JNC 164CH; bounded numeric dataflow established by Pass44 correlated natural windows ; +1548 runtime=1648H OBSERVED
+PLI_154B: RET ; RET; bounded numeric dataflow established by Pass44 correlated natural windows ; +154B runtime=164BH OBSERVED
+PLI_154C: JMP 16D6H ; JMP 16D6H; bounded numeric dataflow established by Pass44 correlated natural windows ; +154C runtime=164CH OBSERVED
 ; SECTION [154F,155F) UNDERSTOOD
 ; @block-pseudo 154F
 ; pseudo:

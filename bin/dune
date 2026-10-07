@@ -82,3 +82,23 @@
  (name native_acquisition_parent)
  (public_name pli80-native-acquisition-parent)
  (libraries pli80 pli80_host runner unix))
+
+(executable
+ (name native_reentrant_acquisition)
+ (public_name pli80-native-reentrant-acquisition)
+ (libraries pli80 pli80_host runner unix))
+
+(executable
+ (name native_acquisition_family)
+ (public_name pli80-native-acquisition-family)
+ (libraries pli80 pli80_host runner unix))
+
+(executable
+ (name native_numeric_acquisition)
+ (public_name pli80-native-numeric-acquisition)
+ (libraries pli80 pli80_host runner unix))
+
+(executable
+ (name native_reentrant_hybrids)
+ (public_name pli80-native-reentrant-hybrids)
+ (libraries pli80 pli80_host cpm i8080 runner analysis unix))

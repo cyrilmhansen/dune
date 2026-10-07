@@ -1,0 +1,450 @@
+{
+  "status": "complete; all categories passed after one documented catalog-epoch assertion repair",
+  "validation_tier": "full_checkpoint",
+  "previous_full_checkpoint": "fbaf7b86491c7a30449d826e4f6a21a937f3020d",
+  "new_full_checkpoint": "the coherent Pass44 commit containing this report",
+  "trigger": "bounded resident1376 contract extension",
+  "exact_historical_bytes": 94720,
+  "logical_root_shadows": 21,
+  "outer_root_shadows": 15,
+  "field15_boundary_pairs": 7,
+  "field80_boundary_pairs": 3,
+  "numeric_resident_shadows": 3,
+  "oracle_queries": 0,
+  "dune_test_stanzas": 37,
+  "categories_deferred": [],
+  "all_passed": true,
+  "category_count": 73,
+  "python_test_count": 477,
+  "python_test_executions_including_rerun": 496,
+  "safe_parallel_workers": 4,
+  "full_checkpoint_wall_seconds": 810.041,
+  "initial_sum_category_seconds": 3095.54,
+  "sum_all_executions_seconds": 3130.884,
+  "reruns": [
+    {
+      "category": "pass42",
+      "tests": 19,
+      "elapsed_seconds": 35.344,
+      "return_code": 0,
+      "reason": "The old global catalog immutability assertion was pinned to the explicit preserved pre-Pass44 +1376 contract; every other catalog entry remains compared unchanged. No historical/runtime correction. Rerun overlapped the checkpoint tail."
+    }
+  ],
+  "top_10_slowest": [
+    {
+      "category": "pass13",
+      "elapsed_seconds": 155.158
+    },
+    {
+      "category": "packet-continuation",
+      "elapsed_seconds": 143.793
+    },
+    {
+      "category": "pass31",
+      "elapsed_seconds": 140.08
+    },
+    {
+      "category": "pass14",
+      "elapsed_seconds": 134.882
+    },
+    {
+      "category": "pass18-native",
+      "elapsed_seconds": 122.656
+    },
+    {
+      "category": "minimal-pass-10",
+      "elapsed_seconds": 119.965
+    },
+    {
+      "category": "minimal-pass-9",
+      "elapsed_seconds": 108.027
+    },
+    {
+      "category": "pass21-native",
+      "elapsed_seconds": 99.259
+    },
+    {
+      "category": "pass20-native",
+      "elapsed_seconds": 95.184
+    },
+    {
+      "category": "minimal-pass-6",
+      "elapsed_seconds": 93.464
+    }
+  ],
+  "category_results": {
+    "build": {
+      "return_code": 0,
+      "elapsed_seconds": 2.861,
+      "python_tests": 0
+    },
+    "project": {
+      "return_code": 0,
+      "elapsed_seconds": 3.021,
+      "python_tests": 0
+    },
+    "pass17-native": {
+      "return_code": 0,
+      "elapsed_seconds": 80.526,
+      "python_tests": 5
+    },
+    "native-unit": {
+      "return_code": 0,
+      "elapsed_seconds": 0.053,
+      "python_tests": 0
+    },
+    "pass19-native": {
+      "return_code": 0,
+      "elapsed_seconds": 88.825,
+      "python_tests": 9
+    },
+    "pass20-native": {
+      "return_code": 0,
+      "elapsed_seconds": 95.184,
+      "python_tests": 7
+    },
+    "pass15": {
+      "return_code": 0,
+      "elapsed_seconds": 28.215,
+      "python_tests": 7
+    },
+    "pass18-native": {
+      "return_code": 0,
+      "elapsed_seconds": 122.656,
+      "python_tests": 6
+    },
+    "baseline": {
+      "return_code": 0,
+      "elapsed_seconds": 0.27,
+      "python_tests": 9
+    },
+    "minimal-pass-1": {
+      "return_code": 0,
+      "elapsed_seconds": 0.176,
+      "python_tests": 8
+    },
+    "minimal-pass-2": {
+      "return_code": 0,
+      "elapsed_seconds": 0.175,
+      "python_tests": 9
+    },
+    "minimal-pass-3": {
+      "return_code": 0,
+      "elapsed_seconds": 0.333,
+      "python_tests": 9
+    },
+    "minimal-pass-4": {
+      "return_code": 0,
+      "elapsed_seconds": 0.154,
+      "python_tests": 11
+    },
+    "pass16": {
+      "return_code": 0,
+      "elapsed_seconds": 57.056,
+      "python_tests": 6
+    },
+    "minimal-pass-5": {
+      "return_code": 0,
+      "elapsed_seconds": 64.761,
+      "python_tests": 8
+    },
+    "pass14": {
+      "return_code": 0,
+      "elapsed_seconds": 134.882,
+      "python_tests": 8
+    },
+    "minimal-pass-6": {
+      "return_code": 0,
+      "elapsed_seconds": 93.464,
+      "python_tests": 8
+    },
+    "minimal-pass-8": {
+      "return_code": 0,
+      "elapsed_seconds": 9.813,
+      "python_tests": 8
+    },
+    "minimal-pass-7": {
+      "return_code": 0,
+      "elapsed_seconds": 59.186,
+      "python_tests": 8
+    },
+    "pass13": {
+      "return_code": 0,
+      "elapsed_seconds": 155.158,
+      "python_tests": 8
+    },
+    "minimal-pass-12": {
+      "return_code": 0,
+      "elapsed_seconds": 50.705,
+      "python_tests": 8
+    },
+    "recursive-unit": {
+      "return_code": 0,
+      "elapsed_seconds": 0.017,
+      "python_tests": 0
+    },
+    "balance-unit": {
+      "return_code": 0,
+      "elapsed_seconds": 0.005,
+      "python_tests": 0
+    },
+    "minimal-pass-11": {
+      "return_code": 0,
+      "elapsed_seconds": 78.702,
+      "python_tests": 8
+    },
+    "minimal-pass-9": {
+      "return_code": 0,
+      "elapsed_seconds": 108.027,
+      "python_tests": 7
+    },
+    "V1": {
+      "return_code": 0,
+      "elapsed_seconds": 21.831,
+      "python_tests": 9
+    },
+    "minimal-pass-10": {
+      "return_code": 0,
+      "elapsed_seconds": 119.965,
+      "python_tests": 8
+    },
+    "mapped-unit": {
+      "return_code": 0,
+      "elapsed_seconds": 0.013,
+      "python_tests": 0
+    },
+    "attribute-unit": {
+      "return_code": 0,
+      "elapsed_seconds": 0.111,
+      "python_tests": 0
+    },
+    "emitter-unit": {
+      "return_code": 0,
+      "elapsed_seconds": 0.039,
+      "python_tests": 0
+    },
+    "roundtrip": {
+      "return_code": 0,
+      "elapsed_seconds": 13.188,
+      "python_tests": 0
+    },
+    "roundtrip-tests": {
+      "return_code": 0,
+      "elapsed_seconds": 26.077,
+      "python_tests": 11
+    },
+    "pass23": {
+      "return_code": 0,
+      "elapsed_seconds": 16.432,
+      "python_tests": 6
+    },
+    "native-emitter-unit": {
+      "return_code": 0,
+      "elapsed_seconds": 1.609,
+      "python_tests": 0
+    },
+    "word-emitter-unit": {
+      "return_code": 0,
+      "elapsed_seconds": 0.118,
+      "python_tests": 0
+    },
+    "pass22": {
+      "return_code": 0,
+      "elapsed_seconds": 83.757,
+      "python_tests": 9
+    },
+    "range-unit": {
+      "return_code": 0,
+      "elapsed_seconds": 0.115,
+      "python_tests": 0
+    },
+    "pass24": {
+      "return_code": 0,
+      "elapsed_seconds": 64.572,
+      "python_tests": 7
+    },
+    "publication-unit": {
+      "return_code": 0,
+      "elapsed_seconds": 0.063,
+      "python_tests": 0
+    },
+    "pass21-native": {
+      "return_code": 0,
+      "elapsed_seconds": 99.259,
+      "python_tests": 6
+    },
+    "range-publication-unit": {
+      "return_code": 0,
+      "elapsed_seconds": 0.3,
+      "python_tests": 0
+    },
+    "packet-continuation": {
+      "return_code": 0,
+      "elapsed_seconds": 143.793,
+      "python_tests": 27
+    },
+    "control-unit": {
+      "return_code": 0,
+      "elapsed_seconds": 0.004,
+      "python_tests": 0
+    },
+    "input-unit": {
+      "return_code": 0,
+      "elapsed_seconds": 0.125,
+      "python_tests": 0
+    },
+    "pass25": {
+      "return_code": 0,
+      "elapsed_seconds": 60.803,
+      "python_tests": 6
+    },
+    "gate-unit": {
+      "return_code": 0,
+      "elapsed_seconds": 0.38,
+      "python_tests": 0
+    },
+    "pass26": {
+      "return_code": 0,
+      "elapsed_seconds": 63.197,
+      "python_tests": 5
+    },
+    "pass27": {
+      "return_code": 0,
+      "elapsed_seconds": 62.844,
+      "python_tests": 5
+    },
+    "pass28": {
+      "return_code": 0,
+      "elapsed_seconds": 74.495,
+      "python_tests": 7
+    },
+    "pass32": {
+      "return_code": 0,
+      "elapsed_seconds": 44.76,
+      "python_tests": 10
+    },
+    "pass29": {
+      "return_code": 0,
+      "elapsed_seconds": 79.995,
+      "python_tests": 8
+    },
+    "historical-leaf-queries": {
+      "return_code": 0,
+      "elapsed_seconds": 3.781,
+      "python_tests": 0
+    },
+    "pass30": {
+      "return_code": 0,
+      "elapsed_seconds": 82.383,
+      "python_tests": 8
+    },
+    "pass34": {
+      "return_code": 0,
+      "elapsed_seconds": 41.939,
+      "python_tests": 12
+    },
+    "pass35": {
+      "return_code": 0,
+      "elapsed_seconds": 40.033,
+      "python_tests": 12
+    },
+    "pass31": {
+      "return_code": 0,
+      "elapsed_seconds": 140.08,
+      "python_tests": 8
+    },
+    "pass33": {
+      "return_code": 0,
+      "elapsed_seconds": 83.914,
+      "python_tests": 12
+    },
+    "pass36": {
+      "return_code": 0,
+      "elapsed_seconds": 40.52,
+      "python_tests": 14
+    },
+    "pass37": {
+      "return_code": 0,
+      "elapsed_seconds": 41.481,
+      "python_tests": 15
+    },
+    "pass39": {
+      "return_code": 0,
+      "elapsed_seconds": 44.194,
+      "python_tests": 19
+    },
+    "pass40": {
+      "return_code": 0,
+      "elapsed_seconds": 43.909,
+      "python_tests": 17
+    },
+    "pass38": {
+      "return_code": 0,
+      "elapsed_seconds": 54.576,
+      "python_tests": 19
+    },
+    "acquisition-parent-unit": {
+      "return_code": 0,
+      "elapsed_seconds": 0.002,
+      "python_tests": 0
+    },
+    "pass44-roots": {
+      "return_code": 0,
+      "elapsed_seconds": 2.602,
+      "python_tests": 3
+    },
+    "pass44-family": {
+      "return_code": 0,
+      "elapsed_seconds": 6.547,
+      "python_tests": 4
+    },
+    "pass41": {
+      "return_code": 0,
+      "elapsed_seconds": 54.945,
+      "python_tests": 16
+    },
+    "pass44-numeric": {
+      "return_code": 0,
+      "elapsed_seconds": 23.206,
+      "python_tests": 5
+    },
+    "classifier-unit": {
+      "return_code": 0,
+      "elapsed_seconds": 0.093,
+      "python_tests": 0
+    },
+    "dynamic-progress": {
+      "return_code": 0,
+      "elapsed_seconds": 0.135,
+      "python_tests": 0
+    },
+    "diff-check": {
+      "return_code": 0,
+      "elapsed_seconds": 0.041,
+      "python_tests": 0
+    },
+    "pass42": {
+      "return_code": 0,
+      "elapsed_seconds": 35.344,
+      "python_tests": 19
+    },
+    "pass44-hybrids": {
+      "return_code": 0,
+      "elapsed_seconds": 49.462,
+      "python_tests": 5
+    },
+    "pass43": {
+      "return_code": 0,
+      "elapsed_seconds": 87.523,
+      "python_tests": 8
+    }
+  },
+  "validation_aggregate_commands": 1,
+  "checkpoint_logs": "_build/host-compiler-pass-44/checkpoint",
+  "tests_deferred": [],
+  "model_facing_packet_bytes": 18146,
+  "scope_extension": true,
+  "historical_contract_correction": null,
+  "divergence": null,
+  "fidelity_debt": null
+}

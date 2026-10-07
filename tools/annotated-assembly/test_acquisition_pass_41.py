@@ -10,7 +10,10 @@ class PassFortyOneTests(unittest.TestCase):
  def test_every_corrected_duplicate_window_retained(self):
   self.assertEqual(projection(self.rows,self.a),load(REPORT/'route-distribution.json'));self.assertEqual([len(g['PLI1.OVL+784E'])for g in self.rows.values()],[19,86,37]);self.assertEqual([len(g['PLI.COM+1376'])for g in self.rows.values()],[38,172,74]);self.assertEqual(sum(len(rs)for g in self.a.values()for rs in g.values()),1212)
  def test_compact_packet_regenerates_exactly(self):
-  self.assertEqual(build_packet(self.rows,self.a,self.cat),load(REPORT/'work-packet.json'));self.assertLessEqual((REPORT/'work-packet.json').stat().st_size,32768)
+  epoch_catalog=dict(self.cat)
+  extension=ROOT/'research/host-compiler/pass-44/numeric-contract-before.json'
+  if extension.exists():epoch_catalog['PLI.COM+1376']=load(extension)
+  self.assertEqual(build_packet(self.rows,self.a,epoch_catalog),load(REPORT/'work-packet.json'));self.assertLessEqual((REPORT/'work-packet.json').stat().st_size,32768)
  def test_full_proof_hash_is_rederivable(self):
   b=encode_full_proof(self.rows,self.a);e=load(REPORT/'efficiency.json');self.assertEqual(len(b),e['full_rederivable_evidence_bytes']);self.assertEqual(hashlib.sha256(b).hexdigest(),e['full_rederivable_evidence_sha256'])
  def test_parent_compatibility_independent_ancestry(self):
@@ -47,7 +50,7 @@ class PassFortyOneTests(unittest.TestCase):
    self.assertEqual(self.cat[k]['completeness'],dict(bounds='provisional',control_flow='partial',contract='partial'))
   image=next(i for i in load(ROOT/'research/annotated-assembly/manifest.json')['images']if i['name']=='PLI.COM');status=lambda o:next(s['status']for s in image['sections']if s['start_offset']<=o<s['end_offset']);self.assertEqual(status(0x160a),'RAW')
  def test_only_documented_catalog_entries_changed(self):
-  before=load(REPORT/'before.json');after=load(REPORT/'after.json');base={p['id']:p for p in json.loads(subprocess.check_output(['git','show',BASE+':research/annotated-assembly/procedures.json'],text=True))['procedures']};self.assertEqual({k:base.get(k)for k in before},before);self.assertTrue(all((load(ROOT/'research/host-compiler/pass-42/before.json').get(k)or self.cat[k])==p for k,p in base.items()if k not in after));self.assertEqual({k:self.cat[k]for k in after},after)
+  before=load(REPORT/'before.json');after=load(REPORT/'after.json');base={p['id']:p for p in json.loads(subprocess.check_output(['git','show',BASE+':research/annotated-assembly/procedures.json'],text=True))['procedures']};self.assertEqual({k:base.get(k)for k in before},before);self.assertTrue(all((load(ROOT/'research/host-compiler/pass-42/before.json').get(k)or self.cat[k])==p for k,p in base.items()if k not in after));epoch=dict(self.cat);extension=ROOT/'research/host-compiler/pass-44/numeric-contract-before.json';epoch.update({'PLI.COM+1376':load(extension)}if extension.exists()else{});self.assertEqual({k:epoch[k]for k in after},after)
  def test_modified_carry_or_return_flag_falsifies_law(self):
   for kind in ['carry','return']:
    r=copy.deepcopy(self.rows['FIZZBUZ']['PLI1.OVL+784E'][0])

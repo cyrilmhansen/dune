@@ -8,7 +8,8 @@ module U=U16
 module B=U8
 type event=Enter of int*int|Leave|Push of int*int|Pop|Constructor_arguments of int
 type result={returned:R.returned;selection:string;acquisition:string}
-let run memory ~entry ~write ~compatibility ~guard_field ~saved =
+type operation=Parent|Hash_prefix|Payload_match|Acquire_overlay|Select_pointer|Successor|Pointer_compare|Null_mask|Search|Resident_acquisition
+let run ?(operation=Parent) memory ~entry ~write ~compatibility ~guard_field ~saved =
  List.iter B.check [entry.R.a;entry.bc land 255;entry.de land 255];List.iter U.check [entry.bc;entry.de;entry.hl];
  let q=ref entry in
  let need b text=if not b then invalid_arg("Acquisition_parent: "^text)in
@@ -69,7 +70,7 @@ let run memory ~entry ~write ~compatibility ~guard_field ~saved =
  let payload_match()=
   hl 0xa907;put(overlay 0x4587)!q.hl(!q.de land 255);hl 0xa906;put(overlay 0x4589)!q.hl(!q.bc lsr 8);hl 0xa905;put(overlay 0x458b)!q.hl(!q.bc land 255);
   de 0x1c36;bc 0xa863;call(overlay 0x4592)0x1b33 resident_compare;
-  need !q.flags.carry "payload floor branch";
+  if !q.flags.carry then(
   pair 0xa863;guard_field !q.hl(10+read 0xa907);a(read !q.hl);a(dec !q.a);a(dec !q.a);sub 8;hl 0xa907;cmp(read !q.hl);need !q.flags.zero "payload length mismatch";
   a(read 0xa907);put(overlay 0x45aa)0xa908 !q.a;
   let rec loop()=a(read 0xa908);cmp 0;need(not !q.flags.zero)"zero payload alternative";
@@ -77,7 +78,7 @@ let run memory ~entry ~write ~compatibility ~guard_field ~saved =
    pair 0xa905;dad !q.bc;let source= !q.hl in push(overlay 0x45c0)source;
    pair 0xa908;hl(!q.hl land 255);bc 10;dad !q.bc;exchange();pair 0xa863;dad !q.de;
    pop();de source;a(read !q.de);cmp(read !q.hl);need !q.flags.zero "payload mismatch retry";
-   a(read 0xa908);cmp 0;if not !q.flags.zero then loop()in loop()in
+   a(read 0xa908);cmp 0;if not !q.flags.zero then loop()in loop())in
  let selection=ref ""in
  let selection_operation()=
   hl 0xa90f;put(overlay 0x4654)!q.hl(!q.bc land 255);call1 0x4655 0x4562 hash_prefix;call1 0x4658 0x422f select_pointer;
@@ -132,33 +133,8 @@ let run memory ~entry ~write ~compatibility ~guard_field ~saved =
   hl 0xa911;put(overlay 0x46aa)!q.hl(!q.bc land 255);pair 0xa911;c(!q.hl land 255);
   call1 0x46af 0x4651 selection_operation;call1 0x46b2 0x4281 mask_pointer;rar();
   if not !q.flags.carry then(pair 0xa911;c(!q.hl land 255);call1 0x46bd 0x4693 construct_wrapper)in
- (* Existing classifier family, kept as independent scratch/flag channels. *)
- let predicate02()=
-  hl 0xa645;put(overlay 0x213f)!q.hl(!q.bc land 255);
-  let rec tests=function []->a 0|k::ks->a(read 0xa645);cmp k;if !q.flags.zero then(need(k=2)"unvalidated classifier arm";a 1)else tests ks in
-  tests[11;12;13;2;3;4]in
- let interval_predicate()=
-  hl 0xa647;put(overlay 0x21b0)!q.hl(!q.bc land 255);a(read 0xa647);sub 0x30;add 255;mask();let carrier=save_mask(overlay 0x21b9)in
-  a 0x31;hl 0xa647;sub(read !q.hl);mask();a(!q.a lxor 255);restore_mask carrier;logical true(!q.bc land 255);rar();
-  if !q.flags.carry then a 1 else(pair 0xa647;c(!q.hl land 255);call1 0x21d0 0x213c predicate02) in
- let classifier()=
-  c 0;call1 0x239c 0x2355(fun()->
-   hl 0xa64d;put(overlay 0x2358)!q.hl(!q.bc land 255);pair 0xa64d;hl(!q.hl land 255);bc 0xa628;dad !q.bc;c(read !q.hl);
-   (* Selector05 takes the established false predicate route as well. *)
-   let selector=read !q.hl in
-   ignore selector;call1 0x2363 0x21ad interval_predicate;
-   rar();if not !q.flags.carry then a 5 else(
-    pair 0xa64d;hl(!q.hl land 255);bc 0xa628;dad !q.bc;a(read !q.hl);cmp 0x31;need(not !q.flags.zero)"selector31";
-    pair 0xa64d;hl(!q.hl land 255);bc 0xa628;dad !q.bc;a(read !q.hl);cmp 0x2a;need(not !q.flags.zero)"selector2A";
-    pair 0xa64d;c(!q.hl land 255);call1 0x2395 0x230e(fun()->
-     hl 0xa64c;put(overlay 0x2311)!q.hl(!q.bc land 255);pair 0xa64c;hl(!q.hl land 255);bc 0xa628;dad !q.bc;
-     a(read !q.hl);sub 0x24;sub 1;mask();let carrier=save_mask(overlay 0x2321)in
-     a(read !q.hl);sub 0x25;sub 1;mask();restore_mask carrier;logical false(!q.bc land 255);rar();need(not !q.flags.carry)"classifier24/25";
-     pair 0xa64c;hl(!q.hl land 255);bc 0xa628;dad !q.bc;a(read !q.hl);cmp 0x28;need(not !q.flags.zero)"classifier28";
-     pair 0xa64c;c(!q.hl land 255);call1 0x2348 0x22cb(fun()->
-      hl 0xa64b;put(overlay 0x22ce)!q.hl(!q.bc land 255);
-      List.iter(fun k->pair 0xa64b;hl(!q.hl land 255);bc 0xa628;dad !q.bc;a(read !q.hl);cmp k;need(not !q.flags.zero)"classifier15/16/19")[0x15;0x16;0x19];a 2);
-     a(inc !q.a);a(inc !q.a))))in
+ (* One canonical implementation also serves the parent dispatcher. *)
+ let classifier()=q:=Classifier.run memory ~entry:!q ~write ~call ~push ~pop in
  let mask_context()=
   hl 0x208f;put(resident 0x081a)!q.hl(!q.bc land 255);a 0x5f;hl 0x208f;cmp(read !q.hl);
   if !q.flags.carry then(a(read 0x208f);ani 0x5f)else a(read 0x208f)in
@@ -190,8 +166,9 @@ let run memory ~entry ~write ~compatibility ~guard_field ~saved =
    a(read 0x20c1);sub 0;sub 1;mask();restore_mask carrier;logical false(!q.bc land 255);rar();
    if !q.flags.carry then(call0 0x13c5 0x12d9 adapted_read;put(resident 0x13c8)0x20c1 !q.a;initial())else(
     call0 0x13ce 0x15e3 letter;rar();if !q.flags.carry then(hl 0x20c3;put(resident 0x13d8)!q.hl 1)
-    else(call0 0x13dd 0x15da digit;rar();need(not !q.flags.carry)"numeric acquisition";
-     a(read 0x20c1);cmp 0x27;need(not !q.flags.zero)"quoted acquisition";hl 0x20c3;put(resident 0x1404)!q.hl 10))in initial();
+    else(call0 0x13dd 0x15da digit;rar();
+     if !q.flags.carry then(hl 0x20c3;put(resident 0x13e7)!q.hl 2)else(
+      a(read 0x20c1);cmp 0x27;need(not !q.flags.zero)"quoted acquisition";hl 0x20c3;put(resident 0x1404)!q.hl 10)))in initial();
   let rec accumulate()=
    a(read 0x20c1);cmp 0;need(not !q.flags.zero)"zero context";
    call0 0x1411 0x1627 append_prefix;a(read 0x20c1);put(resident 0x1417)0x20c2 !q.a;
@@ -211,7 +188,17 @@ let run memory ~entry ~write ~compatibility ~guard_field ~saved =
      a 0;de 0x1c59;call0 0x1478 0x1a40(fun()->word_difference(word !q.de)0;de(U.wrap(!q.de+1)));
      logical false(!q.hl land 255);need !q.flags.zero "nonzero acquired word"))
    else(
-    List.iter(fun k->a(read 0x20c3);cmp k;need(not !q.flags.zero)"unsupported resident selector")[4;3;2;5])in accumulate()in
+    List.iter(fun k->a(read 0x20c3);cmp k;need(not !q.flags.zero)"unsupported resident selector")[4;3];
+    a(read 0x20c3);cmp 2;
+    if !q.flags.zero then(
+     a(read 0x20c1);cmp 0x2e;need(not !q.flags.zero)"numeric decimal-point alternative";
+     pair 0x20c1;c(!q.hl land 255);call0 0x1534 0x1616(fun()->
+      hl 0x2149;put(resident 0x1619)!q.hl(!q.bc land 255);pair 0x2149;c(!q.hl land 255);
+      call0 0x161e 0x0817 mask_context;sub 0x45;sub 1;mask());
+     rar();need(not !q.flags.carry)"numeric exponent alternative";
+     call0 0x1543 0x15da digit;a(!q.a lxor 255);rar();
+     if not !q.flags.carry then accumulate())
+    else(a(read 0x20c3);cmp 5;need(not !q.flags.zero)"unsupported resident selector"))in accumulate()in
  let acquisition=ref ""in
  let acquire_overlay()=
   call(overlay 0x784e)0x1476 acquire_resident;
@@ -219,7 +206,8 @@ let run memory ~entry ~write ~compatibility ~guard_field ~saved =
   a(read 0x20c6);sub 0x2f;sub 1;mask();restore_mask carrier;logical true(!q.bc land 255);let carrier=save_mask(overlay 0x7865)in
   a(read 0x20c1);sub 0x2a;sub 1;mask();restore_mask carrier;logical true(!q.bc land 255);rar();need(not !q.flags.carry)"triple rewrite";
   a(read 0x20c3);sub 10;add 255;mask();let carrier=save_mask(overlay 0x78ab)in
-  a(read 0x20c3);sub 1;add 255;mask();restore_mask carrier;logical true(!q.bc land 255);rar();need(not !q.flags.carry)"passthrough acquisition";
+  a(read 0x20c3);sub 1;add 255;mask();restore_mask carrier;logical true(!q.bc land 255);rar();
+  if !q.flags.carry then(need(read 0x20c3=2)"unsupported passthrough acquisition";acquisition:="numeric_selector02_passthrough")else(
   a(read 0x20c3);cmp 10;
   if !q.flags.zero then(
    a(read 0x20c6);put(overlay 0x78c7)0x20c3 !q.a;
@@ -248,13 +236,14 @@ let run memory ~entry ~write ~compatibility ~guard_field ~saved =
       let old= !q.a and high= !q.hl lsr 8 in let sum=old+high+carry in
       let v=B.wrap sum in q:={!q with R.a=v;hl=v lsl 8 lor low;flags=flags v((old land 15)+(high land 15)+carry>15)(sum>255)});
      exchange();hl(U.wrap(!q.hl-1));put(overlay 0x79f9)!q.hl(!q.de land 255);hl(U.wrap(!q.hl+1));put(overlay 0x79fb)!q.hl(!q.de lsr 8);
-     a(read 0xaa19);cmp 0;if !q.flags.zero then(pair 0xaa16;a(read !q.hl);put(overlay 0x7a08)0x20c3 !q.a;acquisition:="descriptor_match")else traverse())in traverse())in
+     a(read 0xaa19);cmp 0;if !q.flags.zero then(pair 0xaa16;a(read !q.hl);put(overlay 0x7a08)0x20c3 !q.a;acquisition:="descriptor_match")else traverse())in traverse()))in
  (* Complete +57B7 byte list search, conditional termination as historically. *)
- bc 0x7923;
- call1 0x592c 0x57b7(fun()->
+ let search_operation()=
   hl 0xa937;put(overlay 0x57ba)!q.hl(!q.bc lsr 8);hl 0xa936;put(overlay 0x57bc)!q.hl(!q.bc land 255);hl 0xa935;put(overlay 0x57c0)!q.hl 255;
   let rec search()=a(read 0xa935);a(inc !q.a);put(overlay 0x57c6)0xa935 !q.a;bc !q.a;pair 0xa936;dad !q.bc;a(read !q.hl);put(overlay 0x57d1)0xa938 !q.a;cmp 0;
-   need(not !q.flags.zero)"57B7 not found";hl 0xa938;a(read 0x20c3);cmp(read !q.hl);if !q.flags.zero then a 1 else search()in search());
+   if !q.flags.zero then(need(operation=Search)"57B7 not found";a 0)else(hl 0xa938;a(read 0x20c3);cmp(read !q.hl);if !q.flags.zero then a 1 else search())in search() in
+ let parent()=
+ bc 0x7923;call1 0x592c 0x57b7 search_operation;
  rar();need !q.flags.carry "5929 not found";
  pair 0x20c3;c(!q.hl land 255);call1 0x5937 0x46a7 select_or_construct;
  pair 0xa863;store(overlay 0x593d)0xa63b !q.hl;store(overlay 0x5940)0xa635 !q.hl;
@@ -268,5 +257,8 @@ let run memory ~entry ~write ~compatibility ~guard_field ~saved =
  pair 0xa863;bc(U.wrap(!q.bc+1));dad !q.bc;a(read 0xa62e);put(overlay 0x5a33)!q.hl !q.a;
  call1 0x5a34 0x239a classifier;a(inc !q.a);c !q.a;
  call1 0x5a39 0x2511(fun()->q:=saved !q);
- call1 0x5a3c 0x784e acquire_overlay;
+ call1 0x5a3c 0x784e acquire_overlay in
+ (match operation with Parent->parent()|Hash_prefix->hash_prefix()|Payload_match->payload_match()
+ |Acquire_overlay->acquire_overlay()|Select_pointer->select_pointer()|Successor->successor()
+ |Pointer_compare->pointer_compare()|Null_mask->mask_pointer()|Search->search_operation()|Resident_acquisition->acquire_resident());
  {returned= !q;selection= !selection;acquisition= !acquisition}

@@ -56,6 +56,9 @@ cmds['pass41']=['python3','tools/annotated-assembly/test_acquisition_pass_41.py'
 cmds['pass42']=['python3','tools/annotated-assembly/test_causal_5929_pass_42.py','--images',images,'-q']
 cmds['pass43']=['python3','tools/annotated-assembly/test_native_5929_pass_43.py','--images',images,'-q']
 cmds['acquisition-parent-unit']=['_build/default/test/native_acquisition_parent.exe']
+for name,file in [('pass44-roots','test_reentrant_acquisition_pass_44.py'),('pass44-family','test_acquisition_family_pass_44.py'),('pass44-numeric','test_numeric_acquisition_pass_44.py'),('pass44-hybrids','test_native_reentry_hybrids_pass_44.py')]:
+ cmds[name]=['python3','tools/annotated-assembly/'+file,'--images',images,'-q']
+cmds['classifier-unit']=['_build/default/test/native_classifier.exe']
 cmds['dynamic-progress']=['python3','-c',"import json,subprocess;from pathlib import Path;p=Path("+repr(str(out/'dynamic-progress.json'))+");subprocess.run(['python3','tools/annotated-assembly/minimal_dynamic_progress.py','--output',str(p)],check=True);assert json.loads(p.read_text())==json.loads(Path('research/minimal-baseline/dynamic-progress.json').read_text())"]
 cmds['diff-check']=['git','diff','--check']
 

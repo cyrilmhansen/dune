@@ -54,7 +54,7 @@ class PassFortyTwoTests(unittest.TestCase):
  def test_exact_Pass41_cross_parent_compatibility(self):
   self.assertEqual(acquisition_compatibility(self.rows),load(REPORT/'acquisition-compatibility.json')['cases']);self.assertEqual(len(acquisition_compatibility(self.rows)),13)
  def test_old_complete_children_and_global_constructor_unchanged(self):
-  base={p['id']:p for p in json.loads(subprocess.check_output(['git','show',BASE+':research/annotated-assembly/procedures.json'],text=True))['procedures']};after=load(REPORT/'after.json');self.assertTrue(all(self.cat[k]==p for k,p in base.items()if k not in after));self.assertEqual({k:self.cat[k]for k in after},after)
+  base={p['id']:p for p in json.loads(subprocess.check_output(['git','show',BASE+':research/annotated-assembly/procedures.json'],text=True))['procedures']};after=load(REPORT/'after.json');epoch=dict(self.cat);extension=ROOT/'research/host-compiler/pass-44/numeric-contract-before.json';epoch.update({'PLI.COM+1376':load(extension)}if extension.exists()else{});self.assertTrue(all(epoch[k]==p for k,p in base.items()if k not in after));self.assertEqual({k:self.cat[k]for k in after},after)
   self.assertEqual(self.cat['PLI1.OVL+46A7']['completeness'],dict(bounds='stable',control_flow='complete',contract='partial'));self.assertEqual(self.cat['PLI1.OVL+4651']['completeness'],dict(bounds='stable',control_flow='partial',contract='partial'))
  def test_unexecuted_local_paths_remain_RAW(self):
   im=next(i for i in load(ROOT/'research/annotated-assembly/manifest.json')['images']if i['name']=='PLI1.OVL');status=lambda o:next(s['status']for s in im['sections']if s['start_offset']<=o<s['end_offset']);self.assertEqual(status(0x4680),'RAW');self.assertTrue(all(status(o)=='RAW'for o in range(0x468c,0x4692)))

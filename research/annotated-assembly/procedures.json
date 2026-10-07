@@ -10985,18 +10985,19 @@
           "FIZZBUZ": 172,
           "PICTURE": 74
         },
-        "represented_bytes": 328,
-        "description": "38 calls:19 PLI0+42D4 and19 PLI1+784E; each ordered stream has9 selector1,9 selector0A,1 selector5;128 appends,130 direct reader calls,28 adapter reads including2 extra reads; no recursion/frame. Pass41 accumulated MINIMAL/FIZZBUZ/PICTURE inventory; required parent correlations retained independently."
+        "represented_bytes": 367,
+        "description": "38 calls:19 PLI0+42D4 and19 PLI1+784E; each ordered stream has9 selector1,9 selector0A,1 selector5;128 appends,130 direct reader calls,28 adapter reads including2 extra reads; no recursion/frame. Pass41 accumulated MINIMAL/FIZZBUZ/PICTURE inventory; required parent correlations retained independently. Pass44 three correlated numeric selector02 invocations; required digit prefixes and ordinary return proved."
       },
       "unresolved_paths": [
         "partial helper scope: +12AE/+0D40 refill tab/high-bit/capacity paths and +1627 overflow path; +15F9 range30..39 return arm RAW.",
-        "unobserved branch: EOF/reuse entry arms, selector2/3/4 handling, selected-word nonzero handling, previous2E/range predicate true, selector5 1A/42/27/5E alternatives; bounds/CFG/contract partial.",
+        "unobserved branch: EOF/reuse entry arms, selector3/4 handling and selector2 decimal/exponent alternatives, selected-word nonzero handling, previous2E/range predicate true, selector5 1A/42/27/5E alternatives; bounds/CFG/contract partial.",
         "general provenance need: reader initialization, pointer-table word producers and earlier context; host effects are not joined by V0.1.",
         "arbitrary termination concern: whitespace/acquisition retries depend on reader state/input; no arbitrary-input termination proof.",
-        "Pass41 required selector01/0A acquisition closed; global unexecuted rewrite/EOF/reuse/refill/other selector alternatives remain partial, not required causal blockers."
+        "Pass41 required selector01/0A acquisition closed; global unexecuted rewrite/EOF/reuse/refill/other selector alternatives remain partial, not required causal blockers.",
+        "Pass44 closes only digit-selected selector02 accumulation/ordinary return; no global numeric completeness."
       ],
       "inputs": "retained context20C1, EOF2012.bit0/reuse20C4.bit0, counted reader1F06/1F08 and refill state; writable prefix/count/accumulator; selected word table1C38; nonaliasing scratch/stack; no meaningful entry-register byte argument on observed scope",
-      "outputs": "selector20C3, width20C5 and prefix20C6 established; context20C1 is fresh following/extra read, previous20C2 saved; accumulator1C58=sum mod16; selected-word1C59 on selector1;2087/88 cleared. RET14B5 A0 HL0 BC=selected table high address DE1C5A CY0; RET15D5 A0A flagsCPI05; RET15AB A=fresh context flagsCPI27; remaining registers helper-derived.",
+      "outputs": "selector20C3, width20C5 and prefix20C6 established; context20C1 is fresh following/extra read, previous20C2 saved; accumulator1C58=sum mod16; selected-word1C59 on selector1;2087/88 cleared. RET14B5 A0 HL0 BC=selected table high address DE1C5A CY0; RET15D5 A0A flagsCPI05; RET15AB A=fresh context flagsCPI27; remaining registers helper-derived. Pass44 selector02 digit accumulation ordinaryRET154B: A7F BC=normalized following-byte argument HL208F DEpreserved; flagsS0Z1AC1P1CY1.",
       "clobbers": "A,BC,DE,HL,flags; prefix/count/context/previous/selector/accumulator/selected-word/reset controls; transient PSW saves; reader/refill guest/host side effects at inherited partial scope",
       "memory_state": [
         "pattern_context=20C1H (retained current byte; repeatedly replaced by reader-derived values)",
@@ -11055,10 +11056,11 @@
         "convention": "ordinary hardware CALL word; original slot unchanged, SP after RET=entry_SP+2",
         "observed_file_offsets": [
           5301,
+          5451,
           5547,
           5589
         ],
-        "sites_description": "PLI.COM+14B5; PLI.COM+15AB; PLI.COM+15D5"
+        "sites_description": "PLI.COM+14B5; PLI.COM+15AB; PLI.COM+15D5; Pass44 numeric ordinaryRET154B"
       },
       "direct_callees": [
         {
@@ -11110,18 +11112,25 @@
           "callsite_offset": 5485,
           "coordinate": "PLI.COM+12D9",
           "runtime_address": 5081
+        },
+        {
+          "callsite_offset": 5428,
+          "coordinate": "PLI.COM+1616",
+          "runtime_address": 5910
         }
       ],
       "overlapping_entries": [],
-      "contract_scope": "MINIMAL observed clear EOF2012/reuse20C4 bit0 paths; selector1 with selected word zero, selector0A with previous2E/range predicate false, selector5 plain accumulation and extra-read bytes not42/27; inherited partial reader/refill/append scopes; nonaliasing prefix/scratch/table/stack; Pass41 closes required non-refill selector01/0A scopes, independently of unexecuted/refill alternatives.",
-      "contract": "Clear bytes2088/2087. On all38 observed entries EOF2012.bit0=0 and reuse20C4.bit0=0: clear modulo16 accumulator1C58, width20C5 and selector20C3. While selector==0, context20C1 equal00 or20 triggers +12D9 (counted-reader +12AE then conditional mask0817) and replacement of context; otherwise +15E3.A.bit0 chooses selector1; observed false +15DA excludes30..39, context27 clears context and selects5, other observed bytes select0A. Once selector!=0, iterate: if context!=0, partial +1627 appends it to20C6+width, increments width, updates sum mod16. Save context to20C2; +12AE supplies fresh context. Unless selector==5, mask fresh context through0817. Selector0A tests previous-byte2E AND range30..39 mask; observed false then returns via15D5 (one appended byte). Selector1 calls15F9: CMA/RAR/JNC repeats iff original returnedA.bit0==1; observed false selects word[1C38+2*accumulator], copies it to1C59 and subtracts0 via complete1A40; ORA L/JZ returns iff selected word==0 (18/18). Selector5 does not apply mask: context!=1A, context!=27 and context!=5E repeat on observed arms; context27 consumes one more masked read via12D9; observed returned byte!=42 and!=27 returns15AB. Other selector/special/error/EOF-entry/reuse alternatives remain RAW. The prefix is a distinct publication from the retained following context: nine selector1 prefixes, nine selector0A one-byte prefixes and one selector5 seven-byte prefix per overlay caller. Incoming general registers are overwritten before meaningful use on these paths; input dependence is durable reader/context state. No direct BDOS call; buffer refill is delegated to existing partial reader/build contracts; guest-only packet does not establish all host effects. Pass41 bounded required scope (23 independently correlated +784E calls): EOF2012.bit0 and reuse20C4.bit0 clear; every counted read has freshindex1F06<count1F08, so no refill/host effects. Clear2088 then2087, accumulator1C58, width20C5 and selector20C3. Fresh zero/space context20C1 repeatedly calls12D9 then publishes its transformed byte. Complete15E3 selects01 for41..5A or3F; required remaining contexts are nondigit and not27, selecting0A. Each iteration calls bounded1627 before reading the following byte: prefix[20C6+oldwidth]=freshcontext, width increment, accumulator=(oldacc+freshcontext)&0F. Save fresh oldcontext20C2; immediate12AE increments the live reader index before returning the rawfollowing byte; publish raw20C1, independently paired-read20C1/20C2 lowC through0817, republish masked20C1. Selector0A required previous-dot/following-digit conjunction is false and returns at15D5, A=0A,BC=0,HL=208F,DEpreserved,flagsCPI(0A,05). Selector01 uses15F9 actualA.bit0 viaCMA/RAR; continuation repeats. On termination freshaccumulator selects low/high word[1C38+2*acc], published1C59/1C5A; required selectedword0 yields A0,BC1C38,DE1C5A,HL0,flagsS0Z1AC0P1CY0 after subtract0/ORA. Following context remains physically stored separately from prefix. No buffer clear, arbitrary-input termination, refill, quoted, nonzero selectedword or wider selector claim.",
+      "contract_scope": "MINIMAL observed clear EOF2012/reuse20C4 bit0 paths; selector1 with selected word zero, selector0A with previous2E/range predicate false, selector5 plain accumulation and extra-read bytes not42/27; inherited partial reader/refill/append scopes; nonaliasing prefix/scratch/table/stack; Pass41 closes required non-refill selector01/0A scopes, independently of unexecuted/refill alternatives.; Pass44 digit-selected selector02 with bounded immediate counted reads, no decimal-point/exponent transition, prefix<=127 and nonaliasing.",
+      "contract": "Clear bytes2088/2087. On all38 observed entries EOF2012.bit0=0 and reuse20C4.bit0=0: clear modulo16 accumulator1C58, width20C5 and selector20C3. While selector==0, context20C1 equal00 or20 triggers +12D9 (counted-reader +12AE then conditional mask0817) and replacement of context; otherwise +15E3.A.bit0 chooses selector1; observed false +15DA excludes30..39, context27 clears context and selects5, other observed bytes select0A. Once selector!=0, iterate: if context!=0, partial +1627 appends it to20C6+width, increments width, updates sum mod16. Save context to20C2; +12AE supplies fresh context. Unless selector==5, mask fresh context through0817. Selector0A tests previous-byte2E AND range30..39 mask; observed false then returns via15D5 (one appended byte). Selector1 calls15F9: CMA/RAR/JNC repeats iff original returnedA.bit0==1; observed false selects word[1C38+2*accumulator], copies it to1C59 and subtracts0 via complete1A40; ORA L/JZ returns iff selected word==0 (18/18). Selector5 does not apply mask: context!=1A, context!=27 and context!=5E repeat on observed arms; context27 consumes one more masked read via12D9; observed returned byte!=42 and!=27 returns15AB. Other selector/special/error/EOF-entry/reuse alternatives remain RAW. The prefix is a distinct publication from the retained following context: nine selector1 prefixes, nine selector0A one-byte prefixes and one selector5 seven-byte prefix per overlay caller. Incoming general registers are overwritten before meaningful use on these paths; input dependence is durable reader/context state. No direct BDOS call; buffer refill is delegated to existing partial reader/build contracts; guest-only packet does not establish all host effects. Pass41 bounded required scope (23 independently correlated +784E calls): EOF2012.bit0 and reuse20C4.bit0 clear; every counted read has freshindex1F06<count1F08, so no refill/host effects. Clear2088 then2087, accumulator1C58, width20C5 and selector20C3. Fresh zero/space context20C1 repeatedly calls12D9 then publishes its transformed byte. Complete15E3 selects01 for41..5A or3F; required remaining contexts are nondigit and not27, selecting0A. Each iteration calls bounded1627 before reading the following byte: prefix[20C6+oldwidth]=freshcontext, width increment, accumulator=(oldacc+freshcontext)&0F. Save fresh oldcontext20C2; immediate12AE increments the live reader index before returning the rawfollowing byte; publish raw20C1, independently paired-read20C1/20C2 lowC through0817, republish masked20C1. Selector0A required previous-dot/following-digit conjunction is false and returns at15D5, A=0A,BC=0,HL=208F,DEpreserved,flagsCPI(0A,05). Selector01 uses15F9 actualA.bit0 viaCMA/RAR; continuation repeats. On termination freshaccumulator selects low/high word[1C38+2*acc], published1C59/1C5A; required selectedword0 yields A0,BC1C38,DE1C5A,HL0,flagsS0Z1AC0P1CY0 after subtract0/ORA. Following context remains physically stored separately from prefix. No buffer clear, arbitrary-input termination, refill, quoted, nonzero selectedword or wider selector claim. Pass44 bounded numeric extension: fresh context20C1 in30..39 selects02 through complete15DA/RAR and publication13E7. Each current nonzero digit is appended by1627 before12AE; save previous20C2, publish raw following20C1, then independently paired-read20C1/20C2 and normalize lowC through0817. Fresh selector comparisons04,03,02 select numeric handling. Fresh following context2E is unsupported; paired20C1/20C2 lowC invokes complete1616, whose actual returned bit must be clear (exponent45 route unsupported). Independently call15DA on current context, CMA thenRAR. If CYclear (digit true), JMP154C->15D6->1409 repeats accumulation without resetting selector or prefix. If CYset (digit false), ordinaryRET154B leaves A7F with S0Z1AC1P1CY1, BC from1616, HL208F, DEpreserved. Required prefixes are31,35 /33 /35 with retained following29; widths2/1/1 and modulo16 accumulators6/3/5. Scope is non-refill, clear EOF/reuse, prefix width<=127, no decimal-point/exponent/other selector transition, and scratch/code/reader/stack nonaliasing. No numeric-value conversion or arbitrary-input termination claim. Pass41 selector01/0A evidence remains valid; this is a scope extension, not a correction.",
       "semantic_hypothesis": null,
       "pseudocode": "scope EOF.bit0=0,reuse.bit0=0: word[2087]=0; width=0; sum=0; selector=0; while selector==0 { if context in {00,20}: context=read_mask12D9(); else if predicate15E3(context).bit0: selector=1; else if predicate15DA(context).bit0: unresolved RAW arm; else if context==27 { context=0; selector=5; } else selector=0A; }; loop { if context!=0: append1627(context,width,sum); previous=context; context=read12AE(); if selector!=5: context=mask0817(context); if selector==0A { if previous==2E && predicate15DA(context).bit0: unresolved RAW arm; RET15D5; }; if selector==1 { if predicate15F9(context).bit0: continue; selected=word[1C38+2*sum]; word[1C59]=selected; if selected==0: RET14B5; unresolved RAW arm; }; if selector==5 { if context==1A: unresolved RAW arm; if context==27 { context=read_mask12D9(); if context in {42,27}: unresolved RAW arm; RET15AB; }; if context==5E: unresolved RAW arm; continue; }; unresolved RAW dispatch; }",
       "evidence_refs": [
         "evidence.json#seeds/PLI.COM+1376",
         "../minimal-baseline/pass-5/structural.json#PLI.COM+1376",
         "../host-compiler/pass-41/README.md",
-        "../host-compiler/pass-41/work-packet.json"
+        "../host-compiler/pass-41/work-packet.json",
+        "../host-compiler/pass-44/numeric-acquisition-cases.json",
+        "../host-compiler/pass-44/numeric-contract.md"
       ],
       "blocks": [
         {
@@ -11312,6 +11321,15 @@
             "selector01: actual continuation bit; terminate at fresh zero selectedword",
             "selector0A: dot/digit conjunction false; retain following context"
           ]
+        },
+        {
+          "offset": 5092,
+          "pseudocode": [
+            "digit-true15DA/RAR publishes selector02",
+            "append current digit before counted following read; independently normalize following",
+            "reject decimal-point/exponent transition at bounded scope",
+            "fresh digit predicate; CMA/RAR; digit continues via15D6, false ordinaryRET154B"
+          ]
         }
       ],
       "local_comments": {
@@ -11456,7 +11474,24 @@
         "15B4": "if Z=0: PC=16D2H; flags preserved",
         "15D2": "if always: PC=16D6H; flags preserved",
         "15D5": "RET A0A; flags from selectorCPI05; context separately retains following byte",
-        "15D6": "if always: PC=1509H; flags preserved"
+        "15D6": "if always: PC=1509H; flags preserved",
+        "13E4": "LXI H,20C3H; bounded numeric dataflow established by Pass44 correlated natural windows",
+        "13E7": "MVI M,02H; bounded numeric dataflow established by Pass44 correlated natural windows",
+        "13E9": "JMP 1506H; bounded numeric dataflow established by Pass44 correlated natural windows",
+        "1520": "LDA 20C1H; bounded numeric dataflow established by Pass44 correlated natural windows",
+        "1523": "CPI 2EH; bounded numeric dataflow established by Pass44 correlated natural windows",
+        "1525": "JNZ 1630H; bounded numeric dataflow established by Pass44 correlated natural windows",
+        "1530": "LHLD 20C1H; bounded numeric dataflow established by Pass44 correlated natural windows",
+        "1533": "MOV C,L; bounded numeric dataflow established by Pass44 correlated natural windows",
+        "1534": "CALL 1716H; bounded numeric dataflow established by Pass44 correlated natural windows",
+        "1537": "RAR; bounded numeric dataflow established by Pass44 correlated natural windows",
+        "1538": "JNC 1643H; bounded numeric dataflow established by Pass44 correlated natural windows",
+        "1543": "CALL 16DAH; bounded numeric dataflow established by Pass44 correlated natural windows",
+        "1546": "CMA; bounded numeric dataflow established by Pass44 correlated natural windows",
+        "1547": "RAR; bounded numeric dataflow established by Pass44 correlated natural windows",
+        "1548": "JNC 164CH; bounded numeric dataflow established by Pass44 correlated natural windows",
+        "154C": "JMP 16D6H; bounded numeric dataflow established by Pass44 correlated natural windows",
+        "154B": "RET; bounded numeric dataflow established by Pass44 correlated natural windows"
       }
     },
     {

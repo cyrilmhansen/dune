@@ -1,0 +1,1580 @@
+{
+  "scope_extension": true,
+  "correction": false,
+  "oracle_queries": 0,
+  "new_understood_bytes": 39,
+  "cases": [
+    {
+      "source": "FIZZBUZ",
+      "caller": "PLI1.OVL+784E",
+      "call_step": 390901,
+      "entry_step": 390902,
+      "return_step": 391183,
+      "entry": {
+        "a": 44,
+        "b": 0,
+        "c": 44,
+        "d": 251,
+        "e": 0,
+        "h": 165,
+        "l": 175,
+        "sp": 65414,
+        "pc": 5238,
+        "flags": {
+          "sign": false,
+          "zero": true,
+          "auxiliary_carry": true,
+          "parity": true,
+          "carry": false
+        }
+      },
+      "output": {
+        "a": 127,
+        "b": 0,
+        "c": 41,
+        "d": 251,
+        "e": 0,
+        "h": 32,
+        "l": 143,
+        "sp": 65416,
+        "pc": 39505,
+        "flags": {
+          "sign": false,
+          "zero": true,
+          "auxiliary_carry": true,
+          "parity": true,
+          "carry": true
+        }
+      },
+      "initial_context": 49,
+      "prefix": [
+        49,
+        53
+      ],
+      "width": 2,
+      "accumulator": 6,
+      "following_context": 41,
+      "selector": 2,
+      "reads": [
+        {
+          "index": 18,
+          "count": 30,
+          "address": 7840,
+          "value": 53,
+          "next_index": 19
+        },
+        {
+          "index": 19,
+          "count": 30,
+          "address": 7841,
+          "value": 41,
+          "next_index": 20
+        }
+      ],
+      "children": [
+        {
+          "site": 5070,
+          "target": "PLI.COM+15E3",
+          "entry": {
+            "a": 0,
+            "b": 0,
+            "c": 0,
+            "d": 251,
+            "e": 0,
+            "h": 32,
+            "l": 195,
+            "sp": 65412,
+            "pc": 5859,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 0,
+            "b": 0,
+            "c": 0,
+            "d": 251,
+            "e": 0,
+            "h": 32,
+            "l": 195,
+            "sp": 65414,
+            "pc": 5329,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          }
+        },
+        {
+          "site": 5085,
+          "target": "PLI.COM+15DA",
+          "entry": {
+            "a": 0,
+            "b": 0,
+            "c": 0,
+            "d": 251,
+            "e": 0,
+            "h": 32,
+            "l": 195,
+            "sp": 65412,
+            "pc": 5850,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 255,
+            "b": 0,
+            "c": 0,
+            "d": 251,
+            "e": 0,
+            "h": 32,
+            "l": 195,
+            "sp": 65414,
+            "pc": 5344,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": true
+            }
+          }
+        },
+        {
+          "site": 5137,
+          "target": "PLI.COM+1627",
+          "entry": {
+            "a": 49,
+            "b": 0,
+            "c": 0,
+            "d": 251,
+            "e": 0,
+            "h": 32,
+            "l": 195,
+            "sp": 65412,
+            "pc": 5927,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 1,
+            "b": 32,
+            "c": 197,
+            "d": 251,
+            "e": 0,
+            "h": 28,
+            "l": 88,
+            "sp": 65414,
+            "pc": 5396,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": false,
+              "carry": false
+            }
+          }
+        },
+        {
+          "site": 5146,
+          "target": "PLI.COM+12AE",
+          "entry": {
+            "a": 49,
+            "b": 32,
+            "c": 197,
+            "d": 251,
+            "e": 0,
+            "h": 28,
+            "l": 88,
+            "sp": 65412,
+            "pc": 5038,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 53,
+            "b": 0,
+            "c": 18,
+            "d": 251,
+            "e": 0,
+            "h": 30,
+            "l": 160,
+            "sp": 65414,
+            "pc": 5405,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          }
+        },
+        {
+          "site": 5164,
+          "target": "PLI.COM+0817",
+          "entry": {
+            "a": 2,
+            "b": 0,
+            "c": 53,
+            "d": 251,
+            "e": 0,
+            "h": 49,
+            "l": 53,
+            "sp": 65412,
+            "pc": 2327,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": true
+            }
+          },
+          "output": {
+            "a": 53,
+            "b": 0,
+            "c": 53,
+            "d": 251,
+            "e": 0,
+            "h": 32,
+            "l": 143,
+            "sp": 65414,
+            "pc": 5423,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": false,
+              "carry": false
+            }
+          }
+        },
+        {
+          "site": 5428,
+          "target": "PLI.COM+1616",
+          "entry": {
+            "a": 53,
+            "b": 0,
+            "c": 53,
+            "d": 251,
+            "e": 0,
+            "h": 49,
+            "l": 53,
+            "sp": 65412,
+            "pc": 5910,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 0,
+            "b": 0,
+            "c": 53,
+            "d": 251,
+            "e": 0,
+            "h": 32,
+            "l": 143,
+            "sp": 65414,
+            "pc": 5687,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          }
+        },
+        {
+          "site": 5443,
+          "target": "PLI.COM+15DA",
+          "entry": {
+            "a": 0,
+            "b": 0,
+            "c": 53,
+            "d": 251,
+            "e": 0,
+            "h": 32,
+            "l": 143,
+            "sp": 65412,
+            "pc": 5850,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 255,
+            "b": 0,
+            "c": 53,
+            "d": 251,
+            "e": 0,
+            "h": 32,
+            "l": 143,
+            "sp": 65414,
+            "pc": 5702,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": true
+            }
+          }
+        },
+        {
+          "site": 5137,
+          "target": "PLI.COM+1627",
+          "entry": {
+            "a": 53,
+            "b": 0,
+            "c": 53,
+            "d": 251,
+            "e": 0,
+            "h": 32,
+            "l": 143,
+            "sp": 65412,
+            "pc": 5927,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 6,
+            "b": 32,
+            "c": 197,
+            "d": 251,
+            "e": 0,
+            "h": 28,
+            "l": 88,
+            "sp": 65414,
+            "pc": 5396,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          }
+        },
+        {
+          "site": 5146,
+          "target": "PLI.COM+12AE",
+          "entry": {
+            "a": 53,
+            "b": 32,
+            "c": 197,
+            "d": 251,
+            "e": 0,
+            "h": 28,
+            "l": 88,
+            "sp": 65412,
+            "pc": 5038,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 41,
+            "b": 0,
+            "c": 19,
+            "d": 251,
+            "e": 0,
+            "h": 30,
+            "l": 161,
+            "sp": 65414,
+            "pc": 5405,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": false,
+              "carry": false
+            }
+          }
+        },
+        {
+          "site": 5164,
+          "target": "PLI.COM+0817",
+          "entry": {
+            "a": 2,
+            "b": 0,
+            "c": 41,
+            "d": 251,
+            "e": 0,
+            "h": 53,
+            "l": 41,
+            "sp": 65412,
+            "pc": 2327,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": true
+            }
+          },
+          "output": {
+            "a": 41,
+            "b": 0,
+            "c": 41,
+            "d": 251,
+            "e": 0,
+            "h": 32,
+            "l": 143,
+            "sp": 65414,
+            "pc": 5423,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          }
+        },
+        {
+          "site": 5428,
+          "target": "PLI.COM+1616",
+          "entry": {
+            "a": 41,
+            "b": 0,
+            "c": 41,
+            "d": 251,
+            "e": 0,
+            "h": 53,
+            "l": 41,
+            "sp": 65412,
+            "pc": 5910,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": true
+            }
+          },
+          "output": {
+            "a": 0,
+            "b": 0,
+            "c": 41,
+            "d": 251,
+            "e": 0,
+            "h": 32,
+            "l": 143,
+            "sp": 65414,
+            "pc": 5687,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          }
+        },
+        {
+          "site": 5443,
+          "target": "PLI.COM+15DA",
+          "entry": {
+            "a": 0,
+            "b": 0,
+            "c": 41,
+            "d": 251,
+            "e": 0,
+            "h": 32,
+            "l": 143,
+            "sp": 65412,
+            "pc": 5850,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 0,
+            "b": 0,
+            "c": 41,
+            "d": 251,
+            "e": 0,
+            "h": 32,
+            "l": 143,
+            "sp": 65414,
+            "pc": 5702,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          }
+        }
+      ],
+      "writes": [
+        {
+          "step": 390903,
+          "writer": "PLI.COM+1379",
+          "address": 8328,
+          "value": 0
+        },
+        {
+          "step": 390905,
+          "writer": "PLI.COM+137C",
+          "address": 8327,
+          "value": 0
+        },
+        {
+          "step": 390910,
+          "writer": "PLI.COM+138B",
+          "address": 7256,
+          "value": 0
+        },
+        {
+          "step": 390912,
+          "writer": "PLI.COM+1390",
+          "address": 8389,
+          "value": 0
+        },
+        {
+          "step": 390918,
+          "writer": "PLI.COM+13A3",
+          "address": 8387,
+          "value": 0
+        },
+        {
+          "step": 390957,
+          "writer": "PLI.COM+13E7",
+          "address": 8387,
+          "value": 2
+        },
+        {
+          "step": 390991,
+          "writer": "PLI.COM+1417",
+          "address": 8386,
+          "value": 49
+        },
+        {
+          "step": 391007,
+          "writer": "PLI.COM+141D",
+          "address": 8385,
+          "value": 53
+        },
+        {
+          "step": 391022,
+          "writer": "PLI.COM+142F",
+          "address": 8385,
+          "value": 53
+        },
+        {
+          "step": 391102,
+          "writer": "PLI.COM+1417",
+          "address": 8386,
+          "value": 53
+        },
+        {
+          "step": 391118,
+          "writer": "PLI.COM+141D",
+          "address": 8385,
+          "value": 41
+        },
+        {
+          "step": 391133,
+          "writer": "PLI.COM+142F",
+          "address": 8385,
+          "value": 41
+        }
+      ],
+      "stack": [
+        {
+          "relative_address": -4,
+          "value": 33,
+          "writer": "PLI.COM+161E",
+          "step": 391159,
+          "overwritten": [
+            "PLI.COM+161E"
+          ]
+        },
+        {
+          "relative_address": -3,
+          "value": 23,
+          "writer": "PLI.COM+161E",
+          "step": 391159,
+          "overwritten": [
+            "PLI.COM+161E"
+          ]
+        },
+        {
+          "relative_address": -2,
+          "value": 70,
+          "writer": "PLI.COM+1543",
+          "step": 391174,
+          "overwritten": [
+            "PLI.COM+13B5",
+            "PLI.COM+13CE",
+            "PLI.COM+13DD",
+            "PLI.COM+1411",
+            "PLI.COM+141A",
+            "PLI.COM+142C",
+            "PLI.COM+1534",
+            "PLI.COM+1543",
+            "PLI.COM+1411",
+            "PLI.COM+141A",
+            "PLI.COM+142C",
+            "PLI.COM+1534"
+          ]
+        },
+        {
+          "relative_address": -1,
+          "value": 22,
+          "writer": "PLI.COM+1543",
+          "step": 391174,
+          "overwritten": [
+            "PLI.COM+13B5",
+            "PLI.COM+13CE",
+            "PLI.COM+13DD",
+            "PLI.COM+1411",
+            "PLI.COM+141A",
+            "PLI.COM+142C",
+            "PLI.COM+1534",
+            "PLI.COM+1543",
+            "PLI.COM+1411",
+            "PLI.COM+141A",
+            "PLI.COM+142C",
+            "PLI.COM+1534"
+          ]
+        }
+      ]
+    },
+    {
+      "source": "FIZZBUZ",
+      "caller": "PLI1.OVL+784E",
+      "call_step": 460821,
+      "entry_step": 460822,
+      "return_step": 460992,
+      "entry": {
+        "a": 44,
+        "b": 0,
+        "c": 44,
+        "d": 251,
+        "e": 0,
+        "h": 165,
+        "l": 175,
+        "sp": 65410,
+        "pc": 5238,
+        "flags": {
+          "sign": false,
+          "zero": true,
+          "auxiliary_carry": true,
+          "parity": true,
+          "carry": false
+        }
+      },
+      "output": {
+        "a": 127,
+        "b": 0,
+        "c": 41,
+        "d": 251,
+        "e": 0,
+        "h": 32,
+        "l": 143,
+        "sp": 65412,
+        "pc": 39505,
+        "flags": {
+          "sign": false,
+          "zero": true,
+          "auxiliary_carry": true,
+          "parity": true,
+          "carry": true
+        }
+      },
+      "initial_context": 51,
+      "prefix": [
+        51
+      ],
+      "width": 1,
+      "accumulator": 3,
+      "following_context": 41,
+      "selector": 2,
+      "reads": [
+        {
+          "index": 23,
+          "count": 34,
+          "address": 7845,
+          "value": 41,
+          "next_index": 24
+        }
+      ],
+      "children": [
+        {
+          "site": 5070,
+          "target": "PLI.COM+15E3",
+          "entry": {
+            "a": 0,
+            "b": 0,
+            "c": 0,
+            "d": 251,
+            "e": 0,
+            "h": 32,
+            "l": 195,
+            "sp": 65408,
+            "pc": 5859,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 0,
+            "b": 0,
+            "c": 0,
+            "d": 251,
+            "e": 0,
+            "h": 32,
+            "l": 195,
+            "sp": 65410,
+            "pc": 5329,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          }
+        },
+        {
+          "site": 5085,
+          "target": "PLI.COM+15DA",
+          "entry": {
+            "a": 0,
+            "b": 0,
+            "c": 0,
+            "d": 251,
+            "e": 0,
+            "h": 32,
+            "l": 195,
+            "sp": 65408,
+            "pc": 5850,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 255,
+            "b": 0,
+            "c": 0,
+            "d": 251,
+            "e": 0,
+            "h": 32,
+            "l": 195,
+            "sp": 65410,
+            "pc": 5344,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": true
+            }
+          }
+        },
+        {
+          "site": 5137,
+          "target": "PLI.COM+1627",
+          "entry": {
+            "a": 51,
+            "b": 0,
+            "c": 0,
+            "d": 251,
+            "e": 0,
+            "h": 32,
+            "l": 195,
+            "sp": 65408,
+            "pc": 5927,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 3,
+            "b": 32,
+            "c": 197,
+            "d": 251,
+            "e": 0,
+            "h": 28,
+            "l": 88,
+            "sp": 65410,
+            "pc": 5396,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          }
+        },
+        {
+          "site": 5146,
+          "target": "PLI.COM+12AE",
+          "entry": {
+            "a": 51,
+            "b": 32,
+            "c": 197,
+            "d": 251,
+            "e": 0,
+            "h": 28,
+            "l": 88,
+            "sp": 65408,
+            "pc": 5038,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 41,
+            "b": 0,
+            "c": 23,
+            "d": 251,
+            "e": 0,
+            "h": 30,
+            "l": 165,
+            "sp": 65410,
+            "pc": 5405,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          }
+        },
+        {
+          "site": 5164,
+          "target": "PLI.COM+0817",
+          "entry": {
+            "a": 2,
+            "b": 0,
+            "c": 41,
+            "d": 251,
+            "e": 0,
+            "h": 51,
+            "l": 41,
+            "sp": 65408,
+            "pc": 2327,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": true
+            }
+          },
+          "output": {
+            "a": 41,
+            "b": 0,
+            "c": 41,
+            "d": 251,
+            "e": 0,
+            "h": 32,
+            "l": 143,
+            "sp": 65410,
+            "pc": 5423,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          }
+        },
+        {
+          "site": 5428,
+          "target": "PLI.COM+1616",
+          "entry": {
+            "a": 41,
+            "b": 0,
+            "c": 41,
+            "d": 251,
+            "e": 0,
+            "h": 51,
+            "l": 41,
+            "sp": 65408,
+            "pc": 5910,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": true
+            }
+          },
+          "output": {
+            "a": 0,
+            "b": 0,
+            "c": 41,
+            "d": 251,
+            "e": 0,
+            "h": 32,
+            "l": 143,
+            "sp": 65410,
+            "pc": 5687,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          }
+        },
+        {
+          "site": 5443,
+          "target": "PLI.COM+15DA",
+          "entry": {
+            "a": 0,
+            "b": 0,
+            "c": 41,
+            "d": 251,
+            "e": 0,
+            "h": 32,
+            "l": 143,
+            "sp": 65408,
+            "pc": 5850,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 0,
+            "b": 0,
+            "c": 41,
+            "d": 251,
+            "e": 0,
+            "h": 32,
+            "l": 143,
+            "sp": 65410,
+            "pc": 5702,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          }
+        }
+      ],
+      "writes": [
+        {
+          "step": 460823,
+          "writer": "PLI.COM+1379",
+          "address": 8328,
+          "value": 0
+        },
+        {
+          "step": 460825,
+          "writer": "PLI.COM+137C",
+          "address": 8327,
+          "value": 0
+        },
+        {
+          "step": 460830,
+          "writer": "PLI.COM+138B",
+          "address": 7256,
+          "value": 0
+        },
+        {
+          "step": 460832,
+          "writer": "PLI.COM+1390",
+          "address": 8389,
+          "value": 0
+        },
+        {
+          "step": 460838,
+          "writer": "PLI.COM+13A3",
+          "address": 8387,
+          "value": 0
+        },
+        {
+          "step": 460877,
+          "writer": "PLI.COM+13E7",
+          "address": 8387,
+          "value": 2
+        },
+        {
+          "step": 460911,
+          "writer": "PLI.COM+1417",
+          "address": 8386,
+          "value": 51
+        },
+        {
+          "step": 460927,
+          "writer": "PLI.COM+141D",
+          "address": 8385,
+          "value": 41
+        },
+        {
+          "step": 460942,
+          "writer": "PLI.COM+142F",
+          "address": 8385,
+          "value": 41
+        }
+      ],
+      "stack": [
+        {
+          "relative_address": -4,
+          "value": 33,
+          "writer": "PLI.COM+161E",
+          "step": 460968,
+          "overwritten": []
+        },
+        {
+          "relative_address": -3,
+          "value": 23,
+          "writer": "PLI.COM+161E",
+          "step": 460968,
+          "overwritten": []
+        },
+        {
+          "relative_address": -2,
+          "value": 70,
+          "writer": "PLI.COM+1543",
+          "step": 460983,
+          "overwritten": [
+            "PLI.COM+13B5",
+            "PLI.COM+13CE",
+            "PLI.COM+13DD",
+            "PLI.COM+1411",
+            "PLI.COM+141A",
+            "PLI.COM+142C",
+            "PLI.COM+1534"
+          ]
+        },
+        {
+          "relative_address": -1,
+          "value": 22,
+          "writer": "PLI.COM+1543",
+          "step": 460983,
+          "overwritten": [
+            "PLI.COM+13B5",
+            "PLI.COM+13CE",
+            "PLI.COM+13DD",
+            "PLI.COM+1411",
+            "PLI.COM+141A",
+            "PLI.COM+142C",
+            "PLI.COM+1534"
+          ]
+        }
+      ]
+    },
+    {
+      "source": "FIZZBUZ",
+      "caller": "PLI1.OVL+784E",
+      "call_step": 527619,
+      "entry_step": 527620,
+      "return_step": 527790,
+      "entry": {
+        "a": 44,
+        "b": 0,
+        "c": 44,
+        "d": 251,
+        "e": 0,
+        "h": 165,
+        "l": 175,
+        "sp": 65406,
+        "pc": 5238,
+        "flags": {
+          "sign": false,
+          "zero": true,
+          "auxiliary_carry": true,
+          "parity": true,
+          "carry": false
+        }
+      },
+      "output": {
+        "a": 127,
+        "b": 0,
+        "c": 41,
+        "d": 251,
+        "e": 0,
+        "h": 32,
+        "l": 143,
+        "sp": 65408,
+        "pc": 39505,
+        "flags": {
+          "sign": false,
+          "zero": true,
+          "auxiliary_carry": true,
+          "parity": true,
+          "carry": true
+        }
+      },
+      "initial_context": 53,
+      "prefix": [
+        53
+      ],
+      "width": 1,
+      "accumulator": 5,
+      "following_context": 41,
+      "selector": 2,
+      "reads": [
+        {
+          "index": 23,
+          "count": 34,
+          "address": 7845,
+          "value": 41,
+          "next_index": 24
+        }
+      ],
+      "children": [
+        {
+          "site": 5070,
+          "target": "PLI.COM+15E3",
+          "entry": {
+            "a": 0,
+            "b": 0,
+            "c": 0,
+            "d": 251,
+            "e": 0,
+            "h": 32,
+            "l": 195,
+            "sp": 65404,
+            "pc": 5859,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 0,
+            "b": 0,
+            "c": 0,
+            "d": 251,
+            "e": 0,
+            "h": 32,
+            "l": 195,
+            "sp": 65406,
+            "pc": 5329,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          }
+        },
+        {
+          "site": 5085,
+          "target": "PLI.COM+15DA",
+          "entry": {
+            "a": 0,
+            "b": 0,
+            "c": 0,
+            "d": 251,
+            "e": 0,
+            "h": 32,
+            "l": 195,
+            "sp": 65404,
+            "pc": 5850,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 255,
+            "b": 0,
+            "c": 0,
+            "d": 251,
+            "e": 0,
+            "h": 32,
+            "l": 195,
+            "sp": 65406,
+            "pc": 5344,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": true
+            }
+          }
+        },
+        {
+          "site": 5137,
+          "target": "PLI.COM+1627",
+          "entry": {
+            "a": 53,
+            "b": 0,
+            "c": 0,
+            "d": 251,
+            "e": 0,
+            "h": 32,
+            "l": 195,
+            "sp": 65404,
+            "pc": 5927,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 5,
+            "b": 32,
+            "c": 197,
+            "d": 251,
+            "e": 0,
+            "h": 28,
+            "l": 88,
+            "sp": 65406,
+            "pc": 5396,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          }
+        },
+        {
+          "site": 5146,
+          "target": "PLI.COM+12AE",
+          "entry": {
+            "a": 53,
+            "b": 32,
+            "c": 197,
+            "d": 251,
+            "e": 0,
+            "h": 28,
+            "l": 88,
+            "sp": 65404,
+            "pc": 5038,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 41,
+            "b": 0,
+            "c": 23,
+            "d": 251,
+            "e": 0,
+            "h": 30,
+            "l": 165,
+            "sp": 65406,
+            "pc": 5405,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          }
+        },
+        {
+          "site": 5164,
+          "target": "PLI.COM+0817",
+          "entry": {
+            "a": 2,
+            "b": 0,
+            "c": 41,
+            "d": 251,
+            "e": 0,
+            "h": 53,
+            "l": 41,
+            "sp": 65404,
+            "pc": 2327,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": true
+            }
+          },
+          "output": {
+            "a": 41,
+            "b": 0,
+            "c": 41,
+            "d": 251,
+            "e": 0,
+            "h": 32,
+            "l": 143,
+            "sp": 65406,
+            "pc": 5423,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          }
+        },
+        {
+          "site": 5428,
+          "target": "PLI.COM+1616",
+          "entry": {
+            "a": 41,
+            "b": 0,
+            "c": 41,
+            "d": 251,
+            "e": 0,
+            "h": 53,
+            "l": 41,
+            "sp": 65404,
+            "pc": 5910,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": true
+            }
+          },
+          "output": {
+            "a": 0,
+            "b": 0,
+            "c": 41,
+            "d": 251,
+            "e": 0,
+            "h": 32,
+            "l": 143,
+            "sp": 65406,
+            "pc": 5687,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          }
+        },
+        {
+          "site": 5443,
+          "target": "PLI.COM+15DA",
+          "entry": {
+            "a": 0,
+            "b": 0,
+            "c": 41,
+            "d": 251,
+            "e": 0,
+            "h": 32,
+            "l": 143,
+            "sp": 65404,
+            "pc": 5850,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 0,
+            "b": 0,
+            "c": 41,
+            "d": 251,
+            "e": 0,
+            "h": 32,
+            "l": 143,
+            "sp": 65406,
+            "pc": 5702,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          }
+        }
+      ],
+      "writes": [
+        {
+          "step": 527621,
+          "writer": "PLI.COM+1379",
+          "address": 8328,
+          "value": 0
+        },
+        {
+          "step": 527623,
+          "writer": "PLI.COM+137C",
+          "address": 8327,
+          "value": 0
+        },
+        {
+          "step": 527628,
+          "writer": "PLI.COM+138B",
+          "address": 7256,
+          "value": 0
+        },
+        {
+          "step": 527630,
+          "writer": "PLI.COM+1390",
+          "address": 8389,
+          "value": 0
+        },
+        {
+          "step": 527636,
+          "writer": "PLI.COM+13A3",
+          "address": 8387,
+          "value": 0
+        },
+        {
+          "step": 527675,
+          "writer": "PLI.COM+13E7",
+          "address": 8387,
+          "value": 2
+        },
+        {
+          "step": 527709,
+          "writer": "PLI.COM+1417",
+          "address": 8386,
+          "value": 53
+        },
+        {
+          "step": 527725,
+          "writer": "PLI.COM+141D",
+          "address": 8385,
+          "value": 41
+        },
+        {
+          "step": 527740,
+          "writer": "PLI.COM+142F",
+          "address": 8385,
+          "value": 41
+        }
+      ],
+      "stack": [
+        {
+          "relative_address": -4,
+          "value": 33,
+          "writer": "PLI.COM+161E",
+          "step": 527766,
+          "overwritten": []
+        },
+        {
+          "relative_address": -3,
+          "value": 23,
+          "writer": "PLI.COM+161E",
+          "step": 527766,
+          "overwritten": []
+        },
+        {
+          "relative_address": -2,
+          "value": 70,
+          "writer": "PLI.COM+1543",
+          "step": 527781,
+          "overwritten": [
+            "PLI.COM+13B5",
+            "PLI.COM+13CE",
+            "PLI.COM+13DD",
+            "PLI.COM+1411",
+            "PLI.COM+141A",
+            "PLI.COM+142C",
+            "PLI.COM+1534"
+          ]
+        },
+        {
+          "relative_address": -1,
+          "value": 22,
+          "writer": "PLI.COM+1543",
+          "step": 527781,
+          "overwritten": [
+            "PLI.COM+13B5",
+            "PLI.COM+13CE",
+            "PLI.COM+13DD",
+            "PLI.COM+1411",
+            "PLI.COM+141A",
+            "PLI.COM+142C",
+            "PLI.COM+1534"
+          ]
+        }
+      ]
+    }
+  ]
+}

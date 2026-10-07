@@ -1,0 +1,992 @@
+{
+  "status": "complete independent historical shadows; 21 logical windows and composed recursive checkpoints matched",
+  "sources": [
+    {
+      "source": "MINIMAL",
+      "matched_route_B": 1,
+      "pending_route_A": 0,
+      "cases": [
+        {
+          "caller": "PLI1.OVL+6273",
+          "entry_step": 256870,
+          "return_step": 258856,
+          "route": "B_5929_2511",
+          "input": {
+            "a": 128,
+            "b": 0,
+            "c": 40,
+            "d": 0,
+            "e": 0,
+            "h": 165,
+            "l": 175,
+            "sp": 65471,
+            "pc": 33827,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 33,
+            "b": 27,
+            "c": 75,
+            "d": 251,
+            "e": 0,
+            "h": 27,
+            "l": 98,
+            "sp": 65473,
+            "pc": 33910,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "entry_memory_sha256": "b4cb8482f85dd7f07120560ead9105e8a8c2adced6a02950c5cca8b24239a3f0",
+          "post_memory_sha256": "02cfd3e347df17570c59b1fb481ecc7e650192f069778efcd3f49a9545b34baf",
+          "stack_cells": 13,
+          "logical_writes": 219
+        }
+      ]
+    },
+    {
+      "source": "FIZZBUZ",
+      "matched_route_B": 11,
+      "pending_route_A": 0,
+      "cases": [
+        {
+          "caller": "PLI1.OVL+6273",
+          "entry_step": 357250,
+          "return_step": 359436,
+          "route": "B_5929_2511",
+          "input": {
+            "a": 128,
+            "b": 0,
+            "c": 40,
+            "d": 166,
+            "e": 109,
+            "h": 165,
+            "l": 175,
+            "sp": 65466,
+            "pc": 33827,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 33,
+            "b": 27,
+            "c": 75,
+            "d": 251,
+            "e": 0,
+            "h": 27,
+            "l": 98,
+            "sp": 65468,
+            "pc": 33910,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "entry_memory_sha256": "5dd296ee13d0b95e62fcf62fa24b1fb9032a5e12c96764f27495dbfb7ac4f525",
+          "post_memory_sha256": "fe1a15e236db244da45cf8d375c1640a2609342391530a206ccccbf7c71763d0",
+          "stack_cells": 13,
+          "logical_writes": 221
+        },
+        {
+          "caller": "PLI1.OVL+6273",
+          "entry_step": 364699,
+          "return_step": 366356,
+          "route": "B_5929_2511",
+          "input": {
+            "a": 128,
+            "b": 0,
+            "c": 40,
+            "d": 0,
+            "e": 2,
+            "h": 165,
+            "l": 175,
+            "sp": 65464,
+            "pc": 33827,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 33,
+            "b": 27,
+            "c": 75,
+            "d": 251,
+            "e": 0,
+            "h": 27,
+            "l": 98,
+            "sp": 65466,
+            "pc": 33910,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "entry_memory_sha256": "9094495edf562781afcf940b067cdc3f12b98d77bda699d1844adde800301d73",
+          "post_memory_sha256": "73de5091fa3efaff087fe958a77cd08f5e273df6805896679b1d529e8bf33acd",
+          "stack_cells": 13,
+          "logical_writes": 185
+        },
+        {
+          "caller": "PLI1.OVL+6273",
+          "entry_step": 385349,
+          "return_step": 396074,
+          "route": "A_early",
+          "input": {
+            "a": 128,
+            "b": 0,
+            "c": 40,
+            "d": 151,
+            "e": 149,
+            "h": 165,
+            "l": 175,
+            "sp": 65456,
+            "pc": 33827,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 0,
+            "b": 0,
+            "c": 252,
+            "d": 255,
+            "e": 166,
+            "h": 0,
+            "l": 166,
+            "sp": 65458,
+            "pc": 33910,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "entry_memory_sha256": "22c8eaf2f94f02581a1027fbaa3f98b6212c77dc92ee47e30a8ed1ebfcf527f8",
+          "post_memory_sha256": "6054d1d09a580389596246b46e22f9864aa4ed837a40d829c231181257266937",
+          "stack_cells": 104,
+          "logical_writes": 1130
+        },
+        {
+          "caller": "PLI1.OVL+6273",
+          "entry_step": 387953,
+          "return_step": 390566,
+          "route": "A_01E8_256C",
+          "input": {
+            "a": 128,
+            "b": 0,
+            "c": 40,
+            "d": 154,
+            "e": 53,
+            "h": 165,
+            "l": 175,
+            "sp": 65397,
+            "pc": 33827,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 33,
+            "b": 27,
+            "c": 75,
+            "d": 251,
+            "e": 0,
+            "h": 27,
+            "l": 98,
+            "sp": 65399,
+            "pc": 33910,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "entry_memory_sha256": "706fa47c4a61729beddc1ea6082656ce12a26bee2d95d59e4ef2d0d04c0d7f88",
+          "post_memory_sha256": "bbb23e65ad2e955f8e3ece406f4b8735abb7cf868f70acc23fcf4b738ed25a8e",
+          "stack_cells": 47,
+          "logical_writes": 300
+        },
+        {
+          "caller": "PLI1.OVL+6273",
+          "entry_step": 391332,
+          "return_step": 392899,
+          "route": "B_5929_2511",
+          "input": {
+            "a": 128,
+            "b": 0,
+            "c": 40,
+            "d": 251,
+            "e": 0,
+            "h": 165,
+            "l": 175,
+            "sp": 65397,
+            "pc": 33827,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 33,
+            "b": 27,
+            "c": 75,
+            "d": 251,
+            "e": 0,
+            "h": 27,
+            "l": 98,
+            "sp": 65399,
+            "pc": 33910,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "entry_memory_sha256": "b56d4ce5d2f9a50b49bcb2eae398d6d7a856999209c84f6b7b901539251338fc",
+          "post_memory_sha256": "74cf25c58302e4e18ff4d1d0628757c8db178e609507c3e4d4b767d54dedb69c",
+          "stack_cells": 13,
+          "logical_writes": 161
+        },
+        {
+          "caller": "PLI1.OVL+6273",
+          "entry_step": 396647,
+          "return_step": 400250,
+          "route": "B_5929_2511",
+          "input": {
+            "a": 128,
+            "b": 0,
+            "c": 40,
+            "d": 251,
+            "e": 207,
+            "h": 165,
+            "l": 175,
+            "sp": 65456,
+            "pc": 33827,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 33,
+            "b": 27,
+            "c": 75,
+            "d": 251,
+            "e": 0,
+            "h": 27,
+            "l": 98,
+            "sp": 65458,
+            "pc": 33910,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "entry_memory_sha256": "6899a070d7efdae9d20c000800b34fe0a72704ee408254e8907585304da5cffc",
+          "post_memory_sha256": "573e99184fc810e51a4ba155b4e47b45de9de6e98a0b80fec573865db1478ad5",
+          "stack_cells": 13,
+          "logical_writes": 316
+        },
+        {
+          "caller": "PLI1.OVL+6273",
+          "entry_step": 430410,
+          "return_step": 432385,
+          "route": "B_5929_2511",
+          "input": {
+            "a": 128,
+            "b": 0,
+            "c": 40,
+            "d": 0,
+            "e": 7,
+            "h": 165,
+            "l": 175,
+            "sp": 65440,
+            "pc": 33827,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 33,
+            "b": 27,
+            "c": 75,
+            "d": 251,
+            "e": 0,
+            "h": 27,
+            "l": 98,
+            "sp": 65442,
+            "pc": 33910,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "entry_memory_sha256": "9e76cbd57fe0afd25d452abac89a885b54bd33ad5997f0bcd71d7aab4c77d174",
+          "post_memory_sha256": "84f9fdd9f0189c68c6622881ab1da76f73a692a2df9390e82e521d1dbfb0bcbc",
+          "stack_cells": 13,
+          "logical_writes": 221
+        },
+        {
+          "caller": "PLI1.OVL+6273",
+          "entry_step": 455269,
+          "return_step": 465814,
+          "route": "A_early",
+          "input": {
+            "a": 128,
+            "b": 0,
+            "c": 40,
+            "d": 151,
+            "e": 149,
+            "h": 165,
+            "l": 175,
+            "sp": 65452,
+            "pc": 33827,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 0,
+            "b": 0,
+            "c": 252,
+            "d": 255,
+            "e": 162,
+            "h": 0,
+            "l": 166,
+            "sp": 65454,
+            "pc": 33910,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "entry_memory_sha256": "45c1409ef26917eb7919580fcd2f04062f79f438db1c5df03974d9e2cdbb8b9e",
+          "post_memory_sha256": "9b00aacbe2637ed10ecd6ddff60af9665c0384f7f136053731dacf12f7ebda07",
+          "stack_cells": 104,
+          "logical_writes": 1137
+        },
+        {
+          "caller": "PLI1.OVL+6273",
+          "entry_step": 457873,
+          "return_step": 460486,
+          "route": "A_01E8_256C",
+          "input": {
+            "a": 128,
+            "b": 0,
+            "c": 40,
+            "d": 154,
+            "e": 53,
+            "h": 165,
+            "l": 175,
+            "sp": 65393,
+            "pc": 33827,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 33,
+            "b": 27,
+            "c": 75,
+            "d": 251,
+            "e": 0,
+            "h": 27,
+            "l": 98,
+            "sp": 65395,
+            "pc": 33910,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "entry_memory_sha256": "888f57fa84593a883e995a8a9db6805b50e21161850820b6928c1694f7b7dc6a",
+          "post_memory_sha256": "b127aab858f58846c012211189e5f176e44ffad6c929195ef9095b0ccf701039",
+          "stack_cells": 47,
+          "logical_writes": 300
+        },
+        {
+          "caller": "PLI1.OVL+6273",
+          "entry_step": 461141,
+          "return_step": 462761,
+          "route": "B_5929_2511",
+          "input": {
+            "a": 128,
+            "b": 0,
+            "c": 40,
+            "d": 251,
+            "e": 0,
+            "h": 165,
+            "l": 175,
+            "sp": 65393,
+            "pc": 33827,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 33,
+            "b": 27,
+            "c": 75,
+            "d": 251,
+            "e": 0,
+            "h": 27,
+            "l": 98,
+            "sp": 65395,
+            "pc": 33910,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "entry_memory_sha256": "4694a1633dfa51013793bc21480d60e6498724f058d40bed50571e18b43d29cf",
+          "post_memory_sha256": "c36e03a52ded9db221f7c08c11b0603ed3e87b38b39a98cc6dafd59f50bbf6d6",
+          "stack_cells": 13,
+          "logical_writes": 181
+        },
+        {
+          "caller": "PLI1.OVL+6273",
+          "entry_step": 466387,
+          "return_step": 469896,
+          "route": "B_5929_2511",
+          "input": {
+            "a": 128,
+            "b": 0,
+            "c": 40,
+            "d": 251,
+            "e": 207,
+            "h": 165,
+            "l": 175,
+            "sp": 65452,
+            "pc": 33827,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 33,
+            "b": 27,
+            "c": 75,
+            "d": 251,
+            "e": 0,
+            "h": 27,
+            "l": 98,
+            "sp": 65454,
+            "pc": 33910,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "entry_memory_sha256": "eb4984721dacc268529243ba5645f89838381f590fe167293e5d7c61a85bb236",
+          "post_memory_sha256": "65599ffade160d29e9d231c17fab19f2c8ade807ca5a1c9ef1590e015443ea58",
+          "stack_cells": 13,
+          "logical_writes": 293
+        },
+        {
+          "caller": "PLI1.OVL+6273",
+          "entry_step": 499500,
+          "return_step": 501327,
+          "route": "B_5929_2511",
+          "input": {
+            "a": 128,
+            "b": 0,
+            "c": 40,
+            "d": 0,
+            "e": 4,
+            "h": 165,
+            "l": 175,
+            "sp": 65436,
+            "pc": 33827,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 33,
+            "b": 27,
+            "c": 75,
+            "d": 251,
+            "e": 0,
+            "h": 27,
+            "l": 98,
+            "sp": 65438,
+            "pc": 33910,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "entry_memory_sha256": "a318339d79783467439e4b94e2072fe291a540e02950c3bd1147294555e5e9ff",
+          "post_memory_sha256": "99f81b45bd5c844abbc53c45608927387fb4b0d8a071a57742a8ffc89f23de30",
+          "stack_cells": 13,
+          "logical_writes": 205
+        },
+        {
+          "caller": "PLI1.OVL+6273",
+          "entry_step": 522067,
+          "return_step": 532612,
+          "route": "A_early",
+          "input": {
+            "a": 128,
+            "b": 0,
+            "c": 40,
+            "d": 151,
+            "e": 149,
+            "h": 165,
+            "l": 175,
+            "sp": 65448,
+            "pc": 33827,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 0,
+            "b": 0,
+            "c": 252,
+            "d": 255,
+            "e": 158,
+            "h": 0,
+            "l": 166,
+            "sp": 65450,
+            "pc": 33910,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "entry_memory_sha256": "85ca8e7edb524ee84b1c45fa2ecf251fe1d089bba1eddfc1422339a1dec9e2a8",
+          "post_memory_sha256": "5ccbf2e581c138deef7d005595a8bb94a244377aa8f6299a9ef392bea18de5e6",
+          "stack_cells": 104,
+          "logical_writes": 1137
+        },
+        {
+          "caller": "PLI1.OVL+6273",
+          "entry_step": 524671,
+          "return_step": 527284,
+          "route": "A_01E8_256C",
+          "input": {
+            "a": 128,
+            "b": 0,
+            "c": 40,
+            "d": 154,
+            "e": 53,
+            "h": 165,
+            "l": 175,
+            "sp": 65389,
+            "pc": 33827,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 33,
+            "b": 27,
+            "c": 75,
+            "d": 251,
+            "e": 0,
+            "h": 27,
+            "l": 98,
+            "sp": 65391,
+            "pc": 33910,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "entry_memory_sha256": "578cd4e92a918bc6e473baf201b6e676371dcce7e25fe1c32b156750998f998a",
+          "post_memory_sha256": "243b1e4736afb94a31d90f02038ff1f60b481cda7f6c37655718b28db1ef60cd",
+          "stack_cells": 47,
+          "logical_writes": 300
+        },
+        {
+          "caller": "PLI1.OVL+6273",
+          "entry_step": 527939,
+          "return_step": 529559,
+          "route": "B_5929_2511",
+          "input": {
+            "a": 128,
+            "b": 0,
+            "c": 40,
+            "d": 251,
+            "e": 0,
+            "h": 165,
+            "l": 175,
+            "sp": 65389,
+            "pc": 33827,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 33,
+            "b": 27,
+            "c": 75,
+            "d": 251,
+            "e": 0,
+            "h": 27,
+            "l": 98,
+            "sp": 65391,
+            "pc": 33910,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "entry_memory_sha256": "b73917adb1d3a13b5cdb3712bf16043a98020122586f474085843c1ac8c1063e",
+          "post_memory_sha256": "2c6f5a087deff5fb62e2fdfbe2ecd9e0351b244743f11da4c34ad19d1bfa17a6",
+          "stack_cells": 13,
+          "logical_writes": 181
+        },
+        {
+          "caller": "PLI1.OVL+6273",
+          "entry_step": 533185,
+          "return_step": 536694,
+          "route": "B_5929_2511",
+          "input": {
+            "a": 128,
+            "b": 0,
+            "c": 40,
+            "d": 251,
+            "e": 207,
+            "h": 165,
+            "l": 175,
+            "sp": 65448,
+            "pc": 33827,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 33,
+            "b": 27,
+            "c": 75,
+            "d": 251,
+            "e": 0,
+            "h": 27,
+            "l": 98,
+            "sp": 65450,
+            "pc": 33910,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "entry_memory_sha256": "e636296182f7b5f978656d49c6454c75b18ff3a8bd00c3b9ac5ced5ee188f83c",
+          "post_memory_sha256": "0cece404fc9220c93b2b1de4683372339ff5e1b86d6d22188891d6bcb7225618",
+          "stack_cells": 13,
+          "logical_writes": 293
+        },
+        {
+          "caller": "PLI1.OVL+6273",
+          "entry_step": 566150,
+          "return_step": 567977,
+          "route": "B_5929_2511",
+          "input": {
+            "a": 128,
+            "b": 0,
+            "c": 40,
+            "d": 0,
+            "e": 7,
+            "h": 165,
+            "l": 175,
+            "sp": 65432,
+            "pc": 33827,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 33,
+            "b": 27,
+            "c": 75,
+            "d": 251,
+            "e": 0,
+            "h": 27,
+            "l": 98,
+            "sp": 65434,
+            "pc": 33910,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "entry_memory_sha256": "5977ccb20afdfdc29c3850fc683fe0a69ddba4e3e5b0fc3c4b9016ee9ba8a2ea",
+          "post_memory_sha256": "88cbb02a2b5e06c8c7e0a47b1c037c891200406dcd864d516032d35a07481b03",
+          "stack_cells": 13,
+          "logical_writes": 205
+        },
+        {
+          "caller": "PLI1.OVL+6273",
+          "entry_step": 603960,
+          "return_step": 606573,
+          "route": "A_01E8_256C",
+          "input": {
+            "a": 128,
+            "b": 0,
+            "c": 40,
+            "d": 154,
+            "e": 53,
+            "h": 165,
+            "l": 175,
+            "sp": 65432,
+            "pc": 33827,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 33,
+            "b": 27,
+            "c": 75,
+            "d": 251,
+            "e": 0,
+            "h": 27,
+            "l": 98,
+            "sp": 65434,
+            "pc": 33910,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "entry_memory_sha256": "d97a2b94ca383555c204b8fd92e87857455bdafca978cbed1f49116a8aeeacac",
+          "post_memory_sha256": "f593ed1068cd2e155cb7bac751a18c604734571c0552bcfe24a622f81d21ddaa",
+          "stack_cells": 47,
+          "logical_writes": 300
+        }
+      ]
+    },
+    {
+      "source": "PICTURE",
+      "matched_route_B": 1,
+      "pending_route_A": 0,
+      "cases": [
+        {
+          "caller": "PLI1.OVL+6273",
+          "entry_step": 306153,
+          "return_step": 307773,
+          "route": "B_5929_2511",
+          "input": {
+            "a": 128,
+            "b": 0,
+            "c": 40,
+            "d": 255,
+            "e": 216,
+            "h": 165,
+            "l": 175,
+            "sp": 65477,
+            "pc": 33827,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 33,
+            "b": 27,
+            "c": 75,
+            "d": 251,
+            "e": 0,
+            "h": 27,
+            "l": 98,
+            "sp": 65479,
+            "pc": 33910,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "entry_memory_sha256": "beac7a4e4362ce799ce3718aeaf3d2e98eb395828c5aaa550f0f49e355f9220f",
+          "post_memory_sha256": "778d15ca258c644412cd36a3a2d31af1fa47e17d92111e1f6273b41ca70db0ce",
+          "stack_cells": 13,
+          "logical_writes": 181
+        },
+        {
+          "caller": "PLI1.OVL+6273",
+          "entry_step": 329443,
+          "return_step": 332268,
+          "route": "A_01E8_256C",
+          "input": {
+            "a": 128,
+            "b": 0,
+            "c": 40,
+            "d": 152,
+            "e": 249,
+            "h": 165,
+            "l": 175,
+            "sp": 65471,
+            "pc": 33827,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 33,
+            "b": 27,
+            "c": 75,
+            "d": 251,
+            "e": 0,
+            "h": 27,
+            "l": 98,
+            "sp": 65473,
+            "pc": 33910,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "entry_memory_sha256": "14d7e48a70104443ec0c0c29973a0820c07e5006bdb2756bfab049c74d8453cf",
+          "post_memory_sha256": "9f1633cb648e26e80194273a2584e2a50be2bb349e845a5b482f7d1e82457788",
+          "stack_cells": 47,
+          "logical_writes": 313
+        }
+      ]
+    }
+  ]
+}

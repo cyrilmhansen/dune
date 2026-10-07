@@ -62,5 +62,6 @@ let prepare t ~call ~origin ~(state:Runner.state_snapshot) ~memory =
 
 let internal_call t site =
   let offset=site-0x2200 in
-  require(offset>=0 && offset+3<=Bytes.length t.image && Char.code(Bytes.get t.image offset)=0xcd && word t.image(offset+1)=0x9da2) "unproven internal CALL";
-  {coordinate=Printf.sprintf "PLI1.OVL+%04X" offset;runtime_site=site;resume=site+3;operation=Recycle}
+  require(offset>=0 && offset+3<=Bytes.length t.image && Char.code(Bytes.get t.image offset)=0xcd) "unproven internal CALL";
+  let operation=match word t.image(offset+1) with 0x9cd5->Publish|0x9da2->Recycle|_->invalid_arg "Not a mapped publication CALL" in
+  {coordinate=Printf.sprintf "PLI1.OVL+%04X" offset;runtime_site=site;resume=site+3;operation}
