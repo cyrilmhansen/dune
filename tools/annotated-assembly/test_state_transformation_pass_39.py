@@ -18,7 +18,7 @@ class PassThirtyNineTests(unittest.TestCase):
  def test_single_copy_full_proof_hash(self):
   b=encode_full_proof(self.rows,self.analyses);e=load(REPORT/'efficiency.json');self.assertEqual(hashlib.sha256(b).hexdigest(),e['full_rederivable_evidence_sha256']);self.assertEqual(len(b),e['full_rederivable_evidence_bytes']);self.assertEqual(e['oracle_queries'],0)
  def test_catalog_preserves_old_contracts(self):
-  epoch=load(ROOT/'research/host-compiler/pass-41/before.json')|load(ROOT/'research/host-compiler/pass-40/before.json')
+  epoch=(load(ROOT/'research/host-compiler/pass-42/before.json')|load(ROOT/'research/host-compiler/pass-41/before.json'))|load(ROOT/'research/host-compiler/pass-40/before.json')
   self.assertTrue(all((epoch.get(k) or self.catalog[k])==p for k,p in self.base.items()))
   for k,p in load(REPORT/'after.json').items():
    self.assertEqual(p,self.catalog[k]);self.assertEqual(p['observed_paths']['invocations_by_run'],{s:len(g[k])for s,g in self.rows.items()});union={w['origin']['offset']+i for g in self.rows.values()for r in g[k]for w in r['own_witnesses']for i in range(len(bytes.fromhex(w['bytes'])))};self.assertEqual(len(union),p['observed_paths']['represented_bytes'])

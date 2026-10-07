@@ -6809,15 +6809,128 @@ PLI1_4625: LHLD 0A90BH ; HL=fresh little_endian_word[A90BH]; low then high read;
 PLI1_4628: XCHG ; exchange DE and HL; flags preserved ; +4628 runtime=6828H OBSERVED
 PLI1_4629: CALL 6784H ; push following PC; invoke PLI1.OVL+4584; child state/effects at the explicitly scoped contract ; +4629 runtime=6829H OBSERVED
 PLI1_462C: RET ; consume original hardware return word; SP=entry_SP+2; preserve final path flags and registers ; +462C runtime=682CH OBSERVED
-; SECTION [462D,4693) RAW
+; SECTION [462D,4651) RAW
 PLI1_462D: DB 021H,00EH,0A9H ; +462D runtime=682DH RAW
 PLI1_4630: DB 073H,02BH,070H,02BH,071H,02AH,00CH,0A9H,044H,04DH,02AH,00EH,0A9H,0EBH,0CDH,02BH ; +4630 runtime=6830H RAW
 PLI1_4640: DB 067H,0CDH,02FH,064H,02AH,00CH,0A9H,044H,04DH,02AH,00EH,0A9H,0EBH,0CDH,084H,067H ; +4640 runtime=6840H RAW
-PLI1_4650: DB 0C9H,021H,00FH,0A9H,071H,0CDH,062H,067H,0CDH,02FH,064H,0CDH,075H,064H,01FH,0D2H ; +4650 runtime=6850H RAW
-PLI1_4660: DB 068H,068H,0CDH,08EH,064H,0C3H,05BH,068H,0CDH,081H,064H,01FH,0D2H,092H,068H,02AH ; +4660 runtime=6860H RAW
-PLI1_4670: DB 0C5H,020H,0EBH,001H,0C6H,020H,0CDH,084H,067H,0CDH,081H,064H,01FH,0DAH,081H,068H ; +4670 runtime=6870H RAW
-PLI1_4680: DB 0C9H,0CDH,09FH,063H,021H,00FH,0A9H,0BEH,0C2H,08CH,068H,0C9H,0CDH,08EH,064H,0C3H ; +4680 runtime=6880H RAW
-PLI1_4690: DB 068H,068H,0C9H ; +4690 runtime=6890H RAW
+PLI1_4650: DB 0C9H ; +4650 runtime=6850H RAW
+
+; @procedure-v1 PLI1.OVL+4651
+; ProcedureHypothesis: Prefix hash / reference-bounded pointer selection and payload/tag match
+; Entry: PLI1_4651 = PLI1.OVL+4651 @ 6851H; SHA-256
+;   1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564
+; Extent: HYPOTHESIS [4651,4693) file offsets; overlapping entries: none established
+; Callers: OBSERVED PLI1.OVL+46AF (FIZZBUZ=11, MINIMAL=1, PICTURE=1)
+; Returns: OBSERVED/DEDUCED ordinary outerhardware CALL/RET; nested4468 consumesits own two-byte
+;   callerargument, notouterargument; exact path-specific ordinary return
+; Inputs: DEDUCED Actual inputC and live numeric prefix/reader/hash/working/reference state;
+;   inherited child nonaliasing and terminating supported scopes. No capacity/ownership
+;   assumption.
+; Outputs: DEDUCED Path-specific data registers/flags from described local comparison/rotate or
+;   delegated child; SP=entrySP+2; originalCALL continuation.
+; Clobbers: DEDUCED A/BC/DE/HL/flags along child sequence; local scratch; inherited child data and
+;   derived CALL/PUSH residue.
+; Memory: DEDUCED Own savedC atA90F; fresh paired neighbors retained as actual read inputs.;
+;   Shared numericA760/A761/A863/A8AB and prefix20C5/20C6; distinct provenance.; F=entrySP;
+;   originalCALL atF; childstacklastwriters explicitly derived belowF.
+; Direct callees: OBSERVED PLI1.OVL+4562 @6762H; PLI1.OVL+422F @642FH; PLI1.OVL+4275 @6475H;
+;   PLI1.OVL+428E @648EH; PLI1.OVL+4281 @6481H; PLI1.OVL+4584 @6784H; PLI1.OVL+4281
+;   @6481H; PLI1.OVL+419F @639FH
+; Coverage: OBSERVED FIZZBUZ: 11 CALLs; MINIMAL: 1 CALLs; PICTURE: 1 CALLs; 59/66 bytes
+;   represented as instructions; OBSERVED corrected ordinary windows; independent
+;   duplicates retained. Required scope selected from historical predicates, not indices
+;   or snapshot membership.
+; Unresolved: Unexecuted mismatch/retry arms and arbitrary traversal termination remain RAW /
+;   STATIC / UNOBSERVED; all required natural children closed.
+; Contract: DEDUCED (partial; scope: Required accumulated-natural composition selected by fresh
+;   null/reference/payload/tag predicates; unsupported alternatives and aliases explicit.)
+;   Save inputC atA90F. Complete4562 reads20C5/20C6 and computes descending-prefix sum
+;   modulo128 atA760; complete422F freshly selects word[A761+2*index] intoA863. Each
+;   complete4275 compares fresh workingpointer against referenceA8AB; RAR tests
+;   returnedA.bit0 independently of its borrow flags. While pointer>=reference,
+;   complete428E freshly reads successorword atpointer+8, publishesA863 and repeats. Stop
+;   only at the historical comparison. Fresh4281 null mask: zero RAR returns00 at4692 with
+;   childBC/DE/HL, S0Z1AC1P1CY0. Nonzero: freshly read20C5/20C6 pair, pass lowwidthE and
+;   independent literalBC20C6 to existing bounded4584. Required positive
+;   equal-length/payload route leaves pointer unchanged, returnsA00 andCMP0,0 flags;
+;   fresh4281 rechecks pointer. Its nonnull bit selects complete419F fresh tag
+;   atpointer+2. Compare with freshly read savedA90F; required equality returns tagA with
+;   BC/DE from helpers, HL=A90F and exactCMP(tag,saved)flags. Mismatch, payload
+;   retry/floor and postmatch-null alternatives are not implemented/claimed here. Own data
+;   write onlyA90F; child scratch/hash/source/pointer effects and CALL residues remain
+;   separate. Conditional pointer traversal termination only at demonstrated scope; no
+;   capacity, ownership or arbitrary-chain termination claim.
+; Hypothesis: none beyond the low-level operational description
+; Completeness: bounds=stable; control_flow=partial; contract=partial
+; Evidence: evidence.json#seeds/PLI1.OVL+4651; ../host-compiler/pass-42/README.md;
+;   ../host-compiler/pass-42/work-packet.json
+; Procedure pseudo (operational; byte/word arithmetic wraps):
+;   Save inputC atA90F. Complete4562 reads20C5/20C6 and computes descending-prefix sum modulo128
+;   atA760; complete422F freshly selects word[A761+2*index] intoA863. Each complete4275 compares
+;   fresh workingpointer against referenceA8AB; RAR tests returnedA.bit0 independently of its
+;   borrow flags. While pointer>=reference, complete428E freshly reads successorword atpointer+8,
+;   publishesA863 and repeats. Stop only at the historical comparison. Fresh4281 null mask: zero
+;   RAR returns00 at4692 with childBC/DE/HL, S0Z1AC1P1CY0. Nonzero: freshly read20C5/20C6 pair,
+;   pass lowwidthE and independent literalBC20C6 to existing bounded4584. Required positive
+;   equal-length/payload route leaves pointer unchanged, returnsA00 andCMP0,0 flags; fresh4281
+;   rechecks pointer. Its nonnull bit selects complete419F fresh tag atpointer+2. Compare with
+;   freshly read savedA90F; required equality returns tagA with BC/DE from helpers, HL=A90F and
+;   exactCMP(tag,saved)flags. Mismatch, payload retry/floor and postmatch-null alternatives are
+;   not implemented/claimed here. Own data write onlyA90F; child scratch/hash/source/pointer
+;   effects and CALL residues remain separate. Conditional pointer traversal termination only at
+;   demonstrated scope; no capacity, ownership or arbitrary-chain termination claim.
+; @end-procedure-v1 PLI1.OVL+4651
+; SECTION [4651,4680) UNDERSTOOD
+; @block-pseudo 4651
+; pseudo:
+; | saveinputC; fresh prefixsum4562; current selectedslot422F
+PLI1_4651: LXI H,0A90FH ; H pair = literal A90FH; flags preserved ; +4651 runtime=6851H OBSERVED
+PLI1_4654: MOV M,C ; byte[HL]=C; flags preserved ; +4654 runtime=6854H OBSERVED
+PLI1_4655: CALL 6762H ; push following PC; invoke PLI1.OVL+4562; child state/effects at the explicitly scoped contract ; +4655 runtime=6855H OBSERVED
+PLI1_4658: CALL 642FH ; push following PC; invoke PLI1.OVL+422F; child state/effects at the explicitly scoped contract ; +4658 runtime=6858H OBSERVED
+; @block-pseudo 465B
+; pseudo:
+; | fresh4275: RAR tests returnedA bit, not wordborrow
+; | while pointer>=reference:428E follows fresh+8 successor; repeat
+PLI1_465B: CALL 6475H ; push following PC; invoke PLI1.OVL+4275; child state/effects at the explicitly scoped contract ; +465B runtime=685BH OBSERVED
+PLI1_465E: RAR ; A=(incoming_CY<<7)|(old_A>>1); CY=old_A.bit0; NZPA preserved ; +465E runtime=685EH OBSERVED
+PLI1_465F: JNC 6868H ; if CY=0: PC=6868H; flags preserved ; +465F runtime=685FH OBSERVED
+PLI1_4662: CALL 648EH ; push following PC; invoke PLI1.OVL+428E; child state/effects at the explicitly scoped contract ; +4662 runtime=6862H OBSERVED
+PLI1_4665: JMP 685BH ; unconditionally: PC=685BH; flags preserved ; +4665 runtime=6865H OBSERVED
+; @block-pseudo 4668
+; pseudo:
+; | fresh4281 null mask; RARclear ->sharedRET4692
+PLI1_4668: CALL 6481H ; push following PC; invoke PLI1.OVL+4281; child state/effects at the explicitly scoped contract ; +4668 runtime=6868H OBSERVED
+PLI1_466B: RAR ; A=(incoming_CY<<7)|(old_A>>1); CY=old_A.bit0; NZPA preserved ; +466B runtime=686BH OBSERVED
+PLI1_466C: JNC 6892H ; if CY=0: PC=6892H; flags preserved ; +466C runtime=686CH OBSERVED
+; @block-pseudo 466F
+; pseudo:
+; | pairedwidth/source ->bounded4584 exact payload match
+; | fresh4281: observednonnull ->tag read; nullalternative remainsRAW
+PLI1_466F: LHLD 20C5H ; HL=fresh little_endian_word[20C5H]; low then high read; flags preserved ; +466F runtime=686FH OBSERVED
+PLI1_4672: XCHG ; exchange DE and HL; flags preserved ; +4672 runtime=6872H OBSERVED
+PLI1_4673: LXI B,20C6H ; B pair = literal 20C6H; flags preserved ; +4673 runtime=6873H OBSERVED
+PLI1_4676: CALL 6784H ; push following PC; invoke PLI1.OVL+4584; child state/effects at the explicitly scoped contract ; +4676 runtime=6876H OBSERVED
+PLI1_4679: CALL 6481H ; push following PC; invoke PLI1.OVL+4281; child state/effects at the explicitly scoped contract ; +4679 runtime=6879H OBSERVED
+PLI1_467C: RAR ; A=(incoming_CY<<7)|(old_A>>1); CY=old_A.bit0; NZPA preserved ; +467C runtime=687CH OBSERVED
+PLI1_467D: JC 6881H ; if CY=1: PC=6881H; flags preserved ; +467D runtime=687DH OBSERVED
+; SECTION [4680,4681) RAW
+PLI1_4680: DB 0C9H ; +4680 runtime=6880H RAW
+; SECTION [4681,468C) UNDERSTOOD
+; @block-pseudo 4681
+; pseudo:
+; | fresh419F pointer+2 tag; CMP freshsavedinputA90F
+; | observed equality RET; mismatchretry remainsRAW
+PLI1_4681: CALL 639FH ; push following PC; invoke PLI1.OVL+419F; child state/effects at the explicitly scoped contract ; +4681 runtime=6881H OBSERVED
+PLI1_4684: LXI H,0A90FH ; H pair = literal A90FH; flags preserved ; +4684 runtime=6884H OBSERVED
+PLI1_4687: CMP M ; flags=unsigned byte comparison A against M; operands preserved ; +4687 runtime=6887H OBSERVED
+PLI1_4688: JNZ 688CH ; if Z=0: PC=688CH; flags preserved ; +4688 runtime=6888H OBSERVED
+PLI1_468B: RET ; consume original hardware return word; SP=entry_SP+2; preserve final path flags and registers ; +468B runtime=688BH OBSERVED
+; SECTION [468C,4692) RAW
+PLI1_468C: DB 0CDH,08EH,064H,0C3H ; +468C runtime=688CH RAW
+PLI1_4690: DB 068H,068H ; +4690 runtime=6890H RAW
+; SECTION [4692,4693) UNDERSTOOD
+PLI1_4692: RET ; consume original hardware return word; SP=entry_SP+2; preserve final path flags and registers ; +4692 runtime=6892H OBSERVED
 
 ; @procedure-v1 PLI1.OVL+4693
 ; ProcedureHypothesis: stack-argument adapter to record constructor
@@ -6872,10 +6985,86 @@ PLI1_469F: LHLD 0A910H ; L = byte[adapter_tag (A910H)]; H = byte[A911H] ; +469F 
 PLI1_46A2: XCHG ; swap HL and DE; flags preserved ; +46A2 runtime=68A2H OBSERVED
 PLI1_46A3: CALL 6668H ; push following PC; invoke PLI1.OVL+4468; result effects belong to callee ; +46A3 runtime=68A3H OBSERVED
 PLI1_46A6: RET ; PC = word[SP]; SP += 2; use the convention in procedure header ; +46A6 runtime=68A6H OBSERVED
-; SECTION [46A7,46ED) RAW
-PLI1_46A7: DB 021H,011H,0A9H,071H,02AH,011H,0A9H,04DH,0CDH ; +46A7 runtime=68A7H RAW
-PLI1_46B0: DB 051H,068H,0CDH,081H,064H,01FH,0DAH,0C0H,068H,02AH,011H,0A9H,04DH,0CDH,093H,068H ; +46B0 runtime=68B0H RAW
-PLI1_46C0: DB 0C9H,001H,00AH,000H,02AH,063H,0A8H,009H,022H,012H,0A9H,0CDH,027H,064H,032H,014H ; +46C0 runtime=68C0H RAW
+
+; @procedure-v1 PLI1.OVL+46A7
+; ProcedureHypothesis: Select or construct through fresh working-pointer null mask
+; Entry: PLI1_46A7 = PLI1.OVL+46A7 @ 68A7H; SHA-256
+;   1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564
+; Extent: HYPOTHESIS [46A7,46C1) file offsets; overlapping entries: none established
+; Callers: OBSERVED PLI1.OVL+5937 (FIZZBUZ=11, MINIMAL=1, PICTURE=1)
+; Returns: OBSERVED/DEDUCED ordinary outerhardware CALL/RET; nested4468 consumesits own two-byte
+;   callerargument, notouterargument; exact path-specific ordinary return
+; Inputs: DEDUCED Actual inputC and live numeric prefix/reader/hash/working/reference state;
+;   inherited child nonaliasing and terminating supported scopes. No capacity/ownership
+;   assumption.
+; Outputs: DEDUCED Path-specific data registers/flags from described local comparison/rotate or
+;   delegated child; SP=entrySP+2; originalCALL continuation.
+; Clobbers: DEDUCED A/BC/DE/HL/flags along child sequence; local scratch; inherited child data and
+;   derived CALL/PUSH residue.
+; Memory: DEDUCED Own savedC atA911; fresh paired neighbors retained as actual read inputs.;
+;   Shared numericA760/A761/A863/A8AB and prefix20C5/20C6; distinct provenance.; F=entrySP;
+;   originalCALL atF; childstacklastwriters explicitly derived belowF.
+; Direct callees: OBSERVED PLI1.OVL+4651 @6851H; PLI1.OVL+4281 @6481H; PLI1.OVL+4693 @6893H
+; Coverage: OBSERVED FIZZBUZ: 11 CALLs; MINIMAL: 1 CALLs; PICTURE: 1 CALLs; 26/26 bytes
+;   represented as instructions; OBSERVED corrected ordinary windows; independent
+;   duplicates retained. Required scope selected from historical predicates, not indices
+;   or snapshot membership.
+; Unresolved: Local CFG complete; inherited4651/4468 allocator/error/traversal alternatives remain
+;   globally partial. Required natural scopes closed.
+; Contract: DEDUCED (partial; scope: Required accumulated-natural composition selected by fresh
+;   null/reference/payload/tag predicates; unsupported alternatives and aliases explicit.)
+;   Save inputC atA911; pairedA911/A912 read passes lowC to bounded4651. Then independent
+;   complete4281 freshly reads word[A863] and builds FF/00 null mask. RAR preserves
+;   S/Z/AC/P and setsCY=mask.bit0; JC goes directly toRET ifnonnull. Required reuse
+;   returnsAFF, S1Z0AC0P1CY1, BCfrom4651,DE=A864,HL=workingpointer. Null branch freshly
+;   rereads pairedA911/A912, lowC to bounded4693; its native-ready constructor consumes
+;   its separate sourceword argument. Return all constructor data registers/flags,
+;   preservingouteroriginal CALL continuation; empty constructor returnsA00 withAC1,
+;   nonempty terminal-link returnsA00 withAC0. Returned4651 tag is not this null mask, and
+;   returned46A7 A is not subsequent5929 selector. Own data write onlyA911. All26 local
+;   bytes and branch directions established; globalcontract remainspartial
+;   because4651/constructor alternatives are bounded.
+; Hypothesis: none beyond the low-level operational description
+; Completeness: bounds=stable; control_flow=complete; contract=partial
+; Evidence: evidence.json#seeds/PLI1.OVL+46A7; ../host-compiler/pass-42/README.md;
+;   ../host-compiler/pass-42/work-packet.json
+; Procedure pseudo (operational; byte/word arithmetic wraps):
+;   Save inputC atA911; pairedA911/A912 read passes lowC to bounded4651. Then independent
+;   complete4281 freshly reads word[A863] and builds FF/00 null mask. RAR preserves S/Z/AC/P and
+;   setsCY=mask.bit0; JC goes directly toRET ifnonnull. Required reuse returnsAFF, S1Z0AC0P1CY1,
+;   BCfrom4651,DE=A864,HL=workingpointer. Null branch freshly rereads pairedA911/A912, lowC to
+;   bounded4693; its native-ready constructor consumes its separate sourceword argument. Return
+;   all constructor data registers/flags, preservingouteroriginal CALL continuation; empty
+;   constructor returnsA00 withAC1, nonempty terminal-link returnsA00 withAC0. Returned4651 tag is
+;   not this null mask, and returned46A7 A is not subsequent5929 selector. Own data write
+;   onlyA911. All26 local bytes and branch directions established; globalcontract remainspartial
+;   because4651/constructor alternatives are bounded.
+; @end-procedure-v1 PLI1.OVL+46A7
+; SECTION [46A7,46C1) UNDERSTOOD
+; @block-pseudo 46A7
+; pseudo:
+; | saveC; pairedsavedtag ->bounded4651
+PLI1_46A7: LXI H,0A911H ; H pair = literal A911H; flags preserved ; +46A7 runtime=68A7H OBSERVED
+PLI1_46AA: MOV M,C ; byte[HL]=C; flags preserved ; +46AA runtime=68AAH OBSERVED
+PLI1_46AB: LHLD 0A911H ; HL=fresh little_endian_word[A911H]; low then high read; flags preserved ; +46AB runtime=68ABH OBSERVED
+PLI1_46AE: MOV C,L ; C=L; flags preserved ; +46AE runtime=68AEH OBSERVED
+PLI1_46AF: CALL 6851H ; push following PC; invoke PLI1.OVL+4651; child state/effects at the explicitly scoped contract ; +46AF runtime=68AFH OBSERVED
+; @block-pseudo 46B2
+; pseudo:
+; | independent fresh4281 nullmask; RAR/JCnonnull ->RET
+PLI1_46B2: CALL 6481H ; push following PC; invoke PLI1.OVL+4281; child state/effects at the explicitly scoped contract ; +46B2 runtime=68B2H OBSERVED
+PLI1_46B5: RAR ; A=(incoming_CY<<7)|(old_A>>1); CY=old_A.bit0; NZPA preserved ; +46B5 runtime=68B5H OBSERVED
+PLI1_46B6: JC 68C0H ; if CY=1: PC=68C0H; flags preserved ; +46B6 runtime=68B6H OBSERVED
+; @block-pseudo 46B9
+; pseudo:
+; | freshsavedtagpair lowC ->4693/4468 N2constructor
+; | RET delegates constructorflags/dataregs throughoriginalouterCALL
+PLI1_46B9: LHLD 0A911H ; HL=fresh little_endian_word[A911H]; low then high read; flags preserved ; +46B9 runtime=68B9H OBSERVED
+PLI1_46BC: MOV C,L ; C=L; flags preserved ; +46BC runtime=68BCH OBSERVED
+PLI1_46BD: CALL 6893H ; push following PC; invoke PLI1.OVL+4693; child state/effects at the explicitly scoped contract ; +46BD runtime=68BDH OBSERVED
+PLI1_46C0: RET ; consume original hardware return word; SP=entry_SP+2; preserve final path flags and registers ; +46C0 runtime=68C0H OBSERVED
+; SECTION [46C1,46ED) RAW
+PLI1_46C1: DB 001H,00AH,000H,02AH,063H,0A8H,009H,022H,012H,0A9H,0CDH,027H,064H,032H,014H ; +46C1 runtime=68C1H RAW
 PLI1_46D0: DB 0A9H,02AH,012H,0A9H,044H,04DH,02AH,014H,0A9H,0EBH,0CDH,02BH,067H,0CDH,02FH,064H ; +46D0 runtime=68D0H RAW
 PLI1_46E0: DB 02AH,012H,0A9H,044H,04DH,02AH,014H,0A9H,0EBH,0CDH,084H,067H,0C9H ; +46E0 runtime=68E0H RAW
 
@@ -8699,27 +8888,36 @@ PLI1_5920: DB 09AH,045H,0C6H,013H,04FH,0CDH,06CH,047H,0C9H ; +5920 runtime=7B20H
 ;   independently retained for MINIMAL/FIZZBUZ/PICTURE; union of own bytes excludes child
 ;   bodies.
 ; Unresolved: RAW scan-miss +5A42, selector3/4 handling +5971..+59DB and selector7/8/9 publication
-;   arms remain STATIC / UNOBSERVED. / Opaque +46A7 and partial +784E
-;   acquisition/classification prevent faithful whole-parent native composition; scoped
-;   child chronology is not a child implementation. / Pointer producers, aliases and
-;   conditional termination remain unproved beyond actual natural windows.
+;   arms remain STATIC / UNOBSERVED. / Pointer producers, aliases and conditional
+;   termination remain unproved beyond actual natural windows. / Global
+;   unobserved57B7-notfound / selectors3,4,7,8,9 and aliases remain unsupported;
+;   required13natural composition has no opaquechild.
 ; Contract: DEDUCED (partial; scope: Bounded accumulated-natural routes and exact represented
 ;   local operations; delegated partial/opaque children and unexecuted local arms are not
-;   silently implemented.) Call complete +57B7 with BC=7923H; RAR its result; JNC clear
-;   bit selects an unobserved RAW alternative. OBSERVED result01 enters work. Fresh20C3
-;   low from paired20C3/20C4 read is C to opaque +46A7. Fresh word[A863] is copied
-;   low/high to A63B/A63C then A635/A636. Clear A631; fresh20C3 -> A628; fresh20C5 ->
-;   A62B; clear A62E. Preserve separate SUI03/SUI01/SBB and SUI04/SUI01/SBB masks through
-;   PUSH PSW/POP B/ORA C/RAR. Natural selectors02/05 skip the RAW3/4,7,8,9 alternatives.
-;   Fresh word[A863]+4 receives fresh A62B; a second fresh pointer read+5 receives fresh
-;   A62E. Fresh +239A, INR A, MOV C,A -> bounded +2511; partial +784E then RET through
-;   +5A45. OBSERVED +239A returns04 and child2511 receives05; final machine state
-;   delegated784E. +46A7 returns00 orFF but its return A is not used as the later
-;   selector; the caller freshly rereads20C3.
+;   silently implemented.; Pass42 closes causal46A7/4651 and required constructor scopes;
+;   Pass41 closes final acquisition.) Call complete +57B7 with BC=7923H; RAR its result;
+;   JNC clear bit selects an unobserved RAW alternative. OBSERVED result01 enters work.
+;   Fresh20C3 low from paired20C3/20C4 read is C to bounded +46A7 (Pass42). Fresh
+;   word[A863] is copied low/high to A63B/A63C then A635/A636. Clear A631; fresh20C3 ->
+;   A628; fresh20C5 -> A62B; clear A62E. Preserve separate SUI03/SUI01/SBB and
+;   SUI04/SUI01/SBB masks through PUSH PSW/POP B/ORA C/RAR. Natural selectors02/05 skip
+;   the RAW3/4,7,8,9 alternatives. Fresh word[A863]+4 receives fresh A62B; a second fresh
+;   pointer read+5 receives fresh A62E. Fresh +239A, INR A, MOV C,A -> bounded +2511;
+;   bounded Pass41 +784E then RET through +5A45. OBSERVED +239A returns04 and child2511
+;   receives05; final machine state delegated784E. +46A7 returns00 orFF but its return A
+;   is not used as the later selector; the caller freshly rereads20C3. Pass42:
+;   all13required4651/46A7 descendants now reproduced from currentstate. Nine directnull
+;   selections, one nullafterreferencewalk and three exactpayload/tag matches;
+;   independent4281 selects ten constructors versus three reuse returns. Allten4693/4468
+;   children reuse established N2 empty/nonempty constructor scope. Fresh20C3 aftergate
+;   isindependentofgateA00/FF; prefix/hash/selectedslot/pointer publications remain
+;   distinct. Complete ancestor composition requires only inherited explicit
+;   boundedchildpredicates and observedtermination, not global RAW completion.
 ; Hypothesis: none beyond the low-level operational description
 ; Completeness: bounds=provisional; control_flow=partial; contract=partial
 ; Evidence: evidence.json#seeds/PLI1.OVL+5929; ../host-compiler/pass-32/README.md;
-;   ../host-compiler/pass-32/child-correlations.json
+;   ../host-compiler/pass-32/child-correlations.json; ../host-compiler/pass-42/README.md;
+;   ../host-compiler/pass-42/acquisition-compatibility.json
 ; Procedure pseudo (operational; byte/word arithmetic wraps):
 ;   57B7(7923H); RAR; observed found route; opaque46A7(fresh20C3); publish fresh pointer twice;
 ;   clear extra; independently copy20C3/20C5; two wrapping masks, saved PSW, OR/RAR; natural02/05
@@ -8736,7 +8934,7 @@ PLI1_592F: RAR ; A=(incoming_CY<<7)|(old_A>>1); CY=old_A.bit0; NZPA preserved ; 
 PLI1_5930: JNC 7C42H ; if CY=0: PC=7C42H; flags preserved ; +5930 runtime=7B30H OBSERVED
 PLI1_5933: LHLD 20C3H ; HL=fresh little_endian_word[20C3H]; low then high read; flags preserved ; +5933 runtime=7B33H OBSERVED
 PLI1_5936: MOV C,L ; C=L; flags preserved ; +5936 runtime=7B36H OBSERVED
-PLI1_5937: CALL 68A7H ; push following PC; invoke PLI1.OVL+46A7; child state/effects at the explicitly scoped contract ; +5937 runtime=7B37H OBSERVED
+PLI1_5937: CALL 68A7H ; CALL bounded46A7; returnedA00/FF is not the laterselector ; +5937 runtime=7B37H OBSERVED
 ; @block-pseudo 593A
 ; pseudo:
 ; | publish fresh pointer twice; clear extra; independently copy20C3/20C5
@@ -8745,7 +8943,7 @@ PLI1_593D: SHLD 0A63BH ; byte[A63BH]=L then byte[address+1]=H; flags preserved ;
 PLI1_5940: SHLD 0A635H ; byte[A635H]=L then byte[address+1]=H; flags preserved ; +5940 runtime=7B40H OBSERVED
 PLI1_5943: LXI H,0A631H ; H pair = literal A631H; flags preserved ; +5943 runtime=7B43H OBSERVED
 PLI1_5946: MVI M,00H ; byte[HL]=00H; flags preserved ; +5946 runtime=7B46H OBSERVED
-PLI1_5948: LDA 20C3H ; A=fresh byte[20C3H]; flags preserved ; +5948 runtime=7B48H OBSERVED
+PLI1_5948: LDA 20C3H ; freshly reread20C3 aftergate; do not substitute returnedgateA ; +5948 runtime=7B48H OBSERVED
 PLI1_594B: STA 0A628H ; unconditionally publish A to byte[A628H]; flags preserved ; +594B runtime=7B4BH OBSERVED
 PLI1_594E: LDA 20C5H ; A=fresh byte[20C5H]; flags preserved ; +594E runtime=7B4EH OBSERVED
 PLI1_5951: STA 0A62BH ; unconditionally publish A to byte[A62BH]; flags preserved ; +5951 runtime=7B51H OBSERVED
@@ -15217,4 +15415,7 @@ PLI1_6C30: EQU 08E30H ; +6C30 runtime=8E30H coordinate-only preserved label
 PLI1_6C50: EQU 08E50H ; +6C50 runtime=8E50H coordinate-only preserved label
 PLI1_6C60: EQU 08E60H ; +6C60 runtime=8E60H coordinate-only preserved label
 PLI1_6C90: EQU 08E90H ; +6C90 runtime=8E90H coordinate-only preserved label
+PLI1_4660: EQU 06860H ; +4660 runtime=6860H coordinate-only preserved label
+PLI1_4670: EQU 06870H ; +4670 runtime=6870H coordinate-only preserved label
+PLI1_46B0: EQU 068B0H ; +46B0 runtime=68B0H coordinate-only preserved label
     END

@@ -1,0 +1,636 @@
+{
+  "method": "CALL operands and PUSH register/PSW values at actual SP independently derive ordered bytes. Per-window stack last-writer patterns interned in work packet; detailed ancestry in ignored full proof.",
+  "software_continuation": "4468 N2: source argument20C6 pushed by469A; constructor consumesoriginal CALL slot and one caller argument, PUSH4474 copiescontinuation; RETSP=constructor_entrySP+4. WrapperRETSP=wrapper_entrySP+2. Temporary pointer PUSHes mayoverwriteoriginalCALLslot but not relocatedcontinuation.",
+  "constructor_cases": [
+    {
+      "source": "MINIMAL",
+      "call": 257266,
+      "caller": "PLI1.OVL+46A3",
+      "software": {
+        "call_step": 257266,
+        "original_return_slot": 65461,
+        "original_return_pop_step": 257272,
+        "continuation_register": "DE",
+        "continuation_writer_step": 257277,
+        "relocated_return_slot": 65463,
+        "consumed_caller_bytes": 2,
+        "software_ret_step": 257585,
+        "final_SP_minus_preCALL": 2,
+        "argument_pop_steps": [
+          257273
+        ]
+      },
+      "last_writers": [
+        {
+          "relative_address": -2,
+          "value": 137,
+          "writer": "PLI1.OVL+4286",
+          "step": 257537,
+          "stack_depth": 0
+        },
+        {
+          "relative_address": -1,
+          "value": 100,
+          "writer": "PLI1.OVL+4286",
+          "step": 257537,
+          "stack_depth": 0
+        },
+        {
+          "relative_address": 0,
+          "value": 198,
+          "writer": "PLI1.OVL+451A",
+          "step": 257575,
+          "stack_depth": -2
+        },
+        {
+          "relative_address": 1,
+          "value": 251,
+          "writer": "PLI1.OVL+451A",
+          "step": 257575,
+          "stack_depth": -2
+        },
+        {
+          "relative_address": 2,
+          "value": 166,
+          "writer": "PLI1.OVL+4474",
+          "step": 257277,
+          "stack_depth": -4
+        },
+        {
+          "relative_address": 3,
+          "value": 104,
+          "writer": "PLI1.OVL+4474",
+          "step": 257277,
+          "stack_depth": -4
+        }
+      ]
+    },
+    {
+      "source": "FIZZBUZ",
+      "call": 357427,
+      "caller": "PLI1.OVL+46A3",
+      "software": {
+        "call_step": 357427,
+        "original_return_slot": 65456,
+        "original_return_pop_step": 357433,
+        "continuation_register": "DE",
+        "continuation_writer_step": 357438,
+        "relocated_return_slot": 65458,
+        "consumed_caller_bytes": 2,
+        "software_ret_step": 357599,
+        "final_SP_minus_preCALL": 2,
+        "argument_pop_steps": [
+          357434
+        ]
+      },
+      "last_writers": [
+        {
+          "relative_address": -2,
+          "value": 137,
+          "writer": "PLI1.OVL+4286",
+          "step": 357566,
+          "stack_depth": 0
+        },
+        {
+          "relative_address": -1,
+          "value": 100,
+          "writer": "PLI1.OVL+4286",
+          "step": 357566,
+          "stack_depth": 0
+        },
+        {
+          "relative_address": 0,
+          "value": 180,
+          "writer": "PLI1.OVL+44EB",
+          "step": 357585,
+          "stack_depth": -2
+        },
+        {
+          "relative_address": 1,
+          "value": 251,
+          "writer": "PLI1.OVL+44EB",
+          "step": 357585,
+          "stack_depth": -2
+        },
+        {
+          "relative_address": 2,
+          "value": 166,
+          "writer": "PLI1.OVL+4474",
+          "step": 357438,
+          "stack_depth": -4
+        },
+        {
+          "relative_address": 3,
+          "value": 104,
+          "writer": "PLI1.OVL+4474",
+          "step": 357438,
+          "stack_depth": -4
+        }
+      ]
+    },
+    {
+      "source": "FIZZBUZ",
+      "call": 364891,
+      "caller": "PLI1.OVL+46A3",
+      "software": {
+        "call_step": 364891,
+        "original_return_slot": 65454,
+        "original_return_pop_step": 364897,
+        "continuation_register": "DE",
+        "continuation_writer_step": 364902,
+        "relocated_return_slot": 65456,
+        "consumed_caller_bytes": 2,
+        "software_ret_step": 365085,
+        "final_SP_minus_preCALL": 2,
+        "argument_pop_steps": [
+          364898
+        ]
+      },
+      "last_writers": [
+        {
+          "relative_address": -2,
+          "value": 137,
+          "writer": "PLI1.OVL+4286",
+          "step": 365052,
+          "stack_depth": 0
+        },
+        {
+          "relative_address": -1,
+          "value": 100,
+          "writer": "PLI1.OVL+4286",
+          "step": 365052,
+          "stack_depth": 0
+        },
+        {
+          "relative_address": 0,
+          "value": 168,
+          "writer": "PLI1.OVL+44EB",
+          "step": 365071,
+          "stack_depth": -2
+        },
+        {
+          "relative_address": 1,
+          "value": 251,
+          "writer": "PLI1.OVL+44EB",
+          "step": 365071,
+          "stack_depth": -2
+        },
+        {
+          "relative_address": 2,
+          "value": 166,
+          "writer": "PLI1.OVL+4474",
+          "step": 364902,
+          "stack_depth": -4
+        },
+        {
+          "relative_address": 3,
+          "value": 104,
+          "writer": "PLI1.OVL+4474",
+          "step": 364902,
+          "stack_depth": -4
+        }
+      ]
+    },
+    {
+      "source": "FIZZBUZ",
+      "call": 396824,
+      "caller": "PLI1.OVL+46A3",
+      "software": {
+        "call_step": 396824,
+        "original_return_slot": 65446,
+        "original_return_pop_step": 396830,
+        "continuation_register": "DE",
+        "continuation_writer_step": 396835,
+        "relocated_return_slot": 65448,
+        "consumed_caller_bytes": 2,
+        "software_ret_step": 396996,
+        "final_SP_minus_preCALL": 2,
+        "argument_pop_steps": [
+          396831
+        ]
+      },
+      "last_writers": [
+        {
+          "relative_address": -2,
+          "value": 137,
+          "writer": "PLI1.OVL+4286",
+          "step": 396963,
+          "stack_depth": 0
+        },
+        {
+          "relative_address": -1,
+          "value": 100,
+          "writer": "PLI1.OVL+4286",
+          "step": 396963,
+          "stack_depth": 0
+        },
+        {
+          "relative_address": 0,
+          "value": 157,
+          "writer": "PLI1.OVL+44EB",
+          "step": 396982,
+          "stack_depth": -2
+        },
+        {
+          "relative_address": 1,
+          "value": 251,
+          "writer": "PLI1.OVL+44EB",
+          "step": 396982,
+          "stack_depth": -2
+        },
+        {
+          "relative_address": 2,
+          "value": 166,
+          "writer": "PLI1.OVL+4474",
+          "step": 396835,
+          "stack_depth": -4
+        },
+        {
+          "relative_address": 3,
+          "value": 104,
+          "writer": "PLI1.OVL+4474",
+          "step": 396835,
+          "stack_depth": -4
+        }
+      ]
+    },
+    {
+      "source": "FIZZBUZ",
+      "call": 430788,
+      "caller": "PLI1.OVL+46A3",
+      "software": {
+        "call_step": 430788,
+        "original_return_slot": 65430,
+        "original_return_pop_step": 430794,
+        "continuation_register": "DE",
+        "continuation_writer_step": 430799,
+        "relocated_return_slot": 65432,
+        "consumed_caller_bytes": 2,
+        "software_ret_step": 431114,
+        "final_SP_minus_preCALL": 2,
+        "argument_pop_steps": [
+          430795
+        ]
+      },
+      "last_writers": [
+        {
+          "relative_address": -2,
+          "value": 137,
+          "writer": "PLI1.OVL+4286",
+          "step": 431081,
+          "stack_depth": 0
+        },
+        {
+          "relative_address": -1,
+          "value": 100,
+          "writer": "PLI1.OVL+4286",
+          "step": 431081,
+          "stack_depth": 0
+        },
+        {
+          "relative_address": 0,
+          "value": 139,
+          "writer": "PLI1.OVL+44EB",
+          "step": 431100,
+          "stack_depth": -2
+        },
+        {
+          "relative_address": 1,
+          "value": 251,
+          "writer": "PLI1.OVL+44EB",
+          "step": 431100,
+          "stack_depth": -2
+        },
+        {
+          "relative_address": 2,
+          "value": 166,
+          "writer": "PLI1.OVL+4474",
+          "step": 430799,
+          "stack_depth": -4
+        },
+        {
+          "relative_address": 3,
+          "value": 104,
+          "writer": "PLI1.OVL+4474",
+          "step": 430799,
+          "stack_depth": -4
+        }
+      ]
+    },
+    {
+      "source": "FIZZBUZ",
+      "call": 461318,
+      "caller": "PLI1.OVL+46A3",
+      "software": {
+        "call_step": 461318,
+        "original_return_slot": 65383,
+        "original_return_pop_step": 461324,
+        "continuation_register": "DE",
+        "continuation_writer_step": 461329,
+        "relocated_return_slot": 65385,
+        "consumed_caller_bytes": 2,
+        "software_ret_step": 461490,
+        "final_SP_minus_preCALL": 2,
+        "argument_pop_steps": [
+          461325
+        ]
+      },
+      "last_writers": [
+        {
+          "relative_address": -2,
+          "value": 137,
+          "writer": "PLI1.OVL+4286",
+          "step": 461457,
+          "stack_depth": 0
+        },
+        {
+          "relative_address": -1,
+          "value": 100,
+          "writer": "PLI1.OVL+4286",
+          "step": 461457,
+          "stack_depth": 0
+        },
+        {
+          "relative_address": 0,
+          "value": 110,
+          "writer": "PLI1.OVL+44EB",
+          "step": 461476,
+          "stack_depth": -2
+        },
+        {
+          "relative_address": 1,
+          "value": 251,
+          "writer": "PLI1.OVL+44EB",
+          "step": 461476,
+          "stack_depth": -2
+        },
+        {
+          "relative_address": 2,
+          "value": 166,
+          "writer": "PLI1.OVL+4474",
+          "step": 461329,
+          "stack_depth": -4
+        },
+        {
+          "relative_address": 3,
+          "value": 104,
+          "writer": "PLI1.OVL+4474",
+          "step": 461329,
+          "stack_depth": -4
+        }
+      ]
+    },
+    {
+      "source": "FIZZBUZ",
+      "call": 499818,
+      "caller": "PLI1.OVL+46A3",
+      "software": {
+        "call_step": 499818,
+        "original_return_slot": 65426,
+        "original_return_pop_step": 499824,
+        "continuation_register": "DE",
+        "continuation_writer_step": 499829,
+        "relocated_return_slot": 65428,
+        "consumed_caller_bytes": 2,
+        "software_ret_step": 500056,
+        "final_SP_minus_preCALL": 2,
+        "argument_pop_steps": [
+          499825
+        ]
+      },
+      "last_writers": [
+        {
+          "relative_address": -2,
+          "value": 137,
+          "writer": "PLI1.OVL+4286",
+          "step": 500023,
+          "stack_depth": 0
+        },
+        {
+          "relative_address": -1,
+          "value": 100,
+          "writer": "PLI1.OVL+4286",
+          "step": 500023,
+          "stack_depth": 0
+        },
+        {
+          "relative_address": 0,
+          "value": 96,
+          "writer": "PLI1.OVL+44EB",
+          "step": 500042,
+          "stack_depth": -2
+        },
+        {
+          "relative_address": 1,
+          "value": 251,
+          "writer": "PLI1.OVL+44EB",
+          "step": 500042,
+          "stack_depth": -2
+        },
+        {
+          "relative_address": 2,
+          "value": 166,
+          "writer": "PLI1.OVL+4474",
+          "step": 499829,
+          "stack_depth": -4
+        },
+        {
+          "relative_address": 3,
+          "value": 104,
+          "writer": "PLI1.OVL+4474",
+          "step": 499829,
+          "stack_depth": -4
+        }
+      ]
+    },
+    {
+      "source": "FIZZBUZ",
+      "call": 528116,
+      "caller": "PLI1.OVL+46A3",
+      "software": {
+        "call_step": 528116,
+        "original_return_slot": 65379,
+        "original_return_pop_step": 528122,
+        "continuation_register": "DE",
+        "continuation_writer_step": 528127,
+        "relocated_return_slot": 65381,
+        "consumed_caller_bytes": 2,
+        "software_ret_step": 528288,
+        "final_SP_minus_preCALL": 2,
+        "argument_pop_steps": [
+          528123
+        ]
+      },
+      "last_writers": [
+        {
+          "relative_address": -2,
+          "value": 137,
+          "writer": "PLI1.OVL+4286",
+          "step": 528255,
+          "stack_depth": 0
+        },
+        {
+          "relative_address": -1,
+          "value": 100,
+          "writer": "PLI1.OVL+4286",
+          "step": 528255,
+          "stack_depth": 0
+        },
+        {
+          "relative_address": 0,
+          "value": 71,
+          "writer": "PLI1.OVL+44EB",
+          "step": 528274,
+          "stack_depth": -2
+        },
+        {
+          "relative_address": 1,
+          "value": 251,
+          "writer": "PLI1.OVL+44EB",
+          "step": 528274,
+          "stack_depth": -2
+        },
+        {
+          "relative_address": 2,
+          "value": 166,
+          "writer": "PLI1.OVL+4474",
+          "step": 528127,
+          "stack_depth": -4
+        },
+        {
+          "relative_address": 3,
+          "value": 104,
+          "writer": "PLI1.OVL+4474",
+          "step": 528127,
+          "stack_depth": -4
+        }
+      ]
+    },
+    {
+      "source": "FIZZBUZ",
+      "call": 566468,
+      "caller": "PLI1.OVL+46A3",
+      "software": {
+        "call_step": 566468,
+        "original_return_slot": 65422,
+        "original_return_pop_step": 566474,
+        "continuation_register": "DE",
+        "continuation_writer_step": 566479,
+        "relocated_return_slot": 65424,
+        "consumed_caller_bytes": 2,
+        "software_ret_step": 566706,
+        "final_SP_minus_preCALL": 2,
+        "argument_pop_steps": [
+          566475
+        ]
+      },
+      "last_writers": [
+        {
+          "relative_address": -2,
+          "value": 137,
+          "writer": "PLI1.OVL+4286",
+          "step": 566673,
+          "stack_depth": 0
+        },
+        {
+          "relative_address": -1,
+          "value": 100,
+          "writer": "PLI1.OVL+4286",
+          "step": 566673,
+          "stack_depth": 0
+        },
+        {
+          "relative_address": 0,
+          "value": 57,
+          "writer": "PLI1.OVL+44EB",
+          "step": 566692,
+          "stack_depth": -2
+        },
+        {
+          "relative_address": 1,
+          "value": 251,
+          "writer": "PLI1.OVL+44EB",
+          "step": 566692,
+          "stack_depth": -2
+        },
+        {
+          "relative_address": 2,
+          "value": 166,
+          "writer": "PLI1.OVL+4474",
+          "step": 566479,
+          "stack_depth": -4
+        },
+        {
+          "relative_address": 3,
+          "value": 104,
+          "writer": "PLI1.OVL+4474",
+          "step": 566479,
+          "stack_depth": -4
+        }
+      ]
+    },
+    {
+      "source": "PICTURE",
+      "call": 306330,
+      "caller": "PLI1.OVL+46A3",
+      "software": {
+        "call_step": 306330,
+        "original_return_slot": 65467,
+        "original_return_pop_step": 306336,
+        "continuation_register": "DE",
+        "continuation_writer_step": 306341,
+        "relocated_return_slot": 65469,
+        "consumed_caller_bytes": 2,
+        "software_ret_step": 306502,
+        "final_SP_minus_preCALL": 2,
+        "argument_pop_steps": [
+          306337
+        ]
+      },
+      "last_writers": [
+        {
+          "relative_address": -2,
+          "value": 137,
+          "writer": "PLI1.OVL+4286",
+          "step": 306469,
+          "stack_depth": 0
+        },
+        {
+          "relative_address": -1,
+          "value": 100,
+          "writer": "PLI1.OVL+4286",
+          "step": 306469,
+          "stack_depth": 0
+        },
+        {
+          "relative_address": 0,
+          "value": 154,
+          "writer": "PLI1.OVL+44EB",
+          "step": 306488,
+          "stack_depth": -2
+        },
+        {
+          "relative_address": 1,
+          "value": 251,
+          "writer": "PLI1.OVL+44EB",
+          "step": 306488,
+          "stack_depth": -2
+        },
+        {
+          "relative_address": 2,
+          "value": 166,
+          "writer": "PLI1.OVL+4474",
+          "step": 306341,
+          "stack_depth": -4
+        },
+        {
+          "relative_address": 3,
+          "value": 104,
+          "writer": "PLI1.OVL+4474",
+          "step": 306341,
+          "stack_depth": -4
+        }
+      ]
+    }
+  ]
+}

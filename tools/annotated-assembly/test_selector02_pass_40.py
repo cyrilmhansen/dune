@@ -38,7 +38,7 @@ class PassFortyTests(unittest.TestCase):
    q=validate_parent(r);self.assertEqual(q['selected_after'],21);self.assertEqual(q['adjusted'],23);self.assertEqual(q['second_position'],(q['stop']+1)&255)
  def test_catalog_statuses_and_prior_unchanged_entries(self):
   before=load(REPORT/'before.json');after=load(REPORT/'after.json');base={p['id']:p for p in json.loads(subprocess.check_output(['git','show',BASE+':research/annotated-assembly/procedures.json'],text=True))['procedures']}
-  epoch=load(ROOT/'research/host-compiler/pass-41/before.json');self.assertTrue(all((epoch.get(k)or self.catalog[k])==p for k,p in base.items()if k not in after));self.assertEqual({k:self.catalog[k]for k in after},after)
+  epoch=(load(ROOT/'research/host-compiler/pass-42/before.json')|load(ROOT/'research/host-compiler/pass-41/before.json'));self.assertTrue(all((epoch.get(k)or self.catalog[k])==p for k,p in base.items()if k not in after));self.assertEqual({k:self.catalog[k]for k in after},after)
   for k in ['28AA','6708']:self.assertEqual(self.catalog['PLI1.OVL+'+k]['completeness'],dict(bounds='provisional',control_flow='partial',contract='partial'))
   self.assertEqual(self.catalog['PLI1.OVL+8309']['completeness']['contract'],'complete');self.assertEqual(self.catalog['PLI1.OVL+2185']['completeness']['contract'],'partial')
  def test_unobserved_alternatives_RAW(self):

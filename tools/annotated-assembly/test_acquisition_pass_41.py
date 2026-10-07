@@ -47,7 +47,7 @@ class PassFortyOneTests(unittest.TestCase):
    self.assertEqual(self.cat[k]['completeness'],dict(bounds='provisional',control_flow='partial',contract='partial'))
   image=next(i for i in load(ROOT/'research/annotated-assembly/manifest.json')['images']if i['name']=='PLI.COM');status=lambda o:next(s['status']for s in image['sections']if s['start_offset']<=o<s['end_offset']);self.assertEqual(status(0x160a),'RAW')
  def test_only_documented_catalog_entries_changed(self):
-  before=load(REPORT/'before.json');after=load(REPORT/'after.json');base={p['id']:p for p in json.loads(subprocess.check_output(['git','show',BASE+':research/annotated-assembly/procedures.json'],text=True))['procedures']};self.assertEqual({k:base.get(k)for k in before},before);self.assertTrue(all(self.cat[k]==p for k,p in base.items()if k not in after));self.assertEqual({k:self.cat[k]for k in after},after)
+  before=load(REPORT/'before.json');after=load(REPORT/'after.json');base={p['id']:p for p in json.loads(subprocess.check_output(['git','show',BASE+':research/annotated-assembly/procedures.json'],text=True))['procedures']};self.assertEqual({k:base.get(k)for k in before},before);self.assertTrue(all((load(ROOT/'research/host-compiler/pass-42/before.json').get(k)or self.cat[k])==p for k,p in base.items()if k not in after));self.assertEqual({k:self.cat[k]for k in after},after)
  def test_modified_carry_or_return_flag_falsifies_law(self):
   for kind in ['carry','return']:
    r=copy.deepcopy(self.rows['FIZZBUZ']['PLI1.OVL+784E'][0])

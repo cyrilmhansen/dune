@@ -1,0 +1,235 @@
+{
+  "validation_tier": "incremental",
+  "full_checkpoint_base": "22c38cf8d83b61e602523c48aacf5147a69835ba",
+  "all_passed": true,
+  "categories": {
+    "exact-reconstruction": {
+      "command": [
+        "python",
+        "tools/annotated-assembly/verify.py",
+        "--images",
+        "/home/john/pli/cpm/pli80/DISK1",
+        "--write-progress"
+      ],
+      "return_code": 0,
+      "elapsed_seconds": 12.484,
+      "tests": null,
+      "log": "_build/host-compiler-pass-42/validation/exact-reconstruction.log"
+    },
+    "dynamic-progress": {
+      "command": [
+        "python",
+        "tools/annotated-assembly/minimal_dynamic_progress.py",
+        "--output",
+        "research/minimal-baseline/dynamic-progress.json"
+      ],
+      "return_code": 0,
+      "elapsed_seconds": 0.098,
+      "tests": null,
+      "log": "_build/host-compiler-pass-42/validation/dynamic-progress.log"
+    },
+    "dune-build": {
+      "command": [
+        "dune",
+        "build",
+        "@all",
+        "-j",
+        "4"
+      ],
+      "return_code": 0,
+      "elapsed_seconds": 0.327,
+      "tests": null,
+      "log": "_build/host-compiler-pass-42/validation/dune-build.log"
+    },
+    "dune-project": {
+      "command": [
+        "dune",
+        "runtest",
+        "-j",
+        "4"
+      ],
+      "return_code": 0,
+      "elapsed_seconds": 0.246,
+      "tests": null,
+      "log": "_build/host-compiler-pass-42/validation/dune-project.log"
+    },
+    "pass34-composition": {
+      "command": [
+        "python",
+        "tools/annotated-assembly/test_5a46_pass_34.py",
+        "--images",
+        "/home/john/pli/cpm/pli80/DISK1"
+      ],
+      "return_code": 0,
+      "elapsed_seconds": 40.474,
+      "tests": 12,
+      "log": "_build/host-compiler-pass-42/validation/pass34-composition.log"
+    },
+    "pass42": {
+      "command": [
+        "python",
+        "tools/annotated-assembly/test_causal_5929_pass_42.py",
+        "--images",
+        "/home/john/pli/cpm/pli80/DISK1"
+      ],
+      "return_code": 0,
+      "elapsed_seconds": 41.09,
+      "tests": 19,
+      "log": "_build/host-compiler-pass-42/validation/pass42.log"
+    },
+    "pass32-ancestry": {
+      "command": [
+        "python",
+        "tools/annotated-assembly/test_6223_pass_32.py",
+        "--images",
+        "/home/john/pli/cpm/pli80/DISK1"
+      ],
+      "return_code": 0,
+      "elapsed_seconds": 43.844,
+      "tests": 10,
+      "log": "_build/host-compiler-pass-42/validation/pass32-ancestry.log"
+    },
+    "pass41-acquisition": {
+      "command": [
+        "python",
+        "tools/annotated-assembly/test_acquisition_pass_41.py",
+        "--images",
+        "/home/john/pli/cpm/pli80/DISK1"
+      ],
+      "return_code": 0,
+      "elapsed_seconds": 52.189,
+      "tests": 16,
+      "log": "_build/host-compiler-pass-42/validation/pass41-acquisition.log"
+    },
+    "V1": {
+      "command": [
+        "python",
+        "tools/annotated-assembly/test_decompilation_annotations.py"
+      ],
+      "return_code": 0,
+      "elapsed_seconds": 19.815,
+      "tests": 9,
+      "log": "_build/host-compiler-pass-42/validation/V1.log"
+    },
+    "pass33-upward": {
+      "command": [
+        "python",
+        "tools/annotated-assembly/test_60e5_pass_33.py",
+        "--images",
+        "/home/john/pli/cpm/pli80/DISK1"
+      ],
+      "return_code": 0,
+      "elapsed_seconds": 77.003,
+      "tests": 12,
+      "log": "_build/host-compiler-pass-42/validation/pass33-upward.log"
+    },
+    "pass13-constructor": {
+      "command": [
+        "python",
+        "tools/annotated-assembly/test_fizzbuz_pass_13.py",
+        "--images",
+        "/home/john/pli/cpm/pli80/DISK1"
+      ],
+      "return_code": 0,
+      "elapsed_seconds": 129.328,
+      "tests": 8,
+      "log": "_build/host-compiler-pass-42/validation/pass13-constructor.log"
+    }
+  },
+  "wall_seconds": 182.958,
+  "sum_category_seconds": 416.898,
+  "safe_parallel_workers": 3,
+  "aggregate_final_validation_commands": 2,
+  "python_tests": 86,
+  "exact_historical_bytes": 94720,
+  "checkpoint_triggers": [],
+  "next_full_checkpoint_due": 43,
+  "deferred_categories": [
+    "pass17-native",
+    "native-unit",
+    "pass19-native",
+    "pass20-native",
+    "pass15",
+    "pass18-native",
+    "baseline",
+    "minimal-pass-1",
+    "minimal-pass-2",
+    "minimal-pass-3",
+    "minimal-pass-4",
+    "pass16",
+    "minimal-pass-5",
+    "pass14",
+    "minimal-pass-6",
+    "minimal-pass-8",
+    "minimal-pass-7",
+    "minimal-pass-12",
+    "recursive-unit",
+    "balance-unit",
+    "minimal-pass-11",
+    "minimal-pass-9",
+    "minimal-pass-10",
+    "mapped-unit",
+    "attribute-unit",
+    "emitter-unit",
+    "roundtrip",
+    "roundtrip-tests",
+    "pass23",
+    "native-emitter-unit",
+    "word-emitter-unit",
+    "pass22",
+    "range-unit",
+    "pass24",
+    "publication-unit",
+    "pass21-native",
+    "range-publication-unit",
+    "packet-continuation",
+    "control-unit",
+    "input-unit",
+    "pass25",
+    "gate-unit",
+    "pass26",
+    "pass27",
+    "pass28",
+    "pass29",
+    "historical-leaf-queries",
+    "pass30",
+    "pass35",
+    "pass31",
+    "pass36",
+    "pass37",
+    "pass39",
+    "pass38",
+    "pass40"
+  ],
+  "deferred_reason": "Pass40 checkpoint remains valid for unchanged runtime/schema/native/shared-contract inputs; targeted acquisition scopes and affected ancestry only. Epoch assertions32/41 and16/39/40 preserve prior catalog contracts; full16/39/40 suites remain deferred toPass43.",
+  "runtime_changed": false,
+  "schema_changed": false,
+  "native_changed": false,
+  "contract_corrections": [],
+  "divergences": [],
+  "fidelity_debt": [],
+  "oracle_queries": 0,
+  "RAW_to_UNDERSTOOD_bytes": 85,
+  "historical_images": {
+    "PLI.COM": {
+      "size": 8064,
+      "sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80"
+    },
+    "PLI0.OVL": {
+      "size": 18048,
+      "sha256": "e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff"
+    },
+    "PLI1.OVL": {
+      "size": 34816,
+      "sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564"
+    },
+    "PLI2.OVL": {
+      "size": 33792,
+      "sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a"
+    }
+  },
+  "all_four_images_reconstructed_exactly": true,
+  "diff_check_passed": true,
+  "final_audit_seconds": 0.058,
+  "model_facing_packet_bytes": 30339
+}

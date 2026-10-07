@@ -1,0 +1,111 @@
+{
+  "PLI1.OVL+5929": {
+    "counts": {
+      "MINIMAL": 1,
+      "FIZZBUZ": 11,
+      "PICTURE": 1
+    },
+    "callers": {
+      "PLI1.OVL+6240": 13
+    },
+    "routes": {
+      "MINIMAL": {
+        "found_nonspecial": 1
+      },
+      "FIZZBUZ": {
+        "found_nonspecial": 11
+      },
+      "PICTURE": {
+        "found_nonspecial": 1
+      }
+    }
+  },
+  "PLI1.OVL+46A7": {
+    "counts": {
+      "MINIMAL": 1,
+      "FIZZBUZ": 11,
+      "PICTURE": 1
+    },
+    "callers": {
+      "PLI1.OVL+5937": 13
+    },
+    "routes": {
+      "MINIMAL": {
+        "existing_nonempty_terminal_link": 1
+      },
+      "FIZZBUZ": {
+        "existing_empty_slot": 8,
+        "reuse_nonnull": 3
+      },
+      "PICTURE": {
+        "existing_empty_slot": 1
+      }
+    }
+  },
+  "PLI1.OVL+4651": {
+    "counts": {
+      "MINIMAL": 1,
+      "FIZZBUZ": 11,
+      "PICTURE": 1
+    },
+    "callers": {
+      "PLI1.OVL+46AF": 13
+    },
+    "routes": {
+      "MINIMAL": {
+        "null_after_reference_walk": 1
+      },
+      "FIZZBUZ": {
+        "existing_payload_and_tag_match": 3,
+        "null_selected_slot": 8
+      },
+      "PICTURE": {
+        "null_selected_slot": 1
+      }
+    }
+  },
+  "PLI1.OVL+4693": {
+    "counts": {
+      "MINIMAL": 1,
+      "FIZZBUZ": 8,
+      "PICTURE": 1
+    },
+    "callers": {
+      "PLI1.OVL+46BD": 10
+    },
+    "routes": {
+      "MINIMAL": {
+        "reused_constructor_wrapper": 1
+      },
+      "FIZZBUZ": {
+        "reused_constructor_wrapper": 8
+      },
+      "PICTURE": {
+        "reused_constructor_wrapper": 1
+      }
+    }
+  },
+  "PLI1.OVL+4468": {
+    "counts": {
+      "MINIMAL": 2,
+      "FIZZBUZ": 11,
+      "PICTURE": 1
+    },
+    "callers": {
+      "PLI1.OVL+46A3": 10,
+      "PLI1.OVL+4756": 4
+    },
+    "routes": {
+      "MINIMAL": {
+        "existing_nonempty_terminal_link": 2
+      },
+      "FIZZBUZ": {
+        "existing_empty_slot": 8,
+        "existing_nonempty_terminal_link": 3
+      },
+      "PICTURE": {
+        "existing_empty_slot": 1
+      }
+    }
+  }
+}

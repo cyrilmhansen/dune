@@ -118137,7 +118137,8 @@
           }
         }
       },
-      "behavioral_contract": "Call complete +57B7 with BC=7923H; RAR its result; JNC clear bit selects an unobserved RAW alternative. OBSERVED result01 enters work. Fresh20C3 low from paired20C3/20C4 read is C to opaque +46A7. Fresh word[A863] is copied low/high to A63B/A63C then A635/A636. Clear A631; fresh20C3 -> A628; fresh20C5 -> A62B; clear A62E. Preserve separate SUI03/SUI01/SBB and SUI04/SUI01/SBB masks through PUSH PSW/POP B/ORA C/RAR. Natural selectors02/05 skip the RAW3/4,7,8,9 alternatives. Fresh word[A863]+4 receives fresh A62B; a second fresh pointer read+5 receives fresh A62E. Fresh +239A, INR A, MOV C,A -> bounded +2511; partial +784E then RET through +5A45. OBSERVED +239A returns04 and child2511 receives05; final machine state delegated784E. +46A7 returns00 orFF but its return A is not used as the later selector; the caller freshly rereads20C3."
+      "behavioral_contract": "Call complete +57B7 with BC=7923H; RAR its result; JNC clear bit selects an unobserved RAW alternative. OBSERVED result01 enters work. Fresh20C3 low from paired20C3/20C4 read is C to opaque +46A7. Fresh word[A863] is copied low/high to A63B/A63C then A635/A636. Clear A631; fresh20C3 -> A628; fresh20C5 -> A62B; clear A62E. Preserve separate SUI03/SUI01/SBB and SUI04/SUI01/SBB masks through PUSH PSW/POP B/ORA C/RAR. Natural selectors02/05 skip the RAW3/4,7,8,9 alternatives. Fresh word[A863]+4 receives fresh A62B; a second fresh pointer read+5 receives fresh A62E. Fresh +239A, INR A, MOV C,A -> bounded +2511; partial +784E then RET through +5A45. OBSERVED +239A returns04 and child2511 receives05; final machine state delegated784E. +46A7 returns00 orFF but its return A is not used as the later selector; the caller freshly rereads20C3.",
+      "pass42_causal_scope": "Call complete +57B7 with BC=7923H; RAR its result; JNC clear bit selects an unobserved RAW alternative. OBSERVED result01 enters work. Fresh20C3 low from paired20C3/20C4 read is C to bounded +46A7 (Pass42). Fresh word[A863] is copied low/high to A63B/A63C then A635/A636. Clear A631; fresh20C3 -> A628; fresh20C5 -> A62B; clear A62E. Preserve separate SUI03/SUI01/SBB and SUI04/SUI01/SBB masks through PUSH PSW/POP B/ORA C/RAR. Natural selectors02/05 skip the RAW3/4,7,8,9 alternatives. Fresh word[A863]+4 receives fresh A62B; a second fresh pointer read+5 receives fresh A62E. Fresh +239A, INR A, MOV C,A -> bounded +2511; bounded Pass41 +784E then RET through +5A45. OBSERVED +239A returns04 and child2511 receives05; final machine state delegated784E. +46A7 returns00 orFF but its return A is not used as the later selector; the caller freshly rereads20C3. Pass42: all13required4651/46A7 descendants now reproduced from currentstate. Nine directnull selections, one nullafterreferencewalk and three exactpayload/tag matches; independent4281 selects ten constructors versus three reuse returns. Allten4693/4468 children reuse established N2 empty/nonempty constructor scope. Fresh20C3 aftergate isindependentofgateA00/FF; prefix/hash/selectedslot/pointer publications remain distinct. Complete ancestor composition requires only inherited explicit boundedchildpredicates and observedtermination, not global RAW completion."
     },
     {
       "id": "PLI1.OVL+01E8",
@@ -156439,6 +156440,1225 @@
         }
       },
       "behavioral_contract": "Save inputC at2149; genuinely read little-endian2149/214A; use onlylowC and call complete0817. Let m=(C>5F)?(C AND5F):C. SUI45;SUI01;selfSBBA givesA=FF iff m==45 else00. BC andDE preserved,HL208F; flags from finalselfSBB: FF gives S1Z0AC0P1CY1;00 gives S0Z1AC1P1CY0. Own scratch2149 and child208F remain distinct. Original outer CALL word consumed; below-entry word comes from CALL0817 continuation1721, not an invented callee-save slot. Complete at nonaliasing code/scratch/read/save scope; no semantic interpretation of45."
+    },
+    {
+      "id": "PLI1.OVL+4651",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "start_offset": 18001,
+      "end_offset": 18067,
+      "description": "Prefix hash / reference-bounded pointer selection and payload/tag match",
+      "inputs_and_effects": "Actual inputC and live numeric prefix/reader/hash/working/reference state; inherited child nonaliasing and terminating supported scopes. No capacity/ownership assumption.; Path-specific data registers/flags from described local comparison/rotate or delegated child; SP=entrySP+2; originalCALL continuation.",
+      "downstream_helpers_runtime": "PLI1.OVL+4562; PLI1.OVL+422F; PLI1.OVL+4275; PLI1.OVL+428E; PLI1.OVL+4281; PLI1.OVL+4584; PLI1.OVL+4281; PLI1.OVL+419F",
+      "unresolved": "Unexecuted mismatch/retry arms and arbitrary traversal termination remain RAW / STATIC / UNOBSERVED; all required natural children closed.",
+      "instructions": [
+        {
+          "offset": 18001,
+          "runtime_pc": 26705,
+          "bytes": "210FA9",
+          "decoded": "LXI H,A90FH",
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 1,
+              "first_step": 257018,
+              "last_step": 257018
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 11,
+              "first_step": 357302,
+              "last_step": 566298
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 1,
+              "first_step": 306205,
+              "last_step": 306205
+            }
+          ]
+        },
+        {
+          "offset": 18004,
+          "runtime_pc": 26708,
+          "bytes": "71",
+          "decoded": "MOV M,C",
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 1,
+              "first_step": 257019,
+              "last_step": 257019
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 11,
+              "first_step": 357303,
+              "last_step": 566299
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 1,
+              "first_step": 306206,
+              "last_step": 306206
+            }
+          ]
+        },
+        {
+          "offset": 18005,
+          "runtime_pc": 26709,
+          "bytes": "CD6267",
+          "decoded": "CALL 6762H",
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 1,
+              "first_step": 257020,
+              "last_step": 257020
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 11,
+              "first_step": 357304,
+              "last_step": 566300
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 1,
+              "first_step": 306207,
+              "last_step": 306207
+            }
+          ]
+        },
+        {
+          "offset": 18008,
+          "runtime_pc": 26712,
+          "bytes": "CD2F64",
+          "decoded": "CALL 642FH",
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 1,
+              "first_step": 257147,
+              "last_step": 257147
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 11,
+              "first_step": 357341,
+              "last_step": 566382
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 1,
+              "first_step": 306244,
+              "last_step": 306244
+            }
+          ]
+        },
+        {
+          "offset": 18011,
+          "runtime_pc": 26715,
+          "bytes": "CD7564",
+          "decoded": "CALL 6475H",
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 2,
+              "first_step": 257159,
+              "last_step": 257192
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 11,
+              "first_step": 357353,
+              "last_step": 566394
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 1,
+              "first_step": 306256,
+              "last_step": 306256
+            }
+          ]
+        },
+        {
+          "offset": 18014,
+          "runtime_pc": 26718,
+          "bytes": "1F",
+          "decoded": "RAR",
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 2,
+              "first_step": 257179,
+              "last_step": 257212
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 11,
+              "first_step": 357373,
+              "last_step": 566414
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 1,
+              "first_step": 306276,
+              "last_step": 306276
+            }
+          ]
+        },
+        {
+          "offset": 18015,
+          "runtime_pc": 26719,
+          "bytes": "D26868",
+          "decoded": "JNC 6868H",
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 2,
+              "first_step": 257180,
+              "last_step": 257213
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 11,
+              "first_step": 357374,
+              "last_step": 566415
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 1,
+              "first_step": 306277,
+              "last_step": 306277
+            }
+          ]
+        },
+        {
+          "offset": 18018,
+          "runtime_pc": 26722,
+          "bytes": "CD8E64",
+          "decoded": "CALL 648EH",
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 1,
+              "first_step": 257181,
+              "last_step": 257181
+            }
+          ]
+        },
+        {
+          "offset": 18021,
+          "runtime_pc": 26725,
+          "bytes": "C35B68",
+          "decoded": "JMP 685BH",
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 1,
+              "first_step": 257191,
+              "last_step": 257191
+            }
+          ]
+        },
+        {
+          "offset": 18024,
+          "runtime_pc": 26728,
+          "bytes": "CD8164",
+          "decoded": "CALL 6481H",
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 1,
+              "first_step": 257214,
+              "last_step": 257214
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 11,
+              "first_step": 357375,
+              "last_step": 566416
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 1,
+              "first_step": 306278,
+              "last_step": 306278
+            }
+          ]
+        },
+        {
+          "offset": 18027,
+          "runtime_pc": 26731,
+          "bytes": "1F",
+          "decoded": "RAR",
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 1,
+              "first_step": 257232,
+              "last_step": 257232
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 11,
+              "first_step": 357393,
+              "last_step": 566434
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 1,
+              "first_step": 306296,
+              "last_step": 306296
+            }
+          ]
+        },
+        {
+          "offset": 18028,
+          "runtime_pc": 26732,
+          "bytes": "D29268",
+          "decoded": "JNC 6892H",
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 1,
+              "first_step": 257233,
+              "last_step": 257233
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 11,
+              "first_step": 357394,
+              "last_step": 566435
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 1,
+              "first_step": 306297,
+              "last_step": 306297
+            }
+          ]
+        },
+        {
+          "offset": 18031,
+          "runtime_pc": 26735,
+          "bytes": "2AC520",
+          "decoded": "LHLD 20C5H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 3,
+              "first_step": 391492,
+              "last_step": 533330
+            }
+          ]
+        },
+        {
+          "offset": 18034,
+          "runtime_pc": 26738,
+          "bytes": "EB",
+          "decoded": "XCHG",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 3,
+              "first_step": 391493,
+              "last_step": 533331
+            }
+          ]
+        },
+        {
+          "offset": 18035,
+          "runtime_pc": 26739,
+          "bytes": "01C620",
+          "decoded": "LXI B,20C6H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 3,
+              "first_step": 391494,
+              "last_step": 533332
+            }
+          ]
+        },
+        {
+          "offset": 18038,
+          "runtime_pc": 26742,
+          "bytes": "CD8467",
+          "decoded": "CALL 6784H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 3,
+              "first_step": 391495,
+              "last_step": 533333
+            }
+          ]
+        },
+        {
+          "offset": 18041,
+          "runtime_pc": 26745,
+          "bytes": "CD8164",
+          "decoded": "CALL 6481H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 3,
+              "first_step": 391580,
+              "last_step": 533392
+            }
+          ]
+        },
+        {
+          "offset": 18044,
+          "runtime_pc": 26748,
+          "bytes": "1F",
+          "decoded": "RAR",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 3,
+              "first_step": 391598,
+              "last_step": 533410
+            }
+          ]
+        },
+        {
+          "offset": 18045,
+          "runtime_pc": 26749,
+          "bytes": "DA8168",
+          "decoded": "JC 6881H",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 3,
+              "first_step": 391599,
+              "last_step": 533411
+            }
+          ]
+        },
+        {
+          "offset": 18049,
+          "runtime_pc": 26753,
+          "bytes": "CD9F63",
+          "decoded": "CALL 639FH",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 3,
+              "first_step": 391600,
+              "last_step": 533412
+            }
+          ]
+        },
+        {
+          "offset": 18052,
+          "runtime_pc": 26756,
+          "bytes": "210FA9",
+          "decoded": "LXI H,A90FH",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 3,
+              "first_step": 391606,
+              "last_step": 533418
+            }
+          ]
+        },
+        {
+          "offset": 18055,
+          "runtime_pc": 26759,
+          "bytes": "BE",
+          "decoded": "CMP M",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 3,
+              "first_step": 391607,
+              "last_step": 533419
+            }
+          ]
+        },
+        {
+          "offset": 18056,
+          "runtime_pc": 26760,
+          "bytes": "C28C68",
+          "decoded": "JNZ 688CH",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 3,
+              "first_step": 391608,
+              "last_step": 533420
+            }
+          ]
+        },
+        {
+          "offset": 18059,
+          "runtime_pc": 26763,
+          "bytes": "C9",
+          "decoded": "RET",
+          "runs": [
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 3,
+              "first_step": 391609,
+              "last_step": 533421
+            }
+          ]
+        },
+        {
+          "offset": 18066,
+          "runtime_pc": 26770,
+          "bytes": "C9",
+          "decoded": "RET",
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 1,
+              "first_step": 257234,
+              "last_step": 257234
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 8,
+              "first_step": 357395,
+              "last_step": 566436
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 1,
+              "first_step": 306298,
+              "last_step": 306298
+            }
+          ]
+        }
+      ],
+      "observed_callers": [
+        {
+          "run": "MINIMAL",
+          "image": "PLI1.OVL",
+          "offset": 18095,
+          "bytes": "CD5168",
+          "execution_count": 1,
+          "first_step": 257017
+        },
+        {
+          "run": "FIZZBUZ",
+          "image": "PLI1.OVL",
+          "offset": 18095,
+          "bytes": "CD5168",
+          "execution_count": 11,
+          "first_step": 357301
+        },
+        {
+          "run": "PICTURE",
+          "image": "PLI1.OVL",
+          "offset": 18095,
+          "bytes": "CD5168",
+          "execution_count": 1,
+          "first_step": 306204
+        }
+      ],
+      "observed_return_offsets": [
+        18059,
+        18066
+      ],
+      "matched_return_sample": {
+        "relation": "OBSERVED corrected ordinary outerCALL/RET",
+        "call": {
+          "step_index": 257017,
+          "pc": 26799,
+          "pc_after": 26705,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI1.OVL",
+              "identity": "0:0:PLI1.OVL"
+            },
+            "offset": 18095
+          },
+          "target_origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI1.OVL",
+              "identity": "0:0:PLI1.OVL"
+            },
+            "offset": 18001
+          },
+          "runtime_pc": 26799,
+          "bytes": "CD5168",
+          "disassembly": "CALL 6851H",
+          "source": "memory",
+          "before": {
+            "a": 0,
+            "b": 0,
+            "c": 5,
+            "d": 0,
+            "e": 0,
+            "h": 0,
+            "l": 5,
+            "sp": 65467,
+            "pc": 26799,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": true
+            }
+          },
+          "after": {
+            "a": 0,
+            "b": 0,
+            "c": 5,
+            "d": 0,
+            "e": 0,
+            "h": 0,
+            "l": 5,
+            "sp": 65465,
+            "pc": 26705,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": true
+            }
+          },
+          "sp_before": 65467,
+          "sp_after": 65465,
+          "call_return_address": 26802,
+          "reads": [],
+          "writes": [
+            {
+              "address": 65466,
+              "old_value": null,
+              "new_value": 104
+            },
+            {
+              "address": 65465,
+              "old_value": null,
+              "new_value": 178
+            }
+          ],
+          "control": {
+            "kind": "call",
+            "target": 26705,
+            "taken": true
+          }
+        },
+        "ret": {
+          "step_index": 257234,
+          "pc": 26770,
+          "pc_after": 26802,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI1.OVL",
+              "identity": "0:0:PLI1.OVL"
+            },
+            "offset": 18066
+          },
+          "target_origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI1.OVL",
+              "identity": "0:0:PLI1.OVL"
+            },
+            "offset": 18098
+          },
+          "runtime_pc": 26770,
+          "bytes": "C9",
+          "disassembly": "RET",
+          "source": "memory",
+          "before": {
+            "a": 0,
+            "b": 251,
+            "c": 225,
+            "d": 168,
+            "e": 100,
+            "h": 0,
+            "l": 0,
+            "sp": 65465,
+            "pc": 26770,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 0,
+            "b": 251,
+            "c": 225,
+            "d": 168,
+            "e": 100,
+            "h": 0,
+            "l": 0,
+            "sp": 65467,
+            "pc": 26802,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "sp_before": 65465,
+          "sp_after": 65467,
+          "call_return_address": null,
+          "reads": [
+            {
+              "address": 65465,
+              "value": 178
+            },
+            {
+              "address": 65466,
+              "value": 104
+            }
+          ],
+          "writes": [],
+          "control": {
+            "kind": "return",
+            "target": 26802,
+            "taken": true
+          }
+        }
+      },
+      "behavioral_contract": "Save inputC atA90F. Complete4562 reads20C5/20C6 and computes descending-prefix sum modulo128 atA760; complete422F freshly selects word[A761+2*index] intoA863. Each complete4275 compares fresh workingpointer against referenceA8AB; RAR tests returnedA.bit0 independently of its borrow flags. While pointer>=reference, complete428E freshly reads successorword atpointer+8, publishesA863 and repeats. Stop only at the historical comparison. Fresh4281 null mask: zero RAR returns00 at4692 with childBC/DE/HL, S0Z1AC1P1CY0. Nonzero: freshly read20C5/20C6 pair, pass lowwidthE and independent literalBC20C6 to existing bounded4584. Required positive equal-length/payload route leaves pointer unchanged, returnsA00 andCMP0,0 flags; fresh4281 rechecks pointer. Its nonnull bit selects complete419F fresh tag atpointer+2. Compare with freshly read savedA90F; required equality returns tagA with BC/DE from helpers, HL=A90F and exactCMP(tag,saved)flags. Mismatch, payload retry/floor and postmatch-null alternatives are not implemented/claimed here. Own data write onlyA90F; child scratch/hash/source/pointer effects and CALL residues remain separate. Conditional pointer traversal termination only at demonstrated scope; no capacity, ownership or arbitrary-chain termination claim."
+    },
+    {
+      "id": "PLI1.OVL+46A7",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "start_offset": 18087,
+      "end_offset": 18113,
+      "description": "Select or construct through fresh working-pointer null mask",
+      "inputs_and_effects": "Actual inputC and live numeric prefix/reader/hash/working/reference state; inherited child nonaliasing and terminating supported scopes. No capacity/ownership assumption.; Path-specific data registers/flags from described local comparison/rotate or delegated child; SP=entrySP+2; originalCALL continuation.",
+      "downstream_helpers_runtime": "PLI1.OVL+4651; PLI1.OVL+4281; PLI1.OVL+4693",
+      "unresolved": "Local CFG complete; inherited4651/4468 allocator/error/traversal alternatives remain globally partial. Required natural scopes closed.",
+      "instructions": [
+        {
+          "offset": 18087,
+          "runtime_pc": 26791,
+          "bytes": "2111A9",
+          "decoded": "LXI H,A911H",
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 1,
+              "first_step": 257013,
+              "last_step": 257013
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 11,
+              "first_step": 357297,
+              "last_step": 566293
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 1,
+              "first_step": 306200,
+              "last_step": 306200
+            }
+          ]
+        },
+        {
+          "offset": 18090,
+          "runtime_pc": 26794,
+          "bytes": "71",
+          "decoded": "MOV M,C",
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 1,
+              "first_step": 257014,
+              "last_step": 257014
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 11,
+              "first_step": 357298,
+              "last_step": 566294
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 1,
+              "first_step": 306201,
+              "last_step": 306201
+            }
+          ]
+        },
+        {
+          "offset": 18091,
+          "runtime_pc": 26795,
+          "bytes": "2A11A9",
+          "decoded": "LHLD A911H",
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 1,
+              "first_step": 257015,
+              "last_step": 257015
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 11,
+              "first_step": 357299,
+              "last_step": 566295
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 1,
+              "first_step": 306202,
+              "last_step": 306202
+            }
+          ]
+        },
+        {
+          "offset": 18094,
+          "runtime_pc": 26798,
+          "bytes": "4D",
+          "decoded": "MOV C,L",
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 1,
+              "first_step": 257016,
+              "last_step": 257016
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 11,
+              "first_step": 357300,
+              "last_step": 566296
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 1,
+              "first_step": 306203,
+              "last_step": 306203
+            }
+          ]
+        },
+        {
+          "offset": 18095,
+          "runtime_pc": 26799,
+          "bytes": "CD5168",
+          "decoded": "CALL 6851H",
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 1,
+              "first_step": 257017,
+              "last_step": 257017
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 11,
+              "first_step": 357301,
+              "last_step": 566297
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 1,
+              "first_step": 306204,
+              "last_step": 306204
+            }
+          ]
+        },
+        {
+          "offset": 18098,
+          "runtime_pc": 26802,
+          "bytes": "CD8164",
+          "decoded": "CALL 6481H",
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 1,
+              "first_step": 257235,
+              "last_step": 257235
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 11,
+              "first_step": 357396,
+              "last_step": 566437
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 1,
+              "first_step": 306299,
+              "last_step": 306299
+            }
+          ]
+        },
+        {
+          "offset": 18101,
+          "runtime_pc": 26805,
+          "bytes": "1F",
+          "decoded": "RAR",
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 1,
+              "first_step": 257253,
+              "last_step": 257253
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 11,
+              "first_step": 357414,
+              "last_step": 566455
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 1,
+              "first_step": 306317,
+              "last_step": 306317
+            }
+          ]
+        },
+        {
+          "offset": 18102,
+          "runtime_pc": 26806,
+          "bytes": "DAC068",
+          "decoded": "JC 68C0H",
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 1,
+              "first_step": 257254,
+              "last_step": 257254
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 11,
+              "first_step": 357415,
+              "last_step": 566456
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 1,
+              "first_step": 306318,
+              "last_step": 306318
+            }
+          ]
+        },
+        {
+          "offset": 18105,
+          "runtime_pc": 26809,
+          "bytes": "2A11A9",
+          "decoded": "LHLD A911H",
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 1,
+              "first_step": 257255,
+              "last_step": 257255
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 8,
+              "first_step": 357416,
+              "last_step": 566457
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 1,
+              "first_step": 306319,
+              "last_step": 306319
+            }
+          ]
+        },
+        {
+          "offset": 18108,
+          "runtime_pc": 26812,
+          "bytes": "4D",
+          "decoded": "MOV C,L",
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 1,
+              "first_step": 257256,
+              "last_step": 257256
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 8,
+              "first_step": 357417,
+              "last_step": 566458
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 1,
+              "first_step": 306320,
+              "last_step": 306320
+            }
+          ]
+        },
+        {
+          "offset": 18109,
+          "runtime_pc": 26813,
+          "bytes": "CD9368",
+          "decoded": "CALL 6893H",
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 1,
+              "first_step": 257257,
+              "last_step": 257257
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 8,
+              "first_step": 357418,
+              "last_step": 566459
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 1,
+              "first_step": 306321,
+              "last_step": 306321
+            }
+          ]
+        },
+        {
+          "offset": 18112,
+          "runtime_pc": 26816,
+          "bytes": "C9",
+          "decoded": "RET",
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 1,
+              "first_step": 257587,
+              "last_step": 257587
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 11,
+              "first_step": 357601,
+              "last_step": 566708
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 1,
+              "first_step": 306504,
+              "last_step": 306504
+            }
+          ]
+        }
+      ],
+      "observed_callers": [
+        {
+          "run": "MINIMAL",
+          "image": "PLI1.OVL",
+          "offset": 22839,
+          "bytes": "CDA768",
+          "execution_count": 1,
+          "first_step": 257012
+        },
+        {
+          "run": "FIZZBUZ",
+          "image": "PLI1.OVL",
+          "offset": 22839,
+          "bytes": "CDA768",
+          "execution_count": 11,
+          "first_step": 357296
+        },
+        {
+          "run": "PICTURE",
+          "image": "PLI1.OVL",
+          "offset": 22839,
+          "bytes": "CDA768",
+          "execution_count": 1,
+          "first_step": 306199
+        }
+      ],
+      "observed_return_offsets": [
+        18112
+      ],
+      "matched_return_sample": {
+        "relation": "OBSERVED corrected ordinary outerCALL/RET",
+        "call": {
+          "step_index": 257012,
+          "pc": 31543,
+          "pc_after": 26791,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI1.OVL",
+              "identity": "0:0:PLI1.OVL"
+            },
+            "offset": 22839
+          },
+          "target_origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI1.OVL",
+              "identity": "0:0:PLI1.OVL"
+            },
+            "offset": 18087
+          },
+          "runtime_pc": 31543,
+          "bytes": "CDA768",
+          "disassembly": "CALL 68A7H",
+          "source": "memory",
+          "before": {
+            "a": 0,
+            "b": 0,
+            "c": 5,
+            "d": 0,
+            "e": 0,
+            "h": 0,
+            "l": 5,
+            "sp": 65469,
+            "pc": 31543,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": true
+            }
+          },
+          "after": {
+            "a": 0,
+            "b": 0,
+            "c": 5,
+            "d": 0,
+            "e": 0,
+            "h": 0,
+            "l": 5,
+            "sp": 65467,
+            "pc": 26791,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": true
+            }
+          },
+          "sp_before": 65469,
+          "sp_after": 65467,
+          "call_return_address": 31546,
+          "reads": [],
+          "writes": [
+            {
+              "address": 65468,
+              "old_value": null,
+              "new_value": 123
+            },
+            {
+              "address": 65467,
+              "old_value": null,
+              "new_value": 58
+            }
+          ],
+          "control": {
+            "kind": "call",
+            "target": 26791,
+            "taken": true
+          }
+        },
+        "ret": {
+          "step_index": 257587,
+          "pc": 26816,
+          "pc_after": 31546,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI1.OVL",
+              "identity": "0:0:PLI1.OVL"
+            },
+            "offset": 18112
+          },
+          "target_origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI1.OVL",
+              "identity": "0:0:PLI1.OVL"
+            },
+            "offset": 22842
+          },
+          "runtime_pc": 26816,
+          "bytes": "C9",
+          "disassembly": "RET",
+          "source": "memory",
+          "before": {
+            "a": 0,
+            "b": 251,
+            "c": 198,
+            "d": 251,
+            "e": 240,
+            "h": 251,
+            "l": 198,
+            "sp": 65467,
+            "pc": 26816,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 0,
+            "b": 251,
+            "c": 198,
+            "d": 251,
+            "e": 240,
+            "h": 251,
+            "l": 198,
+            "sp": 65469,
+            "pc": 31546,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "sp_before": 65467,
+          "sp_after": 65469,
+          "call_return_address": null,
+          "reads": [
+            {
+              "address": 65467,
+              "value": 58
+            },
+            {
+              "address": 65468,
+              "value": 123
+            }
+          ],
+          "writes": [],
+          "control": {
+            "kind": "return",
+            "target": 31546,
+            "taken": true
+          }
+        }
+      },
+      "behavioral_contract": "Save inputC atA911; pairedA911/A912 read passes lowC to bounded4651. Then independent complete4281 freshly reads word[A863] and builds FF/00 null mask. RAR preserves S/Z/AC/P and setsCY=mask.bit0; JC goes directly toRET ifnonnull. Required reuse returnsAFF, S1Z0AC0P1CY1, BCfrom4651,DE=A864,HL=workingpointer. Null branch freshly rereads pairedA911/A912, lowC to bounded4693; its native-ready constructor consumes its separate sourceword argument. Return all constructor data registers/flags, preservingouteroriginal CALL continuation; empty constructor returnsA00 withAC1, nonempty terminal-link returnsA00 withAC0. Returned4651 tag is not this null mask, and returned46A7 A is not subsequent5929 selector. Own data write onlyA911. All26 local bytes and branch directions established; globalcontract remainspartial because4651/constructor alternatives are bounded."
     }
   ]
 }
