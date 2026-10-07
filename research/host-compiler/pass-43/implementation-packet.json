@@ -1,0 +1,53 @@
+{
+  "archaeology_packet": "../pass-42/work-packet.json",
+  "native_root": "PLI1.OVL+5929",
+  "host": "Pli80_host.Acquisition_parent",
+  "bridge": "Pli80.Acquisition_parent_bridge",
+  "harness": "Pli80.Native_acquisition_parent",
+  "core_selection": "Actual historical state only. Prefix hash, pointer/reference walk, exact payload/tag match or bounded construction, independent mask; fresh selector publications; classifier; existing native2511; counted resident acquisition and descriptor/literal route.",
+  "stack": "Compatibility events interpreted only as proven CALL/PUSH save protocol, never arbitrary CPU instructions.",
+  "unsupported": [
+    "57B7 not found",
+    "selector3/4/7/8/9",
+    "4651 payload/tag mismatch, retry and RAW alternatives",
+    "allocator failure/floor",
+    "pointer/code/scratch/stack aliases",
+    "arbitrary chain/reader termination",
+    "resident EOF/reuse/refill/quoted/numeric/special/nonzero-word alternatives",
+    "inherited2511/8048/7E5F/7D53/emitter unsupported outcomes"
+  ],
+  "counts": [
+    {
+      "source": "MINIMAL",
+      "count": 1,
+      "selection_routes": {
+        "null": 1
+      },
+      "acquisition_routes": {
+        "literal_first_byte": 1
+      }
+    },
+    {
+      "source": "FIZZBUZ",
+      "count": 11,
+      "selection_routes": {
+        "null": 8,
+        "reuse": 3
+      },
+      "acquisition_routes": {
+        "descriptor_match": 4,
+        "literal_first_byte": 7
+      }
+    },
+    {
+      "source": "PICTURE",
+      "count": 1,
+      "selection_routes": {
+        "null": 1
+      },
+      "acquisition_routes": {
+        "literal_first_byte": 1
+      }
+    }
+  ]
+}

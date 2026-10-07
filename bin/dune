@@ -77,3 +77,8 @@
  (name native_state_adaptation)
  (public_name pli80-native-state-adaptation)
  (libraries pli80 pli80_host runner unix))
+
+(executable
+ (name native_acquisition_parent)
+ (public_name pli80-native-acquisition-parent)
+ (libraries pli80 pli80_host runner unix))

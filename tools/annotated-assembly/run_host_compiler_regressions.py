@@ -52,12 +52,18 @@ cmds['pass37']=['python3','tools/annotated-assembly/test_small_gates_pass_37.py'
 cmds['pass38']=['python3','tools/annotated-assembly/test_acquisition_reentry_pass_38.py','--images',images,'-q']
 cmds['pass39']=['python3','tools/annotated-assembly/test_state_transformation_pass_39.py','--images',images,'-q']
 cmds['pass40']=['python3','tools/annotated-assembly/test_selector02_pass_40.py','--images',images,'-q']
+cmds['pass41']=['python3','tools/annotated-assembly/test_acquisition_pass_41.py','--images',images,'-q']
+cmds['pass42']=['python3','tools/annotated-assembly/test_causal_5929_pass_42.py','--images',images,'-q']
+cmds['pass43']=['python3','tools/annotated-assembly/test_native_5929_pass_43.py','--images',images,'-q']
+cmds['acquisition-parent-unit']=['_build/default/test/native_acquisition_parent.exe']
+cmds['dynamic-progress']=['python3','-c',"import json,subprocess;from pathlib import Path;p=Path("+repr(str(out/'dynamic-progress.json'))+");subprocess.run(['python3','tools/annotated-assembly/minimal_dynamic_progress.py','--output',str(p)],check=True);assert json.loads(p.read_text())==json.loads(Path('research/minimal-baseline/dynamic-progress.json').read_text())"]
 cmds['diff-check']=['git','diff','--check']
 
 def run(name,cmd):
  start=time.perf_counter()
  with(out/(name+'.log')).open('w')as f:r=subprocess.run(cmd,stdout=f,stderr=subprocess.STDOUT,env=env)
- value=dict(return_code=r.returncode,elapsed_seconds=round(time.perf_counter()-start,3),command=cmd)
+ text=(out/(name+'.log')).read_text();match=re.search(r'Ran (\d+) tests?',text)
+ value=dict(return_code=r.returncode,elapsed_seconds=round(time.perf_counter()-start,3),command=cmd,python_tests=int(match[1])if match else 0)
  if r.returncode:print(name,'FAILED', (out/(name+'.log')).read_text()[-1800:],flush=True)
  return value
 results={'build':run('build',['dune','build','@all','-j','4'])}
