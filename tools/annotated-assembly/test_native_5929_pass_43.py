@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Native root versus independently corrected Pass42 windows, not snapshot semantics."""
+from historical_catalog_epoch import frozen_catalog
 import argparse,json,subprocess,tempfile,unittest,hashlib
 from pathlib import Path
 from collections import Counter
@@ -64,6 +65,7 @@ class NativeAcquisitionTests(unittest.TestCase):
   for forbidden in ['Cpu.step','Cpu8080','Runner.','Cpm.','source_name','entry_step','sha256']:self.assertNotIn(forbidden,text)
   base=subprocess.check_output(['git','show','6e267e64bdfea5b9418e69952d43e9c4bea996ed:research/annotated-assembly/procedures.json'])
   current=json.loads((ROOT/'research/annotated-assembly/procedures.json').read_text())
+  current['procedures']=list(frozen_catalog({p['id']:p for p in current['procedures']}).values())
   extension=ROOT/'research/host-compiler/pass-44/numeric-contract-before.json'
   if extension.exists():
    old=json.loads(extension.read_text());current['procedures']=[old if p['id']=='PLI.COM+1376'else p for p in current['procedures']]

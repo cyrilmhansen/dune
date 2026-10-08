@@ -1,0 +1,574 @@
+{
+  "PLI1.OVL+2006": {
+    "end": 8358,
+    "description": "Pass47 bounded reader setup",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ],
+    "contract": "Clear A61E/A606/A5F9/A5FA/A5FB in order; complete57B7(BC=3594H) supplies the actual not-found result and RAR. Actual8C/90 selector probes choose the bounded C=1 reader1C07 operation; final13AD fresh semicolon probe controls ordinary return.",
+    "implementation": "lib/pli80_host/reader_construction.ml#Reader_setup"
+  },
+  "PLI1.OVL+1C07": {
+    "end": 7443,
+    "description": "Pass47 bounded reader entry",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ],
+    "contract": "Save C at A621 and A5F7, publish mode through8268. Fresh selector probes C6/C7/C2 choose descriptor construction, structure traversal/publication, or literal prefix adaptation; loop from newly acquired selector after the C2 path. Compose1AFD,140D,80B7 and witnessed trailing784E reads until the fresh semicolon. No source-level stream or type inference.",
+    "implementation": "lib/pli80_host/reader_construction.ml#Reader_entry"
+  },
+  "PLI1.OVL+4A26": {
+    "end": 19058,
+    "description": "Pass47 bounded select structure",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ],
+    "contract": "Bounded historical Select structure operation in the canonical reader_construction.ml implementation; actual registers/shared-memory tests select the represented natural paths. Fresh low/high reads, wrapped arithmetic and ordered publications follow the annotated local instructions. Child calls retain their separately established contracts. Returned registers/flags are independent path channels; exact CALL/PUSH/POP residue is derived, never copied. Unexecuted alternatives and inherited unsupported child states remain excluded.",
+    "implementation": "lib/pli80_host/reader_construction.ml#Select_structure"
+  },
+  "PLI1.OVL+58BB": {
+    "end": 22798,
+    "description": "Pass47 bounded publish structure",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ],
+    "contract": "Bounded historical Publish structure operation in the canonical reader_construction.ml implementation; actual registers/shared-memory tests select the represented natural paths. Fresh low/high reads, wrapped arithmetic and ordered publications follow the annotated local instructions. Child calls retain their separately established contracts. Returned registers/flags are independent path channels; exact CALL/PUSH/POP residue is derived, never copied. Unexecuted alternatives and inherited unsupported child states remain excluded.",
+    "implementation": "lib/pli80_host/reader_construction.ml#Publish_structure"
+  },
+  "PLI1.OVL+1BA8": {
+    "end": 7103,
+    "description": "Pass47 bounded construction start",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ],
+    "contract": "Bounded historical Construction start operation in the canonical reader_construction.ml implementation; actual registers/shared-memory tests select the represented natural paths. Fresh low/high reads, wrapped arithmetic and ordered publications follow the annotated local instructions. Child calls retain their separately established contracts. Returned registers/flags are independent path channels; exact CALL/PUSH/POP residue is derived, never copied. Unexecuted alternatives and inherited unsupported child states remain excluded.",
+    "implementation": "lib/pli80_host/reader_construction.ml#Construction_start"
+  },
+  "PLI1.OVL+1BBF": {
+    "end": 7144,
+    "description": "Pass47 bounded descriptor build",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ],
+    "contract": "Historical descriptor construction around1421 and canonical mapped publications; fresh selector and count channels remain distinct. Descending balance indices and the actual comparison predicates terminate the demonstrated route.",
+    "implementation": "lib/pli80_host/reader_construction.ml#Descriptor_build"
+  },
+  "PLI1.OVL+1D13": {
+    "end": 7479,
+    "description": "Pass47 bounded reader prefix",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ],
+    "contract": "1BA8 initializes construction state;1BBF builds the independent descriptor publications; fresh copies update the historical A5xx channels in instruction order. Child effects remain delegated to their independently proved bounded laws.",
+    "implementation": "lib/pli80_host/reader_construction.ml#Reader_prefix"
+  },
+  "PLI1.OVL+0D94": {
+    "end": 3485,
+    "description": "Pass47 bounded field literal",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ],
+    "contract": "Bounded historical Field literal operation in the canonical reader_construction.ml implementation; actual registers/shared-memory tests select the represented natural paths. Fresh low/high reads, wrapped arithmetic and ordered publications follow the annotated local instructions. Child calls retain their separately established contracts. Returned registers/flags are independent path channels; exact CALL/PUSH/POP residue is derived, never copied. Unexecuted alternatives and inherited unsupported child states remain excluded.",
+    "implementation": "lib/pli80_host/reader_construction.ml#Field_literal"
+  },
+  "PLI1.OVL+1AFD": {
+    "end": 7070,
+    "description": "Pass47 bounded reader parent",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ],
+    "contract": "Allocate the historical two-byte private frame; retain input C and independent prior state. Publish A619=0, mode8268; require actual parenthesis match and clear saved input bit. C=0 invokes canonical19F0, then140D consumes its returned A. Fresh comma probe controls witnessed no-repeat path;156D acquires the closing delimiter. Literal A=0, POP H and RET preserve the path flags and surviving private residue.",
+    "implementation": "lib/pli80_host/reader_construction.ml#Reader_parent"
+  },
+  "PLI1.OVL+14D4": {
+    "end": 5348,
+    "description": "Pass47 bounded descriptor mask",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ],
+    "contract": "Bounded historical Descriptor mask operation in the canonical reader_construction.ml implementation; actual registers/shared-memory tests select the represented natural paths. Fresh low/high reads, wrapped arithmetic and ordered publications follow the annotated local instructions. Child calls retain their separately established contracts. Returned registers/flags are independent path channels; exact CALL/PUSH/POP residue is derived, never copied. Unexecuted alternatives and inherited unsupported child states remain excluded.",
+    "implementation": "lib/pli80_host/reader_construction.ml#Descriptor_mask"
+  },
+  "PLI1.OVL+14E4": {
+    "end": 5392,
+    "description": "Pass47 bounded descriptor add",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ],
+    "contract": "Bounded historical Descriptor add operation in the canonical reader_construction.ml implementation; actual registers/shared-memory tests select the represented natural paths. Fresh low/high reads, wrapped arithmetic and ordered publications follow the annotated local instructions. Child calls retain their separately established contracts. Returned registers/flags are independent path channels; exact CALL/PUSH/POP residue is derived, never copied. Unexecuted alternatives and inherited unsupported child states remain excluded.",
+    "implementation": "lib/pli80_host/reader_construction.ml#Descriptor_add"
+  },
+  "PLI1.OVL+0D6E": {
+    "end": 3476,
+    "description": "Pass47 bounded field setup",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ],
+    "contract": "Bounded historical Field setup operation in the canonical reader_construction.ml implementation; actual registers/shared-memory tests select the represented natural paths. Fresh low/high reads, wrapped arithmetic and ordered publications follow the annotated local instructions. Child calls retain their separately established contracts. Returned registers/flags are independent path channels; exact CALL/PUSH/POP residue is derived, never copied. Unexecuted alternatives and inherited unsupported child states remain excluded.",
+    "implementation": "lib/pli80_host/reader_construction.ml#Field_setup"
+  },
+  "PLI1.OVL+140D": {
+    "end": 5153,
+    "description": "Pass47 bounded mode finish",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ],
+    "contract": "Bounded historical Mode finish operation in the canonical reader_construction.ml implementation; actual registers/shared-memory tests select the represented natural paths. Fresh low/high reads, wrapped arithmetic and ordered publications follow the annotated local instructions. Child calls retain their separately established contracts. Returned registers/flags are independent path channels; exact CALL/PUSH/POP residue is derived, never copied. Unexecuted alternatives and inherited unsupported child states remain excluded.",
+    "implementation": "lib/pli80_host/reader_construction.ml#Mode_finish"
+  },
+  "PLI1.OVL+8167": {
+    "end": 33145,
+    "description": "Pass47 bounded range finish",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ],
+    "contract": "Bounded historical Range finish operation in the canonical reader_construction.ml implementation; actual registers/shared-memory tests select the represented natural paths. Fresh low/high reads, wrapped arithmetic and ordered publications follow the annotated local instructions. Child calls retain their separately established contracts. Returned registers/flags are independent path channels; exact CALL/PUSH/POP residue is derived, never copied. Unexecuted alternatives and inherited unsupported child states remain excluded.",
+    "implementation": "lib/pli80_host/reader_construction.ml#Range_finish"
+  },
+  "PLI1.OVL+7ED7": {
+    "end": 32591,
+    "description": "Pass47 bounded map rotate",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ],
+    "contract": "Bounded historical Map rotate operation in the canonical reader_construction.ml implementation; actual registers/shared-memory tests select the represented natural paths. Fresh low/high reads, wrapped arithmetic and ordered publications follow the annotated local instructions. Child calls retain their separately established contracts. Returned registers/flags are independent path channels; exact CALL/PUSH/POP residue is derived, never copied. Unexecuted alternatives and inherited unsupported child states remain excluded.",
+    "implementation": "lib/pli80_host/reader_construction.ml#Map_rotate"
+  },
+  "PLI1.OVL+1421": {
+    "end": 5320,
+    "description": "Pass47 bounded descriptor sort",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ],
+    "contract": "Repeated balance traversal and descriptor adjustment use fresh A610/A60F and mapped table reads. The carry-producing compare selects swap or nonswap; both arms restore AE35, freshly publish A610 from A60F, and call14C8. Retain each iteration and fresh reread; no fixed iteration count.",
+    "implementation": "lib/pli80_host/reader_construction.ml#Descriptor_sort"
+  },
+  "PLI1.OVL+156D": {
+    "end": 5498,
+    "description": "Pass47 bounded require close",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ],
+    "contract": "Bounded historical Require close operation in the canonical reader_construction.ml implementation; actual registers/shared-memory tests select the represented natural paths. Fresh low/high reads, wrapped arithmetic and ordered publications follow the annotated local instructions. Child calls retain their separately established contracts. Returned registers/flags are independent path channels; exact CALL/PUSH/POP residue is derived, never copied. Unexecuted alternatives and inherited unsupported child states remain excluded.",
+    "implementation": "lib/pli80_host/reader_construction.ml#Require_close"
+  },
+  "PLI1.OVL+1BE8": {
+    "end": 7175,
+    "description": "Pass47 bounded false probe",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ],
+    "contract": "Bounded historical False probe operation in the canonical reader_construction.ml implementation; actual registers/shared-memory tests select the represented natural paths. Fresh low/high reads, wrapped arithmetic and ordered publications follow the annotated local instructions. Child calls retain their separately established contracts. Returned registers/flags are independent path channels; exact CALL/PUSH/POP residue is derived, never copied. Unexecuted alternatives and inherited unsupported child states remain excluded.",
+    "implementation": "lib/pli80_host/reader_construction.ml#False_probe"
+  },
+  "PLI1.OVL+08D9": {
+    "end": 2571,
+    "description": "Pass47 bounded acquire item",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ],
+    "contract": "Four-byte inherited-pointer/input frame; preserve old A5BA separately, clear fresh A5BA and copy private input into F1. Actual selector/gate predicates choose nested-base acquisition,5A46 and3DD9(C0,E2). Independent null-word check controls A5BA/A5BC/A5B8 publications; actual field reads,784E and8273 precede0187/086E. Restore old A5BA from F2/F3, then two POP H; no snapshot substitution.",
+    "implementation": "lib/pli80_host/recursive_parent.ml#Acquire_item"
+  },
+  "PLI1.OVL+086E": {
+    "end": 2265,
+    "description": "Pass47 bounded advance context",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ],
+    "contract": "Bounded historical Advance context operation in the canonical recursive_parent.ml implementation; actual registers/shared-memory tests select the represented natural paths. Fresh low/high reads, wrapped arithmetic and ordered publications follow the annotated local instructions. Child calls retain their separately established contracts. Returned registers/flags are independent path channels; exact CALL/PUSH/POP residue is derived, never copied. Unexecuted alternatives and inherited unsupported child states remain excluded.",
+    "implementation": "lib/pli80_host/recursive_parent.ml#Advance_context"
+  },
+  "PLI1.OVL+4986": {
+    "end": 18903,
+    "description": "Pass47 bounded cleanup heads",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ],
+    "contract": "Bounded historical Cleanup heads operation in the canonical recursive_parent.ml implementation; actual registers/shared-memory tests select the represented natural paths. Fresh low/high reads, wrapped arithmetic and ordered publications follow the annotated local instructions. Child calls retain their separately established contracts. Returned registers/flags are independent path channels; exact CALL/PUSH/POP residue is derived, never copied. Unexecuted alternatives and inherited unsupported child states remain excluded.",
+    "implementation": "lib/pli80_host/recursive_parent.ml#Cleanup_heads"
+  },
+  "PLI1.OVL+0146": {
+    "end": 335,
+    "description": "Pass47 bounded finish reader",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ],
+    "contract": "Bounded historical Finish reader operation in the canonical recursive_parent.ml implementation; actual registers/shared-memory tests select the represented natural paths. Fresh low/high reads, wrapped arithmetic and ordered publications follow the annotated local instructions. Child calls retain their separately established contracts. Returned registers/flags are independent path channels; exact CALL/PUSH/POP residue is derived, never copied. Unexecuted alternatives and inherited unsupported child states remain excluded.",
+    "implementation": "lib/pli80_host/recursive_parent.ml#Finish_reader"
+  },
+  "PLI1.OVL+80EF": {
+    "end": 33035,
+    "description": "Pass47 bounded emit position",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ],
+    "contract": "Bounded historical Emit position operation in the canonical recursive_parent.ml implementation; actual registers/shared-memory tests select the represented natural paths. Fresh low/high reads, wrapped arithmetic and ordered publications follow the annotated local instructions. Child calls retain their separately established contracts. Returned registers/flags are independent path channels; exact CALL/PUSH/POP residue is derived, never copied. Unexecuted alternatives and inherited unsupported child states remain excluded.",
+    "implementation": "lib/pli80_host/recursive_parent.ml#Emit_position"
+  },
+  "PLI1.OVL+11E2": {
+    "end": 4904,
+    "description": "Pass47 bounded inherited frame",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ],
+    "contract": "Eleven-byte private frame retains BC and E independently, plus four PUSH H words.020E/RAR selects the demonstrated route;0E00 publishes header state. Fresh A5E3/A5EC/A5E5/A5F0/A5E2/A5E6 populate F3..F10 in historical order.0A32 receives independently reloaded BC/E and may recurse into02F0. Fresh frame publications feed58BB/590E,0D94,3304,2308/classifier and2511; final fresh semicolon test, LXI H,000BH/DAD SP/SPHL discard the eleven private bytes before ordinary RET.",
+    "implementation": "lib/pli80_host/recursive_parent.ml#Inherited_frame"
+  },
+  "PLI1.OVL+0A32": {
+    "end": 2984,
+    "description": "Pass47 bounded recursive frame",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ],
+    "contract": "Eight-byte historical frame: DCX SP, two PUSH H, MOV D,E/PUSH D/INX SP, PUSH B. Each iteration reinitializes frame F3/F4 before02E9 and independent18DB/020E probes. Fresh cached predicate or unmatched87/A7/9B route invokes the same canonical02F0 using the frame word. Actual8A route composes0146,45F0, fresh pointer comparison and784E; semicolon plus0266 terminate; four POP H consume only the private frame.",
+    "implementation": "lib/pli80_host/recursive_parent.ml#Recursive_frame"
+  },
+  "PLI1.OVL+0A0B": {
+    "end": 2610,
+    "description": "Pass47 bounded item wrapper",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ],
+    "contract": "Bounded historical Item wrapper operation in the canonical recursive_parent.ml implementation; actual registers/shared-memory tests select the represented natural paths. Fresh low/high reads, wrapped arithmetic and ordered publications follow the annotated local instructions. Child calls retain their separately established contracts. Returned registers/flags are independent path channels; exact CALL/PUSH/POP residue is derived, never copied. Unexecuted alternatives and inherited unsupported child states remain excluded.",
+    "implementation": "lib/pli80_host/recursive_parent.ml#Item_wrapper"
+  },
+  "PLI1.OVL+0E00": {
+    "end": 4041,
+    "description": "Pass47 bounded header",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ],
+    "contract": "Initialize A5F2/A5E1..A5E5; exact cached/lookahead mask constructions select1014/1187. Preserve fresh count and pointer publications; independent590E calls consume the two producer words.3304, fresh classifier+39H and2511 precede common24/1/0 publications,240A,0FC9 and8179 restoration. Final independent mask tests,8048(A8),7ED7 and2511(6A) delegate the exact returned state.",
+    "implementation": "lib/pli80_host/recursive_parent.ml#Header"
+  },
+  "PLI1.OVL+1014": {
+    "end": 4254,
+    "description": "Pass47 bounded primary fields",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ],
+    "contract": "Bounded historical Primary fields operation in the canonical recursive_parent.ml implementation; actual registers/shared-memory tests select the represented natural paths. Fresh low/high reads, wrapped arithmetic and ordered publications follow the annotated local instructions. Child calls retain their separately established contracts. Returned registers/flags are independent path channels; exact CALL/PUSH/POP residue is derived, never copied. Unexecuted alternatives and inherited unsupported child states remain excluded.",
+    "implementation": "lib/pli80_host/recursive_parent.ml#Primary_fields"
+  },
+  "PLI1.OVL+109E": {
+    "end": 4487,
+    "description": "Pass47 bounded secondary fields",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ],
+    "contract": "Cache independent position difference through8152;6639 and8179 restore it;3262 establishes fresh indexed channels. Exact 2/3/4 equality masks and independent balance comparisons choose A5F5. Reconstruct2DC3 and the final PSW comparison; bounded81F1 consumes C=2 only when the actual final predicate selects it.",
+    "implementation": "lib/pli80_host/recursive_parent.ml#Secondary_fields"
+  },
+  "PLI1.OVL+1187": {
+    "end": 4578,
+    "description": "Pass47 bounded secondary wrapper",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ],
+    "contract": "Bounded historical Secondary wrapper operation in the canonical recursive_parent.ml implementation; actual registers/shared-memory tests select the represented natural paths. Fresh low/high reads, wrapped arithmetic and ordered publications follow the annotated local instructions. Child calls retain their separately established contracts. Returned registers/flags are independent path channels; exact CALL/PUSH/POP residue is derived, never copied. Unexecuted alternatives and inherited unsupported child states remain excluded.",
+    "implementation": "lib/pli80_host/recursive_parent.ml#Secondary_wrapper"
+  },
+  "PLI1.OVL+342F": {
+    "end": 13406,
+    "description": "Pass47 bounded reduce fields",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ],
+    "contract": "Bounded historical Reduce fields operation in the canonical recursive_parent.ml implementation; actual registers/shared-memory tests select the represented natural paths. Fresh low/high reads, wrapped arithmetic and ordered publications follow the annotated local instructions. Child calls retain their separately established contracts. Returned registers/flags are independent path channels; exact CALL/PUSH/POP residue is derived, never copied. Unexecuted alternatives and inherited unsupported child states remain excluded.",
+    "implementation": "lib/pli80_host/recursive_parent.ml#Reduce_fields"
+  },
+  "PLI1.OVL+8152": {
+    "end": 33127,
+    "description": "Pass47 bounded shift fields",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ],
+    "contract": "Bounded historical Shift fields operation in the canonical recursive_parent.ml implementation; actual registers/shared-memory tests select the represented natural paths. Fresh low/high reads, wrapped arithmetic and ordered publications follow the annotated local instructions. Child calls retain their separately established contracts. Returned registers/flags are independent path channels; exact CALL/PUSH/POP residue is derived, never copied. Unexecuted alternatives and inherited unsupported child states remain excluded.",
+    "implementation": "lib/pli80_host/recursive_parent.ml#Shift_fields"
+  },
+  "PLI1.OVL+029C": {
+    "end": 714,
+    "description": "Pass47 bounded bracket setup",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ],
+    "contract": "Bounded historical Bracket setup operation in the canonical recursive_parent.ml implementation; actual registers/shared-memory tests select the represented natural paths. Fresh low/high reads, wrapped arithmetic and ordered publications follow the annotated local instructions. Child calls retain their separately established contracts. Returned registers/flags are independent path channels; exact CALL/PUSH/POP residue is derived, never copied. Unexecuted alternatives and inherited unsupported child states remain excluded.",
+    "implementation": "lib/pli80_host/recursive_parent.ml#Bracket_setup"
+  },
+  "PLI1.OVL+0FC9": {
+    "end": 4116,
+    "description": "Pass47 bounded lookahead finish",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ],
+    "contract": "Bounded historical Lookahead finish operation in the canonical recursive_parent.ml implementation; actual registers/shared-memory tests select the represented natural paths. Fresh low/high reads, wrapped arithmetic and ordered publications follow the annotated local instructions. Child calls retain their separately established contracts. Returned registers/flags are independent path channels; exact CALL/PUSH/POP residue is derived, never copied. Unexecuted alternatives and inherited unsupported child states remain excluded.",
+    "implementation": "lib/pli80_host/recursive_parent.ml#Lookahead_finish"
+  },
+  "PLI1.OVL+0277": {
+    "end": 668,
+    "description": "Pass47 bounded publish pair",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ],
+    "contract": "Bounded historical Publish pair operation in the canonical recursive_parent.ml implementation; actual registers/shared-memory tests select the represented natural paths. Fresh low/high reads, wrapped arithmetic and ordered publications follow the annotated local instructions. Child calls retain their separately established contracts. Returned registers/flags are independent path channels; exact CALL/PUSH/POP residue is derived, never copied. Unexecuted alternatives and inherited unsupported child states remain excluded.",
+    "implementation": "lib/pli80_host/recursive_parent.ml#Publish_pair"
+  },
+  "PLI1.OVL+02CA": {
+    "end": 745,
+    "description": "Pass47 bounded advance record",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ],
+    "contract": "Bounded historical Advance record operation in the canonical recursive_parent.ml implementation; actual registers/shared-memory tests select the represented natural paths. Fresh low/high reads, wrapped arithmetic and ordered publications follow the annotated local instructions. Child calls retain their separately established contracts. Returned registers/flags are independent path channels; exact CALL/PUSH/POP residue is derived, never copied. Unexecuted alternatives and inherited unsupported child states remain excluded.",
+    "implementation": "lib/pli80_host/recursive_parent.ml#Advance_record"
+  },
+  "PLI1.OVL+0266": {
+    "end": 619,
+    "description": "Pass47 bounded line decrement",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ],
+    "contract": "Bounded historical Line decrement operation in the canonical recursive_parent.ml implementation; actual registers/shared-memory tests select the represented natural paths. Fresh low/high reads, wrapped arithmetic and ordered publications follow the annotated local instructions. Child calls retain their separately established contracts. Returned registers/flags are independent path channels; exact CALL/PUSH/POP residue is derived, never copied. Unexecuted alternatives and inherited unsupported child states remain excluded.",
+    "implementation": "lib/pli80_host/recursive_parent.ml#Line_decrement"
+  },
+  "PLI1.OVL+02F0": {
+    "end": 1660,
+    "description": "Pass47 bounded parent",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ],
+    "contract": "PUSH the original BC word; compose 80CA and 02E9; publish A6CA=0; fresh resident18DB and RAR select the cached-probe route. Otherwise exact selector probes choose the reader tail, mediated11E2 frame, or 82/B4/B3 direct-recursion sequence. Direct recursive calls receive BC=0 from instructions; 0A32-mediated recursion receives its fresh inherited frame word. Recursion follows changing acquisition state and historical predicates with no depth limit. Final01D8 state and POP H restore the original BC word to HL; final RET consumes the actual caller word.",
+    "implementation": "lib/pli80_host/recursive_parent.ml#Parent"
+  },
+  "PLI1.OVL+80CA": {
+    "end": 33007,
+    "description": "Pass47 bounded line gate",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ],
+    "contract": "Bounded historical Line gate operation in the canonical recursive_parent.ml implementation; actual registers/shared-memory tests select the represented natural paths. Fresh low/high reads, wrapped arithmetic and ordered publications follow the annotated local instructions. Child calls retain their separately established contracts. Returned registers/flags are independent path channels; exact CALL/PUSH/POP residue is derived, never copied. Unexecuted alternatives and inherited unsupported child states remain excluded.",
+    "implementation": "lib/pli80_host/recursive_parent.ml#Line_gate"
+  },
+  "PLI1.OVL+02E9": {
+    "end": 752,
+    "description": "Pass47 bounded base",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ],
+    "contract": "Bounded historical Base operation in the canonical recursive_parent.ml implementation; actual registers/shared-memory tests select the represented natural paths. Fresh low/high reads, wrapped arithmetic and ordered publications follow the annotated local instructions. Child calls retain their separately established contracts. Returned registers/flags are independent path channels; exact CALL/PUSH/POP residue is derived, never copied. Unexecuted alternatives and inherited unsupported child states remain excluded.",
+    "implementation": "lib/pli80_host/recursive_parent.ml#Base"
+  },
+  "PLI1.OVL+01D8": {
+    "end": 488,
+    "description": "Pass47 bounded clear state",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ],
+    "contract": "Bounded historical Clear state operation in the canonical recursive_parent.ml implementation; actual registers/shared-memory tests select the represented natural paths. Fresh low/high reads, wrapped arithmetic and ordered publications follow the annotated local instructions. Child calls retain their separately established contracts. Returned registers/flags are independent path channels; exact CALL/PUSH/POP residue is derived, never copied. Unexecuted alternatives and inherited unsupported child states remain excluded.",
+    "implementation": "lib/pli80_host/recursive_parent.ml#Clear_state"
+  },
+  "PLI1.OVL+0261": {
+    "end": 614,
+    "description": "Pass47 bounded line increment",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ],
+    "contract": "Bounded historical Line increment operation in the canonical recursive_parent.ml implementation; actual registers/shared-memory tests select the represented natural paths. Fresh low/high reads, wrapped arithmetic and ordered publications follow the annotated local instructions. Child calls retain their separately established contracts. Returned registers/flags are independent path channels; exact CALL/PUSH/POP residue is derived, never copied. Unexecuted alternatives and inherited unsupported child states remain excluded.",
+    "implementation": "lib/pli80_host/recursive_parent.ml#Line_increment"
+  },
+  "PLI1.OVL+026B": {
+    "end": 631,
+    "description": "Pass47 bounded clear fields",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ],
+    "contract": "Bounded historical Clear fields operation in the canonical recursive_parent.ml implementation; actual registers/shared-memory tests select the represented natural paths. Fresh low/high reads, wrapped arithmetic and ordered publications follow the annotated local instructions. Child calls retain their separately established contracts. Returned registers/flags are independent path channels; exact CALL/PUSH/POP residue is derived, never copied. Unexecuted alternatives and inherited unsupported child states remain excluded.",
+    "implementation": "lib/pli80_host/recursive_parent.ml#Clear_fields"
+  },
+  "PLI1.OVL+33D6": {
+    "end": 13276,
+    "description": "Pass47 bounded canonical adapter",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ],
+    "contract": "C=1; delegate33AD then ordinary RET.",
+    "implementation": "lib/pli80_host/acquisition_family.ml"
+  },
+  "PLI1.OVL+33AD": {
+    "end": 13270,
+    "description": "Pass47 bounded canonical adapter",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ],
+    "contract": "Save C atA669; canonical31FB supplies fresh acquisition groups; independent masks preserve PSW channels; freshly reload saved C into335B.",
+    "implementation": "lib/pli80_host/acquisition_family.ml"
+  },
+  "PLI1.OVL+335B": {
+    "end": 13229,
+    "description": "Pass47 bounded canonical adapter",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ],
+    "contract": "Save C atA668; publish A634=2; require fresh A628!=31. Fresh saved C feeds28AA; required selector02 or guard scope is chosen by current indexed state. Fresh A628 classification via2185/RAR selects bounded2DCA.",
+    "implementation": "lib/pli80_host/acquisition_family.ml"
+  },
+  "PLI1.OVL+2DCA": {
+    "end": 11814,
+    "description": "Pass47 bounded canonical adapter",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ],
+    "contract": "Fresh A62A excludes2A/28 alternatives; publish A634=2, call2DC3 and return exact child state.",
+    "implementation": "lib/pli80_host/acquisition_family.ml"
+  },
+  "PLI1.OVL+2DC3": {
+    "end": 11722,
+    "description": "Pass47 bounded canonical adapter",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ],
+    "contract": "Compose canonical2C59 then independent2705 fresh A628 comparison; selector16 unsupported.",
+    "implementation": "lib/pli80_host/acquisition_family.ml"
+  },
+  "PLI1.OVL+13AD": {
+    "end": 5050,
+    "description": "Pass47 bounded canonical adapter",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ],
+    "contract": "C=3B; fresh01AF selector equality mask; historicalRAR returns its exact flags on the demonstrated matched path.",
+    "implementation": "lib/pli80_host/acquisition_family.ml"
+  },
+  "PLI1.OVL+0187": {
+    "end": 431,
+    "description": "Pass47 bounded canonical adapter",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ],
+    "contract": "Fresh2010; RAR; witnessed bit0-clear return only, flags retain rotate ancestry.",
+    "implementation": "lib/pli80_host/acquisition_family.ml"
+  },
+  "PLI1.OVL+61B6": {
+    "end": 25029,
+    "description": "Pass47 bounded canonical adapter",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ],
+    "contract": "Compose61A4 then CPI00; actual zero route ordinary return; nonzero arm remains excluded.",
+    "implementation": "lib/pli80_host/acquisition_family.ml"
+  },
+  "PLI1.OVL+256C": {
+    "end": 9641,
+    "description": "Pass47 bounded canonical adapter",
+    "completeness": [
+      "stable",
+      "complete",
+      "partial"
+    ],
+    "contract": "Existing attr4 composition retained. Pass47 additionally proves attr6: private saved C is independently reloaded for8048 and7EC0; fresh AE32 and A5B0 feed7AF0, C=0 feeds23D2 between them; discard only the private byte, return final7EC0 state.",
+    "implementation": "lib/pli80_host/acquisition_family.ml"
+  }
+}

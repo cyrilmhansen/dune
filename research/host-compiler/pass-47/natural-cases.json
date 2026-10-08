@@ -1,0 +1,206 @@
+{
+  "logical_cases": "implementation-packet.json#/cases",
+  "outer_cases": [
+    {
+      "source": "MINIMAL",
+      "caller": "PLI1.OVL+0B79",
+      "entry_step": 242527,
+      "return_step": 274889,
+      "route": "R0_reader_tail",
+      "input": {
+        "a": 144,
+        "b": 0,
+        "c": 0,
+        "d": 2,
+        "e": 2,
+        "h": 255,
+        "l": 238,
+        "sp": 65512,
+        "pc": 9456,
+        "flags": {
+          "sign": true,
+          "zero": false,
+          "auxiliary_carry": false,
+          "parity": true,
+          "carry": false
+        }
+      },
+      "output": {
+        "a": 128,
+        "b": 0,
+        "c": 0,
+        "d": 151,
+        "e": 101,
+        "h": 0,
+        "l": 0,
+        "sp": 65514,
+        "pc": 11644,
+        "flags": {
+          "sign": false,
+          "zero": true,
+          "auxiliary_carry": true,
+          "parity": true,
+          "carry": false
+        }
+      },
+      "entry_memory_sha256": "1a8dbd16077fa1c6e4f154fd5a418c618acb118f1a42b454f9b330e51b38be33",
+      "post_memory_sha256": "9c71becc46b5e3b1e19bfb44efca4ca72b4986645fa1d11260b60760af610ba5",
+      "journal_sha256": "6dfdf066f0230014bf4b4d0ee41dcd935934e5540084a9e258cede4d72ef02d5",
+      "logical_writes": 3559,
+      "stack_writer_cells": 54,
+      "internal_6619": 1,
+      "internal_19F0": 1
+    },
+    {
+      "source": "FIZZBUZ",
+      "caller": "PLI1.OVL+0B79",
+      "entry_step": 353169,
+      "return_step": 624423,
+      "route": "R1_mediated_recursion",
+      "input": {
+        "a": 129,
+        "b": 0,
+        "c": 0,
+        "d": 151,
+        "e": 61,
+        "h": 255,
+        "l": 238,
+        "sp": 65512,
+        "pc": 9456,
+        "flags": {
+          "sign": true,
+          "zero": false,
+          "auxiliary_carry": false,
+          "parity": false,
+          "carry": false
+        }
+      },
+      "output": {
+        "a": 0,
+        "b": 0,
+        "c": 0,
+        "d": 151,
+        "e": 101,
+        "h": 0,
+        "l": 0,
+        "sp": 65514,
+        "pc": 11644,
+        "flags": {
+          "sign": false,
+          "zero": true,
+          "auxiliary_carry": true,
+          "parity": true,
+          "carry": false
+        }
+      },
+      "entry_memory_sha256": "09b6dce01674acf0dc4ceeadd68e19f02c1554e56916b6a3cd265fc26e33809f",
+      "post_memory_sha256": "13a065c90c810c7018b0c82a7b1855dbb3fe8c5182085e3c0653bdb6ecdf24d3",
+      "journal_sha256": "22f7e16faa482152d963e4e98c105c0b0fab08166022d8a083eeb4a92120b364",
+      "logical_writes": 27092,
+      "stack_writer_cells": 170,
+      "internal_6619": 9,
+      "internal_19F0": 4
+    },
+    {
+      "source": "PICTURE",
+      "caller": "PLI1.OVL+0ABB",
+      "entry_step": 302904,
+      "return_step": 318102,
+      "route": "R3_cached_probe",
+      "input": {
+        "a": 255,
+        "b": 0,
+        "c": 0,
+        "d": 152,
+        "e": 249,
+        "h": 255,
+        "l": 238,
+        "sp": 65512,
+        "pc": 9456,
+        "flags": {
+          "sign": false,
+          "zero": false,
+          "auxiliary_carry": false,
+          "parity": false,
+          "carry": false
+        }
+      },
+      "output": {
+        "a": 128,
+        "b": 0,
+        "c": 0,
+        "d": 151,
+        "e": 137,
+        "h": 0,
+        "l": 0,
+        "sp": 65514,
+        "pc": 11454,
+        "flags": {
+          "sign": false,
+          "zero": true,
+          "auxiliary_carry": true,
+          "parity": true,
+          "carry": false
+        }
+      },
+      "entry_memory_sha256": "ff3e6d34014c4c1bbff6810185ec2f6b97576bfdda12bdafd35aa5526fcb472b",
+      "post_memory_sha256": "4bc17b8ab3ed87110999abff58d954975500e9440c15ea77ca32c0c669aad5d2",
+      "journal_sha256": "b75296d1b92cff3a3dd1b774ad2dff19826ab3241c4c32a39fa781bce265edd6",
+      "logical_writes": 1415,
+      "stack_writer_cells": 53,
+      "internal_6619": 1,
+      "internal_19F0": 0
+    },
+    {
+      "source": "PICTURE",
+      "caller": "PLI1.OVL+0B79",
+      "entry_step": 318377,
+      "return_step": 340862,
+      "route": "R0_reader_tail",
+      "input": {
+        "a": 144,
+        "b": 0,
+        "c": 0,
+        "d": 151,
+        "e": 137,
+        "h": 255,
+        "l": 238,
+        "sp": 65512,
+        "pc": 9456,
+        "flags": {
+          "sign": true,
+          "zero": false,
+          "auxiliary_carry": false,
+          "parity": true,
+          "carry": false
+        }
+      },
+      "output": {
+        "a": 128,
+        "b": 0,
+        "c": 0,
+        "d": 151,
+        "e": 101,
+        "h": 0,
+        "l": 0,
+        "sp": 65514,
+        "pc": 11644,
+        "flags": {
+          "sign": false,
+          "zero": true,
+          "auxiliary_carry": true,
+          "parity": true,
+          "carry": false
+        }
+      },
+      "entry_memory_sha256": "18bf221a514a9916050188b20b967f372aed5c780568d2d57edf7a109681c00e",
+      "post_memory_sha256": "54e431d3b5d85ed4269d796c17cd6c905ea1bf3811038921866bce165164bea3",
+      "journal_sha256": "d0eee85fdda314525069fa0587b59a7ba475c01437d636dcd8cc0b3fffc7300c",
+      "logical_writes": 2254,
+      "stack_writer_cells": 88,
+      "internal_6619": 1,
+      "internal_19F0": 1
+    }
+  ],
+  "duplicates_preserved": true
+}

@@ -1,0 +1,50 @@
+{
+  "topology": {
+    "MINIMAL": {
+      "logical": 1,
+      "outer": 1,
+      "nested": 0,
+      "maximum_depth": 1
+    },
+    "FIZZBUZ": {
+      "logical": 8,
+      "outer": 1,
+      "nested": 7,
+      "maximum_depth": 5
+    },
+    "PICTURE": {
+      "logical": 2,
+      "outer": 2,
+      "nested": 0,
+      "maximum_depth": 1
+    }
+  },
+  "callers": {
+    "MINIMAL": {
+      "PLI1.OVL+0B79": 1
+    },
+    "FIZZBUZ": {
+      "PLI1.OVL+0B79": 2,
+      "PLI1.OVL+03CD": 3,
+      "PLI1.OVL+03E8": 3
+    },
+    "PICTURE": {
+      "PLI1.OVL+0ABB": 1,
+      "PLI1.OVL+0B79": 1
+    }
+  },
+  "routes": {
+    "MINIMAL": {
+      "R0": 1
+    },
+    "FIZZBUZ": {
+      "R1": 1,
+      "R2": 3,
+      "R0": 4
+    },
+    "PICTURE": {
+      "R3": 1,
+      "R0": 1
+    }
+  }
+}

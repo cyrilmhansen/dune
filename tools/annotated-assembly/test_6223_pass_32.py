@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Independent path, value, flag, ownership and scoped-promotion regressions."""
+from historical_catalog_epoch import frozen_catalog
 import argparse,copy,hashlib,json,sys,unittest
 from pathlib import Path
 from collections import Counter
@@ -10,6 +11,7 @@ class PassThirtyTwoTests(unittest.TestCase):
   cls.rows={s:gather(c,BOUNDS,include_nested_returns=True)for s,c in CAPTURES.items()}
   cls.actual=derive([analyze(s,CAPTURES[s],IMAGES,rs)for s,rs in cls.rows.items()])
   cls.catalog={p['id']:p for p in load(ROOT/'research/annotated-assembly/procedures.json')['procedures']}
+  cls.catalog=frozen_catalog(cls.catalog)
  def test_fresh_reports_counts_and_exact_callers(self):
   for n in FILES:self.assertEqual(self.actual[n],load(REPORT/(n+'.json')))
   for s,rs in self.rows.items():

@@ -1,4 +1,5 @@
 """Alternate acquisition arithmetic, copied continuation and independent channels."""
+from historical_catalog_epoch import frozen_catalog
 import argparse,copy,subprocess,unittest
 from collections import Counter
 from check_selector02_pass_40 import *
@@ -7,6 +8,7 @@ class PassFortyTests(unittest.TestCase):
  @classmethod
  def setUpClass(cls):
   cls.rows={s:gather_selected(c,BOUNDS,include_nested_returns=True,software_callees=SOFTWARE)for s,c in CAPTURES.items()};cls.a=analyze(cls.rows,IMAGES);cls.catalog={p['id']:p for p in load(ROOT/'research/annotated-assembly/procedures.json')['procedures']}
+  cls.catalog=frozen_catalog(cls.catalog)
   future=load(ROOT/'research/host-compiler/pass-46/before.json')
   cls.catalog={k:future.get(k) or v for k,v in cls.catalog.items()if k not in future or future[k]is not None}
  def selected(self,k):return [r for g in self.rows.values()for r in g[k]if k.endswith('28AA')and val(one(r['own_witnesses'],0x28b7),0xa628+(word_read(one(r['own_witnesses'],0x28ae),0xa634)&255))==2 or k.endswith('6708')and r['entry']['before']['e']==2]

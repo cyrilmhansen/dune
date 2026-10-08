@@ -1,4 +1,5 @@
 """Natural causal closure, existing constructor scope, source and continuation ancestry."""
+from historical_catalog_epoch import frozen_catalog
 import argparse,copy,subprocess,unittest
 from collections import Counter
 from check_causal_5929_pass_42 import *
@@ -6,6 +7,7 @@ class PassFortyTwoTests(unittest.TestCase):
  @classmethod
  def setUpClass(cls):
   cls.rows={s:gather_selected(c,BOUNDS,include_nested_returns=True,software_callees=SOFTWARE)for s,c in CAPTURES.items()};cls.a=analyze(cls.rows,IMAGES);cls.cat={p['id']:p for p in load(ROOT/'research/annotated-assembly/procedures.json')['procedures']}
+  cls.cat=frozen_catalog(cls.cat)
  def by(self,source):return {r['call']['step_index']:r for rs in self.rows[source].values()for r in rs}
  def test_all_duplicate_natural_windows_retained(self):
   self.assertEqual(projection(self.rows,self.a),load(REPORT/'route-distribution.json'));self.assertEqual(sum(len(rs)for g in self.a.values()for rs in g.values()),63)

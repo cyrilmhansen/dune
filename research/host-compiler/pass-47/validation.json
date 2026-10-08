@@ -1,0 +1,607 @@
+{
+  "validation_tier": "full_checkpoint",
+  "previous_full_checkpoint": "430b75bb82187216731f26588b3bfb48e6fed435",
+  "new_full_checkpoint": "this Pass47 commit",
+  "baseline": "2fc80f0b09af0c07e41ca37ed79e6846e1f600d2",
+  "all_passed": true,
+  "initial_checkpoint_all_passed": false,
+  "category_count": 77,
+  "unique_python_test_count": 502,
+  "python_count_method": "Distinct unittest categories; repeated affected-category runs counted once using final complete-category totals.",
+  "dune_test_rule_stanzas": 37,
+  "workers": 4,
+  "checkpoint_wall_seconds": 1047.176,
+  "rerun_wall_seconds": 179.42,
+  "total_validation_wall_seconds": 1226.596,
+  "sum_initial_category_seconds": 3545.298,
+  "sum_rerun_category_seconds": 562.65,
+  "top_10_slowest": [
+    {
+      "category": "pass47",
+      "elapsed_seconds": 297.12
+    },
+    {
+      "category": "pass13",
+      "elapsed_seconds": 156.314
+    },
+    {
+      "category": "pass31",
+      "elapsed_seconds": 142.861
+    },
+    {
+      "category": "packet-continuation",
+      "elapsed_seconds": 142.476
+    },
+    {
+      "category": "pass14",
+      "elapsed_seconds": 136.49
+    },
+    {
+      "category": "pass18-native",
+      "elapsed_seconds": 123.908
+    },
+    {
+      "category": "minimal-pass-10",
+      "elapsed_seconds": 119.205
+    },
+    {
+      "category": "minimal-pass-9",
+      "elapsed_seconds": 108.096
+    },
+    {
+      "category": "pass20-native",
+      "elapsed_seconds": 97.466
+    },
+    {
+      "category": "pass21-native",
+      "elapsed_seconds": 96.509
+    }
+  ],
+  "reruns": [
+    {
+      "category": "pass16",
+      "reason": "Frozen pre-extension catalog epoch assertion; preserve exact immutable Pass44 metadata and reject undocumented current changes",
+      "initial_return_code": 1,
+      "final_return_code": 0
+    },
+    {
+      "category": "minimal-pass-6",
+      "reason": "Pass47 draft metadata incorrectly replaced overall1376 count with the quoted subset; restored prior full inventory",
+      "initial_return_code": 1,
+      "final_return_code": 0
+    },
+    {
+      "category": "pass32",
+      "reason": "Frozen pre-extension catalog epoch assertion; preserve exact immutable Pass44 metadata and reject undocumented current changes",
+      "initial_return_code": 1,
+      "final_return_code": 0
+    },
+    {
+      "category": "pass39",
+      "reason": "Frozen pre-extension catalog epoch assertion; preserve exact immutable Pass44 metadata and reject undocumented current changes",
+      "initial_return_code": 1,
+      "final_return_code": 0
+    },
+    {
+      "category": "pass40",
+      "reason": "Frozen pre-extension catalog epoch assertion; preserve exact immutable Pass44 metadata and reject undocumented current changes",
+      "initial_return_code": 1,
+      "final_return_code": 0
+    },
+    {
+      "category": "pass41",
+      "reason": "Frozen pre-extension catalog epoch assertion; preserve exact immutable Pass44 metadata and reject undocumented current changes",
+      "initial_return_code": 1,
+      "final_return_code": 0
+    },
+    {
+      "category": "pass42",
+      "reason": "Frozen pre-extension catalog epoch assertion; preserve exact immutable Pass44 metadata and reject undocumented current changes",
+      "initial_return_code": 1,
+      "final_return_code": 0
+    },
+    {
+      "category": "pass43",
+      "reason": "Frozen pre-extension catalog epoch assertion; preserve exact immutable Pass44 metadata and reject undocumented current changes",
+      "initial_return_code": 1,
+      "final_return_code": 0
+    }
+  ],
+  "additional_rerun_categories": [
+    "build",
+    "project",
+    "V1",
+    "roundtrip-tests",
+    "roundtrip",
+    "dynamic-progress",
+    "diff-check"
+  ],
+  "categories": {
+    "build": {
+      "return_code": 0,
+      "python_tests": 0,
+      "initial_seconds": 2.851,
+      "rerun_seconds": 0.627
+    },
+    "project": {
+      "return_code": 0,
+      "python_tests": 0,
+      "initial_seconds": 1.352,
+      "rerun_seconds": 0.456
+    },
+    "pass17-native": {
+      "return_code": 0,
+      "python_tests": 5,
+      "initial_seconds": 81.502,
+      "rerun_seconds": null
+    },
+    "native-unit": {
+      "return_code": 0,
+      "python_tests": 0,
+      "initial_seconds": 0.056,
+      "rerun_seconds": null
+    },
+    "pass19-native": {
+      "return_code": 0,
+      "python_tests": 9,
+      "initial_seconds": 89.73,
+      "rerun_seconds": null
+    },
+    "pass20-native": {
+      "return_code": 0,
+      "python_tests": 7,
+      "initial_seconds": 97.466,
+      "rerun_seconds": null
+    },
+    "pass15": {
+      "return_code": 0,
+      "python_tests": 7,
+      "initial_seconds": 28.202,
+      "rerun_seconds": null
+    },
+    "pass18-native": {
+      "return_code": 0,
+      "python_tests": 6,
+      "initial_seconds": 123.908,
+      "rerun_seconds": null
+    },
+    "baseline": {
+      "return_code": 0,
+      "python_tests": 9,
+      "initial_seconds": 0.321,
+      "rerun_seconds": null
+    },
+    "minimal-pass-1": {
+      "return_code": 0,
+      "python_tests": 8,
+      "initial_seconds": 0.237,
+      "rerun_seconds": null
+    },
+    "minimal-pass-2": {
+      "return_code": 0,
+      "python_tests": 9,
+      "initial_seconds": 0.16,
+      "rerun_seconds": null
+    },
+    "minimal-pass-3": {
+      "return_code": 0,
+      "python_tests": 9,
+      "initial_seconds": 0.366,
+      "rerun_seconds": null
+    },
+    "minimal-pass-4": {
+      "return_code": 0,
+      "python_tests": 11,
+      "initial_seconds": 0.181,
+      "rerun_seconds": null
+    },
+    "pass16": {
+      "return_code": 0,
+      "python_tests": 6,
+      "initial_seconds": 57.59,
+      "rerun_seconds": 51.915
+    },
+    "minimal-pass-6": {
+      "return_code": 0,
+      "python_tests": 8,
+      "initial_seconds": 26.854,
+      "rerun_seconds": 88.836
+    },
+    "minimal-pass-5": {
+      "return_code": 0,
+      "python_tests": 8,
+      "initial_seconds": 66.378,
+      "rerun_seconds": null
+    },
+    "minimal-pass-8": {
+      "return_code": 0,
+      "python_tests": 8,
+      "initial_seconds": 9.919,
+      "rerun_seconds": null
+    },
+    "minimal-pass-7": {
+      "return_code": 0,
+      "python_tests": 8,
+      "initial_seconds": 58.902,
+      "rerun_seconds": null
+    },
+    "pass14": {
+      "return_code": 0,
+      "python_tests": 8,
+      "initial_seconds": 136.49,
+      "rerun_seconds": null
+    },
+    "pass13": {
+      "return_code": 0,
+      "python_tests": 8,
+      "initial_seconds": 156.314,
+      "rerun_seconds": null
+    },
+    "minimal-pass-9": {
+      "return_code": 0,
+      "python_tests": 7,
+      "initial_seconds": 108.096,
+      "rerun_seconds": null
+    },
+    "recursive-unit": {
+      "return_code": 0,
+      "python_tests": 0,
+      "initial_seconds": 0.015,
+      "rerun_seconds": null
+    },
+    "balance-unit": {
+      "return_code": 0,
+      "python_tests": 0,
+      "initial_seconds": 0.005,
+      "rerun_seconds": null
+    },
+    "minimal-pass-11": {
+      "return_code": 0,
+      "python_tests": 8,
+      "initial_seconds": 77.816,
+      "rerun_seconds": null
+    },
+    "minimal-pass-12": {
+      "return_code": 0,
+      "python_tests": 8,
+      "initial_seconds": 50.445,
+      "rerun_seconds": null
+    },
+    "minimal-pass-10": {
+      "return_code": 0,
+      "python_tests": 8,
+      "initial_seconds": 119.205,
+      "rerun_seconds": null
+    },
+    "V1": {
+      "return_code": 0,
+      "python_tests": 9,
+      "initial_seconds": 37.668,
+      "rerun_seconds": 35.438
+    },
+    "mapped-unit": {
+      "return_code": 0,
+      "python_tests": 0,
+      "initial_seconds": 0.014,
+      "rerun_seconds": null
+    },
+    "attribute-unit": {
+      "return_code": 0,
+      "python_tests": 0,
+      "initial_seconds": 0.099,
+      "rerun_seconds": null
+    },
+    "emitter-unit": {
+      "return_code": 0,
+      "python_tests": 0,
+      "initial_seconds": 0.047,
+      "rerun_seconds": null
+    },
+    "roundtrip": {
+      "return_code": 0,
+      "python_tests": 0,
+      "initial_seconds": 24.876,
+      "rerun_seconds": 27.274
+    },
+    "roundtrip-tests": {
+      "return_code": 0,
+      "python_tests": 11,
+      "initial_seconds": 49.258,
+      "rerun_seconds": 49.7
+    },
+    "pass23": {
+      "return_code": 0,
+      "python_tests": 6,
+      "initial_seconds": 16.864,
+      "rerun_seconds": null
+    },
+    "native-emitter-unit": {
+      "return_code": 0,
+      "python_tests": 0,
+      "initial_seconds": 1.345,
+      "rerun_seconds": null
+    },
+    "word-emitter-unit": {
+      "return_code": 0,
+      "python_tests": 0,
+      "initial_seconds": 0.111,
+      "rerun_seconds": null
+    },
+    "pass21-native": {
+      "return_code": 0,
+      "python_tests": 6,
+      "initial_seconds": 96.509,
+      "rerun_seconds": null
+    },
+    "range-unit": {
+      "return_code": 0,
+      "python_tests": 0,
+      "initial_seconds": 0.117,
+      "rerun_seconds": null
+    },
+    "packet-continuation": {
+      "return_code": 0,
+      "python_tests": 27,
+      "initial_seconds": 142.476,
+      "rerun_seconds": null
+    },
+    "publication-unit": {
+      "return_code": 0,
+      "python_tests": 0,
+      "initial_seconds": 0.062,
+      "rerun_seconds": null
+    },
+    "pass22": {
+      "return_code": 0,
+      "python_tests": 9,
+      "initial_seconds": 84.756,
+      "rerun_seconds": null
+    },
+    "range-publication-unit": {
+      "return_code": 0,
+      "python_tests": 0,
+      "initial_seconds": 0.334,
+      "rerun_seconds": null
+    },
+    "pass24": {
+      "return_code": 0,
+      "python_tests": 7,
+      "initial_seconds": 64.109,
+      "rerun_seconds": null
+    },
+    "control-unit": {
+      "return_code": 0,
+      "python_tests": 0,
+      "initial_seconds": 0.006,
+      "rerun_seconds": null
+    },
+    "input-unit": {
+      "return_code": 0,
+      "python_tests": 0,
+      "initial_seconds": 0.136,
+      "rerun_seconds": null
+    },
+    "pass25": {
+      "return_code": 0,
+      "python_tests": 6,
+      "initial_seconds": 60.939,
+      "rerun_seconds": null
+    },
+    "gate-unit": {
+      "return_code": 0,
+      "python_tests": 0,
+      "initial_seconds": 0.369,
+      "rerun_seconds": null
+    },
+    "pass26": {
+      "return_code": 0,
+      "python_tests": 5,
+      "initial_seconds": 62.428,
+      "rerun_seconds": null
+    },
+    "pass27": {
+      "return_code": 0,
+      "python_tests": 5,
+      "initial_seconds": 62.728,
+      "rerun_seconds": null
+    },
+    "pass28": {
+      "return_code": 0,
+      "python_tests": 7,
+      "initial_seconds": 73.716,
+      "rerun_seconds": null
+    },
+    "pass32": {
+      "return_code": 0,
+      "python_tests": 10,
+      "initial_seconds": 44.88,
+      "rerun_seconds": 45.821
+    },
+    "pass29": {
+      "return_code": 0,
+      "python_tests": 8,
+      "initial_seconds": 80.327,
+      "rerun_seconds": null
+    },
+    "historical-leaf-queries": {
+      "return_code": 0,
+      "python_tests": 0,
+      "initial_seconds": 3.77,
+      "rerun_seconds": null
+    },
+    "pass30": {
+      "return_code": 0,
+      "python_tests": 8,
+      "initial_seconds": 82.912,
+      "rerun_seconds": null
+    },
+    "pass34": {
+      "return_code": 0,
+      "python_tests": 12,
+      "initial_seconds": 42.728,
+      "rerun_seconds": null
+    },
+    "pass35": {
+      "return_code": 0,
+      "python_tests": 12,
+      "initial_seconds": 41.362,
+      "rerun_seconds": null
+    },
+    "pass31": {
+      "return_code": 0,
+      "python_tests": 8,
+      "initial_seconds": 142.861,
+      "rerun_seconds": null
+    },
+    "pass33": {
+      "return_code": 0,
+      "python_tests": 12,
+      "initial_seconds": 85.178,
+      "rerun_seconds": null
+    },
+    "pass36": {
+      "return_code": 0,
+      "python_tests": 14,
+      "initial_seconds": 41.244,
+      "rerun_seconds": null
+    },
+    "pass37": {
+      "return_code": 0,
+      "python_tests": 15,
+      "initial_seconds": 42.174,
+      "rerun_seconds": null
+    },
+    "pass39": {
+      "return_code": 0,
+      "python_tests": 19,
+      "initial_seconds": 44.115,
+      "rerun_seconds": 44.02
+    },
+    "pass38": {
+      "return_code": 0,
+      "python_tests": 19,
+      "initial_seconds": 53.538,
+      "rerun_seconds": null
+    },
+    "pass40": {
+      "return_code": 0,
+      "python_tests": 17,
+      "initial_seconds": 43.839,
+      "rerun_seconds": 44.013
+    },
+    "acquisition-parent-unit": {
+      "return_code": 0,
+      "python_tests": 0,
+      "initial_seconds": 0.002,
+      "rerun_seconds": null
+    },
+    "pass44-roots": {
+      "return_code": 0,
+      "python_tests": 3,
+      "initial_seconds": 2.422,
+      "rerun_seconds": null
+    },
+    "pass44-family": {
+      "return_code": 0,
+      "python_tests": 4,
+      "initial_seconds": 6.461,
+      "rerun_seconds": null
+    },
+    "pass41": {
+      "return_code": 0,
+      "python_tests": 16,
+      "initial_seconds": 53.62,
+      "rerun_seconds": 51.635
+    },
+    "pass42": {
+      "return_code": 0,
+      "python_tests": 19,
+      "initial_seconds": 41.435,
+      "rerun_seconds": 40.247
+    },
+    "pass44-numeric": {
+      "return_code": 0,
+      "python_tests": 5,
+      "initial_seconds": 22.274,
+      "rerun_seconds": null
+    },
+    "pass44-hybrids": {
+      "return_code": 0,
+      "python_tests": 5,
+      "initial_seconds": 52.0,
+      "rerun_seconds": null
+    },
+    "pass45-local": {
+      "return_code": 0,
+      "python_tests": 2,
+      "initial_seconds": 7.133,
+      "rerun_seconds": null
+    },
+    "pass43": {
+      "return_code": 0,
+      "python_tests": 8,
+      "initial_seconds": 90.797,
+      "rerun_seconds": 82.4
+    },
+    "classifier-unit": {
+      "return_code": 0,
+      "python_tests": 0,
+      "initial_seconds": 0.088,
+      "rerun_seconds": null
+    },
+    "dynamic-progress": {
+      "return_code": 0,
+      "python_tests": 0,
+      "initial_seconds": 0.129,
+      "rerun_seconds": 0.144
+    },
+    "diff-check": {
+      "return_code": 0,
+      "python_tests": 0,
+      "initial_seconds": 0.083,
+      "rerun_seconds": 0.124
+    },
+    "pass46": {
+      "return_code": 0,
+      "python_tests": 7,
+      "initial_seconds": 90.087,
+      "rerun_seconds": null
+    },
+    "pass45-root": {
+      "return_code": 0,
+      "python_tests": 3,
+      "initial_seconds": 59.391,
+      "rerun_seconds": null
+    },
+    "pass47": {
+      "return_code": 0,
+      "python_tests": 13,
+      "initial_seconds": 297.12,
+      "rerun_seconds": null
+    }
+  },
+  "full_result_sha256": "64b840b0bd555475e6d89c873febdaa1ac2763760dfac7828422a993282dfb21",
+  "rerun_result_sha256": "a7b7c857ba44405740d5668dc4519ab4d30612fd620fef0e2e26665cf38526d3",
+  "reconstruction_bytes": 94720,
+  "oracle_queries": 0,
+  "development_target_tests": 13,
+  "development_target_wall_seconds": 284.844,
+  "interactive_orchestration": {
+    "current_continuation_approximate_calls": 100,
+    "total_across_compacted_sessions": "not instrumented; do not infer an exact task total",
+    "automated_phases": [
+      "corrected call/return extraction",
+      "recursion topology",
+      "local CFG/child correlation",
+      "quoted-case extraction",
+      "component proof batches",
+      "logical/outer shadows",
+      "standalone/cumulative hybrids",
+      "residual parent ranking",
+      "compact reports",
+      "full checkpoint dispatch"
+    ]
+  },
+  "temporary_policy": "All new TemporaryDirectory proofs under ignored _build; no task /tmp directories",
+  "dune_stanza_count_method": "Top-level (test ...) declarations in test/dune"
+}

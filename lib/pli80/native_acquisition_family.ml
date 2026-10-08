@@ -2,7 +2,7 @@
 module B=Acquisition_family_bridge
 let require b m=if not b then failwith("family shadow: "^m)
 let shadow ?(spine=false) ?(entry_steps=[]) operation input=
- let bridge=B.create ~pli_com:input.Experiment.pli_com ~pli1:input.pli1_ovl in
+ let bridge=B.create_with_pli0 ~pli_com:input.Experiment.pli_com ~pli0:input.pli0_ovl ~pli1:input.pli1_ovl in
  let previous=ref None and current_origin=ref Analysis.Execution_map.Unknown and active=ref [] in
  let count=ref 0 and pending=ref 0 and partial=ref None and proofs=ref[]in
  let on_guest_step ~step_index:_ ~before ~after step=
@@ -46,17 +46,18 @@ let shadow ?(spine=false) ?(entry_steps=[]) operation input=
    if logical<>p.logical_writes then(
     let rec first i a b=match a,b with x::xs,y::ys when x=y->first(i+1)xs ys|x::_,y::_->Printf.sprintf"at %d actual=%04X:%02X native=%04X:%02X"i(fst x)(snd x)(fst y)(snd y)|_->Printf.sprintf"length %d/%d"(List.length logical)(List.length p.logical_writes)in let out=open_out "_build/host-compiler-pass-44/stage1/writes.tsv"in List.iteri(fun i (a,v)->Printf.fprintf out "H %d %04X %02X\n"i a v)logical;List.iteri(fun i(w:B.write)->if w.kind="logical"then Printf.fprintf out "N %d %04X %02X %04X\n"i w.address w.value w.writer)p.journal;close_out out;failwith("family write chronology "^first 0 logical p.logical_writes));
    let final=Hashtbl.create 128 in List.iter(fun(w:B.write)->Hashtbl.replace final w.address(w.writer,w.value))p.journal;
-   Hashtbl.iter(fun address value->require(Hashtbl.find_opt latest address=Some value)(Printf.sprintf"final writer %04X"address))final;
+   Hashtbl.iter(fun address value->require(Hashtbl.find_opt latest address=Some value)(Printf.sprintf"final writer %04X expected %04X:%02X observed %s"address(fst value)(snd value)(match Hashtbl.find_opt latest address with None->"absent"|Some(w,v)->Printf.sprintf"%04X:%02X"w v)))final;
    require(Hashtbl.length final=Hashtbl.length latest)"missing observed writer";
    require(state.sp=entry.Runner.sp+(if operation=B.Copy05 then 10 else 2))"return SP";
    proofs:=Printf.sprintf"{\"kind\":\"field15_complete\",\"return_step\":%d,\"memory_sha256\":%S,\"ordered_writes\":%d,\"final_writer_cells\":%d}"step_index(Experiment.sha256_hex actual)(List.length logical)(Hashtbl.length final)::!proofs;
    incr count;active:=rest
   |_->());
-  let offset=match operation with B.Context->0x60e5|B.Field->0x5e98|Attribute->0x256c|Spine->0x4f54|Resident->0x1376|Pair_gate->0x2259|Selected_transform->0x345e|Table_adapter->0x25a9|Wrapper->0x6619|Repeat->0x654e|Copy05->0x6708|Traversal->0x46ed|Construction->0x4738|Record_output->0x666e|Index_one->0x28aa|Parent->0x19f0 in
-  if o=B.origin(if operation=B.Resident then"PLI.COM"else"PLI1.OVL")offset&&(entry_steps=[]||List.mem step_index entry_steps)&&(operation<>B.Copy05||state.e=5)&&(operation<>B.Index_one||(state.c=1&&List.mem(boundary.read_memory(0xa628+boundary.read_memory 0xa634))[5;0x15]))then(
+  let offset=match operation with B.Adapter offset->offset| B.Recursive op->fst(Pli80_host.Recursive_parent.bounds op)| B.Resident_reader op->fst(Pli80_host.Resident_reader.bounds op)|B.Context->0x60e5|B.Field->0x5e98|Attribute->0x256c|Spine->0x4f54|Resident->0x1376|Pair_gate->0x2259|Selected_transform->0x345e|Table_adapter->0x25a9|Wrapper->0x6619|Repeat->0x654e|Copy05->0x6708|Traversal->0x46ed|Construction->0x4738|Record_output->0x666e|Index_one->0x28aa|Parent->0x19f0|Reader op->fst(Pli80_host.Reader_construction.bounds op)in
+  let entered_call=match !previous with Some p->(match I8080.Step.control_flow p.step with I8080.Step.Call{taken=true;_}->true|_->false)|None->false in
+  if entered_call&&o=B.origin(if B.resident_operation operation then"PLI.COM"else"PLI1.OVL")offset&&(entry_steps=[]||List.mem step_index entry_steps)&&(operation<>B.Copy05||state.e=5)&&(operation<>B.Index_one||(state.c=1&&List.mem(boundary.read_memory(0xa628+boundary.read_memory 0xa634))[5;0x15]))then(
    let call=B.verify_call bridge operation(Option.get !previous)~entry:state in
    let ram=boundary.copy_memory()and dma=boundary.dma and files=boundary.copy_filesystem()in
-   let rejects f=match f()with exception Invalid_argument _->()|_->failwith"family malformed entry accepted"in
+   let rejection_index=ref 0 in let rejects f=incr rejection_index;match f()with exception Invalid_argument _->()|_->failwith(Printf.sprintf"family malformed entry accepted PC=%04X case=%d"state.pc !rejection_index)in
    rejects(fun()->B.prepare bridge operation ~call ~origin:(B.origin"PLI2.OVL"offset)boundary);
    rejects(fun()->B.prepare bridge operation ~call ~origin:o{boundary with state={state with pc=state.pc+1}});
    rejects(fun()->B.prepare bridge operation ~call ~origin:o{boundary with state={state with sp=0xa6ca}});
@@ -67,11 +68,11 @@ let shadow ?(spine=false) ?(entry_steps=[]) operation input=
    if operation=B.Table_adapter then(
     rejects(fun()->B.prepare bridge operation ~call ~origin:o{boundary with state={state with d=0xa6;e=0x44}}));
    if operation=B.Resident then(
-    let altered edits={boundary with copy_memory=(fun()->let b=Bytes.copy ram in List.iter(fun(a,v)->Bytes.set b a(Char.chr v))edits;b)}in
+    let altered edits={boundary with copy_memory=(fun()->let b=Bytes.copy ram in List.iter(fun(a,v)->Bytes.set b a(Char.chr v))edits;b);preview_host_program=(fun p->boundary.preview_host_program{p with effects=List.map(fun(a,v)->Runner.Memory_write(a,v))edits@p.effects})}in
     List.iter(fun edits->rejects(fun()->B.prepare bridge operation ~call ~origin:o(altered edits)))
-     [[0x2012,1];[0x20c4,1];[0x1f06,Char.code(Bytes.get ram 0x1f08)];
-      [0x1e8e+Char.code(Bytes.get ram 0x1f06),0x2e];[0x1e8e+Char.code(Bytes.get ram 0x1f06),0x45];[0x20c1,0x27]];
-    rejects(fun()->B.prepare bridge operation ~call ~origin:o(altered([0x20c1,0x31;0x1f06,0;0x1f08,200]@List.init 130(fun i->0x1e8e+i,0x31)))));
+     [[0x2012,1];[0x20c4,1];[0x1f06,Char.code(Bytes.get ram 0x1f08);0x2008,0;0x1d06,state.sp land 255;0x1d07,state.sp lsr 8];
+      [0x20c1,0x27;0x1e8e+Char.code(Bytes.get ram 0x1f06),0x1a];[0x20c1,0x27;0x1e8e+Char.code(Bytes.get ram 0x1f06),0x5e]];
+    rejects(fun()->B.prepare bridge operation ~call ~origin:o(altered([0x20c1,0x27;0x1f06,0;0x1f08,121]@List.init 120(fun i->0x1e8e+i,0x41)))));
    if List.mem operation[B.Copy05;B.Index_one;B.Record_output;B.Construction;B.Traversal]then(
     let altered address value={boundary with copy_memory=(fun()->let b=Bytes.copy ram in Bytes.set b address(Char.chr value);b);preview_host_program=(fun p->boundary.preview_host_program{p with effects=Runner.Memory_write(address,value)::p.effects})}in
     if operation=B.Record_output then(

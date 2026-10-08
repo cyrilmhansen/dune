@@ -1,4 +1,5 @@
 """Required resident acquisition, descriptor carry provenance and parent compatibility."""
+from historical_catalog_epoch import frozen_catalog
 import argparse,copy,subprocess,unittest
 from collections import Counter
 from check_acquisition_pass_41 import *
@@ -6,6 +7,7 @@ class PassFortyOneTests(unittest.TestCase):
  @classmethod
  def setUpClass(cls):
   cls.rows={s:gather_selected(c,BOUNDS,include_nested_returns=True,software_callees=SOFTWARE)for s,c in CAPTURES.items()};cls.a=analyze(cls.rows,IMAGES);cls.cat={p['id']:p for p in load(ROOT/'research/annotated-assembly/procedures.json')['procedures']}
+  cls.cat=frozen_catalog(cls.cat)
  def required(self):return [q for g in self.a.values()for q in g['PLI1.OVL+784E']if'resident'in q['law']]
  def test_every_corrected_duplicate_window_retained(self):
   self.assertEqual(projection(self.rows,self.a),load(REPORT/'route-distribution.json'));self.assertEqual([len(g['PLI1.OVL+784E'])for g in self.rows.values()],[19,86,37]);self.assertEqual([len(g['PLI.COM+1376'])for g in self.rows.values()],[38,172,74]);self.assertEqual(sum(len(rs)for g in self.a.values()for rs in g.values()),1212)

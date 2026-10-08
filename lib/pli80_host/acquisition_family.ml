@@ -8,7 +8,7 @@ module U=U16
 module B=U8
 module H=Acquisition_parent
 module K=Classifier
-type operation=Context|Field|Attribute|Spine|Resident|Pair_gate|Selected_transform|Table_adapter|Wrapper|Repeat|Copy05|Traversal|Construction|Record_output|Index_one|Parent
+type operation=Adapter of int|Context|Field|Attribute|Spine|Resident|Pair_gate|Selected_transform|Table_adapter|Wrapper|Repeat|Copy05|Traversal|Construction|Record_output|Index_one|Parent|Reader of Reader_construction.operation|Recursive of Recursive_parent.operation
 type result={returned:R.returned;field:int option}
 let run operation memory ~entry ~write ~compatibility ~adjust ~sp ~guard_field ~native ~follow_spine ~software =
  B.check entry.R.a;List.iter U.check[entry.bc;entry.de;entry.hl;sp()];
@@ -41,7 +41,7 @@ let run operation memory ~entry ~write ~compatibility ~adjust ~sp ~guard_field ~
  let call site target fn=compatibility(H.Enter(site+0x2200,target+0x2200));fn();compatibility H.Leave in
  let resident site target fn=compatibility(H.Enter(site+0x2200,target+0x100));fn();compatibility H.Leave in
  let child site target=call site target(fun()->q:=native ~site:(site+0x2200) ~target:(target+0x2200) !q)in
- let reuse op=q:=(H.run ~operation:op memory ~entry:!q ~write ~compatibility ~guard_field ~saved:(fun _->invalid_arg"Acquisition_family: unexpected saved child")).returned in
+ let reuse op=q:=(H.run ~reader_refill:(fun q->native ~site:0x13b8 ~target:0x0e40 q) ~operation:op memory ~entry:!q ~write ~compatibility ~guard_field ~saved:(fun _->invalid_arg"Acquisition_family: unexpected saved child")).returned in
  let classifier op=q:=K.run ~operation:op memory ~entry:!q ~write
   ~call:(fun site target fn->compatibility(H.Enter(site,target));fn();compatibility H.Leave)
   ~push:(fun site value->compatibility(H.Push(site,value)))~pop:(fun()->compatibility H.Pop)in
@@ -185,9 +185,11 @@ let run operation memory ~entry ~write ~compatibility ~adjust ~sp ~guard_field ~
     hl 0xae32;let value=dec(read !q.hl)in put 0x820f !q.hl value;loop())in loop()in
  let attribute_dispatch()=
   bc((!q.bc land 255)lsl 8 lor(!q.bc land 255));push 0x256d !q.bc;adjust ~site:0x476e ~delta:1;
-  frame 0;c(read !q.hl);child 0x2574 0x7b64;cmp 6;need(not !q.flags.zero)"256C unvalidated attribute6";
-  need(!q.a=4)"256C unvalidated transformed attribute";
-  frame 0;c(read !q.hl);child 0x25a4 0x2511;adjust ~site:0x47a7 ~delta:1 in
+  frame 0;c(read !q.hl);child 0x2574 0x7b64;cmp 6;
+  if !q.flags.zero then(
+   frame 0;c(read !q.hl);child 0x2581 0x8048;pair 0xae32;c(!q.hl land 255);pair 0xa5b0;exchange();child 0x258c 0x7af0;
+   c 0;child 0x2591 0x23d2;frame 0;c(read !q.hl);child 0x2599 0x7ec0
+  )else(need(!q.a=4)"256C unvalidated transformed attribute";frame 0;c(read !q.hl);child 0x25a4 0x2511);adjust ~site:0x47a7 ~delta:1 in
  (* Pass38/39 state transformation: fresh channels and PSW mask carriers. *)
  let maximum()=
   hl 0xa651;put 0x23bc !q.hl(!q.de land 255);hl(U.wrap(!q.hl-1));put 0x23be !q.hl(!q.bc land 255);
@@ -423,7 +425,7 @@ let run operation memory ~entry ~write ~compatibility ~adjust ~sp ~guard_field ~
   pair 0xa863;guard_field !q.hl 1;a(read !q.hl);sub 10;indexed 0xa628;e(read !q.hl);c !q.a;
   call 0x2985 0x6708 acquisition in
  let acquire_selected02()=
-  acquisition_prefix();need(not !q.flags.carry)"28AA guard-only exit";acquisition_arguments decimal_arguments;
+  acquisition_prefix();if not !q.flags.carry then(acquisition_arguments decimal_arguments;
   restore();logical true(!q.bc land 255);rar();need !q.flags.carry "28AA acquisition false result";
   List.iter(fun(base,site)->indexed base;a(read !q.bc);put site !q.hl !q.a)[0xa628,0x2999;0xa62b,0x29a4;0xa62e,0x29af];
   indexed 0xa628;a(read !q.hl);sub 0x15;sub 1;mask();save 0x2ace;
@@ -434,7 +436,7 @@ let run operation memory ~entry ~write ~compatibility ~adjust ~sp ~guard_field ~
   pair 0xa949;hl(!q.hl land 255);c 8;call 0x2b06 0x8380 shift_word;
   de 0xa863;call 0x2b0c 0x834f(fun()->a(read !q.de);logical false(!q.hl land 255);hl((!q.hl land 0xff00)lor !q.a);de(U.wrap(!q.de+1));a(read !q.de);logical false(!q.hl lsr 8);hl(!q.a lsl 8 lor(!q.hl land 255)));
   exchange();hl(U.wrap(!q.hl-1));put 0x2b11 !q.hl(!q.de land 255);hl(U.wrap(!q.hl+1));put 0x2b13 !q.hl(!q.de lsr 8);
-  acquisition_publications() in
+  acquisition_publications()) in
  let acquire_index_one()=
   acquisition_prefix();
   if not !q.flags.carry then(
@@ -628,6 +630,11 @@ let run operation memory ~entry ~write ~compatibility ~adjust ~sp ~guard_field ~
   frame 2;e(read !q.hl);hl(U.wrap(!q.hl+1));de(read !q.hl lsl 8 lor(!q.de land 255));exchange();store 0x618d 0xa6cb !q.hl;
   de(U.wrap(!q.de+1));a(read !q.de);put 0x6192 0xa6ca !q.a;de(U.wrap(!q.de-3));a(read !q.de);
   adjust ~site:0x8399 ~delta:1;hl(pop());hl(pop())in
+ let initial_channels()=
+    List.iter(fun(site,address)->hl address;put site address 0)[0x3265,0xa629;0x326a,0xa62c;0x326f,0xa62f];
+    let channel site target destination=pair 0xae32;c(!q.hl land 255);child site target;put(site+3)destination !q.a in
+    channel 0x3275 0x7a93 0xa62a;channel 0x327f 0x7aa9 0xa62d;channel 0x3289 0x7abf 0xa630;
+    pair 0xae32;c(!q.hl land 255);child 0x3293 0x7a79;store 0x3296 0xa63f !q.hl;hl 0xa634;put 0x329c !q.hl 2 in
  let parent()=
   let selector_minimum()=
    hl 0xa65b;put 0x25c3 !q.hl(!q.bc land 255);pair 0xa65b;c(!q.hl land 255);e 0x36;
@@ -654,11 +661,7 @@ let run operation memory ~entry ~write ~compatibility ~adjust ~sp ~guard_field ~
     if !q.flags.zero then call 0x2f92 0x27d1 adjust_selected;
     indexed 0xa628;a(read !q.hl);cmp 0x31;need(not !q.flags.zero)"2F1C selector31")in
   let initial_transform()=
-   call 0x3533 0x3262(fun()->
-    List.iter(fun(site,address)->hl address;put site address 0)[0x3265,0xa629;0x326a,0xa62c;0x326f,0xa62f];
-    let channel site target destination=pair 0xae32;c(!q.hl land 255);child site target;put(site+3)destination !q.a in
-    channel 0x3275 0x7a93 0xa62a;channel 0x327f 0x7aa9 0xa62d;channel 0x3289 0x7abf 0xa630;
-    pair 0xae32;c(!q.hl land 255);child 0x3293 0x7a79;store 0x3296 0xa63f !q.hl;hl 0xa634;put 0x329c !q.hl 2);
+   call 0x3533 0x3262 initial_channels;
    call 0x3536 0x31a8(fun()->c 1;call 0x31aa 0x2221 special_index;save 0x31ad;c 2;call 0x31b0 0x2221 special_index;restore();logical true(!q.bc land 255);rar();need(not !q.flags.carry)"31A8 both-special alternative";
     hl 0xa62a;a(read 0xa629);cmp(read !q.hl);need(not !q.flags.zero)"31A8 equal-selector arm";hl 0xa628;put 0x31f8 !q.hl 0x28);
    hl 0xa628;a(read 0xa62a);cmp(read !q.hl);
@@ -682,5 +685,107 @@ let run operation memory ~entry ~write ~compatibility ~adjust ~sp ~guard_field ~
   hl 0xa61c;a(read 0xae32);sub(read !q.hl);put 0x1ae7 !q.hl !q.a;
   frame 0;a(read !q.hl);rar();need(not !q.flags.carry)"19F0 private input set-bit arm";
   call 0x1af6 0x80b1(fun()->c 0xfe;child 0x80b3 0x8048);a 0;hl(pop())in
- (match operation with Context->context()|Field->field_acquisition()|Attribute->attribute_dispatch()|Spine->recursive_spine()|Resident->reuse H.Resident_acquisition|Pair_gate->pair_gate()|Selected_transform->selected_transform()|Table_adapter->table_adapter()|Wrapper->counted_spine()|Repeat->counted_spine ~repeat_only:true ()|Copy05->copy_arguments()|Traversal->traversal()|Construction->construction()|Record_output->record_output()|Index_one->acquire_index_one()|Parent->parent());
+  let rec invoke ~site ~target entry=
+   q:=entry;
+   (match target with
+   |0x23af->selector_match()
+   |0x63af->low_field()
+   |0x63a6->field_byte()
+   |0x35ad->c 0x3b;call 0x13af 0x01af selector_match;rar();need !q.flags.carry "13AD unmatched semicolon"
+   |0x2387->a(read 0x2010);rar();need(not !q.flags.carry)"0187 set mode"
+   |0x35ad->c 0x3b;call 0x13af 0x01af selector_match;rar();need !q.flags.carry "13AD unmatched semicolon"
+   |0x7c46->pointer_acquire()
+   |0x5fd9->common_gate()
+   |0xa5a0->de !q.a;let address= !q.hl in difference !q.de(word address);de(U.wrap(address+1))
+   |target when List.mem_assoc target [0x2ad9,Recursive_parent.Acquire_item;0x2a6e,Advance_context;0x6b86,Cleanup_heads;0x6b29,Cleanup_tables;0x2346,Finish_reader;0xa2ef,Emit_position;0xa473,Reset_map]->
+    q:=Recursive_parent.run(List.assoc target [0x2ad9,Recursive_parent.Acquire_item;0x2a6e,Advance_context;0x6b86,Cleanup_heads;0x6b29,Cleanup_tables;0x2346,Finish_reader;0xa2ef,Emit_position;0xa473,Reset_map])memory ~entry:!q ~write ~compatibility ~adjust ~sp ~invoke
+   |0x4508->c 0;call 0x230a 0x22cb(fun()->classifier K.Selected)
+   |0x784e->reuse H.Acquire_overlay
+   |0x9a4e->reuse H.Acquire_overlay
+   |0x67f0->call 0x45f0 0x4562(fun()->reuse H.Hash_prefix);call 0x45f3 0x422f(fun()->reuse H.Select_pointer);pair 0x20c5;exchange();bc 0x20c6;call 0x45fd 0x4584(fun()->reuse H.Payload_match)
+   |target when List.mem_assoc target [0x33e2,Recursive_parent.Inherited_frame;0x2c32,Recursive_frame;0x2c0b,Item_wrapper]->
+    q:=Recursive_parent.run(List.assoc target [0x33e2,Recursive_parent.Inherited_frame;0x2c32,Recursive_frame;0x2c0b,Item_wrapper])memory ~entry:!q ~write ~compatibility ~adjust ~sp ~invoke
+   |0x5504->transform_pair()
+   |0xa3f1->recycle_count()
+   |0x4fc3->call 0x2dc3 0x2c59 transform_second;call 0x2dc6 0x2705(fun()->a(read 0xa628);cmp 0x16;need(not !q.flags.zero)"2705 selector16")
+   |0x7b0e->hl 0xa93d;put 0x5911 !q.hl(!q.bc lsr 8);hl(U.wrap(!q.hl-1));put 0x5913 !q.hl(!q.bc land 255);pair 0xa93c;bc !q.hl;call 0x5919 0x58bb(fun()->ignore(invoke ~site:0x7b19 ~target:0x7abb !q));
+    call 0x591c 0x01e8(fun()->ignore(invoke ~site:0x7b1c ~target:0x23e8 !q));call 0x591f 0x239a(fun()->classifier K.Wrapper);add 0x13;c !q.a;call 0x5925 0x256c attribute_dispatch
+   |0x4e53->c 1;call 0x2c55 0x28aa(fun()->if read(0xa628+read 0xa634)<=10&&read(0xa628+read 0xa634)<>5 then acquire_selected02()else acquire_index_one())
+   |0xa30b->hl 0xae6d;put 0x810e !q.hl(!q.bc land 255);hl 0xae6d;a(read 0xae35);sub(read !q.hl);hl(U.wrap(!q.hl+1));put 0x8117 !q.hl !q.a;put 0x8118 0xae35 !q.a;child 0x811b 0x7d53;a 0;hl 0xae6d;cmp(read !q.hl);need(not !q.flags.carry)"810B positive count route";a(read 0xae34);put 0x814e 0xae35 !q.a
+   |target when List.mem_assoc target [0x3000,Recursive_parent.Header;0x3214,Primary_fields;0x329e,Secondary_fields;0x3387,Secondary_wrapper;0x562f,Reduce_fields;0xa352,Shift_fields]->
+    q:=Recursive_parent.run(List.assoc target [0x3000,Recursive_parent.Header;0x3214,Primary_fields;0x329e,Secondary_fields;0x3387,Secondary_wrapper;0x562f,Reduce_fields;0xa352,Shift_fields]) memory ~entry:!q ~write ~compatibility ~adjust ~sp ~invoke
+   |0x240e->q:=Input_gate.run memory ~entry:!q ~compatibility
+   |0x23e8->hl 2;store 0x01eb 0xa5b0 !q.hl;a(read 0xa628);cmp 0x70;need(not !q.flags.zero)"01E8 selector70"
+   |0x476c->attribute_dispatch()
+   |0x8839->hl 0xa933;put 0x663c !q.hl 0;call 0x663e 0x6619 counted_spine;pair 0xa933;c(!q.hl land 255);call 0x6645 0x8179(fun()->ignore(invoke ~site:0x8845 ~target:0xa379 !q))
+   |0x459a->classifier K.Wrapper
+   |0x55d6->c 1;call 0x33d8 0x33ad(fun()->ignore(invoke ~site:0x55d8 ~target:0x55ad !q))
+   |0x55ad->hl 0xa669;put 0x33b0 !q.hl(!q.bc land 255);call 0x33b1 0x31fb acquire_two_groups;
+    a(read 0xa629);put 0x33b7 0xa628 !q.a;a(read 0xa62c);put 0x33bd 0xa62b !q.a;a(read 0xa62f);put 0x33c3 0xa62e !q.a;
+    call 0x33c6 0x2259 pair_gate;rar();need(not !q.flags.carry)"33AD set-result arm";
+    pair 0xa669;c(!q.hl land 255);call 0x33d2 0x335b(fun()->ignore(invoke ~site:0x55d2 ~target:0x555b !q))
+   |0x555b->hl 0xa668;put 0x335e !q.hl(!q.bc land 255);hl 0xa634;put 0x3362 !q.hl 2;a(read 0xa628);cmp 0x31;need(not !q.flags.zero)"335B selector31";
+    pair 0xa668;c(!q.hl land 255);call 0x3383 0x28aa(fun()->if read(0xa628+read 0xa634)<=10&&read(0xa628+read 0xa634)<>5 then acquire_selected02()else acquire_index_one());pair 0xa628;c(!q.hl land 255);call 0x338a 0x2185 interval_wrapper;rar();need !q.flags.carry "335B clear classifier";
+    call 0x3391 0x2dca(fun()->ignore(invoke ~site:0x5591 ~target:0x4fca !q))
+   |0x4fca->a(read 0xa62a);cmp 0x2a;need(not !q.flags.zero)"2DCA selector2A";a(read 0xa62a);cmp 0x28;need(not !q.flags.zero)"2DCA selector28";hl 0xa634;put 0x2e20 !q.hl 2;call 0x2e22 0x2dc3(fun()->call 0x2dc3 0x2c59 transform_second;call 0x2dc6 0x2705(fun()->a(read 0xa628);cmp 0x16;need(not !q.flags.zero)"2705 selector16"))
+   |0x5462->initial_channels()
+   |0x83b6->call 0x61b6 0x61a4(fun()->hl 0xa941;put 0x61a7 !q.hl 0;call 0x61a9 0x60e5 context);cmp 0;need !q.flags.zero "61B6 nonzero acquisition"
+   |target when List.mem_assoc target [0xa379,Recursive_parent.Restore_index;0x249c,Bracket_setup;0x2477,Publish_pair;0x24ca,Advance_record;0x2466,Line_decrement;0x31c9,Lookahead_finish]->
+    q:=Recursive_parent.run(List.assoc target [0xa379,Recursive_parent.Restore_index;0x249c,Bracket_setup;0x2477,Publish_pair;0x24ca,Advance_record;0x2466,Line_decrement;0x31c9,Lookahead_finish]) memory ~entry:!q ~write ~compatibility ~adjust ~sp ~invoke
+   |target when List.mem_assoc target [0x24f0,Recursive_parent.Parent;0xa2ca,Line_gate;0x24e9,Base;0x23d8,Clear_state;0x2461,Line_increment;0x246b,Clear_fields]->
+    q:=Recursive_parent.run(List.assoc target [0x24f0,Recursive_parent.Parent;0xa2ca,Line_gate;0x24e9,Base;0x23d8,Clear_state;0x2461,Line_increment;0x246b,Clear_fields])memory ~entry:!q ~write ~compatibility ~adjust ~sp ~invoke
+   |0x4206->
+    hl 0xa61e;put 0x2009 !q.hl 0;hl 0xa606;put 0x200e !q.hl 0;hl 0xa5f9;put 0x2013 !q.hl 0;a 0;hl(U.wrap(!q.hl+1));put 0x2018 !q.hl !q.a;hl(U.wrap(!q.hl+1));put 0x201a !q.hl 0;
+    bc 0x3594;call 0x201f 0x57b7(fun()->reuse H.Search);rar();need(not !q.flags.carry)"2006 found table route";
+    c 0x8c;call 0x2032 0x01af selector_match;rar();need(not !q.flags.carry)"2006 8C route";
+    c 0x90;call 0x2043 0x01af selector_match;rar();need !q.flags.carry "2006 unmatched90 route";
+    c 1;call 0x204c 0x1c07(fun()->ignore(invoke ~site:0x424c ~target:0x3e07 !q));
+    call 0x20a2 0x13ad(fun()->c 0x3b;call 0x13af 0x01af selector_match;rar();need !q.flags.carry "13AD unmatched semicolon")
+   |0x6c26->
+    pair 0xa8eb;hl(!q.hl land 255);bc 0xa86d;dad !q.hl;dad !q.bc;de(word !q.hl);hl(U.wrap(!q.hl+1));exchange();store 0x4a34 0xa863 !q.hl;
+    let rec loop()=c 0;call 0x4a39 0x424f advance_matching;call 0x4a3c 0x4275(fun()->reuse H.Pointer_compare);rar();need !q.flags.carry "4A26 exhausted traversal";
+     call 0x4a44 0x419f tag;cmp 0x43;
+     if not !q.flags.zero then loop()else(
+      call 0x4a4c 0x47f7(fun()->call 0x47f7 0x41a6 field_byte;ani 0x40;sub 0x40;add 0xff;mask());rar();
+      if not !q.flags.carry then loop()else(call 0x4a53 0x4227 count_field;cmp 0;if not !q.flags.zero then loop()else(
+       pair 0xa8eb;hl(!q.hl land 255);bc 0xa86d;dad !q.hl;dad !q.bc;push 0x4a65 !q.hl;pair 0xa863;exchange();hl(pop());put 0x4a6b !q.hl(!q.de land 255);hl(U.wrap(!q.hl+1));put 0x4a6d !q.hl(!q.de lsr 8))))in loop()
+   |0x7abb->
+    hl 0xa93b;put 0x58be !q.hl(!q.bc lsr 8);hl(U.wrap(!q.hl-1));put 0x58c0 !q.hl(!q.bc land 255);pair 0xa93a;store 0x58c4 0xa863 !q.hl;store 0x58c7 0xa63b !q.hl;
+    call 0x58ca 0x419f tag;put 0x58cd 0xa628 !q.a;bc 4;pair 0xa863;dad !q.bc;a(read !q.hl);put 0x58d8 0xa62b !q.a;
+    pair 0xa863;bc(U.wrap(!q.bc+1));dad !q.bc;a(read !q.hl);put 0x58e1 0xa62e !q.a;call 0x58e4 0x239a(fun()->classifier K.Wrapper);a(inc !q.a);c !q.a;child 0x58e9 0x2511;
+    pair 0xa93a;store 0x58ef 0xa863 !q.hl;call 0x58f2 0x41af low_field;cmp 3;need(not !q.flags.zero)"58BB low-field3";call 0x5900 0x41af low_field;cmp 5;need(not !q.flags.zero)"58BB low-field5"
+   |0x3e07->
+    hl 0xa621;put 0x1c0a !q.hl(!q.bc land 255);a(read 0xa621);put 0x1c0e 0xa5f7 !q.a;c 1;call 0x1c13 0x8268(fun()->ignore(invoke ~site:0x3e13 ~target:0xa468 !q));
+    let delegated site target=call site target(fun()->ignore(invoke ~site:(site+0x2200)~target:(target+0x2200) !q))in
+    let finish site= c 0;delegated site 0x1afd;c !q.a;delegated(site+4)0x140d;c 0xb7;child(site+9)0x80b7 in
+    let rec loop()=
+     a(read 0x20c3);cmp 0x3b;need(not !q.flags.zero)"1C07 leading semicolon";
+     c 0xc6;call 0x1c34 0x01af selector_match;rar();if !q.flags.carry then(delegated 0x1c3b 0x1d13;finish 0x1c40)else(
+      c 0xc7;call 0x1c4f 0x01af selector_match;rar();if !q.flags.carry then(
+       delegated 0x1c56 0x1d13;delegated 0x1c59 0x4a26;call 0x1c5c 0x4275(fun()->reuse H.Pointer_compare);rar();need !q.flags.carry "1C07 null structure";
+       call 0x1c69 0x41af low_field;cmp 5;need(not !q.flags.zero)"1C07 low-field5";pair 0xa863;bc !q.hl;delegated 0x1c80 0x58bb;
+       hl 0;store 0x1c86 0xa5b0 !q.hl;c 0x18;call 0x1c8b 0x256c attribute_dispatch;c 0xb0;child 0x1c90 0x80b7;finish 0x1c95;
+       let rec trailing()=a(read 0x20c3);cmp 0x3b;if not !q.flags.zero then(call 0x1ca9 0x784e(fun()->reuse H.Acquire_overlay);trailing())in trailing()
+      )else(
+       delegated 0x1cb0 0x1be8;rar();need(not !q.flags.carry)"1C07 matched95";
+       c 0xc4;call 0x1cbc 0x01af selector_match;rar();need(not !q.flags.carry)"1C07 C4 route";
+       c 0xc2;call 0x1ce2 0x01af selector_match;rar();need !q.flags.carry "1C07 unmatched C2";
+       c 3;delegated 0x1ceb 0x14e4;a(read 0x20c3);cmp 0x28;need(not !q.flags.zero)"1C07 C2 parenthesis arm";
+       delegated 0x1cfc 0x0d94;c 0xb5;child 0x1d01 0x2511;c 3;delegated 0x1d06 0x13e3;loop()))in loop()
+   |0x3bf0->parent()
+   |0x3cfd->
+    adjust ~site:0x3cfd ~delta:(-1);bc((!q.bc land 255)lsl 8 lor(!q.bc land 255));push 0x1aff !q.bc;adjust ~site:0x3d00 ~delta:1;
+    hl 0xa619;put 0x1b04 !q.hl 0;frame 0;c(read !q.hl);call 0x1b0b 0x8268(fun()->ignore(invoke ~site:0x3d0b ~target:0xa468 !q));
+    c 0x28;call 0x1b10 0x01af selector_match;rar();need !q.flags.carry "1AFD context28 unmatched";
+    frame 0;a(read !q.hl);rar();need(not !q.flags.carry)"1AFD private bit-set arm";
+    c 0;call 0x1b7b 0x19f0 parent;c !q.a;call 0x1b7f 0x140d(fun()->ignore(invoke ~site:0x3d7f ~target:0x360d !q));
+    c 0x2c;call 0x1b84 0x01af selector_match;rar();need(not !q.flags.carry)"1AFD comma-repeat arm";
+    call 0x1b97 0x156d(fun()->ignore(invoke ~site:0x3d97 ~target:0x376d !q));a 0;hl(pop())
+   |0xa2b1->c 0xfe;child 0x80b3 0x8048
+   |0xa1f3->hl 0xae66;put 0x7ff6 !q.hl(!q.bc lsr 8);hl(U.wrap(!q.hl-1));put 0x7ff8 !q.hl(!q.bc land 255);pair 0xae65;exchange();c 0x0a;child 0x7fff 0x7e5f
+   |target when List.mem_assoc target [0x3de8,Reader_construction.False_probe;0x35e3,Descriptor_marker;0x2f6e,Field_setup;0x2f94,Field_literal;0x3da8,Construction_start;0x3dbf,Descriptor_build;0x3f13,Reader_prefix;0x3621,Descriptor_sort;0x360d,Mode_finish;0x376d,Require_close;0xa0d7,Reader_construction.Map_rotate;0x36d4,Descriptor_mask;0x36e4,Descriptor_add;0xa586,Shift_right;0xa54f,Bit_union;0xa580,Shift_left;0xa468,Mode;0xa367,Range_finish]->
+    q:=Reader_construction.run(List.assoc target [0x3de8,Reader_construction.False_probe;0x35e3,Descriptor_marker;0x2f6e,Field_setup;0x2f94,Field_literal;0x3da8,Construction_start;0x3dbf,Descriptor_build;0x3f13,Reader_prefix;0x3621,Descriptor_sort;0x360d,Mode_finish;0x376d,Require_close;0xa0d7,Reader_construction.Map_rotate;0x36d4,Descriptor_mask;0x36e4,Descriptor_add;0xa586,Shift_right;0xa54f,Bit_union;0xa580,Shift_left;0xa468,Mode;0xa367,Range_finish]) memory ~entry:!q ~write ~compatibility ~sp ~invoke
+   |_->q:=native ~site ~target !q);!q in
+ (match operation with Adapter offset->ignore(invoke ~site:0 ~target:(offset+0x2200)!q)|Context->context()|Field->field_acquisition()|Attribute->attribute_dispatch()|Spine->recursive_spine()|Resident->reuse H.Resident_acquisition|Pair_gate->pair_gate()|Selected_transform->selected_transform()|Table_adapter->table_adapter()|Wrapper->counted_spine()|Repeat->counted_spine ~repeat_only:true ()|Copy05->copy_arguments()|Traversal->traversal()|Construction->construction()|Record_output->record_output()|Index_one->acquire_index_one()|Parent->parent()|Recursive op->q:=Recursive_parent.run op memory ~entry:!q ~write ~compatibility ~adjust ~sp ~invoke|Reader op->
+  if List.mem_assoc op [Reader_construction.Reader_setup,0x4206;Reader_parent,0x3cfd;Reader_entry,0x3e07;Select_structure,0x6c26;Publish_structure,0x7abb]then ignore(invoke ~site:0 ~target:(List.assoc op [Reader_construction.Reader_setup,0x4206;Reader_parent,0x3cfd;Reader_entry,0x3e07;Select_structure,0x6c26;Publish_structure,0x7abb])!q)else q:=Reader_construction.run op memory ~entry:!q ~write ~compatibility ~sp ~invoke);
  {returned= !q;field= !acquired_field}

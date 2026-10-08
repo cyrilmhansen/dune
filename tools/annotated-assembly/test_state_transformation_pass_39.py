@@ -1,4 +1,5 @@
 """Incremental state-transformation, publication provenance and delegated-scope checks."""
+from historical_catalog_epoch import frozen_catalog
 import argparse,copy,subprocess,json,unittest
 from collections import Counter
 from check_state_transformation_pass_39 import *
@@ -8,6 +9,7 @@ class PassThirtyNineTests(unittest.TestCase):
  def setUpClass(cls):
   cls.rows={s:gather(c,BOUNDS,include_nested_returns=True,software_callees=SOFTWARE)for s,c in CAPTURES.items()};cls.analyses=analyze(cls.rows,IMAGES)
   cls.base={p['id']:p for p in json.loads(subprocess.check_output(['git','show',BASE+':research/annotated-assembly/procedures.json'],text=True))['procedures']};cls.reference=cls.base|load(REPORT/'after.json');cls.catalog={p['id']:p for p in load(ROOT/'research/annotated-assembly/procedures.json')['procedures']}
+  cls.catalog=frozen_catalog(cls.catalog)
   future=load(ROOT/'research/host-compiler/pass-46/before.json')
   cls.catalog={k:future.get(k) or v for k,v in cls.catalog.items()if k not in future or future[k]is not None}
  def test_fresh_counts_callers_and_all_independent_windows(self):

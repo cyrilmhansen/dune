@@ -8,8 +8,8 @@ module U=U16
 module B=U8
 type event=Enter of int*int|Leave|Push of int*int|Pop|Constructor_arguments of int
 type result={returned:R.returned;selection:string;acquisition:string}
-type operation=Parent|Hash_prefix|Payload_match|Acquire_overlay|Select_pointer|Successor|Pointer_compare|Null_mask|Search|Resident_acquisition|Prefix_sum|Constructor
-let run ?(operation=Parent) ?(constructor_abi=(fun()->0x20c6,0x68a6)) memory ~entry ~write ~compatibility ~guard_field ~saved =
+type operation=Parent|Hash_prefix|Payload_match|Acquire_overlay|Select_pointer|Successor|Pointer_compare|Null_mask|Search|Resident_acquisition|Prefix_sum|Constructor|Counted_read|Context_mask
+let run ?(reader_refill=(fun _->invalid_arg"Acquisition_parent: reader refill/EOF")) ?(operation=Parent) ?(constructor_abi=(fun()->0x20c6,0x68a6)) memory ~entry ~write ~compatibility ~guard_field ~saved =
  List.iter B.check [entry.R.a;entry.bc land 255;entry.de land 255];List.iter U.check [entry.bc;entry.de;entry.hl];
  let q=ref entry in
  let need b text=if not b then invalid_arg("Acquisition_parent: "^text)in
@@ -138,10 +138,10 @@ let run ?(operation=Parent) ?(constructor_abi=(fun()->0x20c6,0x68a6)) memory ~en
  let mask_context()=
   hl 0x208f;put(resident 0x081a)!q.hl(!q.bc land 255);a 0x5f;hl 0x208f;cmp(read !q.hl);
   if !q.flags.carry then(a(read 0x208f);ani 0x5f)else a(read 0x208f)in
- let counted_read()=
-  hl 0x1f08;a(read 0x1f06);cmp(read !q.hl);need !q.flags.carry "reader refill/EOF";
-  a(read 0x1f06);a(inc !q.a);put(resident 0x12cc)0x1f06 !q.a;a(dec !q.a);bc !q.a;
-  hl 0x1e8e;dad !q.bc;a(read !q.hl)in
+ let rec counted_read()=
+  hl 0x1f08;a(read 0x1f06);cmp(read !q.hl);
+  if !q.flags.carry then(a(read 0x1f06);a(inc !q.a);put(resident 0x12cc)0x1f06 !q.a;a(dec !q.a);bc !q.a;hl 0x1e8e;dad !q.bc;guard_field !q.hl 1;a(read !q.hl))
+  else(call0 0x12b8 0x0d40(fun()->q:=reader_refill !q);a(read 0x2012);rar();if !q.flags.carry then a 0x1a else counted_read())in
  let adapted_read()=call0 0x12d9 0x12ae counted_read;c !q.a;call0 0x12dd 0x0817 mask_context in
  let letter()=a(read 0x20c1);sub 0x41;cmp 0x1a;if !q.flags.carry then a 1 else(a(read 0x20c1);sub 0x3f;sub 1;mask())in
  let digit()=a(read 0x20c1);sub 0x30;sub 10;mask()in
@@ -168,13 +168,11 @@ let run ?(operation=Parent) ?(constructor_abi=(fun()->0x20c6,0x68a6)) memory ~en
     call0 0x13ce 0x15e3 letter;rar();if !q.flags.carry then(hl 0x20c3;put(resident 0x13d8)!q.hl 1)
     else(call0 0x13dd 0x15da digit;rar();
      if !q.flags.carry then(hl 0x20c3;put(resident 0x13e7)!q.hl 2)else(
-      a(read 0x20c1);cmp 0x27;need(not !q.flags.zero)"quoted acquisition";hl 0x20c3;put(resident 0x1404)!q.hl 10)))in initial();
+      a(read 0x20c1);cmp 0x27;if !q.flags.zero then(hl 0x20c1;put(resident 0x13f7)!q.hl 0;hl 0x20c3;put(resident 0x13fc)!q.hl 5)else(hl 0x20c3;put(resident 0x1404)!q.hl 10))))in initial();
   let rec accumulate()=
-   a(read 0x20c1);cmp 0;need(not !q.flags.zero)"zero context";
-   call0 0x1411 0x1627 append_prefix;a(read 0x20c1);put(resident 0x1417)0x20c2 !q.a;
+   a(read 0x20c1);cmp 0;if not !q.flags.zero then call0 0x1411 0x1627 append_prefix;a(read 0x20c1);put(resident 0x1417)0x20c2 !q.a;
    call0 0x141a 0x12ae counted_read;put(resident 0x141d)0x20c1 !q.a;
-   a(read 0x20c3);cmp 5;need(not !q.flags.zero)"quoted selector";
-   pair 0x20c1;c(!q.hl land 255);call0 0x142c 0x0817 mask_context;put(resident 0x142f)0x20c1 !q.a;
+   a(read 0x20c3);cmp 5;if not !q.flags.zero then(pair 0x20c1;c(!q.hl land 255);call0 0x142c 0x0817 mask_context;put(resident 0x142f)0x20c1 !q.a);
    a(read 0x20c3);cmp 10;
    if !q.flags.zero then(
     a(read 0x20c2);sub 0x2e;sub 1;mask();let carrier=save_mask(resident 0x1442)in
@@ -198,7 +196,12 @@ let run ?(operation=Parent) ?(constructor_abi=(fun()->0x20c6,0x68a6)) memory ~en
      rar();need(not !q.flags.carry)"numeric exponent alternative";
      call0 0x1543 0x15da digit;a(!q.a lxor 255);rar();
      if not !q.flags.carry then accumulate())
-    else(a(read 0x20c3);cmp 5;need(not !q.flags.zero)"unsupported resident selector"))in accumulate()in
+    else(a(read 0x20c3);cmp 5;if !q.flags.zero then(
+     a(read 0x20c1);cmp 0x1a;need(not !q.flags.zero)"quoted EOF";
+     a(read 0x20c1);cmp 0x27;if !q.flags.zero then(
+      call0 0x156d 0x12d9 adapted_read;put(resident 0x1570)0x20c1 !q.a;cmp 0x42;need(not !q.flags.zero)"quoted B suffix";
+      a(read 0x20c1);cmp 0x27;need(not !q.flags.zero)"doubled quote")else(
+      a(read 0x20c1);cmp 0x5e;need(not !q.flags.zero)"quoted caret escape";accumulate()))))in accumulate()in
  let acquisition=ref ""in
  let acquire_overlay()=
   call(overlay 0x784e)0x1476 acquire_resident;
@@ -207,7 +210,7 @@ let run ?(operation=Parent) ?(constructor_abi=(fun()->0x20c6,0x68a6)) memory ~en
   a(read 0x20c1);sub 0x2a;sub 1;mask();restore_mask carrier;logical true(!q.bc land 255);rar();need(not !q.flags.carry)"triple rewrite";
   a(read 0x20c3);sub 10;add 255;mask();let carrier=save_mask(overlay 0x78ab)in
   a(read 0x20c3);sub 1;add 255;mask();restore_mask carrier;logical true(!q.bc land 255);rar();
-  if !q.flags.carry then(need(read 0x20c3=2)"unsupported passthrough acquisition";acquisition:="numeric_selector02_passthrough")else(
+  if !q.flags.carry then(need(List.mem(read 0x20c3)[2;5])"unsupported passthrough acquisition";acquisition:=(if read 0x20c3=2 then"numeric_selector02_passthrough"else"quoted_selector05_passthrough"))else(
   a(read 0x20c3);cmp 10;
   if !q.flags.zero then(
    a(read 0x20c6);put(overlay 0x78c7)0x20c3 !q.a;
@@ -260,5 +263,5 @@ let run ?(operation=Parent) ?(constructor_abi=(fun()->0x20c6,0x68a6)) memory ~en
  call1 0x5a3c 0x784e acquire_overlay in
  (match operation with Parent->parent()|Hash_prefix->hash_prefix()|Payload_match->payload_match()
  |Acquire_overlay->acquire_overlay()|Select_pointer->select_pointer()|Successor->successor()
- |Pointer_compare->pointer_compare()|Null_mask->mask_pointer()|Search->search_operation()|Resident_acquisition->acquire_resident()|Prefix_sum->prefix_sum()|Constructor->constructor());
+ |Pointer_compare->pointer_compare()|Null_mask->mask_pointer()|Search->search_operation()|Resident_acquisition->acquire_resident()|Prefix_sum->prefix_sum()|Constructor->constructor()|Counted_read->counted_read()|Context_mask->mask_context());
  {returned= !q;selection= !selection;acquisition= !acquisition}

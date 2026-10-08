@@ -1,0 +1,211 @@
+{
+  "PLI.COM+1688": {
+    "end": 6211,
+    "description": "Pass47 bounded lookahead",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ],
+    "contract": "Initialize independent lookahead depth, replay length/index, cursor and cached context. State-driven scan tests whitespace, equals, semicolon, nesting delimiters and identifier/digit masks; calls18A2/18BC/1843 in historical order.1843 reads counted buffered data or appends raw fetch to replay; fresh predicates terminate or advance. Quoted/slash/EOF and unobserved scanner alternatives remain excluded.",
+    "implementation": "lib/pli80_host/resident_reader.ml#Lookahead"
+  },
+  "PLI.COM+18DB": {
+    "end": 6394,
+    "description": "Pass47 bounded peek cached",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ],
+    "contract": "A=0 SUB fresh2008 SBB A; OR fresh2087; historical RAR. Clear-bit route returns independently fresh2089. Set-bit route publishes2087=1, calls canonical1688, and caches its returned A at2089; flags remain the actual producer flags.",
+    "implementation": "lib/pli80_host/resident_reader.ml#Peek_cached"
+  },
+  "PLI.COM+1843": {
+    "end": 6306,
+    "description": "Pass47 bounded read ahead",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ],
+    "contract": "Bounded historical Read ahead operation in the canonical resident_reader.ml implementation; actual registers/shared-memory tests select the represented natural paths. Fresh low/high reads, wrapped arithmetic and ordered publications follow the annotated local instructions. Child calls retain their separately established contracts. Returned registers/flags are independent path channels; exact CALL/PUSH/POP residue is derived, never copied. Unexecuted alternatives and inherited unsupported child states remain excluded.",
+    "implementation": "lib/pli80_host/resident_reader.ml#Read_ahead"
+  },
+  "PLI.COM+18A2": {
+    "end": 6332,
+    "description": "Pass47 bounded boundary probe",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ],
+    "contract": "Bounded historical Boundary probe operation in the canonical resident_reader.ml implementation; actual registers/shared-memory tests select the represented natural paths. Fresh low/high reads, wrapped arithmetic and ordered publications follow the annotated local instructions. Child calls retain their separately established contracts. Returned registers/flags are independent path channels; exact CALL/PUSH/POP residue is derived, never copied. Unexecuted alternatives and inherited unsupported child states remain excluded.",
+    "implementation": "lib/pli80_host/resident_reader.ml#Boundary_probe"
+  },
+  "PLI.COM+18BC": {
+    "end": 6341,
+    "description": "Pass47 bounded boundary clear",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ],
+    "contract": "Bounded historical Boundary clear operation in the canonical resident_reader.ml implementation; actual registers/shared-memory tests select the represented natural paths. Fresh low/high reads, wrapped arithmetic and ordered publications follow the annotated local instructions. Child calls retain their separately established contracts. Returned registers/flags are independent path channels; exact CALL/PUSH/POP residue is derived, never copied. Unexecuted alternatives and inherited unsupported child states remain excluded.",
+    "implementation": "lib/pli80_host/resident_reader.ml#Boundary_clear"
+  },
+  "PLI.COM+18C5": {
+    "end": 6363,
+    "description": "Pass47 bounded letter probe",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ],
+    "contract": "Bounded historical Letter probe operation in the canonical resident_reader.ml implementation; actual registers/shared-memory tests select the represented natural paths. Fresh low/high reads, wrapped arithmetic and ordered publications follow the annotated local instructions. Child calls retain their separately established contracts. Returned registers/flags are independent path channels; exact CALL/PUSH/POP residue is derived, never copied. Unexecuted alternatives and inherited unsupported child states remain excluded.",
+    "implementation": "lib/pli80_host/resident_reader.ml#Letter_probe"
+  },
+  "PLI.COM+05B2": {
+    "end": 1528,
+    "description": "Pass47 bounded poll",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ],
+    "contract": "Bounded historical Poll operation in the canonical resident_reader.ml implementation; actual registers/shared-memory tests select the represented natural paths. Fresh low/high reads, wrapped arithmetic and ordered publications follow the annotated local instructions. Child calls retain their separately established contracts. Returned registers/flags are independent path channels; exact CALL/PUSH/POP residue is derived, never copied. Unexecuted alternatives and inherited unsupported child states remain excluded.",
+    "implementation": "lib/pli80_host/resident_reader.ml#Poll"
+  },
+  "PLI.COM+02EE": {
+    "end": 766,
+    "description": "Pass47 bounded set dma",
+    "completeness": [
+      "stable",
+      "complete",
+      "partial"
+    ],
+    "contract": "Bounded historical Set dma operation in the canonical resident_reader.ml implementation; actual registers/shared-memory tests select the represented natural paths. Fresh low/high reads, wrapped arithmetic and ordered publications follow the annotated local instructions. Child calls retain their separately established contracts. Returned registers/flags are independent path channels; exact CALL/PUSH/POP residue is derived, never copied. Unexecuted alternatives and inherited unsupported child states remain excluded.",
+    "implementation": "lib/pli80_host/resident_reader.ml#Set_dma"
+  },
+  "PLI.COM+0318": {
+    "end": 808,
+    "description": "Pass47 bounded read record",
+    "completeness": [
+      "stable",
+      "complete",
+      "partial"
+    ],
+    "contract": "Bounded historical Read record operation in the canonical resident_reader.ml implementation; actual registers/shared-memory tests select the represented natural paths. Fresh low/high reads, wrapped arithmetic and ordered publications follow the annotated local instructions. Child calls retain their separately established contracts. Returned registers/flags are independent path channels; exact CALL/PUSH/POP residue is derived, never copied. Unexecuted alternatives and inherited unsupported child states remain excluded.",
+    "implementation": "lib/pli80_host/resident_reader.ml#Read_record"
+  },
+  "PLI.COM+070C": {
+    "end": 1928,
+    "description": "Pass47 bounded read buffer",
+    "completeness": [
+      "stable",
+      "complete",
+      "partial"
+    ],
+    "contract": "Fresh EOF bit may return literal1A; otherwise increment word1D08 and compare against01FF. Available byte reads use fresh1D06 base and cursor. Refill polls console, sets cursor0, compares current cursor with0200, sets DMA and reads sequential source records. Success advances128; EOF writes1A and forces cursor0200. Recheck actual predicates, reset cursor, freshly read first buffer byte; no arbitrary-input termination claim.",
+    "implementation": "lib/pli80_host/resident_reader.ml#Read_buffer"
+  },
+  "PLI.COM+0AA9": {
+    "end": 2793,
+    "description": "Pass47 bounded fetch masked",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ],
+    "contract": "Bounded historical Fetch masked operation in the canonical resident_reader.ml implementation; actual registers/shared-memory tests select the represented natural paths. Fresh low/high reads, wrapped arithmetic and ordered publications follow the annotated local instructions. Child calls retain their separately established contracts. Returned registers/flags are independent path channels; exact CALL/PUSH/POP residue is derived, never copied. Unexecuted alternatives and inherited unsupported child states remain excluded.",
+    "implementation": "lib/pli80_host/resident_reader.ml#Fetch_masked"
+  },
+  "PLI.COM+0D40": {
+    "end": 3615,
+    "description": "Pass47 bounded refill",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ],
+    "contract": "Reset the witnessed listing gate; clear reader cursor/count and independently fetch raw source. Fresh LF/EOF masks terminate; CR appends zero, witnessed printable bytes append through0E1F, fresh source fetch repeats. Record line counter is a separate four-byte representation. Publish count=cursor+1, append final zero, publish200A=1, and reset cursor. Unseen tab/high-bit/listing/error alternatives remain excluded.",
+    "implementation": "lib/pli80_host/resident_reader.ml#Refill"
+  },
+  "PLI.COM+0B86": {
+    "end": 3043,
+    "description": "Pass47 bounded format counter",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ],
+    "contract": "Bounded historical Format counter operation in the canonical resident_reader.ml implementation; actual registers/shared-memory tests select the represented natural paths. Fresh low/high reads, wrapped arithmetic and ordered publications follow the annotated local instructions. Child calls retain their separately established contracts. Returned registers/flags are independent path channels; exact CALL/PUSH/POP residue is derived, never copied. Unexecuted alternatives and inherited unsupported child states remain excluded.",
+    "implementation": "lib/pli80_host/resident_reader.ml#Format_counter"
+  },
+  "PLI.COM+0CD9": {
+    "end": 3327,
+    "description": "Pass47 bounded reset",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ],
+    "contract": "Bounded historical Reset operation in the canonical resident_reader.ml implementation; actual registers/shared-memory tests select the represented natural paths. Fresh low/high reads, wrapped arithmetic and ordered publications follow the annotated local instructions. Child calls retain their separately established contracts. Returned registers/flags are independent path channels; exact CALL/PUSH/POP residue is derived, never copied. Unexecuted alternatives and inherited unsupported child states remain excluded.",
+    "implementation": "lib/pli80_host/resident_reader.ml#Reset"
+  },
+  "PLI.COM+0AF5": {
+    "end": 2858,
+    "description": "Pass47 bounded source",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ],
+    "contract": "Bounded historical Source operation in the canonical resident_reader.ml implementation; actual registers/shared-memory tests select the represented natural paths. Fresh low/high reads, wrapped arithmetic and ordered publications follow the annotated local instructions. Child calls retain their separately established contracts. Returned registers/flags are independent path channels; exact CALL/PUSH/POP residue is derived, never copied. Unexecuted alternatives and inherited unsupported child states remain excluded.",
+    "implementation": "lib/pli80_host/resident_reader.ml#Source"
+  },
+  "PLI.COM+09CB": {
+    "end": 2725,
+    "description": "Pass47 bounded filter",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ],
+    "contract": "Bounded historical Filter operation in the canonical resident_reader.ml implementation; actual registers/shared-memory tests select the represented natural paths. Fresh low/high reads, wrapped arithmetic and ordered publications follow the annotated local instructions. Child calls retain their separately established contracts. Returned registers/flags are independent path channels; exact CALL/PUSH/POP residue is derived, never copied. Unexecuted alternatives and inherited unsupported child states remain excluded.",
+    "implementation": "lib/pli80_host/resident_reader.ml#Filter"
+  },
+  "PLI.COM+0E1F": {
+    "end": 3655,
+    "description": "Pass47 bounded store",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ],
+    "contract": "Bounded historical Store operation in the canonical resident_reader.ml implementation; actual registers/shared-memory tests select the represented natural paths. Fresh low/high reads, wrapped arithmetic and ordered publications follow the annotated local instructions. Child calls retain their separately established contracts. Returned registers/flags are independent path channels; exact CALL/PUSH/POP residue is derived, never copied. Unexecuted alternatives and inherited unsupported child states remain excluded.",
+    "implementation": "lib/pli80_host/resident_reader.ml#Store"
+  },
+  "PLI.COM+1376": {
+    "end": 5594,
+    "description": "Pass47 bounded resident acquisition extension",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ],
+    "contract": "Pass41/44 letter, literal, descriptor and numeric contracts remain valid. Pass47 additionally establishes ten independent natural selector05 quoted routes, including PLI0 callers: publish initial selector5, clear context at13F7, skip zero-context append and selector5 adaptation, append raw counted bytes until a quote. Historical156D consumes following context; exclude doubled quotes, B suffix, caret escapes and quoted EOF. Final flags come from fresh context CPI27, independent of returned selector. Counted reads may use the separately proved no-listing refill scope; no global resident-input completion.",
+    "implementation": "lib/pli80_host/acquisition_parent.ml"
+  },
+  "PLI.COM+12AE": {
+    "end": 4825,
+    "description": "Pass47 bounded resident acquisition extension",
+    "completeness": [
+      "stable",
+      "complete",
+      "partial"
+    ],
+    "contract": "Fresh cursor versus count controls direct increment/index read or actual CALL0D40 refill. Fresh2012 RAR after refill selects literal1A or another counted read. Refill and reader state are historical shared bytes; no stream abstraction.",
+    "implementation": "lib/pli80_host/acquisition_parent.ml"
+  }
+}

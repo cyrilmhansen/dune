@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Pass-16 cut dependencies, exact output chronology and closed uncertainty."""
+from historical_catalog_epoch import frozen_catalog
 import argparse
 import hashlib
 import json
@@ -18,6 +19,7 @@ class HostBoundaryPassSixteenTests(unittest.TestCase):
         cls.timeline=scan(FIZZ,cls.images)
         cls.operations=[operation_capture(ROOT/r) for r in ['_build/minimal-baseline/capture','_build/evidence-packet-cross-run/fizzbuz-capture','_build/discriminator-pass-15/selected-capture']]
         cls.cut=load(REPORT/'recommended-cut.json');cls.catalog={p['id']:p for p in load(ROOT/'research/annotated-assembly/procedures.json')['procedures']}
+        cls.catalog=frozen_catalog(cls.catalog)
 
     def test_identity_and_durable_mechanical_facts(self):
         self.assertEqual(sum(len(x) for x in self.images.values()),94720)

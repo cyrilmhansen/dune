@@ -6,28 +6,34 @@ module S=Pli80_host.State
 module U=Pli80_host.U16
 module A=Acquisition_parent_bridge
 module B=State_adaptation_bridge
-type operation=Context|Field|Attribute|Spine|Resident|Pair_gate|Selected_transform|Table_adapter|Wrapper|Repeat|Copy05|Traversal|Construction|Record_output|Index_one|Parent
+type operation=Adapter of int|Resident_reader of Pli80_host.Resident_reader.operation|Context|Field|Attribute|Spine|Resident|Pair_gate|Selected_transform|Table_adapter|Wrapper|Repeat|Copy05|Traversal|Construction|Record_output|Index_one|Parent|Reader of Pli80_host.Reader_construction.operation|Recursive of Pli80_host.Recursive_parent.operation
 type call={coordinate:string;site:int;resume:int;operation:operation}
 type write=Range_processing_bridge.write={address:int;value:int;writer:int;depth:int;kind:string}
-type t={com:bytes;image:bytes;adapt:B.t;input:Input_processing_bridge.t;publication:Range_publication_bridge.t;
+type t={emitter:Int_emitter_bridge.t;pli0:bytes;range:Range_processing_bridge.t;gate:Attribute_gate_bridge.t;com:bytes;image:bytes;adapt:B.t;input:Input_processing_bridge.t;publication:Range_publication_bridge.t;
  balance:Balance_scan_bridge.t;word:Publication_primitives_bridge.t;mapped:Mapped_publication_bridge.t;control:Mapped_control_bridge.t}
 type prepared={result:F.result;program:Runner.host_program;state:Runner.state_snapshot;journal:write list;logical_writes:(int*int)list}
 let origin=A.origin
 let require b m=if not b then invalid_arg("acquisition family bridge: "^m)
 let word b a=Char.code(Bytes.get b a)lor(Char.code(Bytes.get b(a+1))lsl 8)
-let bounds=function Context->0x60e5,0x61a4|Field->0x5e98,0x60e5|Attribute->0x256c,0x25a9|Spine->0x4f54,0x4f6e|Resident->0x1376,0x15da|Pair_gate->0x2259,0x22c0|Selected_transform->0x345e,0x34ac|Table_adapter->0x25a9,0x25c0|Wrapper->0x6619,0x6639|Repeat->0x654e,0x65f9|Copy05->0x6708,0x67bb|Traversal->0x46ed,0x4738|Construction->0x4738,0x478d|Record_output->0x666e,0x6708|Index_one->0x28aa,0x2c53|Parent->0x19f0,0x1afd
-let create ~pli_com ~pli1={com=Bytes.copy pli_com;image=Bytes.copy pli1;adapt=B.create ~pli_com ~pli1;input=Input_processing_bridge.create ~pli_com ~pli1;
+let bounds=function Adapter offset->offset,(List.assoc offset [0x33d6,0x33dc;0x33ad,0x33d6;0x335b,0x33ad;0x2dca,0x2e26;0x2dc3,0x2dca;0x13ad,0x13ba;0x0187,0x01af;0x61b6,0x61c5])| Recursive op->Pli80_host.Recursive_parent.bounds op| Resident_reader op->Pli80_host.Resident_reader.bounds op| Context->0x60e5,0x61a4|Field->0x5e98,0x60e5|Attribute->0x256c,0x25a9|Spine->0x4f54,0x4f6e|Resident->0x1376,0x15da|Pair_gate->0x2259,0x22c0|Selected_transform->0x345e,0x34ac|Table_adapter->0x25a9,0x25c0|Wrapper->0x6619,0x6639|Repeat->0x654e,0x65f9|Copy05->0x6708,0x67bb|Traversal->0x46ed,0x4738|Construction->0x4738,0x478d|Record_output->0x666e,0x6708|Index_one->0x28aa,0x2c53|Parent->0x19f0,0x1afd|Reader op->Pli80_host.Reader_construction.bounds op
+let resident_operation=function Resident|Resident_reader _->true|_->false
+let create ~pli_com ~pli1={emitter=Int_emitter_bridge.create ~pli_com ~pli1;pli0=Bytes.empty;range=Range_processing_bridge.create ~pli_com ~pli1;gate=Attribute_gate_bridge.create ~pli_com ~pli1;com=Bytes.copy pli_com;image=Bytes.copy pli1;adapt=B.create ~pli_com ~pli1;input=Input_processing_bridge.create ~pli_com ~pli1;
  publication=Range_publication_bridge.create ~pli1;balance=Balance_scan_bridge.create ~pli1;
  word=Publication_primitives_bridge.create ~pli1;mapped=Mapped_publication_bridge.create ~pli1;control=Mapped_control_bridge.create ~pli1}
+let create_with_pli0 ~pli_com ~pli0 ~pli1={ (create ~pli_com ~pli1) with pli0=Bytes.copy pli0 }
 let internal_call t operation site=
- let off=site-0x2200 in let target=fst(bounds operation)+(if operation=Resident then 0x100 else 0x2200) in
- require(off>=0&&off+3<=Bytes.length t.image&&Char.code(Bytes.get t.image off)=0xcd&&word t.image(off+1)=target)"CALL identity";
- {coordinate=Printf.sprintf"PLI1.OVL+%04X"off;site;resume=site+3;operation}
+ let base=if site<0x2200 then 0x100 else 0x2200 in let off=site-base in let target=fst(bounds operation)+(if resident_operation operation then 0x100 else 0x2200) in
+ let fits image=off>=0&&off+3<=Bytes.length image&&Char.code(Bytes.get image off)=0xcd&&word image(off+1)=target in
+ let image=if base=0x100&&fits t.com then"PLI.COM"else if base=0x2200&&fits t.image then"PLI1.OVL"else if resident_operation operation&&fits t.pli0 then"PLI0.OVL"else invalid_arg"acquisition family bridge: CALL identity"in
+ {coordinate=Printf.sprintf"%s+%04X"image off;site;resume=site+3;operation}
 let verify_call t operation (p:Native_dispatch.previous) ~(entry:Runner.state_snapshot)=
  let c=internal_call t operation p.before.pc in
- require(p.origin=origin"PLI1.OVL"(c.site-0x2200)&&p.after=entry&&entry.pc=fst(bounds operation)+(if operation=Resident then 0x100 else 0x2200)
+ let caller_image=String.sub c.coordinate 0(String.index c.coordinate '+') in
+ let caller_bytes=if caller_image="PLI.COM"then t.com else if caller_image="PLI0.OVL"then t.pli0 else t.image in
+ let caller_base=if caller_image="PLI.COM"then 0x100 else 0x2200 in
+ require(p.origin=origin caller_image(c.site-caller_base)&&p.after=entry&&entry.pc=fst(bounds operation)+(if resident_operation operation then 0x100 else 0x2200)
   &&I8080.Step.pc_before p.step=c.site&&I8080.Step.pc_after p.step=entry.pc
-  &&I8080.Step.fetched_bytes p.step=Bytes.sub t.image(c.site-0x2200)3
+  &&I8080.Step.fetched_bytes p.step=Bytes.sub caller_bytes(c.site-caller_base)3
   &&I8080.Step.control_flow p.step=I8080.Step.Call{target=entry.pc;taken=true}
   &&p.before.sp=U.wrap(entry.sp+2))"canonical CALL/SP ancestry";
  let ws=List.filter_map(function I8080.Step.Write w->Some(w.address,w.value)|_->None)(I8080.Step.memory_accesses p.step)in
@@ -35,18 +41,18 @@ let verify_call t operation (p:Native_dispatch.previous) ~(entry:Runner.state_sn
 exception Unfinished of Runner.state_snapshot * bytes * write list * Runner.host_program_result
 let prepare ?(follow_spine=false) ?(recursive=(fun _ _->invalid_arg"unfinished recursive 6223 callback")) t operation ~call ~origin:o (boundary:Runner.instruction_boundary)=
  let entry=boundary.state and first,_=bounds operation in
- require(o=origin(if operation=Resident then"PLI.COM"else"PLI1.OVL")first&&entry.pc=first+(if operation=Resident then 0x100 else 0x2200))"wrong entry/image";
+ require(o=origin(if resident_operation operation then"PLI.COM"else"PLI1.OVL")first&&entry.pc=first+(if resident_operation operation then 0x100 else 0x2200))"wrong entry/image";
  List.iter Pli80_host.U8.check[entry.a;entry.b;entry.c;entry.d;entry.e;entry.h;entry.l];U.check entry.sp;
  require(entry.sp>=0xb000&&entry.sp<=0xfffc)"stack alias/bounds";
  let memory=boundary.copy_memory()in let m=S.of_bytes memory in
- let resident_code=[0x1140,0x1229;0x0817,0x082e;0x12ae,0x12e1;0x1376,0x166e;0x1a1c,0x1a4b]in
- let overlay_code=[0x19f0,0x1afd;0x21e9,0x2221;0x24f1,0x2511;0x25c0,0x25d6;0x27d1,0x2804;0x2f1c,0x2fc2;0x31a8,0x31fb;0x3262,0x329f;0x3533,0x3547;0x6639,0x6649;0x80b1,0x80b7;0x8179,0x8187;0x666e,0x6708;0x82bb,0x82cd;0x4394,0x452b;0x46ed,0x478d;0x4cc2,0x4ce9;0x4f54,0x4f6e;0x61a4,0x6223;0x625d,0x6288;0x6314,0x63cf;0x640d,0x6477;0x6477,0x64f2;0x64f2,0x6508;0x654e,0x65f9;0x65f9,0x6619;0x6619,0x6639;0x2308,0x230e;0x4c4c,0x4c52;0x4cd4,0x4ce1;0x4f2a,0x4f54;0x56e1,0x570e;0x2185,0x21ad;0x28aa,0x2dc3;0x6708,0x6ca1;0x8309,0x8314;0x834f,0x8357;0x8380,0x8386;0x8396,0x83ac;0x21d4,0x21e9;0x2221,0x22c0;0x345e,0x34ac;0x25a9,0x25c0;0x23a0,0x23d2;0x25d6,0x25ec;0x2c53,0x2c59;0x2fc2,0x31a8;0x31fb,0x3262;0x329f,0x32b3;0x3304,0x3333;0x01af,0x01c6;0x020e,0x0222;0x213c,0x2185;0x21ad,0x21d4;0x22cb,0x234e;0x2355,0x23a0;0x3558,0x3563;0x387f,0x38a9;0x3963,0x3987;0x3a76,0x3c16;0x3c8a,0x415e;0x415e,0x41ba;0x421f,0x43ac;0x452b,0x45f0;0x500f,0x5035;0x506e,0x50b4;0x53bb,0x53c6;0x81f1,0x8214;0x45f0,0x462d;0x5a46,0x5ab2;0x5e48,0x61a4;0x784e,0x7a15;0x7ff3,0x8003;0x83a0,0x83ac]in
+ let resident_code=[0x1688,0x18fa;0x02ee,0x034a;0x05b2,0x05f8;0x070c,0x0788;0x19bb,0x19d5;0x1a0f,0x1a1c;0x09cb,0x0e47;0x1140,0x1229;0x0817,0x082e;0x12ae,0x12e1;0x1376,0x166e;0x1a1c,0x1a4b]in
+ let overlay_code=[0x256c,0x25a9;0x0187,0x01af;0x2dc3,0x2fc2;0x4929,0x49d7;0x0146,0x014f;0x086e,0x0a0b;0x80ef,0x810b;0x8273,0x82ac;0x0a0b,0x0ba8;0x11e2,0x1328;0x0e00,0x1187;0x1187,0x11e2;0x342f,0x345e;0x335b,0x33dc;0x810b,0x8167;0x0277,0x02e9;0x0fc9,0x1014;0x01d8,0x01e8;0x0261,0x026b;0x026b,0x0277;0x02e9,0x02f0;0x02f0,0x067c;0x80ca,0x80ef;0x2006,0x20a6;0x13ad,0x13ba;0x4a26,0x4a72;0x58bb,0x590e;0x0d6e,0x0d9d;0x140d,0x1510;0x1afd,0x1d37;0x8167,0x8179;0x8380,0x8396;0x13e3,0x1510;0x156d,0x157a;0x1be8,0x1c07;0x7ed7,0x7f4f;0x8268,0x8273;0x19f0,0x1afd;0x21e9,0x2221;0x24f1,0x2511;0x25c0,0x25d6;0x27d1,0x2804;0x2f1c,0x2fc2;0x31a8,0x31fb;0x3262,0x329f;0x3533,0x3547;0x6639,0x6649;0x80b1,0x80b7;0x8179,0x8187;0x666e,0x6708;0x82bb,0x82cd;0x4394,0x452b;0x46ed,0x478d;0x4cc2,0x4ce9;0x4f54,0x4f6e;0x61a4,0x6223;0x625d,0x6288;0x6314,0x63cf;0x640d,0x6477;0x6477,0x64f2;0x64f2,0x6508;0x654e,0x65f9;0x65f9,0x6619;0x6619,0x6639;0x2308,0x230e;0x4c4c,0x4c52;0x4cd4,0x4ce1;0x4f2a,0x4f54;0x56e1,0x570e;0x2185,0x21ad;0x28aa,0x2dc3;0x6708,0x6ca1;0x8309,0x8314;0x834f,0x8357;0x8380,0x8386;0x8396,0x83ac;0x21d4,0x21e9;0x2221,0x22c0;0x345e,0x34ac;0x25a9,0x25c0;0x23a0,0x23d2;0x25d6,0x25ec;0x2c53,0x2c59;0x2fc2,0x31a8;0x31fb,0x3262;0x329f,0x32b3;0x3304,0x3333;0x01af,0x01c6;0x020e,0x0222;0x213c,0x2185;0x21ad,0x21d4;0x22cb,0x234e;0x2355,0x23a0;0x3558,0x3563;0x387f,0x38a9;0x3963,0x3987;0x3a76,0x3c16;0x3c8a,0x415e;0x415e,0x41ba;0x421f,0x43ac;0x452b,0x45f0;0x500f,0x5035;0x506e,0x50b4;0x53bb,0x53c6;0x81f1,0x8214;0x45f0,0x462d;0x5a46,0x5ab2;0x5e48,0x61a4;0x784e,0x7a15;0x7ff3,0x8003;0x83a0,0x83ac]in
  List.iter(fun(a,b)->require(Bytes.sub memory(a+0x100)(b-a)=Bytes.sub t.com a(b-a))(Printf.sprintf"resident code changed %04X"a))resident_code;
- List.iter(fun(a,b)->require(Bytes.sub memory(a+0x2200)(b-a)=Bytes.sub t.image a(b-a))(Printf.sprintf"overlay code changed %04X"a))overlay_code;
+ if not(resident_operation operation) then List.iter(fun(a,b)->require(Bytes.sub memory(a+0x2200)(b-a)=Bytes.sub t.image a(b-a))(Printf.sprintf"overlay code changed %04X"a))overlay_code;
  require(call=internal_call t operation call.site&&S.word m entry.sp=call.resume)"continuation mismatch";
  let effects=ref[]and journal=ref[]and sp=ref entry.sp and depth=ref 0 and frames=ref(if operation=Copy05 then[entry.sp+2,0x8908,call.resume]else[])in
  let append item=effects:=item::!effects in
- let frame_sites=[0x19fb;0x6564;0x6570;0x6572;0x6577;0x65d8;0x60f0;0x60f2;0x6108;0x610d;0x6116;0x5ea7;0x5eaa;0x5ebc;0x5ed2;0x5ed4;0x5edc;0x6072;0x5f16;0x507f;0x5081;0x3ca9;0x3caf;0x3cb1]in
+ let frame_sites=[0x08e6;0x08e8;0x08f8;0x0a3f;0x0a41;0x1219;0x1222;0x1224;0x122c;0x1235;0x1237;0x123f;0x1244;0x19fb;0x6564;0x6570;0x6572;0x6577;0x65d8;0x60f0;0x60f2;0x6108;0x610d;0x6116;0x5ea7;0x5eaa;0x5ebc;0x5ed2;0x5ed4;0x5edc;0x6072;0x5f16;0x507f;0x5081;0x3ca9;0x3caf;0x3cb1]in
  let put kind writer address value=
   U.check address;Pli80_host.U8.check value;
   if kind="logical"&&address>=entry.sp-512&&address<=entry.sp+1 then(
@@ -73,7 +79,7 @@ let prepare ?(follow_spine=false) ?(recursive=(fun _ _->invalid_arg"unfinished r
   match !frames with
   |(before,target,resume)::rest->require(target=0x8908&& !sp=before+6&&S.word m !sp=resume)"N8 copied continuation/SP";frames:=(before+consumed,target,resume)::rest
   |[]->invalid_arg"missing software frame"in
- let adjust ~site ~delta=require(Char.code(Bytes.get(code site 1)0)=(if delta=1 then 0x33 else 0x3b)&&List.mem delta[1;-1])"private SP instruction";sp:= !sp+delta in
+ let adjust ~site ~delta=if site=0x3526 then(require(delta=11&&Char.code(Bytes.get(code site 1)0)=0xf9)"11E2 SPHL";sp:= !sp+delta)else(require(Char.code(Bytes.get(code site 1)0)=(if delta=1 then 0x33 else 0x3b)&&List.mem delta[1;-1])"private SP instruction";sp:= !sp+delta)in
  let staged state={Runner.effects=List.rev !effects;next_state=state;validate=(fun _->Ok());on_commit=ignore}in
  let sync b=for a=0 to 65535 do S.write m a(Char.code(Bytes.get b a))done in
  let preview state=match boundary.preview_host_program(staged state)with Ok result->sync result.memory;result|Error e->invalid_arg e in
@@ -82,7 +88,7 @@ let prepare ?(follow_spine=false) ?(recursive=(fun _ _->invalid_arg"unfinished r
   let protected=[entry.sp-512,entry.sp+2;0xa628,0xa65b;0xa6ca,0xa861;0xa863,0xa865;0xa8ab,0xa93a;0xa947,0xa9e5;0xaa16,0xaa1a;0xae32,0xae6d;0x1c36,0x1c5b;0x1f06,0x1f09;0x20c1,0x214a]
    @List.map(fun(a,b)->a+0x100,b+0x100)resident_code@List.map(fun(a,b)->a+0x2200,b+0x2200)overlay_code in
   require(not(List.exists(fun(a,b)->base<b&&base+width>a)protected))"pointer/scratch/code/stack alias"in
- let native ~site ~target (q:R.returned)=
+ let rec native ~site ~target (q:R.returned)=
   let state=A.machine entry q !sp target in
   let prior=List.rev !effects in let before=preview state in
   let boundary={Runner.state;read_memory=S.read m;copy_memory=(fun()->S.copy m);dma=before.dma;
@@ -94,6 +100,36 @@ let prepare ?(follow_spine=false) ?(recursive=(fun _ _->invalid_arg"unfinished r
    ignore(preview result);require(result.sp= !sp+2&&result.pc=site+3)"native child continuation";A.logical result in
   let put_writes writes writer=List.iter(fun(w:Pli80_host.Mapped_lookup.write)->put"logical"(writer w.phase)w.address w.value)writes in
   match target with
+  |target when List.mem_assoc target [0x1b35,Pli80_host.Resident_reader.Pointer_tail;0x1b40,Memory_zero;0x1b33,Pointer_difference;0x1788,Lookahead;0x19db,Peek_cached;0x1943,Read_ahead;0x19a2,Boundary_probe;0x19bc,Boundary_clear;0x19c5,Letter_probe;0x080c,Read_buffer;0x06b2,Poll;0x0441,Poll_console;0x03ee,Set_dma;0x0418,Read_record;0x1abb,Service_gate;0x1b2c,Difference;0x1b38,Memory_difference;0x0e40,Refill;0x0dd9,Reset;0x0c86,Format_counter;0x0bf5,Source;0x0acb,Filter;0x0ba9,Fetch_masked;0x0f1f,Store]->
+   (if target=0x080c then guard_field(S.word m 0x1d06)1);
+   Pli80_host.Resident_reader.run(List.assoc target [0x1b35,Pli80_host.Resident_reader.Pointer_tail;0x1b40,Memory_zero;0x1b33,Pointer_difference;0x1788,Lookahead;0x19db,Peek_cached;0x1943,Read_ahead;0x19a2,Boundary_probe;0x19bc,Boundary_clear;0x19c5,Letter_probe;0x080c,Read_buffer;0x06b2,Poll;0x0441,Poll_console;0x03ee,Set_dma;0x0418,Read_record;0x1abb,Service_gate;0x1b2c,Difference;0x1b38,Memory_difference;0x0e40,Refill;0x0dd9,Reset;0x0c86,Format_counter;0x0bf5,Source;0x0acb,Filter;0x0ba9,Fetch_masked;0x0f1f,Store])m ~entry:q ~write:(fun ~site ~address ~value->put"logical"site address value)~compatibility ~sp:(fun()-> !sp)~invoke:native
+  |0x0917->(Pli80_host.Acquisition_parent.run ~operation:Pli80_host.Acquisition_parent.Context_mask m ~entry:q ~write:(fun ~site ~address ~value->put"logical"site address value)~compatibility ~guard_field ~saved:(fun _->invalid_arg"context saved child")).returned
+  |0x13ae->(Pli80_host.Acquisition_parent.run ~operation:Pli80_host.Acquisition_parent.Counted_read ~reader_refill:(fun q->native ~site:0x13b8 ~target:0x0e40 q)m ~entry:q ~write:(fun ~site ~address ~value->put"logical"site address value)~compatibility ~guard_field ~saved:(fun _->invalid_arg"reader saved child")).returned
+  |0xff6->
+   let offset=site-0x2200 in let call:Int_emitter_bridge.call={coordinate=Printf.sprintf"PLI1.OVL+%04X"offset;site;resume=site+3;image="PLI1.OVL";offset}in
+   let p=Int_emitter_bridge.prepare t.emitter ~call ~origin:(origin"PLI.COM"0xef6)~state ~memory:(S.copy m)in
+   let reset=ref false in
+   List.iter(function Runner.Dispatch_bdos _ as e->append e|Runner.Memory_write(address,value)->
+    let distance= !sp-address in let stack=distance>=1&&distance<=10 in
+    let writer=if stack then(match(distance+1)/2 with 1->if !reset then 0x1021 else 0x1016|2->if !reset then 0x434 else 0x3fa|3->0x1abb|4->0x1abc|5->0x1ac3|_->assert false)
+     else if address=0x20b0 then 0xff9 else if address=0x1e0c then(if value=0 then 0x101c else 0x100b)
+     else if address>=0x1d8c&&address<0x1e8c then 0x1006 else match address with 0x2060->0x3f1|0x205f->0x3f3|0x2066->0x42b|0x2065->0x42d|_->invalid_arg"unproved emitter writer"in
+    if address=0x1e0c&&value=0 then reset:=true;put(if stack then"compatibility"else"logical")writer address value)p.program.effects;
+   ignore(preview p.state);require(p.state.sp= !sp+2&&p.state.pc=site+3)"emitter continuation";A.logical p.state
+  |5->
+   let fn=q.bc land 255 in require(List.mem fn[11;20;26])"reader BDOS function";
+   let status=if fn<>20 then 0 else(
+    let ram=I8080.Memory.create()in I8080.Memory.load ram ~address:0(S.copy m);
+    let key=match Cpm.Filesystem.key_of_fcb ~memory:ram ~fcb_address:q.de ~current_drive:0 ~current_user:0 with Ok k->k|Error _->invalid_arg"reader FCB"in
+    let fcb=Cpm.Fcb.at ram ~address:q.de in let record=Cpm.Fcb.extent fcb*128+Cpm.Fcb.current_record fcb in
+    match Cpm.Filesystem.record_count before.filesystem key with Some n when Cpm.Fcb.current_record fcb<=128&&record<n->0|_->1)in
+   let call_state=A.machine entry q !sp 5 in
+   let expected_resume={call_state with Runner.a=status;b=0;h=0;l=status;sp= !sp;pc=5}in
+   append(Runner.Dispatch_bdos{call_state;expected_resume});ignore(preview expected_resume);A.logical expected_resume
+  |0x45d2->let p=B.prepare t.adapt B.Publish ~call:(B.internal_call t.adapt B.Publish site)~origin:(origin"PLI1.OVL"0x23d2)boundary in import p.program p.journal p.state
+  |0xa0c0->let p=Attribute_gate_bridge.prepare t.gate Attribute_gate_bridge.Gate ~call:(Attribute_gate_bridge.internal_call t.gate Attribute_gate_bridge.Gate site)~origin:(origin"PLI1.OVL"0x7ec0)boundary in import p.program p.journal p.state
+  |0x9f53->let call=Range_processing_bridge.internal_call t.range site in let p=Range_processing_bridge.prepare t.range ~call ~origin:(origin"PLI1.OVL"0x7d53)boundary in import p.program p.journal p.state
+  |0xa2b7->let p=Attribute_gate_bridge.prepare t.gate Attribute_gate_bridge.Saved ~call:(Attribute_gate_bridge.internal_call t.gate Attribute_gate_bridge.Saved site) ~origin:(origin"PLI1.OVL"0x80b7)boundary in import p.program p.journal p.state
   |0x8423->let program,child_state,child_journal=recursive site boundary in import program child_journal child_state
   |0xa248->let p=Input_processing_bridge.prepare t.input ~call:(Input_processing_bridge.internal_call t.input site)~origin:(origin"PLI1.OVL"0x8048)boundary in import p.program p.journal p.state
   |0x4711->let p=B.prepare t.adapt B.Saved ~call:(B.internal_call t.adapt B.Saved site)~origin:(origin"PLI1.OVL"0x2511)boundary in import p.program p.journal p.state
@@ -147,7 +183,7 @@ let prepare ?(follow_spine=false) ?(recursive=(fun _ _->invalid_arg"unfinished r
     ~write:(fun w->put"logical"(List.assoc w.Pli80_host.Mapped_lookup.phase["auxiliary_value",0x9d31;"auxiliary_position",0x9d33;"auxiliary_publication",0x9d47])w.address w.value)in
    {q with R.a=r.value;bc=r.index;hl=r.address;flags={q.flags with carry=false}}
   |_->invalid_arg(Printf.sprintf"acquisition family: unfinished native child %04X"target)in
- let result=F.run(match operation with Context->F.Context|Field->F.Field|Attribute->F.Attribute|Spine->F.Spine|Resident->F.Resident|Pair_gate->F.Pair_gate|Selected_transform->F.Selected_transform|Table_adapter->F.Table_adapter|Wrapper->F.Wrapper|Repeat->F.Repeat|Copy05->F.Copy05|Traversal->F.Traversal|Construction->F.Construction|Record_output->F.Record_output|Index_one->F.Index_one|Parent->F.Parent)m ~entry:(A.logical entry)
+ let result=match operation with Resident_reader op->{F.returned=Pli80_host.Resident_reader.run op m ~entry:(A.logical entry)~write:(fun ~site ~address ~value->put"logical"site address value)~compatibility ~sp:(fun()-> !sp)~invoke:native;field=None}|_->F.run(match operation with Adapter offset->F.Adapter offset|Resident_reader _->assert false| Context->F.Context|Field->F.Field|Attribute->F.Attribute|Spine->F.Spine|Resident->F.Resident|Pair_gate->F.Pair_gate|Selected_transform->F.Selected_transform|Table_adapter->F.Table_adapter|Wrapper->F.Wrapper|Repeat->F.Repeat|Copy05->F.Copy05|Traversal->F.Traversal|Construction->F.Construction|Record_output->F.Record_output|Index_one->F.Index_one|Parent->F.Parent|Reader op->F.Reader op|Recursive op->F.Recursive op)m ~entry:(A.logical entry)
   ~write:(fun ~site ~address ~value->put"logical"site address value)~compatibility ~adjust ~sp:(fun()-> !sp)~guard_field ~native ~follow_spine ~software in
  let consumed=if operation=Copy05 then 8 else 0 in
  if operation=Copy05 then(require(!frames=[entry.sp+10,0x8908,call.resume])"root copied continuation frame";frames:=[]);
