@@ -67,7 +67,13 @@ class NativeAcquisitionTests(unittest.TestCase):
   extension=ROOT/'research/host-compiler/pass-44/numeric-contract-before.json'
   if extension.exists():
    old=json.loads(extension.read_text());current['procedures']=[old if p['id']=='PLI.COM+1376'else p for p in current['procedures']]
-  self.assertEqual(json.loads(base),current)
+  # Compare the immutable Pass43 catalog epoch; bounded Pass44/45 extensions
+  # have independent proofs and must not rewrite the older historical claim.
+  epoch=json.loads((ROOT/'research/host-compiler/pass-45/before.json').read_text())
+  current['procedures']=[epoch.get(p['id']) or p for p in current['procedures']if p['id']not in epoch or epoch[p['id']]is not None]
+  expected=json.loads(base)
+  self.assertEqual({k:v for k,v in expected.items()if k!='procedures'},{k:v for k,v in current.items()if k!='procedures'})
+  self.assertEqual({p['id']:p for p in expected['procedures']},{p['id']:p for p in current['procedures']})
 if __name__=='__main__':
  p=argparse.ArgumentParser();p.add_argument('--images',required=True,type=Path);args,rest=p.parse_known_args();IMAGES=args.images
  unittest.main(argv=[__file__]+rest)

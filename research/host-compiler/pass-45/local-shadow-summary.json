@@ -1,0 +1,98 @@
+{
+  "status": "2259 and345E bounded shadows complete; no6619 controller",
+  "operations": {
+    "2259": [
+      {
+        "source": "FIZZBUZ",
+        "matched": 5,
+        "cases": [
+          {
+            "return_step": 360082,
+            "memory_sha256": "00de29ad43d216f6701aa42e0a6ec93480d58994505aeef5e897b2f748b6a643",
+            "ordered_writes": 3,
+            "final_writer_cells": 6
+          },
+          {
+            "return_step": 400712,
+            "memory_sha256": "d052c7342b1c6c003868a4cbf6f51a93127190fd9665db9eed7c354d892ca091",
+            "ordered_writes": 3,
+            "final_writer_cells": 6
+          },
+          {
+            "return_step": 470358,
+            "memory_sha256": "1b5f08ab9cd7e558ca9b0a9228e446cd015036d6b1b06e77d98cf1d1eb70c535",
+            "ordered_writes": 3,
+            "final_writer_cells": 6
+          },
+          {
+            "return_step": 537156,
+            "memory_sha256": "899408c38b9cba65e37a5edf8cae76d064c31cf29e64dcf4a7843c5869021303",
+            "ordered_writes": 3,
+            "final_writer_cells": 6
+          },
+          {
+            "return_step": 617270,
+            "memory_sha256": "fe0b8db530ad65a905c075745ddd7a0a49153c6ef9e074bd69344362b04665f0",
+            "ordered_writes": 3,
+            "final_writer_cells": 6
+          }
+        ]
+      },
+      {
+        "source": "PICTURE",
+        "matched": 1,
+        "cases": [
+          {
+            "return_step": 308423,
+            "memory_sha256": "39d4c68e8b07ae3b878bf807323345f27054bb321b56c5df88e3d5c429e87034",
+            "ordered_writes": 3,
+            "final_writer_cells": 6
+          }
+        ]
+      }
+    ],
+    "345E": [
+      {
+        "source": "FIZZBUZ",
+        "matched": 3,
+        "cases": [
+          {
+            "return_step": 402221,
+            "memory_sha256": "c6c0d757e2840d3d38cd664bbe654fdace4eeff552378d2709a4b9115cb13715",
+            "ordered_writes": 145,
+            "final_writer_cells": 98
+          },
+          {
+            "return_step": 471867,
+            "memory_sha256": "29db83ce8df9e08b357543531d642236b1704dbb12edfba17bcdb88842f2452f",
+            "ordered_writes": 145,
+            "final_writer_cells": 98
+          },
+          {
+            "return_step": 538665,
+            "memory_sha256": "13e04c75b95ba6bd0b99e4294125de96a352f920cbe7b8d9389586a4648e2660",
+            "ordered_writes": 145,
+            "final_writer_cells": 98
+          }
+        ]
+      },
+      {
+        "source": "PICTURE",
+        "matched": 0,
+        "cases": []
+      }
+    ]
+  },
+  "comparisons": [
+    "registers",
+    "flags",
+    "SP/PC",
+    "ordered logical writes",
+    "full65536 RAM",
+    "derived final stack writers",
+    "DMA",
+    "filesystem",
+    "record chronology"
+  ],
+  "oracle_queries": 0
+}

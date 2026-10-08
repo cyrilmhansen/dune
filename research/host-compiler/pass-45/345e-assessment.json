@@ -1,0 +1,3329 @@
+{
+  "status": "assessment, no reconstructed contract yet",
+  "cfg": [
+    [
+      13406,
+      "CDFB53",
+      "CALL 53FBH"
+    ],
+    [
+      13409,
+      "CD5944",
+      "CALL 4459H"
+    ],
+    [
+      13412,
+      "1F",
+      "RAR"
+    ],
+    [
+      13413,
+      "D26B56",
+      "JNC 566BH"
+    ],
+    [
+      13419,
+      "2A29A6",
+      "LHLD A629H"
+    ],
+    [
+      13422,
+      "4D",
+      "MOV C,L"
+    ],
+    [
+      13423,
+      "CD8543",
+      "CALL 4385H"
+    ],
+    [
+      13426,
+      "F5",
+      "PUSH PSW"
+    ],
+    [
+      13427,
+      "2A2AA6",
+      "LHLD A62AH"
+    ],
+    [
+      13430,
+      "4D",
+      "MOV C,L"
+    ],
+    [
+      13431,
+      "CD8543",
+      "CALL 4385H"
+    ],
+    [
+      13434,
+      "C1",
+      "POP B"
+    ],
+    [
+      13435,
+      "48",
+      "MOV C,B"
+    ],
+    [
+      13436,
+      "B1",
+      "ORA C"
+    ],
+    [
+      13437,
+      "1F",
+      "RAR"
+    ],
+    [
+      13438,
+      "D2AF56",
+      "JNC 56AFH"
+    ],
+    [
+      13441,
+      "CDC152",
+      "CALL 52C1H"
+    ],
+    [
+      13444,
+      "2128A6",
+      "LXI H,A628H"
+    ],
+    [
+      13447,
+      "3A29A6",
+      "LDA A629H"
+    ],
+    [
+      13450,
+      "BE",
+      "CMP M"
+    ],
+    [
+      13451,
+      "CA9156",
+      "JZ 5691H"
+    ],
+    [
+      13457,
+      "CD0549",
+      "CALL 4905H"
+    ],
+    [
+      13460,
+      "2134A6",
+      "LXI H,A634H"
+    ],
+    [
+      13463,
+      "3602",
+      "MVI M,02H"
+    ],
+    [
+      13465,
+      "2128A6",
+      "LXI H,A628H"
+    ],
+    [
+      13468,
+      "3A2AA6",
+      "LDA A62AH"
+    ],
+    [
+      13471,
+      "BE",
+      "CMP M"
+    ],
+    [
+      13472,
+      "CAA656",
+      "JZ 56A6H"
+    ],
+    [
+      13475,
+      "CD594E",
+      "CALL 4E59H"
+    ],
+    [
+      13478,
+      "CD0549",
+      "CALL 4905H"
+    ],
+    [
+      13481,
+      "3E00",
+      "MVI A,00H"
+    ],
+    [
+      13483,
+      "C9",
+      "RET"
+    ]
+  ],
+  "cases": [
+    {
+      "call_step": 400416,
+      "entry": {
+        "a": 5,
+        "b": 0,
+        "c": 248,
+        "d": 251,
+        "e": 157,
+        "h": 255,
+        "l": 191,
+        "sp": 65469,
+        "pc": 22110,
+        "flags": {
+          "sign": false,
+          "zero": false,
+          "auxiliary_carry": true,
+          "parity": true,
+          "carry": false
+        }
+      },
+      "output": {
+        "a": 0,
+        "b": 166,
+        "c": 40,
+        "d": 43,
+        "e": 23,
+        "h": 166,
+        "l": 42,
+        "sp": 65471,
+        "pc": 34730,
+        "flags": {
+          "sign": true,
+          "zero": false,
+          "auxiliary_carry": false,
+          "parity": true,
+          "carry": true
+        }
+      },
+      "return_coordinate": "PLI1.OVL+34AB",
+      "children": [
+        {
+          "observed_cpu_read_ranges": [
+            [
+              6992,
+              6993
+            ],
+            [
+              7010,
+              7011
+            ],
+            [
+              42599,
+              42601
+            ],
+            [
+              43555,
+              43558
+            ],
+            [
+              43703,
+              43704
+            ],
+            [
+              43705,
+              43706
+            ],
+            [
+              43853,
+              43855
+            ],
+            [
+              43859,
+              43861
+            ],
+            [
+              44149,
+              44150
+            ],
+            [
+              44152,
+              44153
+            ],
+            [
+              44298,
+              44299
+            ],
+            [
+              44301,
+              44302
+            ],
+            [
+              44447,
+              44448
+            ],
+            [
+              44450,
+              44451
+            ],
+            [
+              44594,
+              44595
+            ],
+            [
+              44598,
+              44605
+            ],
+            [
+              44616,
+              44618
+            ],
+            [
+              65461,
+              65469
+            ]
+          ],
+          "observed_cpu_write_ranges": [
+            [
+              42537,
+              42539
+            ],
+            [
+              42540,
+              42542
+            ],
+            [
+              42543,
+              42545
+            ],
+            [
+              42548,
+              42549
+            ],
+            [
+              42557,
+              42561
+            ],
+            [
+              42599,
+              42600
+            ],
+            [
+              44598,
+              44604
+            ],
+            [
+              44616,
+              44618
+            ],
+            [
+              65461,
+              65467
+            ]
+          ],
+          "cpu_memory_write_count": 56,
+          "cpu_memory_write_chronology_sha256": "f1d94d9db42052913805fb725584f1d35c2c274c4c3ff9d2be789e606312885b",
+          "lowest_observed_SP": 65461,
+          "callsite": "PLI1.OVL+345E",
+          "target": "PLI1.OVL+31FB",
+          "call_step": 400417,
+          "return_step": 400642,
+          "return_coordinate": "PLI1.OVL+3261",
+          "entry": {
+            "a": 5,
+            "b": 0,
+            "c": 248,
+            "d": 251,
+            "e": 157,
+            "h": 255,
+            "l": 191,
+            "sp": 65467,
+            "pc": 21499,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 0,
+            "b": 0,
+            "c": 2,
+            "d": 171,
+            "e": 78,
+            "h": 166,
+            "l": 52,
+            "sp": 65469,
+            "pc": 22113,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "instruction_occurrences": 225
+        },
+        {
+          "observed_cpu_read_ranges": [
+            [
+              42537,
+              42540
+            ],
+            [
+              42546,
+              42548
+            ],
+            [
+              42567,
+              42568
+            ],
+            [
+              42570,
+              42571
+            ],
+            [
+              65463,
+              65469
+            ]
+          ],
+          "observed_cpu_write_ranges": [
+            [
+              42567,
+              42568
+            ],
+            [
+              42570,
+              42571
+            ],
+            [
+              65463,
+              65467
+            ]
+          ],
+          "cpu_memory_write_count": 15,
+          "cpu_memory_write_chronology_sha256": "d0ce41cbeb6a91253942c293bc6f7bc7679dbf064d6894aa8ab77efe78fbdbe1",
+          "lowest_observed_SP": 65463,
+          "callsite": "PLI1.OVL+3461",
+          "target": "PLI1.OVL+2259",
+          "call_step": 400643,
+          "return_step": 400711,
+          "return_coordinate": "PLI1.OVL+227E",
+          "entry": {
+            "a": 0,
+            "b": 0,
+            "c": 2,
+            "d": 171,
+            "e": 78,
+            "h": 166,
+            "l": 52,
+            "sp": 65467,
+            "pc": 17497,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 0,
+            "b": 255,
+            "c": 255,
+            "d": 171,
+            "e": 78,
+            "h": 166,
+            "l": 71,
+            "sp": 65469,
+            "pc": 22116,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": true
+            }
+          },
+          "instruction_occurrences": 68
+        },
+        {
+          "observed_cpu_read_ranges": [
+            [
+              42566,
+              42567
+            ],
+            [
+              65467,
+              65469
+            ]
+          ],
+          "observed_cpu_write_ranges": [
+            [
+              42566,
+              42567
+            ]
+          ],
+          "cpu_memory_write_count": 1,
+          "cpu_memory_write_chronology_sha256": "6869ff6eca4db4fd89baaa3889bd85ae817b6ececccd606e04b0f600e9c0a62e",
+          "lowest_observed_SP": 65467,
+          "callsite": "PLI1.OVL+346F",
+          "target": "PLI1.OVL+2185",
+          "call_step": 400716,
+          "return_step": 400724,
+          "return_coordinate": "PLI1.OVL+2195",
+          "entry": {
+            "a": 128,
+            "b": 255,
+            "c": 21,
+            "d": 171,
+            "e": 78,
+            "h": 2,
+            "l": 21,
+            "sp": 65467,
+            "pc": 17285,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 1,
+            "b": 255,
+            "c": 21,
+            "d": 171,
+            "e": 78,
+            "h": 166,
+            "l": 70,
+            "sp": 65469,
+            "pc": 22130,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "instruction_occurrences": 8
+        },
+        {
+          "observed_cpu_read_ranges": [
+            [
+              42565,
+              42568
+            ],
+            [
+              65463,
+              65467
+            ]
+          ],
+          "observed_cpu_write_ranges": [
+            [
+              42565,
+              42567
+            ],
+            [
+              65463,
+              65465
+            ]
+          ],
+          "cpu_memory_write_count": 4,
+          "cpu_memory_write_chronology_sha256": "f1b4b952cd0221800e4898ff550b078647cc1c2c89babe29e1dd40e254018179",
+          "lowest_observed_SP": 65463,
+          "callsite": "PLI1.OVL+3477",
+          "target": "PLI1.OVL+2185",
+          "call_step": 400728,
+          "return_step": 400757,
+          "return_coordinate": "PLI1.OVL+21A3",
+          "entry": {
+            "a": 1,
+            "b": 255,
+            "c": 2,
+            "d": 171,
+            "e": 78,
+            "h": 1,
+            "l": 2,
+            "sp": 65465,
+            "pc": 17285,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 1,
+            "b": 255,
+            "c": 2,
+            "d": 171,
+            "e": 78,
+            "h": 166,
+            "l": 69,
+            "sp": 65467,
+            "pc": 22138,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": true
+            }
+          },
+          "instruction_occurrences": 29
+        },
+        {
+          "observed_cpu_read_ranges": [
+            [
+              17117,
+              17118
+            ],
+            [
+              42536,
+              42545
+            ],
+            [
+              42546,
+              42548
+            ],
+            [
+              42562,
+              42564
+            ],
+            [
+              42565,
+              42566
+            ],
+            [
+              42569,
+              42571
+            ],
+            [
+              42574,
+              42578
+            ],
+            [
+              42588,
+              42590
+            ],
+            [
+              42595,
+              42599
+            ],
+            [
+              65459,
+              65469
+            ]
+          ],
+          "observed_cpu_write_ranges": [
+            [
+              42536,
+              42537
+            ],
+            [
+              42539,
+              42540
+            ],
+            [
+              42542,
+              42543
+            ],
+            [
+              42565,
+              42566
+            ],
+            [
+              42569,
+              42570
+            ],
+            [
+              42574,
+              42578
+            ],
+            [
+              42588,
+              42589
+            ],
+            [
+              42595,
+              42599
+            ],
+            [
+              65459,
+              65467
+            ]
+          ],
+          "cpu_memory_write_count": 77,
+          "cpu_memory_write_chronology_sha256": "bb5a6de28c1ac6c04773fc853767f6322f2b7db5a2e4bbbe92954a898c116d28",
+          "lowest_observed_SP": 65459,
+          "callsite": "PLI1.OVL+3481",
+          "target": "PLI1.OVL+30C1",
+          "call_step": 400763,
+          "return_step": 401104,
+          "return_coordinate": "PLI1.OVL+31A7",
+          "entry": {
+            "a": 0,
+            "b": 1,
+            "c": 1,
+            "d": 171,
+            "e": 78,
+            "h": 166,
+            "l": 69,
+            "sp": 65467,
+            "pc": 21185,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": true
+            }
+          },
+          "output": {
+            "a": 15,
+            "b": 0,
+            "c": 15,
+            "d": 53,
+            "e": 15,
+            "h": 166,
+            "l": 79,
+            "sp": 65469,
+            "pc": 22148,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "instruction_occurrences": 341
+        },
+        {
+          "observed_cpu_read_ranges": [
+            [
+              42536,
+              42537
+            ],
+            [
+              65467,
+              65469
+            ]
+          ],
+          "observed_cpu_write_ranges": [],
+          "cpu_memory_write_count": 0,
+          "cpu_memory_write_chronology_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "lowest_observed_SP": 65467,
+          "callsite": "PLI1.OVL+3491",
+          "target": "PLI1.OVL+2705",
+          "call_step": 401109,
+          "return_step": 401113,
+          "return_coordinate": "PLI1.OVL+2710",
+          "entry": {
+            "a": 21,
+            "b": 0,
+            "c": 15,
+            "d": 53,
+            "e": 15,
+            "h": 166,
+            "l": 40,
+            "sp": 65467,
+            "pc": 18693,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 21,
+            "b": 0,
+            "c": 15,
+            "d": 53,
+            "e": 15,
+            "h": 166,
+            "l": 40,
+            "sp": 65469,
+            "pc": 22164,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": true
+            }
+          },
+          "instruction_occurrences": 4
+        },
+        {
+          "observed_cpu_read_ranges": [
+            [
+              6992,
+              6993
+            ],
+            [
+              7010,
+              7011
+            ],
+            [
+              42536,
+              42540
+            ],
+            [
+              42541,
+              42543
+            ],
+            [
+              42544,
+              42545
+            ],
+            [
+              42548,
+              42550
+            ],
+            [
+              42559,
+              42561
+            ],
+            [
+              42566,
+              42568
+            ],
+            [
+              42571,
+              42575
+            ],
+            [
+              42591,
+              42596
+            ],
+            [
+              43107,
+              43109
+            ],
+            [
+              43335,
+              43339
+            ],
+            [
+              43482,
+              43492
+            ],
+            [
+              43556,
+              43558
+            ],
+            [
+              43703,
+              43704
+            ],
+            [
+              43705,
+              43706
+            ],
+            [
+              44594,
+              44596
+            ],
+            [
+              44598,
+              44601
+            ],
+            [
+              44604,
+              44615
+            ],
+            [
+              44616,
+              44618
+            ],
+            [
+              64413,
+              64414
+            ],
+            [
+              64423,
+              64424
+            ],
+            [
+              65451,
+              65469
+            ]
+          ],
+          "observed_cpu_write_ranges": [
+            [
+              42538,
+              42539
+            ],
+            [
+              42541,
+              42542
+            ],
+            [
+              42544,
+              42545
+            ],
+            [
+              42559,
+              42561
+            ],
+            [
+              42566,
+              42568
+            ],
+            [
+              42571,
+              42574
+            ],
+            [
+              42591,
+              42595
+            ],
+            [
+              43107,
+              43109
+            ],
+            [
+              43335,
+              43338
+            ],
+            [
+              43482,
+              43492
+            ],
+            [
+              43703,
+              43704
+            ],
+            [
+              43705,
+              43706
+            ],
+            [
+              43855,
+              43857
+            ],
+            [
+              44150,
+              44151
+            ],
+            [
+              44152,
+              44153
+            ],
+            [
+              44299,
+              44300
+            ],
+            [
+              44301,
+              44302
+            ],
+            [
+              44448,
+              44449
+            ],
+            [
+              44450,
+              44451
+            ],
+            [
+              44598,
+              44600
+            ],
+            [
+              44604,
+              44615
+            ],
+            [
+              44616,
+              44618
+            ],
+            [
+              65451,
+              65467
+            ]
+          ],
+          "cpu_memory_write_count": 199,
+          "cpu_memory_write_chronology_sha256": "fc3afbbf7dd461556156d8a4febd33472dcdb2015f859b26abe823334e664020",
+          "lowest_observed_SP": 65451,
+          "callsite": "PLI1.OVL+34A3",
+          "target": "PLI1.OVL+2C59",
+          "call_step": 401120,
+          "return_step": 402213,
+          "return_coordinate": "PLI1.OVL+2DC2",
+          "entry": {
+            "a": 2,
+            "b": 0,
+            "c": 15,
+            "d": 53,
+            "e": 15,
+            "h": 166,
+            "l": 40,
+            "sp": 65467,
+            "pc": 20057,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": true
+            }
+          },
+          "output": {
+            "a": 21,
+            "b": 166,
+            "c": 40,
+            "d": 43,
+            "e": 23,
+            "h": 166,
+            "l": 42,
+            "sp": 65469,
+            "pc": 22182,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": true
+            }
+          },
+          "instruction_occurrences": 1093
+        },
+        {
+          "observed_cpu_read_ranges": [
+            [
+              42536,
+              42537
+            ],
+            [
+              65467,
+              65469
+            ]
+          ],
+          "observed_cpu_write_ranges": [],
+          "cpu_memory_write_count": 0,
+          "cpu_memory_write_chronology_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "lowest_observed_SP": 65467,
+          "callsite": "PLI1.OVL+34A6",
+          "target": "PLI1.OVL+2705",
+          "call_step": 402214,
+          "return_step": 402218,
+          "return_coordinate": "PLI1.OVL+2710",
+          "entry": {
+            "a": 21,
+            "b": 166,
+            "c": 40,
+            "d": 43,
+            "e": 23,
+            "h": 166,
+            "l": 42,
+            "sp": 65467,
+            "pc": 18693,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": true
+            }
+          },
+          "output": {
+            "a": 21,
+            "b": 166,
+            "c": 40,
+            "d": 43,
+            "e": 23,
+            "h": 166,
+            "l": 42,
+            "sp": 65469,
+            "pc": 22185,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": true
+            }
+          },
+          "instruction_occurrences": 4
+        }
+      ],
+      "branches": [
+        {
+          "coordinate": "PLI1.OVL+3465",
+          "before": {
+            "a": 128,
+            "b": 255,
+            "c": 255,
+            "d": 171,
+            "e": 78,
+            "h": 166,
+            "l": 71,
+            "sp": 65469,
+            "pc": 22117,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 128,
+            "b": 255,
+            "c": 255,
+            "d": 171,
+            "e": 78,
+            "h": 166,
+            "l": 71,
+            "sp": 65469,
+            "pc": 22123,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "control": {
+            "kind": "jump",
+            "target": 22123,
+            "taken": true
+          }
+        },
+        {
+          "coordinate": "PLI1.OVL+347E",
+          "before": {
+            "a": 0,
+            "b": 1,
+            "c": 1,
+            "d": 171,
+            "e": 78,
+            "h": 166,
+            "l": 69,
+            "sp": 65469,
+            "pc": 22142,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": true
+            }
+          },
+          "after": {
+            "a": 0,
+            "b": 1,
+            "c": 1,
+            "d": 171,
+            "e": 78,
+            "h": 166,
+            "l": 69,
+            "sp": 65469,
+            "pc": 22145,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": true
+            }
+          },
+          "control": {
+            "kind": "jump",
+            "target": 22191,
+            "taken": false
+          }
+        },
+        {
+          "coordinate": "PLI1.OVL+348B",
+          "before": {
+            "a": 21,
+            "b": 0,
+            "c": 15,
+            "d": 53,
+            "e": 15,
+            "h": 166,
+            "l": 40,
+            "sp": 65469,
+            "pc": 22155,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 21,
+            "b": 0,
+            "c": 15,
+            "d": 53,
+            "e": 15,
+            "h": 166,
+            "l": 40,
+            "sp": 65469,
+            "pc": 22161,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "control": {
+            "kind": "jump",
+            "target": 22161,
+            "taken": true
+          }
+        },
+        {
+          "coordinate": "PLI1.OVL+34A0",
+          "before": {
+            "a": 2,
+            "b": 0,
+            "c": 15,
+            "d": 53,
+            "e": 15,
+            "h": 166,
+            "l": 40,
+            "sp": 65469,
+            "pc": 22176,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": true
+            }
+          },
+          "after": {
+            "a": 2,
+            "b": 0,
+            "c": 15,
+            "d": 53,
+            "e": 15,
+            "h": 166,
+            "l": 40,
+            "sp": 65469,
+            "pc": 22179,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": true
+            }
+          },
+          "control": {
+            "kind": "jump",
+            "target": 22182,
+            "taken": false
+          }
+        }
+      ]
+    },
+    {
+      "call_step": 470062,
+      "entry": {
+        "a": 5,
+        "b": 0,
+        "c": 248,
+        "d": 251,
+        "e": 157,
+        "h": 255,
+        "l": 187,
+        "sp": 65465,
+        "pc": 22110,
+        "flags": {
+          "sign": false,
+          "zero": false,
+          "auxiliary_carry": true,
+          "parity": true,
+          "carry": false
+        }
+      },
+      "output": {
+        "a": 0,
+        "b": 166,
+        "c": 40,
+        "d": 43,
+        "e": 23,
+        "h": 166,
+        "l": 42,
+        "sp": 65467,
+        "pc": 34730,
+        "flags": {
+          "sign": true,
+          "zero": false,
+          "auxiliary_carry": false,
+          "parity": true,
+          "carry": true
+        }
+      },
+      "return_coordinate": "PLI1.OVL+34AB",
+      "children": [
+        {
+          "observed_cpu_read_ranges": [
+            [
+              6992,
+              6993
+            ],
+            [
+              7010,
+              7011
+            ],
+            [
+              42599,
+              42601
+            ],
+            [
+              43555,
+              43558
+            ],
+            [
+              43702,
+              43704
+            ],
+            [
+              43851,
+              43853
+            ],
+            [
+              43855,
+              43857
+            ],
+            [
+              44148,
+              44149
+            ],
+            [
+              44150,
+              44151
+            ],
+            [
+              44297,
+              44298
+            ],
+            [
+              44299,
+              44300
+            ],
+            [
+              44446,
+              44447
+            ],
+            [
+              44448,
+              44449
+            ],
+            [
+              44594,
+              44595
+            ],
+            [
+              44598,
+              44605
+            ],
+            [
+              44616,
+              44618
+            ],
+            [
+              65457,
+              65465
+            ]
+          ],
+          "observed_cpu_write_ranges": [
+            [
+              42537,
+              42539
+            ],
+            [
+              42540,
+              42542
+            ],
+            [
+              42543,
+              42545
+            ],
+            [
+              42548,
+              42549
+            ],
+            [
+              42557,
+              42561
+            ],
+            [
+              42599,
+              42600
+            ],
+            [
+              44598,
+              44604
+            ],
+            [
+              44616,
+              44618
+            ],
+            [
+              65457,
+              65463
+            ]
+          ],
+          "cpu_memory_write_count": 56,
+          "cpu_memory_write_chronology_sha256": "94b2c045aaf82d9e4961600cf6b646b9a525eff693f72640f82e9491cc4ab74b",
+          "lowest_observed_SP": 65457,
+          "callsite": "PLI1.OVL+345E",
+          "target": "PLI1.OVL+31FB",
+          "call_step": 470063,
+          "return_step": 470288,
+          "return_coordinate": "PLI1.OVL+3261",
+          "entry": {
+            "a": 5,
+            "b": 0,
+            "c": 248,
+            "d": 251,
+            "e": 157,
+            "h": 255,
+            "l": 187,
+            "sp": 65463,
+            "pc": 21499,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 0,
+            "b": 0,
+            "c": 1,
+            "d": 171,
+            "e": 76,
+            "h": 166,
+            "l": 52,
+            "sp": 65465,
+            "pc": 22113,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "instruction_occurrences": 225
+        },
+        {
+          "observed_cpu_read_ranges": [
+            [
+              42537,
+              42540
+            ],
+            [
+              42546,
+              42548
+            ],
+            [
+              42567,
+              42568
+            ],
+            [
+              42570,
+              42571
+            ],
+            [
+              65459,
+              65465
+            ]
+          ],
+          "observed_cpu_write_ranges": [
+            [
+              42567,
+              42568
+            ],
+            [
+              42570,
+              42571
+            ],
+            [
+              65459,
+              65463
+            ]
+          ],
+          "cpu_memory_write_count": 15,
+          "cpu_memory_write_chronology_sha256": "17334cbb144959eb56979bcb66670c59ed6fd8008187364af18fad374c437110",
+          "lowest_observed_SP": 65459,
+          "callsite": "PLI1.OVL+3461",
+          "target": "PLI1.OVL+2259",
+          "call_step": 470289,
+          "return_step": 470357,
+          "return_coordinate": "PLI1.OVL+227E",
+          "entry": {
+            "a": 0,
+            "b": 0,
+            "c": 1,
+            "d": 171,
+            "e": 76,
+            "h": 166,
+            "l": 52,
+            "sp": 65463,
+            "pc": 17497,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 0,
+            "b": 255,
+            "c": 255,
+            "d": 171,
+            "e": 76,
+            "h": 166,
+            "l": 71,
+            "sp": 65465,
+            "pc": 22116,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": true
+            }
+          },
+          "instruction_occurrences": 68
+        },
+        {
+          "observed_cpu_read_ranges": [
+            [
+              42566,
+              42567
+            ],
+            [
+              65463,
+              65465
+            ]
+          ],
+          "observed_cpu_write_ranges": [
+            [
+              42566,
+              42567
+            ]
+          ],
+          "cpu_memory_write_count": 1,
+          "cpu_memory_write_chronology_sha256": "e2be52215fb03d63bcfe8fb09e552e73ff265640e3bee19cab4899fa2631c92b",
+          "lowest_observed_SP": 65463,
+          "callsite": "PLI1.OVL+346F",
+          "target": "PLI1.OVL+2185",
+          "call_step": 470362,
+          "return_step": 470370,
+          "return_coordinate": "PLI1.OVL+2195",
+          "entry": {
+            "a": 128,
+            "b": 255,
+            "c": 21,
+            "d": 171,
+            "e": 76,
+            "h": 2,
+            "l": 21,
+            "sp": 65463,
+            "pc": 17285,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 1,
+            "b": 255,
+            "c": 21,
+            "d": 171,
+            "e": 76,
+            "h": 166,
+            "l": 70,
+            "sp": 65465,
+            "pc": 22130,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "instruction_occurrences": 8
+        },
+        {
+          "observed_cpu_read_ranges": [
+            [
+              42565,
+              42568
+            ],
+            [
+              65459,
+              65463
+            ]
+          ],
+          "observed_cpu_write_ranges": [
+            [
+              42565,
+              42567
+            ],
+            [
+              65459,
+              65461
+            ]
+          ],
+          "cpu_memory_write_count": 4,
+          "cpu_memory_write_chronology_sha256": "8ee8e42e52883965d04e8b5e6a1fd1e90693b0b1c293e7e4a7109d779dfc4bd0",
+          "lowest_observed_SP": 65459,
+          "callsite": "PLI1.OVL+3477",
+          "target": "PLI1.OVL+2185",
+          "call_step": 470374,
+          "return_step": 470403,
+          "return_coordinate": "PLI1.OVL+21A3",
+          "entry": {
+            "a": 1,
+            "b": 255,
+            "c": 2,
+            "d": 171,
+            "e": 76,
+            "h": 1,
+            "l": 2,
+            "sp": 65461,
+            "pc": 17285,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 1,
+            "b": 255,
+            "c": 2,
+            "d": 171,
+            "e": 76,
+            "h": 166,
+            "l": 69,
+            "sp": 65463,
+            "pc": 22138,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": true
+            }
+          },
+          "instruction_occurrences": 29
+        },
+        {
+          "observed_cpu_read_ranges": [
+            [
+              17117,
+              17118
+            ],
+            [
+              42536,
+              42545
+            ],
+            [
+              42546,
+              42548
+            ],
+            [
+              42562,
+              42564
+            ],
+            [
+              42565,
+              42566
+            ],
+            [
+              42569,
+              42571
+            ],
+            [
+              42574,
+              42578
+            ],
+            [
+              42588,
+              42590
+            ],
+            [
+              42595,
+              42599
+            ],
+            [
+              65455,
+              65465
+            ]
+          ],
+          "observed_cpu_write_ranges": [
+            [
+              42536,
+              42537
+            ],
+            [
+              42539,
+              42540
+            ],
+            [
+              42542,
+              42543
+            ],
+            [
+              42565,
+              42566
+            ],
+            [
+              42569,
+              42570
+            ],
+            [
+              42574,
+              42578
+            ],
+            [
+              42588,
+              42589
+            ],
+            [
+              42595,
+              42599
+            ],
+            [
+              65455,
+              65463
+            ]
+          ],
+          "cpu_memory_write_count": 77,
+          "cpu_memory_write_chronology_sha256": "47bc17ecac41097546b2d4d3fbcc52dcf63478c8e6557319c8920a5f324dfdc9",
+          "lowest_observed_SP": 65455,
+          "callsite": "PLI1.OVL+3481",
+          "target": "PLI1.OVL+30C1",
+          "call_step": 470409,
+          "return_step": 470750,
+          "return_coordinate": "PLI1.OVL+31A7",
+          "entry": {
+            "a": 0,
+            "b": 1,
+            "c": 1,
+            "d": 171,
+            "e": 76,
+            "h": 166,
+            "l": 69,
+            "sp": 65463,
+            "pc": 21185,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": true
+            }
+          },
+          "output": {
+            "a": 15,
+            "b": 0,
+            "c": 15,
+            "d": 53,
+            "e": 15,
+            "h": 166,
+            "l": 79,
+            "sp": 65465,
+            "pc": 22148,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "instruction_occurrences": 341
+        },
+        {
+          "observed_cpu_read_ranges": [
+            [
+              42536,
+              42537
+            ],
+            [
+              65463,
+              65465
+            ]
+          ],
+          "observed_cpu_write_ranges": [],
+          "cpu_memory_write_count": 0,
+          "cpu_memory_write_chronology_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "lowest_observed_SP": 65463,
+          "callsite": "PLI1.OVL+3491",
+          "target": "PLI1.OVL+2705",
+          "call_step": 470755,
+          "return_step": 470759,
+          "return_coordinate": "PLI1.OVL+2710",
+          "entry": {
+            "a": 21,
+            "b": 0,
+            "c": 15,
+            "d": 53,
+            "e": 15,
+            "h": 166,
+            "l": 40,
+            "sp": 65463,
+            "pc": 18693,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 21,
+            "b": 0,
+            "c": 15,
+            "d": 53,
+            "e": 15,
+            "h": 166,
+            "l": 40,
+            "sp": 65465,
+            "pc": 22164,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": true
+            }
+          },
+          "instruction_occurrences": 4
+        },
+        {
+          "observed_cpu_read_ranges": [
+            [
+              6992,
+              6993
+            ],
+            [
+              7010,
+              7011
+            ],
+            [
+              42536,
+              42540
+            ],
+            [
+              42541,
+              42543
+            ],
+            [
+              42544,
+              42545
+            ],
+            [
+              42548,
+              42550
+            ],
+            [
+              42559,
+              42561
+            ],
+            [
+              42566,
+              42568
+            ],
+            [
+              42571,
+              42575
+            ],
+            [
+              42591,
+              42596
+            ],
+            [
+              43107,
+              43109
+            ],
+            [
+              43335,
+              43339
+            ],
+            [
+              43482,
+              43492
+            ],
+            [
+              43556,
+              43558
+            ],
+            [
+              43702,
+              43704
+            ],
+            [
+              44594,
+              44596
+            ],
+            [
+              44598,
+              44601
+            ],
+            [
+              44604,
+              44615
+            ],
+            [
+              44616,
+              44618
+            ],
+            [
+              64413,
+              64414
+            ],
+            [
+              64423,
+              64424
+            ],
+            [
+              65447,
+              65465
+            ]
+          ],
+          "observed_cpu_write_ranges": [
+            [
+              42538,
+              42539
+            ],
+            [
+              42541,
+              42542
+            ],
+            [
+              42544,
+              42545
+            ],
+            [
+              42559,
+              42561
+            ],
+            [
+              42566,
+              42568
+            ],
+            [
+              42571,
+              42574
+            ],
+            [
+              42591,
+              42595
+            ],
+            [
+              43107,
+              43109
+            ],
+            [
+              43335,
+              43338
+            ],
+            [
+              43482,
+              43492
+            ],
+            [
+              43702,
+              43704
+            ],
+            [
+              43853,
+              43855
+            ],
+            [
+              44149,
+              44151
+            ],
+            [
+              44298,
+              44300
+            ],
+            [
+              44447,
+              44449
+            ],
+            [
+              44598,
+              44600
+            ],
+            [
+              44604,
+              44615
+            ],
+            [
+              44616,
+              44618
+            ],
+            [
+              65447,
+              65463
+            ]
+          ],
+          "cpu_memory_write_count": 199,
+          "cpu_memory_write_chronology_sha256": "25867aaa01f0faa48e09e48c9ef0f0f492f73e65351ec297771f092dabcd5658",
+          "lowest_observed_SP": 65447,
+          "callsite": "PLI1.OVL+34A3",
+          "target": "PLI1.OVL+2C59",
+          "call_step": 470766,
+          "return_step": 471859,
+          "return_coordinate": "PLI1.OVL+2DC2",
+          "entry": {
+            "a": 2,
+            "b": 0,
+            "c": 15,
+            "d": 53,
+            "e": 15,
+            "h": 166,
+            "l": 40,
+            "sp": 65463,
+            "pc": 20057,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": true
+            }
+          },
+          "output": {
+            "a": 21,
+            "b": 166,
+            "c": 40,
+            "d": 43,
+            "e": 23,
+            "h": 166,
+            "l": 42,
+            "sp": 65465,
+            "pc": 22182,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": true
+            }
+          },
+          "instruction_occurrences": 1093
+        },
+        {
+          "observed_cpu_read_ranges": [
+            [
+              42536,
+              42537
+            ],
+            [
+              65463,
+              65465
+            ]
+          ],
+          "observed_cpu_write_ranges": [],
+          "cpu_memory_write_count": 0,
+          "cpu_memory_write_chronology_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "lowest_observed_SP": 65463,
+          "callsite": "PLI1.OVL+34A6",
+          "target": "PLI1.OVL+2705",
+          "call_step": 471860,
+          "return_step": 471864,
+          "return_coordinate": "PLI1.OVL+2710",
+          "entry": {
+            "a": 21,
+            "b": 166,
+            "c": 40,
+            "d": 43,
+            "e": 23,
+            "h": 166,
+            "l": 42,
+            "sp": 65463,
+            "pc": 18693,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": true
+            }
+          },
+          "output": {
+            "a": 21,
+            "b": 166,
+            "c": 40,
+            "d": 43,
+            "e": 23,
+            "h": 166,
+            "l": 42,
+            "sp": 65465,
+            "pc": 22185,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": true
+            }
+          },
+          "instruction_occurrences": 4
+        }
+      ],
+      "branches": [
+        {
+          "coordinate": "PLI1.OVL+3465",
+          "before": {
+            "a": 128,
+            "b": 255,
+            "c": 255,
+            "d": 171,
+            "e": 76,
+            "h": 166,
+            "l": 71,
+            "sp": 65465,
+            "pc": 22117,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 128,
+            "b": 255,
+            "c": 255,
+            "d": 171,
+            "e": 76,
+            "h": 166,
+            "l": 71,
+            "sp": 65465,
+            "pc": 22123,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "control": {
+            "kind": "jump",
+            "target": 22123,
+            "taken": true
+          }
+        },
+        {
+          "coordinate": "PLI1.OVL+347E",
+          "before": {
+            "a": 0,
+            "b": 1,
+            "c": 1,
+            "d": 171,
+            "e": 76,
+            "h": 166,
+            "l": 69,
+            "sp": 65465,
+            "pc": 22142,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": true
+            }
+          },
+          "after": {
+            "a": 0,
+            "b": 1,
+            "c": 1,
+            "d": 171,
+            "e": 76,
+            "h": 166,
+            "l": 69,
+            "sp": 65465,
+            "pc": 22145,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": true
+            }
+          },
+          "control": {
+            "kind": "jump",
+            "target": 22191,
+            "taken": false
+          }
+        },
+        {
+          "coordinate": "PLI1.OVL+348B",
+          "before": {
+            "a": 21,
+            "b": 0,
+            "c": 15,
+            "d": 53,
+            "e": 15,
+            "h": 166,
+            "l": 40,
+            "sp": 65465,
+            "pc": 22155,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 21,
+            "b": 0,
+            "c": 15,
+            "d": 53,
+            "e": 15,
+            "h": 166,
+            "l": 40,
+            "sp": 65465,
+            "pc": 22161,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "control": {
+            "kind": "jump",
+            "target": 22161,
+            "taken": true
+          }
+        },
+        {
+          "coordinate": "PLI1.OVL+34A0",
+          "before": {
+            "a": 2,
+            "b": 0,
+            "c": 15,
+            "d": 53,
+            "e": 15,
+            "h": 166,
+            "l": 40,
+            "sp": 65465,
+            "pc": 22176,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": true
+            }
+          },
+          "after": {
+            "a": 2,
+            "b": 0,
+            "c": 15,
+            "d": 53,
+            "e": 15,
+            "h": 166,
+            "l": 40,
+            "sp": 65465,
+            "pc": 22179,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": true
+            }
+          },
+          "control": {
+            "kind": "jump",
+            "target": 22182,
+            "taken": false
+          }
+        }
+      ]
+    },
+    {
+      "call_step": 536860,
+      "entry": {
+        "a": 5,
+        "b": 0,
+        "c": 248,
+        "d": 251,
+        "e": 157,
+        "h": 255,
+        "l": 183,
+        "sp": 65461,
+        "pc": 22110,
+        "flags": {
+          "sign": false,
+          "zero": false,
+          "auxiliary_carry": true,
+          "parity": true,
+          "carry": false
+        }
+      },
+      "output": {
+        "a": 0,
+        "b": 166,
+        "c": 40,
+        "d": 43,
+        "e": 23,
+        "h": 166,
+        "l": 42,
+        "sp": 65463,
+        "pc": 34730,
+        "flags": {
+          "sign": true,
+          "zero": false,
+          "auxiliary_carry": false,
+          "parity": true,
+          "carry": true
+        }
+      },
+      "return_coordinate": "PLI1.OVL+34AB",
+      "children": [
+        {
+          "observed_cpu_read_ranges": [
+            [
+              6992,
+              6993
+            ],
+            [
+              7010,
+              7011
+            ],
+            [
+              42599,
+              42601
+            ],
+            [
+              43555,
+              43558
+            ],
+            [
+              43701,
+              43703
+            ],
+            [
+              43849,
+              43851
+            ],
+            [
+              43853,
+              43855
+            ],
+            [
+              44147,
+              44148
+            ],
+            [
+              44149,
+              44150
+            ],
+            [
+              44296,
+              44297
+            ],
+            [
+              44298,
+              44299
+            ],
+            [
+              44445,
+              44446
+            ],
+            [
+              44447,
+              44448
+            ],
+            [
+              44594,
+              44595
+            ],
+            [
+              44598,
+              44605
+            ],
+            [
+              44616,
+              44618
+            ],
+            [
+              65453,
+              65461
+            ]
+          ],
+          "observed_cpu_write_ranges": [
+            [
+              42537,
+              42539
+            ],
+            [
+              42540,
+              42542
+            ],
+            [
+              42543,
+              42545
+            ],
+            [
+              42548,
+              42549
+            ],
+            [
+              42557,
+              42561
+            ],
+            [
+              42599,
+              42600
+            ],
+            [
+              44598,
+              44604
+            ],
+            [
+              44616,
+              44618
+            ],
+            [
+              65453,
+              65459
+            ]
+          ],
+          "cpu_memory_write_count": 56,
+          "cpu_memory_write_chronology_sha256": "bcbfa35ab319a3d4215467897deb4b2b28db0ad5e002a41bd63ee4149583819a",
+          "lowest_observed_SP": 65453,
+          "callsite": "PLI1.OVL+345E",
+          "target": "PLI1.OVL+31FB",
+          "call_step": 536861,
+          "return_step": 537086,
+          "return_coordinate": "PLI1.OVL+3261",
+          "entry": {
+            "a": 5,
+            "b": 0,
+            "c": 248,
+            "d": 251,
+            "e": 157,
+            "h": 255,
+            "l": 183,
+            "sp": 65459,
+            "pc": 21499,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 0,
+            "b": 0,
+            "c": 0,
+            "d": 171,
+            "e": 74,
+            "h": 166,
+            "l": 52,
+            "sp": 65461,
+            "pc": 22113,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "instruction_occurrences": 225
+        },
+        {
+          "observed_cpu_read_ranges": [
+            [
+              42537,
+              42540
+            ],
+            [
+              42546,
+              42548
+            ],
+            [
+              42567,
+              42568
+            ],
+            [
+              42570,
+              42571
+            ],
+            [
+              65455,
+              65461
+            ]
+          ],
+          "observed_cpu_write_ranges": [
+            [
+              42567,
+              42568
+            ],
+            [
+              42570,
+              42571
+            ],
+            [
+              65455,
+              65459
+            ]
+          ],
+          "cpu_memory_write_count": 15,
+          "cpu_memory_write_chronology_sha256": "f534d5f438f9ff88ba69730ced6005f5e382df8520c0ac78514f976bd39fa16b",
+          "lowest_observed_SP": 65455,
+          "callsite": "PLI1.OVL+3461",
+          "target": "PLI1.OVL+2259",
+          "call_step": 537087,
+          "return_step": 537155,
+          "return_coordinate": "PLI1.OVL+227E",
+          "entry": {
+            "a": 0,
+            "b": 0,
+            "c": 0,
+            "d": 171,
+            "e": 74,
+            "h": 166,
+            "l": 52,
+            "sp": 65459,
+            "pc": 17497,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 0,
+            "b": 255,
+            "c": 255,
+            "d": 171,
+            "e": 74,
+            "h": 166,
+            "l": 71,
+            "sp": 65461,
+            "pc": 22116,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": true
+            }
+          },
+          "instruction_occurrences": 68
+        },
+        {
+          "observed_cpu_read_ranges": [
+            [
+              42566,
+              42567
+            ],
+            [
+              65459,
+              65461
+            ]
+          ],
+          "observed_cpu_write_ranges": [
+            [
+              42566,
+              42567
+            ]
+          ],
+          "cpu_memory_write_count": 1,
+          "cpu_memory_write_chronology_sha256": "80e6b19b2c433ebf5f02d858266254f26ed0367b097932201c3bc69b4b3406ae",
+          "lowest_observed_SP": 65459,
+          "callsite": "PLI1.OVL+346F",
+          "target": "PLI1.OVL+2185",
+          "call_step": 537160,
+          "return_step": 537168,
+          "return_coordinate": "PLI1.OVL+2195",
+          "entry": {
+            "a": 128,
+            "b": 255,
+            "c": 21,
+            "d": 171,
+            "e": 74,
+            "h": 2,
+            "l": 21,
+            "sp": 65459,
+            "pc": 17285,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 1,
+            "b": 255,
+            "c": 21,
+            "d": 171,
+            "e": 74,
+            "h": 166,
+            "l": 70,
+            "sp": 65461,
+            "pc": 22130,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "instruction_occurrences": 8
+        },
+        {
+          "observed_cpu_read_ranges": [
+            [
+              42565,
+              42568
+            ],
+            [
+              65455,
+              65459
+            ]
+          ],
+          "observed_cpu_write_ranges": [
+            [
+              42565,
+              42567
+            ],
+            [
+              65455,
+              65457
+            ]
+          ],
+          "cpu_memory_write_count": 4,
+          "cpu_memory_write_chronology_sha256": "1c3669ce1cc4124a2ac883a9773b3e15be1d9541fac960b46867db290654674b",
+          "lowest_observed_SP": 65455,
+          "callsite": "PLI1.OVL+3477",
+          "target": "PLI1.OVL+2185",
+          "call_step": 537172,
+          "return_step": 537201,
+          "return_coordinate": "PLI1.OVL+21A3",
+          "entry": {
+            "a": 1,
+            "b": 255,
+            "c": 2,
+            "d": 171,
+            "e": 74,
+            "h": 1,
+            "l": 2,
+            "sp": 65457,
+            "pc": 17285,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 1,
+            "b": 255,
+            "c": 2,
+            "d": 171,
+            "e": 74,
+            "h": 166,
+            "l": 69,
+            "sp": 65459,
+            "pc": 22138,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": true
+            }
+          },
+          "instruction_occurrences": 29
+        },
+        {
+          "observed_cpu_read_ranges": [
+            [
+              17117,
+              17118
+            ],
+            [
+              42536,
+              42545
+            ],
+            [
+              42546,
+              42548
+            ],
+            [
+              42562,
+              42564
+            ],
+            [
+              42565,
+              42566
+            ],
+            [
+              42569,
+              42571
+            ],
+            [
+              42574,
+              42578
+            ],
+            [
+              42588,
+              42590
+            ],
+            [
+              42595,
+              42599
+            ],
+            [
+              65451,
+              65461
+            ]
+          ],
+          "observed_cpu_write_ranges": [
+            [
+              42536,
+              42537
+            ],
+            [
+              42539,
+              42540
+            ],
+            [
+              42542,
+              42543
+            ],
+            [
+              42565,
+              42566
+            ],
+            [
+              42569,
+              42570
+            ],
+            [
+              42574,
+              42578
+            ],
+            [
+              42588,
+              42589
+            ],
+            [
+              42595,
+              42599
+            ],
+            [
+              65451,
+              65459
+            ]
+          ],
+          "cpu_memory_write_count": 77,
+          "cpu_memory_write_chronology_sha256": "a7bab2017d229274884a21612d8d478077ebd986bafae25750f7fa2257894061",
+          "lowest_observed_SP": 65451,
+          "callsite": "PLI1.OVL+3481",
+          "target": "PLI1.OVL+30C1",
+          "call_step": 537207,
+          "return_step": 537548,
+          "return_coordinate": "PLI1.OVL+31A7",
+          "entry": {
+            "a": 0,
+            "b": 1,
+            "c": 1,
+            "d": 171,
+            "e": 74,
+            "h": 166,
+            "l": 69,
+            "sp": 65459,
+            "pc": 21185,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": true
+            }
+          },
+          "output": {
+            "a": 15,
+            "b": 0,
+            "c": 15,
+            "d": 53,
+            "e": 15,
+            "h": 166,
+            "l": 79,
+            "sp": 65461,
+            "pc": 22148,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "instruction_occurrences": 341
+        },
+        {
+          "observed_cpu_read_ranges": [
+            [
+              42536,
+              42537
+            ],
+            [
+              65459,
+              65461
+            ]
+          ],
+          "observed_cpu_write_ranges": [],
+          "cpu_memory_write_count": 0,
+          "cpu_memory_write_chronology_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "lowest_observed_SP": 65459,
+          "callsite": "PLI1.OVL+3491",
+          "target": "PLI1.OVL+2705",
+          "call_step": 537553,
+          "return_step": 537557,
+          "return_coordinate": "PLI1.OVL+2710",
+          "entry": {
+            "a": 21,
+            "b": 0,
+            "c": 15,
+            "d": 53,
+            "e": 15,
+            "h": 166,
+            "l": 40,
+            "sp": 65459,
+            "pc": 18693,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 21,
+            "b": 0,
+            "c": 15,
+            "d": 53,
+            "e": 15,
+            "h": 166,
+            "l": 40,
+            "sp": 65461,
+            "pc": 22164,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": true
+            }
+          },
+          "instruction_occurrences": 4
+        },
+        {
+          "observed_cpu_read_ranges": [
+            [
+              6992,
+              6993
+            ],
+            [
+              7010,
+              7011
+            ],
+            [
+              42536,
+              42540
+            ],
+            [
+              42541,
+              42543
+            ],
+            [
+              42544,
+              42545
+            ],
+            [
+              42548,
+              42550
+            ],
+            [
+              42559,
+              42561
+            ],
+            [
+              42566,
+              42568
+            ],
+            [
+              42571,
+              42575
+            ],
+            [
+              42591,
+              42596
+            ],
+            [
+              43107,
+              43109
+            ],
+            [
+              43335,
+              43339
+            ],
+            [
+              43482,
+              43492
+            ],
+            [
+              43556,
+              43558
+            ],
+            [
+              43701,
+              43703
+            ],
+            [
+              44594,
+              44596
+            ],
+            [
+              44598,
+              44601
+            ],
+            [
+              44604,
+              44615
+            ],
+            [
+              44616,
+              44618
+            ],
+            [
+              64413,
+              64414
+            ],
+            [
+              64423,
+              64424
+            ],
+            [
+              65443,
+              65461
+            ]
+          ],
+          "observed_cpu_write_ranges": [
+            [
+              42538,
+              42539
+            ],
+            [
+              42541,
+              42542
+            ],
+            [
+              42544,
+              42545
+            ],
+            [
+              42559,
+              42561
+            ],
+            [
+              42566,
+              42568
+            ],
+            [
+              42571,
+              42574
+            ],
+            [
+              42591,
+              42595
+            ],
+            [
+              43107,
+              43109
+            ],
+            [
+              43335,
+              43338
+            ],
+            [
+              43482,
+              43492
+            ],
+            [
+              43701,
+              43703
+            ],
+            [
+              43851,
+              43853
+            ],
+            [
+              44148,
+              44150
+            ],
+            [
+              44297,
+              44299
+            ],
+            [
+              44446,
+              44448
+            ],
+            [
+              44598,
+              44600
+            ],
+            [
+              44604,
+              44615
+            ],
+            [
+              44616,
+              44618
+            ],
+            [
+              65443,
+              65459
+            ]
+          ],
+          "cpu_memory_write_count": 199,
+          "cpu_memory_write_chronology_sha256": "8b71d07ae2a1e1ec45781154441781da5133325e01b39090c8db5c747b2ee338",
+          "lowest_observed_SP": 65443,
+          "callsite": "PLI1.OVL+34A3",
+          "target": "PLI1.OVL+2C59",
+          "call_step": 537564,
+          "return_step": 538657,
+          "return_coordinate": "PLI1.OVL+2DC2",
+          "entry": {
+            "a": 2,
+            "b": 0,
+            "c": 15,
+            "d": 53,
+            "e": 15,
+            "h": 166,
+            "l": 40,
+            "sp": 65459,
+            "pc": 20057,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": true
+            }
+          },
+          "output": {
+            "a": 21,
+            "b": 166,
+            "c": 40,
+            "d": 43,
+            "e": 23,
+            "h": 166,
+            "l": 42,
+            "sp": 65461,
+            "pc": 22182,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": true
+            }
+          },
+          "instruction_occurrences": 1093
+        },
+        {
+          "observed_cpu_read_ranges": [
+            [
+              42536,
+              42537
+            ],
+            [
+              65459,
+              65461
+            ]
+          ],
+          "observed_cpu_write_ranges": [],
+          "cpu_memory_write_count": 0,
+          "cpu_memory_write_chronology_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "lowest_observed_SP": 65459,
+          "callsite": "PLI1.OVL+34A6",
+          "target": "PLI1.OVL+2705",
+          "call_step": 538658,
+          "return_step": 538662,
+          "return_coordinate": "PLI1.OVL+2710",
+          "entry": {
+            "a": 21,
+            "b": 166,
+            "c": 40,
+            "d": 43,
+            "e": 23,
+            "h": 166,
+            "l": 42,
+            "sp": 65459,
+            "pc": 18693,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": true
+            }
+          },
+          "output": {
+            "a": 21,
+            "b": 166,
+            "c": 40,
+            "d": 43,
+            "e": 23,
+            "h": 166,
+            "l": 42,
+            "sp": 65461,
+            "pc": 22185,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": true
+            }
+          },
+          "instruction_occurrences": 4
+        }
+      ],
+      "branches": [
+        {
+          "coordinate": "PLI1.OVL+3465",
+          "before": {
+            "a": 128,
+            "b": 255,
+            "c": 255,
+            "d": 171,
+            "e": 74,
+            "h": 166,
+            "l": 71,
+            "sp": 65461,
+            "pc": 22117,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 128,
+            "b": 255,
+            "c": 255,
+            "d": 171,
+            "e": 74,
+            "h": 166,
+            "l": 71,
+            "sp": 65461,
+            "pc": 22123,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "control": {
+            "kind": "jump",
+            "target": 22123,
+            "taken": true
+          }
+        },
+        {
+          "coordinate": "PLI1.OVL+347E",
+          "before": {
+            "a": 0,
+            "b": 1,
+            "c": 1,
+            "d": 171,
+            "e": 74,
+            "h": 166,
+            "l": 69,
+            "sp": 65461,
+            "pc": 22142,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": true
+            }
+          },
+          "after": {
+            "a": 0,
+            "b": 1,
+            "c": 1,
+            "d": 171,
+            "e": 74,
+            "h": 166,
+            "l": 69,
+            "sp": 65461,
+            "pc": 22145,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": true
+            }
+          },
+          "control": {
+            "kind": "jump",
+            "target": 22191,
+            "taken": false
+          }
+        },
+        {
+          "coordinate": "PLI1.OVL+348B",
+          "before": {
+            "a": 21,
+            "b": 0,
+            "c": 15,
+            "d": 53,
+            "e": 15,
+            "h": 166,
+            "l": 40,
+            "sp": 65461,
+            "pc": 22155,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 21,
+            "b": 0,
+            "c": 15,
+            "d": 53,
+            "e": 15,
+            "h": 166,
+            "l": 40,
+            "sp": 65461,
+            "pc": 22161,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "control": {
+            "kind": "jump",
+            "target": 22161,
+            "taken": true
+          }
+        },
+        {
+          "coordinate": "PLI1.OVL+34A0",
+          "before": {
+            "a": 2,
+            "b": 0,
+            "c": 15,
+            "d": 53,
+            "e": 15,
+            "h": 166,
+            "l": 40,
+            "sp": 65461,
+            "pc": 22176,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": true
+            }
+          },
+          "after": {
+            "a": 2,
+            "b": 0,
+            "c": 15,
+            "d": 53,
+            "e": 15,
+            "h": 166,
+            "l": 40,
+            "sp": 65461,
+            "pc": 22179,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": true
+            }
+          },
+          "control": {
+            "kind": "jump",
+            "target": 22182,
+            "taken": false
+          }
+        }
+      ]
+    }
+  ]
+}

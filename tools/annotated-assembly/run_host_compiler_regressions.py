@@ -9,7 +9,7 @@ read-only categories never contend over the shared build directory.
 import argparse,concurrent.futures,hashlib,json,os,re,subprocess,time
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2]
-p=argparse.ArgumentParser();p.add_argument('--images',required=True);p.add_argument('--output',type=Path,required=True);p.add_argument('--workers',type=int,choices=range(1,5),default=4);args=p.parse_args()
+p=argparse.ArgumentParser();p.add_argument('--images',required=True);p.add_argument('--output',type=Path,required=True);p.add_argument('--categories',help='comma-separated incremental categories; build/project remain mandatory');p.add_argument('--workers',type=int,choices=range(1,5),default=4);args=p.parse_args()
 os.chdir(ROOT);out=args.output.resolve();out.mkdir(parents=True,exist_ok=True);images=str(Path(args.images).resolve());env=dict(os.environ,RUNES_HOST_IMAGES=images,PYTHONDONTWRITEBYTECODE='1');started=time.perf_counter()
 cmds={'project':['dune','runtest'],'native-unit':['dune','exec','test/native_packed_scan.exe'],'pass16':['python3','tools/annotated-assembly/test_host_boundary_pass_16.py','--images',images,'-v'],'pass15':['python3','tools/annotated-assembly/test_attribute_discriminator_pass_15.py','--images',images,'-v'],'pass14':['python3','tools/annotated-assembly/test_fizzbuz_pass_14.py','--images',images,'-v'],'pass13':['python3','tools/annotated-assembly/test_fizzbuz_pass_13.py','--images',images,'-v'],'baseline':['python3','tools/annotated-assembly/test_minimal_baseline.py','--images',images,'-v']}
 for n in range(1,13):cmds['minimal-pass-'+str(n)]=['python3',f'tools/annotated-assembly/test_minimal_pass_{n}.py',*(['--capture','_build/minimal-baseline/capture']if n==8 else ['--images',images]),'-v']
@@ -58,6 +58,8 @@ cmds['pass43']=['python3','tools/annotated-assembly/test_native_5929_pass_43.py'
 cmds['acquisition-parent-unit']=['_build/default/test/native_acquisition_parent.exe']
 for name,file in [('pass44-roots','test_reentrant_acquisition_pass_44.py'),('pass44-family','test_acquisition_family_pass_44.py'),('pass44-numeric','test_numeric_acquisition_pass_44.py'),('pass44-hybrids','test_native_reentry_hybrids_pass_44.py')]:
  cmds[name]=['python3','tools/annotated-assembly/'+file,'--images',images,'-q']
+cmds['pass45-local']=['python3','tools/annotated-assembly/test_local_gates_pass_45.py','--images',images,'-q']
+cmds['pass45-root']=['python3','tools/annotated-assembly/test_native_wrapper_pass_45.py','--images',images,'-q']
 cmds['classifier-unit']=['_build/default/test/native_classifier.exe']
 cmds['dynamic-progress']=['python3','-c',"import json,subprocess;from pathlib import Path;p=Path("+repr(str(out/'dynamic-progress.json'))+");subprocess.run(['python3','tools/annotated-assembly/minimal_dynamic_progress.py','--output',str(p)],check=True);assert json.loads(p.read_text())==json.loads(Path('research/minimal-baseline/dynamic-progress.json').read_text())"]
 cmds['diff-check']=['git','diff','--check']
@@ -69,6 +71,10 @@ def run(name,cmd):
  value=dict(return_code=r.returncode,elapsed_seconds=round(time.perf_counter()-start,3),command=cmd,python_tests=int(match[1])if match else 0)
  if r.returncode:print(name,'FAILED', (out/(name+'.log')).read_text()[-1800:],flush=True)
  return value
+if args.categories:
+ selected=set(args.categories.split(','));unknown=selected-set(cmds)
+ if unknown:raise SystemExit('Unknown categories: '+','.join(sorted(unknown)))
+ cmds={k:v for k,v in cmds.items()if k in selected or k=='project'}
 results={'build':run('build',['dune','build','@all','-j','4'])}
 if results['build']['return_code']:raise SystemExit(1)
 results['project']=run('project',cmds.pop('project')+['-j','4'])

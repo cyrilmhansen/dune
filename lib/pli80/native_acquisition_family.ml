@@ -53,7 +53,7 @@ let shadow ?(spine=false) ?(entry_steps=[]) operation input=
    proofs:=Printf.sprintf"{\"kind\":\"field15_complete\",\"return_step\":%d,\"memory_sha256\":%S,\"ordered_writes\":%d,\"final_writer_cells\":%d}"step_index(Experiment.sha256_hex actual)(List.length logical)(Hashtbl.length final)::!proofs;
    incr count;active:=rest
   |_->());
-  let offset=match operation with B.Context->0x60e5|B.Field->0x5e98|Attribute->0x256c|Spine->0x4f54|Resident->0x1376 in
+  let offset=match operation with B.Context->0x60e5|B.Field->0x5e98|Attribute->0x256c|Spine->0x4f54|Resident->0x1376|Pair_gate->0x2259|Selected_transform->0x345e|Table_adapter->0x25a9|Wrapper->0x6619|Repeat->0x654e in
   if o=B.origin(if operation=B.Resident then"PLI.COM"else"PLI1.OVL")offset&&(entry_steps=[]||List.mem step_index entry_steps)then(
    let call=B.verify_call bridge operation(Option.get !previous)~entry:state in
    let ram=boundary.copy_memory()and dma=boundary.dma and files=boundary.copy_filesystem()in
@@ -62,6 +62,11 @@ let shadow ?(spine=false) ?(entry_steps=[]) operation input=
    rejects(fun()->B.prepare bridge operation ~call ~origin:o{boundary with state={state with pc=state.pc+1}});
    rejects(fun()->B.prepare bridge operation ~call ~origin:o{boundary with state={state with sp=0xa6ca}});
    rejects(fun()->B.prepare bridge operation ~call ~origin:o{boundary with copy_memory=(fun()->let b=Bytes.copy ram in Bytes.set b state.pc(Char.chr((Char.code(Bytes.get b state.pc)+1)land 255));b)});
+   if operation=B.Pair_gate then(
+    let altered address value={boundary with copy_memory=(fun()->let b=Bytes.copy ram in Bytes.set b address(Char.chr value);b)}in
+    List.iter(fun(a,v)->rejects(fun()->B.prepare bridge operation ~call ~origin:o(altered a v)))[0xa632,1;0xa633,1;0xa629,0x30;0xa62a,0x30]);
+   if operation=B.Table_adapter then(
+    rejects(fun()->B.prepare bridge operation ~call ~origin:o{boundary with state={state with d=0xa6;e=0x44}}));
    if operation=B.Resident then(
     let altered edits={boundary with copy_memory=(fun()->let b=Bytes.copy ram in List.iter(fun(a,v)->Bytes.set b a(Char.chr v))edits;b)}in
     List.iter(fun edits->rejects(fun()->B.prepare bridge operation ~call ~origin:o(altered edits)))

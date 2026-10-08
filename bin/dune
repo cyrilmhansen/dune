@@ -102,3 +102,8 @@
  (name native_reentrant_hybrids)
  (public_name pli80-native-reentrant-hybrids)
  (libraries pli80 pli80_host cpm i8080 runner analysis unix))
+
+(executable
+ (name native_wrapper_hybrids)
+ (public_name pli80-native-wrapper-hybrids)
+ (libraries pli80 pli80_host cpm i8080 runner analysis unix))

@@ -1,0 +1,692 @@
+{
+  "sources": [
+    {
+      "source": "MINIMAL",
+      "members": [
+        {
+          "caller": "PLI1.OVL+663E",
+          "entry_step": 256768,
+          "return_step": 259180,
+          "input": {
+            "a": 1,
+            "b": 0,
+            "c": 0,
+            "d": 0,
+            "e": 0,
+            "h": 169,
+            "l": 51,
+            "sp": 65494,
+            "pc": 34841,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 128,
+            "b": 0,
+            "c": 92,
+            "d": 251,
+            "e": 0,
+            "h": 165,
+            "l": 175,
+            "sp": 65496,
+            "pc": 34881,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "entry_memory_sha256": "4695cd58cbf816735968d455cddc1f8671a2c081e3ea8787332c302224d467af",
+          "post_memory_sha256": "25afc996d575e793f38f365e8487af7d593601cee931b4398e6421407b7a4c97",
+          "entry_filesystem_sha256": "retained-in-proof",
+          "post_filesystem_sha256": "retained-in-proof",
+          "entry_dma": 64638,
+          "post_dma": 64638,
+          "result": {
+            "route": "clear"
+          },
+          "service_details": [],
+          "journal_sha256": "e719cf7e1408c570a66769edeca2f6b229fa7aa7b727caab3a19e0cf4ffda4f9",
+          "write_count": 535,
+          "logical_write_count": 275,
+          "stack_last_writer_count": 33,
+          "stack_derivation": "historical CALL/PUSH/frame and N2/N8 writers, no post-RAM copy"
+        }
+      ]
+    },
+    {
+      "source": "FIZZBUZ",
+      "members": [
+        {
+          "caller": "PLI1.OVL+663E",
+          "entry_step": 357148,
+          "return_step": 359760,
+          "input": {
+            "a": 128,
+            "b": 255,
+            "c": 255,
+            "d": 166,
+            "e": 109,
+            "h": 169,
+            "l": 51,
+            "sp": 65489,
+            "pc": 34841,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": true
+            }
+          },
+          "output": {
+            "a": 0,
+            "b": 0,
+            "c": 92,
+            "d": 251,
+            "e": 0,
+            "h": 165,
+            "l": 175,
+            "sp": 65491,
+            "pc": 34881,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "entry_memory_sha256": "1cfaf82e7a9297ff8f66a2872a56589bbd6b8b5a688f8637973486e6dfa70ecf",
+          "post_memory_sha256": "0124c6ac3f5c984507656421aec1b0881d85531a19b9b3e00b9c67a1bd6399ca",
+          "entry_filesystem_sha256": "retained-in-proof",
+          "post_filesystem_sha256": "retained-in-proof",
+          "entry_dma": 64894,
+          "post_dma": 64894,
+          "result": {
+            "route": "clear"
+          },
+          "service_details": [],
+          "journal_sha256": "6dade2d9f51d16f3f90015adea6028a5a78e89ea1b67aca3f83247a6a6e91466",
+          "write_count": 583,
+          "logical_write_count": 277,
+          "stack_last_writer_count": 33,
+          "stack_derivation": "historical CALL/PUSH/frame and N2/N8 writers, no post-RAM copy"
+        },
+        {
+          "caller": "PLI1.OVL+663E",
+          "entry_step": 364597,
+          "return_step": 366680,
+          "input": {
+            "a": 0,
+            "b": 255,
+            "c": 0,
+            "d": 0,
+            "e": 2,
+            "h": 169,
+            "l": 51,
+            "sp": 65487,
+            "pc": 34841,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 128,
+            "b": 0,
+            "c": 92,
+            "d": 251,
+            "e": 0,
+            "h": 165,
+            "l": 175,
+            "sp": 65489,
+            "pc": 34881,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "entry_memory_sha256": "5770190befcf9f01f1e93114ce8fe6b0d67d06086f7ebc9d5fe58a4afd3dab7b",
+          "post_memory_sha256": "3640b520087a3b2633b876734f6181cf6a750bc8f77232739db1de6009d180c3",
+          "entry_filesystem_sha256": "retained-in-proof",
+          "post_filesystem_sha256": "retained-in-proof",
+          "entry_dma": 64894,
+          "post_dma": 64894,
+          "result": {
+            "route": "clear"
+          },
+          "service_details": [],
+          "journal_sha256": "40865bbddbe7562b279b0864940ab661f8dd22f04a3c6517e037993ff80a4806",
+          "write_count": 483,
+          "logical_write_count": 241,
+          "stack_last_writer_count": 33,
+          "stack_derivation": "historical CALL/PUSH/frame and N2/N8 writers, no post-RAM copy"
+        },
+        {
+          "caller": "PLI1.OVL+663E",
+          "entry_step": 385247,
+          "return_step": 402924,
+          "input": {
+            "a": 0,
+            "b": 255,
+            "c": 255,
+            "d": 151,
+            "e": 149,
+            "h": 169,
+            "l": 51,
+            "sp": 65479,
+            "pc": 34841,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": true
+            }
+          },
+          "output": {
+            "a": 0,
+            "b": 0,
+            "c": 92,
+            "d": 251,
+            "e": 0,
+            "h": 165,
+            "l": 175,
+            "sp": 65481,
+            "pc": 34881,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "entry_memory_sha256": "44a57a4b87ad4c39efb20b3cc696085ae9671bd229fc78031b3ea8764ecd6a4a",
+          "post_memory_sha256": "74fdc37205949bace3be5e4b968cb4ddf272db16aa7aad78e9324bf40f8f2b4e",
+          "entry_filesystem_sha256": "retained-in-proof",
+          "post_filesystem_sha256": "retained-in-proof",
+          "entry_dma": 64894,
+          "post_dma": 64894,
+          "result": {
+            "route": "repeat"
+          },
+          "service_details": [],
+          "journal_sha256": "5553eaa5b9aec956cff45b416784019a1b7e96abd2f7b14aaffbdcb54a4ae759",
+          "write_count": 3994,
+          "logical_write_count": 1781,
+          "stack_last_writer_count": 128,
+          "stack_derivation": "historical CALL/PUSH/frame and N2/N8 writers, no post-RAM copy"
+        },
+        {
+          "caller": "PLI1.OVL+663E",
+          "entry_step": 430308,
+          "return_step": 432709,
+          "input": {
+            "a": 1,
+            "b": 0,
+            "c": 0,
+            "d": 0,
+            "e": 7,
+            "h": 169,
+            "l": 51,
+            "sp": 65463,
+            "pc": 34841,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 128,
+            "b": 0,
+            "c": 92,
+            "d": 251,
+            "e": 0,
+            "h": 165,
+            "l": 175,
+            "sp": 65465,
+            "pc": 34881,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "entry_memory_sha256": "536e74563805f197cd87e69c5685262252cec95e475c88ae72b4bf79dee8b319",
+          "post_memory_sha256": "ede5c6daa2736214231390aa0438b06ad5af12367e7245cfdda4ff7d03b4172c",
+          "entry_filesystem_sha256": "retained-in-proof",
+          "post_filesystem_sha256": "retained-in-proof",
+          "entry_dma": 64894,
+          "post_dma": 64894,
+          "result": {
+            "route": "clear"
+          },
+          "service_details": [],
+          "journal_sha256": "9ee0a921a40b824a5daad8cbfc618123ae710da0deac15e7c9c8265393e91c17",
+          "write_count": 531,
+          "logical_write_count": 277,
+          "stack_last_writer_count": 33,
+          "stack_derivation": "historical CALL/PUSH/frame and N2/N8 writers, no post-RAM copy"
+        },
+        {
+          "caller": "PLI1.OVL+663E",
+          "entry_step": 455167,
+          "return_step": 472570,
+          "input": {
+            "a": 0,
+            "b": 255,
+            "c": 255,
+            "d": 151,
+            "e": 149,
+            "h": 169,
+            "l": 51,
+            "sp": 65475,
+            "pc": 34841,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": true
+            }
+          },
+          "output": {
+            "a": 0,
+            "b": 0,
+            "c": 92,
+            "d": 251,
+            "e": 0,
+            "h": 165,
+            "l": 175,
+            "sp": 65477,
+            "pc": 34881,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "entry_memory_sha256": "59ad8c34ba1dfcac01abe070353c451d52366c7e141d063335ce48c5c14b4ed9",
+          "post_memory_sha256": "c7ea10bfa9bd9246e0f6177d700394c96cb8e0ee94a5b1c80db880d30ecf71e9",
+          "entry_filesystem_sha256": "retained-in-proof",
+          "post_filesystem_sha256": "retained-in-proof",
+          "entry_dma": 64894,
+          "post_dma": 64894,
+          "result": {
+            "route": "repeat"
+          },
+          "service_details": [],
+          "journal_sha256": "5843a16fa7ab50f5e5bfaca7978fca891800cb8042c88311af357209f847965e",
+          "write_count": 3946,
+          "logical_write_count": 1765,
+          "stack_last_writer_count": 128,
+          "stack_derivation": "historical CALL/PUSH/frame and N2/N8 writers, no post-RAM copy"
+        },
+        {
+          "caller": "PLI1.OVL+663E",
+          "entry_step": 499398,
+          "return_step": 501651,
+          "input": {
+            "a": 1,
+            "b": 0,
+            "c": 0,
+            "d": 0,
+            "e": 4,
+            "h": 169,
+            "l": 51,
+            "sp": 65459,
+            "pc": 34841,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 128,
+            "b": 0,
+            "c": 92,
+            "d": 251,
+            "e": 0,
+            "h": 165,
+            "l": 175,
+            "sp": 65461,
+            "pc": 34881,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "entry_memory_sha256": "35848bc4ffca7cf9809d5fc8f99c6cc35d54549594ec0852976058c8350961eb",
+          "post_memory_sha256": "a387972c4777569ecab9fe15cf0ca46f89487ca4a4d38a376ea6b5d2ebba7d80",
+          "entry_filesystem_sha256": "retained-in-proof",
+          "post_filesystem_sha256": "retained-in-proof",
+          "entry_dma": 7564,
+          "post_dma": 7564,
+          "result": {
+            "route": "clear"
+          },
+          "service_details": [],
+          "journal_sha256": "3e3ca3afa9f5370cb142019afd577b63b255c6ee9f6c2d644761cdb7e54f149e",
+          "write_count": 507,
+          "logical_write_count": 261,
+          "stack_last_writer_count": 33,
+          "stack_derivation": "historical CALL/PUSH/frame and N2/N8 writers, no post-RAM copy"
+        },
+        {
+          "caller": "PLI1.OVL+663E",
+          "entry_step": 521965,
+          "return_step": 539368,
+          "input": {
+            "a": 0,
+            "b": 255,
+            "c": 255,
+            "d": 151,
+            "e": 149,
+            "h": 169,
+            "l": 51,
+            "sp": 65471,
+            "pc": 34841,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": true
+            }
+          },
+          "output": {
+            "a": 0,
+            "b": 0,
+            "c": 92,
+            "d": 251,
+            "e": 0,
+            "h": 165,
+            "l": 175,
+            "sp": 65473,
+            "pc": 34881,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "entry_memory_sha256": "d5e85e3dd6ec675c8cedeb91d0bcd39b7c77b1fa1974bbdff6b551b1520882f1",
+          "post_memory_sha256": "aa3b073d70904fd4e45e6952c9a8ff8914026f66871b705e1d3b37561eed2a0c",
+          "entry_filesystem_sha256": "retained-in-proof",
+          "post_filesystem_sha256": "retained-in-proof",
+          "entry_dma": 7564,
+          "post_dma": 7564,
+          "result": {
+            "route": "repeat"
+          },
+          "service_details": [],
+          "journal_sha256": "c84ef897bff0ff36d99bc6033fd4a977057ff40a3d362f2fa60eaebb946009a8",
+          "write_count": 3946,
+          "logical_write_count": 1765,
+          "stack_last_writer_count": 128,
+          "stack_derivation": "historical CALL/PUSH/frame and N2/N8 writers, no post-RAM copy"
+        },
+        {
+          "caller": "PLI1.OVL+663E",
+          "entry_step": 566048,
+          "return_step": 568301,
+          "input": {
+            "a": 1,
+            "b": 0,
+            "c": 0,
+            "d": 0,
+            "e": 7,
+            "h": 169,
+            "l": 51,
+            "sp": 65455,
+            "pc": 34841,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 128,
+            "b": 0,
+            "c": 92,
+            "d": 251,
+            "e": 0,
+            "h": 165,
+            "l": 175,
+            "sp": 65457,
+            "pc": 34881,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "entry_memory_sha256": "895efdee5063492a42788c622fefeff9ec44825f9fc1b243fcd6b059668333a3",
+          "post_memory_sha256": "a1327085ed2ae4cdd50ca37b88e54693bdd2e767a4f3d69ab0c21bbb85aa896a",
+          "entry_filesystem_sha256": "retained-in-proof",
+          "post_filesystem_sha256": "retained-in-proof",
+          "entry_dma": 7564,
+          "post_dma": 7564,
+          "result": {
+            "route": "clear"
+          },
+          "service_details": [],
+          "journal_sha256": "6128c36a568db683429eccc57778f50ff8cf78e8133f34302650647358ebce1c",
+          "write_count": 507,
+          "logical_write_count": 261,
+          "stack_last_writer_count": 33,
+          "stack_derivation": "historical CALL/PUSH/frame and N2/N8 writers, no post-RAM copy"
+        },
+        {
+          "caller": "PLI1.OVL+663E",
+          "entry_step": 603858,
+          "return_step": 606897,
+          "input": {
+            "a": 1,
+            "b": 0,
+            "c": 0,
+            "d": 154,
+            "e": 53,
+            "h": 169,
+            "l": 51,
+            "sp": 65455,
+            "pc": 34841,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 128,
+            "b": 0,
+            "c": 92,
+            "d": 251,
+            "e": 0,
+            "h": 165,
+            "l": 175,
+            "sp": 65457,
+            "pc": 34881,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "entry_memory_sha256": "1a1284cf6872e390bc8db73aea9b54dd578a0b5d742cfa131e18b863018c6a1e",
+          "post_memory_sha256": "a80bc81dcc3eb3c1ad59ab397d5e19c4307d976f89284d9544b67c2c648c91a6",
+          "entry_filesystem_sha256": "retained-in-proof",
+          "post_filesystem_sha256": "retained-in-proof",
+          "entry_dma": 7564,
+          "post_dma": 7564,
+          "result": {
+            "route": "clear"
+          },
+          "service_details": [],
+          "journal_sha256": "14d57f352585f2c7af7c2317adc9ad5882de86b61285e0f504813fc5314ff37a",
+          "write_count": 773,
+          "logical_write_count": 356,
+          "stack_last_writer_count": 67,
+          "stack_derivation": "historical CALL/PUSH/frame and N2/N8 writers, no post-RAM copy"
+        }
+      ]
+    },
+    {
+      "source": "PICTURE",
+      "members": [
+        {
+          "caller": "PLI1.OVL+663E",
+          "entry_step": 306051,
+          "return_step": 308097,
+          "input": {
+            "a": 128,
+            "b": 255,
+            "c": 255,
+            "d": 255,
+            "e": 216,
+            "h": 169,
+            "l": 51,
+            "sp": 65500,
+            "pc": 34841,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": true
+            }
+          },
+          "output": {
+            "a": 128,
+            "b": 0,
+            "c": 92,
+            "d": 251,
+            "e": 0,
+            "h": 165,
+            "l": 175,
+            "sp": 65502,
+            "pc": 34881,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "entry_memory_sha256": "0eb8be2502abd2b56d3bb713e833573cd9fe1acaff35d4f03e11fdd5dcf61bac",
+          "post_memory_sha256": "94a38540128474257b8291e303288e7a16702960a8d2c7d49ebc419c2d6db848",
+          "entry_filesystem_sha256": "retained-in-proof",
+          "post_filesystem_sha256": "retained-in-proof",
+          "entry_dma": 64766,
+          "post_dma": 64766,
+          "result": {
+            "route": "clear"
+          },
+          "service_details": [],
+          "journal_sha256": "0b8068219763f5cd8f3bfaab20b8a43d5900c911ceb3ef60d54ada8d82429da3",
+          "write_count": 477,
+          "logical_write_count": 237,
+          "stack_last_writer_count": 33,
+          "stack_derivation": "historical CALL/PUSH/frame and N2/N8 writers, no post-RAM copy"
+        },
+        {
+          "caller": "PLI1.OVL+663E",
+          "entry_step": 329341,
+          "return_step": 332592,
+          "input": {
+            "a": 1,
+            "b": 0,
+            "c": 0,
+            "d": 152,
+            "e": 249,
+            "h": 169,
+            "l": 51,
+            "sp": 65494,
+            "pc": 34841,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 128,
+            "b": 0,
+            "c": 92,
+            "d": 251,
+            "e": 0,
+            "h": 165,
+            "l": 175,
+            "sp": 65496,
+            "pc": 34881,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "entry_memory_sha256": "d9198a3f185e0402555f4e6eed00c937bc935353309fca453233af363e8c58aa",
+          "post_memory_sha256": "8200af04ff9f1c78019f87461fd04ac598f7fe49ddbe5acc2905a20377c01930",
+          "entry_filesystem_sha256": "retained-in-proof",
+          "post_filesystem_sha256": "retained-in-proof",
+          "entry_dma": 64766,
+          "post_dma": 64766,
+          "result": {
+            "route": "clear"
+          },
+          "service_details": [],
+          "journal_sha256": "7b5c26b0feef4da665416a712fea28375d4c421221fc3d285c3ff63a54a8267e",
+          "write_count": 798,
+          "logical_write_count": 369,
+          "stack_last_writer_count": 67,
+          "stack_derivation": "historical CALL/PUSH/frame and N2/N8 writers, no post-RAM copy"
+        }
+      ]
+    }
+  ],
+  "all_passed": true
+}

@@ -1,0 +1,107 @@
+{
+  "PLI1.OVL+2259": null,
+  "PLI1.OVL+345E": null,
+  "PLI1.OVL+25A9": null,
+  "PLI1.OVL+654E": {
+    "id": "PLI1.OVL+654E",
+    "image": "PLI1.OVL",
+    "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+    "stable_label": "PLI1_654E",
+    "runtime_entry": 34638,
+    "start_offset": 25934,
+    "end_offset": 26105,
+    "length": 171,
+    "byte_status_at_entry": "UNDERSTOOD",
+    "description": "two-word inherited frame with clear table-repeat gate",
+    "completeness": {
+      "bounds": "provisional",
+      "control_flow": "partial",
+      "contract": "partial"
+    },
+    "observed_paths": {
+      "invocations_by_run": {
+        "MINIMAL": 1,
+        "FIZZBUZ": 15,
+        "PICTURE": 2
+      },
+      "represented_bytes": 18,
+      "description": "OBSERVED corrected ordinary CALL/return windows independently retained for MINIMAL/FIZZBUZ/PICTURE; union of own bytes excludes child bodies."
+    },
+    "unresolved_paths": [
+      "Other localmatch/repeat arms RAW or independentoutside requiredscope; child acquisition/6223 remainsdelegated."
+    ],
+    "inputs": "Actual entry registers and selected shared byte-addressed memory; child scopes inherited; executable code, selected scratch/publications/read carriers and active return/save slots nonaliasing where their operation requires it. No table capacity or ownership assumption.",
+    "outputs": "Path-specific A/BC/DE/HL and flags as documented below and in correlated natural cases; SP=entry_SP+2; PC=original CALL continuation.",
+    "clobbers": "Path-specific A/BC/DE/HL/flags; local scratch/publications stated below; delegated child effects; proven CALL/PUSH stack residue.",
+    "memory_state": [
+      "All numerical addresses denote historical runtime bytes, not separate host arrays.",
+      "F=entry_SP; original hardware CALL word at F; body CALL/save traffic below F; preserved per-invocation last writers."
+    ],
+    "data_role_ids": [],
+    "callers": [
+      {
+        "coordinate": "PLI1.OVL+65F9",
+        "counts_by_run": {
+          "MINIMAL": 1,
+          "FIZZBUZ": 15,
+          "PICTURE": 2
+        }
+      }
+    ],
+    "returns": {
+      "convention": "ordinary hardware CALL word; original slot unchanged; SP after RET=entry_SP+2",
+      "observed_file_offsets": [
+        26104
+      ],
+      "sites_description": "PLI1.OVL+65F8"
+    },
+    "direct_callees": [
+      {
+        "callsite_offset": 25936,
+        "coordinate": "PLI1.OVL+64F2",
+        "runtime_address": 34546
+      },
+      {
+        "callsite_offset": 25942,
+        "coordinate": "PLI1.OVL+57B7",
+        "runtime_address": 31159
+      }
+    ],
+    "overlapping_entries": [],
+    "contract_scope": "Bounded accumulated-natural routes and exact represented local operations; delegated partial/opaque children and unexecuted local arms are not silently implemented.",
+    "contract": "At required bounded clear-repeat scope: PUSH H twice preservesinheritedHL. Call64F2; complete57B7 withbase7969 searchescurrentselectoruntilmatchingbyte orzero. RAR/JNC clear result skipsloop. POP H twice restoresentryHL; A/BC/DE/NZPA fromtablepredicate, CYfromRAR. Sixrequired4F54childroutes allskip. ThreeindependentFIZZBUZ loops areobservedbut outside requiredscope, remainRAW/unreconstructed; no arbitraryterminationlaw. Fresh memorypredicates, sharedstate and exactCALL/PUSH residue preserved. Other local arms remainRAW; no cyclicstate termination claim.",
+    "semantic_hypothesis": null,
+    "pseudocode": "two inheritedPUSHH;64F2;57B7(base7969);RAR;clear skipsloop; twoPOPH restoreinheritedHL;retainpredicateA/flags;RET",
+    "evidence_refs": [
+      "evidence.json#seeds/PLI1.OVL+654E",
+      "../host-compiler/pass-38/README.md",
+      "../host-compiler/pass-38/natural-summary.json"
+    ],
+    "blocks": [
+      {
+        "offset": 25934,
+        "pseudocode": [
+          "two inheritedPUSHH;64F2;57B7(base7969);RAR;clear skipsloop"
+        ]
+      },
+      {
+        "offset": 26102,
+        "pseudocode": [
+          "twoPOPH restoreinheritedHL;retainpredicateA/flags;RET"
+        ]
+      }
+    ],
+    "local_comments": {
+      "654E": "write high then low H below SP; SP-=2; preserve flags; compatibility residue retained",
+      "654F": "write high then low H below SP; SP-=2; preserve flags; compatibility residue retained",
+      "6550": "push following PC; invoke PLI1.OVL+64F2; child state/effects at the explicitly scoped contract",
+      "6553": "B pair = literal 7969H; flags preserved",
+      "6556": "push following PC; invoke PLI1.OVL+57B7; child state/effects at the explicitly scoped contract",
+      "6559": "A=(incoming_CY<<7)|(old_A>>1); CY=old_A.bit0; NZPA preserved",
+      "655A": "if CY=0: PC=87F6H; flags preserved",
+      "65F6": "read low then high into H pair; SP+=2; flags preserved; residue remains",
+      "65F7": "read low then high into H pair; SP+=2; flags preserved; residue remains",
+      "65F8": "consume original hardware return word; SP=entry_SP+2; preserve final path flags and registers"
+    }
+  }
+}

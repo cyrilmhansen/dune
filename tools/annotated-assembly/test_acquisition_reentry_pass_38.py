@@ -16,7 +16,10 @@ class PassThirtyEightTests(unittest.TestCase):
   b=encode_full_proof(self.rows,self.analyses);e=load(REPORT/'efficiency.json');self.assertEqual(len(b),e['full_rederivable_evidence_bytes']);self.assertEqual(hashlib.sha256(b).hexdigest(),e['full_rederivable_evidence_sha256']);self.assertEqual(e['oracle_queries'],0)
  def test_catalog_counts_and_supported_coordinate_union(self):
   for k,p in load(REPORT/'after.json').items():
-   self.assertEqual(p,self.catalog[k]);union=set()
+   # Pass45 extends the previously RAW654E arm; the immutable Pass38 epoch remains its clear-route proof.
+   if k!='PLI1.OVL+654E':self.assertEqual(p,self.catalog[k])
+   else:self.assertEqual(p,self.reference[k])
+   union=set()
    for s,g in self.rows.items():
     rs=g[k];self.assertEqual(len(rs),p['observed_paths']['invocations_by_run'][s]);self.assertEqual(Counter(coord(r['call']['origin'])for r in rs),{c['coordinate']:c['counts_by_run'][s]for c in p['callers']if s in c['counts_by_run']})
     for r in rs:
@@ -61,7 +64,7 @@ class PassThirtyEightTests(unittest.TestCase):
    for r in a['cases']['PLI1.OVL+4F2A']:self.assertEqual(r['output']['a'],0)
  def test_raw_arms_remain_raw(self):
   im=next(i for i in load(ROOT/'research/annotated-assembly/manifest.json')['images']if i['name']=='PLI1.OVL');st={n:s['status']for s in im['sections']for n in range(s['start_offset'],s['end_offset'])}
-  for a,b in [(0x4f6e,0x4f71),(0x4cdd,0x4ce0),(0x4cce,0x4cd4),(0x4ced,0x4cf3),(0x655d,0x65f6),(0x3314,0x3317),(0x270d,0x2710)]:self.assertTrue(all(st[n]=='RAW'for n in range(a,b)))
+  for a,b in [(0x4f6e,0x4f71),(0x4cdd,0x4ce0),(0x4cce,0x4cd4),(0x4ced,0x4cf3),(0x65a1,0x65a7),(0x65ae,0x65c5),(0x3314,0x3317),(0x270d,0x2710)]:self.assertTrue(all(st[n]=='RAW'for n in range(a,b)))
  def test_packet_values_restore_return_and_stack(self):
   p=build_packet(self.rows,self.reference);by={(s,r['call']['step_index']):r for s,g in self.rows.items()for rs in g.values()for r in rs}
   for c in p['cases']:

@@ -8,7 +8,7 @@ module U=U16
 module B=U8
 module H=Acquisition_parent
 module K=Classifier
-type operation=Context|Field|Attribute|Spine|Resident
+type operation=Context|Field|Attribute|Spine|Resident|Pair_gate|Selected_transform|Table_adapter|Wrapper|Repeat
 type result={returned:R.returned;field:int option}
 let run operation memory ~entry ~write ~compatibility ~adjust ~sp ~guard_field ~native ~follow_spine ~software =
  B.check entry.R.a;List.iter U.check[entry.bc;entry.de;entry.hl;sp()];
@@ -222,9 +222,20 @@ let run operation memory ~entry ~write ~compatibility ~adjust ~sp ~guard_field ~
   hl 0xa62e;add(read !q.hl);put 0x3067 0xa62b !q.a;
   a(read 0xa628);cmp 0x15;need !q.flags.zero "2FC2 final selector15";
   pair 0xa62b;c(!q.hl land 255);pair 0xa642;exchange();call 0x307a 0x23a0 minimum;put 0x307d 0xa62b !q.a in
+ let zero_pair()=equality 0xa632 0;combine 0x21dc(fun()->equality 0xa633 0)true in
+ let pair_gate()=
+  call 0x2259 0x21d4 zero_pair;put 0x225c 0xa64a !q.a;
+  pair 0xa629;c(!q.hl land 255);call 0x2263 0x21ad(fun()->classifier K.Interval);rar();need !q.flags.carry "2259 first interval-clear arm";
+  pair 0xa62a;c(!q.hl land 255);call 0x226e 0x21ad(fun()->classifier K.Interval);rar();need !q.flags.carry "2259 second interval-clear arm";
+  a(read 0xa64a);rar();need !q.flags.carry "2259 cached mask-clear arm";a 0 in
+ let interval_wrapper()=
+   hl 0xa646;put 0x2188 !q.hl(!q.bc land 255);a(read 0xa646);ani 0xf0;cmp 0x10;
+   if !q.flags.zero then a 1 else(
+    pair 0xa646;c(!q.hl land 255);call 0x219a 0x213c(fun()->classifier K.Predicate);rar();
+    if !q.flags.carry then a 1 else(equality 0xa646 0x31)) in
  let transform_first()=
   call 0x30c1 0x22c0(fun()->
-   call 0x22c0 0x21d4(fun()->equality 0xa632 0;combine 0x21dc(fun()->equality 0xa633 0)true);
+   call 0x22c0 0x21d4 zero_pair;
    rar();need !q.flags.carry "22C0 clear gate");
   equality 0xa629 0x19;
   List.iter(fun(site,address,value)->combine site(fun()->equality address value)false)
@@ -297,11 +308,7 @@ let run operation memory ~entry ~write ~compatibility ~adjust ~sp ~guard_field ~
   (* Historical DAD H precedes DAD B, not an index equation. *)
   pair 0xa634;hl(!q.hl land 255);bc 0xa63b;dad !q.hl;dad !q.bc;e(read !q.hl);hl(U.wrap(!q.hl+1));de(read !q.hl lsl 8 lor(!q.de land 255));exchange();store 0x2938 0xa863 !q.hl;
   a(read 0xa662);rar();need(not !q.flags.carry)"28AA negative prefix";hl 0xa662;put 0x294d !q.hl 0x2b;
-  pair 0xa628;c(!q.hl land 255);call 0x2953 0x2185(fun()->
-   hl 0xa646;put 0x2188 !q.hl(!q.bc land 255);a(read 0xa646);ani 0xf0;cmp 0x10;
-   if !q.flags.zero then a 1 else(
-    pair 0xa646;c(!q.hl land 255);call 0x219a 0x213c(fun()->classifier K.Predicate);rar();
-    if !q.flags.carry then a 1 else(equality 0xa646 0x31)));
+  pair 0xa628;c(!q.hl land 255);call 0x2953 0x2185 interval_wrapper;
   save 0x2956;pair 0xa662;push 0x295a !q.hl;
   pair 0xa634;hl(!q.hl land 255);bc 0xa63b;dad !q.hl;dad !q.bc;c(read !q.hl);hl(U.wrap(!q.hl+1));bc(read !q.hl lsl 8 lor(!q.bc land 255));push 0x2968 !q.bc;c 0;push 0x296b !q.bc;
   bc 10;pair 0xa863;dad !q.bc;push 0x2973 !q.hl;
@@ -359,12 +366,25 @@ let run operation memory ~entry ~write ~compatibility ~adjust ~sp ~guard_field ~
   call 0x332c 0x2705 gate;
   call 0x332f 0x329f(fun()->pair 0xa62c;c(!q.hl land 255);pair 0xa62d;exchange();call 0x32a7 0x23b9 maximum;
    put 0x32aa 0xa62b !q.a;hl 0xa62e;put 0x32b0 !q.hl 0)in
+ let selected_transform()=
+  call 0x345e 0x31fb acquire_two_groups;call 0x3461 0x2259 pair_gate;rar();need(not !q.flags.carry)"345E initial set gate";
+  pair 0xa629;c(!q.hl land 255);call 0x346f 0x2185 interval_wrapper;save 0x3472;
+  pair 0xa62a;c(!q.hl land 255);call 0x3477 0x2185 interval_wrapper;restore();logical false(!q.bc land 255);rar();need !q.flags.carry "345E classifier-clear arm";
+  call 0x3481 0x30c1 transform_first;hl 0xa628;a(read 0xa629);cmp(read !q.hl);need !q.flags.zero "345E unequal first selectors";
+  let gate()=a(read 0xa628);cmp 0x16;need(not !q.flags.zero)"2705 selector16"in
+  call 0x3491 0x2705 gate;hl 0xa634;put 0x3497 !q.hl 2;hl 0xa628;a(read 0xa62a);cmp(read !q.hl);
+  if not !q.flags.zero then call 0x34a3 0x2c59 transform_second;
+  call 0x34a6 0x2705 gate;a 0 in
+ let table_adapter()=
+  hl 0xa65a;put 0x25ac !q.hl(!q.de lsr 8);hl(U.wrap(!q.hl-1));put 0x25ae !q.hl(!q.de land 255);
+  hl(U.wrap(!q.hl-1));put 0x25b0 !q.hl(!q.bc land 255);pair 0xa658;hl(!q.hl land 255);exchange();
+  pair 0xa659;dad !q.de;guard_field !q.hl 1;c(read !q.hl);child 0x25bc 0x2511 in
  let reentry_leaf()=
   a(read 0xa934);rar();need(not !q.flags.carry)"625D initial gate-set";
   c 0x28;call 0x6266 0x01af selector_match;rar();need(not !q.flags.carry)"625D selector28 arm";
   child 0x6273 0x6223;
   hl 0xa934;put 0x6279 !q.hl 0;c 0xf9;call 0x627d 0x01af selector_match;rar();need(not !q.flags.carry)"625D selectorF9 arm"in
- let counted_spine()=
+ let counted_spine ?(repeat_only=false) ()=
   let leaf()=
    adjust ~site:0x8514 ~delta:(-1);a(read 0xa934);rar();need(not !q.flags.carry)"6314 initial gate";
    bc 0x7950;call 0x6325 0x57b7(fun()->reuse H.Search);rar();need(not !q.flags.carry)"6314 search-found arm";
@@ -381,11 +401,23 @@ let run operation memory ~entry ~write ~compatibility ~adjust ~sp ~guard_field ~
    call 0x64f2 0x6477 outer;c 0xf8;call 0x64f7 0x01af selector_match;rar();need(not !q.flags.carry)"64F2 selectorF8 arm"in
   let saved()=
    push 0x654e !q.hl;push 0x654f !q.hl;call 0x6550 0x64f2 wrapped;
-   bc 0x7969;call 0x6556 0x57b7(fun()->reuse H.Search);rar();need(not !q.flags.carry)"654E search-found arm";
-   hl(pop());hl(pop())in
+   let rec search()=
+    bc 0x7969;call 0x6556 0x57b7(fun()->reuse H.Search);rar();
+    if !q.flags.carry then(
+     a(read 0xa935);frame 0;put 0x6564 !q.hl !q.a;call 0x6565 0x784e(fun()->reuse H.Acquire_overlay);
+     pair 0xa635;exchange();frame 1;put 0x6570 !q.hl(!q.de land 255);hl(U.wrap(!q.hl+1));put 0x6572 !q.hl(!q.de lsr 8);
+     a(read 0xa631);hl(U.wrap(!q.hl+1));put 0x6577 !q.hl !q.a;call 0x6578 0x64f2 wrapped;
+     frame 3;a(read !q.hl);put 0x6580 0xa632 !q.a;a(read 0xa631);put 0x6586 0xa633 !q.a;
+     hl(U.wrap(!q.hl-2));e(read !q.hl);hl(U.wrap(!q.hl+1));de(read !q.hl lsl 8 lor(!q.de land 255));exchange();store 0x658f 0xa637 !q.hl;
+     pair 0xa635;store 0x6595 0xa639 !q.hl;exchange();a 5;hl(U.wrap(!q.hl-2));cmp(read !q.hl);need(not !q.flags.carry)"654E offset above5 arm";
+     call 0x65a7 0x345e selected_transform;rar();need(not !q.flags.carry)"654E transform set-result arm";
+     frame 0;a(read !q.hl);add !q.a;add !q.a;add !q.a;save 0x65cd;call 0x65ce 0x239a(fun()->classifier K.Wrapper);restore();add(!q.bc land 255);
+     frame 0;put 0x65d8 !q.hl !q.a;hl 0xa628;put 0x65dc !q.hl 0x24;hl 0xa62b;put 0x65e1 !q.hl 1;hl 0xa62e;put 0x65e6 !q.hl 0;
+     frame 0;c(read !q.hl);de 0x7972;call 0x65f0 0x25a9 table_adapter;search())in
+   search();hl(pop());hl(pop())in
   let gate()=
    call 0x65f9 0x654e saved;c 0x26;call 0x65fe 0x01af selector_match;rar();need(not !q.flags.carry)"65F9 selector26 arm"in
-  call 0x6619 0x65f9 gate;c 0x5c;call 0x661e 0x01af selector_match;rar();need(not !q.flags.carry)"6619 selector5C arm"in
+  if repeat_only then saved()else( call 0x6619 0x65f9 gate;c 0x5c;call 0x661e 0x01af selector_match;rar();need(not !q.flags.carry)"6619 selector5C arm")in
  let recursive_spine()=
   call 0x4f54 0x4cc2(fun()->c 0x28;call 0x4cc4 0x01af selector_match;rar();need !q.flags.carry "4CC2 selector mismatch";a 1);
   rar();need !q.flags.carry "4F54 literal-zero arm";call 0x4f5b 0x6619 counted_spine;
@@ -469,5 +501,5 @@ let run operation memory ~entry ~write ~compatibility ~adjust ~sp ~guard_field ~
   frame 2;e(read !q.hl);hl(U.wrap(!q.hl+1));de(read !q.hl lsl 8 lor(!q.de land 255));exchange();store 0x618d 0xa6cb !q.hl;
   de(U.wrap(!q.de+1));a(read !q.de);put 0x6192 0xa6ca !q.a;de(U.wrap(!q.de-3));a(read !q.de);
   adjust ~site:0x8399 ~delta:1;hl(pop());hl(pop())in
- (match operation with Context->context()|Field->field_acquisition()|Attribute->attribute_dispatch()|Spine->recursive_spine()|Resident->reuse H.Resident_acquisition);
+ (match operation with Context->context()|Field->field_acquisition()|Attribute->attribute_dispatch()|Spine->recursive_spine()|Resident->reuse H.Resident_acquisition|Pair_gate->pair_gate()|Selected_transform->selected_transform()|Table_adapter->table_adapter()|Wrapper->counted_spine()|Repeat->counted_spine ~repeat_only:true ());
  {returned= !q;field= !acquired_field}

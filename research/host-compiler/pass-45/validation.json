@@ -1,0 +1,169 @@
+{
+  "status": "all required incremental categories passed",
+  "validation_tier": "incremental",
+  "full_checkpoint_base": "430b75bb82187216731f26588b3bfb48e6fed435",
+  "checkpoint_trigger": null,
+  "category_count": 23,
+  "python_test_count": 104,
+  "dune_test_stanzas": 37,
+  "workers": [
+    4,
+    2
+  ],
+  "validation_wall_seconds": 241.733,
+  "sum_category_seconds": 671.147,
+  "aggregate_commands": 2,
+  "attempts": [
+    {
+      "wall_seconds": 149.783,
+      "passed": 21,
+      "categories": 23,
+      "failures": [
+        "Pass39 catalog epoch assertion",
+        "Pass43 catalog epoch assertion"
+      ]
+    },
+    {
+      "wall_seconds": 91.95,
+      "passed": 8,
+      "categories": 8,
+      "reason": "only affected catalog epoch/local/V1 integrity categories rerun"
+    }
+  ],
+  "categories": {
+    "build": {
+      "elapsed_seconds": 0.319,
+      "python_tests": 0,
+      "passed": true
+    },
+    "project": {
+      "elapsed_seconds": 0.261,
+      "python_tests": 0,
+      "passed": true
+    },
+    "recursive-unit": {
+      "elapsed_seconds": 0.016,
+      "python_tests": 0,
+      "passed": true
+    },
+    "mapped-unit": {
+      "elapsed_seconds": 0.019,
+      "python_tests": 0,
+      "passed": true
+    },
+    "word-emitter-unit": {
+      "elapsed_seconds": 0.11,
+      "python_tests": 0,
+      "passed": true
+    },
+    "range-unit": {
+      "elapsed_seconds": 0.097,
+      "python_tests": 0,
+      "passed": true
+    },
+    "input-unit": {
+      "elapsed_seconds": 0.112,
+      "python_tests": 0,
+      "passed": true
+    },
+    "gate-unit": {
+      "elapsed_seconds": 0.294,
+      "python_tests": 0,
+      "passed": true
+    },
+    "roundtrip": {
+      "elapsed_seconds": 13.206,
+      "python_tests": 0,
+      "passed": true
+    },
+    "V1": {
+      "elapsed_seconds": 19.473,
+      "python_tests": 9,
+      "passed": true
+    },
+    "pass38": {
+      "elapsed_seconds": 52.472,
+      "python_tests": 19,
+      "passed": true
+    },
+    "acquisition-parent-unit": {
+      "elapsed_seconds": 0.002,
+      "python_tests": 0,
+      "passed": true
+    },
+    "pass44-roots": {
+      "elapsed_seconds": 2.469,
+      "python_tests": 3,
+      "passed": true
+    },
+    "pass39": {
+      "elapsed_seconds": 36.735,
+      "python_tests": 19,
+      "passed": true
+    },
+    "pass44-family": {
+      "elapsed_seconds": 6.601,
+      "python_tests": 4,
+      "passed": true
+    },
+    "pass44-numeric": {
+      "elapsed_seconds": 22.408,
+      "python_tests": 5,
+      "passed": true
+    },
+    "pass45-local": {
+      "elapsed_seconds": 5.854,
+      "python_tests": 2,
+      "passed": true
+    },
+    "pass43": {
+      "elapsed_seconds": 71.894,
+      "python_tests": 8,
+      "passed": true
+    },
+    "classifier-unit": {
+      "elapsed_seconds": 0.084,
+      "python_tests": 0,
+      "passed": true
+    },
+    "diff-check": {
+      "elapsed_seconds": 0.041,
+      "python_tests": 0,
+      "passed": true
+    },
+    "pass44-hybrids": {
+      "elapsed_seconds": 54.593,
+      "python_tests": 5,
+      "passed": true
+    },
+    "packet-continuation": {
+      "elapsed_seconds": 140.741,
+      "python_tests": 27,
+      "passed": true
+    },
+    "pass45-root": {
+      "elapsed_seconds": 57.68,
+      "python_tests": 3,
+      "passed": true
+    }
+  },
+  "exact_reconstruction_bytes": 94720,
+  "driver_consistency_seconds": 101.396,
+  "oracle_queries": 0,
+  "scope_extension": true,
+  "historical_correction": null,
+  "pragmatic_divergence": null,
+  "fidelity_debt": null,
+  "epoch_assertion_repairs": [
+    "Pass38 retains clear654E epoch and current RAW sibling assertions",
+    "Pass39 references immutable pre-Pass45 654E contract",
+    "Pass43 compares catalog by identity at its own epoch; newly bounded procedures have separate proofs"
+  ],
+  "deferred_categories": [
+    "unrelated full MINIMAL baseline Pass1..12 suites",
+    "unrelated old Pass13..31/Pass32..37/Pass40..42 Python archaeology suites; reused native operations tested through Dune, complete Pass44 and current hybrids",
+    "full checkpoint dynamic-progress comparison; generated metadata is finalized and exact image/V1 verification passed"
+  ],
+  "next_full_checkpoint": "by approximately Pass47 unless a trigger occurs",
+  "scripts_view_optimist_untouched": true
+}

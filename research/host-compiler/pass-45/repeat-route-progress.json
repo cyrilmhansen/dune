@@ -1,0 +1,2623 @@
+{
+  "status": "local prefix reconstructed up to first missing child; whole loop not yet proved",
+  "cases": [
+    {
+      "source": "FIZZBUZ",
+      "outer_call": 385246,
+      "child_call": 385248,
+      "found_iterations": 1,
+      "search_calls": 2,
+      "child_sequence": [
+        [
+          "PLI1.OVL+6550",
+          "PLI1.OVL+64F2"
+        ],
+        [
+          "PLI1.OVL+6556",
+          "PLI1.OVL+57B7"
+        ],
+        [
+          "PLI1.OVL+6565",
+          "PLI1.OVL+784E"
+        ],
+        [
+          "PLI1.OVL+6578",
+          "PLI1.OVL+64F2"
+        ],
+        [
+          "PLI1.OVL+65A7",
+          "PLI1.OVL+345E"
+        ],
+        [
+          "PLI1.OVL+65CE",
+          "PLI1.OVL+239A"
+        ],
+        [
+          "PLI1.OVL+65F0",
+          "PLI1.OVL+25A9"
+        ],
+        [
+          "PLI1.OVL+6556",
+          "PLI1.OVL+57B7"
+        ]
+      ],
+      "prefix_sha256": "75c69038ac3ee25ec6a02f2909477c958a437990150bb3c557498d3ded0b4eea",
+      "prefix_reads": [
+        {
+          "step": 396278,
+          "coordinate": "PLI1.OVL+655D",
+          "reads": [
+            {
+              "address": 43317,
+              "value": 2
+            }
+          ]
+        },
+        {
+          "step": 396539,
+          "coordinate": "PLI1.OVL+6568",
+          "reads": [
+            {
+              "address": 42549,
+              "value": 207
+            },
+            {
+              "address": 42550,
+              "value": 251
+            }
+          ]
+        },
+        {
+          "step": 396546,
+          "coordinate": "PLI1.OVL+6573",
+          "reads": [
+            {
+              "address": 42545,
+              "value": 0
+            }
+          ]
+        },
+        {
+          "step": 400397,
+          "coordinate": "PLI1.OVL+657F",
+          "reads": [
+            {
+              "address": 65474,
+              "value": 0
+            }
+          ]
+        },
+        {
+          "step": 400399,
+          "coordinate": "PLI1.OVL+6583",
+          "reads": [
+            {
+              "address": 42545,
+              "value": 0
+            }
+          ]
+        },
+        {
+          "step": 400403,
+          "coordinate": "PLI1.OVL+658B",
+          "reads": [
+            {
+              "address": 65472,
+              "value": 207
+            }
+          ]
+        },
+        {
+          "step": 400405,
+          "coordinate": "PLI1.OVL+658D",
+          "reads": [
+            {
+              "address": 65473,
+              "value": 251
+            }
+          ]
+        },
+        {
+          "step": 400408,
+          "coordinate": "PLI1.OVL+6592",
+          "reads": [
+            {
+              "address": 42549,
+              "value": 157
+            },
+            {
+              "address": 42550,
+              "value": 251
+            }
+          ]
+        },
+        {
+          "step": 400414,
+          "coordinate": "PLI1.OVL+659D",
+          "reads": [
+            {
+              "address": 65471,
+              "value": 2
+            }
+          ]
+        }
+      ],
+      "prefix_writes": [
+        {
+          "coordinate": "PLI1.OVL+6564",
+          "address": 65471,
+          "value": 2
+        },
+        {
+          "coordinate": "PLI1.OVL+6565",
+          "address": 65470,
+          "value": 135
+        },
+        {
+          "coordinate": "PLI1.OVL+6565",
+          "address": 65469,
+          "value": 104
+        },
+        {
+          "coordinate": "PLI1.OVL+6570",
+          "address": 65472,
+          "value": 207
+        },
+        {
+          "coordinate": "PLI1.OVL+6572",
+          "address": 65473,
+          "value": 251
+        },
+        {
+          "coordinate": "PLI1.OVL+6577",
+          "address": 65474,
+          "value": 0
+        },
+        {
+          "coordinate": "PLI1.OVL+6578",
+          "address": 65470,
+          "value": 135
+        },
+        {
+          "coordinate": "PLI1.OVL+6578",
+          "address": 65469,
+          "value": 123
+        },
+        {
+          "coordinate": "PLI1.OVL+6580",
+          "address": 42546,
+          "value": 0
+        },
+        {
+          "coordinate": "PLI1.OVL+6586",
+          "address": 42547,
+          "value": 0
+        },
+        {
+          "coordinate": "PLI1.OVL+658F",
+          "address": 42551,
+          "value": 207
+        },
+        {
+          "coordinate": "PLI1.OVL+658F",
+          "address": 42552,
+          "value": 251
+        },
+        {
+          "coordinate": "PLI1.OVL+6595",
+          "address": 42553,
+          "value": 157
+        },
+        {
+          "coordinate": "PLI1.OVL+6595",
+          "address": 42554,
+          "value": 251
+        }
+      ],
+      "branch_checks": [
+        {
+          "coordinate": "PLI1.OVL+659E",
+          "input": {
+            "a": 5,
+            "b": 0,
+            "c": 248,
+            "d": 251,
+            "e": 157,
+            "h": 255,
+            "l": 191,
+            "sp": 65471,
+            "pc": 34718,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "taken": true
+        }
+      ],
+      "acquisition": {
+        "observed_cpu_read_ranges": [
+          [
+            7256,
+            7257
+          ],
+          [
+            7845,
+            7847
+          ],
+          [
+            7942,
+            7943
+          ],
+          [
+            7944,
+            7945
+          ],
+          [
+            8210,
+            8211
+          ],
+          [
+            8335,
+            8336
+          ],
+          [
+            8385,
+            8391
+          ],
+          [
+            8521,
+            8523
+          ],
+          [
+            65463,
+            65471
+          ]
+        ],
+        "observed_cpu_write_ranges": [
+          [
+            7256,
+            7257
+          ],
+          [
+            7942,
+            7943
+          ],
+          [
+            8327,
+            8329
+          ],
+          [
+            8335,
+            8336
+          ],
+          [
+            8385,
+            8388
+          ],
+          [
+            8389,
+            8391
+          ],
+          [
+            8521,
+            8522
+          ],
+          [
+            65463,
+            65469
+          ]
+        ],
+        "cpu_memory_write_count": 53,
+        "cpu_memory_write_chronology_sha256": "bbfd69c25f3f9ac4c468057e6b60174b497d1d5c37e3a66cdeeb52c87b6b500f",
+        "lowest_observed_SP": 65463,
+        "callsite": "PLI1.OVL+6565",
+        "target": "PLI1.OVL+784E",
+        "call_step": 396282,
+        "return_step": 396538,
+        "return_coordinate": "PLI1.OVL+78BB",
+        "entry": {
+          "a": 2,
+          "b": 0,
+          "c": 2,
+          "d": 255,
+          "e": 166,
+          "h": 255,
+          "l": 191,
+          "sp": 65469,
+          "pc": 39502,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "output": {
+          "a": 127,
+          "b": 255,
+          "c": 255,
+          "d": 255,
+          "e": 166,
+          "h": 32,
+          "l": 143,
+          "sp": 65471,
+          "pc": 34664,
+          "flags": {
+            "sign": true,
+            "zero": false,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": true
+          }
+        },
+        "instruction_occurrences": 256
+      },
+      "second_wrapper": {
+        "observed_cpu_read_ranges": [
+          [
+            6992,
+            6993
+          ],
+          [
+            7010,
+            7011
+          ],
+          [
+            7222,
+            7224
+          ],
+          [
+            7254,
+            7259
+          ],
+          [
+            7847,
+            7852
+          ],
+          [
+            7942,
+            7943
+          ],
+          [
+            7944,
+            7945
+          ],
+          [
+            8210,
+            8211
+          ],
+          [
+            8335,
+            8336
+          ],
+          [
+            8385,
+            8394
+          ],
+          [
+            8645,
+            8646
+          ],
+          [
+            31011,
+            31012
+          ],
+          [
+            31056,
+            31060
+          ],
+          [
+            31063,
+            31066
+          ],
+          [
+            31072,
+            31075
+          ],
+          [
+            38806,
+            38807
+          ],
+          [
+            38810,
+            38811
+          ],
+          [
+            38815,
+            38816
+          ],
+          [
+            38820,
+            38821
+          ],
+          [
+            38825,
+            38826
+          ],
+          [
+            38830,
+            38831
+          ],
+          [
+            38835,
+            38836
+          ],
+          [
+            38840,
+            38841
+          ],
+          [
+            38845,
+            38846
+          ],
+          [
+            38850,
+            38851
+          ],
+          [
+            38855,
+            38856
+          ],
+          [
+            38860,
+            38861
+          ],
+          [
+            38865,
+            38866
+          ],
+          [
+            38870,
+            38871
+          ],
+          [
+            38875,
+            38876
+          ],
+          [
+            38880,
+            38881
+          ],
+          [
+            38884,
+            38886
+          ],
+          [
+            38890,
+            38891
+          ],
+          [
+            38893,
+            38896
+          ],
+          [
+            38900,
+            38901
+          ],
+          [
+            38905,
+            38906
+          ],
+          [
+            38910,
+            38911
+          ],
+          [
+            38915,
+            38916
+          ],
+          [
+            38920,
+            38927
+          ],
+          [
+            39482,
+            39484
+          ],
+          [
+            42415,
+            42416
+          ],
+          [
+            42536,
+            42537
+          ],
+          [
+            42539,
+            42540
+          ],
+          [
+            42542,
+            42543
+          ],
+          [
+            42555,
+            42557
+          ],
+          [
+            42567,
+            42568
+          ],
+          [
+            42571,
+            42575
+          ],
+          [
+            42578,
+            42581
+          ],
+          [
+            42848,
+            42850
+          ],
+          [
+            42945,
+            42947
+          ],
+          [
+            43107,
+            43109
+          ],
+          [
+            43179,
+            43181
+          ],
+          [
+            43254,
+            43255
+          ],
+          [
+            43261,
+            43268
+          ],
+          [
+            43280,
+            43283
+          ],
+          [
+            43316,
+            43321
+          ],
+          [
+            43542,
+            43547
+          ],
+          [
+            43555,
+            43558
+          ],
+          [
+            43703,
+            43704
+          ],
+          [
+            43705,
+            43706
+          ],
+          [
+            44149,
+            44151
+          ],
+          [
+            44298,
+            44300
+          ],
+          [
+            44447,
+            44449
+          ],
+          [
+            44594,
+            44599
+          ],
+          [
+            44601,
+            44615
+          ],
+          [
+            44628,
+            44633
+          ],
+          [
+            44650,
+            44652
+          ],
+          [
+            65443,
+            65460
+          ],
+          [
+            65461,
+            65463
+          ],
+          [
+            65464,
+            65466
+          ],
+          [
+            65467,
+            65471
+          ]
+        ],
+        "observed_cpu_write_ranges": [
+          [
+            7222,
+            7224
+          ],
+          [
+            7256,
+            7259
+          ],
+          [
+            7942,
+            7943
+          ],
+          [
+            8327,
+            8329
+          ],
+          [
+            8335,
+            8336
+          ],
+          [
+            8385,
+            8388
+          ],
+          [
+            8389,
+            8394
+          ],
+          [
+            42415,
+            42416
+          ],
+          [
+            42536,
+            42537
+          ],
+          [
+            42539,
+            42540
+          ],
+          [
+            42542,
+            42543
+          ],
+          [
+            42545,
+            42546
+          ],
+          [
+            42549,
+            42551
+          ],
+          [
+            42555,
+            42557
+          ],
+          [
+            42567,
+            42568
+          ],
+          [
+            42571,
+            42574
+          ],
+          [
+            42578,
+            42580
+          ],
+          [
+            42848,
+            42849
+          ],
+          [
+            42945,
+            42947
+          ],
+          [
+            43107,
+            43109
+          ],
+          [
+            43254,
+            43255
+          ],
+          [
+            43261,
+            43268
+          ],
+          [
+            43279,
+            43282
+          ],
+          [
+            43316,
+            43321
+          ],
+          [
+            43542,
+            43546
+          ],
+          [
+            43556,
+            43558
+          ],
+          [
+            43703,
+            43704
+          ],
+          [
+            43705,
+            43706
+          ],
+          [
+            43855,
+            43857
+          ],
+          [
+            43859,
+            43861
+          ],
+          [
+            44150,
+            44151
+          ],
+          [
+            44152,
+            44153
+          ],
+          [
+            44299,
+            44300
+          ],
+          [
+            44301,
+            44302
+          ],
+          [
+            44448,
+            44449
+          ],
+          [
+            44450,
+            44451
+          ],
+          [
+            44594,
+            44596
+          ],
+          [
+            44597,
+            44598
+          ],
+          [
+            44601,
+            44615
+          ],
+          [
+            44628,
+            44632
+          ],
+          [
+            44650,
+            44651
+          ],
+          [
+            64413,
+            64424
+          ],
+          [
+            65443,
+            65460
+          ],
+          [
+            65461,
+            65463
+          ],
+          [
+            65464,
+            65466
+          ],
+          [
+            65467,
+            65469
+          ]
+        ],
+        "cpu_memory_write_count": 785,
+        "cpu_memory_write_chronology_sha256": "1ff59c808ad7c4f8b7c2b62f6e1590ba421ad4874ea170a9be7ca2eb21a7577c",
+        "lowest_observed_SP": 65443,
+        "callsite": "PLI1.OVL+6578",
+        "target": "PLI1.OVL+64F2",
+        "call_step": 396549,
+        "return_step": 400394,
+        "return_coordinate": "PLI1.OVL+654D",
+        "entry": {
+          "a": 0,
+          "b": 255,
+          "c": 255,
+          "d": 251,
+          "e": 207,
+          "h": 255,
+          "l": 194,
+          "sp": 65469,
+          "pc": 34546,
+          "flags": {
+            "sign": true,
+            "zero": false,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "output": {
+          "a": 128,
+          "b": 0,
+          "c": 248,
+          "d": 251,
+          "e": 0,
+          "h": 165,
+          "l": 175,
+          "sp": 65471,
+          "pc": 34683,
+          "flags": {
+            "sign": true,
+            "zero": false,
+            "auxiliary_carry": false,
+            "parity": false,
+            "carry": false
+          }
+        },
+        "instruction_occurrences": 3845
+      },
+      "proof_scope": "local prefix equations and established64F2 law; no full repeat reconstruction before345E contract"
+    },
+    {
+      "source": "FIZZBUZ",
+      "outer_call": 455166,
+      "child_call": 455168,
+      "found_iterations": 1,
+      "search_calls": 2,
+      "child_sequence": [
+        [
+          "PLI1.OVL+6550",
+          "PLI1.OVL+64F2"
+        ],
+        [
+          "PLI1.OVL+6556",
+          "PLI1.OVL+57B7"
+        ],
+        [
+          "PLI1.OVL+6565",
+          "PLI1.OVL+784E"
+        ],
+        [
+          "PLI1.OVL+6578",
+          "PLI1.OVL+64F2"
+        ],
+        [
+          "PLI1.OVL+65A7",
+          "PLI1.OVL+345E"
+        ],
+        [
+          "PLI1.OVL+65CE",
+          "PLI1.OVL+239A"
+        ],
+        [
+          "PLI1.OVL+65F0",
+          "PLI1.OVL+25A9"
+        ],
+        [
+          "PLI1.OVL+6556",
+          "PLI1.OVL+57B7"
+        ]
+      ],
+      "prefix_sha256": "df5cef1ab068553c5f87d678e57a16191abae16c4043ed6d643367daf4921574",
+      "prefix_reads": [
+        {
+          "step": 466018,
+          "coordinate": "PLI1.OVL+655D",
+          "reads": [
+            {
+              "address": 43317,
+              "value": 2
+            }
+          ]
+        },
+        {
+          "step": 466279,
+          "coordinate": "PLI1.OVL+6568",
+          "reads": [
+            {
+              "address": 42549,
+              "value": 207
+            },
+            {
+              "address": 42550,
+              "value": 251
+            }
+          ]
+        },
+        {
+          "step": 466286,
+          "coordinate": "PLI1.OVL+6573",
+          "reads": [
+            {
+              "address": 42545,
+              "value": 0
+            }
+          ]
+        },
+        {
+          "step": 470043,
+          "coordinate": "PLI1.OVL+657F",
+          "reads": [
+            {
+              "address": 65470,
+              "value": 0
+            }
+          ]
+        },
+        {
+          "step": 470045,
+          "coordinate": "PLI1.OVL+6583",
+          "reads": [
+            {
+              "address": 42545,
+              "value": 0
+            }
+          ]
+        },
+        {
+          "step": 470049,
+          "coordinate": "PLI1.OVL+658B",
+          "reads": [
+            {
+              "address": 65468,
+              "value": 207
+            }
+          ]
+        },
+        {
+          "step": 470051,
+          "coordinate": "PLI1.OVL+658D",
+          "reads": [
+            {
+              "address": 65469,
+              "value": 251
+            }
+          ]
+        },
+        {
+          "step": 470054,
+          "coordinate": "PLI1.OVL+6592",
+          "reads": [
+            {
+              "address": 42549,
+              "value": 157
+            },
+            {
+              "address": 42550,
+              "value": 251
+            }
+          ]
+        },
+        {
+          "step": 470060,
+          "coordinate": "PLI1.OVL+659D",
+          "reads": [
+            {
+              "address": 65467,
+              "value": 2
+            }
+          ]
+        }
+      ],
+      "prefix_writes": [
+        {
+          "coordinate": "PLI1.OVL+6564",
+          "address": 65467,
+          "value": 2
+        },
+        {
+          "coordinate": "PLI1.OVL+6565",
+          "address": 65466,
+          "value": 135
+        },
+        {
+          "coordinate": "PLI1.OVL+6565",
+          "address": 65465,
+          "value": 104
+        },
+        {
+          "coordinate": "PLI1.OVL+6570",
+          "address": 65468,
+          "value": 207
+        },
+        {
+          "coordinate": "PLI1.OVL+6572",
+          "address": 65469,
+          "value": 251
+        },
+        {
+          "coordinate": "PLI1.OVL+6577",
+          "address": 65470,
+          "value": 0
+        },
+        {
+          "coordinate": "PLI1.OVL+6578",
+          "address": 65466,
+          "value": 135
+        },
+        {
+          "coordinate": "PLI1.OVL+6578",
+          "address": 65465,
+          "value": 123
+        },
+        {
+          "coordinate": "PLI1.OVL+6580",
+          "address": 42546,
+          "value": 0
+        },
+        {
+          "coordinate": "PLI1.OVL+6586",
+          "address": 42547,
+          "value": 0
+        },
+        {
+          "coordinate": "PLI1.OVL+658F",
+          "address": 42551,
+          "value": 207
+        },
+        {
+          "coordinate": "PLI1.OVL+658F",
+          "address": 42552,
+          "value": 251
+        },
+        {
+          "coordinate": "PLI1.OVL+6595",
+          "address": 42553,
+          "value": 157
+        },
+        {
+          "coordinate": "PLI1.OVL+6595",
+          "address": 42554,
+          "value": 251
+        }
+      ],
+      "branch_checks": [
+        {
+          "coordinate": "PLI1.OVL+659E",
+          "input": {
+            "a": 5,
+            "b": 0,
+            "c": 248,
+            "d": 251,
+            "e": 157,
+            "h": 255,
+            "l": 187,
+            "sp": 65467,
+            "pc": 34718,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "taken": true
+        }
+      ],
+      "acquisition": {
+        "observed_cpu_read_ranges": [
+          [
+            7256,
+            7257
+          ],
+          [
+            7849,
+            7851
+          ],
+          [
+            7942,
+            7943
+          ],
+          [
+            7944,
+            7945
+          ],
+          [
+            8210,
+            8211
+          ],
+          [
+            8335,
+            8336
+          ],
+          [
+            8385,
+            8391
+          ],
+          [
+            8521,
+            8523
+          ],
+          [
+            65459,
+            65467
+          ]
+        ],
+        "observed_cpu_write_ranges": [
+          [
+            7256,
+            7257
+          ],
+          [
+            7942,
+            7943
+          ],
+          [
+            8327,
+            8329
+          ],
+          [
+            8335,
+            8336
+          ],
+          [
+            8385,
+            8388
+          ],
+          [
+            8389,
+            8391
+          ],
+          [
+            8521,
+            8522
+          ],
+          [
+            65459,
+            65465
+          ]
+        ],
+        "cpu_memory_write_count": 53,
+        "cpu_memory_write_chronology_sha256": "b3600e5a764229f9e70735be462cee46594b42a25457c3933b761be16fa3cb00",
+        "lowest_observed_SP": 65459,
+        "callsite": "PLI1.OVL+6565",
+        "target": "PLI1.OVL+784E",
+        "call_step": 466022,
+        "return_step": 466278,
+        "return_coordinate": "PLI1.OVL+78BB",
+        "entry": {
+          "a": 2,
+          "b": 0,
+          "c": 2,
+          "d": 255,
+          "e": 162,
+          "h": 255,
+          "l": 187,
+          "sp": 65465,
+          "pc": 39502,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "output": {
+          "a": 127,
+          "b": 255,
+          "c": 255,
+          "d": 255,
+          "e": 162,
+          "h": 32,
+          "l": 143,
+          "sp": 65467,
+          "pc": 34664,
+          "flags": {
+            "sign": true,
+            "zero": false,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": true
+          }
+        },
+        "instruction_occurrences": 256
+      },
+      "second_wrapper": {
+        "observed_cpu_read_ranges": [
+          [
+            6992,
+            6993
+          ],
+          [
+            7010,
+            7011
+          ],
+          [
+            7222,
+            7224
+          ],
+          [
+            7254,
+            7259
+          ],
+          [
+            7851,
+            7856
+          ],
+          [
+            7942,
+            7943
+          ],
+          [
+            7944,
+            7945
+          ],
+          [
+            8210,
+            8211
+          ],
+          [
+            8335,
+            8336
+          ],
+          [
+            8385,
+            8394
+          ],
+          [
+            8645,
+            8646
+          ],
+          [
+            31011,
+            31012
+          ],
+          [
+            31056,
+            31060
+          ],
+          [
+            31063,
+            31066
+          ],
+          [
+            31072,
+            31075
+          ],
+          [
+            38806,
+            38807
+          ],
+          [
+            38810,
+            38811
+          ],
+          [
+            38815,
+            38816
+          ],
+          [
+            38820,
+            38821
+          ],
+          [
+            38825,
+            38826
+          ],
+          [
+            38830,
+            38831
+          ],
+          [
+            38835,
+            38836
+          ],
+          [
+            38840,
+            38841
+          ],
+          [
+            38845,
+            38846
+          ],
+          [
+            38850,
+            38851
+          ],
+          [
+            38855,
+            38856
+          ],
+          [
+            38860,
+            38861
+          ],
+          [
+            38865,
+            38866
+          ],
+          [
+            38870,
+            38871
+          ],
+          [
+            38875,
+            38876
+          ],
+          [
+            38880,
+            38881
+          ],
+          [
+            38884,
+            38886
+          ],
+          [
+            38890,
+            38891
+          ],
+          [
+            38893,
+            38896
+          ],
+          [
+            38900,
+            38901
+          ],
+          [
+            38905,
+            38906
+          ],
+          [
+            38910,
+            38911
+          ],
+          [
+            38915,
+            38916
+          ],
+          [
+            38920,
+            38927
+          ],
+          [
+            39482,
+            39484
+          ],
+          [
+            42415,
+            42416
+          ],
+          [
+            42536,
+            42537
+          ],
+          [
+            42539,
+            42540
+          ],
+          [
+            42542,
+            42543
+          ],
+          [
+            42555,
+            42557
+          ],
+          [
+            42567,
+            42568
+          ],
+          [
+            42571,
+            42575
+          ],
+          [
+            42578,
+            42581
+          ],
+          [
+            42848,
+            42850
+          ],
+          [
+            42945,
+            42947
+          ],
+          [
+            43107,
+            43109
+          ],
+          [
+            43179,
+            43181
+          ],
+          [
+            43265,
+            43268
+          ],
+          [
+            43269,
+            43274
+          ],
+          [
+            43279,
+            43280
+          ],
+          [
+            43281,
+            43283
+          ],
+          [
+            43316,
+            43321
+          ],
+          [
+            43542,
+            43547
+          ],
+          [
+            43555,
+            43558
+          ],
+          [
+            43702,
+            43704
+          ],
+          [
+            44148,
+            44150
+          ],
+          [
+            44297,
+            44299
+          ],
+          [
+            44446,
+            44448
+          ],
+          [
+            44594,
+            44599
+          ],
+          [
+            44601,
+            44615
+          ],
+          [
+            44628,
+            44633
+          ],
+          [
+            44650,
+            44652
+          ],
+          [
+            64413,
+            64414
+          ],
+          [
+            64415,
+            64416
+          ],
+          [
+            64423,
+            64424
+          ],
+          [
+            65439,
+            65456
+          ],
+          [
+            65457,
+            65459
+          ],
+          [
+            65460,
+            65462
+          ],
+          [
+            65463,
+            65467
+          ]
+        ],
+        "observed_cpu_write_ranges": [
+          [
+            7256,
+            7259
+          ],
+          [
+            7942,
+            7943
+          ],
+          [
+            8327,
+            8329
+          ],
+          [
+            8335,
+            8336
+          ],
+          [
+            8385,
+            8388
+          ],
+          [
+            8389,
+            8394
+          ],
+          [
+            42415,
+            42416
+          ],
+          [
+            42536,
+            42537
+          ],
+          [
+            42539,
+            42540
+          ],
+          [
+            42542,
+            42543
+          ],
+          [
+            42545,
+            42546
+          ],
+          [
+            42549,
+            42551
+          ],
+          [
+            42555,
+            42557
+          ],
+          [
+            42567,
+            42568
+          ],
+          [
+            42571,
+            42574
+          ],
+          [
+            42578,
+            42580
+          ],
+          [
+            42848,
+            42849
+          ],
+          [
+            43107,
+            43109
+          ],
+          [
+            43265,
+            43268
+          ],
+          [
+            43269,
+            43273
+          ],
+          [
+            43279,
+            43280
+          ],
+          [
+            43281,
+            43282
+          ],
+          [
+            43316,
+            43321
+          ],
+          [
+            43542,
+            43546
+          ],
+          [
+            43556,
+            43558
+          ],
+          [
+            43702,
+            43704
+          ],
+          [
+            43853,
+            43857
+          ],
+          [
+            44149,
+            44151
+          ],
+          [
+            44298,
+            44300
+          ],
+          [
+            44447,
+            44449
+          ],
+          [
+            44594,
+            44596
+          ],
+          [
+            44597,
+            44598
+          ],
+          [
+            44601,
+            44615
+          ],
+          [
+            44628,
+            44632
+          ],
+          [
+            44650,
+            44651
+          ],
+          [
+            64417,
+            64419
+          ],
+          [
+            65439,
+            65456
+          ],
+          [
+            65457,
+            65459
+          ],
+          [
+            65460,
+            65462
+          ],
+          [
+            65463,
+            65465
+          ]
+        ],
+        "cpu_memory_write_count": 748,
+        "cpu_memory_write_chronology_sha256": "ae33c792b7ca4749da88d269b6f6c938b4e67ef915181249eccc813653223c85",
+        "lowest_observed_SP": 65439,
+        "callsite": "PLI1.OVL+6578",
+        "target": "PLI1.OVL+64F2",
+        "call_step": 466289,
+        "return_step": 470040,
+        "return_coordinate": "PLI1.OVL+654D",
+        "entry": {
+          "a": 0,
+          "b": 255,
+          "c": 255,
+          "d": 251,
+          "e": 207,
+          "h": 255,
+          "l": 190,
+          "sp": 65465,
+          "pc": 34546,
+          "flags": {
+            "sign": true,
+            "zero": false,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "output": {
+          "a": 128,
+          "b": 0,
+          "c": 248,
+          "d": 251,
+          "e": 0,
+          "h": 165,
+          "l": 175,
+          "sp": 65467,
+          "pc": 34683,
+          "flags": {
+            "sign": true,
+            "zero": false,
+            "auxiliary_carry": false,
+            "parity": false,
+            "carry": false
+          }
+        },
+        "instruction_occurrences": 3751
+      },
+      "proof_scope": "local prefix equations and established64F2 law; no full repeat reconstruction before345E contract"
+    },
+    {
+      "source": "FIZZBUZ",
+      "outer_call": 521964,
+      "child_call": 521966,
+      "found_iterations": 1,
+      "search_calls": 2,
+      "child_sequence": [
+        [
+          "PLI1.OVL+6550",
+          "PLI1.OVL+64F2"
+        ],
+        [
+          "PLI1.OVL+6556",
+          "PLI1.OVL+57B7"
+        ],
+        [
+          "PLI1.OVL+6565",
+          "PLI1.OVL+784E"
+        ],
+        [
+          "PLI1.OVL+6578",
+          "PLI1.OVL+64F2"
+        ],
+        [
+          "PLI1.OVL+65A7",
+          "PLI1.OVL+345E"
+        ],
+        [
+          "PLI1.OVL+65CE",
+          "PLI1.OVL+239A"
+        ],
+        [
+          "PLI1.OVL+65F0",
+          "PLI1.OVL+25A9"
+        ],
+        [
+          "PLI1.OVL+6556",
+          "PLI1.OVL+57B7"
+        ]
+      ],
+      "prefix_sha256": "a8824c6813daae93e668bde6da0c1410770b76e0a2f4ee882826cca3bc838614",
+      "prefix_reads": [
+        {
+          "step": 532816,
+          "coordinate": "PLI1.OVL+655D",
+          "reads": [
+            {
+              "address": 43317,
+              "value": 2
+            }
+          ]
+        },
+        {
+          "step": 533077,
+          "coordinate": "PLI1.OVL+6568",
+          "reads": [
+            {
+              "address": 42549,
+              "value": 207
+            },
+            {
+              "address": 42550,
+              "value": 251
+            }
+          ]
+        },
+        {
+          "step": 533084,
+          "coordinate": "PLI1.OVL+6573",
+          "reads": [
+            {
+              "address": 42545,
+              "value": 0
+            }
+          ]
+        },
+        {
+          "step": 536841,
+          "coordinate": "PLI1.OVL+657F",
+          "reads": [
+            {
+              "address": 65466,
+              "value": 0
+            }
+          ]
+        },
+        {
+          "step": 536843,
+          "coordinate": "PLI1.OVL+6583",
+          "reads": [
+            {
+              "address": 42545,
+              "value": 0
+            }
+          ]
+        },
+        {
+          "step": 536847,
+          "coordinate": "PLI1.OVL+658B",
+          "reads": [
+            {
+              "address": 65464,
+              "value": 207
+            }
+          ]
+        },
+        {
+          "step": 536849,
+          "coordinate": "PLI1.OVL+658D",
+          "reads": [
+            {
+              "address": 65465,
+              "value": 251
+            }
+          ]
+        },
+        {
+          "step": 536852,
+          "coordinate": "PLI1.OVL+6592",
+          "reads": [
+            {
+              "address": 42549,
+              "value": 157
+            },
+            {
+              "address": 42550,
+              "value": 251
+            }
+          ]
+        },
+        {
+          "step": 536858,
+          "coordinate": "PLI1.OVL+659D",
+          "reads": [
+            {
+              "address": 65463,
+              "value": 2
+            }
+          ]
+        }
+      ],
+      "prefix_writes": [
+        {
+          "coordinate": "PLI1.OVL+6564",
+          "address": 65463,
+          "value": 2
+        },
+        {
+          "coordinate": "PLI1.OVL+6565",
+          "address": 65462,
+          "value": 135
+        },
+        {
+          "coordinate": "PLI1.OVL+6565",
+          "address": 65461,
+          "value": 104
+        },
+        {
+          "coordinate": "PLI1.OVL+6570",
+          "address": 65464,
+          "value": 207
+        },
+        {
+          "coordinate": "PLI1.OVL+6572",
+          "address": 65465,
+          "value": 251
+        },
+        {
+          "coordinate": "PLI1.OVL+6577",
+          "address": 65466,
+          "value": 0
+        },
+        {
+          "coordinate": "PLI1.OVL+6578",
+          "address": 65462,
+          "value": 135
+        },
+        {
+          "coordinate": "PLI1.OVL+6578",
+          "address": 65461,
+          "value": 123
+        },
+        {
+          "coordinate": "PLI1.OVL+6580",
+          "address": 42546,
+          "value": 0
+        },
+        {
+          "coordinate": "PLI1.OVL+6586",
+          "address": 42547,
+          "value": 0
+        },
+        {
+          "coordinate": "PLI1.OVL+658F",
+          "address": 42551,
+          "value": 207
+        },
+        {
+          "coordinate": "PLI1.OVL+658F",
+          "address": 42552,
+          "value": 251
+        },
+        {
+          "coordinate": "PLI1.OVL+6595",
+          "address": 42553,
+          "value": 157
+        },
+        {
+          "coordinate": "PLI1.OVL+6595",
+          "address": 42554,
+          "value": 251
+        }
+      ],
+      "branch_checks": [
+        {
+          "coordinate": "PLI1.OVL+659E",
+          "input": {
+            "a": 5,
+            "b": 0,
+            "c": 248,
+            "d": 251,
+            "e": 157,
+            "h": 255,
+            "l": 183,
+            "sp": 65463,
+            "pc": 34718,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "taken": true
+        }
+      ],
+      "acquisition": {
+        "observed_cpu_read_ranges": [
+          [
+            7256,
+            7257
+          ],
+          [
+            7849,
+            7851
+          ],
+          [
+            7942,
+            7943
+          ],
+          [
+            7944,
+            7945
+          ],
+          [
+            8210,
+            8211
+          ],
+          [
+            8335,
+            8336
+          ],
+          [
+            8385,
+            8391
+          ],
+          [
+            8521,
+            8523
+          ],
+          [
+            65455,
+            65463
+          ]
+        ],
+        "observed_cpu_write_ranges": [
+          [
+            7256,
+            7257
+          ],
+          [
+            7942,
+            7943
+          ],
+          [
+            8327,
+            8329
+          ],
+          [
+            8335,
+            8336
+          ],
+          [
+            8385,
+            8388
+          ],
+          [
+            8389,
+            8391
+          ],
+          [
+            8521,
+            8522
+          ],
+          [
+            65455,
+            65461
+          ]
+        ],
+        "cpu_memory_write_count": 53,
+        "cpu_memory_write_chronology_sha256": "622946cdac640362fb3c2826a53ae4d6cfdacef97fe3c25c039c3d7d71dd35e3",
+        "lowest_observed_SP": 65455,
+        "callsite": "PLI1.OVL+6565",
+        "target": "PLI1.OVL+784E",
+        "call_step": 532820,
+        "return_step": 533076,
+        "return_coordinate": "PLI1.OVL+78BB",
+        "entry": {
+          "a": 2,
+          "b": 0,
+          "c": 2,
+          "d": 255,
+          "e": 158,
+          "h": 255,
+          "l": 183,
+          "sp": 65461,
+          "pc": 39502,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "output": {
+          "a": 127,
+          "b": 255,
+          "c": 255,
+          "d": 255,
+          "e": 158,
+          "h": 32,
+          "l": 143,
+          "sp": 65463,
+          "pc": 34664,
+          "flags": {
+            "sign": true,
+            "zero": false,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": true
+          }
+        },
+        "instruction_occurrences": 256
+      },
+      "second_wrapper": {
+        "observed_cpu_read_ranges": [
+          [
+            6992,
+            6993
+          ],
+          [
+            7010,
+            7011
+          ],
+          [
+            7222,
+            7224
+          ],
+          [
+            7254,
+            7259
+          ],
+          [
+            7851,
+            7856
+          ],
+          [
+            7942,
+            7943
+          ],
+          [
+            7944,
+            7945
+          ],
+          [
+            8210,
+            8211
+          ],
+          [
+            8335,
+            8336
+          ],
+          [
+            8385,
+            8394
+          ],
+          [
+            8645,
+            8646
+          ],
+          [
+            31011,
+            31012
+          ],
+          [
+            31056,
+            31060
+          ],
+          [
+            31063,
+            31066
+          ],
+          [
+            31072,
+            31075
+          ],
+          [
+            38806,
+            38807
+          ],
+          [
+            38810,
+            38811
+          ],
+          [
+            38815,
+            38816
+          ],
+          [
+            38820,
+            38821
+          ],
+          [
+            38825,
+            38826
+          ],
+          [
+            38830,
+            38831
+          ],
+          [
+            38835,
+            38836
+          ],
+          [
+            38840,
+            38841
+          ],
+          [
+            38845,
+            38846
+          ],
+          [
+            38850,
+            38851
+          ],
+          [
+            38855,
+            38856
+          ],
+          [
+            38860,
+            38861
+          ],
+          [
+            38865,
+            38866
+          ],
+          [
+            38870,
+            38871
+          ],
+          [
+            38875,
+            38876
+          ],
+          [
+            38880,
+            38881
+          ],
+          [
+            38884,
+            38886
+          ],
+          [
+            38890,
+            38891
+          ],
+          [
+            38893,
+            38896
+          ],
+          [
+            38900,
+            38901
+          ],
+          [
+            38905,
+            38906
+          ],
+          [
+            38910,
+            38911
+          ],
+          [
+            38915,
+            38916
+          ],
+          [
+            38920,
+            38927
+          ],
+          [
+            39482,
+            39484
+          ],
+          [
+            42415,
+            42416
+          ],
+          [
+            42536,
+            42537
+          ],
+          [
+            42539,
+            42540
+          ],
+          [
+            42542,
+            42543
+          ],
+          [
+            42555,
+            42557
+          ],
+          [
+            42567,
+            42568
+          ],
+          [
+            42571,
+            42575
+          ],
+          [
+            42578,
+            42581
+          ],
+          [
+            42848,
+            42850
+          ],
+          [
+            42945,
+            42947
+          ],
+          [
+            43107,
+            43109
+          ],
+          [
+            43179,
+            43181
+          ],
+          [
+            43265,
+            43268
+          ],
+          [
+            43269,
+            43274
+          ],
+          [
+            43279,
+            43280
+          ],
+          [
+            43281,
+            43283
+          ],
+          [
+            43316,
+            43321
+          ],
+          [
+            43542,
+            43547
+          ],
+          [
+            43555,
+            43558
+          ],
+          [
+            43701,
+            43703
+          ],
+          [
+            44147,
+            44149
+          ],
+          [
+            44296,
+            44298
+          ],
+          [
+            44445,
+            44447
+          ],
+          [
+            44594,
+            44599
+          ],
+          [
+            44601,
+            44615
+          ],
+          [
+            44628,
+            44633
+          ],
+          [
+            44650,
+            44652
+          ],
+          [
+            64413,
+            64414
+          ],
+          [
+            64415,
+            64416
+          ],
+          [
+            64423,
+            64424
+          ],
+          [
+            65435,
+            65452
+          ],
+          [
+            65453,
+            65455
+          ],
+          [
+            65456,
+            65458
+          ],
+          [
+            65459,
+            65463
+          ]
+        ],
+        "observed_cpu_write_ranges": [
+          [
+            7256,
+            7259
+          ],
+          [
+            7942,
+            7943
+          ],
+          [
+            8327,
+            8329
+          ],
+          [
+            8335,
+            8336
+          ],
+          [
+            8385,
+            8388
+          ],
+          [
+            8389,
+            8394
+          ],
+          [
+            42415,
+            42416
+          ],
+          [
+            42536,
+            42537
+          ],
+          [
+            42539,
+            42540
+          ],
+          [
+            42542,
+            42543
+          ],
+          [
+            42545,
+            42546
+          ],
+          [
+            42549,
+            42551
+          ],
+          [
+            42555,
+            42557
+          ],
+          [
+            42567,
+            42568
+          ],
+          [
+            42571,
+            42574
+          ],
+          [
+            42578,
+            42580
+          ],
+          [
+            42848,
+            42849
+          ],
+          [
+            43107,
+            43109
+          ],
+          [
+            43265,
+            43268
+          ],
+          [
+            43269,
+            43273
+          ],
+          [
+            43279,
+            43280
+          ],
+          [
+            43281,
+            43282
+          ],
+          [
+            43316,
+            43321
+          ],
+          [
+            43542,
+            43546
+          ],
+          [
+            43556,
+            43558
+          ],
+          [
+            43701,
+            43703
+          ],
+          [
+            43851,
+            43855
+          ],
+          [
+            44148,
+            44150
+          ],
+          [
+            44297,
+            44299
+          ],
+          [
+            44446,
+            44448
+          ],
+          [
+            44594,
+            44596
+          ],
+          [
+            44597,
+            44598
+          ],
+          [
+            44601,
+            44615
+          ],
+          [
+            44628,
+            44632
+          ],
+          [
+            44650,
+            44651
+          ],
+          [
+            64417,
+            64419
+          ],
+          [
+            65435,
+            65452
+          ],
+          [
+            65453,
+            65455
+          ],
+          [
+            65456,
+            65458
+          ],
+          [
+            65459,
+            65461
+          ]
+        ],
+        "cpu_memory_write_count": 748,
+        "cpu_memory_write_chronology_sha256": "0702e23a06d73e48c4acf73c150113cfc5b3003d945155b93201ebd10fcb6fd2",
+        "lowest_observed_SP": 65435,
+        "callsite": "PLI1.OVL+6578",
+        "target": "PLI1.OVL+64F2",
+        "call_step": 533087,
+        "return_step": 536838,
+        "return_coordinate": "PLI1.OVL+654D",
+        "entry": {
+          "a": 0,
+          "b": 255,
+          "c": 255,
+          "d": 251,
+          "e": 207,
+          "h": 255,
+          "l": 186,
+          "sp": 65461,
+          "pc": 34546,
+          "flags": {
+            "sign": true,
+            "zero": false,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "output": {
+          "a": 128,
+          "b": 0,
+          "c": 248,
+          "d": 251,
+          "e": 0,
+          "h": 165,
+          "l": 175,
+          "sp": 65463,
+          "pc": 34683,
+          "flags": {
+            "sign": true,
+            "zero": false,
+            "auxiliary_carry": false,
+            "parity": false,
+            "carry": false
+          }
+        },
+        "instruction_occurrences": 3751
+      },
+      "proof_scope": "local prefix equations and established64F2 law; no full repeat reconstruction before345E contract"
+    }
+  ],
+  "observed_iterations": [
+    1,
+    1,
+    1
+  ],
+  "observed_search_calls": [
+    2,
+    2,
+    2
+  ],
+  "oracle_queries": 0
+}

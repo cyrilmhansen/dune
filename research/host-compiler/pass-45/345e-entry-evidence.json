@@ -1,0 +1,202 @@
+{
+  "operation": "PLI1.OVL+345E",
+  "first_coordinate": "PLI1.OVL+345E",
+  "runtime": 22110,
+  "caller": "PLI1.OVL+65A7",
+  "entries": [
+    {
+      "source": "FIZZBUZ",
+      "outer_call_step": 385246,
+      "caller": "PLI1.OVL+65A7",
+      "call_step": 400416,
+      "entry": {
+        "a": 5,
+        "b": 0,
+        "c": 248,
+        "d": 251,
+        "e": 157,
+        "h": 255,
+        "l": 191,
+        "sp": 65469,
+        "pc": 22110,
+        "flags": {
+          "sign": false,
+          "zero": false,
+          "auxiliary_carry": true,
+          "parity": true,
+          "carry": false
+        }
+      },
+      "historical_return_step": 402220,
+      "historical_output": {
+        "a": 0,
+        "b": 166,
+        "c": 40,
+        "d": 43,
+        "e": 23,
+        "h": 166,
+        "l": 42,
+        "sp": 65471,
+        "pc": 34730,
+        "flags": {
+          "sign": true,
+          "zero": false,
+          "auxiliary_carry": false,
+          "parity": true,
+          "carry": true
+        }
+      },
+      "call_bytes": "CD5E56",
+      "hardware_call_writes": [
+        {
+          "address": 65470,
+          "old_value": null,
+          "new_value": 135
+        },
+        {
+          "address": 65469,
+          "old_value": null,
+          "new_value": 170
+        }
+      ],
+      "ancestry": [
+        "663E ->6619",
+        "6619 ->65F9",
+        "65F9 ->654E",
+        "65A7 ->345E"
+      ],
+      "required_route": "first found7969 search, acquisition, second clear64F2, pointer comparison JC clear ->CALL345E",
+      "reason": "No ProcedureHypothesis, bounded evidence contract or canonical host implementation for345E. Its returned A and independent flags feedRAR/JNC at65AA/65AB. Historical outputs are oracle evidence, not implementation semantics."
+    },
+    {
+      "source": "FIZZBUZ",
+      "outer_call_step": 455166,
+      "caller": "PLI1.OVL+65A7",
+      "call_step": 470062,
+      "entry": {
+        "a": 5,
+        "b": 0,
+        "c": 248,
+        "d": 251,
+        "e": 157,
+        "h": 255,
+        "l": 187,
+        "sp": 65465,
+        "pc": 22110,
+        "flags": {
+          "sign": false,
+          "zero": false,
+          "auxiliary_carry": true,
+          "parity": true,
+          "carry": false
+        }
+      },
+      "historical_return_step": 471866,
+      "historical_output": {
+        "a": 0,
+        "b": 166,
+        "c": 40,
+        "d": 43,
+        "e": 23,
+        "h": 166,
+        "l": 42,
+        "sp": 65467,
+        "pc": 34730,
+        "flags": {
+          "sign": true,
+          "zero": false,
+          "auxiliary_carry": false,
+          "parity": true,
+          "carry": true
+        }
+      },
+      "call_bytes": "CD5E56",
+      "hardware_call_writes": [
+        {
+          "address": 65466,
+          "old_value": null,
+          "new_value": 135
+        },
+        {
+          "address": 65465,
+          "old_value": null,
+          "new_value": 170
+        }
+      ],
+      "ancestry": [
+        "663E ->6619",
+        "6619 ->65F9",
+        "65F9 ->654E",
+        "65A7 ->345E"
+      ],
+      "required_route": "first found7969 search, acquisition, second clear64F2, pointer comparison JC clear ->CALL345E",
+      "reason": "No ProcedureHypothesis, bounded evidence contract or canonical host implementation for345E. Its returned A and independent flags feedRAR/JNC at65AA/65AB. Historical outputs are oracle evidence, not implementation semantics."
+    },
+    {
+      "source": "FIZZBUZ",
+      "outer_call_step": 521964,
+      "caller": "PLI1.OVL+65A7",
+      "call_step": 536860,
+      "entry": {
+        "a": 5,
+        "b": 0,
+        "c": 248,
+        "d": 251,
+        "e": 157,
+        "h": 255,
+        "l": 183,
+        "sp": 65461,
+        "pc": 22110,
+        "flags": {
+          "sign": false,
+          "zero": false,
+          "auxiliary_carry": true,
+          "parity": true,
+          "carry": false
+        }
+      },
+      "historical_return_step": 538664,
+      "historical_output": {
+        "a": 0,
+        "b": 166,
+        "c": 40,
+        "d": 43,
+        "e": 23,
+        "h": 166,
+        "l": 42,
+        "sp": 65463,
+        "pc": 34730,
+        "flags": {
+          "sign": true,
+          "zero": false,
+          "auxiliary_carry": false,
+          "parity": true,
+          "carry": true
+        }
+      },
+      "call_bytes": "CD5E56",
+      "hardware_call_writes": [
+        {
+          "address": 65462,
+          "old_value": null,
+          "new_value": 135
+        },
+        {
+          "address": 65461,
+          "old_value": null,
+          "new_value": 170
+        }
+      ],
+      "ancestry": [
+        "663E ->6619",
+        "6619 ->65F9",
+        "65F9 ->654E",
+        "65A7 ->345E"
+      ],
+      "required_route": "first found7969 search, acquisition, second clear64F2, pointer comparison JC clear ->CALL345E",
+      "reason": "No ProcedureHypothesis, bounded evidence contract or canonical host implementation for345E. Its returned A and independent flags feedRAR/JNC at65AA/65AB. Historical outputs are oracle evidence, not implementation semantics."
+    }
+  ],
+  "scope_extension": "pending: no full654E contract promotion",
+  "native_enabled": false
+}
