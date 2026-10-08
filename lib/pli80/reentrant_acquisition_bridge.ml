@@ -49,6 +49,7 @@ let rec prepare ?(observe=(fun _ _ _ _ _->())) t ~call ~origin:o (boundary:Runne
  |Leave->let before,_,_=List.hd !frames in require(!sp+2=before)"child stack result";sp:= !sp+2;decr depth;frames:=List.tl !frames
  |Push(site,v)->require(List.mem(Char.code(Bytes.get(code site 1)0))[0xc5;0xd5;0xe5;0xf5])"PUSH identity";push site v
  |Pop->sp:= !sp+2
+ |Exchange _->invalid_arg"exchange belongs to initialization planner"
  |Constructor_arguments _->invalid_arg"reentrant acquisition bridge: constructor protocol belongs to child planner"in
  let staged state={Runner.effects=List.rev !effects;next_state=state;validate=(fun _->Ok());on_commit=ignore}in
  let sync b=for i=0 to 65535 do S.write m i(Char.code(Bytes.get b i))done in

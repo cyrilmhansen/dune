@@ -1,0 +1,92 @@
+{
+  "PLI1.OVL+0C1B": {
+    "end": 3189,
+    "description": "Four-byte context carrier and bounded initialization parent",
+    "completeness": [
+      "stable",
+      "complete",
+      "partial"
+    ],
+    "contract": "PUSH HL/PUSH BC create F=entrySP-4. Fresh word[A5B5] overwrites F2/F3 low/high. Saved input BC from F0/F1 is visibly published to A5B5. Compose01C6,0261,013D; reread F0/F1 for58BB; C=7D invokes canonical2511. Reread F0/F1 publishes A863 before0B84, then independently reload BC, set E=2 and invoke canonical0A32. Fresh784E follows; restore A5B5 from F2/F3 low/high, then two POP H and ordinary RET. Flags derive from final784E except final DAD SP replaces CY. HL=oldA5B5, DE=F+3; input BC and saved context are distinct channels. Unsupported child paths and code/scratch/frame aliases reject transactionally."
+  },
+  "PLI1.OVL+01C6": {
+    "end": 472,
+    "description": "Fresh semicolon acquisition adapter",
+    "completeness": [
+      "stable",
+      "partial",
+      "partial"
+    ],
+    "contract": "Fresh LDA20C3; CPI3B selects JZ01D4 on the bounded semicolon route. Compose canonical784E then ordinary RET of its actual registers/flags. Nonsemicolon error arm remains RAW; entry A/BC/DE/HL are inherited child inputs, not fixture selectors."
+  },
+  "PLI1.OVL+0B84": {
+    "end": 3099,
+    "description": "Bounded pointer-plus-five initialization gate",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ],
+    "contract": "BC=5; fresh word[A863] plus BC addresses one byte, cached at A5D6. Publish literal1 at A5D5 independently, reread A5D6 and CMP fresh byte[A5D5]. Required carry arm returns at0C0E with actual CMP flags, A=read pointer+5, BC=5, HL=A5D5, DE preserved. No inference about nonborrow long initializer arm; zero byte is an observed state, while unsigned less-than is the proved branch predicate."
+  },
+  "PLI1.OVL+013D": {
+    "end": 326,
+    "description": "Cursor initialization and FB position publication wrapper",
+    "completeness": [
+      "stable",
+      "complete",
+      "partial"
+    ],
+    "contract": "Compose bounded4802 once, replace low C by FB preserving B, then canonical80EF position emission once; ordinary RET carries exact final child registers/flags and residue. Complete local straight-line CFG; bounded child scopes inherited."
+  },
+  "PLI1.OVL+4802": {
+    "end": 18576,
+    "description": "Cursor/floor traversal and indexed pointer publication",
+    "completeness": [
+      "stable",
+      "partial",
+      "partial"
+    ],
+    "contract": "Clear A91F. Complete resident1A33 compares fresh word[A861] against independent word[1C32]; required borrow route caches initial cursor in A8E9 and composes4890. Fresh pointer+4/+5 are cleared in order. Repeated fresh4227 count compared with fresh A8EB drives47E2; each new index clears word[A8AB+2*index]. Publish independent saved A8E9 word to A8AB and A86D indexed slots low/high. Repeat fresh A861->A863,83A3 cursor-minus-floor mask, independent421F high-field not20 mask, PSW preservation/POP B/ANA/RAR; call4890 only when actual conjunction bit0 is set. No fixed traversal count; no-borrow initial exit and index overflow/error alternatives unsupported."
+  },
+  "PLI1.OVL+4890": {
+    "end": 18729,
+    "description": "Fresh cursor advance, mode balance and prefix slot linkage",
+    "completeness": [
+      "stable",
+      "complete",
+      "partial"
+    ],
+    "contract": "At bounded positive-length records, fresh A861->A863; fresh byte[p] zero-extended DE advances independently reread A861 modulo65536. Fresh A91F==0 gates low3 classification; low3==3 invokes47F7 and actual RAR bit controls literal1 at A91F. Independently reread A91F: nonzero invokes3563, adds fresh mode, DCR, writes A91F. Zero mode combines independent421F high==0 and4227 count!=0 masks through PSW/POP B/ANA/RAR. Set conjunction calls canonical452B with fresh count E and p+10 BC. Fresh A760 low index gives slot=A761+2*index. PUSH/XTHL preserve actual stack word order; old slot word goes low/high to fresh p+8, then separately reread index and pointer publishes p into slot low/high. All demonstrated local blocks observed; arbitrary capacities/aliases and3563 zero-high alternatives excluded."
+  },
+  "PLI1.OVL+47E2": {
+    "end": 18423,
+    "description": "Fresh index increment and unsigned limit comparison",
+    "completeness": [
+      "stable",
+      "partial",
+      "partial"
+    ],
+    "contract": "Fresh A8EB is wrapping INR incremented and visibly stored; C copies actual increment while B preserved. Literal A=1E CMP C produces returned flags; demonstrated JNC returns normally when new index<=1E. Overflow/error arm remains RAW and unsupported."
+  },
+  "PLI1.OVL+47F7": {
+    "end": 18434,
+    "description": "Independent fresh bit40 equality mask",
+    "completeness": [
+      "stable",
+      "complete",
+      "complete"
+    ],
+    "contract": "Compose complete41A6 fresh field byte; ANI40, SUI40, ADIFF and SBB A derive FF iff bit40 was clear, otherwise00. Return exact arithmetic flags from SBB A, preserve child BC/DE/HL. Ordinary hardware CALL/RET and child continuation residue retained."
+  },
+  "PLI1.OVL+3563": {
+    "end": 13701,
+    "description": "Bounded nonzero high-field mode adapter",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ],
+    "contract": "Compose complete421F high-field mask; CPI00 determines branch. Demonstrated nonzero path loads literal A=00 without changing CPI flags then RET at356D. Zero-high branch beginning356E remains RAW; high-field flags and returned literal zero are independent channels."
+  }
+}

@@ -6,7 +6,7 @@ module R=Recursive_mapped
 module S=State
 module U=U16
 module B=U8
-type event=Enter of int*int|Leave|Push of int*int|Pop|Constructor_arguments of int
+type event=Enter of int*int|Leave|Push of int*int|Pop|Constructor_arguments of int|Exchange of int*int
 type result={returned:R.returned;selection:string;acquisition:string}
 type operation=Parent|Hash_prefix|Payload_match|Acquire_overlay|Select_pointer|Successor|Pointer_compare|Null_mask|Search|Resident_acquisition|Prefix_sum|Constructor|Counted_read|Context_mask
 let run ?(reader_refill=(fun _->invalid_arg"Acquisition_parent: reader refill/EOF")) ?(operation=Parent) ?(constructor_abi=(fun()->0x20c6,0x68a6)) memory ~entry ~write ~compatibility ~guard_field ~saved =

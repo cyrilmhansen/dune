@@ -8,6 +8,7 @@ from pathlib import Path
 from check_minimal_pass_2 import at,coord,pair,word
 from check_minimal_pass_3 import gather
 from minimal_baseline import load
+from historical_catalog_epoch import frozen_catalog
 from minimal_dynamic_progress import calculate
 from procedure_evidence_packet import ROOT,build,software_profile,verify_return
 
@@ -19,7 +20,8 @@ def local(p,iv,o):
 class MinimalPassTwelveTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.catalog={p['id']:p for p in load(ROOT/'research/annotated-assembly/procedures.json')['procedures']}
+        # Assert the published pre-extension catalog epoch; execute current traces/algorithms.
+        cls.catalog=frozen_catalog({p['id']:p for p in load(ROOT/'research/annotated-assembly/procedures.json')['procedures']})
         cls.direct=gather(CAPTURE,{'PLI1.OVL+'+k:(0,0) for k in KEYS},include_nested_returns=True,software_callees=software_profile(cls.catalog))
         cls.packets={k:build(CAPTURE,IMAGES,'PLI1.OVL+'+k,0,()) for k in ['4890','4802']}
 

@@ -60,6 +60,7 @@ let prepare t ~call ~origin:o (boundary:Runner.instruction_boundary)=
    require(!sp+2=expected)"child stack result";sp:= !sp+2;decr depth;frames:=List.tl !frames
  |Push(site,v)->let op=Char.code(Bytes.get(code site 1)0)in require(List.mem op[0xc5;0xd5;0xe5;0xf5])"PUSH identity";push site v
  |Pop->sp:= !sp+2
+ |Exchange _->invalid_arg"exchange belongs to initialization planner"
  |Constructor_arguments site->
    require(Char.code(Bytes.get(code site 1)0)=0xd5)"copied continuation PUSH";
    let continuation=S.word m !sp and source=S.word m(!sp+2)in

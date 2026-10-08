@@ -5,14 +5,18 @@ let shadow ?(spine=false) ?(entry_steps=[]) operation input=
  let bridge=B.create_with_pli0 ~pli_com:input.Experiment.pli_com ~pli0:input.pli0_ovl ~pli1:input.pli1_ovl in
  let previous=ref None and current_origin=ref Analysis.Execution_map.Unknown and active=ref [] in
  let count=ref 0 and pending=ref 0 and partial=ref None and proofs=ref[]in
+ let component_sites=[0x233d;0x2342;0x23d4;0x6a0d;0x6a1a;0x6a2a;0x6a35;0x6a75;0x6a7a;0x6a89;0x6aab;0x6ab3;0x6ac7;0x6ad3;0x6adc;0x6af3;0x6af8;0x69f7;0x5763]in
+ let component_calls=Hashtbl.create 16 in
  let on_guest_step ~step_index:_ ~before ~after step=
+  if List.mem before.Runner.pc component_sites&&(match I8080.Step.control_flow step with I8080.Step.Call{taken=true;_}->true|_->false)then
+   List.iter(fun(call,entry,_,_,_,_)->let key=call.B.site,entry.Runner.sp in Hashtbl.replace component_calls key(before.pc::Option.value ~default:[](Hashtbl.find_opt component_calls key)))!active;
   previous:=Some{Native_dispatch.origin= !current_origin;before;after;step};
   let targets=List.map(fun(_,_,_,_,w,l)->w,l)!active@(match !partial with None->[]|Some(_,_,_,_,w,l)->[w,l])in
   List.iter(fun(writes,latest)->
   List.iter(function I8080.Step.Write w->
    Hashtbl.replace latest w.address(I8080.Step.pc_before step,w.value);
    let opcode=Char.code(Bytes.get(I8080.Step.fetched_bytes step)0)in
-   if ((I8080.Step.pc_before step=0x4712&&w.address=before.sp-1)||(Native_7c1b.logical_write step before w.address&&(match I8080.Step.control_flow step with I8080.Step.Call _->false|_->true)&&(not(List.mem opcode[0xc5;0xd5;0xe5;0xf5])||List.mem(I8080.Step.pc_before step)[0x9e1b;0x9e1c;0x9e1e])))&&not(List.mem(I8080.Step.pc_before step)[0x9f82;0x1abb;0x1abc;0x9d09])then writes:=(w.address,w.value)::!writes|_->())(I8080.Step.memory_accesses step))targets in
+   if ((I8080.Step.pc_before step=0x4712&&w.address=before.sp-1)||(Native_7c1b.logical_write step before w.address&&(match I8080.Step.control_flow step with I8080.Step.Call _->false|_->true)&&(not(List.mem opcode[0xc5;0xd5;0xe5;0xf5])||List.mem(I8080.Step.pc_before step)[0x9e1b;0x9e1c;0x9e1e])))&&not(List.mem(I8080.Step.pc_before step)[0x9f82;0x1abb;0x1abc;0x9d09;0x6b0d])then writes:=(w.address,w.value)::!writes|_->())(I8080.Step.memory_accesses step))targets in
  let on_before_instruction ~origin:o ~step_index (boundary:Runner.instruction_boundary)=
   current_origin:=o;let state=boundary.state in
   (match !partial with Some(expected,memory,journal,(external_state:Runner.host_program_result),writes,latest)when state.pc=expected.Runner.pc&&state.sp=expected.Runner.sp&&(not spine||boundary.read_memory(state.sp+2)=Char.code(Bytes.get memory(state.sp+2))&&boundary.read_memory(state.sp+3)=Char.code(Bytes.get memory(state.sp+3)))->
@@ -48,6 +52,11 @@ let shadow ?(spine=false) ?(entry_steps=[]) operation input=
    let final=Hashtbl.create 128 in List.iter(fun(w:B.write)->Hashtbl.replace final w.address(w.writer,w.value))p.journal;
    Hashtbl.iter(fun address value->require(Hashtbl.find_opt latest address=Some value)(Printf.sprintf"final writer %04X expected %04X:%02X observed %s"address(fst value)(snd value)(match Hashtbl.find_opt latest address with None->"absent"|Some(w,v)->Printf.sprintf"%04X:%02X"w v)))final;
    require(Hashtbl.length final=Hashtbl.length latest)"missing observed writer";
+   (match operation with B.Recursive(Pli80_host.Recursive_parent.Initialization _)->
+    let rec calls=function (a:B.write)::(b:B.write)::rest when a.kind="compatibility"&&b.kind="compatibility"&&a.writer=b.writer&&a.address=b.address+1&&List.mem a.writer component_sites->a.writer::calls rest|_::rest->calls rest|[]->[]in
+    require(List.rev(Option.value ~default:[](Hashtbl.find_opt component_calls(call.B.site,entry.Runner.sp)))=calls p.journal)"initialization child CALL chronology";
+    Hashtbl.remove component_calls(call.B.site,entry.Runner.sp)
+   |_->());
    require(state.sp=entry.Runner.sp+(if operation=B.Copy05 then 10 else 2))"return SP";
    proofs:=Printf.sprintf"{\"kind\":\"field15_complete\",\"return_step\":%d,\"memory_sha256\":%S,\"ordered_writes\":%d,\"final_writer_cells\":%d}"step_index(Experiment.sha256_hex actual)(List.length logical)(Hashtbl.length final)::!proofs;
    incr count;active:=rest
@@ -62,6 +71,16 @@ let shadow ?(spine=false) ?(entry_steps=[]) operation input=
    rejects(fun()->B.prepare bridge operation ~call ~origin:o{boundary with state={state with pc=state.pc+1}});
    rejects(fun()->B.prepare bridge operation ~call ~origin:o{boundary with state={state with sp=0xa6ca}});
    rejects(fun()->B.prepare bridge operation ~call ~origin:o{boundary with copy_memory=(fun()->let b=Bytes.copy ram in Bytes.set b state.pc(Char.chr((Char.code(Bytes.get b state.pc)+1)land 255));b)});
+   (match operation with B.Recursive(Pli80_host.Recursive_parent.Initialization op)->
+    let altered address value={boundary with copy_memory=(fun()->let b=Bytes.copy ram in Bytes.set b address(Char.chr value);b);preview_host_program=(fun p->boundary.preview_host_program{p with effects=Runner.Memory_write(address,value)::p.effects})}in
+    (match op with
+     |Pli80_host.Initialization_parent.Terminator->rejects(fun()->B.prepare bridge operation ~call ~origin:o(altered 0x20c3 0))
+     |Structure->let pointer=Char.code(Bytes.get ram 0xa863)lor(Char.code(Bytes.get ram 0xa864)lsl 8)in rejects(fun()->B.prepare bridge operation ~call ~origin:o(altered(pointer+5)1))
+     |Index->rejects(fun()->B.prepare bridge operation ~call ~origin:o(altered 0xa8eb 30))
+     |Mode_step->let pointer=Char.code(Bytes.get ram 0xa863)lor(Char.code(Bytes.get ram 0xa864)lsl 8)in rejects(fun()->B.prepare bridge operation ~call ~origin:o(altered(pointer+1)0))
+     |_->());
+    rejects(fun()->B.prepare bridge operation ~call ~origin:o{boundary with copy_memory=(fun()->let b=Bytes.copy ram in Bytes.set b 0x6b0d(Char.chr 0);b)})
+   |_->());
    if operation=B.Pair_gate then(
     let altered address value={boundary with copy_memory=(fun()->let b=Bytes.copy ram in Bytes.set b address(Char.chr value);b)}in
     List.iter(fun(a,v)->rejects(fun()->B.prepare bridge operation ~call ~origin:o(altered a v)))[0xa632,1;0xa633,1;0xa629,0x30;0xa62a,0x30]);

@@ -4,8 +4,8 @@ module S=State
 module H=Acquisition_parent
 module U=U16
 module B=U8
-type operation=Acquire_item|Advance_context|Cleanup_heads|Cleanup_tables|Finish_reader|Emit_position|Reset_map|Inherited_frame|Recursive_frame|Item_wrapper|Header|Primary_fields|Secondary_fields|Secondary_wrapper|Reduce_fields|Shift_fields|Restore_index|Bracket_setup|Lookahead_finish|Publish_pair|Advance_record|Line_decrement|Parent|Line_gate|Base|Clear_state|Line_increment|Clear_fields
-let bounds=function Acquire_item->0x08d9,0x0a0b|Advance_context->0x086e,0x08d9|Cleanup_heads->0x4986,0x49d7|Cleanup_tables->0x4929,0x4986|Finish_reader->0x0146,0x014f|Emit_position->0x80ef,0x810b|Reset_map->0x8273,0x82ac| Inherited_frame->0x11e2,0x1328|Recursive_frame->0x0a32,0x0ba8|Item_wrapper->0x0a0b,0x0a32| Header->0x0e00,0x0fc9|Primary_fields->0x1014,0x109e|Secondary_fields->0x109e,0x1187|Secondary_wrapper->0x1187,0x11e2|Reduce_fields->0x342f,0x345e|Shift_fields->0x8152,0x8167| Restore_index->0x8179,0x8187|Bracket_setup->0x029c,0x02ca|Lookahead_finish->0x0fc9,0x1014|Publish_pair->0x0277,0x029c|Advance_record->0x02ca,0x02e9|Line_decrement->0x0266,0x026b| Parent->0x02f0,0x067c|Line_gate->0x80ca,0x80ef|Base->0x02e9,0x02f0|Clear_state->0x01d8,0x01e8|Line_increment->0x0261,0x0266|Clear_fields->0x026b,0x0277
+type operation=Acquire_item|Advance_context|Cleanup_heads|Cleanup_tables|Finish_reader|Emit_position|Reset_map|Inherited_frame|Recursive_frame|Item_wrapper|Header|Primary_fields|Secondary_fields|Secondary_wrapper|Reduce_fields|Shift_fields|Restore_index|Bracket_setup|Lookahead_finish|Publish_pair|Advance_record|Line_decrement|Parent|Line_gate|Base|Clear_state|Line_increment|Clear_fields|Initialization of Initialization_parent.operation
+let bounds=function Initialization op->Initialization_parent.bounds op|Acquire_item->0x08d9,0x0a0b|Advance_context->0x086e,0x08d9|Cleanup_heads->0x4986,0x49d7|Cleanup_tables->0x4929,0x4986|Finish_reader->0x0146,0x014f|Emit_position->0x80ef,0x810b|Reset_map->0x8273,0x82ac| Inherited_frame->0x11e2,0x1328|Recursive_frame->0x0a32,0x0ba8|Item_wrapper->0x0a0b,0x0a32| Header->0x0e00,0x0fc9|Primary_fields->0x1014,0x109e|Secondary_fields->0x109e,0x1187|Secondary_wrapper->0x1187,0x11e2|Reduce_fields->0x342f,0x345e|Shift_fields->0x8152,0x8167| Restore_index->0x8179,0x8187|Bracket_setup->0x029c,0x02ca|Lookahead_finish->0x0fc9,0x1014|Publish_pair->0x0277,0x029c|Advance_record->0x02ca,0x02e9|Line_decrement->0x0266,0x026b| Parent->0x02f0,0x067c|Line_gate->0x80ca,0x80ef|Base->0x02e9,0x02f0|Clear_state->0x01d8,0x01e8|Line_increment->0x0261,0x0266|Clear_fields->0x026b,0x0277
 let run operation memory ~entry ~write ~compatibility ~adjust ~sp ~invoke =
  let q=ref entry in
  let read=S.read memory and word=S.word memory in
@@ -39,6 +39,8 @@ let run operation memory ~entry ~write ~compatibility ~adjust ~sp ~invoke =
  let combine site fn and_op=save site;fn();restore();if and_op then conjunction(!q.bc land 255)else logical(!q.bc land 255)in
  let frame n=hl n;dad(sp())in
  (match operation with
+ |Initialization op->q:=Initialization_parent.run op memory ~entry:!q ~write ~compatibility ~sp ~invoke
+
  |Cleanup_tables->hl 0xa921;put 0x492c !q.hl(!q.bc lsr 8);hl(U.wrap(!q.hl-1));put 0x492e !q.hl(!q.bc land 255);hl 0xa922;put 0x4932 !q.hl 0;
   let rec slots()=a 0x7f;hl 0xa922;cmp(read !q.hl);if not !q.flags.carry then(
    pair 0xa922;hl(!q.hl land 255);bc 0xa761;dad !q.hl;dad !q.bc;e(read !q.hl);hl(U.wrap(!q.hl+1));de(read !q.hl lsl 8 lor(!q.de land 255));let old= !q.hl in hl !q.de;de old;store 0x494b 0xa863 !q.hl;

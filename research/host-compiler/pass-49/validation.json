@@ -1,0 +1,212 @@
+{
+  "validation_tier": "incremental",
+  "full_checkpoint_base": "7a4bf0adf5959ffa29238a7f30d549522d18750f",
+  "status": "passed initially",
+  "workers": 4,
+  "aggregate_commands": 2,
+  "planned_categories": [
+    "pass49",
+    "pass48",
+    "pass47",
+    "minimal-pass-12",
+    "packet-continuation",
+    "recursive-unit",
+    "acquisition-parent-unit",
+    "classifier-unit",
+    "balance-unit",
+    "gate-unit",
+    "control-unit",
+    "input-unit",
+    "V1",
+    "roundtrip-tests",
+    "roundtrip",
+    "dynamic-progress",
+    "diff-check",
+    "build",
+    "project"
+  ],
+  "checkpoint_trigger": false,
+  "next_full_checkpoint": "Pass50",
+  "deferred": "Unrelated historical/native/reader categories from the full checkpoint; directly affected MINIMAL Pass12 is executed. Pass47/48 and all Dune units are executed.",
+  "reruns": [
+    {
+      "kind": "metadata-only recheck",
+      "reason": "Final review scoped obsolete pre-Pass49 RAW limitations correctly; host/runtime laws and all initial shadows/hybrids unchanged.",
+      "categories": [
+        "build",
+        "project",
+        "dynamic-progress",
+        "diff-check",
+        "roundtrip",
+        "V1",
+        "roundtrip-tests"
+      ],
+      "all_passed": true,
+      "wall_seconds": 46.675,
+      "receipt_sha256": "60c8b55e434bb856bb1ec14b42f798a38ad4fd6490400fc03dd07451764ef9a1"
+    }
+  ],
+  "historical_bytes": 94720,
+  "all_passed": true,
+  "category_count": 19,
+  "unique_python_tests": 88,
+  "dune_stanzas": 38,
+  "wall_seconds": 606.074,
+  "sum_category_seconds": 1569.887,
+  "category_results": {
+    "build": {
+      "return_code": 0,
+      "seconds": 5.168,
+      "python_tests": 0
+    },
+    "project": {
+      "return_code": 0,
+      "seconds": 3.628,
+      "python_tests": 0
+    },
+    "balance-unit": {
+      "return_code": 0,
+      "seconds": 0.005,
+      "python_tests": 0
+    },
+    "recursive-unit": {
+      "return_code": 0,
+      "seconds": 0.019,
+      "python_tests": 0
+    },
+    "V1": {
+      "return_code": 0,
+      "seconds": 39.707,
+      "python_tests": 9
+    },
+    "minimal-pass-12": {
+      "return_code": 0,
+      "seconds": 46.148,
+      "python_tests": 8
+    },
+    "control-unit": {
+      "return_code": 0,
+      "seconds": 0.005,
+      "python_tests": 0
+    },
+    "input-unit": {
+      "return_code": 0,
+      "seconds": 0.143,
+      "python_tests": 0
+    },
+    "gate-unit": {
+      "return_code": 0,
+      "seconds": 0.331,
+      "python_tests": 0
+    },
+    "acquisition-parent-unit": {
+      "return_code": 0,
+      "seconds": 0.002,
+      "python_tests": 0
+    },
+    "roundtrip-tests": {
+      "return_code": 0,
+      "seconds": 50.561,
+      "python_tests": 11
+    },
+    "roundtrip": {
+      "return_code": 0,
+      "seconds": 25.972,
+      "python_tests": 0
+    },
+    "packet-continuation": {
+      "return_code": 0,
+      "seconds": 137.247,
+      "python_tests": 27
+    },
+    "classifier-unit": {
+      "return_code": 0,
+      "seconds": 0.087,
+      "python_tests": 0
+    },
+    "dynamic-progress": {
+      "return_code": 0,
+      "seconds": 0.146,
+      "python_tests": 0
+    },
+    "diff-check": {
+      "return_code": 0,
+      "seconds": 0.077,
+      "python_tests": 0
+    },
+    "pass48": {
+      "return_code": 0,
+      "seconds": 343.687,
+      "python_tests": 9
+    },
+    "pass47": {
+      "return_code": 0,
+      "seconds": 366.308,
+      "python_tests": 13
+    },
+    "pass49": {
+      "return_code": 0,
+      "seconds": 550.646,
+      "python_tests": 11
+    }
+  },
+  "top_10_slowest": [
+    {
+      "category": "pass49",
+      "elapsed_seconds": 550.646
+    },
+    {
+      "category": "pass47",
+      "elapsed_seconds": 366.308
+    },
+    {
+      "category": "pass48",
+      "elapsed_seconds": 343.687
+    },
+    {
+      "category": "packet-continuation",
+      "elapsed_seconds": 137.247
+    },
+    {
+      "category": "roundtrip-tests",
+      "elapsed_seconds": 50.561
+    },
+    {
+      "category": "minimal-pass-12",
+      "elapsed_seconds": 46.148
+    },
+    {
+      "category": "V1",
+      "elapsed_seconds": 39.707
+    },
+    {
+      "category": "roundtrip",
+      "elapsed_seconds": 25.972
+    },
+    {
+      "category": "build",
+      "elapsed_seconds": 5.168
+    },
+    {
+      "category": "project",
+      "elapsed_seconds": 3.628
+    }
+  ],
+  "receipt_sha256": "99345d0a0b715b6d0ef49d0c7943d722780c6bde93f50ee915d3988ad3ebf9a6",
+  "packet_bytes": 27283,
+  "oracle_queries": 0,
+  "interactive_call_count": null,
+  "interactive_count_note": "Not instrumented across context compaction; no estimate presented as a count.",
+  "driver_automated_phases": [
+    "corrected inventory",
+    "CFG/route/contract hashing",
+    "packet compaction",
+    "component proof batches",
+    "root/internal shadows and hybrid counters",
+    "compact reports",
+    "aggregate validation"
+  ],
+  "new_unit_discriminants": 512,
+  "metadata_post_aggregate_edits": "Measured receipt fields plus explicit epoch scoping of old unresolved-path wording; regenerated packet/annotations, then complete V1/roundtrip/project/dynamic/diff categories rechecked.",
+  "final_validation_wall_seconds": 652.749
+}

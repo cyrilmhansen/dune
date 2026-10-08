@@ -1,0 +1,345 @@
+{
+  "all_passed": true,
+  "roots": {
+    "MINIMAL": [
+      {
+        "caller": "PLI1.OVL+0CD7",
+        "entry_step": 234604,
+        "return_step": 282711,
+        "input": {
+          "a": 59,
+          "b": 251,
+          "c": 231,
+          "d": 151,
+          "e": 230,
+          "h": 251,
+          "l": 231,
+          "sp": 65528,
+          "pc": 11803,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "output": {
+          "a": 26,
+          "b": 0,
+          "c": 0,
+          "d": 255,
+          "e": 247,
+          "h": 0,
+          "l": 0,
+          "sp": 65530,
+          "pc": 11994,
+          "flags": {
+            "sign": true,
+            "zero": false,
+            "auxiliary_carry": false,
+            "parity": false,
+            "carry": false
+          }
+        },
+        "route": "context_cursor_initialization",
+        "ordered_writes": 4909,
+        "writer_cells": 642,
+        "journal_hash": "59cc9c0655d2a8d60edf31fc374207343ec902aff377e41a944efaf2b1f64530",
+        "post_memory_sha256": "8949da52163092f3db2579c461d305667f36e030a2878ac08eb96d39f4cd2e99",
+        "services_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "frame": {
+          "base": 65524,
+          "old_context": 0
+        }
+      }
+    ],
+    "FIZZBUZ": [
+      {
+        "caller": "PLI1.OVL+0CD7",
+        "entry_step": 338624,
+        "return_step": 632105,
+        "input": {
+          "a": 59,
+          "b": 251,
+          "c": 220,
+          "d": 151,
+          "e": 230,
+          "h": 251,
+          "l": 220,
+          "sp": 65528,
+          "pc": 11803,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "output": {
+          "a": 26,
+          "b": 0,
+          "c": 0,
+          "d": 255,
+          "e": 247,
+          "h": 0,
+          "l": 0,
+          "sp": 65530,
+          "pc": 11994,
+          "flags": {
+            "sign": true,
+            "zero": false,
+            "auxiliary_carry": false,
+            "parity": false,
+            "carry": false
+          }
+        },
+        "route": "context_cursor_initialization",
+        "ordered_writes": 29156,
+        "writer_cells": 1268,
+        "journal_hash": "8367bf7ec72491047db711b708dc1cd195f847e76a5560d8fa24c8e997a75396",
+        "post_memory_sha256": "520e9eedbe7ddc4300a1da114d91ea9da4714c5c4414ed2e70a9988614ab9403",
+        "services_hash": "ec8397271343cf95d7593b525d46f11e84c474ba0ba4d247445d9c67de218ca7",
+        "frame": {
+          "base": 65524,
+          "old_context": 0
+        }
+      }
+    ],
+    "PICTURE": [
+      {
+        "caller": "PLI1.OVL+0CD7",
+        "entry_step": 271376,
+        "return_step": 348260,
+        "input": {
+          "a": 59,
+          "b": 251,
+          "c": 181,
+          "d": 151,
+          "e": 230,
+          "h": 251,
+          "l": 181,
+          "sp": 65528,
+          "pc": 11803,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "output": {
+          "a": 26,
+          "b": 0,
+          "c": 0,
+          "d": 255,
+          "e": 247,
+          "h": 0,
+          "l": 0,
+          "sp": 65530,
+          "pc": 11994,
+          "flags": {
+            "sign": true,
+            "zero": false,
+            "auxiliary_carry": false,
+            "parity": false,
+            "carry": false
+          }
+        },
+        "route": "context_cursor_initialization",
+        "ordered_writes": 7210,
+        "writer_cells": 688,
+        "journal_hash": "478c2a105c7ccac11708df1a3f8ea60763c55e340cf90b6e07ec85b0e4d8ce3f",
+        "post_memory_sha256": "2e0c5e6e16b4e7897cba254ee42e24d1c2f94dc4fea73c470e44d7ff09b6426d",
+        "services_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "frame": {
+          "base": 65524,
+          "old_context": 0
+        }
+      }
+    ]
+  },
+  "components": [
+    {
+      "source": "MINIMAL",
+      "operation": "47F7",
+      "count": 0,
+      "pending": 0,
+      "proof_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "source": "MINIMAL",
+      "operation": "3563",
+      "count": 0,
+      "pending": 0,
+      "proof_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "source": "MINIMAL",
+      "operation": "47E2",
+      "count": 2,
+      "pending": 0,
+      "proof_hash": "ae60a1241820bfe9611bf3347d1da705ec3437133b7f1c040a8e26884d2b398c"
+    },
+    {
+      "source": "MINIMAL",
+      "operation": "4890",
+      "count": 3,
+      "pending": 0,
+      "proof_hash": "8053969ce7ac045339d5ec764d89f9f24b079a2558f0b5f4a63d220ca6b3329c"
+    },
+    {
+      "source": "MINIMAL",
+      "operation": "4802",
+      "count": 2,
+      "pending": 0,
+      "proof_hash": "63bef0be5136ba4cf6a17cca5b51af652107e69122867394e6b8ed7568d26d52"
+    },
+    {
+      "source": "MINIMAL",
+      "operation": "013D",
+      "count": 2,
+      "pending": 0,
+      "proof_hash": "54bdaf0bfe0d40eff02e651b22eaed59a160d53f1cc06179eaa53d4e4b7a60ed"
+    },
+    {
+      "source": "MINIMAL",
+      "operation": "01C6",
+      "count": 1,
+      "pending": 0,
+      "proof_hash": "496bd3039a5e3178c82cbf6ef3ea4105fb2c6c7b9246f7b357c6ee4f0e5914ce"
+    },
+    {
+      "source": "MINIMAL",
+      "operation": "0B84",
+      "count": 1,
+      "pending": 0,
+      "proof_hash": "a0fd1e43485a570a00e7e3d41c0efcb4c8c7d75106d81ad27605c759f9406682"
+    },
+    {
+      "source": "FIZZBUZ",
+      "operation": "47F7",
+      "count": 0,
+      "pending": 0,
+      "proof_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "source": "FIZZBUZ",
+      "operation": "3563",
+      "count": 0,
+      "pending": 0,
+      "proof_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "source": "FIZZBUZ",
+      "operation": "47E2",
+      "count": 2,
+      "pending": 0,
+      "proof_hash": "025d086f5bdbf2d929d70311a3b92653be05fd74eba2195ad71feae2575d7e98"
+    },
+    {
+      "source": "FIZZBUZ",
+      "operation": "4890",
+      "count": 5,
+      "pending": 0,
+      "proof_hash": "e2f93ead790ca98cf80a668d65a61c346551b92fc8d7b6b1c21a1259fa5c1b68"
+    },
+    {
+      "source": "FIZZBUZ",
+      "operation": "4802",
+      "count": 2,
+      "pending": 0,
+      "proof_hash": "88f1bbf89d63c499b6ebdd0ef2c91facf1925c0f1b82cbcb66be3a108dd44575"
+    },
+    {
+      "source": "FIZZBUZ",
+      "operation": "013D",
+      "count": 2,
+      "pending": 0,
+      "proof_hash": "975aeb8e1d19496fe568b7bc236157527f4d94cf57ba22df273be04712676b97"
+    },
+    {
+      "source": "FIZZBUZ",
+      "operation": "01C6",
+      "count": 1,
+      "pending": 0,
+      "proof_hash": "b09c822d2afb66b7a726e3cf794be5475757b346756f3ab42a6411a2fbfd21bf"
+    },
+    {
+      "source": "FIZZBUZ",
+      "operation": "0B84",
+      "count": 1,
+      "pending": 0,
+      "proof_hash": "517c823ed1fd512a1c313ba553621d7bde4310773cb928c3558c9a3812436085"
+    },
+    {
+      "source": "PICTURE",
+      "operation": "47F7",
+      "count": 2,
+      "pending": 0,
+      "proof_hash": "1e191f87d71ec2bcc9ead57c83e950d5376fe3deca559cce44864fbb5578d781"
+    },
+    {
+      "source": "PICTURE",
+      "operation": "3563",
+      "count": 1,
+      "pending": 0,
+      "proof_hash": "ab0af949d3f8b6318baee26bba44b5b753f093c8f685202bbd6b5800626e8d2a"
+    },
+    {
+      "source": "PICTURE",
+      "operation": "47E2",
+      "count": 2,
+      "pending": 0,
+      "proof_hash": "ab4fa4fd998ecac6d8b5f90bc30dfb26cc0a859eb3e3e1afaa0b503ac7094c29"
+    },
+    {
+      "source": "PICTURE",
+      "operation": "4890",
+      "count": 7,
+      "pending": 0,
+      "proof_hash": "7a8e48d9eae495877d4a12d4f4dca1387c05e839c443707e864ae7aad57b94bf"
+    },
+    {
+      "source": "PICTURE",
+      "operation": "4802",
+      "count": 2,
+      "pending": 0,
+      "proof_hash": "5e61c45a5e7703bc99cec95696f8969cb40be6c8cd5fbea9259ba784e8d5a9a0"
+    },
+    {
+      "source": "PICTURE",
+      "operation": "013D",
+      "count": 2,
+      "pending": 0,
+      "proof_hash": "7e7707a896315640bd8ea158c83915ee371b19f6dc148e710da281c46245ad82"
+    },
+    {
+      "source": "PICTURE",
+      "operation": "01C6",
+      "count": 1,
+      "pending": 0,
+      "proof_hash": "f580b41f74d740ae996e8b2e7d416808200e69e62a36eefdc2f2d504c9132a49"
+    },
+    {
+      "source": "PICTURE",
+      "operation": "0B84",
+      "count": 1,
+      "pending": 0,
+      "proof_hash": "527f4289d9d58a576d8671dd7d0e8e24f27ae8f86c314564144eff5ffc3a54be"
+    }
+  ],
+  "comparisons": [
+    "registers/all flags",
+    "SP/continuation",
+    "ordered logical writes",
+    "65536-byte RAM",
+    "stack last writers",
+    "DMA/filesystem",
+    "record and file chronology",
+    "new local child-call chronology",
+    "canonical0A32/02F0/19F0/6619/6223 checkpoints"
+  ]
+}
