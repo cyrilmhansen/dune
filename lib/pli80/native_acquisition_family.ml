@@ -12,8 +12,7 @@ let shadow ?(spine=false) ?(entry_steps=[]) operation input=
   List.iter(function I8080.Step.Write w->
    Hashtbl.replace latest w.address(I8080.Step.pc_before step,w.value);
    let opcode=Char.code(Bytes.get(I8080.Step.fetched_bytes step)0)in
-   if ((I8080.Step.pc_before step=0x4712&&w.address=before.sp-1)||(match I8080.Step.control_flow step with I8080.Step.Call _->false|_->true)
-    &&not(List.mem opcode[0xc5;0xd5;0xe5;0xf5]))then writes:=(w.address,w.value)::!writes|_->())(I8080.Step.memory_accesses step))targets in
+   if ((I8080.Step.pc_before step=0x4712&&w.address=before.sp-1)||(Native_7c1b.logical_write step before w.address&&(match I8080.Step.control_flow step with I8080.Step.Call _->false|_->true)&&(not(List.mem opcode[0xc5;0xd5;0xe5;0xf5])||List.mem(I8080.Step.pc_before step)[0x9e1b;0x9e1c;0x9e1e])))&&not(List.mem(I8080.Step.pc_before step)[0x9f82;0x1abb;0x1abc;0x9d09])then writes:=(w.address,w.value)::!writes|_->())(I8080.Step.memory_accesses step))targets in
  let on_before_instruction ~origin:o ~step_index (boundary:Runner.instruction_boundary)=
   current_origin:=o;let state=boundary.state in
   (match !partial with Some(expected,memory,journal,(external_state:Runner.host_program_result),writes,latest)when state.pc=expected.Runner.pc&&state.sp=expected.Runner.sp&&(not spine||boundary.read_memory(state.sp+2)=Char.code(Bytes.get memory(state.sp+2))&&boundary.read_memory(state.sp+3)=Char.code(Bytes.get memory(state.sp+3)))->
@@ -36,7 +35,7 @@ let shadow ?(spine=false) ?(entry_steps=[]) operation input=
    incr pending;partial:=None
   |_->());
   (match !active with
-  |(call,entry,(p:B.prepared),(preview:Runner.host_program_result),writes,latest)::rest when state.pc=call.B.resume&&state.sp=entry.Runner.sp+2->
+  |(call,entry,(p:B.prepared),(preview:Runner.host_program_result),writes,latest)::rest when state.pc=call.B.resume&&state.sp=p.state.Runner.sp->
    if state<>p.state then failwith(Printf.sprintf"family return step %d historical A=%02X BC=%02X%02X DE=%02X%02X HL=%02X%02X flags=%b%b%b%b%b; native A=%02X BC=%02X%02X DE=%02X%02X HL=%02X%02X flags=%b%b%b%b%b"step_index state.a state.b state.c state.d state.e state.h state.l state.sign state.zero state.auxiliary_carry state.parity state.carry p.state.a p.state.b p.state.c p.state.d p.state.e p.state.h p.state.l p.state.sign p.state.zero p.state.auxiliary_carry p.state.parity p.state.carry);
    let actual=boundary.copy_memory()in
    if actual<>preview.memory then(
@@ -49,12 +48,12 @@ let shadow ?(spine=false) ?(entry_steps=[]) operation input=
    let final=Hashtbl.create 128 in List.iter(fun(w:B.write)->Hashtbl.replace final w.address(w.writer,w.value))p.journal;
    Hashtbl.iter(fun address value->require(Hashtbl.find_opt latest address=Some value)(Printf.sprintf"final writer %04X"address))final;
    require(Hashtbl.length final=Hashtbl.length latest)"missing observed writer";
-   require(state.sp=entry.Runner.sp+2)"return SP";
+   require(state.sp=entry.Runner.sp+(if operation=B.Copy05 then 10 else 2))"return SP";
    proofs:=Printf.sprintf"{\"kind\":\"field15_complete\",\"return_step\":%d,\"memory_sha256\":%S,\"ordered_writes\":%d,\"final_writer_cells\":%d}"step_index(Experiment.sha256_hex actual)(List.length logical)(Hashtbl.length final)::!proofs;
    incr count;active:=rest
   |_->());
-  let offset=match operation with B.Context->0x60e5|B.Field->0x5e98|Attribute->0x256c|Spine->0x4f54|Resident->0x1376|Pair_gate->0x2259|Selected_transform->0x345e|Table_adapter->0x25a9|Wrapper->0x6619|Repeat->0x654e in
-  if o=B.origin(if operation=B.Resident then"PLI.COM"else"PLI1.OVL")offset&&(entry_steps=[]||List.mem step_index entry_steps)then(
+  let offset=match operation with B.Context->0x60e5|B.Field->0x5e98|Attribute->0x256c|Spine->0x4f54|Resident->0x1376|Pair_gate->0x2259|Selected_transform->0x345e|Table_adapter->0x25a9|Wrapper->0x6619|Repeat->0x654e|Copy05->0x6708|Traversal->0x46ed|Construction->0x4738|Record_output->0x666e|Index_one->0x28aa|Parent->0x19f0 in
+  if o=B.origin(if operation=B.Resident then"PLI.COM"else"PLI1.OVL")offset&&(entry_steps=[]||List.mem step_index entry_steps)&&(operation<>B.Copy05||state.e=5)&&(operation<>B.Index_one||(state.c=1&&List.mem(boundary.read_memory(0xa628+boundary.read_memory 0xa634))[5;0x15]))then(
    let call=B.verify_call bridge operation(Option.get !previous)~entry:state in
    let ram=boundary.copy_memory()and dma=boundary.dma and files=boundary.copy_filesystem()in
    let rejects f=match f()with exception Invalid_argument _->()|_->failwith"family malformed entry accepted"in
@@ -73,6 +72,13 @@ let shadow ?(spine=false) ?(entry_steps=[]) operation input=
      [[0x2012,1];[0x20c4,1];[0x1f06,Char.code(Bytes.get ram 0x1f08)];
       [0x1e8e+Char.code(Bytes.get ram 0x1f06),0x2e];[0x1e8e+Char.code(Bytes.get ram 0x1f06),0x45];[0x20c1,0x27]];
     rejects(fun()->B.prepare bridge operation ~call ~origin:o(altered([0x20c1,0x31;0x1f06,0;0x1f08,200]@List.init 130(fun i->0x1e8e+i,0x31)))));
+   if List.mem operation[B.Copy05;B.Index_one;B.Record_output;B.Construction;B.Traversal]then(
+    let altered address value={boundary with copy_memory=(fun()->let b=Bytes.copy ram in Bytes.set b address(Char.chr value);b);preview_host_program=(fun p->boundary.preview_host_program{p with effects=Runner.Memory_write(address,value)::p.effects})}in
+    if operation=B.Record_output then(
+     rejects(fun()->B.prepare bridge operation ~call ~origin:o(altered 0x2029 1));
+     rejects(fun()->B.prepare bridge operation ~call ~origin:o(altered 0x1d8a 128));
+     rejects(fun()->B.prepare bridge operation ~call ~origin:o{boundary with state={state with b=0xa9;c=0xd7}}));
+    if operation=B.Copy05 then rejects(fun()->B.prepare bridge operation ~call ~origin:o{boundary with state={state with e=6}}));
    require(boundary.copy_memory()=ram&&boundary.dma=dma&&Cpm.Filesystem.equal(boundary.copy_filesystem())files)"family rejected preparation leaked live state";
    match B.prepare ~follow_spine:spine ~recursive:(fun site boundary->
     let t=Reentrant_acquisition_bridge.create ~pli_com:input.pli_com ~pli1:input.pli1_ovl in

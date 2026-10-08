@@ -69,6 +69,8 @@ class NativeAcquisitionTests(unittest.TestCase):
    old=json.loads(extension.read_text());current['procedures']=[old if p['id']=='PLI.COM+1376'else p for p in current['procedures']]
   # Compare the immutable Pass43 catalog epoch; bounded Pass44/45 extensions
   # have independent proofs and must not rewrite the older historical claim.
+  future=json.loads((ROOT/'research/host-compiler/pass-46/before.json').read_text())
+  current['procedures']=[future.get(p['id']) or p for p in current['procedures']if p['id']not in future or future[p['id']]is not None]
   epoch=json.loads((ROOT/'research/host-compiler/pass-45/before.json').read_text())
   current['procedures']=[epoch.get(p['id']) or p for p in current['procedures']if p['id']not in epoch or epoch[p['id']]is not None]
   expected=json.loads(base)

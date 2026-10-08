@@ -6,17 +6,17 @@ module S=Pli80_host.State
 module U=Pli80_host.U16
 module A=Acquisition_parent_bridge
 module B=State_adaptation_bridge
-type operation=Context|Field|Attribute|Spine|Resident|Pair_gate|Selected_transform|Table_adapter|Wrapper|Repeat
+type operation=Context|Field|Attribute|Spine|Resident|Pair_gate|Selected_transform|Table_adapter|Wrapper|Repeat|Copy05|Traversal|Construction|Record_output|Index_one|Parent
 type call={coordinate:string;site:int;resume:int;operation:operation}
 type write=Range_processing_bridge.write={address:int;value:int;writer:int;depth:int;kind:string}
-type t={com:bytes;image:bytes;adapt:B.t;publication:Range_publication_bridge.t;
+type t={com:bytes;image:bytes;adapt:B.t;input:Input_processing_bridge.t;publication:Range_publication_bridge.t;
  balance:Balance_scan_bridge.t;word:Publication_primitives_bridge.t;mapped:Mapped_publication_bridge.t;control:Mapped_control_bridge.t}
 type prepared={result:F.result;program:Runner.host_program;state:Runner.state_snapshot;journal:write list;logical_writes:(int*int)list}
 let origin=A.origin
 let require b m=if not b then invalid_arg("acquisition family bridge: "^m)
 let word b a=Char.code(Bytes.get b a)lor(Char.code(Bytes.get b(a+1))lsl 8)
-let bounds=function Context->0x60e5,0x61a4|Field->0x5e98,0x60e5|Attribute->0x256c,0x25a9|Spine->0x4f54,0x4f6e|Resident->0x1376,0x15da|Pair_gate->0x2259,0x22c0|Selected_transform->0x345e,0x34ac|Table_adapter->0x25a9,0x25c0|Wrapper->0x6619,0x6639|Repeat->0x654e,0x65f9
-let create ~pli_com ~pli1={com=Bytes.copy pli_com;image=Bytes.copy pli1;adapt=B.create ~pli_com ~pli1;
+let bounds=function Context->0x60e5,0x61a4|Field->0x5e98,0x60e5|Attribute->0x256c,0x25a9|Spine->0x4f54,0x4f6e|Resident->0x1376,0x15da|Pair_gate->0x2259,0x22c0|Selected_transform->0x345e,0x34ac|Table_adapter->0x25a9,0x25c0|Wrapper->0x6619,0x6639|Repeat->0x654e,0x65f9|Copy05->0x6708,0x67bb|Traversal->0x46ed,0x4738|Construction->0x4738,0x478d|Record_output->0x666e,0x6708|Index_one->0x28aa,0x2c53|Parent->0x19f0,0x1afd
+let create ~pli_com ~pli1={com=Bytes.copy pli_com;image=Bytes.copy pli1;adapt=B.create ~pli_com ~pli1;input=Input_processing_bridge.create ~pli_com ~pli1;
  publication=Range_publication_bridge.create ~pli1;balance=Balance_scan_bridge.create ~pli1;
  word=Publication_primitives_bridge.create ~pli1;mapped=Mapped_publication_bridge.create ~pli1;control=Mapped_control_bridge.create ~pli1}
 let internal_call t operation site=
@@ -39,14 +39,14 @@ let prepare ?(follow_spine=false) ?(recursive=(fun _ _->invalid_arg"unfinished r
  List.iter Pli80_host.U8.check[entry.a;entry.b;entry.c;entry.d;entry.e;entry.h;entry.l];U.check entry.sp;
  require(entry.sp>=0xb000&&entry.sp<=0xfffc)"stack alias/bounds";
  let memory=boundary.copy_memory()in let m=S.of_bytes memory in
- let resident_code=[0x0817,0x082e;0x12ae,0x12e1;0x1376,0x166e;0x1a1c,0x1a4b]in
- let overlay_code=[0x4cc2,0x4ce9;0x4f54,0x4f6e;0x61a4,0x6223;0x625d,0x6288;0x6314,0x63cf;0x640d,0x6477;0x6477,0x64f2;0x64f2,0x6508;0x654e,0x65f9;0x65f9,0x6619;0x6619,0x6639;0x2308,0x230e;0x4c4c,0x4c52;0x4cd4,0x4ce1;0x4f2a,0x4f54;0x56e1,0x570e;0x2185,0x21ad;0x28aa,0x2dc3;0x6708,0x6ca1;0x8309,0x8314;0x834f,0x8357;0x8380,0x8386;0x8396,0x83ac;0x21d4,0x21e9;0x2221,0x22c0;0x345e,0x34ac;0x25a9,0x25c0;0x23a0,0x23d2;0x25d6,0x25ec;0x2c53,0x2c59;0x2fc2,0x31a8;0x31fb,0x3262;0x329f,0x32b3;0x3304,0x3333;0x01af,0x01c6;0x020e,0x0222;0x213c,0x2185;0x21ad,0x21d4;0x22cb,0x234e;0x2355,0x23a0;0x3558,0x3563;0x387f,0x38a9;0x3963,0x3987;0x3a76,0x3c16;0x3c8a,0x415e;0x415e,0x41ba;0x421f,0x43ac;0x452b,0x45f0;0x500f,0x5035;0x506e,0x50b4;0x53bb,0x53c6;0x81f1,0x8214;0x45f0,0x462d;0x5a46,0x5ab2;0x5e48,0x61a4;0x784e,0x7a15;0x7ff3,0x8003;0x83a0,0x83ac]in
+ let resident_code=[0x1140,0x1229;0x0817,0x082e;0x12ae,0x12e1;0x1376,0x166e;0x1a1c,0x1a4b]in
+ let overlay_code=[0x19f0,0x1afd;0x21e9,0x2221;0x24f1,0x2511;0x25c0,0x25d6;0x27d1,0x2804;0x2f1c,0x2fc2;0x31a8,0x31fb;0x3262,0x329f;0x3533,0x3547;0x6639,0x6649;0x80b1,0x80b7;0x8179,0x8187;0x666e,0x6708;0x82bb,0x82cd;0x4394,0x452b;0x46ed,0x478d;0x4cc2,0x4ce9;0x4f54,0x4f6e;0x61a4,0x6223;0x625d,0x6288;0x6314,0x63cf;0x640d,0x6477;0x6477,0x64f2;0x64f2,0x6508;0x654e,0x65f9;0x65f9,0x6619;0x6619,0x6639;0x2308,0x230e;0x4c4c,0x4c52;0x4cd4,0x4ce1;0x4f2a,0x4f54;0x56e1,0x570e;0x2185,0x21ad;0x28aa,0x2dc3;0x6708,0x6ca1;0x8309,0x8314;0x834f,0x8357;0x8380,0x8386;0x8396,0x83ac;0x21d4,0x21e9;0x2221,0x22c0;0x345e,0x34ac;0x25a9,0x25c0;0x23a0,0x23d2;0x25d6,0x25ec;0x2c53,0x2c59;0x2fc2,0x31a8;0x31fb,0x3262;0x329f,0x32b3;0x3304,0x3333;0x01af,0x01c6;0x020e,0x0222;0x213c,0x2185;0x21ad,0x21d4;0x22cb,0x234e;0x2355,0x23a0;0x3558,0x3563;0x387f,0x38a9;0x3963,0x3987;0x3a76,0x3c16;0x3c8a,0x415e;0x415e,0x41ba;0x421f,0x43ac;0x452b,0x45f0;0x500f,0x5035;0x506e,0x50b4;0x53bb,0x53c6;0x81f1,0x8214;0x45f0,0x462d;0x5a46,0x5ab2;0x5e48,0x61a4;0x784e,0x7a15;0x7ff3,0x8003;0x83a0,0x83ac]in
  List.iter(fun(a,b)->require(Bytes.sub memory(a+0x100)(b-a)=Bytes.sub t.com a(b-a))(Printf.sprintf"resident code changed %04X"a))resident_code;
  List.iter(fun(a,b)->require(Bytes.sub memory(a+0x2200)(b-a)=Bytes.sub t.image a(b-a))(Printf.sprintf"overlay code changed %04X"a))overlay_code;
  require(call=internal_call t operation call.site&&S.word m entry.sp=call.resume)"continuation mismatch";
- let effects=ref[]and journal=ref[]and sp=ref entry.sp and depth=ref 0 and frames=ref[]in
+ let effects=ref[]and journal=ref[]and sp=ref entry.sp and depth=ref 0 and frames=ref(if operation=Copy05 then[entry.sp+2,0x8908,call.resume]else[])in
  let append item=effects:=item::!effects in
- let frame_sites=[0x6564;0x6570;0x6572;0x6577;0x65d8;0x60f0;0x60f2;0x6108;0x610d;0x6116;0x5ea7;0x5eaa;0x5ebc;0x5ed2;0x5ed4;0x5edc;0x6072;0x5f16;0x507f;0x5081;0x3ca9;0x3caf;0x3cb1]in
+ let frame_sites=[0x19fb;0x6564;0x6570;0x6572;0x6577;0x65d8;0x60f0;0x60f2;0x6108;0x610d;0x6116;0x5ea7;0x5eaa;0x5ebc;0x5ed2;0x5ed4;0x5edc;0x6072;0x5f16;0x507f;0x5081;0x3ca9;0x3caf;0x3cb1]in
  let put kind writer address value=
   U.check address;Pli80_host.U8.check value;
   if kind="logical"&&address>=entry.sp-512&&address<=entry.sp+1 then(
@@ -62,7 +62,12 @@ let prepare ?(follow_spine=false) ?(recursive=(fun _ _->invalid_arg"unfinished r
  |Leave->let before,_,_=List.hd !frames in require(!sp+2=before)"child stack result";sp:= !sp+2;decr depth;frames:=List.tl !frames
  |Push(site,v)->require(List.mem(Char.code(Bytes.get(code site 1)0))[0xc5;0xd5;0xe5;0xf5])"PUSH identity";push site v
  |Pop->sp:= !sp+2
- |Constructor_arguments _->invalid_arg"acquisition family: unexpected constructor"in
+ |Constructor_arguments site->
+   require(site=0x6674&&Char.code(Bytes.get(code site 1)0)=0xd5)"N2 PUSH D identity";
+   (match !frames with
+   |(before,target,resume)::rest->require(target=0x6668&& !sp=before-2&&S.word m !sp=resume)"N2 original continuation";
+     sp:= !sp+4;push site resume;frames:=(before+2,target,resume)::rest
+   |[]->invalid_arg"missing constructor frame")in
  let software ~site ~consumed=
   require(site=0x891f&&consumed=8&&Char.code(Bytes.get(code site 1)0)=0xd5)"software continuation writer";
   match !frames with
@@ -90,6 +95,7 @@ let prepare ?(follow_spine=false) ?(recursive=(fun _ _->invalid_arg"unfinished r
   let put_writes writes writer=List.iter(fun(w:Pli80_host.Mapped_lookup.write)->put"logical"(writer w.phase)w.address w.value)writes in
   match target with
   |0x8423->let program,child_state,child_journal=recursive site boundary in import program child_journal child_state
+  |0xa248->let p=Input_processing_bridge.prepare t.input ~call:(Input_processing_bridge.internal_call t.input site)~origin:(origin"PLI1.OVL"0x8048)boundary in import p.program p.journal p.state
   |0x4711->let p=B.prepare t.adapt B.Saved ~call:(B.internal_call t.adapt B.Saved site)~origin:(origin"PLI1.OVL"0x2511)boundary in import p.program p.journal p.state
   |0x9d64->let r=Pli80_host.Mapped_lookup.high_attribute m ~byte_index:state.c ~protected:(List.init 2(fun i-> !sp+i))
     ~write:(fun w->put"logical"0x9d67 w.Pli80_host.Mapped_lookup.address w.value)in
@@ -141,10 +147,12 @@ let prepare ?(follow_spine=false) ?(recursive=(fun _ _->invalid_arg"unfinished r
     ~write:(fun w->put"logical"(List.assoc w.Pli80_host.Mapped_lookup.phase["auxiliary_value",0x9d31;"auxiliary_position",0x9d33;"auxiliary_publication",0x9d47])w.address w.value)in
    {q with R.a=r.value;bc=r.index;hl=r.address;flags={q.flags with carry=false}}
   |_->invalid_arg(Printf.sprintf"acquisition family: unfinished native child %04X"target)in
- let result=F.run(match operation with Context->F.Context|Field->F.Field|Attribute->F.Attribute|Spine->F.Spine|Resident->F.Resident|Pair_gate->F.Pair_gate|Selected_transform->F.Selected_transform|Table_adapter->F.Table_adapter|Wrapper->F.Wrapper|Repeat->F.Repeat)m ~entry:(A.logical entry)
+ let result=F.run(match operation with Context->F.Context|Field->F.Field|Attribute->F.Attribute|Spine->F.Spine|Resident->F.Resident|Pair_gate->F.Pair_gate|Selected_transform->F.Selected_transform|Table_adapter->F.Table_adapter|Wrapper->F.Wrapper|Repeat->F.Repeat|Copy05->F.Copy05|Traversal->F.Traversal|Construction->F.Construction|Record_output->F.Record_output|Index_one->F.Index_one|Parent->F.Parent)m ~entry:(A.logical entry)
   ~write:(fun ~site ~address ~value->put"logical"site address value)~compatibility ~adjust ~sp:(fun()-> !sp)~guard_field ~native ~follow_spine ~software in
- require(!sp=entry.sp&& !frames=[])"root/private frame balance";
- let state=A.machine entry result.returned(entry.sp+2)call.resume in
+ let consumed=if operation=Copy05 then 8 else 0 in
+ if operation=Copy05 then(require(!frames=[entry.sp+10,0x8908,call.resume])"root copied continuation frame";frames:=[]);
+ require(!sp=entry.sp+consumed&& !frames=[])"root/private frame balance";
+ let state=A.machine entry result.returned(entry.sp+2+consumed)call.resume in
  let expected=preview state in let validate(r:Runner.host_program_result)=
   if r.memory<>expected.memory||r.dma<>expected.dma||r.services<>expected.services||not(Cpm.Filesystem.equal r.filesystem expected.filesystem)
   then Error"family ordered program mismatch"else Ok()in

@@ -7,6 +7,8 @@ class PassFortyTests(unittest.TestCase):
  @classmethod
  def setUpClass(cls):
   cls.rows={s:gather_selected(c,BOUNDS,include_nested_returns=True,software_callees=SOFTWARE)for s,c in CAPTURES.items()};cls.a=analyze(cls.rows,IMAGES);cls.catalog={p['id']:p for p in load(ROOT/'research/annotated-assembly/procedures.json')['procedures']}
+  future=load(ROOT/'research/host-compiler/pass-46/before.json')
+  cls.catalog={k:future.get(k) or v for k,v in cls.catalog.items()if k not in future or future[k]is not None}
  def selected(self,k):return [r for g in self.rows.values()for r in g[k]if k.endswith('28AA')and val(one(r['own_witnesses'],0x28b7),0xa628+(word_read(one(r['own_witnesses'],0x28ae),0xa634)&255))==2 or k.endswith('6708')and r['entry']['before']['e']==2]
  def test_counts_and_route_distributions(self):
   self.assertEqual(projection(self.rows,self.a),load(REPORT/'route-distribution.json'));self.assertEqual(sum(len(v)for g in self.rows.values()for v in g.values()),107)
@@ -38,7 +40,7 @@ class PassFortyTests(unittest.TestCase):
    q=validate_parent(r);self.assertEqual(q['selected_after'],21);self.assertEqual(q['adjusted'],23);self.assertEqual(q['second_position'],(q['stop']+1)&255)
  def test_catalog_statuses_and_prior_unchanged_entries(self):
   before=load(REPORT/'before.json');after=load(REPORT/'after.json');base={p['id']:p for p in json.loads(subprocess.check_output(['git','show',BASE+':research/annotated-assembly/procedures.json'],text=True))['procedures']}
-  epoch=(load(ROOT/'research/host-compiler/pass-42/before.json')|load(ROOT/'research/host-compiler/pass-41/before.json'));self.assertTrue(all((epoch.get(k)or self.catalog[k])==p for k,p in base.items()if k not in after));self.assertEqual({k:self.catalog[k]for k in after},after)
+  epoch=load(ROOT/'research/host-compiler/pass-45/before.json')|(load(ROOT/'research/host-compiler/pass-42/before.json')|load(ROOT/'research/host-compiler/pass-41/before.json'));self.assertTrue(all((epoch.get(k)or self.catalog[k])==p for k,p in base.items()if k not in after));self.assertEqual({k:self.catalog[k]for k in after},after)
   for k in ['28AA','6708']:self.assertEqual(self.catalog['PLI1.OVL+'+k]['completeness'],dict(bounds='provisional',control_flow='partial',contract='partial'))
   self.assertEqual(self.catalog['PLI1.OVL+8309']['completeness']['contract'],'complete');self.assertEqual(self.catalog['PLI1.OVL+2185']['completeness']['contract'],'partial')
  def test_unobserved_alternatives_RAW(self):

@@ -8,8 +8,8 @@ module U=U16
 module B=U8
 type event=Enter of int*int|Leave|Push of int*int|Pop|Constructor_arguments of int
 type result={returned:R.returned;selection:string;acquisition:string}
-type operation=Parent|Hash_prefix|Payload_match|Acquire_overlay|Select_pointer|Successor|Pointer_compare|Null_mask|Search|Resident_acquisition
-let run ?(operation=Parent) memory ~entry ~write ~compatibility ~guard_field ~saved =
+type operation=Parent|Hash_prefix|Payload_match|Acquire_overlay|Select_pointer|Successor|Pointer_compare|Null_mask|Search|Resident_acquisition|Prefix_sum|Constructor
+let run ?(operation=Parent) ?(constructor_abi=(fun()->0x20c6,0x68a6)) memory ~entry ~write ~compatibility ~guard_field ~saved =
  List.iter B.check [entry.R.a;entry.bc land 255;entry.de land 255];List.iter U.check [entry.bc;entry.de;entry.hl];
  let q=ref entry in
  let need b text=if not b then invalid_arg("Acquisition_parent: "^text)in
@@ -99,9 +99,9 @@ let run ?(operation=Parent) memory ~entry ~write ~compatibility ~guard_field ~sa
   a(read 0xa8f6);add 10;pair 0xa863;put(overlay 0x43cd)!q.hl !q.a;pair 0xa863;hl(U.wrap(!q.hl+1));put(overlay 0x43d2)!q.hl 0 in
  let constructor()=
   hl 0xa900;put(overlay 0x446b)!q.hl(!q.de land 255);hl 0xa8ff;put(overlay 0x446d)!q.hl(!q.bc land 255);hl 0xa8fe;
+  let source,resume=constructor_abi()in U.check source;U.check resume;
+  bc source;de resume;put(overlay 0x4471)0xa8fe(!q.bc lsr 8);hl 0xa8fd;put(overlay 0x4473)!q.hl(!q.bc land 255);
   compatibility(Constructor_arguments(overlay 0x4474));
-  (* Original source argument is separately supplied by +4693's PUSH B. *)
-  bc 0x20c6;put(overlay 0x4471)0xa8fe(!q.bc lsr 8);hl 0xa8fd;put(overlay 0x4473)!q.hl(!q.bc land 255);
   pair 0xa8ff;c(!q.hl land 255);call1 0x4479 0x4394 allocate;
   pair 0xa863;hl(U.wrap(!q.hl+2));a(read 0xa900);put(overlay 0x4484)!q.hl !q.a;
   bc 3;pair 0xa863;dad !q.bc;put(overlay 0x448c)!q.hl 0;
@@ -260,5 +260,5 @@ let run ?(operation=Parent) memory ~entry ~write ~compatibility ~guard_field ~sa
  call1 0x5a3c 0x784e acquire_overlay in
  (match operation with Parent->parent()|Hash_prefix->hash_prefix()|Payload_match->payload_match()
  |Acquire_overlay->acquire_overlay()|Select_pointer->select_pointer()|Successor->successor()
- |Pointer_compare->pointer_compare()|Null_mask->mask_pointer()|Search->search_operation()|Resident_acquisition->acquire_resident());
+ |Pointer_compare->pointer_compare()|Null_mask->mask_pointer()|Search->search_operation()|Resident_acquisition->acquire_resident()|Prefix_sum->prefix_sum()|Constructor->constructor());
  {returned= !q;selection= !selection;acquisition= !acquisition}

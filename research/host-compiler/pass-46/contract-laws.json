@@ -1,0 +1,182 @@
+{
+  "PLI1.OVL+19F0": {
+    "end": 6909,
+    "description": "Bounded private-frame acquisition/transformation parent",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ],
+    "contract": "Reserve two bytes by DCX SP, MOV B,C, PUSH B, INX SP; F0 is saved input C and F1 is fresh old A619. Clear A619 and A934. Require fresh context20C3!=28 and modeA5F7!=0. Compose6639. Publish B2 toA61D; fresh21E9(C0), RAR, conditionally replace withAC. Fresh2221(C0), RAR requiresclear. Publish A628=2A,A62B=FE; freshAE32->A61C;3533; freshA61D lowC->2511. FreshAE32 minus freshA61C->A61C. FreshF0 RAR requiresclear;80B1; literalA0 preserving child flags; POP H consumes F0/F1, RET original continuation. OldA619 is a frame channel, not restored to memory; finalHL combines saved input and oldA619."
+  },
+  "PLI1.OVL+3533": {
+    "end": 13639,
+    "description": "Two acquisition groups followed by bounded indexed transformation",
+    "completeness": [
+      "stable",
+      "complete",
+      "partial"
+    ],
+    "contract": "Compose3262 then31A8. Compare freshA62A against freshA628; equal returns directly preservingCMP, unequal calls2FAE and returns child state."
+  },
+  "PLI1.OVL+3262": {
+    "end": 12959,
+    "description": "Fresh four-channel acquisition at current publication position",
+    "completeness": [
+      "stable",
+      "complete",
+      "complete"
+    ],
+    "contract": "Independently clear A629,A62C,A62F. Fresh pairedAE32 before each channel: control7A93->A62A, primary7AA9->A62D, secondary7ABF->A630, word7A79->A63F low/high. Publish literal2 toA634; finalHL=A634, other registers/flags from word lookup. Child nonalias scopes inherited."
+  },
+  "PLI1.OVL+31A8": {
+    "end": 12795,
+    "description": "Bounded independent indexed predicate combination",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ],
+    "contract": "Fresh2221(C1), PUSH PSW; independent2221(C2), POP B/MOV C,B; ANA C thenRAR. RequireCYclear. Compare freshA629 against freshA62A; requireunequal. PublishA628=28 andreturnCMPflags withHL=A628. Equal/special branches remain unsupported."
+  },
+  "PLI1.OVL+2FAE": {
+    "end": 12226,
+    "description": "Bounded mask28 transformation adapter",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ],
+    "contract": "FreshA628 ANI28 CPI28; requireequal; call2F1C andreturn its exact state throughsharedRET2FC1. Other arm remains unsupported."
+  },
+  "PLI1.OVL+2F1C": {
+    "end": 12206,
+    "description": "Bounded index-one acquisition and selector adjustment",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ],
+    "contract": "C1 through2C53 invokes28AA. Fresh selectedA628[index] ->21AD;RAR requiresset. Compare freshbaseA628 against freshselected; equal returns immediately. Unequal constructs independent24/25 masks and requiresclear; excludes16/19; selected15 calls27D1. Freshselected31 excluded;sharedRET2FAD. No known-index whitelist; unsupported alternatives explicit."
+  },
+  "PLI1.OVL+27D1": {
+    "end": 10244,
+    "description": "Indexed selector28 publication and bounded length adjustment",
+    "completeness": [
+      "stable",
+      "complete",
+      "partial"
+    ],
+    "contract": "FreshindexA634 selectsA628 and writes28. FreshindexedA62B lowC->25C0;INR returnedA; freshA641 lowC and returnedA inE ->23A0 CMP minimum;ADI3; freshlyaddressedA62B[index] publication. C63->24F1; return exact child state."
+  },
+  "PLI1.OVL+25C0": {
+    "end": 9686,
+    "description": "Cached capped byte-table selection",
+    "completeness": [
+      "stable",
+      "complete",
+      "complete"
+    ],
+    "contract": "SaveC atA65B; freshpairedread lowC; E36->complete23A0. Returned minimumA->C, B0; HL42A6 DAD BC selectsbyte. ReturnA=selectedbyte, BC=zeroextendedminimum, HL=selectedaddress, DE fromminimum;NZPA/AC fromminimumCMP, CY fromDAD. No capacity or ownership inferred."
+  },
+  "PLI1.OVL+24F1": {
+    "end": 9489,
+    "description": "Cached input composition with indexed publication adaptation",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ],
+    "contract": "SaveC atA654; freshpaired lowC->8048; freshpairedA634 lowC->240A; freshA634 CPI1. Requiredindex!=1 returns through2510 withcomparison flags; indexone alternative remainsunsupported."
+  },
+  "PLI1.OVL+6639": {
+    "end": 26185,
+    "description": "Wrapper root and fresh cursor subtraction adapter",
+    "completeness": [
+      "stable",
+      "complete",
+      "partial"
+    ],
+    "contract": "ClearA933; composecanonical6619. Independently readpairedA933/A934; lowC->8179. Return exact child state. Native6619 bounded routes inherited; no generic recursion/termination claim."
+  },
+  "PLI1.OVL+8179": {
+    "end": 33160,
+    "description": "Cached byte subtraction from begin cursor",
+    "completeness": [
+      "stable",
+      "complete",
+      "complete"
+    ],
+    "contract": "SaveC atAE71; freshHL=AE71; loadfreshAE34, SUB freshsavedC, publishA toAE34. ReturnA=u8(oldbegin-savedC), HL=AE71, BC/DEpreserved; flags areexactSUB flags; no private frame orbodyPUSH."
+  },
+  "PLI1.OVL+21E9": {
+    "end": 8737,
+    "description": "Cached indexed selector equality-mask classifier",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ],
+    "contract": "SaveC atA648. Independently freshpairedA648 zeroextendL andindexA628 forCPI28 thenCPI2A; required bothmismatch. Freshindex reread andselectedbyte SUI5/SUI1/SBB A returnsFF iffselected5 else00, withSBBflags. Earliermatchingreturns remainunobserved."
+  },
+  "PLI1.OVL+80B1": {
+    "end": 32951,
+    "description": "LiteralFE input-processing adapter",
+    "completeness": [
+      "stable",
+      "complete",
+      "partial"
+    ],
+    "contract": "MVI C,FE; composecanonicalbounded8048; returnexactchildstate throughoriginal hardware continuation. No independent native root; child descendants remaininternal."
+  },
+  "PLI1.OVL+28AA": {
+    "end": 11347,
+    "description": "Bounded indexed acquisition with distinct mode-one copy/construction scope",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ],
+    "contract": "Retain Pass39/40 selector02 scope. Added modeC1 route: saveC atA65F; freshindexedselector guards0B/0C/0D clear; unsigned10-vs-selected carry exits directly (observed15). Selector05 route independently loads indexed pointer and prefix2B, computes2185 mask throughPSW, supplies four words to6708 E05. ConsumeN8, restorePSW, ANA/RAR requiresclear. Freshindexedselector->A661; masks2/3clear, selector4mismatch, selector5equal. Freshbase28/2A masks set; publishindexed28. Supply four independent freshwords tosecond6708(E=freshA661,C=header-10), RAR requiresset. Conversionmask15/25/24 ANDfreshsavedmode requiresclear. A661=0;46ED; freshresident1A40 nulltest; null->4738. Publishfield3=29, freshindexedprimary->field4 andsecondary->field5 independently;666E. Common tail: freshpointerword->indexedA63B; freshAE32->7B7A->A660; requiredindex!=1;7AF0; three independentmappedchannels. FreshA661 zero invokes2355 thenINR/cache;7AD5; INRA660; three independentchannels;fresh2355 ADI13->final7AD5. All child calls andsoftware/ordinary continuations remain distinct."
+  },
+  "PLI1.OVL+6708": {
+    "end": 27809,
+    "description": "Eight-byte software continuation with separate copy and decimal acquisitions",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ],
+    "contract": "Retain Pass40 E02 decimal scope. E05 copy scope: poporiginalcontinuation andfourcallerwords, publishargument caches ininstructionorder; copiedcontinuation PUSH at671F consumesN8. Freshcursorword->A863. Freshargumentindexed selector mask28 equal, E05, mask22 unequal. SetA9E2/A9E3=0. Loop rereads freshargumentindexA9DD andindexedlengthA62B, thencompares freshinputindexA9E3 againstfreshsourcecountA9E0. Copyfreshsourcebyte orpad20 intoA9E4; freshoutputindexA9E2->A948; incrementoutput andinput counters independently. Writes may intentionally reachA9DA..A9DD: firstnaturalcopy overwritesargumentindex with20 andthenfreshlimitbecomes0, causingtermination; no fixedschedule. Rejectactivecarrieraliases atA9DE+. Freshoutputcount->A947. Finalfreshinputindex minusfreshsourcecount;SBB A;CMA preservesSBB flags. CalleeSP=entrySP+10, copiedcontinuation atentrySP+8; callerPSW retained separately."
+  },
+  "PLI1.OVL+46ED": {
+    "end": 18232,
+    "description": "Bounded sum-indexed reference and payload traversal",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ],
+    "contract": "Retain olderboundedtraversal proof. SaveC atA915; freshA947word inDE andBC=A948->452B prefixsum,422F selectedpointer. Reference4275/RAR loop advances428E whileCYset, stopswhenCYclear. Independent4281 nulltest; nonnull usesfreshA947word/BC=A948->4584 exactpositivecount payload route; independent4281 mustremainnonnull; freshpointer+2tag comparedwithfreshA915 mustmismatch; successor428E thenrepeatnulltest. Natural required endnull. Equality/postpayload-null arms andarbitrarychaintermination remainunsupported; nofixediterationcount."
+  },
+  "PLI1.OVL+4738": {
+    "end": 18317,
+    "description": "Null-slot constructor with source argument and word-field repair",
+    "completeness": [
+      "stable",
+      "complete",
+      "partial"
+    ],
+    "contract": "SaveC atA916; freshpairedlowC->46ED; independent4281 requiresnull. PUSH BC=A948 suppliescaller sourceword to4468; freshA947lowC andfreshA916pairedDE supplyconstructor arguments. Reuse4468 algorithm, originalcontinuation andargument separately consumed, copiedcontinuation4474, N2, calleeSP=entrySP+4. FreshA8AB->A863; freshpointer+2referenceword->A917; resident1A1D addsfreshA947 tothatword withlowADD/highADCflags andpublishes lowthenhigh. Freshword1C36 +1->A863; freshpointer+6temporaryPUSH; freshA917word->destination lowthenhigh. Nonnullreuse/allocatorfailure excluded."
+  },
+  "PLI1.OVL+666E": {
+    "end": 26310,
+    "description": "Bounded field09 resident bit-output composition",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ],
+    "contract": "SaveDE highthenlow atA9D7/A9D6, BC highthenlow atA9D5/A9D4; freshBCword->A863;41A6 field3 ANI1F->A9D8; freshCPI09 requireequal. Resident119E(C96,E7);66FA addsfreshfield6word andfreshsavedDEword; freshreturnedHL->BC andresident1207 wordcache prefix+low+high;66C6 emitsfreshprefixcountA947 bytes, zero separatorbit thenfreshindexedA948byte eachiteration. Reuse resident1140/119E no-flush algorithm: gate2029bit0clear, freshbuffer/cursors, ADD/PSW/bitOR andfreshindex advancement; rejectflush/error orinvalidcursor beforelivecommit. Finalstate from66C6 endpointCMP, notoutput constants."
+  }
+}

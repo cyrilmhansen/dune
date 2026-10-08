@@ -8,7 +8,7 @@ module U=U16
 module B=U8
 module H=Acquisition_parent
 module K=Classifier
-type operation=Context|Field|Attribute|Spine|Resident|Pair_gate|Selected_transform|Table_adapter|Wrapper|Repeat
+type operation=Context|Field|Attribute|Spine|Resident|Pair_gate|Selected_transform|Table_adapter|Wrapper|Repeat|Copy05|Traversal|Construction|Record_output|Index_one|Parent
 type result={returned:R.returned;field:int option}
 let run operation memory ~entry ~write ~compatibility ~adjust ~sp ~guard_field ~native ~follow_spine ~software =
  B.check entry.R.a;List.iter U.check[entry.bc;entry.de;entry.hl;sp()];
@@ -263,13 +263,15 @@ let run operation memory ~entry ~write ~compatibility ~adjust ~sp ~guard_field ~
  let argument_index base=pair 0xa9dd;hl(!q.hl land 255);bc base;dad !q.bc in
  let shift_word()=
   let rec loop()=dad !q.hl;let n=dec(!q.bc land 255)in c n;if n<>0 then loop()in loop()in
- let decimal_arguments()=
+ let software_arguments()=
   hl 0xa9e1;put 0x670b !q.hl(!q.de land 255);hl(U.wrap(!q.hl-1));put 0x670d !q.hl(!q.bc land 255);hl(U.wrap(!q.hl-1));
   de(pop());bc(pop());put 0x6711 !q.hl(!q.bc lsr 8);hl(U.wrap(!q.hl-1));put 0x6713 !q.hl(!q.bc land 255);hl(U.wrap(!q.hl-1));
   bc(pop());put 0x6716 !q.hl(!q.bc land 255);hl(U.wrap(!q.hl-1));
   bc(pop());put 0x6719 !q.hl(!q.bc lsr 8);hl(U.wrap(!q.hl-1));put 0x671b !q.hl(!q.bc land 255);hl(U.wrap(!q.hl-1));
   bc(pop());put 0x671e !q.hl(!q.bc land 255);push 0x671f !q.de;software ~site:0x891f ~consumed:8;
-  pair 0xa9db;store 0x6723 0xa863 !q.hl;
+  pair 0xa9db;store 0x6723 0xa863 !q.hl in
+ let decimal_arguments()=
+  software_arguments();
   argument_index 0xa628;a 0x28;logical true(read !q.hl);cmp 0x28;need(not !q.flags.zero)"6708 E05 path";
   argument_index 0xa628;a(read !q.hl);sub 0x24;sub 1;mask();save 0x67cd;
   a(read !q.hl);sub 0x25;sub 1;mask();restore();logical false(!q.bc land 255);rar();need(not !q.flags.carry)"6708 selector24/25";
@@ -301,10 +303,116 @@ let run operation memory ~entry ~write ~compatibility ~adjust ~sp ~guard_field ~
   a(read 0xa9da);cmp 0x2d;need(not !q.flags.zero)"6708 negation";
   argument_index 0xa62b;a 7;cmp(read !q.hl);need !q.flags.carry "6708 width<=7";
   hl 0xa947;put 0x6c9c !q.hl 2;a 1 in
- let acquire_selected02()=
+ (* E05 is the historical copy/padding route, independent of decimal E02.
+    The output intentionally reaches A9DA..A9DD in the first acquisition.
+    Those writes change the next fresh selector/limit read. *)
+ let copy_arguments()=
+  software_arguments();
+  argument_index 0xa628;a 0x28;logical true(read !q.hl);cmp 0x28;need !q.flags.zero "6708 E05 mask28";
+  a(read 0xa9e1);cmp 5;need !q.flags.zero "6708 copy E05";
+  hl 0xa9e2;put 0x6745 !q.hl 0;hl(U.wrap(!q.hl+1));put 0x6748 !q.hl 0;
+  argument_index 0xa628;a 0x22;logical true(read !q.hl);cmp 0x22;need(not !q.flags.zero)"6708 E05 mask22";
+  let rec loop()=
+   argument_index 0xa62b;a(read 0xa9e3);cmp(read !q.hl);
+   if not !q.flags.carry then()else(
+    hl 0xa9e0;a(read 0xa9e3);cmp(read !q.hl);
+    if !q.flags.carry then(
+     pair 0xa9e3;hl(!q.hl land 255);exchange();pair 0xa9de;dad !q.de;guard_field !q.hl 1;
+     a(read !q.hl);put 0x678a 0xa9e4 !q.a
+    )else(hl 0xa9e4;put 0x6793 !q.hl 0x20);
+    pair 0xa9e2;hl(!q.hl land 255);bc 0xa948;dad !q.bc;
+    need(!q.hl<0xa9de)"6708 output aliases active copy carriers";
+    a(read 0xa9e4);put 0x67a1 !q.hl !q.a;
+    hl 0xa9e2;let n=inc(read !q.hl)in put 0x67a5 !q.hl n;
+    hl(U.wrap(!q.hl+1));let n=inc(read !q.hl)in put 0x67a7 !q.hl n;loop())in loop();
+  a(read 0xa9e2);put 0x67ae 0xa947 !q.a;hl 0xa9e0;a(read 0xa9e3);sub(read !q.hl);mask();a(!q.a lxor 255)in
+ let traversal()=
+  hl 0xa915;put 0x46f0 !q.hl(!q.bc land 255);pair 0xa947;exchange();bc 0xa948;
+  call 0x46f8 0x452b(fun()->reuse H.Prefix_sum);call 0x46fb 0x422f(fun()->reuse H.Select_pointer);
+  let rec reference()=call 0x46fe 0x4275(fun()->reuse H.Pointer_compare);rar();
+   if !q.flags.carry then(call 0x4705 0x428e(fun()->reuse H.Successor);reference())in reference();
+  let rec matching()=
+   call 0x470b 0x4281(fun()->reuse H.Null_mask);rar();
+   if !q.flags.carry then(
+    pair 0xa947;exchange();bc 0xa948;call 0x4719 0x4584(fun()->reuse H.Payload_match);
+    call 0x471c 0x4281(fun()->reuse H.Null_mask);rar();need !q.flags.carry "46ED post-payload null alternative";
+    pair 0xa863;guard_field !q.hl 3;hl(U.wrap(!q.hl+2));a(read 0xa915);cmp(read !q.hl);
+    need(not !q.flags.zero)"46ED tag-equality early return";
+    call 0x4731 0x428e(fun()->reuse H.Successor);matching())in matching()in
+ let construction()=
+  hl 0xa916;put 0x473b !q.hl(!q.bc land 255);pair 0xa916;c(!q.hl land 255);
+  call 0x4740 0x46ed traversal;call 0x4743 0x4281(fun()->reuse H.Null_mask);rar();need(not !q.flags.carry)"4738 reuse alternative";
+  bc 0xa948;push 0x474d !q.bc;pair 0xa947;c(!q.hl land 255);pair 0xa916;exchange();
+  call 0x4756 0x4468(fun()->q:=(H.run ~operation:H.Constructor ~constructor_abi:(fun()->word(U.wrap(sp()+2)),word(sp())) memory ~entry:!q ~write ~compatibility ~guard_field ~saved:(fun _->invalid_arg"unexpected constructor saved child")).returned);
+  pair 0xa8ab;store 0x475c 0xa863 !q.hl;guard_field !q.hl 4;hl(U.wrap(!q.hl+2));e(read !q.hl);hl(U.wrap(!q.hl+1));de(read !q.hl lsl 8 lor(!q.de land 255));exchange();store 0x4765 0xa917 !q.hl;
+  pair 0xa863;hl(U.wrap(!q.hl+2));a(read 0xa947);
+  resident 0x4770 0x1a1d(fun()->let address= !q.hl and addend= !q.a in let v=word address in let low=(v land 255)+addend in let carry=if low>255 then 1 else 0 in let high=(v lsr 8)+carry in let n=B.wrap high in q:={!q with R.a=n;hl=n lsl 8 lor B.wrap low;de=U.wrap(address+1);flags=flags n(((v lsr 8)land 15)+carry>15)(high>255)});
+  exchange();hl(U.wrap(!q.hl-1));put 0x4775 !q.hl(!q.de land 255);hl(U.wrap(!q.hl+1));put 0x4777 !q.hl(!q.de lsr 8);
+  pair 0x1c36;hl(U.wrap(!q.hl+1));store 0x477c 0xa863 !q.hl;bc 6;dad !q.bc;push 0x4783 !q.hl;
+  pair 0xa917;exchange();hl(pop());put 0x4789 !q.hl(!q.de land 255);hl(U.wrap(!q.hl+1));put 0x478b !q.hl(!q.de lsr 8)in
+ let resident_put site address value=put(site-0x2100)address value in
+ let resident_call site target fn=compatibility(H.Enter(site+0x100,target+0x100));fn();compatibility H.Leave in
+ let bit_write()=
+  hl 0x20b6;resident_put 0x1143 !q.hl(!q.bc land 255);a(read 0x2029);rar();need(not !q.flags.carry)"1140 output gate-set";
+  let address()=pair 0x1d8a;hl(!q.hl land 255);bc 0x1d0a;dad !q.bc;need(read 0x1d8a<128&&read 0x1d8b<8)"1140 cursor scope"in
+  address();a(read !q.hl);add !q.a;compatibility(H.Push(0x1257,(!q.a lsl 8)lor psw()));
+  a(read 0x20b6);ani 1;restore();logical false(!q.bc land 255);
+  address();resident_put 0x1169 !q.hl !q.a;
+  a(read 0x1d8b);a(inc !q.a);ani 7;resident_put 0x1170 0x1d8b !q.a;cmp 0;
+  if !q.flags.zero then(a(read 0x1d8a);a(inc !q.a);resident_put 0x117c 0x1d8a !q.a;cmp 128;need(not !q.flags.zero)"1140 refill/flush outside no-flush scope")in
+ let bits_write()=
+  hl 0x20b8;resident_put 0x11a1 !q.hl(!q.de land 255);hl(U.wrap(!q.hl-1));resident_put 0x11a3 !q.hl(!q.bc land 255);
+  let rec loop()=
+   a 0;hl 0x20b8;cmp(read !q.hl);
+   if !q.flags.carry then(
+    a(read 0x20b7);let old= !q.a in q:={!q with R.a=B.wrap(old lsl 1)lor(old lsr 7);flags={!q.flags with carry=old land 128<>0}};
+    resident_put 0x11b1 0x20b7 !q.a;c !q.a;resident_call 0x11b5 0x1140 bit_write;
+    a(read 0x20b8);a(dec !q.a);resident_put 0x11bc 0x20b8 !q.a;loop())in loop()in
+ let word_bits()=
+  hl 0x20be;resident_put 0x120a !q.hl(!q.bc lsr 8);hl(U.wrap(!q.hl-1));resident_put 0x120c !q.hl(!q.bc land 255);
+  e 2;c 128;resident_call 0x1211 0x119e bits_write;
+  pair 0x20bd;a(!q.hl land 255);c !q.a;e 8;resident_call 0x121b 0x119e bits_write;
+  pair 0x20bd;a(!q.hl lsr 8);c !q.a;e 8;resident_call 0x1225 0x119e bits_write in
+ let payload_bits()=
+  a(read 0xa947);cmp 0;
+  if not !q.flags.zero then(
+   hl 0xa9d9;put 0x66d1 !q.hl 0;
+   let rec loop()=
+    a(read 0xa947);a(dec !q.a);hl 0xa9d9;cmp(read !q.hl);
+    if not !q.flags.carry then(
+     c 0;resident 0x66e0 0x1140 bit_write;
+     pair 0xa9d9;hl(!q.hl land 255);bc 0xa948;dad !q.bc;c(read !q.hl);e 8;resident 0x66ef 0x119e bits_write;
+     hl 0xa9d9;let n=inc(read !q.hl)in put 0x66f5 !q.hl n;if not !q.flags.zero then loop())in loop())in
+ let record_output()=
+  hl 0xa9d7;put 0x6671 !q.hl(!q.de lsr 8);hl(U.wrap(!q.hl-1));put 0x6673 !q.hl(!q.de land 255);
+  hl(U.wrap(!q.hl-1));put 0x6675 !q.hl(!q.bc lsr 8);hl(U.wrap(!q.hl-1));put 0x6677 !q.hl(!q.bc land 255);
+  pair 0xa9d4;store 0x667b 0xa863 !q.hl;call 0x667e 0x41a6 field_byte;ani 31;put 0x6683 0xa9d8 !q.a;
+  a(read 0xa9d8);cmp 9;need !q.flags.zero "666E field3 alternatives";
+  e 7;c 0x96;resident 0x6692 0x119e bits_write;
+  call 0x6695 0x66fa(fun()->bc 6;pair 0xa863;guard_field !q.hl 8;dad !q.bc;de 0xa9d6;
+   call 0x6704 0x82bb(fun()->c(read !q.hl);hl(U.wrap(!q.hl+1));bc(read !q.hl lsl 8 lor(!q.bc land 255));
+    a(read !q.de);add(!q.bc land 255);hl((!q.hl land 0xff00)lor !q.a);de(U.wrap(!q.de+1));
+    let v=read !q.de and cy=if !q.flags.carry then 1 else 0 in let n=v+(!q.bc lsr 8)+cy in
+    q:={!q with R.a=B.wrap n;hl=(B.wrap n lsl 8)lor(!q.hl land 255);flags=flags(B.wrap n)((v land 15)+(!q.bc lsr 8 land 15)+cy>15)(n>255)}));
+  bc !q.hl;resident 0x669a 0x1207 word_bits;call 0x669d 0x66c6 payload_bits in
+ let acquisition_publications()=
+  pair 0xa634;hl(!q.hl land 255);bc 0xa63b;dad !q.hl;dad !q.bc;push 0x2b88 !q.hl;pair 0xa863;exchange();hl(pop());put 0x2b8e !q.hl(!q.de land 255);hl(U.wrap(!q.hl+1));put 0x2b90 !q.hl(!q.de lsr 8);
+  pair 0xae32;c(!q.hl land 255);child 0x2b95 0x7b7a;put 0x2b98 0xa660 !q.a;
+  a(read 0xa634);cmp 1;need(not !q.flags.zero)"28AA index1 arm";
+  pair 0xa660;c(!q.hl land 255);pair 0xa863;exchange();child 0x2bb6 0x7af0;
+  let publish base site=indexed base;e(read !q.hl);pair 0xa660;c(!q.hl land 255);child site (if base=0xa628 then 0x7b13 else if base=0xa62b then 0x7b2e else 0x7b49)in
+  List.iter(fun(base,site)->publish base site)[0xa628,0x2bc7;0xa62b,0x2bd8;0xa62e,0x2be9];
+  a(read 0xa661);cmp 0;if !q.flags.zero then(pair 0xa634;c(!q.hl land 255);call 0x2bf8 0x2355(fun()->classifier K.Indexed);a(inc !q.a);put 0x2bfc 0xa661 !q.a);
+  pair 0xa660;c(!q.hl land 255);pair 0xa661;exchange();child 0x2c07 0x7ad5;
+  hl 0xa660;let n=inc(read !q.hl)in put 0x2c0d !q.hl n;
+  List.iter(fun(base,site)->publish base site)[0xa628,0x2c1c;0xa62b,0x2c2d;0xa62e,0x2c3e];
+  pair 0xa634;c(!q.hl land 255);call 0x2c45 0x2355(fun()->classifier K.Indexed);add 0x13;
+  pair 0xa660;e !q.a;c(!q.hl land 255);child 0x2c4f 0x7ad5 in
+ let acquisition_prefix()=
   hl 0xa65f;put 0x28ad !q.hl(!q.bc land 255);
   List.iter(fun(value,site)->indexed 0xa628;a(read !q.hl);sub value;sub 1;mask();put site 0xa662 !q.a;rar();need(not !q.flags.carry)"28AA selector0B/0C/0D")[11,0x28bd;12,0x28e1;13,0x2905];
-  indexed 0xa628;a 10;cmp(read !q.hl);need(not !q.flags.carry)"28AA guard-only exit";
+  indexed 0xa628;a 10;cmp(read !q.hl) in
+ let acquisition_arguments acquisition=
   (* Historical DAD H precedes DAD B, not an index equation. *)
   pair 0xa634;hl(!q.hl land 255);bc 0xa63b;dad !q.hl;dad !q.bc;e(read !q.hl);hl(U.wrap(!q.hl+1));de(read !q.hl lsl 8 lor(!q.de land 255));exchange();store 0x2938 0xa863 !q.hl;
   a(read 0xa662);rar();need(not !q.flags.carry)"28AA negative prefix";hl 0xa662;put 0x294d !q.hl 0x2b;
@@ -313,7 +421,9 @@ let run operation memory ~entry ~write ~compatibility ~adjust ~sp ~guard_field ~
   pair 0xa634;hl(!q.hl land 255);bc 0xa63b;dad !q.hl;dad !q.bc;c(read !q.hl);hl(U.wrap(!q.hl+1));bc(read !q.hl lsl 8 lor(!q.bc land 255));push 0x2968 !q.bc;c 0;push 0x296b !q.bc;
   bc 10;pair 0xa863;dad !q.bc;push 0x2973 !q.hl;
   pair 0xa863;guard_field !q.hl 1;a(read !q.hl);sub 10;indexed 0xa628;e(read !q.hl);c !q.a;
-  call 0x2985 0x6708 decimal_arguments;
+  call 0x2985 0x6708 acquisition in
+ let acquire_selected02()=
+  acquisition_prefix();need(not !q.flags.carry)"28AA guard-only exit";acquisition_arguments decimal_arguments;
   restore();logical true(!q.bc land 255);rar();need !q.flags.carry "28AA acquisition false result";
   List.iter(fun(base,site)->indexed base;a(read !q.bc);put site !q.hl !q.a)[0xa628,0x2999;0xa62b,0x29a4;0xa62e,0x29af];
   indexed 0xa628;a(read !q.hl);sub 0x15;sub 1;mask();save 0x2ace;
@@ -324,18 +434,35 @@ let run operation memory ~entry ~write ~compatibility ~adjust ~sp ~guard_field ~
   pair 0xa949;hl(!q.hl land 255);c 8;call 0x2b06 0x8380 shift_word;
   de 0xa863;call 0x2b0c 0x834f(fun()->a(read !q.de);logical false(!q.hl land 255);hl((!q.hl land 0xff00)lor !q.a);de(U.wrap(!q.de+1));a(read !q.de);logical false(!q.hl lsr 8);hl(!q.a lsl 8 lor(!q.hl land 255)));
   exchange();hl(U.wrap(!q.hl-1));put 0x2b11 !q.hl(!q.de land 255);hl(U.wrap(!q.hl+1));put 0x2b13 !q.hl(!q.de lsr 8);
-  pair 0xa634;hl(!q.hl land 255);bc 0xa63b;dad !q.hl;dad !q.bc;push 0x2b88 !q.hl;pair 0xa863;exchange();hl(pop());put 0x2b8e !q.hl(!q.de land 255);hl(U.wrap(!q.hl+1));put 0x2b90 !q.hl(!q.de lsr 8);
-  pair 0xae32;c(!q.hl land 255);child 0x2b95 0x7b7a;put 0x2b98 0xa660 !q.a;
-  a(read 0xa634);cmp 1;need(not !q.flags.zero)"28AA index1 arm";
-  pair 0xa660;c(!q.hl land 255);pair 0xa863;exchange();child 0x2bb6 0x7af0;
-  let publish base site=indexed base;e(read !q.hl);pair 0xa660;c(!q.hl land 255);child site (if base=0xa628 then 0x7b13 else if base=0xa62b then 0x7b2e else 0x7b49)in
-  List.iter(fun(base,site)->publish base site)[0xa628,0x2bc7;0xa62b,0x2bd8;0xa62e,0x2be9];
-  a(read 0xa661);cmp 0;need(not !q.flags.zero)"28AA literal-zero cached selector";
-  pair 0xa660;c(!q.hl land 255);pair 0xa661;exchange();child 0x2c07 0x7ad5;
-  hl 0xa660;let n=inc(read !q.hl)in put 0x2c0d !q.hl n;
-  List.iter(fun(base,site)->publish base site)[0xa628,0x2c1c;0xa62b,0x2c2d;0xa62e,0x2c3e];
-  pair 0xa634;c(!q.hl land 255);call 0x2c45 0x2355(fun()->classifier K.Indexed);add 0x13;
-  pair 0xa660;e !q.a;c(!q.hl land 255);child 0x2c4f 0x7ad5 in
+  acquisition_publications() in
+ let acquire_index_one()=
+  acquisition_prefix();
+  if not !q.flags.carry then(
+   acquisition_arguments copy_arguments;
+   restore();logical true(!q.bc land 255);rar();need(not !q.flags.carry)"28AA first copy conversion arm";
+   indexed 0xa628;a(read !q.hl);put 0x29bd 0xa661 !q.a;
+   pair 0xa634;hl(!q.hl land 255);dad !q.bc;a(read !q.hl);sub 2;sub 1;mask();save 0x29cc;
+   a(read !q.hl);sub 3;sub 1;mask();restore();logical false(!q.bc land 255);rar();need(not !q.flags.carry)"28AA selector2/3";
+   indexed 0xa628;a(read !q.hl);cmp 4;need(not !q.flags.zero)"28AA selector4";
+   indexed 0xa628;a(read !q.hl);cmp 5;need !q.flags.zero "28AA bounded selector05";
+   equality 0xa628 0x28;combine 0x2a3b(fun()->equality 0xa628 0x2a)false;rar();need !q.flags.carry "28AA base selector28/2A";
+   indexed 0xa628;put 0x2a54 !q.hl 0x28;
+   pair 0xa662;push 0x2a8e !q.hl;
+   pair 0xa634;hl(!q.hl land 255);bc 0xa63b;dad !q.hl;dad !q.bc;c(read !q.hl);hl(U.wrap(!q.hl+1));bc(read !q.hl lsl 8 lor(!q.bc land 255));push 0x2a9c !q.bc;
+   pair 0xa634;push 0x2aa0 !q.hl;bc 10;pair 0xa863;dad !q.bc;push 0x2aa8 !q.hl;
+   pair 0xa863;guard_field !q.hl 1;a(read !q.hl);sub 10;pair 0xa661;exchange();c !q.a;
+   call 0x2ab4 0x6708 copy_arguments;rar();need !q.flags.carry "28AA second copy false result";
+   indexed 0xa628;a(read !q.hl);sub 0x15;sub 1;mask();save 0x2ace;
+   a(read !q.hl);sub 0x25;sub 1;mask();restore();logical false(!q.bc land 255);save 0x2ad8;
+   a(read !q.hl);sub 0x24;sub 1;mask();restore();logical false(!q.bc land 255);hl 0xa65f;logical true(read !q.hl);rar();need(not !q.flags.carry)"28AA numeric construction arm";
+   hl 0xa661;put 0x2b1a !q.hl 0;indexed 0xa628;c(read !q.hl);call 0x2b26 0x46ed traversal;
+   a 0;de 0xa863;resident 0x2b2e 0x1a40(fun()->hl !q.a;pointer_minus());logical false(!q.hl land 255);
+   need !q.flags.zero "28AA existing-pointer construction alternative";
+   indexed 0xa628;c(read !q.hl);call 0x2b3f 0x4738 construction;
+   bc 3;pair 0xa863;dad !q.bc;put 0x2b49 !q.hl 0x29;
+   indexed 0xa62b;bc 4;push 0x2b57 !q.hl;pair 0xa863;dad !q.bc;de(pop());a(read !q.de);put 0x2b5e !q.hl !q.a;
+   indexed 0xa62e;bc 5;push 0x2b6b !q.hl;pair 0xa863;dad !q.bc;de(pop());a(read !q.de);put 0x2b72 !q.hl !q.a;
+   pair 0xa863;bc !q.hl;de 0;call 0x2b7b 0x666e record_output;acquisition_publications())in
  let transform_second()=
   call 0x2c59 0x2c53(fun()->c 1;call 0x2c55 0x28aa acquire_selected02);
   indexed 0xa628;c(read !q.hl);call 0x2c66 0x21ad(fun()->classifier K.Interval);rar();need !q.flags.carry "2C59 clear classifier arm";
@@ -501,5 +628,59 @@ let run operation memory ~entry ~write ~compatibility ~adjust ~sp ~guard_field ~
   frame 2;e(read !q.hl);hl(U.wrap(!q.hl+1));de(read !q.hl lsl 8 lor(!q.de land 255));exchange();store 0x618d 0xa6cb !q.hl;
   de(U.wrap(!q.de+1));a(read !q.de);put 0x6192 0xa6ca !q.a;de(U.wrap(!q.de-3));a(read !q.de);
   adjust ~site:0x8399 ~delta:1;hl(pop());hl(pop())in
- (match operation with Context->context()|Field->field_acquisition()|Attribute->attribute_dispatch()|Spine->recursive_spine()|Resident->reuse H.Resident_acquisition|Pair_gate->pair_gate()|Selected_transform->selected_transform()|Table_adapter->table_adapter()|Wrapper->counted_spine()|Repeat->counted_spine ~repeat_only:true ());
+ let parent()=
+  let selector_minimum()=
+   hl 0xa65b;put 0x25c3 !q.hl(!q.bc land 255);pair 0xa65b;c(!q.hl land 255);e 0x36;
+   call 0x25ca 0x23a0 minimum;c !q.a;bc(!q.bc land 255);hl 0x42a6;dad !q.bc;a(read !q.hl)in
+  let literal_wrapper()=
+   hl 0xa654;put 0x24f4 !q.hl(!q.bc land 255);pair 0xa654;c(!q.hl land 255);child 0x24f9 0x8048;
+   pair 0xa634;c(!q.hl land 255);child 0x2500 0x240a;
+   a(read 0xa634);cmp 1;need(not !q.flags.zero)"24F1 index-one continuation arm"in
+  let adjust_selected()=
+   indexed 0xa628;put 0x27da !q.hl 0x28;
+   indexed 0xa62b;c(read !q.hl);call 0x27e6 0x25c0 selector_minimum;a(inc !q.a);pair 0xa641;e !q.a;c(!q.hl land 255);
+   call 0x27ef 0x23a0 minimum;add 3;indexed 0xa62b;put 0x27fd !q.hl !q.a;
+   c 0x63;call 0x2800 0x24f1 literal_wrapper in
+  let transform()=
+   call 0x2f1c 0x2c53(fun()->c 1;call 0x2c55 0x28aa acquire_index_one);
+   indexed 0xa628;c(read !q.hl);call 0x2f29 0x21ad(fun()->classifier K.Interval);rar();need !q.flags.carry "2F1C classifier-clear alternatives";
+   indexed 0xa628;a(read !q.bc);cmp(read !q.hl);
+   if not !q.flags.zero then(
+    indexed 0xa628;a(read !q.hl);sub 0x24;sub 1;mask();save 0x2f4e;
+    a(read !q.hl);sub 0x25;sub 1;mask();restore();logical false(!q.bc land 255);rar();need(not !q.flags.carry)"2F1C selector24/25";
+    indexed 0xa628;a(read !q.hl);cmp 0x16;need(not !q.flags.zero)"2F1C selector16";
+    indexed 0xa628;a(read !q.hl);cmp 0x19;need(not !q.flags.zero)"2F1C selector19";
+    indexed 0xa628;a(read !q.hl);cmp 0x15;
+    if !q.flags.zero then call 0x2f92 0x27d1 adjust_selected;
+    indexed 0xa628;a(read !q.hl);cmp 0x31;need(not !q.flags.zero)"2F1C selector31")in
+  let initial_transform()=
+   call 0x3533 0x3262(fun()->
+    List.iter(fun(site,address)->hl address;put site address 0)[0x3265,0xa629;0x326a,0xa62c;0x326f,0xa62f];
+    let channel site target destination=pair 0xae32;c(!q.hl land 255);child site target;put(site+3)destination !q.a in
+    channel 0x3275 0x7a93 0xa62a;channel 0x327f 0x7aa9 0xa62d;channel 0x3289 0x7abf 0xa630;
+    pair 0xae32;c(!q.hl land 255);child 0x3293 0x7a79;store 0x3296 0xa63f !q.hl;hl 0xa634;put 0x329c !q.hl 2);
+   call 0x3536 0x31a8(fun()->c 1;call 0x31aa 0x2221 special_index;save 0x31ad;c 2;call 0x31b0 0x2221 special_index;restore();logical true(!q.bc land 255);rar();need(not !q.flags.carry)"31A8 both-special alternative";
+    hl 0xa62a;a(read 0xa629);cmp(read !q.hl);need(not !q.flags.zero)"31A8 equal-selector arm";hl 0xa628;put 0x31f8 !q.hl 0x28);
+   hl 0xa628;a(read 0xa62a);cmp(read !q.hl);
+   if not !q.flags.zero then call 0x3543 0x2fae(fun()->a(read 0xa628);ani 0x28;cmp 0x28;need !q.flags.zero "2FAE non28 arm";call 0x2fb8 0x2f1c transform)in
+  adjust ~site:0x3bf0 ~delta:(-1);bc((!q.bc land 255)lsl 8 lor(!q.bc land 255));push 0x19f2 !q.bc;adjust ~site:0x3bf3 ~delta:1;
+  a(read 0xa619);frame 1;put 0x19fb !q.hl !q.a;hl 0xa619;put 0x19ff !q.hl 0;hl 0xa934;put 0x1a04 !q.hl 0;
+  a(read 0x20c3);cmp 0x28;need(not !q.flags.zero)"19F0 context28 arm";
+  a(read 0xa5f7);cmp 0;need(not !q.flags.zero)"19F0 zero mode arm";
+  call 0x1aa2 0x6639(fun()->hl 0xa933;put 0x663c !q.hl 0;call 0x663e 0x6619 counted_spine;
+   pair 0xa933;c(!q.hl land 255);call 0x6645 0x8179(fun()->hl 0xae71;put 0x817c !q.hl(!q.bc land 255);hl 0xae71;a(read 0xae34);sub(read !q.hl);put 0x8184 0xae34 !q.a));
+  hl 0xa61d;put 0x1aa8 !q.hl 0xb2;c 0;
+  call 0x1aac 0x21e9(fun()->hl 0xa648;put 0x21ec !q.hl(!q.bc land 255);
+   let selected()=pair 0xa648;hl(!q.hl land 255);bc 0xa628;dad !q.bc;a(read !q.hl)in
+   selected();cmp 0x28;need(not !q.flags.zero)"21E9 selector28 early arm";selected();cmp 0x2a;need(not !q.flags.zero)"21E9 selector2A early arm";
+   selected();sub 5;sub 1;mask());
+  rar();if !q.flags.carry then(hl 0xa61d;put 0x1ab6 !q.hl 0xac);
+  c 0;call 0x1aba 0x2221 special_index;rar();need(not !q.flags.carry)"19F0 special indexed arm";
+  hl 0xa628;put 0x1ac9 !q.hl 0x2a;hl 0xa62b;put 0x1ace !q.hl 0xfe;
+  a(read 0xae32);put 0x1ad3 0xa61c !q.a;call 0x1ad6 0x3533 initial_transform;
+  pair 0xa61d;c(!q.hl land 255);child 0x1add 0x2511;
+  hl 0xa61c;a(read 0xae32);sub(read !q.hl);put 0x1ae7 !q.hl !q.a;
+  frame 0;a(read !q.hl);rar();need(not !q.flags.carry)"19F0 private input set-bit arm";
+  call 0x1af6 0x80b1(fun()->c 0xfe;child 0x80b3 0x8048);a 0;hl(pop())in
+ (match operation with Context->context()|Field->field_acquisition()|Attribute->attribute_dispatch()|Spine->recursive_spine()|Resident->reuse H.Resident_acquisition|Pair_gate->pair_gate()|Selected_transform->selected_transform()|Table_adapter->table_adapter()|Wrapper->counted_spine()|Repeat->counted_spine ~repeat_only:true ()|Copy05->copy_arguments()|Traversal->traversal()|Construction->construction()|Record_output->record_output()|Index_one->acquire_index_one()|Parent->parent());
  {returned= !q;field= !acquired_field}

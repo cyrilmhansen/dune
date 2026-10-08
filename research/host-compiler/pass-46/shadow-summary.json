@@ -1,0 +1,49 @@
+{
+  "all_passed": true,
+  "outer_roots": 6,
+  "component_counts": {
+    "6708-E05": {
+      "MINIMAL": 2,
+      "FIZZBUZ": 6,
+      "PICTURE": 0
+    },
+    "46ED": {
+      "MINIMAL": 2,
+      "FIZZBUZ": 6,
+      "PICTURE": 0
+    },
+    "4738": {
+      "MINIMAL": 1,
+      "FIZZBUZ": 3,
+      "PICTURE": 0
+    },
+    "666E": {
+      "MINIMAL": 1,
+      "FIZZBUZ": 3,
+      "PICTURE": 0
+    },
+    "28AA-I1": {
+      "MINIMAL": 1,
+      "FIZZBUZ": 7,
+      "PICTURE": 2
+    },
+    "19F0": {
+      "MINIMAL": 1,
+      "FIZZBUZ": 4,
+      "PICTURE": 1
+    }
+  },
+  "comparisons": [
+    "all registers and flags",
+    "SP/continuation PC",
+    "ordered logical writes",
+    "complete 65536-byte RAM",
+    "all final stack writers",
+    "DMA/filesystem",
+    "file/record chronology",
+    "root/local child CALL chronology",
+    "internal canonical6619 journal and CALL/SP correlation",
+    "internal6223 full state checkpoints"
+  ],
+  "full_proof_sha256": "100d6376a614be5232097f255a6a02fb8656f0acc41518bf0103f4b36c600804"
+}

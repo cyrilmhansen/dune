@@ -1,0 +1,352 @@
+{
+  "validation_tier": "incremental",
+  "full_checkpoint_base": "430b75bb82187216731f26588b3bfb48e6fed435",
+  "baseline": "bba1b42d60b88461c637f15418605e38d89184ff",
+  "all_passed": true,
+  "category_count": 25,
+  "python_tests": 128,
+  "dune_test_rule_stanzas": 37,
+  "workers": 4,
+  "initial_aggregate_wall_seconds": 192.806,
+  "focused_rerun_wall_seconds": 50.497,
+  "total_validation_wall_seconds": 243.303,
+  "sum_category_seconds": 740.057,
+  "categories": {
+    "build": {
+      "return_code": 0,
+      "elapsed_seconds": 0.332,
+      "command": [
+        "dune",
+        "build",
+        "@all",
+        "-j",
+        "4"
+      ],
+      "python_tests": 0
+    },
+    "project": {
+      "return_code": 0,
+      "elapsed_seconds": 0.27,
+      "command": [
+        "dune",
+        "runtest",
+        "-j",
+        "4"
+      ],
+      "python_tests": 0
+    },
+    "recursive-unit": {
+      "return_code": 0,
+      "elapsed_seconds": 0.013,
+      "command": [
+        "_build/default/test/native_recursive_mapped.exe"
+      ],
+      "python_tests": 0
+    },
+    "mapped-unit": {
+      "return_code": 0,
+      "elapsed_seconds": 0.019,
+      "command": [
+        "_build/default/test/native_mapped_publication.exe"
+      ],
+      "python_tests": 0
+    },
+    "word-emitter-unit": {
+      "return_code": 0,
+      "elapsed_seconds": 0.1,
+      "command": [
+        "_build/default/test/native_word_emitters.exe"
+      ],
+      "python_tests": 0
+    },
+    "range-unit": {
+      "return_code": 0,
+      "elapsed_seconds": 0.094,
+      "command": [
+        "_build/default/test/native_range_processing.exe"
+      ],
+      "python_tests": 0
+    },
+    "input-unit": {
+      "return_code": 0,
+      "elapsed_seconds": 0.119,
+      "command": [
+        "_build/default/test/native_input_processing.exe"
+      ],
+      "python_tests": 0
+    },
+    "gate-unit": {
+      "return_code": 0,
+      "elapsed_seconds": 0.31,
+      "command": [
+        "_build/default/test/native_attribute_gate.exe"
+      ],
+      "python_tests": 0
+    },
+    "roundtrip": {
+      "return_code": 0,
+      "elapsed_seconds": 14.845,
+      "command": [
+        "python3",
+        "tools/annotated-assembly/verify.py",
+        "--images",
+        "/home/john/pli/cpm/pli80/DISK1"
+      ],
+      "python_tests": 0
+    },
+    "V1": {
+      "return_code": 0,
+      "elapsed_seconds": 21.666,
+      "command": [
+        "python3",
+        "tools/annotated-assembly/test_decompilation_annotations.py",
+        "-v"
+      ],
+      "python_tests": 9
+    },
+    "pass38": {
+      "return_code": 0,
+      "elapsed_seconds": 53.761,
+      "command": [
+        "python3",
+        "tools/annotated-assembly/test_acquisition_reentry_pass_38.py",
+        "--images",
+        "/home/john/pli/cpm/pli80/DISK1",
+        "-q"
+      ],
+      "python_tests": 19
+    },
+    "pass39": {
+      "return_code": 0,
+      "elapsed_seconds": 45.178,
+      "command": [
+        "python3",
+        "tools/annotated-assembly/test_state_transformation_pass_39.py",
+        "--images",
+        "/home/john/pli/cpm/pli80/DISK1",
+        "-q"
+      ],
+      "python_tests": 19
+    },
+    "acquisition-parent-unit": {
+      "return_code": 0,
+      "elapsed_seconds": 0.002,
+      "command": [
+        "_build/default/test/native_acquisition_parent.exe"
+      ],
+      "python_tests": 0
+    },
+    "pass44-roots": {
+      "return_code": 0,
+      "elapsed_seconds": 2.685,
+      "command": [
+        "python3",
+        "tools/annotated-assembly/test_reentrant_acquisition_pass_44.py",
+        "--images",
+        "/home/john/pli/cpm/pli80/DISK1",
+        "-q"
+      ],
+      "python_tests": 3
+    },
+    "pass40": {
+      "return_code": 0,
+      "elapsed_seconds": 35.047,
+      "command": [
+        "python3",
+        "tools/annotated-assembly/test_selector02_pass_40.py",
+        "--images",
+        "/home/john/pli/cpm/pli80/DISK1",
+        "-q"
+      ],
+      "python_tests": 17
+    },
+    "pass44-family": {
+      "return_code": 0,
+      "elapsed_seconds": 7.122,
+      "command": [
+        "python3",
+        "tools/annotated-assembly/test_acquisition_family_pass_44.py",
+        "--images",
+        "/home/john/pli/cpm/pli80/DISK1",
+        "-q"
+      ],
+      "python_tests": 4
+    },
+    "pass44-numeric": {
+      "return_code": 0,
+      "elapsed_seconds": 22.59,
+      "command": [
+        "python3",
+        "tools/annotated-assembly/test_numeric_acquisition_pass_44.py",
+        "--images",
+        "/home/john/pli/cpm/pli80/DISK1",
+        "-q"
+      ],
+      "python_tests": 5
+    },
+    "pass44-hybrids": {
+      "return_code": 0,
+      "elapsed_seconds": 54.964,
+      "command": [
+        "python3",
+        "tools/annotated-assembly/test_native_reentry_hybrids_pass_44.py",
+        "--images",
+        "/home/john/pli/cpm/pli80/DISK1",
+        "-q"
+      ],
+      "python_tests": 5
+    },
+    "pass45-local": {
+      "return_code": 0,
+      "elapsed_seconds": 7.302,
+      "command": [
+        "python3",
+        "tools/annotated-assembly/test_local_gates_pass_45.py",
+        "--images",
+        "/home/john/pli/cpm/pli80/DISK1",
+        "-q"
+      ],
+      "python_tests": 2
+    },
+    "packet-continuation": {
+      "return_code": 0,
+      "elapsed_seconds": 147.008,
+      "command": [
+        "python3",
+        "tools/annotated-assembly/test_procedure_evidence_packet.py",
+        "--images",
+        "/home/john/pli/cpm/pli80/DISK1",
+        "-v"
+      ],
+      "python_tests": 27
+    },
+    "classifier-unit": {
+      "return_code": 0,
+      "elapsed_seconds": 0.092,
+      "command": [
+        "_build/default/test/native_classifier.exe"
+      ],
+      "python_tests": 0
+    },
+    "diff-check": {
+      "return_code": 0,
+      "elapsed_seconds": 0.049,
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "python_tests": 0
+    },
+    "pass43": {
+      "return_code": 0,
+      "elapsed_seconds": 93.02,
+      "command": [
+        "python3",
+        "tools/annotated-assembly/test_native_5929_pass_43.py",
+        "--images",
+        "/home/john/pli/cpm/pli80/DISK1",
+        "-q"
+      ],
+      "python_tests": 8
+    },
+    "pass46": {
+      "return_code": 0,
+      "elapsed_seconds": 89.303,
+      "command": [
+        "python3",
+        "tools/annotated-assembly/test_parent_pass_46.py",
+        "--images",
+        "/home/john/pli/cpm/pli80/DISK1",
+        "-q"
+      ],
+      "python_tests": 7
+    },
+    "pass45-root": {
+      "return_code": 0,
+      "elapsed_seconds": 56.274,
+      "command": [
+        "python3",
+        "tools/annotated-assembly/test_native_wrapper_pass_45.py",
+        "--images",
+        "/home/john/pli/cpm/pli80/DISK1",
+        "-q"
+      ],
+      "python_tests": 3
+    }
+  },
+  "focused_reruns": {
+    "categories": [
+      "V1",
+      "pass40",
+      "roundtrip",
+      "diff-check"
+    ],
+    "reasons": [
+      "Retain precise older paired-byte semantic comments when extending catalog",
+      "Compare Pass40 unchanged entries at their exact retained Pass45 catalog epoch"
+    ],
+    "implementation_changed": false
+  },
+  "top_10_slowest": [
+    {
+      "category": "packet-continuation",
+      "elapsed_seconds": 147.008
+    },
+    {
+      "category": "pass43",
+      "elapsed_seconds": 93.02
+    },
+    {
+      "category": "pass46",
+      "elapsed_seconds": 89.303
+    },
+    {
+      "category": "pass45-root",
+      "elapsed_seconds": 56.274
+    },
+    {
+      "category": "pass44-hybrids",
+      "elapsed_seconds": 54.964
+    },
+    {
+      "category": "pass38",
+      "elapsed_seconds": 53.761
+    },
+    {
+      "category": "pass39",
+      "elapsed_seconds": 45.178
+    },
+    {
+      "category": "pass40",
+      "elapsed_seconds": 44.866
+    },
+    {
+      "category": "V1",
+      "elapsed_seconds": 23.692
+    },
+    {
+      "category": "pass44-numeric",
+      "elapsed_seconds": 22.59
+    }
+  ],
+  "next_full_checkpoint": "Pass47",
+  "exact_reconstruction_bytes": 94720,
+  "checkpoint_triggers": [],
+  "deferred": "Unrelated old historical/MINIMAL/CPM categories remain deferred to Pass47; complete Pass44/45, direct child/continuation native units and current cumulative compiler hybrids passed.",
+  "oracle_queries": 0,
+  "temporary_artifacts": "Only ignored _build; task-created TemporaryDirectory paths cleaned automatically; no /tmp task directories.",
+  "interactive_calls_note": "Continued session orchestrated extraction, implementation and proof clusters; deterministic driver runs six component batches, root/standalone/cumulative hybrids, report and validation phases. Blocking tool waits are completion transport, not log polling.",
+  "interactive_functions_exec_calls_in_resumed_segment": 69,
+  "interactive_count_scope": "Count excludes blocking completion waits; earlier segments were not reconstructed from unavailable interaction history.",
+  "automated_phases": [
+    "caller ancestry and candidate inventory",
+    "CFG and corrected call windows",
+    "E05/traversal/construction/output and mode-one acquisition inventories",
+    "six independent component shadow batches",
+    "root/standalone/cumulative hybrid proof",
+    "compact reports and catalog-law references",
+    "aggregate incremental validation",
+    "residual parent ranking"
+  ]
+}

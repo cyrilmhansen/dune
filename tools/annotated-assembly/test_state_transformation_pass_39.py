@@ -8,6 +8,8 @@ class PassThirtyNineTests(unittest.TestCase):
  def setUpClass(cls):
   cls.rows={s:gather(c,BOUNDS,include_nested_returns=True,software_callees=SOFTWARE)for s,c in CAPTURES.items()};cls.analyses=analyze(cls.rows,IMAGES)
   cls.base={p['id']:p for p in json.loads(subprocess.check_output(['git','show',BASE+':research/annotated-assembly/procedures.json'],text=True))['procedures']};cls.reference=cls.base|load(REPORT/'after.json');cls.catalog={p['id']:p for p in load(ROOT/'research/annotated-assembly/procedures.json')['procedures']}
+  future=load(ROOT/'research/host-compiler/pass-46/before.json')
+  cls.catalog={k:future.get(k) or v for k,v in cls.catalog.items()if k not in future or future[k]is not None}
  def test_fresh_counts_callers_and_all_independent_windows(self):
   self.assertEqual(summary(self.rows,self.analyses),load(REPORT/'natural-summary.json'))
   self.assertEqual(sum(len(rs)for g in self.rows.values()for rs in g.values()),160)
