@@ -1,0 +1,12 @@
+{
+  "PLI1.OVL+0C75": {
+    "end": 3356,
+    "description": "Bounded delimiter/EOF driver with visible A5D9 lifetime and canonical initialization transaction",
+    "completeness": [
+      "stable",
+      "partial",
+      "partial"
+    ],
+    "contract": "OBSERVED three ordinary roots from011E. DEDUCED publish A5D9=1; fresh A5D9 RAR gates each iteration. Compose020E and rotate its actual A; required bit1 calls013D then45F0. Fresh word[A863] publishes A5DA low/high. Acquire784E, independent01AF predicates C3A/C9B both return bit1; increment0261; fresh01AF C28 returns bit0. Fresh2015 bit1 emits8D via canonical80B7. Repeatedly reread20C3, CPI3B and acquire784E until equality, with no fixed iteration count. Fresh word[A5DA] becomesBC for canonical0C1B. Fresh2015 bit1 emits8E, then canonical0146. Fresh20C3 CPI1A equality publishes A5D9=0. Loop rereads A5D9 and RAR returns A0 with EOF comparison NZPA and CY0. BC/DE are independent final0146 outputs; HLA5D9; no own frame; ordinary RET preserves these channels. Required child unsupported states fail closed transactionally. Termination established only for demonstrated finite delimiter acquisitions; no arbitrary input theorem. Unsupported clear020E gate, unmatched3A/9B, matched28, clear2015 policies and nonEOF arm remainRAW. This is a new bounded contract, not a historical correction."
+  }
+}

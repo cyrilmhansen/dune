@@ -6,8 +6,8 @@ module S=State
 module H=Acquisition_parent
 module U=U16
 module B=U8
-type operation=Parent|Terminator|Structure|Wrapper|Cursor|Advance|Index|Bit40|Mode_step
-let bounds=function Parent->0x0c1b,0x0c75|Terminator->0x01c6,0x01d8|Structure->0x0b84,0x0c1b|Wrapper->0x013d,0x0146|Cursor->0x4802,0x4890|Advance->0x4890,0x4929|Index->0x47e2,0x47f7|Bit40->0x47f7,0x4802|Mode_step->0x3563,0x3585
+type operation=Driver|Parent|Terminator|Structure|Wrapper|Cursor|Advance|Index|Bit40|Mode_step
+let bounds=function Driver->0x0c75,0x0d1c|Parent->0x0c1b,0x0c75|Terminator->0x01c6,0x01d8|Structure->0x0b84,0x0c1b|Wrapper->0x013d,0x0146|Cursor->0x4802,0x4890|Advance->0x4890,0x4929|Index->0x47e2,0x47f7|Bit40->0x47f7,0x4802|Mode_step->0x3563,0x3585
 let run operation memory ~entry ~write ~compatibility ~sp ~invoke =
  let q=ref entry in
  let read=S.read memory and word=S.word memory in
@@ -58,6 +58,20 @@ let run operation memory ~entry ~write ~compatibility ~sp ~invoke =
   pair 0xa8eb;hl(!q.hl land 255);bc 0xa8ab;dad !q.hl;dad !q.bc;push 0x4855 !q.hl;pair 0xa8e9;let old= !q.hl in hl !q.de;de old;hl(pop());put 0x485b !q.hl(!q.de land 255);hl(U.wrap(!q.hl+1));put 0x485d !q.hl(!q.de lsr 8);
   pair 0xa8eb;hl(!q.hl land 255);bc 0xa86d;dad !q.hl;dad !q.bc;put 0x4868 !q.hl(!q.de land 255);hl(U.wrap(!q.hl+1));put 0x486a !q.hl(!q.de lsr 8);
   let rec loop()=pair 0xa861;store 0x486e 0xa863 !q.hl;let old= !q.hl in hl !q.de;de old;hl 0x1c32;call 0x4875 0x83a3;mask();save 0x4879;call 0x487a 0x421f;sub 0x20;add 255;mask();restore();conjunction(!q.bc land 255);rar();if !q.flags.carry then(call 0x4889 0x4890;loop())in loop()
+ |Driver->hl 0xa5d9;put 0x0c78 !q.hl 1;
+  let rec drive()=
+   a(read 0xa5d9);rar();if !q.flags.carry then(
+    call 0x0c81 0x020e;rar();need !q.flags.carry "0C75 clear input gate alternative";
+    call 0x0c88 0x013d;call 0x0c8b 0x45f0;pair 0xa863;store 0x0c91 0xa5da !q.hl;
+    call 0x0c94 0x784e;c 0x3a;call 0x0c99 0x01af;rar();need !q.flags.carry "0C75 unmatched3A delimiter";
+    c 0x9b;call 0x0ca2 0x01af;rar();need !q.flags.carry "0C75 unmatched9B delimiter";
+    call 0x0ca9 0x0261;c 0x28;call 0x0cae 0x01af;rar();need(not !q.flags.carry)"0C75 matched28 alternative";
+    a(read 0x2015);rar();need !q.flags.carry "0C75 clear2015 entry policy";c 0x8d;call 0x0cc1 0x80b7;
+    let rec delimiter()=a(read 0x20c3);cmp 0x3b;if not !q.flags.zero then(call 0x0ccc 0x784e;delimiter())in delimiter();
+    pair 0xa5da;bc !q.hl;call 0x0cd7 0x0c1b;
+    a(read 0x2015);rar();need !q.flags.carry "0C75 clear2015 exit policy";c 0x8e;call 0x0ce3 0x80b7;
+    call 0x0cf2 0x0146;a(read 0x20c3);cmp 0x1a;need !q.flags.zero "0C75 nonEOF continuation arm";
+    hl 0xa5d9;put 0x0d06 !q.hl 0;drive())in drive()
  |Parent->push 0x0c1b !q.hl;push 0x0c1c !q.bc;pair 0xa5b5;let old= !q.hl in hl !q.de;de old;frame 2;put 0x0c25 !q.hl(!q.de land 255);hl(U.wrap(!q.hl+1));put 0x0c27 !q.hl(!q.de lsr 8);
   hl(U.wrap(!q.hl-3));e(read !q.hl);hl(U.wrap(!q.hl+1));de(read !q.hl lsl 8 lor(!q.de land 255));let old= !q.hl in hl !q.de;de old;store 0x0c2f 0xa5b5 !q.hl;
   call 0x0c32 0x01c6;call 0x0c35 0x0261;call 0x0c38 0x013d;frame 0;c(read !q.hl);hl(U.wrap(!q.hl+1));bc(read !q.hl lsl 8 lor(!q.bc land 255));call 0x0c42 0x58bb;c 0x7d;call 0x0c47 0x2511;

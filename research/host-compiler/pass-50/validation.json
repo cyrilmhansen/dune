@@ -1,0 +1,484 @@
+{
+  "validation_tier": "full_checkpoint",
+  "previous_full_checkpoint": "7a4bf0adf5959ffa29238a7f30d549522d18750f",
+  "new_full_checkpoint": "this Pass50 commit",
+  "baseline": "59d7f0b09766b2e711ec0fd9b9b0dc7540719ffb",
+  "status": "passed initially",
+  "workers": 4,
+  "planned_inventory": "Complete established aggregate regression inventory through Pass50; build/project serial, all remaining categories isolated over prebuilt binaries.",
+  "historical_bytes": 94720,
+  "development": {
+    "root_shadows": 3,
+    "standalone_hybrids": 3,
+    "cumulative_hybrids": 3,
+    "focused_python_tests": 8,
+    "driver_discriminants": 7,
+    "orchestrator_restart": "Recovered surviving proof process through one blocking pidfd wait; no duplicate development execution."
+  },
+  "reruns": [],
+  "all_passed": true,
+  "initial_checkpoint_all_passed": true,
+  "category_count": 80,
+  "unique_python_test_count": 530,
+  "python_count_method": "Distinct unittest categories counted once from their complete test runner receipts.",
+  "dune_test_rule_stanzas": 39,
+  "checkpoint_wall_seconds": 1621.221,
+  "sum_category_seconds": 5580.021,
+  "total_validation_wall_seconds": 1621.221,
+  "top_10_slowest": [
+    {
+      "category": "pass50",
+      "elapsed_seconds": 846.193
+    },
+    {
+      "category": "pass49",
+      "elapsed_seconds": 609.847
+    },
+    {
+      "category": "pass47",
+      "elapsed_seconds": 400.292
+    },
+    {
+      "category": "pass48",
+      "elapsed_seconds": 373.756
+    },
+    {
+      "category": "pass13",
+      "elapsed_seconds": 155.76
+    },
+    {
+      "category": "pass31",
+      "elapsed_seconds": 141.682
+    },
+    {
+      "category": "packet-continuation",
+      "elapsed_seconds": 140.361
+    },
+    {
+      "category": "pass14",
+      "elapsed_seconds": 135.07
+    },
+    {
+      "category": "pass18-native",
+      "elapsed_seconds": 124.539
+    },
+    {
+      "category": "minimal-pass-10",
+      "elapsed_seconds": 118.934
+    }
+  ],
+  "category_results": {
+    "build": {
+      "return_code": 0,
+      "seconds": 4.303,
+      "python_tests": 0
+    },
+    "project": {
+      "return_code": 0,
+      "seconds": 3.455,
+      "python_tests": 0
+    },
+    "pass17-native": {
+      "return_code": 0,
+      "seconds": 82.437,
+      "python_tests": 5
+    },
+    "native-unit": {
+      "return_code": 0,
+      "seconds": 0.062,
+      "python_tests": 0
+    },
+    "pass19-native": {
+      "return_code": 0,
+      "seconds": 90.942,
+      "python_tests": 9
+    },
+    "pass20-native": {
+      "return_code": 0,
+      "seconds": 97.334,
+      "python_tests": 7
+    },
+    "pass15": {
+      "return_code": 0,
+      "seconds": 29.837,
+      "python_tests": 7
+    },
+    "pass18-native": {
+      "return_code": 0,
+      "seconds": 124.539,
+      "python_tests": 6
+    },
+    "baseline": {
+      "return_code": 0,
+      "seconds": 0.301,
+      "python_tests": 9
+    },
+    "minimal-pass-1": {
+      "return_code": 0,
+      "seconds": 0.228,
+      "python_tests": 8
+    },
+    "minimal-pass-2": {
+      "return_code": 0,
+      "seconds": 0.181,
+      "python_tests": 9
+    },
+    "minimal-pass-3": {
+      "return_code": 0,
+      "seconds": 0.367,
+      "python_tests": 9
+    },
+    "minimal-pass-4": {
+      "return_code": 0,
+      "seconds": 0.189,
+      "python_tests": 11
+    },
+    "pass16": {
+      "return_code": 0,
+      "seconds": 57.613,
+      "python_tests": 6
+    },
+    "minimal-pass-5": {
+      "return_code": 0,
+      "seconds": 64.956,
+      "python_tests": 8
+    },
+    "pass14": {
+      "return_code": 0,
+      "seconds": 135.07,
+      "python_tests": 8
+    },
+    "minimal-pass-6": {
+      "return_code": 0,
+      "seconds": 93.463,
+      "python_tests": 8
+    },
+    "minimal-pass-8": {
+      "return_code": 0,
+      "seconds": 9.997,
+      "python_tests": 8
+    },
+    "minimal-pass-7": {
+      "return_code": 0,
+      "seconds": 59.752,
+      "python_tests": 8
+    },
+    "pass13": {
+      "return_code": 0,
+      "seconds": 155.76,
+      "python_tests": 8
+    },
+    "minimal-pass-12": {
+      "return_code": 0,
+      "seconds": 50.847,
+      "python_tests": 8
+    },
+    "recursive-unit": {
+      "return_code": 0,
+      "seconds": 0.015,
+      "python_tests": 0
+    },
+    "balance-unit": {
+      "return_code": 0,
+      "seconds": 0.004,
+      "python_tests": 0
+    },
+    "minimal-pass-11": {
+      "return_code": 0,
+      "seconds": 79.499,
+      "python_tests": 8
+    },
+    "minimal-pass-9": {
+      "return_code": 0,
+      "seconds": 108.033,
+      "python_tests": 7
+    },
+    "minimal-pass-10": {
+      "return_code": 0,
+      "seconds": 118.934,
+      "python_tests": 8
+    },
+    "V1": {
+      "return_code": 0,
+      "seconds": 38.074,
+      "python_tests": 9
+    },
+    "mapped-unit": {
+      "return_code": 0,
+      "seconds": 0.014,
+      "python_tests": 0
+    },
+    "attribute-unit": {
+      "return_code": 0,
+      "seconds": 0.093,
+      "python_tests": 0
+    },
+    "emitter-unit": {
+      "return_code": 0,
+      "seconds": 0.037,
+      "python_tests": 0
+    },
+    "roundtrip": {
+      "return_code": 0,
+      "seconds": 26.437,
+      "python_tests": 0
+    },
+    "roundtrip-tests": {
+      "return_code": 0,
+      "seconds": 51.546,
+      "python_tests": 11
+    },
+    "pass23": {
+      "return_code": 0,
+      "seconds": 16.491,
+      "python_tests": 6
+    },
+    "native-emitter-unit": {
+      "return_code": 0,
+      "seconds": 1.419,
+      "python_tests": 0
+    },
+    "word-emitter-unit": {
+      "return_code": 0,
+      "seconds": 0.124,
+      "python_tests": 0
+    },
+    "pass21-native": {
+      "return_code": 0,
+      "seconds": 96.924,
+      "python_tests": 6
+    },
+    "range-unit": {
+      "return_code": 0,
+      "seconds": 0.112,
+      "python_tests": 0
+    },
+    "packet-continuation": {
+      "return_code": 0,
+      "seconds": 140.361,
+      "python_tests": 27
+    },
+    "publication-unit": {
+      "return_code": 0,
+      "seconds": 0.059,
+      "python_tests": 0
+    },
+    "pass22": {
+      "return_code": 0,
+      "seconds": 84.537,
+      "python_tests": 9
+    },
+    "range-publication-unit": {
+      "return_code": 0,
+      "seconds": 0.339,
+      "python_tests": 0
+    },
+    "pass24": {
+      "return_code": 0,
+      "seconds": 64.244,
+      "python_tests": 7
+    },
+    "control-unit": {
+      "return_code": 0,
+      "seconds": 0.006,
+      "python_tests": 0
+    },
+    "input-unit": {
+      "return_code": 0,
+      "seconds": 0.12,
+      "python_tests": 0
+    },
+    "pass25": {
+      "return_code": 0,
+      "seconds": 61.577,
+      "python_tests": 6
+    },
+    "gate-unit": {
+      "return_code": 0,
+      "seconds": 0.365,
+      "python_tests": 0
+    },
+    "pass26": {
+      "return_code": 0,
+      "seconds": 63.676,
+      "python_tests": 5
+    },
+    "pass27": {
+      "return_code": 0,
+      "seconds": 64.177,
+      "python_tests": 5
+    },
+    "pass28": {
+      "return_code": 0,
+      "seconds": 73.825,
+      "python_tests": 7
+    },
+    "pass32": {
+      "return_code": 0,
+      "seconds": 45.397,
+      "python_tests": 10
+    },
+    "pass29": {
+      "return_code": 0,
+      "seconds": 81.219,
+      "python_tests": 8
+    },
+    "historical-leaf-queries": {
+      "return_code": 0,
+      "seconds": 3.294,
+      "python_tests": 0
+    },
+    "pass30": {
+      "return_code": 0,
+      "seconds": 82.628,
+      "python_tests": 8
+    },
+    "pass34": {
+      "return_code": 0,
+      "seconds": 42.476,
+      "python_tests": 12
+    },
+    "pass35": {
+      "return_code": 0,
+      "seconds": 41.484,
+      "python_tests": 12
+    },
+    "pass31": {
+      "return_code": 0,
+      "seconds": 141.682,
+      "python_tests": 8
+    },
+    "pass33": {
+      "return_code": 0,
+      "seconds": 85.758,
+      "python_tests": 12
+    },
+    "pass36": {
+      "return_code": 0,
+      "seconds": 40.617,
+      "python_tests": 14
+    },
+    "pass37": {
+      "return_code": 0,
+      "seconds": 41.722,
+      "python_tests": 15
+    },
+    "pass39": {
+      "return_code": 0,
+      "seconds": 44.802,
+      "python_tests": 19
+    },
+    "pass38": {
+      "return_code": 0,
+      "seconds": 55.06,
+      "python_tests": 19
+    },
+    "pass40": {
+      "return_code": 0,
+      "seconds": 43.86,
+      "python_tests": 17
+    },
+    "acquisition-parent-unit": {
+      "return_code": 0,
+      "seconds": 0.002,
+      "python_tests": 0
+    },
+    "pass44-roots": {
+      "return_code": 0,
+      "seconds": 2.532,
+      "python_tests": 3
+    },
+    "pass44-family": {
+      "return_code": 0,
+      "seconds": 7.427,
+      "python_tests": 4
+    },
+    "pass41": {
+      "return_code": 0,
+      "seconds": 55.099,
+      "python_tests": 16
+    },
+    "pass42": {
+      "return_code": 0,
+      "seconds": 41.927,
+      "python_tests": 19
+    },
+    "pass44-numeric": {
+      "return_code": 0,
+      "seconds": 22.563,
+      "python_tests": 5
+    },
+    "pass44-hybrids": {
+      "return_code": 0,
+      "seconds": 52.411,
+      "python_tests": 5
+    },
+    "pass43": {
+      "return_code": 0,
+      "seconds": 91.46,
+      "python_tests": 8
+    },
+    "pass48": {
+      "return_code": 0,
+      "seconds": 373.756,
+      "python_tests": 9
+    },
+    "pass47": {
+      "return_code": 0,
+      "seconds": 400.292,
+      "python_tests": 13
+    },
+    "pass45-local": {
+      "return_code": 0,
+      "seconds": 8.685,
+      "python_tests": 2
+    },
+    "pass46": {
+      "return_code": 0,
+      "seconds": 98.819,
+      "python_tests": 7
+    },
+    "classifier-unit": {
+      "return_code": 0,
+      "seconds": 0.078,
+      "python_tests": 0
+    },
+    "dynamic-progress": {
+      "return_code": 0,
+      "seconds": 0.13,
+      "python_tests": 0
+    },
+    "diff-check": {
+      "return_code": 0,
+      "seconds": 0.067,
+      "python_tests": 0
+    },
+    "pass45-root": {
+      "return_code": 0,
+      "seconds": 66.059,
+      "python_tests": 3
+    },
+    "pass49": {
+      "return_code": 0,
+      "seconds": 609.847,
+      "python_tests": 11
+    },
+    "pass50": {
+      "return_code": 0,
+      "seconds": 846.193,
+      "python_tests": 8
+    }
+  },
+  "receipt_sha256": "39c96048553cff79c2b8c6e3f6a84bb1c39db778dc603179bd02e0c4d760baa0",
+  "interactive_call_count": null,
+  "interactive_count_note": "Not instrumented; a server restart interrupted the orchestration. Blocking waits were used for the surviving development proof and aggregate checkpoint.",
+  "automated_driver_phases": [
+    "corrected natural inventory/CFG",
+    "compact read/write packet",
+    "root shadows and falsifications",
+    "standalone/cumulative hybrids",
+    "hierarchy and durable reporting",
+    "blocking recovery after orchestrator restart",
+    "full-checkpoint dispatch"
+  ]
+}

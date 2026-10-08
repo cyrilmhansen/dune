@@ -695,9 +695,9 @@ let run operation memory ~entry ~write ~compatibility ~adjust ~sp ~guard_field ~
    |0x6427->count_field()
    |0xa5a3->let address= !q.hl in difference !q.de(word address);de(U.wrap(address+1))
    |0x672b->reuse H.Prefix_sum
-   |target when List.mem_assoc target [0x2e1b,Initialization_parent.Parent;0x23c6,Terminator;0x2d84,Structure;0x233d,Wrapper;0x6a02,Cursor;0x6a90,Advance;0x69e2,Index;0x69f7,Bit40;0x5763,Mode_step]->
+   |target when List.mem_assoc target [0x2e75,Initialization_parent.Driver;0x2e1b,Initialization_parent.Parent;0x23c6,Terminator;0x2d84,Structure;0x233d,Wrapper;0x6a02,Cursor;0x6a90,Advance;0x69e2,Index;0x69f7,Bit40;0x5763,Mode_step]->
     (if target=0x6a90 then guard_field(word 0xa861)1 else if target=0x2d84 then guard_field(word 0xa863)6);
-    q:=Initialization_parent.run(List.assoc target [0x2e1b,Initialization_parent.Parent;0x23c6,Terminator;0x2d84,Structure;0x233d,Wrapper;0x6a02,Cursor;0x6a90,Advance;0x69e2,Index;0x69f7,Bit40;0x5763,Mode_step])memory ~entry:!q ~write ~compatibility ~sp ~invoke
+    q:=Initialization_parent.run(List.assoc target [0x2e75,Initialization_parent.Driver;0x2e1b,Initialization_parent.Parent;0x23c6,Terminator;0x2d84,Structure;0x233d,Wrapper;0x6a02,Cursor;0x6a90,Advance;0x69e2,Index;0x69f7,Bit40;0x5763,Mode_step])memory ~entry:!q ~write ~compatibility ~sp ~invoke
    |0x35ad->c 0x3b;call 0x13af 0x01af selector_match;rar();need !q.flags.carry "13AD unmatched semicolon"
    |0x2387->a(read 0x2010);rar();need(not !q.flags.carry)"0187 set mode"
    |0x35ad->c 0x3b;call 0x13af 0x01af selector_match;rar();need !q.flags.carry "13AD unmatched semicolon"

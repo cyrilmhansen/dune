@@ -41172,6 +41172,204 @@
         "4800": "A=u8(A-A-incoming_CY); exact subtraction flags/borrow; returned flags are independent of later literal loads",
         "4801": "consume original hardware return word; SP=entry_SP+2; preserve final path flags and registers"
       }
+    },
+    {
+      "id": "PLI1.OVL+0C75",
+      "image": "PLI1.OVL",
+      "image_sha256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564",
+      "stable_label": "PLI1_0C75",
+      "runtime_entry": 11893,
+      "start_offset": 3189,
+      "end_offset": 3356,
+      "length": 167,
+      "byte_status_at_entry": "UNDERSTOOD",
+      "description": "Bounded delimiter/EOF driver with visible A5D9 lifetime and canonical initialization transaction",
+      "completeness": {
+        "bounds": "stable",
+        "control_flow": "partial",
+        "contract": "partial"
+      },
+      "observed_paths": {
+        "invocations_by_run": {
+          "MINIMAL": 1,
+          "FIZZBUZ": 1,
+          "PICTURE": 1
+        },
+        "represented_bytes": 142,
+        "description": "OBSERVED corrected ordinary CALL/return windows independently retained for MINIMAL/FIZZBUZ/PICTURE; union of own bytes excludes child bodies."
+      },
+      "unresolved_paths": [
+        "Scope is the independently shadowed Pass50 routes; sibling RAW arms, arbitrary aliases and inherited child unsupported states remain excluded."
+      ],
+      "inputs": "Actual entry registers and selected shared byte-addressed memory; child scopes inherited; executable code, selected scratch/publications/read carriers and active return/save slots nonaliasing where their operation requires it. No table capacity or ownership assumption.",
+      "outputs": "Path-specific A/BC/DE/HL and flags as documented below and in correlated natural cases; SP=entry_SP+2; PC=original CALL continuation.",
+      "clobbers": "Path-specific A/BC/DE/HL/flags; local scratch/publications stated below; delegated child effects; proven CALL/PUSH stack residue.",
+      "memory_state": [
+        "All numerical addresses denote historical runtime bytes, not separate host arrays.",
+        "F=entry_SP; original hardware CALL word at F; body CALL/save traffic below F; preserved per-invocation last writers."
+      ],
+      "data_role_ids": [],
+      "callers": [
+        {
+          "coordinate": "PLI1.OVL+011E",
+          "counts_by_run": {
+            "MINIMAL": 1,
+            "FIZZBUZ": 1,
+            "PICTURE": 1
+          }
+        }
+      ],
+      "returns": {
+        "convention": "ordinary hardware CALL word; original slot unchanged; SP after RET=entry_SP+2",
+        "observed_file_offsets": [
+          3355
+        ],
+        "sites_description": "PLI1.OVL+0D1B"
+      },
+      "direct_callees": [
+        {
+          "callsite_offset": 3201,
+          "coordinate": "PLI1.OVL+020E",
+          "runtime_address": 9230
+        },
+        {
+          "callsite_offset": 3208,
+          "coordinate": "PLI1.OVL+013D",
+          "runtime_address": 9021
+        },
+        {
+          "callsite_offset": 3211,
+          "coordinate": "PLI1.OVL+45F0",
+          "runtime_address": 26608
+        },
+        {
+          "callsite_offset": 3220,
+          "coordinate": "PLI1.OVL+784E",
+          "runtime_address": 39502
+        },
+        {
+          "callsite_offset": 3225,
+          "coordinate": "PLI1.OVL+01AF",
+          "runtime_address": 9135
+        },
+        {
+          "callsite_offset": 3234,
+          "coordinate": "PLI1.OVL+01AF",
+          "runtime_address": 9135
+        },
+        {
+          "callsite_offset": 3241,
+          "coordinate": "PLI1.OVL+0261",
+          "runtime_address": 9313
+        },
+        {
+          "callsite_offset": 3246,
+          "coordinate": "PLI1.OVL+01AF",
+          "runtime_address": 9135
+        },
+        {
+          "callsite_offset": 3265,
+          "coordinate": "PLI1.OVL+80B7",
+          "runtime_address": 41655
+        },
+        {
+          "callsite_offset": 3276,
+          "coordinate": "PLI1.OVL+784E",
+          "runtime_address": 39502
+        },
+        {
+          "callsite_offset": 3287,
+          "coordinate": "PLI1.OVL+0C1B",
+          "runtime_address": 11803
+        },
+        {
+          "callsite_offset": 3299,
+          "coordinate": "PLI1.OVL+80B7",
+          "runtime_address": 41655
+        },
+        {
+          "callsite_offset": 3314,
+          "coordinate": "PLI1.OVL+0146",
+          "runtime_address": 9030
+        }
+      ],
+      "overlapping_entries": [],
+      "contract_scope": "Bounded accumulated-natural routes and exact represented local operations; delegated partial/opaque children and unexecuted local arms are not silently implemented.",
+      "contract": "OBSERVED three ordinary roots from011E. DEDUCED publish A5D9=1; fresh A5D9 RAR gates each iteration. Compose020E and rotate its actual A; required bit1 calls013D then45F0. Fresh word[A863] publishes A5DA low/high. Acquire784E, independent01AF predicates C3A/C9B both return bit1; increment0261; fresh01AF C28 returns bit0. Fresh2015 bit1 emits8D via canonical80B7. Repeatedly reread20C3, CPI3B and acquire784E until equality, with no fixed iteration count. Fresh word[A5DA] becomesBC for canonical0C1B. Fresh2015 bit1 emits8E, then canonical0146. Fresh20C3 CPI1A equality publishes A5D9=0. Loop rereads A5D9 and RAR returns A0 with EOF comparison NZPA and CY0. BC/DE are independent final0146 outputs; HLA5D9; no own frame; ordinary RET preserves these channels. Required child unsupported states fail closed transactionally. Termination established only for demonstrated finite delimiter acquisitions; no arbitrary input theorem. Unsupported clear020E gate, unmatched3A/9B, matched28, clear2015 policies and nonEOF arm remainRAW. This is a new bounded contract, not a historical correction.",
+      "semantic_hypothesis": null,
+      "pseudocode": "OBSERVED three ordinary roots from011E. DEDUCED publish A5D9=1; fresh A5D9 RAR gates each iteration. Compose020E and rotate its actual A; required bit1 calls013D then45F0. Fresh word[A863] publishes A5DA low/high. Acquire784E, independent01AF predicates C3A/C9B both return bit1; increment0261; fresh01AF C28 returns bit0. Fresh2015 bit1 emits8D via canonical80B7. Repeatedly reread20C3, CPI3B and acquire784E until equality, with no fixed iteration count. Fresh word[A5DA] becomesBC for canonical0C1B. Fresh2015 bit1 emits8E, then canonical0146. Fresh20C3 CPI1A equality publishes A5D9=0. Loop rereads A5D9 and RAR returns A0 with EOF comparison NZPA and CY0. BC/DE are independent final0146 outputs; HLA5D9; no own frame; ordinary RET preserves these channels. Required child unsupported states fail closed transactionally. Termination established only for demonstrated finite delimiter acquisitions; no arbitrary input theorem. Unsupported clear020E gate, unmatched3A/9B, matched28, clear2015 policies and nonEOF arm remainRAW. This is a new bounded contract, not a historical correction.",
+      "evidence_refs": [
+        "evidence.json#seeds/PLI1.OVL+0C75",
+        "../host-compiler/pass-50/README.md",
+        "../host-compiler/pass-50/natural-cases.json"
+      ],
+      "blocks": [
+        {
+          "offset": 3189,
+          "pseudocode": [
+            "OBSERVED three ordinary roots from011E. DEDUCED publish A5D9=1; fresh A5D9 RAR gates each iteration. Compose020E and rotate its actual A; required bit1 calls013D then45F0. Fresh word[A863] publishes A5DA low/high. Acquire784E, independent01AF predicates C3A/C9B both return bit1; increment0261; fresh01AF C28 returns bit0. Fresh2015 bit1 emits8D via canonical80B7. Repeatedly reread20C3, CPI3B and acquire784E until equality, with no fixed iteration count. Fresh word[A5DA] becomesBC for canonical0C1B. Fresh2015 bit1 emits8E, then canonical0146. Fresh20C3 CPI1A equality publishes A5D9=0. Loop rereads A5D9 and RAR returns A0 with EOF comparison NZPA and CY0. BC/DE are independent final0146 outputs; HLA5D9; no own frame; ordinary RET preserves these channels. Required child unsupported states fail closed transactionally. Termination established only for demonstrated finite delimiter acquisitions; no arbitrary input theorem. Unsupported clear020E gate, unmatched3A/9B, matched28, clear2015 policies and nonEOF arm remainRAW. This is a new bounded contract, not a historical correction."
+          ]
+        }
+      ],
+      "local_comments": {
+        "0C75": "H pair = literal A5D9H; flags preserved",
+        "0C78": "byte[HL]=01H; flags preserved",
+        "0C7A": "A=fresh byte[A5D9H]; flags preserved",
+        "0C7D": "A=(incoming_CY<<7)|(old_A>>1); CY=old_A.bit0; NZPA preserved",
+        "0C7E": "if CY=0: PC=2F1BH; flags preserved",
+        "0C81": "push following PC; invoke PLI1.OVL+020E; child state/effects at the explicitly scoped contract",
+        "0C84": "A=(incoming_CY<<7)|(old_A>>1); CY=old_A.bit0; NZPA preserved",
+        "0C85": "if CY=0: PC=2EF8H; flags preserved",
+        "0C88": "push following PC; invoke PLI1.OVL+013D; child state/effects at the explicitly scoped contract",
+        "0C8B": "push following PC; invoke PLI1.OVL+45F0; child state/effects at the explicitly scoped contract",
+        "0C8E": "HL=fresh little_endian_word[A863H]; low then high read; flags preserved",
+        "0C91": "byte[A5DAH]=L then byte[address+1]=H; flags preserved",
+        "0C94": "push following PC; invoke PLI1.OVL+784E; child state/effects at the explicitly scoped contract",
+        "0C97": "C=3AH; flags preserved",
+        "0C99": "push following PC; invoke PLI1.OVL+01AF; child state/effects at the explicitly scoped contract",
+        "0C9C": "A=(incoming_CY<<7)|(old_A>>1); CY=old_A.bit0; NZPA preserved",
+        "0C9D": "if CY=0: PC=2EEFH; flags preserved",
+        "0CA0": "C=9BH; flags preserved",
+        "0CA2": "push following PC; invoke PLI1.OVL+01AF; child state/effects at the explicitly scoped contract",
+        "0CA5": "A=(incoming_CY<<7)|(old_A>>1); CY=old_A.bit0; NZPA preserved",
+        "0CA6": "if CY=0: PC=2EE9H; flags preserved",
+        "0CA9": "push following PC; invoke PLI1.OVL+0261; child state/effects at the explicitly scoped contract",
+        "0CAC": "C=28H; flags preserved",
+        "0CAE": "push following PC; invoke PLI1.OVL+01AF; child state/effects at the explicitly scoped contract",
+        "0CB1": "A=(incoming_CY<<7)|(old_A>>1); CY=old_A.bit0; NZPA preserved",
+        "0CB2": "if CY=0: PC=2EB8H; flags preserved",
+        "0CB8": "A=fresh byte[2015H]; flags preserved",
+        "0CBB": "A=(incoming_CY<<7)|(old_A>>1); CY=old_A.bit0; NZPA preserved",
+        "0CBC": "if CY=0: PC=2EC4H; flags preserved",
+        "0CBF": "C=8DH; flags preserved",
+        "0CC1": "push following PC; invoke PLI1.OVL+80B7; child state/effects at the explicitly scoped contract",
+        "0CC4": "A=fresh byte[20C3H]; flags preserved",
+        "0CC7": "flags=unsigned byte comparison A-3BH; A preserved",
+        "0CC9": "if Z=1: PC=2ED2H; flags preserved",
+        "0CCC": "push following PC; invoke PLI1.OVL+784E; child state/effects at the explicitly scoped contract",
+        "0CCF": "unconditionally: PC=2EC4H; flags preserved",
+        "0CD2": "HL=fresh little_endian_word[A5DAH]; low then high read; flags preserved",
+        "0CD5": "B=H; flags preserved",
+        "0CD6": "C=L; flags preserved",
+        "0CD7": "push following PC; invoke PLI1.OVL+0C1B; child state/effects at the explicitly scoped contract",
+        "0CDA": "A=fresh byte[2015H]; flags preserved",
+        "0CDD": "A=(incoming_CY<<7)|(old_A>>1); CY=old_A.bit0; NZPA preserved",
+        "0CDE": "if CY=0: PC=2EE6H; flags preserved",
+        "0CE1": "C=8EH; flags preserved",
+        "0CE3": "push following PC; invoke PLI1.OVL+80B7; child state/effects at the explicitly scoped contract",
+        "0CE6": "unconditionally: PC=2EECH; flags preserved",
+        "0CEC": "unconditionally: PC=2EF2H; flags preserved",
+        "0CF2": "push following PC; invoke PLI1.OVL+0146; child state/effects at the explicitly scoped contract",
+        "0CF5": "unconditionally: PC=2EFBH; flags preserved",
+        "0CFB": "A=fresh byte[20C3H]; flags preserved",
+        "0CFE": "flags=unsigned byte comparison A-1AH; A preserved",
+        "0D00": "if Z=0: PC=2F0BH; flags preserved",
+        "0D03": "H pair = literal A5D9H; flags preserved",
+        "0D06": "byte[HL]=00H; flags preserved",
+        "0D08": "unconditionally: PC=2F18H; flags preserved",
+        "0D18": "unconditionally: PC=2E7AH; flags preserved",
+        "0D1B": "consume original hardware return word; SP=entry_SP+2; preserve final path flags and registers"
+      }
     }
   ]
 }
