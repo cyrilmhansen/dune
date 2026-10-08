@@ -15,12 +15,15 @@ let record_summaries v=List.map(fun(n,r,b)->n,r,Experiment.sha256_hex b)v.record
 let require b m=if not b then failwith("wrapper acquisition proof: "^m)
 let compatibility_writes (p:B.prepared)=List.filter_map(fun(w:B.write)->if w.kind="logical"then None else Some(w.address,w.value))p.journal
 let route (p:B.prepared)=if List.exists(fun(w:B.write)->w.depth=0&&w.writer=0x25cd)p.journal then "R2_direct_recursion"else if List.exists(fun(w:B.write)->w.depth=0&&w.writer=0x265e)p.journal then "R1_mediated_recursion"else if List.exists(fun(w:B.write)->w.depth=0&&w.writer=0x2503)p.journal then "R3_cached_probe"else "R0_reader_tail"
-let prepare_root ?(observe=(fun _ _ _ _ _->())) bridge input ~call ~origin boundary=
+let prepare_root ?(operation=Pli80_host.Recursive_parent.Parent) ?(observe=(fun _ _ _ _ _->())) bridge input ~call ~origin boundary=
+ if operation=Pli80_host.Recursive_parent.Recursive_frame then
+  (if not(List.mem boundary.Runner.state.e [0;2])then invalid_arg"acquisition frame: unsupported saved E parameter");
  let child=RB.create ~pli_com:input.Experiment.pli_com ~pli1:input.pli1_ovl in
  B.prepare ~follow_spine:true ~recursive:(fun site boundary->
   let p=RB.prepare ~observe child ~call:(RB.internal_call child site)~origin:(B.origin"PLI1.OVL"0x6223)boundary in
-  p.program,p.state,p.journal)bridge (B.Recursive Pli80_host.Recursive_parent.Parent) ~call ~origin boundary
-let shadow input=
+  p.program,p.state,p.journal)bridge (B.Recursive operation) ~call ~origin boundary
+let rec shadow ?(operation=Pli80_host.Recursive_parent.Parent) input=
+ let first,_=Pli80_host.Recursive_parent.bounds operation in
  let bridge=B.create ~pli_com:input.Experiment.pli_com ~pli1:input.pli1_ovl in
  let previous=ref None and current_origin=ref Analysis.Execution_map.Unknown and active=ref [] in
  let parent_children=match P.shadow input with Ok v->v|_->failwith"19F0 child proof"in
@@ -50,7 +53,7 @@ let shadow input=
   |(entry_step,call,(entry:Runner.state_snapshot),ram,(_files:Cpm.Filesystem.t),_dma,(p:B.prepared),(preview:Runner.host_program_result),writes,latest,records)::rest
     when state.pc=call.B.resume&&state.sp=entry.sp+2->
    let prev=Option.get !previous in
-   require(I8080.Step.pc_before prev.step=0x287b&&prev.before.sp=entry.sp&&prev.after=state
+   require(I8080.Step.pc_before prev.step=(if operation=Pli80_host.Recursive_parent.Recursive_frame then 0x2d28 else 0x287b)&&prev.before.sp=entry.sp&&prev.after=state
     &&I8080.Step.control_flow prev.step=I8080.Step.Return{target=Some call.resume;taken=true})(Printf.sprintf"outer RET ancestry PC=%04X SP=%04X expectedSP=%04X"(I8080.Step.pc_before prev.step)prev.before.sp entry.sp);
    require(state=p.state)"return registers/flags/SP/PC";
    let actual=boundary.copy_memory()in
@@ -70,29 +73,31 @@ let shadow input=
    let planned=List.concat_map(fun(s:Runner.host_service)->List.filter_map(function
     Cpm.Bdos.Write_record q->Some(q.file.name,q.logical_record,q.data)|_->None)s.events)preview.services in
    require(planned=List.rev !records)"record chronology/data";
-   cases:={caller=call.coordinate;entry_step;return_step=step_index-1;input=entry;output=state;route=(route p);
+   cases:={caller=call.coordinate;entry_step;return_step=step_index-1;input=entry;output=state;route=(if operation=Pli80_host.Recursive_parent.Recursive_frame then
+     Printf.sprintf"frame_iterations_%d"(List.length(List.filter(fun(w:B.write)->w.depth=0&&w.writer=0x2c3f)p.journal))else route p);
     entry_memory_sha256=Experiment.sha256_hex ram;post_memory_sha256=Experiment.sha256_hex actual;
     prepared=p;services=preview.services;entry_dma=_dma;post_dma=preview.dma;stack_cells=List.length(List.sort_uniq compare(List.map fst(compatibility_writes p)));logical_writes=List.length p.logical_writes}::!cases;
    snapshots:=(entry_step,{entry_memory=ram;post_memory=actual;entry_files=_files;post_files=boundary.copy_filesystem()})::!snapshots;
    active:=rest
   |_->());
-  if o=B.origin"PLI1.OVL"0x02f0 then(
-   let call=B.verify_call bridge (B.Recursive Pli80_host.Recursive_parent.Parent)(Option.get !previous)~entry:state in
+  if o=B.origin"PLI1.OVL"first then(
+   let call=B.verify_call bridge (B.Recursive operation)(Option.get !previous)~entry:state in
    let ram=boundary.copy_memory()and files=boundary.copy_filesystem()and dma=boundary.dma in
    let negative=ref 0 in let rejects fn=incr negative;match fn()with exception Invalid_argument _->()|_->failwith(Printf.sprintf"malformed root accepted negative %d at %d" !negative step_index)in
-   rejects(fun()->B.verify_call bridge (B.Recursive Pli80_host.Recursive_parent.Parent) {(Option.get !previous)with origin=B.origin"PLI2.OVL"0x6273}~entry:state);
-   rejects(fun()->prepare_root bridge input ~call ~origin:(B.origin"PLI2.OVL"0x02f0)boundary);
-   rejects(fun()->prepare_root bridge input ~call ~origin:o {boundary with state={state with pc=state.pc+1}});
-   rejects(fun()->prepare_root bridge input ~call ~origin:o {boundary with state={state with c=256}});
-   rejects(fun()->prepare_root bridge input ~call ~origin:o {boundary with state={state with sp=0xa945}});
+   rejects(fun()->B.verify_call bridge (B.Recursive operation) {(Option.get !previous)with origin=B.origin"PLI2.OVL"0x6273}~entry:state);
+   rejects(fun()->prepare_root ~operation bridge input ~call ~origin:(B.origin"PLI2.OVL"0x02f0)boundary);
+   rejects(fun()->prepare_root ~operation bridge input ~call ~origin:o {boundary with state={state with pc=state.pc+1}});
+   rejects(fun()->prepare_root ~operation bridge input ~call ~origin:o {boundary with state={state with c=256}});
+   rejects(fun()->prepare_root ~operation bridge input ~call ~origin:o {boundary with state={state with sp=0xa945}});
    let changed address=let value=(Char.code(Bytes.get ram address)+1)land 255 in {boundary with copy_memory=(fun()->let b=Bytes.copy ram in Bytes.set b address(Char.chr value);b);preview_host_program=(fun p->boundary.preview_host_program{p with effects=Runner.Memory_write(address,value)::p.effects})}in
-   List.iter(fun address->rejects(fun()->prepare_root bridge input ~call ~origin:o(changed address)))[0x24f0;0x25cd;0x25e8;0x265e;0x33e2;0x2d79;0x883e;0x891f;state.sp];
+   List.iter(fun address->rejects(fun()->prepare_root ~operation bridge input ~call ~origin:o(changed address)))[first+0x2200;0x25cd;0x25e8;0x265e;0x33e2;0x2d79;0x883e;0x891f;state.sp];
    let altered address value={boundary with copy_memory=(fun()->let b=Bytes.copy ram in Bytes.set b address(Char.chr value);b);preview_host_program=(fun p->boundary.preview_host_program{p with effects=Runner.Memory_write(address,value)::p.effects})}in
-   rejects(fun()->prepare_root bridge input ~call ~origin:o(altered 0x20c3 0x28));
-   rejects(fun()->prepare_root bridge input ~call ~origin:o(altered 0xaa1a 1));
+   if operation=Pli80_host.Recursive_parent.Parent then rejects(fun()->prepare_root ~operation bridge input ~call ~origin:o(altered 0x20c3 0x28));
+   if operation=Pli80_host.Recursive_parent.Parent then rejects(fun()->prepare_root ~operation bridge input ~call ~origin:o(altered 0xaa1a 1))
+   else rejects(fun()->prepare_root ~operation bridge input ~call ~origin:o {boundary with state={state with e=3}});
    require(boundary.copy_memory()=ram&&boundary.dma=dma&&Cpm.Filesystem.equal(boundary.copy_filesystem())files)"negative preparation leaked live state";
    let logical=ref[]in
-   match prepare_root ~observe:(fun call entry memory p service_result->logical:=(call,entry,Bytes.copy memory,p,service_result)::!logical)bridge input ~call ~origin:o boundary with
+   match prepare_root ~operation ~observe:(fun call entry memory p service_result->logical:=(call,entry,Bytes.copy memory,p,service_result)::!logical)bridge input ~call ~origin:o boundary with
    |exception Invalid_argument m when m="reentrant acquisition bridge: required acquisition-family implementation is unfinished"->
     require(boundary.copy_memory()=ram&&boundary.dma=dma&&Cpm.Filesystem.equal(boundary.copy_filesystem())files)"rejected preparation leaked live state";
     pending:={pending_caller=call.coordinate;pending_entry_step=step_index;entry_sp=state.sp;reason=m}::!pending
@@ -101,7 +106,7 @@ let shadow input=
     pending:={pending_caller=call.coordinate;pending_entry_step=step_index;entry_sp=state.sp;reason="field80 recursive family preparation unfinished"}::!pending
    |p->
     if !active=[]then(composed:= !logical@ !composed;logical_trees:=(step_index,List.rev !logical)::!logical_trees);
-    if route p="repeat" then List.iter(fun off->rejects(fun()->prepare_root bridge input ~call ~origin:o(changed(off+0x2200))))[0x6556;0x6564;0x65f0;0x6273;0x671f];
+    if route p="repeat" then List.iter(fun off->rejects(fun()->prepare_root ~operation bridge input ~call ~origin:o(changed(off+0x2200))))[0x6556;0x6564;0x65f0;0x6273;0x671f];
     let preview=match boundary.preview_host_program p.program with Ok q->q|Error e->failwith e in
     active:=(step_index,call,state,ram,files,dma,p,preview,ref[],Hashtbl.create 64,ref[])::!active)in
  match Experiment.run ~analysis:Experiment.Execution ~on_guest_step ~on_before_instruction ~on_bdos_record input with
@@ -146,11 +151,25 @@ let shadow input=
    let rec take n xs=if n=0 then[]else match xs with[]->[]|v::vs->v::take(n-1)vs in
    let rec find xs=match xs with []->failwith"missing canonical19F0 journal"|_::rest->if normalize(take(List.length wanted)xs)<>normalize wanted then find rest in
    find c.prepared.journal)(List.filter(fun(w:P.case)->c.entry_step<w.entry_step&&w.return_step<c.return_step)parent_children.cases))!cases;
+  (if operation=Pli80_host.Recursive_parent.Recursive_frame then(
+   let proof=match shadow input with Ok v->v|_->failwith"canonical02F0 component proof"in
+   let normalize js=match js with[]->[]|first::_->List.map(fun(w:B.write)->w.address,w.value,w.writer,w.depth-first.B.depth,w.kind)js in
+   let rec take n xs=if n=0 then[]else match xs with[]->[]|v::vs->v::take(n-1)vs in
+   List.iter(fun(c:case)->List.iter(fun(w:case)->
+    let wanted=w.prepared.journal in
+    let rec find xs=match xs with[]->failwith"missing internal02F0 journal"|_::rest->if normalize(take(List.length wanted)xs)<>normalize wanted then find rest in
+    find c.prepared.journal;
+    let plus=String.index w.caller '+'in let site=int_of_string("0x"^String.sub w.caller(plus+1)(String.length w.caller-plus-1))+0x2200 in
+    let call_writes=List.filter(fun(v:B.write)->v.writer=site&&v.kind="compatibility")c.prepared.journal in
+    require(List.exists(fun(v:B.write)->v.address=w.input.sp&&v.value=(site+3)land 255)call_writes&&List.exists(fun(v:B.write)->v.address=w.input.sp+1&&v.value=(site+3)lsr 8)call_writes)"internal02F0 CALL/SP/continuation correlation")
+    (List.filter(fun(w:case)->c.entry_step<w.entry_step&&w.return_step<c.return_step)(List.filter(fun(w:case)->not(List.exists(fun(p:case)->p.entry_step<w.entry_step&&w.return_step<p.return_step)proof.cases))proof.cases)))!cases));
   Ok{cases=List.sort(fun(x:case)(y:case)->compare x.entry_step y.entry_step)!cases;pending=List.rev !pending;historical;snapshots= !snapshots;records=List.rev !all_records;input_digest=Experiment.sha256_hex(Marshal.to_bytes input[])}
 
-let controller ?(exclude_entry_steps=[]) v input=
+let controller ?(operation=Pli80_host.Recursive_parent.Parent) ?(exclude_entry_steps=[]) v input=
  require(v.pending=[])"cannot enable an unfinished logical proof";
- let first,last=0x02f0,0x067c in
+ let first,last=Pli80_host.Recursive_parent.bounds operation in
+ (* 0B84 is an independent initializer, not part of the witnessed0A32 body. *)
+ let last=if operation=Pli80_host.Recursive_parent.Recursive_frame then 0x0b7f else last in
  require(v.input_digest=Experiment.sha256_hex(Marshal.to_bytes input[]))"source/input proof mismatch";
  let exclusions=List.sort_uniq compare exclude_entry_steps in
  require(List.length exclusions=List.length exclude_entry_steps&&List.for_all(fun n->List.exists(fun c->c.entry_step=n)(cases v))exclusions)"invalid exclusions";
@@ -161,8 +180,8 @@ let controller ?(exclude_entry_steps=[]) v input=
   let c=match !remaining with q::_->q|[]->failwith"Additional acquisition parent root"in
   let s=List.assoc c.entry_step v.snapshots in
   require(boundary.dma=c.entry_dma&&Cpm.Filesystem.equal(boundary.copy_filesystem())s.entry_files)"entry service_result state proof";
-  let call=B.verify_call bridge (B.Recursive Pli80_host.Recursive_parent.Parent) previous ~entry:boundary.state in
-  let p=prepare_root bridge input ~call ~origin boundary in
+  let call=B.verify_call bridge (B.Recursive operation) previous ~entry:boundary.state in
+  let p=prepare_root ~operation bridge input ~call ~origin boundary in
   let validate(r:Runner.host_program_result)=
    match p.program.validate r with Error _ as e->e|Ok()->
    if r.memory<>s.post_memory||r.dma<>c.post_dma||r.services<>c.services

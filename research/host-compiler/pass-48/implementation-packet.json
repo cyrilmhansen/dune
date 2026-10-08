@@ -1,0 +1,1696 @@
+{
+  "task": "ACQUISITION_FRAME_PARENT_PASS_48",
+  "baseline": "7a4bf0adf5959ffa29238a7f30d549522d18750f",
+  "cfg": {
+    "PLI1.OVL+0A32": [
+      [
+        2610,
+        "3B",
+        "DCX SP"
+      ],
+      [
+        2611,
+        "E5",
+        "PUSH H"
+      ],
+      [
+        2612,
+        "E5",
+        "PUSH H"
+      ],
+      [
+        2613,
+        "53",
+        "MOV D,E"
+      ],
+      [
+        2614,
+        "D5",
+        "PUSH D"
+      ],
+      [
+        2615,
+        "33",
+        "INX SP"
+      ],
+      [
+        2616,
+        "C5",
+        "PUSH B"
+      ],
+      [
+        2617,
+        "3E00",
+        "MVI A,00H"
+      ],
+      [
+        2619,
+        "210300",
+        "LXI H,0003H"
+      ],
+      [
+        2622,
+        "39",
+        "DAD SP"
+      ],
+      [
+        2623,
+        "77",
+        "MOV M,A"
+      ],
+      [
+        2624,
+        "23",
+        "INX H"
+      ],
+      [
+        2625,
+        "3600",
+        "MVI M,00H"
+      ],
+      [
+        2627,
+        "CDE924",
+        "CALL 24E9H"
+      ],
+      [
+        2630,
+        "CDDB19",
+        "CALL 19DBH"
+      ],
+      [
+        2633,
+        "1F",
+        "RAR"
+      ],
+      [
+        2634,
+        "D24D2C",
+        "JNC 2C4DH"
+      ],
+      [
+        2637,
+        "CD0E24",
+        "CALL 240EH"
+      ],
+      [
+        2640,
+        "F5",
+        "PUSH PSW"
+      ],
+      [
+        2641,
+        "3A4A21",
+        "LDA 214AH"
+      ],
+      [
+        2644,
+        "D63A",
+        "SUI 3AH"
+      ],
+      [
+        2646,
+        "D601",
+        "SUI 01H"
+      ],
+      [
+        2648,
+        "9F",
+        "SBB A"
+      ],
+      [
+        2649,
+        "C1",
+        "POP B"
+      ],
+      [
+        2650,
+        "48",
+        "MOV C,B"
+      ],
+      [
+        2651,
+        "A1",
+        "ANA C"
+      ],
+      [
+        2652,
+        "1F",
+        "RAR"
+      ],
+      [
+        2653,
+        "D2AD2C",
+        "JNC 2CADH"
+      ],
+      [
+        2733,
+        "CDDB19",
+        "CALL 19DBH"
+      ],
+      [
+        2736,
+        "1F",
+        "RAR"
+      ],
+      [
+        2737,
+        "D2C12C",
+        "JNC 2CC1H"
+      ],
+      [
+        2740,
+        "210300",
+        "LXI H,0003H"
+      ],
+      [
+        2743,
+        "39",
+        "DAD SP"
+      ],
+      [
+        2744,
+        "4E",
+        "MOV C,M"
+      ],
+      [
+        2745,
+        "23",
+        "INX H"
+      ],
+      [
+        2746,
+        "46",
+        "MOV B,M"
+      ],
+      [
+        2747,
+        "CDF024",
+        "CALL 24F0H"
+      ],
+      [
+        2750,
+        "C37C2D",
+        "JMP 2D7CH"
+      ],
+      [
+        2753,
+        "0E25",
+        "MVI C,25H"
+      ],
+      [
+        2755,
+        "CDAF23",
+        "CALL 23AFH"
+      ],
+      [
+        2758,
+        "1F",
+        "RAR"
+      ],
+      [
+        2759,
+        "D2D02C",
+        "JNC 2CD0H"
+      ],
+      [
+        2768,
+        "0E8A",
+        "MVI C,8AH"
+      ],
+      [
+        2770,
+        "CDAF23",
+        "CALL 23AFH"
+      ],
+      [
+        2773,
+        "1F",
+        "RAR"
+      ],
+      [
+        2774,
+        "D22C2D",
+        "JNC 2D2CH"
+      ],
+      [
+        2777,
+        "210200",
+        "LXI H,0002H"
+      ],
+      [
+        2780,
+        "39",
+        "DAD SP"
+      ],
+      [
+        2781,
+        "7E",
+        "MOV A,M"
+      ],
+      [
+        2782,
+        "FE02",
+        "CPI 02H"
+      ],
+      [
+        2784,
+        "C2E82C",
+        "JNZ 2CE8H"
+      ],
+      [
+        2787,
+        "0EF7",
+        "MVI C,F7H"
+      ],
+      [
+        2789,
+        "CDB7A2",
+        "CALL A2B7H"
+      ],
+      [
+        2792,
+        "210200",
+        "LXI H,0002H"
+      ],
+      [
+        2795,
+        "39",
+        "DAD SP"
+      ],
+      [
+        2796,
+        "7E",
+        "MOV A,M"
+      ],
+      [
+        2797,
+        "FE00",
+        "CPI 00H"
+      ],
+      [
+        2799,
+        "CAF52C",
+        "JZ 2CF5H"
+      ],
+      [
+        2802,
+        "CD4623",
+        "CALL 2346H"
+      ],
+      [
+        2805,
+        "CD0E24",
+        "CALL 240EH"
+      ],
+      [
+        2808,
+        "1F",
+        "RAR"
+      ],
+      [
+        2809,
+        "D2162D",
+        "JNC 2D16H"
+      ],
+      [
+        2812,
+        "CDF067",
+        "CALL 67F0H"
+      ],
+      [
+        2815,
+        "210000",
+        "LXI H,0000H"
+      ],
+      [
+        2818,
+        "39",
+        "DAD SP"
+      ],
+      [
+        2819,
+        "1163A8",
+        "LXI D,A863H"
+      ],
+      [
+        2822,
+        "CD351B",
+        "CALL 1B35H"
+      ],
+      [
+        2825,
+        "B5",
+        "ORA L"
+      ],
+      [
+        2826,
+        "CA132D",
+        "JZ 2D13H"
+      ],
+      [
+        2835,
+        "CD4E9A",
+        "CALL 9A4EH"
+      ],
+      [
+        2838,
+        "3AC320",
+        "LDA 20C3H"
+      ],
+      [
+        2841,
+        "FE3B",
+        "CPI 3BH"
+      ],
+      [
+        2843,
+        "CA212D",
+        "JZ 2D21H"
+      ],
+      [
+        2849,
+        "CD6624",
+        "CALL 2466H"
+      ],
+      [
+        2852,
+        "E1",
+        "POP H"
+      ],
+      [
+        2853,
+        "E1",
+        "POP H"
+      ],
+      [
+        2854,
+        "E1",
+        "POP H"
+      ],
+      [
+        2855,
+        "E1",
+        "POP H"
+      ],
+      [
+        2856,
+        "C9",
+        "RET"
+      ],
+      [
+        2860,
+        "0E87",
+        "MVI C,87H"
+      ],
+      [
+        2862,
+        "CDAF23",
+        "CALL 23AFH"
+      ],
+      [
+        2865,
+        "1F",
+        "RAR"
+      ],
+      [
+        2866,
+        "D2492D",
+        "JNC 2D49H"
+      ],
+      [
+        2869,
+        "0E01",
+        "MVI C,01H"
+      ],
+      [
+        2871,
+        "CD0B2C",
+        "CALL 2C0BH"
+      ],
+      [
+        2874,
+        "0E3B",
+        "MVI C,3BH"
+      ],
+      [
+        2876,
+        "CDAF23",
+        "CALL 23AFH"
+      ],
+      [
+        2879,
+        "1F",
+        "RAR"
+      ],
+      [
+        2880,
+        "DA462D",
+        "JC 2D46H"
+      ],
+      [
+        2886,
+        "C37C2D",
+        "JMP 2D7CH"
+      ],
+      [
+        2889,
+        "3AC320",
+        "LDA 20C3H"
+      ],
+      [
+        2892,
+        "FEA7",
+        "CPI A7H"
+      ],
+      [
+        2894,
+        "C2572D",
+        "JNZ 2D57H"
+      ],
+      [
+        2903,
+        "3AC320",
+        "LDA 20C3H"
+      ],
+      [
+        2906,
+        "FE9B",
+        "CPI 9BH"
+      ],
+      [
+        2908,
+        "C2722D",
+        "JNZ 2D72H"
+      ],
+      [
+        2930,
+        "210300",
+        "LXI H,0003H"
+      ],
+      [
+        2933,
+        "39",
+        "DAD SP"
+      ],
+      [
+        2934,
+        "4E",
+        "MOV C,M"
+      ],
+      [
+        2935,
+        "23",
+        "INX H"
+      ],
+      [
+        2936,
+        "46",
+        "MOV B,M"
+      ],
+      [
+        2937,
+        "CDF024",
+        "CALL 24F0H"
+      ],
+      [
+        2940,
+        "C3392C",
+        "JMP 2C39H"
+      ]
+    ],
+    "PLI1.OVL+0C1B": {
+      "cfg_hash": "01f01cb7ee8d2103d0012ce1572d3fcc6f4fee83e6fbec99f502dd847aebd1f8",
+      "bounds": [
+        3099,
+        3189
+      ]
+    },
+    "PLI1.OVL+0C75": {
+      "cfg_hash": "ec6a451db9270693633be6ebd31be268bf248569dfc693d81a3d5eed4557e926",
+      "bounds": [
+        3189,
+        3356
+      ]
+    }
+  },
+  "cases": {
+    "MINIMAL": {
+      "PLI1.OVL+0A32": [
+        {
+          "call": 242247,
+          "ret": 282267,
+          "caller": "PLI1.OVL+0C61",
+          "external": true,
+          "entry": {
+            "a": 0,
+            "b": 251,
+            "c": 231,
+            "d": 255,
+            "e": 2,
+            "h": 255,
+            "l": 245,
+            "sp": 65522,
+            "pc": 11314,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 59,
+            "b": 0,
+            "c": 0,
+            "d": 168,
+            "e": 100,
+            "h": 125,
+            "l": 255,
+            "sp": 65524,
+            "pc": 11876,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "children": "3aefb5fda1a14f38535315ab536bba639ac5c777b45b4153e68cd2883f142dce",
+          "residual_ranking": 7521,
+          "absorbed": {
+            "PLI1.OVL+02F0": 1,
+            "PLI1.OVL+80B7": 2,
+            "PLI.COM+0EF6": 2
+          },
+          "proof_hash": "287a70a67317084cfa7ec2da3dbf1f750f335c76595295d00d64d11f69cb2d03",
+          "branches_hash": "27fb79e4016c73896b29ade04217d6e4b3905be1f4312d14c321cc37e25c8049"
+        }
+      ],
+      "PLI1.OVL+0C1B": [
+        {
+          "call": 234603,
+          "ret": 282711,
+          "caller": "PLI1.OVL+0CD7",
+          "external": true,
+          "entry": {
+            "a": 59,
+            "b": 251,
+            "c": 231,
+            "d": 151,
+            "e": 230,
+            "h": 251,
+            "l": 231,
+            "sp": 65528,
+            "pc": 11803,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 26,
+            "b": 0,
+            "c": 0,
+            "d": 255,
+            "e": 247,
+            "h": 0,
+            "l": 0,
+            "sp": 65530,
+            "pc": 11994,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "children": "f9e4e484f3d0bf841b28bdb8b1a8a23d264fb1203a2b17ec7a4f0710b6b3ec03",
+          "residual_ranking": 14029,
+          "absorbed": {
+            "PLI1.OVL+80B7": 3,
+            "PLI.COM+0EF6": 4,
+            "PLI1.OVL+2511": 2,
+            "PLI1.OVL+02F0": 1
+          },
+          "proof_hash": "952056e3606cab825ed402efee6608e643d7d4296c756a643eefd21b209e2e45",
+          "branches_hash": "baf7471dba3927a4f7b03d081f7fe997c187c9927db87ca40921a5803862b501"
+        }
+      ],
+      "PLI1.OVL+0C75": [
+        {
+          "call": 227587,
+          "ret": 287883,
+          "caller": "PLI1.OVL+011E",
+          "external": true,
+          "entry": {
+            "a": 0,
+            "b": 170,
+            "c": 180,
+            "d": 153,
+            "e": 114,
+            "h": 170,
+            "l": 28,
+            "sp": 65530,
+            "pc": 11893,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": true
+            }
+          },
+          "output": {
+            "a": 0,
+            "b": 29,
+            "c": 140,
+            "d": 170,
+            "e": 170,
+            "h": 165,
+            "l": 217,
+            "sp": 65532,
+            "pc": 8993,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "children": "e839fc9109bc47c0b67016b51e5809dc64c8221035a80a764d09ca165d97395f",
+          "residual_ranking": 24839,
+          "absorbed": {
+            "PLI1.OVL+80B7": 7,
+            "PLI.COM+0EF6": 8,
+            "PLI1.OVL+2511": 2,
+            "PLI1.OVL+02F0": 1
+          },
+          "proof_hash": "eb1ed5008881f74a217ac9984d2378b4a7a290a47485ac65ef079fcdb78ae8e8",
+          "branches_hash": "12069aaf9f23fedef8f12353a5466c061ee3c6a003d8aa252e594439756e5db9"
+        }
+      ]
+    },
+    "FIZZBUZ": {
+      "PLI1.OVL+0A32": [
+        {
+          "call": 382794,
+          "ret": 613613,
+          "caller": "PLI1.OVL+1268",
+          "external": false,
+          "entry": {
+            "a": 0,
+            "b": 0,
+            "c": 0,
+            "d": 0,
+            "e": 0,
+            "h": 255,
+            "l": 219,
+            "sp": 65495,
+            "pc": 11314,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 59,
+            "b": 0,
+            "c": 0,
+            "d": 151,
+            "e": 101,
+            "h": 35,
+            "l": 255,
+            "sp": 65497,
+            "pc": 13419,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "children": "fe88336e95486c1eeefa0ad373be28db5836506df7f29f1398880fd470a6a5b3",
+          "residual_ranking": 230819,
+          "absorbed": {},
+          "proof_hash": "ff6935d9812fdadcefd572cd134fb44962d218d4de5b310dcd945f3782a2052c",
+          "branches_hash": "6f1978bebf7ce9d19afc48a731046cfdbb7a1c72e29c49503b7cc402c14e067b"
+        },
+        {
+          "call": 344006,
+          "ret": 631661,
+          "caller": "PLI1.OVL+0C61",
+          "external": true,
+          "entry": {
+            "a": 0,
+            "b": 251,
+            "c": 220,
+            "d": 255,
+            "e": 2,
+            "h": 255,
+            "l": 245,
+            "sp": 65522,
+            "pc": 11314,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 59,
+            "b": 0,
+            "c": 0,
+            "d": 168,
+            "e": 100,
+            "h": 125,
+            "l": 255,
+            "sp": 65524,
+            "pc": 11876,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "children": "949407b2e5c35ab9e8e3995c5fd056b225a7af656db066bb140553bc1344dd5d",
+          "residual_ranking": 16125,
+          "absorbed": {
+            "PLI1.OVL+7B7A": 1,
+            "PLI1.OVL+7B13": 2,
+            "PLI1.OVL+7B49": 2,
+            "PLI1.OVL+7AD5": 1,
+            "PLI1.OVL+7AF0": 1,
+            "PLI1.OVL+02F0": 1,
+            "PLI1.OVL+80B7": 2,
+            "PLI.COM+0EF6": 2
+          },
+          "proof_hash": "39cd5a9fd403cd7e9f7e27a0c54748bdd66a74c60f73a688b7d388369fdf7323",
+          "branches_hash": "0166199e2316a8664da01867bb79cab4dc7ba8698eee35833bb908605af4d87e"
+        }
+      ],
+      "PLI1.OVL+0C1B": [
+        {
+          "call": 338623,
+          "ret": 632105,
+          "caller": "PLI1.OVL+0CD7",
+          "external": true,
+          "entry": {
+            "a": 59,
+            "b": 251,
+            "c": 220,
+            "d": 151,
+            "e": 230,
+            "h": 251,
+            "l": 220,
+            "sp": 65528,
+            "pc": 11803,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 26,
+            "b": 0,
+            "c": 0,
+            "d": 255,
+            "e": 247,
+            "h": 0,
+            "l": 0,
+            "sp": 65530,
+            "pc": 11994,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "children": "f9e4e484f3d0bf841b28bdb8b1a8a23d264fb1203a2b17ec7a4f0710b6b3ec03",
+          "residual_ranking": 20372,
+          "absorbed": {
+            "PLI1.OVL+80B7": 3,
+            "PLI.COM+0EF6": 4,
+            "PLI1.OVL+2511": 2,
+            "PLI1.OVL+7B7A": 1,
+            "PLI1.OVL+7B13": 2,
+            "PLI1.OVL+7B49": 2,
+            "PLI1.OVL+7AD5": 1,
+            "PLI1.OVL+7AF0": 1,
+            "PLI1.OVL+02F0": 1
+          },
+          "proof_hash": "2468a0fd6af9e9f18ec378a68e14c4ecef29378f87526af36389a03dd7879c6b",
+          "branches_hash": "baf7471dba3927a4f7b03d081f7fe997c187c9927db87ca40921a5803862b501"
+        }
+      ],
+      "PLI1.OVL+0C75": [
+        {
+          "call": 331423,
+          "ret": 637317,
+          "caller": "PLI1.OVL+011E",
+          "external": true,
+          "entry": {
+            "a": 0,
+            "b": 170,
+            "c": 180,
+            "d": 153,
+            "e": 114,
+            "h": 170,
+            "l": 28,
+            "sp": 65530,
+            "pc": 11893,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": true
+            }
+          },
+          "output": {
+            "a": 0,
+            "b": 29,
+            "c": 140,
+            "d": 170,
+            "e": 170,
+            "h": 165,
+            "l": 217,
+            "sp": 65532,
+            "pc": 8993,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "children": "e839fc9109bc47c0b67016b51e5809dc64c8221035a80a764d09ca165d97395f",
+          "residual_ranking": 31406,
+          "absorbed": {
+            "PLI1.OVL+80B7": 7,
+            "PLI.COM+0EF6": 8,
+            "PLI1.OVL+2511": 2,
+            "PLI1.OVL+7B7A": 1,
+            "PLI1.OVL+7B13": 2,
+            "PLI1.OVL+7B49": 2,
+            "PLI1.OVL+7AD5": 1,
+            "PLI1.OVL+7AF0": 1,
+            "PLI1.OVL+02F0": 1
+          },
+          "proof_hash": "63247c8dcaf90b939a8684964bfc7400abbefce3fa6191f6d5ef53287b6f0ffb",
+          "branches_hash": "12069aaf9f23fedef8f12353a5466c061ee3c6a003d8aa252e594439756e5db9"
+        }
+      ]
+    },
+    "PICTURE": {
+      "PLI1.OVL+0A32": [
+        {
+          "call": 277856,
+          "ret": 347816,
+          "caller": "PLI1.OVL+0C61",
+          "external": true,
+          "entry": {
+            "a": 0,
+            "b": 251,
+            "c": 181,
+            "d": 255,
+            "e": 2,
+            "h": 255,
+            "l": 245,
+            "sp": 65522,
+            "pc": 11314,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 59,
+            "b": 0,
+            "c": 0,
+            "d": 168,
+            "e": 100,
+            "h": 125,
+            "l": 255,
+            "sp": 65524,
+            "pc": 11876,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "children": "f5e216a37e803c2ab5df10abee1e7b5c3db87f980310b85efd0bf4dac320b966",
+          "residual_ranking": 31861,
+          "absorbed": {
+            "PLI1.OVL+7B7A": 2,
+            "PLI1.OVL+7B13": 4,
+            "PLI1.OVL+7B49": 4,
+            "PLI1.OVL+7AD5": 2,
+            "PLI1.OVL+7AF0": 2,
+            "PLI1.OVL+02F0": 2,
+            "PLI1.OVL+80B7": 2,
+            "PLI.COM+0EF6": 2
+          },
+          "proof_hash": "0a395caff1aaa8b3a5f7e24540bb8857a0bb208d2487a0b2932f1029fc1a264c",
+          "branches_hash": "327defdc831024ae075dc2821a6990676cc472c7caf9a38e2d848644187e4e8d"
+        }
+      ],
+      "PLI1.OVL+0C1B": [
+        {
+          "call": 271375,
+          "ret": 348260,
+          "caller": "PLI1.OVL+0CD7",
+          "external": true,
+          "entry": {
+            "a": 59,
+            "b": 251,
+            "c": 181,
+            "d": 151,
+            "e": 230,
+            "h": 251,
+            "l": 181,
+            "sp": 65528,
+            "pc": 11803,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 26,
+            "b": 0,
+            "c": 0,
+            "d": 255,
+            "e": 247,
+            "h": 0,
+            "l": 0,
+            "sp": 65530,
+            "pc": 11994,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "children": "f9e4e484f3d0bf841b28bdb8b1a8a23d264fb1203a2b17ec7a4f0710b6b3ec03",
+          "residual_ranking": 37206,
+          "absorbed": {
+            "PLI1.OVL+80B7": 3,
+            "PLI.COM+0EF6": 4,
+            "PLI1.OVL+2511": 2,
+            "PLI1.OVL+7B7A": 2,
+            "PLI1.OVL+7B13": 4,
+            "PLI1.OVL+7B49": 4,
+            "PLI1.OVL+7AD5": 2,
+            "PLI1.OVL+7AF0": 2,
+            "PLI1.OVL+02F0": 2
+          },
+          "proof_hash": "3fcaab8a3309a46d2906ce75032528afa6575969912c5a25f72da6901da85141",
+          "branches_hash": "baf7471dba3927a4f7b03d081f7fe997c187c9927db87ca40921a5803862b501"
+        }
+      ],
+      "PLI1.OVL+0C75": [
+        {
+          "call": 264135,
+          "ret": 353432,
+          "caller": "PLI1.OVL+011E",
+          "external": true,
+          "entry": {
+            "a": 0,
+            "b": 170,
+            "c": 180,
+            "d": 154,
+            "e": 19,
+            "h": 170,
+            "l": 28,
+            "sp": 65530,
+            "pc": 11893,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": true
+            }
+          },
+          "output": {
+            "a": 0,
+            "b": 29,
+            "c": 140,
+            "d": 170,
+            "e": 170,
+            "h": 165,
+            "l": 217,
+            "sp": 65532,
+            "pc": 8993,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "children": "e839fc9109bc47c0b67016b51e5809dc64c8221035a80a764d09ca165d97395f",
+          "residual_ranking": 48240,
+          "absorbed": {
+            "PLI1.OVL+80B7": 7,
+            "PLI.COM+0EF6": 8,
+            "PLI1.OVL+2511": 2,
+            "PLI1.OVL+7B7A": 2,
+            "PLI1.OVL+7B13": 4,
+            "PLI1.OVL+7B49": 4,
+            "PLI1.OVL+7AD5": 2,
+            "PLI1.OVL+7AF0": 2,
+            "PLI1.OVL+02F0": 2
+          },
+          "proof_hash": "75d6f517697db4a78c4491d1dad4b75842cf7d2bb71a09f1ce80266a5a57130a",
+          "branches_hash": "12069aaf9f23fedef8f12353a5466c061ee3c6a003d8aa252e594439756e5db9"
+        }
+      ]
+    }
+  },
+  "contracts": {
+    "PLI1.OVL+0A32": {
+      "procedure_hash": "6ea3035ccca548876f957831fe5c97042df96d71c5f9e63529cceaba19e5a665",
+      "completeness": {
+        "bounds": "provisional",
+        "control_flow": "partial",
+        "contract": "partial"
+      }
+    }
+  },
+  "routes": {
+    "3aefb5fda1a14f38535315ab536bba639ac5c777b45b4153e68cd2883f142dce": [
+      [
+        2627,
+        "PLI1.OVL+02E9"
+      ],
+      [
+        2630,
+        "PLI.COM+18DB"
+      ],
+      [
+        2637,
+        "PLI1.OVL+020E"
+      ],
+      [
+        2733,
+        "PLI.COM+18DB"
+      ],
+      [
+        2755,
+        "PLI1.OVL+01AF"
+      ],
+      [
+        2770,
+        "PLI1.OVL+01AF"
+      ],
+      [
+        2862,
+        "PLI1.OVL+01AF"
+      ],
+      [
+        2937,
+        "PLI1.OVL+02F0"
+      ],
+      [
+        2627,
+        "PLI1.OVL+02E9"
+      ],
+      [
+        2630,
+        "PLI.COM+18DB"
+      ],
+      [
+        2637,
+        "PLI1.OVL+020E"
+      ],
+      [
+        2733,
+        "PLI.COM+18DB"
+      ],
+      [
+        2755,
+        "PLI1.OVL+01AF"
+      ],
+      [
+        2770,
+        "PLI1.OVL+01AF"
+      ],
+      [
+        2789,
+        "PLI1.OVL+80B7"
+      ],
+      [
+        2802,
+        "PLI1.OVL+0146"
+      ],
+      [
+        2805,
+        "PLI1.OVL+020E"
+      ],
+      [
+        2812,
+        "PLI1.OVL+45F0"
+      ],
+      [
+        2822,
+        "PLI.COM+1A35"
+      ],
+      [
+        2835,
+        "PLI1.OVL+784E"
+      ],
+      [
+        2849,
+        "PLI1.OVL+0266"
+      ]
+    ],
+    "f9e4e484f3d0bf841b28bdb8b1a8a23d264fb1203a2b17ec7a4f0710b6b3ec03": [
+      [
+        3122,
+        "PLI1.OVL+01C6"
+      ],
+      [
+        3125,
+        "PLI1.OVL+0261"
+      ],
+      [
+        3128,
+        "PLI1.OVL+013D"
+      ],
+      [
+        3138,
+        "PLI1.OVL+58BB"
+      ],
+      [
+        3143,
+        "PLI1.OVL+2511"
+      ],
+      [
+        3157,
+        "PLI1.OVL+0B84"
+      ],
+      [
+        3169,
+        "PLI1.OVL+0A32"
+      ],
+      [
+        3172,
+        "PLI1.OVL+784E"
+      ]
+    ],
+    "e839fc9109bc47c0b67016b51e5809dc64c8221035a80a764d09ca165d97395f": [
+      [
+        3201,
+        "PLI1.OVL+020E"
+      ],
+      [
+        3208,
+        "PLI1.OVL+013D"
+      ],
+      [
+        3211,
+        "PLI1.OVL+45F0"
+      ],
+      [
+        3220,
+        "PLI1.OVL+784E"
+      ],
+      [
+        3225,
+        "PLI1.OVL+01AF"
+      ],
+      [
+        3234,
+        "PLI1.OVL+01AF"
+      ],
+      [
+        3241,
+        "PLI1.OVL+0261"
+      ],
+      [
+        3246,
+        "PLI1.OVL+01AF"
+      ],
+      [
+        3265,
+        "PLI1.OVL+80B7"
+      ],
+      [
+        3276,
+        "PLI1.OVL+784E"
+      ],
+      [
+        3276,
+        "PLI1.OVL+784E"
+      ],
+      [
+        3276,
+        "PLI1.OVL+784E"
+      ],
+      [
+        3276,
+        "PLI1.OVL+784E"
+      ],
+      [
+        3287,
+        "PLI1.OVL+0C1B"
+      ],
+      [
+        3299,
+        "PLI1.OVL+80B7"
+      ],
+      [
+        3314,
+        "PLI1.OVL+0146"
+      ]
+    ],
+    "fe88336e95486c1eeefa0ad373be28db5836506df7f29f1398880fd470a6a5b3": [
+      [
+        2627,
+        "PLI1.OVL+02E9"
+      ],
+      [
+        2630,
+        "PLI.COM+18DB"
+      ],
+      [
+        2637,
+        "PLI1.OVL+020E"
+      ],
+      [
+        2733,
+        "PLI.COM+18DB"
+      ],
+      [
+        2755,
+        "PLI1.OVL+01AF"
+      ],
+      [
+        2770,
+        "PLI1.OVL+01AF"
+      ],
+      [
+        2862,
+        "PLI1.OVL+01AF"
+      ],
+      [
+        2937,
+        "PLI1.OVL+02F0"
+      ],
+      [
+        2627,
+        "PLI1.OVL+02E9"
+      ],
+      [
+        2630,
+        "PLI.COM+18DB"
+      ],
+      [
+        2637,
+        "PLI1.OVL+020E"
+      ],
+      [
+        2733,
+        "PLI.COM+18DB"
+      ],
+      [
+        2755,
+        "PLI1.OVL+01AF"
+      ],
+      [
+        2770,
+        "PLI1.OVL+01AF"
+      ],
+      [
+        2805,
+        "PLI1.OVL+020E"
+      ],
+      [
+        2849,
+        "PLI1.OVL+0266"
+      ]
+    ],
+    "949407b2e5c35ab9e8e3995c5fd056b225a7af656db066bb140553bc1344dd5d": [
+      [
+        2627,
+        "PLI1.OVL+02E9"
+      ],
+      [
+        2630,
+        "PLI.COM+18DB"
+      ],
+      [
+        2637,
+        "PLI1.OVL+020E"
+      ],
+      [
+        2733,
+        "PLI.COM+18DB"
+      ],
+      [
+        2755,
+        "PLI1.OVL+01AF"
+      ],
+      [
+        2770,
+        "PLI1.OVL+01AF"
+      ],
+      [
+        2862,
+        "PLI1.OVL+01AF"
+      ],
+      [
+        2871,
+        "PLI1.OVL+0A0B"
+      ],
+      [
+        2876,
+        "PLI1.OVL+01AF"
+      ],
+      [
+        2627,
+        "PLI1.OVL+02E9"
+      ],
+      [
+        2630,
+        "PLI.COM+18DB"
+      ],
+      [
+        2637,
+        "PLI1.OVL+020E"
+      ],
+      [
+        2733,
+        "PLI.COM+18DB"
+      ],
+      [
+        2755,
+        "PLI1.OVL+01AF"
+      ],
+      [
+        2770,
+        "PLI1.OVL+01AF"
+      ],
+      [
+        2862,
+        "PLI1.OVL+01AF"
+      ],
+      [
+        2937,
+        "PLI1.OVL+02F0"
+      ],
+      [
+        2627,
+        "PLI1.OVL+02E9"
+      ],
+      [
+        2630,
+        "PLI.COM+18DB"
+      ],
+      [
+        2637,
+        "PLI1.OVL+020E"
+      ],
+      [
+        2733,
+        "PLI.COM+18DB"
+      ],
+      [
+        2755,
+        "PLI1.OVL+01AF"
+      ],
+      [
+        2770,
+        "PLI1.OVL+01AF"
+      ],
+      [
+        2789,
+        "PLI1.OVL+80B7"
+      ],
+      [
+        2802,
+        "PLI1.OVL+0146"
+      ],
+      [
+        2805,
+        "PLI1.OVL+020E"
+      ],
+      [
+        2812,
+        "PLI1.OVL+45F0"
+      ],
+      [
+        2822,
+        "PLI.COM+1A35"
+      ],
+      [
+        2835,
+        "PLI1.OVL+784E"
+      ],
+      [
+        2849,
+        "PLI1.OVL+0266"
+      ]
+    ],
+    "f5e216a37e803c2ab5df10abee1e7b5c3db87f980310b85efd0bf4dac320b966": [
+      [
+        2627,
+        "PLI1.OVL+02E9"
+      ],
+      [
+        2630,
+        "PLI.COM+18DB"
+      ],
+      [
+        2637,
+        "PLI1.OVL+020E"
+      ],
+      [
+        2733,
+        "PLI.COM+18DB"
+      ],
+      [
+        2755,
+        "PLI1.OVL+01AF"
+      ],
+      [
+        2770,
+        "PLI1.OVL+01AF"
+      ],
+      [
+        2862,
+        "PLI1.OVL+01AF"
+      ],
+      [
+        2871,
+        "PLI1.OVL+0A0B"
+      ],
+      [
+        2876,
+        "PLI1.OVL+01AF"
+      ],
+      [
+        2627,
+        "PLI1.OVL+02E9"
+      ],
+      [
+        2630,
+        "PLI.COM+18DB"
+      ],
+      [
+        2637,
+        "PLI1.OVL+020E"
+      ],
+      [
+        2733,
+        "PLI.COM+18DB"
+      ],
+      [
+        2755,
+        "PLI1.OVL+01AF"
+      ],
+      [
+        2770,
+        "PLI1.OVL+01AF"
+      ],
+      [
+        2862,
+        "PLI1.OVL+01AF"
+      ],
+      [
+        2871,
+        "PLI1.OVL+0A0B"
+      ],
+      [
+        2876,
+        "PLI1.OVL+01AF"
+      ],
+      [
+        2627,
+        "PLI1.OVL+02E9"
+      ],
+      [
+        2630,
+        "PLI.COM+18DB"
+      ],
+      [
+        2637,
+        "PLI1.OVL+020E"
+      ],
+      [
+        2733,
+        "PLI.COM+18DB"
+      ],
+      [
+        2747,
+        "PLI1.OVL+02F0"
+      ],
+      [
+        2627,
+        "PLI1.OVL+02E9"
+      ],
+      [
+        2630,
+        "PLI.COM+18DB"
+      ],
+      [
+        2637,
+        "PLI1.OVL+020E"
+      ],
+      [
+        2733,
+        "PLI.COM+18DB"
+      ],
+      [
+        2755,
+        "PLI1.OVL+01AF"
+      ],
+      [
+        2770,
+        "PLI1.OVL+01AF"
+      ],
+      [
+        2862,
+        "PLI1.OVL+01AF"
+      ],
+      [
+        2937,
+        "PLI1.OVL+02F0"
+      ],
+      [
+        2627,
+        "PLI1.OVL+02E9"
+      ],
+      [
+        2630,
+        "PLI.COM+18DB"
+      ],
+      [
+        2637,
+        "PLI1.OVL+020E"
+      ],
+      [
+        2733,
+        "PLI.COM+18DB"
+      ],
+      [
+        2755,
+        "PLI1.OVL+01AF"
+      ],
+      [
+        2770,
+        "PLI1.OVL+01AF"
+      ],
+      [
+        2789,
+        "PLI1.OVL+80B7"
+      ],
+      [
+        2802,
+        "PLI1.OVL+0146"
+      ],
+      [
+        2805,
+        "PLI1.OVL+020E"
+      ],
+      [
+        2812,
+        "PLI1.OVL+45F0"
+      ],
+      [
+        2822,
+        "PLI.COM+1A35"
+      ],
+      [
+        2835,
+        "PLI1.OVL+784E"
+      ],
+      [
+        2849,
+        "PLI1.OVL+0266"
+      ]
+    ]
+  },
+  "selected_root": "PLI1.OVL+0A32",
+  "selection": "0C1B exchanges/restores independent A5B5 context, resets resident state and calls0B84 structure initialization;0C75 adds independent A5D9 lifetime, delimiter preamble and EOF driver. Choose reusable eight-byte acquisition frame below those distinct initialization operations.",
+  "proofs": {
+    "natural-cases.json": "e28af1a1818ef945ffc00144ab55ccfe9d3ecef8cc6563fe0723ea6aeb8ffc03",
+    "shadow-summary.json": "c8b7119c2e3ca2403201131125489bf04f32008382da45ed0cf813bbfc6f0698",
+    "single-hybrid-summary.json": "c3b6a127a4044be105ab6f8a6d9d902ec1526d338d08c2fcdc2d75ce48a4ade7",
+    "cumulative-hybrid-summary.json": "6aadf5e7d81db6c31da2410ce02c7bbaa4d9ae75d922feab7cab8b524d07fcd0"
+  },
+  "frames": {
+    "entry": "S; frameF=S-8",
+    "writers": "DCX SP; PUSH H twice; MOV D,E/PUSH D/INX SP; PUSH B",
+    "layout": "F0/F1 saved BC; F2 saved E; F3/F4 zeroed freshly each iteration; F5/F6 original HL; F7 untouched pre-entry residue; finalHL=entryH|(entry_memory[S-1]<<8)",
+    "unwind": "Four POP H; historical RET consumes original continuation; finalSP=S+2",
+    "continuations": [
+      "hardware CALL/RET recursion",
+      "4468 N2 copied continuation",
+      "6708 N8 consumed caller arguments"
+    ]
+  },
+  "unsupported": [
+    "colon/percent/A7/9B routes",
+    "changed-source-pointer arm",
+    "unobserved item comma-repeat",
+    "unsupported saved E beyond0/2",
+    "inherited reader/constructor/error/alias alternatives",
+    "arbitrary input/recursion termination"
+  ]
+}
