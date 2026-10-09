@@ -1,0 +1,111 @@
+{
+  "all_passed": true,
+  "sources": [
+    {
+      "source": "MINIMAL",
+      "entries": [
+        {
+          "coordinate": "PLI2.OVL+7B99",
+          "cases": 0,
+          "proof_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "coordinate": "PLI2.OVL+793C",
+          "cases": 0,
+          "proof_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "coordinate": "PLI2.OVL+7AE4",
+          "cases": 2,
+          "proof_hash": "4332e2bd90d2cf3e68f226a2708d750d1e797e2d16fee37ed1ca3369452cef1b"
+        }
+      ]
+    },
+    {
+      "source": "FIZZBUZ",
+      "entries": [
+        {
+          "coordinate": "PLI2.OVL+7B99",
+          "cases": 10,
+          "proof_hash": "a0901da86d07bd4b0bfc059310d16c7860c0ca76124fed4306c7f7aa7946f947"
+        },
+        {
+          "coordinate": "PLI2.OVL+793C",
+          "cases": 10,
+          "proof_hash": "97461a94b179721c01befdc6dfc71df4d32eeaf13603a20ad2d350d457d7889d"
+        },
+        {
+          "coordinate": "PLI2.OVL+7AE4",
+          "cases": 21,
+          "proof_hash": "8528d3fb6d5ef672e3e8c5c51d0cb10384de36289a94ff71af0ec38dd44e3115"
+        }
+      ]
+    },
+    {
+      "source": "PICTURE",
+      "entries": [
+        {
+          "coordinate": "PLI2.OVL+7B99",
+          "cases": 0,
+          "proof_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "coordinate": "PLI2.OVL+793C",
+          "cases": 0,
+          "proof_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "coordinate": "PLI2.OVL+7AE4",
+          "cases": 1,
+          "proof_hash": "17c86fae1e8fa6f474927b60a481828f8213ce984f4a6e0e11d4da07366e7669"
+        }
+      ]
+    }
+  ],
+  "components": {
+    "sources": [
+      {
+        "source": "MINIMAL",
+        "serializer_shadows": 189,
+        "bit_writer_shadows": 665,
+        "all_passed": true
+      },
+      {
+        "source": "FIZZBUZ",
+        "serializer_shadows": 13,
+        "bit_writer_shadows": 117,
+        "all_passed": true
+      },
+      {
+        "source": "PICTURE",
+        "serializer_shadows": 197,
+        "bit_writer_shadows": 609,
+        "all_passed": true
+      }
+    ],
+    "all_passed": true
+  },
+  "checkpoint_hashes": {
+    "MINIMAL": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "FIZZBUZ": "56bbeb7e0d1332a56fb024ebe53bd0ef99208b693ebc6a01bc2654c8a7e4f5ad",
+    "PICTURE": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+  },
+  "comparison": [
+    "allregs/flags/SP/PC",
+    "orderedlogicalwrites",
+    "65536 RAMbytes",
+    "derivedstacklastwriters",
+    "childCALLchronology",
+    "DMA/filesystem",
+    "record/servicechronology"
+  ],
+  "synthetic": [
+    "E6 clearsADAB destination butcopiesADB3 source",
+    "non6 two freshcopies",
+    "same-index publications retained",
+    "index0/1/4/5/6/7",
+    "cursor127:7",
+    "index8/sentinel/stack/code/continuation rejection"
+  ],
+  "natural_E6_cases": 0
+}

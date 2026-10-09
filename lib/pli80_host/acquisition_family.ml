@@ -433,6 +433,23 @@ let run operation memory ~entry ~write ~compatibility ~adjust ~sp ~guard_field ~
   hl 0xadc3;put 0x73aa !q.hl(!q.bc land 255);a(read 0xadc3);cmp 6;
   need(not !q.flags.zero)"73A7 index6 early return unobserved";
   if not !q.flags.zero then(pair 0xadc3;c(!q.hl land 255);call 0x73b8 0x7397(fun()->pli2_output 0x7397);a(read 0xadc3);a(inc !q.a);c !q.a;call 0x73c0 0x7397(fun()->pli2_output 0x7397))
+ |0x793c->
+  need(!q.bc land 255<8&& !q.de land 255<8)"793C bounded byte indices";
+  hl 0xae03;put 0x793f !q.hl(!q.de land 255);hl(!q.hl-1);put 0x7941 !q.hl(!q.bc land 255);
+  a(read 0xae03);cmp 6;
+  if !q.flags.zero then(pair 0xae02;hl(!q.hl land 255);bc 0xadab;dad !q.bc;put 0x7953 !q.hl 0)
+  else(pair 0xae03;hl(!q.hl land 255);bc 0xadab;dad !q.bc;push 0x7961 !q.hl;
+   pair 0xae02;hl(!q.hl land 255);dad !q.bc;de(pop());a(read !q.de);put 0x796a !q.hl !q.a);
+  pair 0xae03;hl(!q.hl land 255);bc 0xadb3;dad !q.bc;push 0x7974 !q.hl;
+  pair 0xae02;hl(!q.hl land 255);dad !q.bc;de(pop());a(read !q.de);put 0x797d !q.hl !q.a;
+  c 0x40;call 0x7980 0x746f(carrier 0x746f 0xadcc false);
+  pair 0xae02;c(!q.hl land 255);call 0x7987 0x74c7(carrier 0x74c7 0xadcf false);
+  pair 0xae03;c(!q.hl land 255);call 0x798e 0x74c7(carrier 0x74c7 0xadcf false);
+  a(read 0xae02);add !q.a;add !q.a;add !q.a;logical false 0x40;hl 0xae03;logical false(read !q.hl);c !q.a;call 0x799e 0x7557 byte_bits
+ |0x7b99->
+  hl 0xae11;put 0x7b9c !q.hl(!q.de land 255);hl(!q.hl-1);put 0x7b9e !q.hl(!q.bc land 255);
+  pair 0xae10;c(!q.hl land 255);call 0x7ba3 0x7ae4(fun()->pli2_output 0x7ae4);
+  pair 0xae10;c(!q.hl land 255);pair 0xae11;exchange();call 0x7bae 0x793c(fun()->pli2_output 0x793c)
  |0x7903->
   hl 0xae01;put 0x7906 !q.hl(!q.de land 255);hl(!q.hl-1);put 0x7908 !q.hl(!q.bc land 255);
   a(read 0xae01);sub 6;sub 1;mask();put 0x7911 0xadca !q.a;

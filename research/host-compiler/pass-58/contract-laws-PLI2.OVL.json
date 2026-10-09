@@ -1,0 +1,22 @@
+{
+  "PLI2.OVL+793C": {
+    "end": 31138,
+    "description": "Indexed two-carrier transfer and derived byte emission",
+    "contract": "Save E atAE03 then C atAE02. FreshAE03 CPI6. Equal6:pairedAE02,zeroextendL,ADAB+index,publish0. Otherwise:pairedAE03 zeroextend,ADAB+source,PUSH H;independentAE02 zeroextend,destination;POP D;freshLDAX D thenMOV M,A. BOTH routes join796B:repeat address-carrier PUSH/POP sequence withADB3 andpublish freshsource byte. C40 canonical746F;freshAE02 intoC canonical74C7;freshAE03 intoC canonical74C7;freshAE02 ADD A three times,ORI40,ORA freshAE03;C=A,canonical7557. ADD arithmetic flags,notRLC. Encodedbyte=u8(C*8)OR40ORE for scopedindices0..7. Same-index writes retained. Successful children,nonwrap position,clear201D/nonalias immutablecode/stack/sentinel scope;copied transaction rejects unsupported routes before live mutation.",
+    "completeness": [
+      "stable",
+      "complete",
+      "partial"
+    ]
+  },
+  "PLI2.OVL+7B99": {
+    "end": 31666,
+    "description": "Saved selector/index preparation and carrier-transfer transaction",
+    "contract": "Save lowE atAE11 then lowC atAE10. Fresh pairedAE10/AE11 toC;canonical7AE4. Independently reread AE10/AE11 toC,thenAE11/AE12 toHL;XCHG intoDE;canonical793C. No invisible retained entry locals replace reads. D/high word from freshAE12 is an actual channel although793C savesonly lowE. Return actual child state;originalCALL andallchild PUSH/CALL residue preserved. Scope C/E indices0..7,inherited bounded7AE4/emission states;copiedstaging validatescomplete route beforelive mutation.",
+    "completeness": [
+      "stable",
+      "complete",
+      "partial"
+    ]
+  }
+}

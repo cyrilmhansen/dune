@@ -1,0 +1,37 @@
+{
+  "historical_root": "PLI2.OVL+7B99",
+  "semantic_inputs": [
+    "destination indexC",
+    "source indexE orspecialvalue6",
+    "two carrier bytebanks",
+    "fresh pending-preparation state",
+    "current bufferedoutputposition"
+  ],
+  "semantic_outputs": [
+    "ADAB destination clearedwhenE6,otherwisecopied",
+    "ADB3 destination copiedonbothbranches",
+    "derivedrepresentation byte emitted andpositionpublished"
+  ],
+  "shared_historical_state": [
+    "AE10/AE11 savedC/E;pairedAE12 channel",
+    "AE02/AE03 indices",
+    "ADAB/ADB3 banks andpendingAE04/05/06",
+    "emissioncaches,1C2C,RELbuffer/cursor"
+  ],
+  "historical_mechanism": [
+    "absolute scratch carriers andfreshpairedLHLD",
+    "MVI H0 zeroextension thenDAD",
+    "PUSH H/POP D temporarysourceaddress",
+    "ADD A three times thenORI40/ORA savedE",
+    "exact CALL/service/PUSH stackresidue"
+  ],
+  "candidate_modern_operation": "Prepare, transfer indexed carriers and emit a derived byte",
+  "confidence": {
+    "semantic_inputs": "OBSERVED with0..7 boundedindexscope",
+    "semantic_outputs": "OBSERVED non6;DEDUCED/static/synthetic E6",
+    "shared_historical_state": "OBSERVED",
+    "historical_mechanism": "OBSERVED/DEDUCED",
+    "candidate_modern_operation": "HYPOTHESIS descriptive"
+  },
+  "mir_relevance": "Documents future stateful transfer/emission concepts only;no MIR API orfaithful-code refactor."
+}

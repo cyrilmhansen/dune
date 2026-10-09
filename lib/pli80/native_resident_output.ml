@@ -68,6 +68,25 @@ let shadow ?(offset=0x1272) ?(within=[]) ?(run_negatives=true) input=
    rejects(fun()->prepare bridge offset ~call ~origin:o(altered[state.sp,(Char.code(Bytes.get ram state.sp) lxor 1)]));
    if not(List.mem offset[0x7397;0x73a7;0x7ac4;0x7ad4;0x7ae4;0x79e2;0x7a17;0x73d0;0x7550;0x753c;0x746f;0x74c7;0x7510])then List.iter(fun edits->rejects(fun()->prepare bridge offset ~call ~origin:o(altered edits)))[[0x2029,1];[0x1d8a,128];[0x1d8b,8];[0x2155,0x0a;0x2156,0x1d]];
    if List.mem offset[0x79e2;0x7a17]then rejects(fun()->prepare bridge offset ~call ~origin:o(altered[(if offset=0x79e2 then 0xae05 else 0xae04),(if offset=0x79e2 then 1 else 2)]));
+   if List.mem offset[0x793c;0x7b99]then(
+    List.iter(fun(index,source)->
+     let edits=List.init 8(fun i->0xadab+i,0x20+i)@List.init 8(fun i->0xadb3+i,0x90+i)@[0xae04,0;0xae05,0;0xae06,9;0xae12,0xa5;0x1d8a,127;0x1d8b,7]in
+     let staged=altered edits in let staged={staged with state={state with c=index;e=source;d=0x77}}in
+     let plan=prepare bridge offset ~call ~origin:o staged in
+     let result=match staged.preview_host_program plan.program with Ok r->r|Error e->failwith e in
+     let table=Bytes.init 8(fun i->Char.chr(0x20+i))and second=Bytes.init 8(fun i->Char.chr(0x90+i))in
+     Bytes.set table index(Char.chr(if source=6 then 0 else 0x20+source));Bytes.set second index(Char.chr(0x90+source));
+     require(Bytes.sub result.memory 0xadab 8=table&&Bytes.sub result.memory 0xadb3 8=second)"independent indexed transfer and E6 second-copy law";
+     let transferred=List.filter(fun(w:B.write)->List.mem w.writer[0x9b53;0x9b6a;0x9b7d])plan.journal in
+     require(List.map(fun(w:B.write)->w.address,w.value)transferred=[0xadab+index,(if source=6 then 0 else 0x20+source);0xadb3+index,0x90+source])"ordered same-index or special clear publications";
+     require(List.map(fun(w:B.write)->w.value)(List.filter(fun(w:B.write)->w.writer=0x975a)plan.journal)=[((index lsl 3)lor 0x40 lor source)])"ADD ADD ADD OR field passed to canonical byte emitter";
+     let pushes=List.filter(fun(w:B.write)->List.mem w.writer[0x9b61;0x9b74])plan.journal in
+     require(List.map(fun(w:B.write)->w.value)pushes=(if source=6 then[0xad;0xb3+source]else[0xad;0xab+source;0xad;0xb3+source]))"exact PUSH temporary source addresses";
+     require(plan.state.sp=state.sp+2)"indexed transfer stack ABI"
+    )[7,4;5,7;4,6;6,6;0,1;1,1];
+    List.iter(fun(c,e)->rejects(fun()->prepare bridge offset ~call ~origin:o{boundary with state={state with c;e}}))[8,1;1,8];
+    rejects(fun()->prepare bridge offset ~call ~origin:o(altered[0x2155,0xab;0x2156,0xad]))
+   );
    if offset=0x7ae4 then(
     List.iter(fun selector->let bad={boundary with state={state with c=selector}}in
      if selector=7 then rejects(fun()->prepare bridge offset ~call ~origin:o{bad with copy_memory=(fun()->let b=Bytes.copy ram in Bytes.set b 0xae05 '\001';b)})

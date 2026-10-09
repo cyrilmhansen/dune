@@ -46,6 +46,7 @@ def meaning(w):
  if op=='ANI':return 'A=A AND '+arg+'; Intel8080 logical flags/CY0'
  if op=='ANA':return 'A=A AND '+arg+'; Intel8080 logical flags/CY0'
  if op=='DCX'and arg=='SP':return 'SP=u16(SP-1); flags preserved'
+ if op=='ORI':return 'A=A OR literal '+arg+'; logical NZP,AC=0,CY=0'
  if op=='ORA':return 'A=A OR '+arg+'; logical flags; CY=0'
  if op=='XTHL':return 'read both old stack bytes, replace low then high with L/H; HL=old word[SP]; SP and flags preserved; surviving stack residue retained'
  if op=='XCHG':return 'exchange DE and HL; flags preserved'

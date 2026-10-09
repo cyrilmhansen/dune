@@ -1,0 +1,472 @@
+{
+  "task": "PLI2_INDEXED_CARRIER_TRANSFER_7B99_PASS_58",
+  "baseline": "2c9bd0a2afa951080eaf57e2f73b797a1e0b1e13",
+  "selected": {
+    "selected": "PLI2.OVL+7B99",
+    "extent": [
+      31641,
+      31666
+    ],
+    "child_extent": [
+      31036,
+      31138
+    ],
+    "overlapping_entries": "No naturally called overlappingentry in eitherbody.",
+    "sibling": "7B1B has C=80/98/B0 andsmallE,clear7397 plus differentpackedfield;distinctinput/transfer operation,notmerged.",
+    "broader": "7E05 remains separate AE36/37,ADAA/202B policy and7314transform;notpartofPass58.",
+    "next": "Assess7B1B compact carrier-clear/emission sibling before broader7E05 generation."
+  },
+  "laws": {
+    "PLI2.OVL+793C": {
+      "end": 31138,
+      "description": "Indexed two-carrier transfer and derived byte emission",
+      "contract": "Save E atAE03 then C atAE02. FreshAE03 CPI6. Equal6:pairedAE02,zeroextendL,ADAB+index,publish0. Otherwise:pairedAE03 zeroextend,ADAB+source,PUSH H;independentAE02 zeroextend,destination;POP D;freshLDAX D thenMOV M,A. BOTH routes join796B:repeat address-carrier PUSH/POP sequence withADB3 andpublish freshsource byte. C40 canonical746F;freshAE02 intoC canonical74C7;freshAE03 intoC canonical74C7;freshAE02 ADD A three times,ORI40,ORA freshAE03;C=A,canonical7557. ADD arithmetic flags,notRLC. Encodedbyte=u8(C*8)OR40ORE for scopedindices0..7. Same-index writes retained. Successful children,nonwrap position,clear201D/nonalias immutablecode/stack/sentinel scope;copied transaction rejects unsupported routes before live mutation.",
+      "completeness": [
+        "stable",
+        "complete",
+        "partial"
+      ]
+    },
+    "PLI2.OVL+7B99": {
+      "end": 31666,
+      "description": "Saved selector/index preparation and carrier-transfer transaction",
+      "contract": "Save lowE atAE11 then lowC atAE10. Fresh pairedAE10/AE11 toC;canonical7AE4. Independently reread AE10/AE11 toC,thenAE11/AE12 toHL;XCHG intoDE;canonical793C. No invisible retained entry locals replace reads. D/high word from freshAE12 is an actual channel although793C savesonly lowE. Return actual child state;originalCALL andallchild PUSH/CALL residue preserved. Scope C/E indices0..7,inherited bounded7AE4/emission states;copiedstaging validatescomplete route beforelive mutation.",
+      "completeness": [
+        "stable",
+        "complete",
+        "partial"
+      ]
+    }
+  },
+  "inventory": {
+    "MINIMAL": {
+      "PLI2.OVL+7B99": {
+        "calls": 0,
+        "callers": {},
+        "pairs": {},
+        "children": {}
+      },
+      "PLI2.OVL+793C": {
+        "calls": 0,
+        "callers": {},
+        "pairs": {},
+        "children": {}
+      },
+      "PLI2.OVL+7B1B": {
+        "calls": 0,
+        "callers": {},
+        "pairs": {},
+        "children": {}
+      }
+    },
+    "FIZZBUZ": {
+      "PLI2.OVL+7B99": {
+        "calls": 10,
+        "callers": {
+          "PLI2.OVL+3AE8": 1,
+          "PLI2.OVL+36F3": 3,
+          "PLI2.OVL+3708": 3,
+          "PLI2.OVL+4205": 3
+        },
+        "pairs": {
+          "7/4": 4,
+          "5/7": 3,
+          "4/7": 3
+        },
+        "children": {
+          "PLI2.OVL+7AE4/PLI2.OVL+793C": 10
+        }
+      },
+      "PLI2.OVL+793C": {
+        "calls": 10,
+        "callers": {
+          "PLI2.OVL+7BAE": 10
+        },
+        "pairs": {
+          "7/4": 4,
+          "5/7": 3,
+          "4/7": 3
+        },
+        "children": {
+          "PLI2.OVL+746F/PLI2.OVL+74C7/PLI2.OVL+74C7/PLI2.OVL+7557": 10
+        }
+      },
+      "PLI2.OVL+7B1B": {
+        "calls": 10,
+        "callers": {
+          "PLI2.OVL+31E7": 1,
+          "PLI2.OVL+36FA": 3,
+          "PLI2.OVL+3701": 3,
+          "PLI2.OVL+420C": 3
+        },
+        "pairs": {
+          "176/7": 1,
+          "128/7": 3,
+          "152/7": 3,
+          "176/5": 3
+        },
+        "children": {
+          "PLI2.OVL+7397/PLI2.OVL+746F/PLI2.OVL+74C7/PLI2.OVL+7557": 10
+        }
+      }
+    },
+    "PICTURE": {
+      "PLI2.OVL+7B99": {
+        "calls": 0,
+        "callers": {},
+        "pairs": {},
+        "children": {}
+      },
+      "PLI2.OVL+793C": {
+        "calls": 0,
+        "callers": {},
+        "pairs": {},
+        "children": {}
+      },
+      "PLI2.OVL+7B1B": {
+        "calls": 0,
+        "callers": {},
+        "pairs": {},
+        "children": {}
+      }
+    }
+  },
+  "topology": {
+    "MINIMAL": {
+      "logical": 0,
+      "external": 0,
+      "callers": {},
+      "absorbed": {},
+      "net_host_delta": 0,
+      "remaining": {
+        "PLI2.OVL+79E2": {
+          "calls": 0,
+          "callers": {}
+        },
+        "PLI2.OVL+7A17": {
+          "calls": 1,
+          "callers": {
+            "PLI2.OVL+7D15": 1
+          }
+        },
+        "PLI2.OVL+73D0": {
+          "calls": 5,
+          "callers": {
+            "PLI2.OVL+82BA": 1,
+            "PLI2.OVL+742A": 3,
+            "PLI2.OVL+825E": 1
+          }
+        },
+        "PLI2.OVL+7AE4": {
+          "calls": 2,
+          "callers": {
+            "PLI2.OVL+7E0F": 2
+          }
+        },
+        "PLI2.OVL+7B99": {
+          "calls": 0,
+          "callers": {}
+        },
+        "PLI2.OVL+793C": {
+          "calls": 0,
+          "callers": {}
+        },
+        "PLI.COM+119E": {
+          "calls": 36,
+          "callers": {
+            "PLI0.OVL+188F": 1,
+            "PLI0.OVL+1993": 4,
+            "PLI0.OVL+19A5": 24,
+            "PLI0.OVL+189E": 1,
+            "PLI0.OVL+18AD": 1,
+            "PLI0.OVL+18BC": 1,
+            "PLI2.OVL+82A6": 1,
+            "PLI2.OVL+82E1": 1,
+            "PLI2.OVL+82F0": 1,
+            "PLI.COM+126E": 1
+          }
+        }
+      },
+      "logical_internal": {}
+    },
+    "FIZZBUZ": {
+      "logical": 10,
+      "external": 10,
+      "callers": {
+        "PLI2.OVL+3AE8": 1,
+        "PLI2.OVL+36F3": 3,
+        "PLI2.OVL+3708": 3,
+        "PLI2.OVL+4205": 3
+      },
+      "absorbed": {
+        "PLI2.OVL+7AE4": 10,
+        "PLI2.OVL+7557": 10
+      },
+      "net_host_delta": -10,
+      "remaining": {
+        "PLI2.OVL+79E2": {
+          "calls": 0,
+          "callers": {}
+        },
+        "PLI2.OVL+7A17": {
+          "calls": 10,
+          "callers": {
+            "PLI2.OVL+8082": 1,
+            "PLI2.OVL+7BB8": 6,
+            "PLI2.OVL+7D15": 3
+          }
+        },
+        "PLI2.OVL+73D0": {
+          "calls": 26,
+          "callers": {
+            "PLI2.OVL+82BA": 1,
+            "PLI2.OVL+742A": 14,
+            "PLI2.OVL+825E": 11
+          }
+        },
+        "PLI2.OVL+7AE4": {
+          "calls": 11,
+          "callers": {
+            "PLI2.OVL+7E0F": 11
+          }
+        },
+        "PLI2.OVL+7B99": {
+          "calls": 0,
+          "callers": {}
+        },
+        "PLI2.OVL+793C": {
+          "calls": 0,
+          "callers": {}
+        },
+        "PLI.COM+119E": {
+          "calls": 36,
+          "callers": {
+            "PLI0.OVL+188F": 1,
+            "PLI0.OVL+1993": 4,
+            "PLI0.OVL+19A5": 24,
+            "PLI0.OVL+189E": 1,
+            "PLI0.OVL+18AD": 1,
+            "PLI0.OVL+18BC": 1,
+            "PLI2.OVL+82A6": 1,
+            "PLI2.OVL+82E1": 1,
+            "PLI2.OVL+82F0": 1,
+            "PLI.COM+126E": 1
+          }
+        }
+      },
+      "logical_internal": {
+        "PLI2.OVL+7AE4": 10,
+        "PLI2.OVL+7AC4": 10,
+        "PLI2.OVL+79E2": 4,
+        "PLI2.OVL+7AD4": 10,
+        "PLI2.OVL+793C": 10,
+        "PLI2.OVL+746F": 13,
+        "PLI2.OVL+74C7": 23,
+        "PLI2.OVL+7557": 13,
+        "PLI.COM+1140": 117,
+        "PLI.COM+119E": 13,
+        "PLI2.OVL+753C": 13,
+        "PLI.COM+1A29": 13,
+        "PLI2.OVL+7A17": 6,
+        "PLI2.OVL+79B6": 3,
+        "PLI2.OVL+7903": 3,
+        "PLI2.OVL+75CE": 3,
+        "PLI.COM+02EE": 1,
+        "PLI.COM+19BB": 2,
+        "PLI.COM+1A0F": 2,
+        "PLI.COM+0328": 1
+      }
+    },
+    "PICTURE": {
+      "logical": 0,
+      "external": 0,
+      "callers": {},
+      "absorbed": {},
+      "net_host_delta": 0,
+      "remaining": {
+        "PLI2.OVL+79E2": {
+          "calls": 0,
+          "callers": {}
+        },
+        "PLI2.OVL+7A17": {
+          "calls": 3,
+          "callers": {
+            "PLI2.OVL+8082": 1,
+            "PLI2.OVL+7D15": 1,
+            "PLI2.OVL+7BB8": 1
+          }
+        },
+        "PLI2.OVL+73D0": {
+          "calls": 5,
+          "callers": {
+            "PLI2.OVL+82BA": 1,
+            "PLI2.OVL+742A": 3,
+            "PLI2.OVL+825E": 1
+          }
+        },
+        "PLI2.OVL+7AE4": {
+          "calls": 1,
+          "callers": {
+            "PLI2.OVL+7E0F": 1
+          }
+        },
+        "PLI2.OVL+7B99": {
+          "calls": 0,
+          "callers": {}
+        },
+        "PLI2.OVL+793C": {
+          "calls": 0,
+          "callers": {}
+        },
+        "PLI.COM+119E": {
+          "calls": 43,
+          "callers": {
+            "PLI0.OVL+188F": 1,
+            "PLI0.OVL+1993": 4,
+            "PLI0.OVL+19A5": 24,
+            "PLI0.OVL+189E": 1,
+            "PLI0.OVL+18AD": 1,
+            "PLI0.OVL+18BC": 1,
+            "PLI0.OVL+3D33": 1,
+            "PLI0.OVL+3D4E": 6,
+            "PLI2.OVL+82A6": 1,
+            "PLI2.OVL+82E1": 1,
+            "PLI2.OVL+82F0": 1,
+            "PLI.COM+126E": 1
+          }
+        }
+      },
+      "logical_internal": {}
+    }
+  },
+  "proofs": [
+    {
+      "source": "MINIMAL",
+      "entries": [
+        {
+          "coordinate": "PLI2.OVL+7B99",
+          "cases": 0,
+          "proof_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "coordinate": "PLI2.OVL+793C",
+          "cases": 0,
+          "proof_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "coordinate": "PLI2.OVL+7AE4",
+          "cases": 2,
+          "proof_hash": "4332e2bd90d2cf3e68f226a2708d750d1e797e2d16fee37ed1ca3369452cef1b"
+        }
+      ]
+    },
+    {
+      "source": "FIZZBUZ",
+      "entries": [
+        {
+          "coordinate": "PLI2.OVL+7B99",
+          "cases": 10,
+          "proof_hash": "a0901da86d07bd4b0bfc059310d16c7860c0ca76124fed4306c7f7aa7946f947"
+        },
+        {
+          "coordinate": "PLI2.OVL+793C",
+          "cases": 10,
+          "proof_hash": "97461a94b179721c01befdc6dfc71df4d32eeaf13603a20ad2d350d457d7889d"
+        },
+        {
+          "coordinate": "PLI2.OVL+7AE4",
+          "cases": 21,
+          "proof_hash": "8528d3fb6d5ef672e3e8c5c51d0cb10384de36289a94ff71af0ec38dd44e3115"
+        }
+      ]
+    },
+    {
+      "source": "PICTURE",
+      "entries": [
+        {
+          "coordinate": "PLI2.OVL+7B99",
+          "cases": 0,
+          "proof_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "coordinate": "PLI2.OVL+793C",
+          "cases": 0,
+          "proof_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "coordinate": "PLI2.OVL+7AE4",
+          "cases": 1,
+          "proof_hash": "17c86fae1e8fa6f474927b60a481828f8213ce984f4a6e0e11d4da07366e7669"
+        }
+      ]
+    }
+  ],
+  "checkpoints": {
+    "MINIMAL": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "FIZZBUZ": "56bbeb7e0d1332a56fb024ebe53bd0ef99208b693ebc6a01bc2654c8a7e4f5ad",
+    "PICTURE": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+  },
+  "promotions": {
+    "RAW": 127
+  },
+  "canonical_children": {
+    "PLI2.OVL+7AE4": {
+      "hash": "c3cfbb837b7a0b8eb575712bf7b2dc43c445f11f951161ae38cd7c1d9bcbf896",
+      "completeness": {
+        "bounds": "stable",
+        "control_flow": "complete",
+        "contract": "partial"
+      }
+    },
+    "PLI2.OVL+746F": {
+      "hash": "1ae5b8221035fe2550f74c4a3bedbefe7609b9020df78eb26fdf896396785bc4",
+      "completeness": {
+        "bounds": "stable",
+        "control_flow": "partial",
+        "contract": "partial"
+      }
+    },
+    "PLI2.OVL+74C7": {
+      "hash": "84f70badfd64c4ee74770d494af08dae2886e8d5b66f862ce7e1df7dffcb1ee7",
+      "completeness": {
+        "bounds": "stable",
+        "control_flow": "partial",
+        "contract": "partial"
+      }
+    },
+    "PLI2.OVL+7557": {
+      "hash": "fd491d7bcad34d5f79662d49fe8d52226d022b4f295b18644feb6b0bb5d62eab",
+      "completeness": {
+        "bounds": "stable",
+        "control_flow": "complete",
+        "contract": "partial"
+      }
+    },
+    "PLI2.OVL+753C": {
+      "hash": "de3c1e58fda0b4ebb593a5e6a19c3388c8ace6576a83b8d7b7e85bc575625399",
+      "completeness": {
+        "bounds": "stable",
+        "control_flow": "partial",
+        "contract": "partial"
+      }
+    },
+    "PLI.COM+119E": {
+      "hash": "1d2e7ccc485f38fc13d48e57bd128e1288398c5242784cb07f92172e8a0256d1",
+      "completeness": {
+        "bounds": "stable",
+        "control_flow": "complete",
+        "contract": "partial"
+      }
+    },
+    "PLI.COM+1140": {
+      "hash": "d24042cb70146e7ad2ac123b354691b4a39e717ad515174b6963aab89a813a90",
+      "completeness": {
+        "bounds": "provisional",
+        "control_flow": "partial",
+        "contract": "partial"
+      }
+    }
+  },
+  "E6": "Zero natural cases. Exact14bytes staticallydecoded;synthetic destinationclear pluscommonsecondcopy equationandPUSHchronology proved. No globalcapacityclaim.",
+  "oracle_queries": 0
+}
