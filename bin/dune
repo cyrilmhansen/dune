@@ -156,3 +156,8 @@
 (executable
  (name native_external_reference_generation)
  (libraries pli80 unix))
+
+(executable
+ (name native_pending_generation)
+ (modules native_pending_generation)
+ (libraries pli80 unix))

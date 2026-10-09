@@ -1,0 +1,36 @@
+{
+  "historical_root": "PLI2.OVL+7AE4",
+  "semantic_inputs": [
+    "byte selector",
+    "fresh pending gate AE04",
+    "fresh preparation gate AE05",
+    "pending count AE06",
+    "current output cursor/position where emission occurs"
+  ],
+  "semantic_outputs": [
+    "selector-dependent pending-generation preparation",
+    "conditional fixedC5/E4 field emission",
+    "pending gate clear and wrapping count decrement"
+  ],
+  "shared_historical_state": [
+    "AE08,AE09,AE0A selector carriers;paired readAE0B",
+    "AE04,AE05,AE06 independent gates/count",
+    "AE00,AE01,ADCA;output caches,1C2C andREL buffer"
+  ],
+  "historical_mechanism": [
+    "register transfer from independently paired LHLD reads",
+    "CPI literals7/4/5 select child policy",
+    "SUI/SUI/SBB equality mask in7903",
+    "hardware CALL words and final stack residue",
+    "fresh DCR flags retained only when no later comparison overwrites them"
+  ],
+  "candidate_modern_operation": "Prepare pending generation according to byte selector",
+  "confidence": {
+    "semantic_inputs": "OBSERVED",
+    "semantic_outputs": "DEDUCED low-level effects;pending terminology descriptive",
+    "shared_historical_state": "OBSERVED",
+    "historical_mechanism": "OBSERVED/DEDUCED",
+    "candidate_modern_operation": "HYPOTHESIS"
+  },
+  "mir_relevance": "May inform a future stateful emission policy operation;no MIR API or code refactor implied."
+}

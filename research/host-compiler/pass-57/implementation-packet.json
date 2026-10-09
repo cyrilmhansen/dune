@@ -1,0 +1,522 @@
+{
+  "task": "PLI2_PENDING_GENERATION_DISCOVERY_PASS_57",
+  "baseline": "7bd9ca0a11984e7f618293bb2ab4f2c0d4b79314",
+  "selected": {
+    "selected": "PLI2.OVL+7AE4",
+    "extent": [
+      31460,
+      31490
+    ],
+    "anchors": {
+      "7AD0": "valid CALL instruction,not observed entry;owner7AC4",
+      "7ABE": "valid LXI instruction/internal block,not observed entry;owner7AA3"
+    },
+    "candidates": {
+      "7AC4": "only selector7 gate;subsumed by7AE4",
+      "7AD4": "only selector4 gate;subsumed by7AE4",
+      "7AE4": "one saved-selector pending policy;selected",
+      "7AA3": "separate state transition through79BE/7903;used cross-evidence,not artificial merged root",
+      "7B99": "adds two independentADAB/ADB3 indexed transfers via793C plus field emission;defer coherent transfer transaction",
+      "7E05": "independent AE36/37,ADAA,202B masks;7314 transform and repeated fields;distinct broader generation policy"
+    },
+    "economics": "24 new roots absorb3 formerly-native75CE roots. Guest savings confirmed798;host boundaries+21. No serializer leaf explosion or unproved higher parent.",
+    "next": "Assess7B99/793C indexed carrier-transfer and emission transaction;7E05 is separate broader gated generation."
+  },
+  "laws": {
+    "PLI2.OVL+7397": {
+      "end": 29607,
+      "description": "Fresh indexed carrier clear",
+      "contract": "Save C atADC2; paired-readADC2/ADC3,discard high;BC=ADAB;HL=ADAB+zeroextended index modulo16;publish zero atHL;return actual DAD carry and preserved NZPA. Scope index<8. Copied staging validates immutable code,originalCALL/continuation,nonalias scratch/stack/output state;inherited successful writer/nonzero position/clear201D scopes. Unsupported route rejects before live mutation.",
+      "completeness": [
+        "stable",
+        "complete",
+        "complete"
+      ]
+    },
+    "PLI2.OVL+73A7": {
+      "end": 29636,
+      "description": "Two adjacent fresh carrier clears",
+      "contract": "Save C atADC3;fresh compare6. Supported non6 route independently paired-readsADC3 intoC;canonical7397;fresh LDA ADC3;INR;C=result;canonical7397. No cached first index. Index6 earlyRET73B3 unobserved/RAW,unsupported. Copied staging validates immutable code,originalCALL/continuation,nonalias scratch/stack/output state;inherited successful writer/nonzero position/clear201D scopes. Unsupported route rejects before live mutation.",
+      "completeness": [
+        "provisional",
+        "partial",
+        "partial"
+      ]
+    },
+    "PLI2.OVL+7903": {
+      "end": 31036,
+      "description": "Saved selector/index field emission",
+      "contract": "Save E atAE01 then C atAE00. Fresh AE01 SUI6,SUI1,SBB yields equality6 mask atADCA. Fresh AE00 CPI C1. If C1,freshADCA RAR;setCY arm unsupported;clearCY fresh AE01 intoC,canonical73A7. Then freshAE00 intoC,fresh pairedAE01 intoDE,canonical75CE;RET actual state. C1/E6 RAW branch excluded. Copied staging validates immutable code,originalCALL/continuation,nonalias scratch/stack/output state;inherited successful writer/nonzero position/clear201D scopes. Unsupported route rejects before live mutation.",
+      "completeness": [
+        "provisional",
+        "partial",
+        "partial"
+      ]
+    },
+    "PLI2.OVL+79B6": {
+      "end": 31166,
+      "description": "Fixed C5/E4 emission adapter",
+      "contract": "Literal E4,C C5;canonical7903;RET actual state. Constants encoded at entry,not high-level item names. Copied staging validates immutable code,originalCALL/continuation,nonalias scratch/stack/output state;inherited successful writer/nonzero position/clear201D scopes. Unsupported route rejects before live mutation.",
+      "completeness": [
+        "stable",
+        "complete",
+        "partial"
+      ]
+    },
+    "PLI2.OVL+7A17": {
+      "end": 31310,
+      "description": "Fresh AE04 pending-gate drain",
+      "contract": "Retain clearAE04 earlyRET. Fresh nonzeroAE04 reread andCPI1;only1 supported. Canonical79B6 then freshAE05 CPI2;onlynot2 route supported. Publish AE04=0 then fresh DCR byte[AE06],wrapping8bits;returnedA/BC/DE remain actual child/comparison state;HL=AE06;NZPA fromDCR,CY fromCPI2. Other AE04 values,AE05=2 alternatives RAW/unsupported. Copied staging validates immutable code,originalCALL/continuation,nonalias scratch/stack/output state;inherited successful writer/nonzero position/clear201D scopes. Unsupported route rejects before live mutation.",
+      "completeness": [
+        "provisional",
+        "partial",
+        "partial"
+      ]
+    },
+    "PLI2.OVL+7AC4": {
+      "end": 31444,
+      "description": "Saved selector seven gate",
+      "contract": "Save C atAE08;freshly read andCPI7;equal calls canonical79E2,otherwiseRET comparison state. AE05 nonzero child unsupported. Copied staging validates immutable code,originalCALL/continuation,nonalias scratch/stack/output state;inherited successful writer/nonzero position/clear201D scopes. Unsupported route rejects before live mutation.",
+      "completeness": [
+        "stable",
+        "complete",
+        "partial"
+      ]
+    },
+    "PLI2.OVL+7AD4": {
+      "end": 31460,
+      "description": "Saved selector four gate",
+      "contract": "Save C atAE09;freshly read andCPI4;equal calls canonical7A17,otherwiseRET comparison state. Copied staging validates immutable code,originalCALL/continuation,nonalias scratch/stack/output state;inherited successful writer/nonzero position/clear201D scopes. Unsupported route rejects before live mutation.",
+      "completeness": [
+        "stable",
+        "complete",
+        "partial"
+      ]
+    },
+    "PLI2.OVL+7AE4": {
+      "end": 31490,
+      "description": "Saved selector pending-generation policy",
+      "contract": "Save C atAE0A. Independent paired reloadsAE0A/AE0B transferL intoC before canonical7AC4 and7AD4. Fresh LDA AE0A,CPI5;equal canonical7A17,otherwiseRET actual comparison state. AE04/AE05 independently fresh gates;one selector decides7/4/5 calls,not caller/source. Copied staging validates immutable code,originalCALL/continuation,nonalias scratch/stack/output state;inherited successful writer/nonzero position/clear201D scopes. Unsupported route rejects before live mutation.",
+      "completeness": [
+        "stable",
+        "complete",
+        "partial"
+      ]
+    }
+  },
+  "topology": {
+    "MINIMAL": {
+      "logical": 2,
+      "external": 2,
+      "callers": {
+        "PLI2.OVL+7E0F": 2
+      },
+      "absorbed": {},
+      "net_host_delta": 2,
+      "remaining": {
+        "PLI2.OVL+79E2": {
+          "calls": 0,
+          "callers": {}
+        },
+        "PLI2.OVL+7A17": {
+          "calls": 1,
+          "callers": {
+            "PLI2.OVL+7D15": 1
+          }
+        },
+        "PLI2.OVL+73D0": {
+          "calls": 5,
+          "callers": {
+            "PLI2.OVL+82BA": 1,
+            "PLI2.OVL+742A": 3,
+            "PLI2.OVL+825E": 1
+          }
+        },
+        "PLI2.OVL+7AE4": {
+          "calls": 0,
+          "callers": {}
+        },
+        "PLI.COM+119E": {
+          "calls": 36,
+          "callers": {
+            "PLI0.OVL+188F": 1,
+            "PLI0.OVL+1993": 4,
+            "PLI0.OVL+19A5": 24,
+            "PLI0.OVL+189E": 1,
+            "PLI0.OVL+18AD": 1,
+            "PLI0.OVL+18BC": 1,
+            "PLI2.OVL+82A6": 1,
+            "PLI2.OVL+82E1": 1,
+            "PLI2.OVL+82F0": 1,
+            "PLI.COM+126E": 1
+          }
+        }
+      },
+      "logical_internal": {
+        "PLI2.OVL+7AC4": 2,
+        "PLI2.OVL+79E2": 2,
+        "PLI2.OVL+7AD4": 2
+      }
+    },
+    "FIZZBUZ": {
+      "logical": 21,
+      "external": 21,
+      "callers": {
+        "PLI2.OVL+7BA3": 10,
+        "PLI2.OVL+7E0F": 11
+      },
+      "absorbed": {
+        "PLI2.OVL+75CE": 3
+      },
+      "net_host_delta": 18,
+      "remaining": {
+        "PLI2.OVL+79E2": {
+          "calls": 0,
+          "callers": {}
+        },
+        "PLI2.OVL+7A17": {
+          "calls": 10,
+          "callers": {
+            "PLI2.OVL+8082": 1,
+            "PLI2.OVL+7BB8": 6,
+            "PLI2.OVL+7D15": 3
+          }
+        },
+        "PLI2.OVL+73D0": {
+          "calls": 26,
+          "callers": {
+            "PLI2.OVL+82BA": 1,
+            "PLI2.OVL+742A": 14,
+            "PLI2.OVL+825E": 11
+          }
+        },
+        "PLI2.OVL+7AE4": {
+          "calls": 0,
+          "callers": {}
+        },
+        "PLI.COM+119E": {
+          "calls": 36,
+          "callers": {
+            "PLI0.OVL+188F": 1,
+            "PLI0.OVL+1993": 4,
+            "PLI0.OVL+19A5": 24,
+            "PLI0.OVL+189E": 1,
+            "PLI0.OVL+18AD": 1,
+            "PLI0.OVL+18BC": 1,
+            "PLI2.OVL+82A6": 1,
+            "PLI2.OVL+82E1": 1,
+            "PLI2.OVL+82F0": 1,
+            "PLI.COM+126E": 1
+          }
+        }
+      },
+      "logical_internal": {
+        "PLI2.OVL+7AC4": 21,
+        "PLI2.OVL+79E2": 15,
+        "PLI2.OVL+7AD4": 21,
+        "PLI2.OVL+7A17": 6,
+        "PLI2.OVL+79B6": 3,
+        "PLI2.OVL+7903": 3,
+        "PLI2.OVL+75CE": 3,
+        "PLI2.OVL+746F": 3,
+        "PLI2.OVL+74C7": 3,
+        "PLI2.OVL+7557": 3,
+        "PLI.COM+1140": 27,
+        "PLI.COM+119E": 3,
+        "PLI2.OVL+753C": 3,
+        "PLI.COM+1A29": 3
+      }
+    },
+    "PICTURE": {
+      "logical": 1,
+      "external": 1,
+      "callers": {
+        "PLI2.OVL+7E0F": 1
+      },
+      "absorbed": {},
+      "net_host_delta": 1,
+      "remaining": {
+        "PLI2.OVL+79E2": {
+          "calls": 0,
+          "callers": {}
+        },
+        "PLI2.OVL+7A17": {
+          "calls": 3,
+          "callers": {
+            "PLI2.OVL+8082": 1,
+            "PLI2.OVL+7D15": 1,
+            "PLI2.OVL+7BB8": 1
+          }
+        },
+        "PLI2.OVL+73D0": {
+          "calls": 5,
+          "callers": {
+            "PLI2.OVL+82BA": 1,
+            "PLI2.OVL+742A": 3,
+            "PLI2.OVL+825E": 1
+          }
+        },
+        "PLI2.OVL+7AE4": {
+          "calls": 0,
+          "callers": {}
+        },
+        "PLI.COM+119E": {
+          "calls": 43,
+          "callers": {
+            "PLI0.OVL+188F": 1,
+            "PLI0.OVL+1993": 4,
+            "PLI0.OVL+19A5": 24,
+            "PLI0.OVL+189E": 1,
+            "PLI0.OVL+18AD": 1,
+            "PLI0.OVL+18BC": 1,
+            "PLI0.OVL+3D33": 1,
+            "PLI0.OVL+3D4E": 6,
+            "PLI2.OVL+82A6": 1,
+            "PLI2.OVL+82E1": 1,
+            "PLI2.OVL+82F0": 1,
+            "PLI.COM+126E": 1
+          }
+        }
+      },
+      "logical_internal": {
+        "PLI2.OVL+7AC4": 1,
+        "PLI2.OVL+79E2": 1,
+        "PLI2.OVL+7AD4": 1
+      }
+    }
+  },
+  "route_classes": {
+    "MINIMAL": {
+      "selectors": {
+        "7": 2
+      },
+      "nonzero_drains": 0
+    },
+    "FIZZBUZ": {
+      "selectors": {
+        "7": 15,
+        "5": 3,
+        "4": 3
+      },
+      "nonzero_drains": 3
+    },
+    "PICTURE": {
+      "selectors": {
+        "7": 1
+      },
+      "nonzero_drains": 0
+    }
+  },
+  "proofs": [
+    {
+      "source": "MINIMAL",
+      "entries": [
+        {
+          "coordinate": "PLI2.OVL+7AE4",
+          "cases": 2,
+          "proof_hash": "4332e2bd90d2cf3e68f226a2708d750d1e797e2d16fee37ed1ca3369452cef1b"
+        },
+        {
+          "coordinate": "PLI2.OVL+7397",
+          "cases": 2,
+          "proof_hash": "17a1e4460a2c020c5e2f7018263bb19cd73cfe488bfd4d3ca44a8ee90fbd5a07"
+        },
+        {
+          "coordinate": "PLI2.OVL+73A7",
+          "cases": 1,
+          "proof_hash": "93ebe4a019128dfeef28f71a98666aae1d4504e9b604d83109f637f0e21dd446"
+        },
+        {
+          "coordinate": "PLI2.OVL+7AC4",
+          "cases": 2,
+          "proof_hash": "d3e298a345fe85a6f4d35a2b7e8794be353d13638b56d8174eb11ce75a4a0619"
+        },
+        {
+          "coordinate": "PLI2.OVL+7AD4",
+          "cases": 2,
+          "proof_hash": "14ef07cebf93393fe66594d62f870c37f3421aaefad544a7ff78f4a61eed44d7"
+        },
+        {
+          "coordinate": "PLI2.OVL+7A17",
+          "cases": 8,
+          "proof_hash": "31013312b37a814e108157ab64dc47f3eab7ef863b7181d20c947bd83d886046"
+        },
+        {
+          "coordinate": "PLI2.OVL+79B6",
+          "cases": 0,
+          "proof_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "coordinate": "PLI2.OVL+7903",
+          "cases": 0,
+          "proof_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "coordinate": "PLI2.OVL+79E2",
+          "cases": 9,
+          "proof_hash": "7930836e2d2146241a073cb65ed72c93e21e8b93b2abb2a3c7542ce6a7b3baa6"
+        }
+      ]
+    },
+    {
+      "source": "FIZZBUZ",
+      "entries": [
+        {
+          "coordinate": "PLI2.OVL+7AE4",
+          "cases": 21,
+          "proof_hash": "8528d3fb6d5ef672e3e8c5c51d0cb10384de36289a94ff71af0ec38dd44e3115"
+        },
+        {
+          "coordinate": "PLI2.OVL+7397",
+          "cases": 36,
+          "proof_hash": "1a6d2563d35125e656922d027b2a0a873dd0fd635f23add263f5b474546e953b"
+        },
+        {
+          "coordinate": "PLI2.OVL+73A7",
+          "cases": 13,
+          "proof_hash": "ac4f0449d87b55ec7dfa5e6c7c219125abfa48f735e53449cd0bbd4888103d59"
+        },
+        {
+          "coordinate": "PLI2.OVL+7AC4",
+          "cases": 21,
+          "proof_hash": "7e9609dac00eaff6d4df4df568bdb097e7f45acafab407801122c51e94cbd618"
+        },
+        {
+          "coordinate": "PLI2.OVL+7AD4",
+          "cases": 21,
+          "proof_hash": "d6cbfb6ade437edea3d3676c15c3ad45bf292d7a4b8be23d3dc76127c44a5a5a"
+        },
+        {
+          "coordinate": "PLI2.OVL+7A17",
+          "cases": 41,
+          "proof_hash": "444814dd351f0c35e831f76940a86c33304e46599b0ce64fc4957767290542d2"
+        },
+        {
+          "coordinate": "PLI2.OVL+79B6",
+          "cases": 3,
+          "proof_hash": "d291cebc72b2f5a50863e3d2b5527c7cdf2b15619882a2381d41c54f2b09282b"
+        },
+        {
+          "coordinate": "PLI2.OVL+7903",
+          "cases": 6,
+          "proof_hash": "923fc8a281151ee71133254ddf6a7a318ed29f361fcc050501e76c930aa5fd59"
+        },
+        {
+          "coordinate": "PLI2.OVL+79E2",
+          "cases": 40,
+          "proof_hash": "fe4b8cf3c6976c99c7f8e5faf51b9426c44f35e21f48e487af3b9df79b0f3cb0"
+        }
+      ]
+    },
+    {
+      "source": "PICTURE",
+      "entries": [
+        {
+          "coordinate": "PLI2.OVL+7AE4",
+          "cases": 1,
+          "proof_hash": "17c86fae1e8fa6f474927b60a481828f8213ce984f4a6e0e11d4da07366e7669"
+        },
+        {
+          "coordinate": "PLI2.OVL+7397",
+          "cases": 4,
+          "proof_hash": "6053155deb6e180fcfa0fec88387912be182d96afdb2faf12b55623d6aff7221"
+        },
+        {
+          "coordinate": "PLI2.OVL+73A7",
+          "cases": 2,
+          "proof_hash": "59298cb0600327641d61f5b958d372cb63b5eb430027e06bd131fd439daeeb3e"
+        },
+        {
+          "coordinate": "PLI2.OVL+7AC4",
+          "cases": 1,
+          "proof_hash": "bf7ce6795ccfc791617f017be440a2d5dca9bee210b01477241df2f838315c3e"
+        },
+        {
+          "coordinate": "PLI2.OVL+7AD4",
+          "cases": 1,
+          "proof_hash": "75268ea682cf79557b752f34e08511c61def0b5909e0003a9d02f709999480e8"
+        },
+        {
+          "coordinate": "PLI2.OVL+7A17",
+          "cases": 10,
+          "proof_hash": "d5f76e014436435ee7195fe30d3f6f19de47931df475170169b8a7f420192d8a"
+        },
+        {
+          "coordinate": "PLI2.OVL+79B6",
+          "cases": 0,
+          "proof_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "coordinate": "PLI2.OVL+7903",
+          "cases": 0,
+          "proof_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "coordinate": "PLI2.OVL+79E2",
+          "cases": 8,
+          "proof_hash": "671943387dceda790583c5283762f826b1e9e3e6949bb99aa5deb9bd2c6b3c4b"
+        }
+      ]
+    }
+  ],
+  "checkpoints": {
+    "MINIMAL": "2cf39deec1815345382ad65890202c2839336cc0d66ac5660464d8433566b984",
+    "FIZZBUZ": "a27a00c37a2ac418d736c7849d8671fb0f3d41b41337b6d50f76c39376b0eef8",
+    "PICTURE": "0b897d18b260e9328aa4f6c61df201a2179713af129a91c5cf7d97ca83ec848f"
+  },
+  "promotions": {
+    "RAW": 197
+  },
+  "reused_contracts": {
+    "PLI2.OVL+79E2": {
+      "hash": "6c8e457c97add3d668ef9380583812659155826cd968f96d1b494ecc1c42e77e",
+      "completeness": {
+        "bounds": "provisional",
+        "control_flow": "partial",
+        "contract": "partial"
+      }
+    },
+    "PLI2.OVL+75CE": {
+      "hash": "1d4d93a623e6ad5ca1f1165253b37287663e2fd2d8e5861f53f6084b79a73bcf",
+      "completeness": {
+        "bounds": "stable",
+        "control_flow": "complete",
+        "contract": "partial"
+      }
+    },
+    "PLI2.OVL+7557": {
+      "hash": "fd491d7bcad34d5f79662d49fe8d52226d022b4f295b18644feb6b0bb5d62eab",
+      "completeness": {
+        "bounds": "stable",
+        "control_flow": "complete",
+        "contract": "partial"
+      }
+    },
+    "PLI2.OVL+753C": {
+      "hash": "de3c1e58fda0b4ebb593a5e6a19c3388c8ace6576a83b8d7b7e85bc575625399",
+      "completeness": {
+        "bounds": "stable",
+        "control_flow": "partial",
+        "contract": "partial"
+      }
+    },
+    "PLI.COM+119E": {
+      "hash": "1d2e7ccc485f38fc13d48e57bd128e1288398c5242784cb07f92172e8a0256d1",
+      "completeness": {
+        "bounds": "stable",
+        "control_flow": "complete",
+        "contract": "partial"
+      }
+    },
+    "PLI.COM+1140": {
+      "hash": "d24042cb70146e7ad2ac123b354691b4a39e717ad515174b6963aab89a813a90",
+      "completeness": {
+        "bounds": "provisional",
+        "control_flow": "partial",
+        "contract": "partial"
+      }
+    }
+  },
+  "AE04_AE05": "Independent fresh gates,not interchangeable. AE05 stays0 across all79E2 natural calls. AE04=1 drains viafixedC5/E4;freshAE05!=2 thenAE04 clear beforeAE06 decrement. No proof of arbitrary global state machine.",
+  "oracle_queries": 0
+}

@@ -1,0 +1,82 @@
+{
+  "PLI2.OVL+7397": {
+    "end": 29607,
+    "description": "Fresh indexed carrier clear",
+    "contract": "Save C atADC2; paired-readADC2/ADC3,discard high;BC=ADAB;HL=ADAB+zeroextended index modulo16;publish zero atHL;return actual DAD carry and preserved NZPA. Scope index<8. Copied staging validates immutable code,originalCALL/continuation,nonalias scratch/stack/output state;inherited successful writer/nonzero position/clear201D scopes. Unsupported route rejects before live mutation.",
+    "completeness": [
+      "stable",
+      "complete",
+      "complete"
+    ]
+  },
+  "PLI2.OVL+73A7": {
+    "end": 29636,
+    "description": "Two adjacent fresh carrier clears",
+    "contract": "Save C atADC3;fresh compare6. Supported non6 route independently paired-readsADC3 intoC;canonical7397;fresh LDA ADC3;INR;C=result;canonical7397. No cached first index. Index6 earlyRET73B3 unobserved/RAW,unsupported. Copied staging validates immutable code,originalCALL/continuation,nonalias scratch/stack/output state;inherited successful writer/nonzero position/clear201D scopes. Unsupported route rejects before live mutation.",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ]
+  },
+  "PLI2.OVL+7903": {
+    "end": 31036,
+    "description": "Saved selector/index field emission",
+    "contract": "Save E atAE01 then C atAE00. Fresh AE01 SUI6,SUI1,SBB yields equality6 mask atADCA. Fresh AE00 CPI C1. If C1,freshADCA RAR;setCY arm unsupported;clearCY fresh AE01 intoC,canonical73A7. Then freshAE00 intoC,fresh pairedAE01 intoDE,canonical75CE;RET actual state. C1/E6 RAW branch excluded. Copied staging validates immutable code,originalCALL/continuation,nonalias scratch/stack/output state;inherited successful writer/nonzero position/clear201D scopes. Unsupported route rejects before live mutation.",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ]
+  },
+  "PLI2.OVL+79B6": {
+    "end": 31166,
+    "description": "Fixed C5/E4 emission adapter",
+    "contract": "Literal E4,C C5;canonical7903;RET actual state. Constants encoded at entry,not high-level item names. Copied staging validates immutable code,originalCALL/continuation,nonalias scratch/stack/output state;inherited successful writer/nonzero position/clear201D scopes. Unsupported route rejects before live mutation.",
+    "completeness": [
+      "stable",
+      "complete",
+      "partial"
+    ]
+  },
+  "PLI2.OVL+7A17": {
+    "end": 31310,
+    "description": "Fresh AE04 pending-gate drain",
+    "contract": "Retain clearAE04 earlyRET. Fresh nonzeroAE04 reread andCPI1;only1 supported. Canonical79B6 then freshAE05 CPI2;onlynot2 route supported. Publish AE04=0 then fresh DCR byte[AE06],wrapping8bits;returnedA/BC/DE remain actual child/comparison state;HL=AE06;NZPA fromDCR,CY fromCPI2. Other AE04 values,AE05=2 alternatives RAW/unsupported. Copied staging validates immutable code,originalCALL/continuation,nonalias scratch/stack/output state;inherited successful writer/nonzero position/clear201D scopes. Unsupported route rejects before live mutation.",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ]
+  },
+  "PLI2.OVL+7AC4": {
+    "end": 31444,
+    "description": "Saved selector seven gate",
+    "contract": "Save C atAE08;freshly read andCPI7;equal calls canonical79E2,otherwiseRET comparison state. AE05 nonzero child unsupported. Copied staging validates immutable code,originalCALL/continuation,nonalias scratch/stack/output state;inherited successful writer/nonzero position/clear201D scopes. Unsupported route rejects before live mutation.",
+    "completeness": [
+      "stable",
+      "complete",
+      "partial"
+    ]
+  },
+  "PLI2.OVL+7AD4": {
+    "end": 31460,
+    "description": "Saved selector four gate",
+    "contract": "Save C atAE09;freshly read andCPI4;equal calls canonical7A17,otherwiseRET comparison state. Copied staging validates immutable code,originalCALL/continuation,nonalias scratch/stack/output state;inherited successful writer/nonzero position/clear201D scopes. Unsupported route rejects before live mutation.",
+    "completeness": [
+      "stable",
+      "complete",
+      "partial"
+    ]
+  },
+  "PLI2.OVL+7AE4": {
+    "end": 31490,
+    "description": "Saved selector pending-generation policy",
+    "contract": "Save C atAE0A. Independent paired reloadsAE0A/AE0B transferL intoC before canonical7AC4 and7AD4. Fresh LDA AE0A,CPI5;equal canonical7A17,otherwiseRET actual comparison state. AE04/AE05 independently fresh gates;one selector decides7/4/5 calls,not caller/source. Copied staging validates immutable code,originalCALL/continuation,nonalias scratch/stack/output state;inherited successful writer/nonzero position/clear201D scopes. Unsupported route rejects before live mutation.",
+    "completeness": [
+      "stable",
+      "complete",
+      "partial"
+    ]
+  }
+}

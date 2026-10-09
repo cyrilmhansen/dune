@@ -58,6 +58,8 @@ class ReferenceGeneration(unittest.TestCase):
    rows=[r['result']for r in json.loads((OUT/'proof'/name).read_text())['sources']];self.assertEqual([r['REL_sha256']for r in rows],hashes);self.assertTrue(all(r['PASS1']and r['PASS2']and r['END_COMPILATION']and r['termination']=='warm_boot'for r in rows))
  def test_scoped_catalog_and_historical_totals(self):
   cat={p['id']:p for p in json.loads(Path('research/annotated-assembly/procedures.json').read_text())['procedures']}
+  from historical_catalog_epoch import frozen_catalog
+  cat=frozen_catalog(cat,checkpoint='7bd9ca0a11984e7f618293bb2ab4f2c0d4b79314')
   for key in ['PLI2.OVL+8225','PLI2.OVL+8248']:
    p=cat[key];self.assertEqual(p['observed_paths']['invocations_by_run']['FACTOR'],11);self.assertEqual(p['observed_paths']['invocations_by_run']['OPTIMIST'],46);self.assertEqual(p['completeness'],dict(bounds='stable',control_flow='complete',contract='partial'))
   self.assertEqual(cat['PLI2.OVL+73D0']['completeness'],dict(bounds='stable',control_flow='complete',contract='complete'))

@@ -66,8 +66,24 @@ let shadow ?(offset=0x1272) ?(within=[]) ?(run_negatives=true) input=
    rejects(fun()->prepare bridge offset ~call ~origin:o{boundary with state={state with sp=0x20b6}});
    rejects(fun()->prepare bridge offset ~call ~origin:o(altered[state.pc,0]));
    rejects(fun()->prepare bridge offset ~call ~origin:o(altered[state.sp,(Char.code(Bytes.get ram state.sp) lxor 1)]));
-   if not(List.mem offset[0x79e2;0x7a17;0x73d0;0x7550;0x753c;0x746f;0x74c7;0x7510])then List.iter(fun edits->rejects(fun()->prepare bridge offset ~call ~origin:o(altered edits)))[[0x2029,1];[0x1d8a,128];[0x1d8b,8];[0x2155,0x0a;0x2156,0x1d]];
-   if List.mem offset[0x79e2;0x7a17]then rejects(fun()->prepare bridge offset ~call ~origin:o(altered[(if offset=0x79e2 then 0xae05 else 0xae04),1]));
+   if not(List.mem offset[0x7397;0x73a7;0x7ac4;0x7ad4;0x7ae4;0x79e2;0x7a17;0x73d0;0x7550;0x753c;0x746f;0x74c7;0x7510])then List.iter(fun edits->rejects(fun()->prepare bridge offset ~call ~origin:o(altered edits)))[[0x2029,1];[0x1d8a,128];[0x1d8b,8];[0x2155,0x0a;0x2156,0x1d]];
+   if List.mem offset[0x79e2;0x7a17]then rejects(fun()->prepare bridge offset ~call ~origin:o(altered[(if offset=0x79e2 then 0xae05 else 0xae04),(if offset=0x79e2 then 1 else 2)]));
+   if offset=0x7ae4 then(
+    List.iter(fun selector->let bad={boundary with state={state with c=selector}}in
+     if selector=7 then rejects(fun()->prepare bridge offset ~call ~origin:o{bad with copy_memory=(fun()->let b=Bytes.copy ram in Bytes.set b 0xae05 '\001';b)})
+     else rejects(fun()->prepare bridge offset ~call ~origin:o{bad with copy_memory=(fun()->let b=Bytes.copy ram in Bytes.set b 0xae04 '\002';b)}))[7;4;5];
+    List.iter(fun(selector,pending,count)->
+     let staged=altered[0xae04,pending;0xae05,0;0xae06,count;0xae0a,0xee;0x1d8a,127;0x1d8b,7]in
+     let staged={staged with state={state with c=selector}}in
+     let plan=prepare bridge offset ~call ~origin:o staged in
+     let result=match staged.preview_host_program plan.program with Ok r->r|Error e->failwith e in
+     let drain=(selector=4||selector=5)&&pending=1 in
+     require(Char.code(Bytes.get result.memory 0xae0a)=selector&&Char.code(Bytes.get result.memory 0xae08)=selector&&Char.code(Bytes.get result.memory 0xae09)=selector)"fresh selector carrier provenance";
+     require(Char.code(Bytes.get result.memory 0xae04)=(if drain then 0 else pending)&&Char.code(Bytes.get result.memory 0xae06)=(if drain then(count+255)land 255 else count))"pending clear and wrapping decrement law";
+     require(List.length(List.filter(fun(w:B.write)->w.writer=0x9bba)plan.journal)=(if drain then 2 else 0))"state-driven fixed C5/E4 child CALL";
+     if drain && selector=5 then require(plan.state.a=0&&plan.state.h=0xae&&plan.state.l=6&&plan.state.sign=((count+255)land 255>=128)&&plan.state.zero=(count=1))"final DCR channels"
+    )[7,0,9;5,0,9;5,1,1;4,1,0]
+   );
    if offset=0x73d0 then(
     List.iter(fun(value,carry)->
      let staged=altered[0xadaa,value;0xadc4,0xfe;0xadab,0x91;0xadb2,0x92]in

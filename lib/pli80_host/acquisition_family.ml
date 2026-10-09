@@ -420,7 +420,6 @@ let run operation memory ~entry ~write ~compatibility ~adjust ~sp ~guard_field ~
     a(read 0x201c);hl 0x201d;logical false(read !q.hl);rar();need(not !q.flags.carry)"7701 combined mode alternative";
     hl 0xadec;let value=inc(read !q.hl)in put 0x77ba !q.hl value;if not !q.flags.zero then emit())in emit()in
  let preparation79e2()=a(read 0xae05);cmp 0;need !q.flags.zero "79E2 nonzero preparation arm"in
- let preparation7a17()=a(read 0xae04);cmp 0;need !q.flags.zero "7A17 nonzero generation arm"in
  let reset73d0()=
   a(read 0xadaa);rar();if !q.flags.carry then(
    hl 0xadaa;put 0x73db !q.hl 0;hl 0xadc4;put 0x73e0 !q.hl 0;
@@ -428,10 +427,41 @@ let run operation memory ~entry ~write ~compatibility ~adjust ~sp ~guard_field ~
     pair 0xadc4;hl(!q.hl land 255);bc 0xadab;dad !q.bc;put 0x73f4 !q.hl 0;
     hl 0xadc4;let value=inc(read !q.hl)in put 0x73f9 !q.hl value;if not !q.flags.zero then clear())in clear())in
  let rec pli2_output offset=match offset with
- |0x79e2->preparation79e2()|0x7a17->preparation7a17()|0x73d0->reset73d0()
+ |0x79e2->preparation79e2()|0x73d0->reset73d0()
+ |0x7397->need(!q.bc land 255<8)"7397 carrier index scope";hl 0xadc2;put 0x739a !q.hl(!q.bc land 255);pair 0xadc2;hl(!q.hl land 255);bc 0xadab;dad !q.bc;put 0x73a4 !q.hl 0
+ |0x73a7->
+  hl 0xadc3;put 0x73aa !q.hl(!q.bc land 255);a(read 0xadc3);cmp 6;
+  need(not !q.flags.zero)"73A7 index6 early return unobserved";
+  if not !q.flags.zero then(pair 0xadc3;c(!q.hl land 255);call 0x73b8 0x7397(fun()->pli2_output 0x7397);a(read 0xadc3);a(inc !q.a);c !q.a;call 0x73c0 0x7397(fun()->pli2_output 0x7397))
+ |0x7903->
+  hl 0xae01;put 0x7906 !q.hl(!q.de land 255);hl(!q.hl-1);put 0x7908 !q.hl(!q.bc land 255);
+  a(read 0xae01);sub 6;sub 1;mask();put 0x7911 0xadca !q.a;
+  a(read 0xae00);cmp 0xc1;
+  if !q.flags.zero then(a(read 0xadca);rar();need(not !q.flags.carry)"7903 C1/E6 alternative";pair 0xae01;c(!q.hl land 255);call 0x792d 0x73a7(fun()->pli2_output 0x73a7));
+  pair 0xae00;c(!q.hl land 255);pair 0xae01;exchange();call 0x7938 0x75ce(fun()->pli2_output 0x75ce)
+ |0x79b6->e 4;c 0xc5;call 0x79ba 0x7903(fun()->pli2_output 0x7903)
+ |0x7a17->
+  a(read 0xae04);cmp 0;
+  if not !q.flags.zero then(
+   a(read 0xae04);cmp 1;need !q.flags.zero "7A17 AE04 other nonzero arm";
+   call 0x7a28 0x79b6(fun()->pli2_output 0x79b6);
+   a(read 0xae05);cmp 2;need(not !q.flags.zero)"7A17 AE05=2 alternative";
+   hl 0xae04;put 0x7a3b !q.hl 0;hl 0xae06;let v=dec(read !q.hl)in put 0x7a40 !q.hl v)
+ |0x7ac4->
+  hl 0xae08;put 0x7ac7 !q.hl(!q.bc land 255);a(read 0xae08);cmp 7;
+  if !q.flags.zero then call 0x7ad0 0x79e2 preparation79e2
+ |0x7ad4->
+  hl 0xae09;put 0x7ad7 !q.hl(!q.bc land 255);a(read 0xae09);cmp 4;
+  if !q.flags.zero then call 0x7ae0 0x7a17(fun()->pli2_output 0x7a17)
+ |0x7ae4->
+  hl 0xae0a;put 0x7ae7 !q.hl(!q.bc land 255);
+  pair 0xae0a;c(!q.hl land 255);call 0x7aec 0x7ac4(fun()->pli2_output 0x7ac4);
+  pair 0xae0a;c(!q.hl land 255);call 0x7af3 0x7ad4(fun()->pli2_output 0x7ad4);
+  a(read 0xae0a);cmp 5;if !q.flags.zero then call 0x7afe 0x7a17(fun()->pli2_output 0x7a17)
  |0x8225->
+  need(read 0xae04=0)"8225 inherited clear AE04 scope";
   hl 0xae63;put 0x8228 !q.hl(!q.de lsr 8);hl(!q.hl-1);put 0x822a !q.hl(!q.de land 255);hl(!q.hl-1);put 0x822c !q.hl(!q.bc land 255);
-  call 0x822d 0x79e2 preparation79e2;call 0x8230 0x7a17 preparation7a17;call 0x8233 0x73d0 reset73d0;
+  call 0x822d 0x79e2 preparation79e2;call 0x8230 0x7a17(fun()->pli2_output 0x7a17);call 0x8233 0x73d0 reset73d0;
   pair 0xae61;c(!q.hl land 255);e 9;call 0x823c 0x756d(fun()->pli2_output 0x756d);
   pair 0xae62;bc !q.hl;call 0x8244 0x7701 pointer_generation
  |0x8248->
