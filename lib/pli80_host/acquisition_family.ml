@@ -8,7 +8,7 @@ module U=U16
 module B=U8
 module H=Acquisition_parent
 module K=Classifier
-type operation=Output of int|Adapter of int|Context|Field|Attribute|Spine|Resident|Pair_gate|Selected_transform|Table_adapter|Wrapper|Repeat|Copy05|Traversal|Construction|Record_output|Index_one|Parent|Reader of Reader_construction.operation|Recursive of Recursive_parent.operation
+type operation=Pli2_output of int|Output of int|Adapter of int|Context|Field|Attribute|Spine|Resident|Pair_gate|Selected_transform|Table_adapter|Wrapper|Repeat|Copy05|Traversal|Construction|Record_output|Index_one|Parent|Reader of Reader_construction.operation|Recursive of Recursive_parent.operation
 type result={returned:R.returned;field:int option}
 let run operation memory ~entry ~write ~compatibility ~adjust ~sp ~guard_field ~native ~follow_spine ~software =
  B.check entry.R.a;List.iter U.check[entry.bc;entry.de;entry.hl;sp()];
@@ -362,7 +362,7 @@ let run operation memory ~entry ~write ~compatibility ~adjust ~sp ~guard_field ~
   address();resident_put 0x1169 !q.hl !q.a;
   a(read 0x1d8b);a(inc !q.a);ani 7;resident_put 0x1170 0x1d8b !q.a;cmp 0;
   if !q.flags.zero then(a(read 0x1d8a);a(inc !q.a);resident_put 0x117c 0x1d8a !q.a;cmp 128;if !q.flags.zero then(
-   need (match operation with Output _->true|_->false) "1140 refill/flush outside no-flush scope";
+   need (match operation with Output _|Pli2_output _->true|_->false) "1140 refill/flush outside no-flush scope";
    bc 0x1d0a;resident_call 0x1187 0x02ee(fun()->q:=native ~site:0x1287 ~target:0x03ee !q);
    bc 0x1ce4;resident_call 0x118d 0x0328(fun()->q:=native ~site:0x128d ~target:0x0428 !q);
    cmp 0;need !q.flags.zero "1140 write error";hl 0x1d8a;resident_put 0x119b !q.hl 0))in
@@ -380,6 +380,23 @@ let run operation memory ~entry ~write ~compatibility ~adjust ~sp ~guard_field ~
   e 2;c prefix;resident_call(entry+10)0x119e bits_write;
   pair cache;a(!q.hl land 255);c !q.a;e 8;resident_call(entry+20)0x119e bits_write;
   pair cache;a(!q.hl lsr 8);c !q.a;e 8;resident_call(entry+30)0x119e bits_write in
+ let position_step()=
+  pair 0x1c2c;hl(U.wrap(!q.hl+1));store 0x7540 0x1c2c !q.hl;a 0;
+  resident 0x7545 0x1a29(fun()->q:=Resident_reader.run Resident_reader.Byte_difference memory ~entry:!q ~write ~compatibility ~sp ~invoke:native);
+  logical false(!q.hl land 255);need(not !q.flags.zero)"753C wrapped zero position/error alternative" in
+ let position_pair()=call 0x7550 0x753c position_step;call 0x7553 0x753c position_step in
+ let pli2_output offset=match offset with
+ |0x753c->position_step()|0x7550->position_pair()
+ |0x7434->
+  hl 0xadc7;put 0x7437 !q.hl(!q.bc lsr 8);hl( !q.hl-1);put 0x7439 !q.hl(!q.bc land 255);
+  e 7;c 0x96;resident 0x743e 0x119e bits_write;
+  pair 0xadc6;store 0x7444 0x1c2c !q.hl;bc !q.hl;resident 0x7449 0x11e5(fun()->word_bits ~entry:0x11e5())
+ |0x7630|0x765e->
+  let cache,member=if offset=0x7630 then 0xaddc,0x11e5 else 0xade0,0x1207 in
+  hl(cache+1);put(offset+3)!q.hl(!q.bc lsr 8);hl( !q.hl-1);put(offset+5)!q.hl(!q.bc land 255);
+  c 1;resident(offset+8)0x1140 bit_write;pair cache;bc !q.hl;
+  resident(offset+16)member(fun()->word_bits ~entry:member());call(offset+19)0x7550 position_pair
+ |_->invalid_arg"PLI2 output operation" in
  let payload_bits()=
   a(read 0xa947);cmp 0;
   if not !q.flags.zero then(
@@ -806,6 +823,6 @@ let run operation memory ~entry ~write ~compatibility ~adjust ~sp ~guard_field ~
    a(read 0x1d8b);sub 0;add 255;mask();restore();logical false(!q.bc land 255);rar();
    if !q.flags.carry then(c 0;resident_call 0x12a1 0x1140 bit_write;pad())in pad();
   bc 0x1ce4;resident_call 0x12aa 0x064c(fun()->q:=native ~site:0x13aa ~target:0x074c !q)in
- (match operation with Output offset->(match offset with 0x1272->finalize_output()|0x1140->bit_write()|0x119e->bits_write()|0x11c3|0x11e5|0x1207->word_bits ~entry:offset ()|_->invalid_arg"output operation")| Adapter offset->ignore(invoke ~site:0 ~target:(offset+0x2200)!q)|Context->context()|Field->field_acquisition()|Attribute->attribute_dispatch()|Spine->recursive_spine()|Resident->reuse H.Resident_acquisition|Pair_gate->pair_gate()|Selected_transform->selected_transform()|Table_adapter->table_adapter()|Wrapper->counted_spine()|Repeat->counted_spine ~repeat_only:true ()|Copy05->copy_arguments()|Traversal->traversal()|Construction->construction()|Record_output->record_output()|Index_one->acquire_index_one()|Parent->parent()|Recursive op->(match op with Recursive_parent.Initialization Initialization_parent.Advance->guard_field(word 0xa861)1|Initialization Structure->guard_field(word 0xa863)6|_->());q:=Recursive_parent.run op memory ~entry:!q ~write ~compatibility ~adjust ~sp ~invoke|Reader op->
+ (match operation with Pli2_output offset->pli2_output offset|Output offset->(match offset with 0x1272->finalize_output()|0x1140->bit_write()|0x1a29->q:=Resident_reader.run Resident_reader.Byte_difference memory ~entry:!q ~write ~compatibility ~sp ~invoke:native|0x119e->bits_write()|0x11c3|0x11e5|0x1207->word_bits ~entry:offset ()|_->invalid_arg"output operation")| Adapter offset->ignore(invoke ~site:0 ~target:(offset+0x2200)!q)|Context->context()|Field->field_acquisition()|Attribute->attribute_dispatch()|Spine->recursive_spine()|Resident->reuse H.Resident_acquisition|Pair_gate->pair_gate()|Selected_transform->selected_transform()|Table_adapter->table_adapter()|Wrapper->counted_spine()|Repeat->counted_spine ~repeat_only:true ()|Copy05->copy_arguments()|Traversal->traversal()|Construction->construction()|Record_output->record_output()|Index_one->acquire_index_one()|Parent->parent()|Recursive op->(match op with Recursive_parent.Initialization Initialization_parent.Advance->guard_field(word 0xa861)1|Initialization Structure->guard_field(word 0xa863)6|_->());q:=Recursive_parent.run op memory ~entry:!q ~write ~compatibility ~adjust ~sp ~invoke|Reader op->
   if List.mem_assoc op [Reader_construction.Reader_setup,0x4206;Reader_parent,0x3cfd;Reader_entry,0x3e07;Select_structure,0x6c26;Publish_structure,0x7abb]then ignore(invoke ~site:0 ~target:(List.assoc op [Reader_construction.Reader_setup,0x4206;Reader_parent,0x3cfd;Reader_entry,0x3e07;Select_structure,0x6c26;Publish_structure,0x7abb])!q)else q:=Reader_construction.run op memory ~entry:!q ~write ~compatibility ~sp ~invoke);
  {returned= !q;field= !acquired_field}

@@ -1,0 +1,52 @@
+{
+  "PLI2.OVL+7434": {
+    "end": 29773,
+    "description": "Bounded prefix/publication/tag40 REL adapter",
+    "completeness": [
+      "stable",
+      "complete",
+      "partial"
+    ],
+    "contract": "Save input B atADC7 then C atADC6. Set E7,C96; call canonical resident119E at743E. Independently paired-read ADC6; SHLD1C2C low then high; BC=freshly read word; call canonical resident11E5 at7449. Return actual final child registers/flags with no local frame. Prefix7 then tag40/low8/high8, all MSB first. Current state only; no caller/source/step selection. Successful canonical resident119E/1140 writer,2029.bit0 clear,index<128,bit<8,valid immutable code/continuation and nonalias cache/buffer/FCB/sentinel/stack required. Errors, arbitrary service capacity and unsupported aliases fail closed in copied staging."
+  },
+  "PLI2.OVL+7630": {
+    "end": 30279,
+    "description": "Bounded leading-bit/tag40/position REL adapter",
+    "completeness": [
+      "stable",
+      "complete",
+      "partial"
+    ],
+    "contract": "Save input B atADDD then C atADDC. Set C1; call canonical1140 at7638. Fresh paired-read ADDC into HL/BC; call canonical11E5 at7640. Call canonical7550 at7643, then RET its actual state. Leading bit1,tag40/low8/high8, then two independent position increments. No private frame. Current state only; no caller/source/step selection. Successful canonical resident119E/1140 writer,2029.bit0 clear,index<128,bit<8,valid immutable code/continuation and nonalias cache/buffer/FCB/sentinel/stack required. Errors, arbitrary service capacity and unsupported aliases fail closed in copied staging."
+  },
+  "PLI2.OVL+765E": {
+    "end": 30325,
+    "description": "Bounded leading-bit/tag80/position REL adapter",
+    "completeness": [
+      "stable",
+      "complete",
+      "partial"
+    ],
+    "contract": "Same parameterized leading-bit/word/position law as7630 with historically fixed cacheADE0/1 and resident1207 tag80. Save high at7661 then low at7663;1140 CALL7666; independently read cache7669;1207 CALL766E;7550 CALL7671. No further semantic parameter or frame. Current state only; no caller/source/step selection. Successful canonical resident119E/1140 writer,2029.bit0 clear,index<128,bit<8,valid immutable code/continuation and nonalias cache/buffer/FCB/sentinel/stack required. Errors, arbitrary service capacity and unsupported aliases fail closed in copied staging."
+  },
+  "PLI2.OVL+7550": {
+    "end": 30039,
+    "description": "Bounded two-step emission-position adapter",
+    "completeness": [
+      "stable",
+      "complete",
+      "partial"
+    ],
+    "contract": "Ordinary CALL753C at7550, independently CALL753C again at7553; RET actual second child state. Exactly two calls are encoded instructions, not a fixture iteration limit. Each child freshly consumes shared1C2C; no cached first result. No frame. Zero-wrap/error arm in either child unsupported before live mutation."
+  },
+  "PLI2.OVL+753C": {
+    "end": 30032,
+    "description": "Bounded fresh wrapping emission-position increment",
+    "completeness": [
+      "stable",
+      "partial",
+      "partial"
+    ],
+    "contract": "Paired fresh LHLD1C2C; INX H modulo65536; SHLD1C2C low then high at7540. Set A0, call complete canonical resident1A29 at7545 (DE=zeroextendA;HL=DE-HL). ORA L consumes actual returned high A and low L; returned logical flags reflect both bytes, CY0/AC0. JNZ754F returns when incremented position !=0. DE0,HL=negated increment modulo65536,A=high OR low,BC preserved. Natural nonzero path only; zero wraps to unexecuted [754C,754F) error CALL, left RAW/unsupported. No data or stack copying from oracle."
+  }
+}

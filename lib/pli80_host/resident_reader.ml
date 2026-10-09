@@ -4,8 +4,8 @@ module S=State
 module H=Acquisition_parent
 module U=U16
 module B=U8
-type operation=Write_record|Close|Default_dma|Pointer_tail|Memory_zero|Pointer_difference|Lookahead|Peek_cached|Read_ahead|Boundary_probe|Boundary_clear|Letter_probe|Poll|Poll_console|Set_dma|Read_record|Service_gate|Difference|Memory_difference|Read_buffer|Fetch_masked|Refill|Format_counter|Reset|Source|Filter|Store
-let bounds=function Write_record->0x0328,0x0338|Close->0x064c,0x0670|Default_dma->0x02fe,0x0305| Pointer_tail->0x1a35,0x1a40|Memory_zero->0x1a40,0x1a4b| Pointer_difference->0x1a33,0x1a40| Lookahead->0x1688,0x1843|Peek_cached->0x18db,0x18fa|Read_ahead->0x1843,0x18a2|Boundary_probe->0x18a2,0x18bc|Boundary_clear->0x18bc,0x18c5|Letter_probe->0x18c5,0x18db| Poll->0x05b2,0x05f8|Poll_console->0x0341,0x034a|Set_dma->0x02ee,0x02fe|Read_record->0x0318,0x0328|Service_gate->0x19bb,0x19d5|Difference->0x1a2c,0x1a33|Memory_difference->0x1a38,0x1a40| Read_buffer->0x070c,0x0788| Fetch_masked->0x0aa9,0x0ae9| Refill->0x0d40,0x0e1f|Format_counter->0x0b86,0x0be3|Reset->0x0cd9,0x0cff|Source->0x0af5,0x0b2a|Filter->0x09cb,0x0aa5|Store->0x0e1f,0x0e47
+type operation=Byte_difference|Write_record|Close|Default_dma|Pointer_tail|Memory_zero|Pointer_difference|Lookahead|Peek_cached|Read_ahead|Boundary_probe|Boundary_clear|Letter_probe|Poll|Poll_console|Set_dma|Read_record|Service_gate|Difference|Memory_difference|Read_buffer|Fetch_masked|Refill|Format_counter|Reset|Source|Filter|Store
+let bounds=function Byte_difference->0x1a29,0x1a33| Write_record->0x0328,0x0338|Close->0x064c,0x0670|Default_dma->0x02fe,0x0305| Pointer_tail->0x1a35,0x1a40|Memory_zero->0x1a40,0x1a4b| Pointer_difference->0x1a33,0x1a40| Lookahead->0x1688,0x1843|Peek_cached->0x18db,0x18fa|Read_ahead->0x1843,0x18a2|Boundary_probe->0x18a2,0x18bc|Boundary_clear->0x18bc,0x18c5|Letter_probe->0x18c5,0x18db| Poll->0x05b2,0x05f8|Poll_console->0x0341,0x034a|Set_dma->0x02ee,0x02fe|Read_record->0x0318,0x0328|Service_gate->0x19bb,0x19d5|Difference->0x1a2c,0x1a33|Memory_difference->0x1a38,0x1a40| Read_buffer->0x070c,0x0788| Fetch_masked->0x0aa9,0x0ae9| Refill->0x0d40,0x0e1f|Format_counter->0x0b86,0x0be3|Reset->0x0cd9,0x0cff|Source->0x0af5,0x0b2a|Filter->0x09cb,0x0aa5|Store->0x0e1f,0x0e47
 let run operation memory ~entry ~write ~compatibility ~sp ~invoke =
  let q=ref entry in
  let read=S.read memory and word=S.word memory in
@@ -67,8 +67,9 @@ let run operation memory ~entry ~write ~compatibility ~sp ~invoke =
          if !q.flags.carry then(a(read 0x214c);rar();if !q.flags.carry then a 0 else(hl 0x214b;put 0x1819 !q.hl 1;advance();scan()))else(
           hl 0x214c;put 0x1821 !q.hl 0;eq 0x214a 0x5f;save 0x182b;a(read 0x214a);sub 0x30;c !q.a;a 9;sub(!q.bc land 255);mask();a(!q.a lxor 255);restore();logical false(!q.bc land 255);hl(U.wrap(!q.hl-1));put 0x183b !q.hl !q.a;advance();scan())))))))in scan()
  |Memory_zero->hl !q.a;let left=word !q.de and right= !q.hl in let low=(left land 255)-(right land 255)in let borrow=if low<0 then 1 else 0 in let l=left lsr 8 and r=right lsr 8 in let high=B.wrap(l-r-borrow)in q:={!q with R.a=high;hl=high lsl 8 lor B.wrap low;de=U.wrap(!q.de+1);flags=flags high((l land 15)>=(r land 15)+borrow)(l<r+borrow)}
- |Difference|Memory_difference->
-  let left,right=if operation=Difference then !q.de,!q.hl else word !q.de,!q.bc in
+ |Byte_difference|Difference|Memory_difference->
+  if operation=Byte_difference then de !q.a;
+  let left,right=if operation<>Memory_difference then !q.de,!q.hl else word !q.de,!q.bc in
   let low=(left land 255)-(right land 255)in let borrow=if low<0 then 1 else 0 in let l=left lsr 8 and r=right lsr 8 in let high=B.wrap(l-r-borrow)in
   q:={!q with R.a=high;hl=high lsl 8 lor B.wrap low;flags=flags high((l land 15)>=(r land 15)+borrow)(l<r+borrow)};
   if operation=Memory_difference then de(U.wrap(!q.de+1))

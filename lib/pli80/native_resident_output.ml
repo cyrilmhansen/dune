@@ -9,7 +9,10 @@ let record_summaries=Q.record_summaries
 let filesystem_hash=Q.filesystem_hash
 let require b m=if not b then failwith("resident output proof: "^m)
 let compatibility_writes=Q.compatibility_writes
-let prepare bridge offset ~call ~origin boundary=B.prepare bridge (B.Output offset) ~call ~origin boundary
+let output_operation offset=if offset>=0x2200 then B.Pli2_output offset else B.Output offset
+let image_name offset=if offset>=0x2200 then "PLI2.OVL" else "PLI.COM"
+let runtime_base offset=if offset>=0x2200 then 0x2200 else 0x100
+let prepare bridge offset ~call ~origin boundary=B.prepare bridge (output_operation offset) ~call ~origin boundary
 let shadow ?(offset=0x1272) ?(within=[]) ?(run_negatives=true) input=
  let bridge=B.create_with_images ~pli_com:input.Experiment.pli_com ~pli0:input.pli0_ovl ~pli1:input.pli1_ovl ~pli2:input.pli2_ovl in
  let previous=ref None and origin=ref Analysis.Execution_map.Unknown and active=ref None in
@@ -38,7 +41,7 @@ let shadow ?(offset=0x1272) ?(within=[]) ?(run_negatives=true) input=
     let final=Hashtbl.create 128 in List.iter(fun(w:B.write)->Hashtbl.replace final w.address(w.writer,w.value))p.journal;
     Hashtbl.iter(fun address value->require(Hashtbl.find_opt latest address=Some value)(Printf.sprintf"last writer %04X"address))final;
     require(Hashtbl.length final=Hashtbl.length latest)"omitted writer";
-    let planned_calls=List.filter_map(fun(w:B.write)->if w.kind="compatibility"&&w.address mod 2=entry.sp mod 2&&Char.code(Bytes.get input.pli_com(w.writer-0x100))=0xcd then Some w.writer else None)p.journal in
+    let planned_calls=List.filter_map(fun(w:B.write)->if w.kind="compatibility"&&w.address mod 2=entry.sp mod 2&&Char.code(Bytes.get (if w.writer>=0x2200 then input.pli2_ovl else input.pli_com)(w.writer-(if w.writer>=0x2200 then 0x2200 else 0x100)))=0xcd then Some w.writer else None)p.journal in
     require(List.rev !calls=planned_calls)"child CALL chronology";
     require(not(Hashtbl.mem latest entry.sp)&&not(Hashtbl.mem latest(entry.sp+1)))"original continuation lifetime";
     cases:={Q.caller=call.coordinate;entry_step;return_step=step_index-1;input=entry;output=state;route=(if offset=0x1272 then"pending_REL_padding_and_close"else if offset=0x119e then"counted_bits"else if offset=0x1140 then"append_bit"else"tagged_cached_word");entry_memory_sha256=Experiment.sha256_hex ram;post_memory_sha256=Experiment.sha256_hex preview.memory;stack_cells=List.length(compatibility_writes p);logical_writes=List.length p.logical_writes;prepared=p;services=preview.services;entry_dma=dma;post_dma=preview.dma}::!cases;
@@ -47,23 +50,23 @@ let shadow ?(offset=0x1272) ?(within=[]) ?(run_negatives=true) input=
   (match !active with Some(_,_,_,_,_,_,_,(preview:Runner.host_program_result),_,_,_)when state.pc=5->
    let service=List.nth preview.services !service_index in incr service_index;
    require(state=service.resume_state&&boundary.copy_memory()=service.memory_after&&boundary.dma=service.dma_after)"historical ordered service resume boundary"|_->());
-  if o=B.origin"PLI.COM"offset&&
+  if o=B.origin(image_name offset)offset&&
    (if within<>[]then List.exists(fun(a,b)->a<step_index&&step_index<b)within
     else offset<>0x1140||(Option.get !previous).before.pc=0x13a1) then(
    require(!active=None)"nested output root";
-   let call=B.verify_call bridge (B.Output offset)(Option.get !previous)~entry:state in
+   let call=B.verify_call bridge (output_operation offset)(Option.get !previous)~entry:state in
    let ram=boundary.copy_memory()and files=boundary.copy_filesystem()and dma=boundary.dma in
    let negative=ref 0 in
    let rejects fn=incr negative;match fn()with exception Invalid_argument _->()|_->failwith(Printf.sprintf"unsupported output accepted offset=%04X negative=%d"offset !negative)in
    let altered edits={boundary with copy_memory=(fun()->let b=Bytes.copy ram in List.iter(fun(a,v)->Bytes.set b a(Char.chr v))edits;b);preview_host_program=(fun p->boundary.preview_host_program{p with effects=List.map(fun(a,v)->Runner.Memory_write(a,v))edits@p.effects})}in
    if run_negatives then(
-   rejects(fun()->B.verify_call bridge (B.Output offset){(Option.get !previous)with origin=B.origin"PLI1.OVL"0x02e3}~entry:state);
+   rejects(fun()->B.verify_call bridge (output_operation offset){(Option.get !previous)with origin=B.origin"PLI1.OVL"0x02e3}~entry:state);
    rejects(fun()->prepare bridge offset ~call ~origin:o(altered[call.site,0]));
    rejects(fun()->prepare bridge offset ~call ~origin:(B.origin"PLI1.OVL"offset)boundary);
    rejects(fun()->prepare bridge offset ~call ~origin:o{boundary with state={state with sp=0x20b6}});
    rejects(fun()->prepare bridge offset ~call ~origin:o(altered[state.pc,0]));
    rejects(fun()->prepare bridge offset ~call ~origin:o(altered[state.sp,(Char.code(Bytes.get ram state.sp) lxor 1)]));
-   List.iter(fun edits->rejects(fun()->prepare bridge offset ~call ~origin:o(altered edits)))[[0x2029,1];[0x1d8a,128];[0x1d8b,8];[0x2155,0x0a;0x2156,0x1d]];
+   if not(List.mem offset[0x7550;0x753c])then List.iter(fun edits->rejects(fun()->prepare bridge offset ~call ~origin:o(altered edits)))[[0x2029,1];[0x1d8a,128];[0x1d8b,8];[0x2155,0x0a;0x2156,0x1d]];
    if offset=0x1272 then(
     rejects(fun()->prepare bridge offset ~call ~origin:o(altered[0x1d05,0]));
     (* Synthetic current indices drive padding; no oracle or live mutation. *)
@@ -94,6 +97,38 @@ let shadow ?(offset=0x1272) ?(within=[]) ?(run_negatives=true) input=
      require(actual=List.rev !records)"synthetic boundary record bytes";
      require(List.map(fun(s:Runner.host_service)->s.call_state.c)result.services=(if !records=[]then[]else[26;21]))"synthetic flush service chronology"
     )[1,0,0x0001;1,0,0x0100;127,7,0xa55a]);
+   if run_negatives && offset>=0x2200 then(
+    rejects(fun()->prepare bridge offset ~call ~origin:o(altered[0x9745,0]));
+    let cache=if offset=0x7434 then 0xadc6 else if offset=0x7630 then 0xaddc else 0xade0 in
+    rejects(fun()->prepare bridge offset ~call ~origin:o(altered[0x2155,cache land 255;0x2156,cache lsr 8]));
+    if List.mem offset[0x7434;0x7630;0x765e]then(
+     List.iter(fun(index,bits,value)->
+      let staged=altered[0x1d8a,index;0x1d8b,bits;0x1c2c,0;0x1c2d,0]in
+      let staged={staged with state={state with b=value lsr 8;c=value land 255}}in
+      let plan=prepare bridge offset ~call ~origin:o staged in
+      let result=match staged.preview_host_program plan.program with Ok r->r|Error e->failwith e in
+      let tag=if offset=0x765e then 0x80 else 0x40 in
+      let incoming=if offset=0x7434 then List.init 7(fun i->(0x96 lsr(7-i))land 1)else[1]in
+      let incoming=incoming@List.init 2(fun i->(tag lsr(7-i))land 1)@List.init 8(fun i->(value lsr(7-i))land 1)@List.init 8(fun i->(value lsr(15-i))land 1)in
+      let buffer=Bytes.sub ram 0x1d0a 128 and cursor=ref index and bit=ref bits and expected=ref[]in
+      List.iter(fun b->let old=Char.code(Bytes.get buffer !cursor)in Bytes.set buffer !cursor(Char.chr(((old lsl 1)lor b)land 255));incr bit;
+       if !bit=8 then(bit:=0;incr cursor;if !cursor=128 then(expected:=Bytes.copy buffer::!expected;cursor:=0)))incoming;
+      require(Bytes.sub result.memory 0x1d0a 128=buffer)"independent adapter bit stream";
+      require(Char.code(Bytes.get result.memory 0x1d8a)= !cursor&&Char.code(Bytes.get result.memory 0x1d8b)= !bit)"adapter cursor";
+      let actual=List.concat_map(fun(s:Runner.host_service)->List.filter_map(function Cpm.Bdos.Write_record r->Some r.data|_->None)s.events)result.services in
+      require(actual=List.rev !expected)"adapter synthetic flush record";
+      let position=Char.code(Bytes.get result.memory 0x1c2c)lor(Char.code(Bytes.get result.memory 0x1c2d)lsl 8)in
+      require(position=(if offset=0x7434 then value else 2))"adapter publication vs position policy"
+     )[1,0,1;1,0,0x100;127,7,0xa55a]);
+    if List.mem offset[0x7630;0x765e;0x7550;0x753c]then(
+     rejects(fun()->prepare bridge offset ~call ~origin:o(altered[0x1c2c,0xff;0x1c2d,0xff]));
+     List.iter(fun value->let plan=prepare bridge offset ~call ~origin:o(altered[0x1c2c,value land 255;0x1c2d,value lsr 8])in
+      let count=if offset=0x753c then 1 else 2 in
+      require(plan.state.a lor plan.state.l<>0)"position nonzero predicate";
+      let publications=List.filter(fun(w:B.write)->w.writer=0x9740)plan.journal in
+      require(List.map(fun(w:B.write)->w.value)publications=List.concat_map(fun n->let x=(value+n)land 65535 in[x land 255;x lsr 8])(List.init count(fun i->i+1)))"fresh increment publications"
+     )[0;0xff;0x1234]);
+   );
    require(boundary.copy_memory()=ram&&boundary.dma=dma&&Cpm.Filesystem.equal(boundary.copy_filesystem())files)"rejection leaked live state";
    let p=prepare bridge offset ~call ~origin:o boundary in
    let preview=match boundary.preview_host_program p.program with Ok r->r|Error e->failwith e in
@@ -103,7 +138,7 @@ let shadow ?(offset=0x1272) ?(within=[]) ?(run_negatives=true) input=
 
 let controller ?(offset=0x1272) ?(exclude_entry_steps=[]) v input=
  require(v.pending=[])"cannot enable an unfinished logical proof";
- let first,last=B.bounds(B.Output offset) in
+ let first,last=B.bounds(output_operation offset) in
  require(v.input_digest=Experiment.sha256_hex(Marshal.to_bytes input[]))"source/input proof mismatch";
  let exclusions=List.sort_uniq compare exclude_entry_steps in
  require(List.length exclusions=List.length exclude_entry_steps&&List.for_all(fun n->List.exists(fun c->c.entry_step=n)(cases v))exclusions)"invalid exclusions";
@@ -114,7 +149,7 @@ let controller ?(offset=0x1272) ?(exclude_entry_steps=[]) v input=
   let c=match !remaining with q::_->q|[]->failwith"Additional acquisition parent root"in
   let s=List.assoc c.entry_step v.snapshots in
   require(boundary.dma=c.entry_dma&&Cpm.Filesystem.equal(boundary.copy_filesystem())s.entry_files)"entry service_result state proof";
-  let call=B.verify_call bridge (B.Output offset) previous ~entry:boundary.state in
+  let call=B.verify_call bridge (output_operation offset) previous ~entry:boundary.state in
   let p=prepare bridge offset ~call ~origin boundary in
   require(p.journal=c.prepared.journal)"ordered compatibility/last-writer proof mismatch";
   let validate(r:Runner.host_program_result)=
@@ -128,7 +163,7 @@ let controller ?(offset=0x1272) ?(exclude_entry_steps=[]) v input=
  let oracles=List.map(fun c->let s=List.assoc c.entry_step v.snapshots in
   {Native_dispatch.input=c.input;output=c.output;entry_memory=s.entry_memory;post_memory=s.post_memory;
    logical_digest=Native_dispatch.write_digest c.prepared.logical_writes})selected in
- let t=Native_dispatch.create ~image:"PLI.COM" ~entry_pc:(first+0x100) ~end_pc:(last+0x100) ~oracles ~records:v.records ~prepare in
+ let t=Native_dispatch.create ~image:(image_name offset) ~entry_pc:(first+runtime_base offset) ~end_pc:(last+runtime_base offset) ~oracles ~records:v.records ~prepare in
  Native_dispatch.with_host_program t(fun _ _->let p=Option.get !pending in pending:=None;p)
 let compare_external v (r:Experiment.result)=
  require(Cpm.Filesystem.equal r.filesystem v.historical.filesystem)"final filesystem";
