@@ -1,0 +1,348 @@
+{
+  "validation_tier": "incremental",
+  "full_checkpoint_base": "f7b744e2560c0de8ac1115cf91d4beb190f2e7c2",
+  "status": "passed; late metadata preservation follow-up passed",
+  "workers": 4,
+  "historical_bytes": 94720,
+  "reruns": [
+    {
+      "reason": "After initial launch, restore historical FACTOR367/OPTIMIST1404 invocation totals accidentally omitted by the new annotation generator. No native algorithm/old historical law changed.",
+      "categories": [
+        "build",
+        "project",
+        "roundtrip",
+        "dynamic-progress",
+        "diff-check",
+        "V1",
+        "roundtrip-tests",
+        "pass46"
+      ],
+      "wall_seconds": 82.621,
+      "summed_category_seconds": 195.397,
+      "all_passed": true
+    }
+  ],
+  "planned_categories": [
+    "build",
+    "project",
+    "pass52",
+    "pass51",
+    "pass50",
+    "pass46",
+    "pass22",
+    "native-emitter-unit",
+    "emitter-unit",
+    "packet-continuation",
+    "V1",
+    "roundtrip-tests",
+    "roundtrip",
+    "dynamic-progress",
+    "diff-check"
+  ],
+  "all_passed": true,
+  "category_count": 15,
+  "unique_python_test_count": 87,
+  "dune_test_rule_stanzas": 39,
+  "validation_wall_seconds": 989.262,
+  "summed_category_seconds": 2150.219,
+  "slowest_categories": [
+    {
+      "category": "pass50",
+      "elapsed_seconds": 793.688
+    },
+    {
+      "category": "pass51",
+      "elapsed_seconds": 360.915
+    },
+    {
+      "category": "pass52",
+      "elapsed_seconds": 357.528
+    },
+    {
+      "category": "packet-continuation",
+      "elapsed_seconds": 140.184
+    },
+    {
+      "category": "pass46",
+      "elapsed_seconds": 101.474
+    },
+    {
+      "category": "pass22",
+      "elapsed_seconds": 83.618
+    },
+    {
+      "category": "roundtrip-tests",
+      "elapsed_seconds": 49.947
+    },
+    {
+      "category": "V1",
+      "elapsed_seconds": 36.844
+    },
+    {
+      "category": "roundtrip",
+      "elapsed_seconds": 25.456
+    },
+    {
+      "category": "build",
+      "elapsed_seconds": 3.394
+    }
+  ],
+  "categories": {
+    "build": {
+      "return_code": 0,
+      "elapsed_seconds": 3.394,
+      "command": [
+        "dune",
+        "build",
+        "@all",
+        "-j",
+        "4"
+      ],
+      "python_tests": 0
+    },
+    "project": {
+      "return_code": 0,
+      "elapsed_seconds": 0.442,
+      "command": [
+        "dune",
+        "runtest",
+        "-j",
+        "4"
+      ],
+      "python_tests": 0
+    },
+    "roundtrip": {
+      "return_code": 0,
+      "elapsed_seconds": 25.456,
+      "command": [
+        "python3",
+        "tools/annotated-assembly/verify.py",
+        "--images",
+        "/home/john/pli/cpm/pli80/DISK1"
+      ],
+      "python_tests": 0
+    },
+    "emitter-unit": {
+      "return_code": 0,
+      "elapsed_seconds": 0.041,
+      "command": [
+        "_build/default/test/resident_int_emitter.exe"
+      ],
+      "python_tests": 0
+    },
+    "V1": {
+      "return_code": 0,
+      "elapsed_seconds": 36.844,
+      "command": [
+        "python3",
+        "tools/annotated-assembly/test_decompilation_annotations.py",
+        "-v"
+      ],
+      "python_tests": 9
+    },
+    "native-emitter-unit": {
+      "return_code": 0,
+      "elapsed_seconds": 1.105,
+      "command": [
+        "_build/default/test/native_int_emitter.exe"
+      ],
+      "python_tests": 0
+    },
+    "roundtrip-tests": {
+      "return_code": 0,
+      "elapsed_seconds": 49.947,
+      "command": [
+        "python3",
+        "tools/annotated-assembly/test_verify.py",
+        "--images",
+        "/home/john/pli/cpm/pli80/DISK1",
+        "-v"
+      ],
+      "python_tests": 11
+    },
+    "pass22": {
+      "return_code": 0,
+      "elapsed_seconds": 83.618,
+      "command": [
+        "python3",
+        "tools/annotated-assembly/test_int_emitter_pass_22.py",
+        "--images",
+        "/home/john/pli/cpm/pli80/DISK1",
+        "-v"
+      ],
+      "python_tests": 9
+    },
+    "packet-continuation": {
+      "return_code": 0,
+      "elapsed_seconds": 140.184,
+      "command": [
+        "python3",
+        "tools/annotated-assembly/test_procedure_evidence_packet.py",
+        "--images",
+        "/home/john/pli/cpm/pli80/DISK1",
+        "-v"
+      ],
+      "python_tests": 27
+    },
+    "pass46": {
+      "return_code": 0,
+      "elapsed_seconds": 101.474,
+      "command": [
+        "python3",
+        "tools/annotated-assembly/test_parent_pass_46.py",
+        "--images",
+        "/home/john/pli/cpm/pli80/DISK1",
+        "-q"
+      ],
+      "python_tests": 7
+    },
+    "dynamic-progress": {
+      "return_code": 0,
+      "elapsed_seconds": 0.12,
+      "command": [
+        "python3",
+        "-c",
+        "import json,subprocess;from pathlib import Path;p=Path('/home/john/pli/lab/_build/host-compiler-pass-52/incremental-validation/dynamic-progress.json');subprocess.run(['python3','tools/annotated-assembly/minimal_dynamic_progress.py','--output',str(p)],check=True);assert json.loads(p.read_text())==json.loads(Path('research/minimal-baseline/dynamic-progress.json').read_text())"
+      ],
+      "python_tests": 0
+    },
+    "diff-check": {
+      "return_code": 0,
+      "elapsed_seconds": 0.066,
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "python_tests": 0
+    },
+    "pass52": {
+      "return_code": 0,
+      "elapsed_seconds": 357.528,
+      "command": [
+        "python3",
+        "tools/annotated-assembly/test_buffered_rel_emission_pass_52.py",
+        "--images",
+        "/home/john/pli/cpm/pli80/DISK1",
+        "-q"
+      ],
+      "python_tests": 8
+    },
+    "pass51": {
+      "return_code": 0,
+      "elapsed_seconds": 360.915,
+      "command": [
+        "python3",
+        "tools/annotated-assembly/test_output_termination_pass_51.py",
+        "--images",
+        "/home/john/pli/cpm/pli80/DISK1",
+        "-q"
+      ],
+      "python_tests": 8
+    },
+    "pass50": {
+      "return_code": 0,
+      "elapsed_seconds": 793.688,
+      "command": [
+        "python3",
+        "tools/annotated-assembly/test_delimiter_driver_pass_50.py",
+        "--images",
+        "/home/john/pli/cpm/pli80/DISK1",
+        "-q"
+      ],
+      "python_tests": 8
+    }
+  },
+  "initial_validation_wall_seconds": 906.641,
+  "metadata_followup_categories": {
+    "build": {
+      "return_code": 0,
+      "elapsed_seconds": 0.446,
+      "command": [
+        "dune",
+        "build",
+        "@all",
+        "-j",
+        "4"
+      ],
+      "python_tests": 0
+    },
+    "project": {
+      "return_code": 0,
+      "elapsed_seconds": 0.292,
+      "command": [
+        "dune",
+        "runtest",
+        "-j",
+        "4"
+      ],
+      "python_tests": 0
+    },
+    "roundtrip": {
+      "return_code": 0,
+      "elapsed_seconds": 25.69,
+      "command": [
+        "python3",
+        "tools/annotated-assembly/verify.py",
+        "--images",
+        "/home/john/pli/cpm/pli80/DISK1"
+      ],
+      "python_tests": 0
+    },
+    "dynamic-progress": {
+      "return_code": 0,
+      "elapsed_seconds": 0.124,
+      "command": [
+        "python3",
+        "-c",
+        "import json,subprocess;from pathlib import Path;p=Path('/home/john/pli/lab/_build/host-compiler-pass-52/metadata-recheck/dynamic-progress.json');subprocess.run(['python3','tools/annotated-assembly/minimal_dynamic_progress.py','--output',str(p)],check=True);assert json.loads(p.read_text())==json.loads(Path('research/minimal-baseline/dynamic-progress.json').read_text())"
+      ],
+      "python_tests": 0
+    },
+    "diff-check": {
+      "return_code": 0,
+      "elapsed_seconds": 0.055,
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "python_tests": 0
+    },
+    "V1": {
+      "return_code": 0,
+      "elapsed_seconds": 36.006,
+      "command": [
+        "python3",
+        "tools/annotated-assembly/test_decompilation_annotations.py",
+        "-v"
+      ],
+      "python_tests": 9
+    },
+    "roundtrip-tests": {
+      "return_code": 0,
+      "elapsed_seconds": 50.904,
+      "command": [
+        "python3",
+        "tools/annotated-assembly/test_verify.py",
+        "--images",
+        "/home/john/pli/cpm/pli80/DISK1",
+        "-v"
+      ],
+      "python_tests": 11
+    },
+    "pass46": {
+      "return_code": 0,
+      "elapsed_seconds": 81.88,
+      "command": [
+        "python3",
+        "tools/annotated-assembly/test_parent_pass_46.py",
+        "--images",
+        "/home/john/pli/cpm/pli80/DISK1",
+        "-q"
+      ],
+      "python_tests": 7
+    }
+  },
+  "post_stage_check": "Two trailing spaces in previously untracked driver removed; staged diff check passed. Whitespace-only edit, no semantic rerun."
+}

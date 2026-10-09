@@ -374,11 +374,12 @@ let run operation memory ~entry ~write ~compatibility ~adjust ~sp ~guard_field ~
     a(read 0x20b7);let old= !q.a in q:={!q with R.a=B.wrap(old lsl 1)lor(old lsr 7);flags={!q.flags with carry=old land 128<>0}};
     resident_put 0x11b1 0x20b7 !q.a;c !q.a;resident_call 0x11b5 0x1140 bit_write;
     a(read 0x20b8);a(dec !q.a);resident_put 0x11bc 0x20b8 !q.a;loop())in loop()in
- let word_bits()=
-  hl 0x20be;resident_put 0x120a !q.hl(!q.bc lsr 8);hl(U.wrap(!q.hl-1));resident_put 0x120c !q.hl(!q.bc land 255);
-  e 2;c 128;resident_call 0x1211 0x119e bits_write;
-  pair 0x20bd;a(!q.hl land 255);c !q.a;e 8;resident_call 0x121b 0x119e bits_write;
-  pair 0x20bd;a(!q.hl lsr 8);c !q.a;e 8;resident_call 0x1225 0x119e bits_write in
+ let word_bits ?(entry=0x1207) ()=
+  let cache,prefix=List.assoc entry[0x11c3,(0x20b9,0);0x11e5,(0x20bb,0x40);0x1207,(0x20bd,0x80)]in
+  hl(cache+1);resident_put(entry+3)!q.hl(!q.bc lsr 8);hl(U.wrap(!q.hl-1));resident_put(entry+5)!q.hl(!q.bc land 255);
+  e 2;c prefix;resident_call(entry+10)0x119e bits_write;
+  pair cache;a(!q.hl land 255);c !q.a;e 8;resident_call(entry+20)0x119e bits_write;
+  pair cache;a(!q.hl lsr 8);c !q.a;e 8;resident_call(entry+30)0x119e bits_write in
  let payload_bits()=
   a(read 0xa947);cmp 0;
   if not !q.flags.zero then(
@@ -805,6 +806,6 @@ let run operation memory ~entry ~write ~compatibility ~adjust ~sp ~guard_field ~
    a(read 0x1d8b);sub 0;add 255;mask();restore();logical false(!q.bc land 255);rar();
    if !q.flags.carry then(c 0;resident_call 0x12a1 0x1140 bit_write;pad())in pad();
   bc 0x1ce4;resident_call 0x12aa 0x064c(fun()->q:=native ~site:0x13aa ~target:0x074c !q)in
- (match operation with Output offset->(match offset with 0x1272->finalize_output()|0x1140->bit_write()|0x119e->bits_write()|_->invalid_arg"output operation")| Adapter offset->ignore(invoke ~site:0 ~target:(offset+0x2200)!q)|Context->context()|Field->field_acquisition()|Attribute->attribute_dispatch()|Spine->recursive_spine()|Resident->reuse H.Resident_acquisition|Pair_gate->pair_gate()|Selected_transform->selected_transform()|Table_adapter->table_adapter()|Wrapper->counted_spine()|Repeat->counted_spine ~repeat_only:true ()|Copy05->copy_arguments()|Traversal->traversal()|Construction->construction()|Record_output->record_output()|Index_one->acquire_index_one()|Parent->parent()|Recursive op->(match op with Recursive_parent.Initialization Initialization_parent.Advance->guard_field(word 0xa861)1|Initialization Structure->guard_field(word 0xa863)6|_->());q:=Recursive_parent.run op memory ~entry:!q ~write ~compatibility ~adjust ~sp ~invoke|Reader op->
+ (match operation with Output offset->(match offset with 0x1272->finalize_output()|0x1140->bit_write()|0x119e->bits_write()|0x11c3|0x11e5|0x1207->word_bits ~entry:offset ()|_->invalid_arg"output operation")| Adapter offset->ignore(invoke ~site:0 ~target:(offset+0x2200)!q)|Context->context()|Field->field_acquisition()|Attribute->attribute_dispatch()|Spine->recursive_spine()|Resident->reuse H.Resident_acquisition|Pair_gate->pair_gate()|Selected_transform->selected_transform()|Table_adapter->table_adapter()|Wrapper->counted_spine()|Repeat->counted_spine ~repeat_only:true ()|Copy05->copy_arguments()|Traversal->traversal()|Construction->construction()|Record_output->record_output()|Index_one->acquire_index_one()|Parent->parent()|Recursive op->(match op with Recursive_parent.Initialization Initialization_parent.Advance->guard_field(word 0xa861)1|Initialization Structure->guard_field(word 0xa863)6|_->());q:=Recursive_parent.run op memory ~entry:!q ~write ~compatibility ~adjust ~sp ~invoke|Reader op->
   if List.mem_assoc op [Reader_construction.Reader_setup,0x4206;Reader_parent,0x3cfd;Reader_entry,0x3e07;Select_structure,0x6c26;Publish_structure,0x7abb]then ignore(invoke ~site:0 ~target:(List.assoc op [Reader_construction.Reader_setup,0x4206;Reader_parent,0x3cfd;Reader_entry,0x3e07;Select_structure,0x6c26;Publish_structure,0x7abb])!q)else q:=Reader_construction.run op memory ~entry:!q ~write ~compatibility ~sp ~invoke);
  {returned= !q;field= !acquired_field}

@@ -1,0 +1,42 @@
+{
+  "PLI.COM+11C3": {
+    "end": 4581,
+    "description": "Bounded tagged cached-word REL emitter",
+    "completeness": [
+      "stable",
+      "complete",
+      "partial"
+    ],
+    "contract": "Independently store input B at20BA then C at20B9. Set E2,C00; compose canonical119E. Genuinely paired reread word[20B9], select low into A/C and E8; compose119E. Independently paired reread the same cache, select high into A/C and E8; compose119E; ordinary RET of final child state. Tag bits are emitted MSB first followed by low8 and high8, each byte MSB first. No private frame. All entry BC byte values algorithmic, supported cursor index<128/bit<8, output gate2029.bit0 clear, successful actual DMA/sequential-write guards, valid FCB/buffer/cache/stack nonaliases. Global child errors/gate-set and arbitrary files/capacities excluded. No source-language item interpretation claimed."
+  },
+  "PLI.COM+11E5": {
+    "end": 4615,
+    "description": "Bounded tagged cached-word REL emitter",
+    "completeness": [
+      "stable",
+      "complete",
+      "partial"
+    ],
+    "contract": "Independently store input B at20BC then C at20BB. Set E2,C40; compose canonical119E. Genuinely paired reread word[20BB], select low into A/C and E8; compose119E. Independently paired reread the same cache, select high into A/C and E8; compose119E; ordinary RET of final child state. Tag bits are emitted MSB first followed by low8 and high8, each byte MSB first. No private frame. All entry BC byte values algorithmic, supported cursor index<128/bit<8, output gate2029.bit0 clear, successful actual DMA/sequential-write guards, valid FCB/buffer/cache/stack nonaliases. Global child errors/gate-set and arbitrary files/capacities excluded. No source-language item interpretation claimed."
+  },
+  "PLI.COM+1207": {
+    "end": 4649,
+    "description": "Bounded tagged cached-word REL emitter",
+    "completeness": [
+      "stable",
+      "complete",
+      "partial"
+    ],
+    "contract": "Independently store input B at20BE then C at20BD. Set E2,C80; compose canonical119E. Genuinely paired reread word[20BD], select low into A/C and E8; compose119E. Independently paired reread the same cache, select high into A/C and E8; compose119E; ordinary RET of final child state. Tag bits are emitted MSB first followed by low8 and high8, each byte MSB first. No private frame. All entry BC byte values algorithmic, supported cursor index<128/bit<8, output gate2029.bit0 clear, successful actual DMA/sequential-write guards, valid FCB/buffer/cache/stack nonaliases. Global child errors/gate-set and arbitrary files/capacities excluded. No source-language item interpretation claimed."
+  },
+  "PLI.COM+119E": {
+    "end": 4547,
+    "description": "Canonical bounded counted-bit REL serializer",
+    "completeness": [
+      "stable",
+      "complete",
+      "partial"
+    ],
+    "contract": "Retain existing counted-bit law unchanged: E->20B8 then C->20B7; fresh count determines repeat; freshly load20B7, RLC with exact carry ancestry, publish rotated byte, C=rotated byte, compose1140, then freshly load20B8/DCR/publish and repeat. Final A0/HL20B8 and comparison flags from final fresh zero-count CMP, actual last child BC/DE preserved. Independently proved every current natural caller across PLI0/PLI1/PLI2 and resident wrappers, including successful boundary flushes. E=0 is the zero-count route from the same complete CFG; count is byte-sized, no hardcoded fixture iteration. Caller scope remains bounded by successful child1140 and nonaliases; no global standalone Runner interception."
+  }
+}

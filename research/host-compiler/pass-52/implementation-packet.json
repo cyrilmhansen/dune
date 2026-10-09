@@ -1,0 +1,649 @@
+{
+  "task": "RESIDENT_BUFFERED_REL_EMISSION_PASS_52",
+  "baseline": "c89fb3be1a5e5f077161c96f6f8b715baad69776",
+  "full_checkpoint": "f7b744e2560c0de8ac1115cf91d4beb190f2e7c2",
+  "selected": "resident tagged cached-word family",
+  "accepted_entries": [
+    {
+      "coordinate": "PLI.COM+11C3",
+      "cache": "20B9",
+      "prefix": "00",
+      "length": 34
+    },
+    {
+      "coordinate": "PLI.COM+11E5",
+      "cache": "20BB",
+      "prefix": "40",
+      "length": 34
+    },
+    {
+      "coordinate": "PLI.COM+1207",
+      "cache": "20BD",
+      "prefix": "80",
+      "length": 34
+    }
+  ],
+  "unobserved_member": {
+    "coordinate": "PLI.COM+1229",
+    "cache": "20BF",
+    "prefix": "C0",
+    "status": "STATIC / UNOBSERVED; not promoted or intercepted"
+  },
+  "laws": {
+    "PLI.COM+11C3": {
+      "end": 4581,
+      "description": "Bounded tagged cached-word REL emitter",
+      "completeness": [
+        "stable",
+        "complete",
+        "partial"
+      ],
+      "contract": "Independently store input B at20BA then C at20B9. Set E2,C00; compose canonical119E. Genuinely paired reread word[20B9], select low into A/C and E8; compose119E. Independently paired reread the same cache, select high into A/C and E8; compose119E; ordinary RET of final child state. Tag bits are emitted MSB first followed by low8 and high8, each byte MSB first. No private frame. All entry BC byte values algorithmic, supported cursor index<128/bit<8, output gate2029.bit0 clear, successful actual DMA/sequential-write guards, valid FCB/buffer/cache/stack nonaliases. Global child errors/gate-set and arbitrary files/capacities excluded. No source-language item interpretation claimed."
+    },
+    "PLI.COM+11E5": {
+      "end": 4615,
+      "description": "Bounded tagged cached-word REL emitter",
+      "completeness": [
+        "stable",
+        "complete",
+        "partial"
+      ],
+      "contract": "Independently store input B at20BC then C at20BB. Set E2,C40; compose canonical119E. Genuinely paired reread word[20BB], select low into A/C and E8; compose119E. Independently paired reread the same cache, select high into A/C and E8; compose119E; ordinary RET of final child state. Tag bits are emitted MSB first followed by low8 and high8, each byte MSB first. No private frame. All entry BC byte values algorithmic, supported cursor index<128/bit<8, output gate2029.bit0 clear, successful actual DMA/sequential-write guards, valid FCB/buffer/cache/stack nonaliases. Global child errors/gate-set and arbitrary files/capacities excluded. No source-language item interpretation claimed."
+    },
+    "PLI.COM+1207": {
+      "end": 4649,
+      "description": "Bounded tagged cached-word REL emitter",
+      "completeness": [
+        "stable",
+        "complete",
+        "partial"
+      ],
+      "contract": "Independently store input B at20BE then C at20BD. Set E2,C80; compose canonical119E. Genuinely paired reread word[20BD], select low into A/C and E8; compose119E. Independently paired reread the same cache, select high into A/C and E8; compose119E; ordinary RET of final child state. Tag bits are emitted MSB first followed by low8 and high8, each byte MSB first. No private frame. All entry BC byte values algorithmic, supported cursor index<128/bit<8, output gate2029.bit0 clear, successful actual DMA/sequential-write guards, valid FCB/buffer/cache/stack nonaliases. Global child errors/gate-set and arbitrary files/capacities excluded. No source-language item interpretation claimed."
+    },
+    "PLI.COM+119E": {
+      "end": 4547,
+      "description": "Canonical bounded counted-bit REL serializer",
+      "completeness": [
+        "stable",
+        "complete",
+        "partial"
+      ],
+      "contract": "Retain existing counted-bit law unchanged: E->20B8 then C->20B7; fresh count determines repeat; freshly load20B7, RLC with exact carry ancestry, publish rotated byte, C=rotated byte, compose1140, then freshly load20B8/DCR/publish and repeat. Final A0/HL20B8 and comparison flags from final fresh zero-count CMP, actual last child BC/DE preserved. Independently proved every current natural caller across PLI0/PLI1/PLI2 and resident wrappers, including successful boundary flushes. E=0 is the zero-count route from the same complete CFG; count is byte-sized, no hardcoded fixture iteration. Caller scope remains bounded by successful child1140 and nonaliases; no global standalone Runner interception."
+    }
+  },
+  "topology": {
+    "MINIMAL": {
+      "members": {
+        "PLI.COM+11C3": {
+          "logical": 1,
+          "external": 1,
+          "residual_ranking": 811,
+          "serializer_children": 3,
+          "bit_children": 18,
+          "internal_native_root": 0,
+          "flush_calls": 0
+        },
+        "PLI.COM+11E5": {
+          "logical": 14,
+          "external": 14,
+          "residual_ranking": 11374,
+          "serializer_children": 42,
+          "bit_children": 252,
+          "internal_native_root": 0,
+          "flush_calls": 0
+        },
+        "PLI.COM+1207": {
+          "logical": 2,
+          "external": 1,
+          "residual_ranking": 816,
+          "serializer_children": 3,
+          "bit_children": 18,
+          "internal_native_root": 1,
+          "flush_calls": 0
+        },
+        "PLI.COM+1229": {
+          "logical": 0,
+          "external": 0,
+          "residual_ranking": 0,
+          "serializer_children": 0,
+          "bit_children": 0,
+          "internal_native_root": 0,
+          "flush_calls": 0
+        }
+      },
+      "immediate_parents": {
+        "PLI2.OVL+829C": {
+          "calls": 1,
+          "members": 1,
+          "callers": [
+            "PLI2.OVL+19A7"
+          ],
+          "residual": 1132
+        },
+        "PLI0.OVL+1839": {
+          "calls": 1,
+          "members": 1,
+          "callers": [
+            "PLI0.OVL+01D4"
+          ],
+          "residual": 43568
+        },
+        "PLI2.OVL+7434": {
+          "calls": 3,
+          "members": 3,
+          "callers": [
+            "PLI2.OVL+826D",
+            "PLI2.OVL+8295",
+            "PLI2.OVL+82C6"
+          ],
+          "residual": 3401
+        },
+        "PLI2.OVL+7701": {
+          "calls": 7,
+          "members": 7,
+          "callers": [
+            "PLI2.OVL+8244"
+          ],
+          "residual": 30590
+        },
+        "PLI2.OVL+7630": {
+          "calls": 1,
+          "members": 1,
+          "callers": [
+            "PLI2.OVL+828D"
+          ],
+          "residual": 889
+        },
+        "PLI2.OVL+82DD": {
+          "calls": 1,
+          "members": 2,
+          "callers": [
+            "PLI2.OVL+046E"
+          ],
+          "residual": 6403
+        },
+        "PLI2.OVL+765E": {
+          "calls": 1,
+          "members": 1,
+          "callers": [
+            "PLI2.OVL+7808"
+          ],
+          "residual": 894
+        }
+      },
+      "total_serializer": 189,
+      "caller_distribution": {
+        "PLI0.OVL+188F": 1,
+        "PLI0.OVL+1993": 4,
+        "PLI0.OVL+19A5": 24,
+        "PLI0.OVL+189E": 1,
+        "PLI0.OVL+18AD": 1,
+        "PLI0.OVL+18BC": 1,
+        "PLI.COM+11EF": 14,
+        "PLI.COM+11F9": 14,
+        "PLI.COM+1203": 14,
+        "PLI1.OVL+6692": 1,
+        "PLI.COM+1211": 2,
+        "PLI.COM+121B": 2,
+        "PLI.COM+1225": 2,
+        "PLI1.OVL+66EF": 7,
+        "PLI2.OVL+82A6": 1,
+        "PLI.COM+11CD": 1,
+        "PLI.COM+11D7": 1,
+        "PLI.COM+11E1": 1,
+        "PLI2.OVL+743E": 3,
+        "PLI2.OVL+7566": 13,
+        "PLI2.OVL+7603": 10,
+        "PLI2.OVL+7612": 10,
+        "PLI2.OVL+7711": 7,
+        "PLI2.OVL+775A": 7,
+        "PLI2.OVL+777D": 7,
+        "PLI2.OVL+77A2": 35,
+        "PLI2.OVL+75C7": 2,
+        "PLI2.OVL+82E1": 1,
+        "PLI2.OVL+82F0": 1,
+        "PLI.COM+126E": 1
+      },
+      "remaining_external_serializer": 130,
+      "remaining_external_callers": {
+        "PLI0.OVL+188F": 1,
+        "PLI0.OVL+1993": 4,
+        "PLI0.OVL+19A5": 24,
+        "PLI0.OVL+189E": 1,
+        "PLI0.OVL+18AD": 1,
+        "PLI0.OVL+18BC": 1,
+        "PLI2.OVL+82A6": 1,
+        "PLI2.OVL+743E": 3,
+        "PLI2.OVL+7566": 13,
+        "PLI2.OVL+7603": 10,
+        "PLI2.OVL+7612": 10,
+        "PLI2.OVL+7711": 7,
+        "PLI2.OVL+775A": 7,
+        "PLI2.OVL+777D": 7,
+        "PLI2.OVL+77A2": 35,
+        "PLI2.OVL+75C7": 2,
+        "PLI2.OVL+82E1": 1,
+        "PLI2.OVL+82F0": 1,
+        "PLI.COM+126E": 1
+      },
+      "pre_native_internal_serializer": 11
+    },
+    "FIZZBUZ": {
+      "members": {
+        "PLI.COM+11C3": {
+          "logical": 1,
+          "external": 1,
+          "residual_ranking": 811,
+          "serializer_children": 3,
+          "bit_children": 18,
+          "internal_native_root": 0,
+          "flush_calls": 0
+        },
+        "PLI.COM+11E5": {
+          "logical": 63,
+          "external": 63,
+          "residual_ranking": 51163,
+          "serializer_children": 189,
+          "bit_children": 1134,
+          "internal_native_root": 0,
+          "flush_calls": 0
+        },
+        "PLI.COM+1207": {
+          "logical": 14,
+          "external": 11,
+          "residual_ranking": 8941,
+          "serializer_children": 33,
+          "bit_children": 198,
+          "internal_native_root": 3,
+          "flush_calls": 0
+        },
+        "PLI.COM+1229": {
+          "logical": 0,
+          "external": 0,
+          "residual_ranking": 0,
+          "serializer_children": 0,
+          "bit_children": 0,
+          "internal_native_root": 0,
+          "flush_calls": 0
+        }
+      },
+      "immediate_parents": {
+        "PLI2.OVL+829C": {
+          "calls": 1,
+          "members": 1,
+          "callers": [
+            "PLI2.OVL+19A7"
+          ],
+          "residual": 1132
+        },
+        "PLI0.OVL+1839": {
+          "calls": 1,
+          "members": 1,
+          "callers": [
+            "PLI0.OVL+01D4"
+          ],
+          "residual": 144435
+        },
+        "PLI2.OVL+7434": {
+          "calls": 23,
+          "members": 23,
+          "callers": [
+            "PLI2.OVL+826D",
+            "PLI2.OVL+8295",
+            "PLI2.OVL+82C6"
+          ],
+          "residual": 26041
+        },
+        "PLI2.OVL+7701": {
+          "calls": 25,
+          "members": 25,
+          "callers": [
+            "PLI2.OVL+8244"
+          ],
+          "residual": 109290
+        },
+        "PLI2.OVL+7630": {
+          "calls": 12,
+          "members": 12,
+          "callers": [
+            "PLI2.OVL+765A",
+            "PLI2.OVL+828D"
+          ],
+          "residual": 10698
+        },
+        "PLI2.OVL+82DD": {
+          "calls": 1,
+          "members": 2,
+          "callers": [
+            "PLI2.OVL+046E"
+          ],
+          "residual": 6335
+        },
+        "PLI2.OVL+765E": {
+          "calls": 11,
+          "members": 11,
+          "callers": [
+            "PLI2.OVL+7808",
+            "PLI2.OVL+7852"
+          ],
+          "residual": 9799
+        }
+      },
+      "total_serializer": 703,
+      "caller_distribution": {
+        "PLI0.OVL+188F": 1,
+        "PLI0.OVL+1993": 4,
+        "PLI0.OVL+19A5": 24,
+        "PLI0.OVL+189E": 1,
+        "PLI0.OVL+18AD": 1,
+        "PLI0.OVL+18BC": 1,
+        "PLI.COM+11EF": 63,
+        "PLI.COM+11F9": 63,
+        "PLI.COM+1203": 63,
+        "PLI1.OVL+6692": 3,
+        "PLI.COM+1211": 14,
+        "PLI.COM+121B": 14,
+        "PLI.COM+1225": 14,
+        "PLI1.OVL+66EF": 16,
+        "PLI2.OVL+82A6": 1,
+        "PLI.COM+11CD": 1,
+        "PLI.COM+11D7": 1,
+        "PLI.COM+11E1": 1,
+        "PLI2.OVL+743E": 23,
+        "PLI2.OVL+7566": 94,
+        "PLI2.OVL+7603": 43,
+        "PLI2.OVL+7612": 43,
+        "PLI2.OVL+7711": 25,
+        "PLI2.OVL+775A": 25,
+        "PLI2.OVL+777D": 25,
+        "PLI2.OVL+77A2": 125,
+        "PLI2.OVL+75C7": 11,
+        "PLI2.OVL+82E1": 1,
+        "PLI2.OVL+82F0": 1,
+        "PLI.COM+126E": 1
+      },
+      "remaining_external_serializer": 450,
+      "remaining_external_callers": {
+        "PLI0.OVL+188F": 1,
+        "PLI0.OVL+1993": 4,
+        "PLI0.OVL+19A5": 24,
+        "PLI0.OVL+189E": 1,
+        "PLI0.OVL+18AD": 1,
+        "PLI0.OVL+18BC": 1,
+        "PLI2.OVL+82A6": 1,
+        "PLI2.OVL+743E": 23,
+        "PLI2.OVL+7566": 94,
+        "PLI2.OVL+7603": 43,
+        "PLI2.OVL+7612": 43,
+        "PLI2.OVL+7711": 25,
+        "PLI2.OVL+775A": 25,
+        "PLI2.OVL+777D": 25,
+        "PLI2.OVL+77A2": 125,
+        "PLI2.OVL+75C7": 11,
+        "PLI2.OVL+82E1": 1,
+        "PLI2.OVL+82F0": 1,
+        "PLI.COM+126E": 1
+      },
+      "pre_native_internal_serializer": 28
+    },
+    "PICTURE": {
+      "members": {
+        "PLI.COM+11C3": {
+          "logical": 1,
+          "external": 1,
+          "residual_ranking": 811,
+          "serializer_children": 3,
+          "bit_children": 18,
+          "internal_native_root": 0,
+          "flush_calls": 0
+        },
+        "PLI.COM+11E5": {
+          "logical": 14,
+          "external": 14,
+          "residual_ranking": 11369,
+          "serializer_children": 42,
+          "bit_children": 252,
+          "internal_native_root": 0,
+          "flush_calls": 0
+        },
+        "PLI.COM+1207": {
+          "logical": 4,
+          "external": 4,
+          "residual_ranking": 3249,
+          "serializer_children": 12,
+          "bit_children": 72,
+          "internal_native_root": 0,
+          "flush_calls": 0
+        },
+        "PLI.COM+1229": {
+          "logical": 0,
+          "external": 0,
+          "residual_ranking": 0,
+          "serializer_children": 0,
+          "bit_children": 0,
+          "internal_native_root": 0,
+          "flush_calls": 0
+        }
+      },
+      "immediate_parents": {
+        "PLI2.OVL+829C": {
+          "calls": 1,
+          "members": 1,
+          "callers": [
+            "PLI2.OVL+19A7"
+          ],
+          "residual": 1132
+        },
+        "PLI0.OVL+1839": {
+          "calls": 1,
+          "members": 1,
+          "callers": [
+            "PLI0.OVL+01D4"
+          ],
+          "residual": 74407
+        },
+        "PLI2.OVL+7434": {
+          "calls": 3,
+          "members": 3,
+          "callers": [
+            "PLI2.OVL+826D",
+            "PLI2.OVL+8295",
+            "PLI2.OVL+82C6"
+          ],
+          "residual": 3401
+        },
+        "PLI2.OVL+7701": {
+          "calls": 7,
+          "members": 7,
+          "callers": [
+            "PLI2.OVL+8244"
+          ],
+          "residual": 30595
+        },
+        "PLI2.OVL+7630": {
+          "calls": 1,
+          "members": 1,
+          "callers": [
+            "PLI2.OVL+828D"
+          ],
+          "residual": 889
+        },
+        "PLI2.OVL+82DD": {
+          "calls": 1,
+          "members": 2,
+          "callers": [
+            "PLI2.OVL+046E"
+          ],
+          "residual": 6405
+        },
+        "PLI0.OVL+3D2F": {
+          "calls": 1,
+          "members": 1,
+          "callers": [
+            "PLI0.OVL+3FF4"
+          ],
+          "residual": 1127
+        },
+        "PLI2.OVL+765E": {
+          "calls": 3,
+          "members": 3,
+          "callers": [
+            "PLI2.OVL+7808",
+            "PLI2.OVL+7852"
+          ],
+          "residual": 2672
+        }
+      },
+      "total_serializer": 197,
+      "caller_distribution": {
+        "PLI0.OVL+188F": 1,
+        "PLI0.OVL+1993": 4,
+        "PLI0.OVL+19A5": 24,
+        "PLI0.OVL+189E": 1,
+        "PLI0.OVL+18AD": 1,
+        "PLI0.OVL+18BC": 1,
+        "PLI.COM+11EF": 14,
+        "PLI.COM+11F9": 14,
+        "PLI.COM+1203": 14,
+        "PLI0.OVL+3D33": 1,
+        "PLI.COM+1211": 4,
+        "PLI.COM+121B": 4,
+        "PLI.COM+1225": 4,
+        "PLI0.OVL+3D4E": 6,
+        "PLI2.OVL+82A6": 1,
+        "PLI.COM+11CD": 1,
+        "PLI.COM+11D7": 1,
+        "PLI.COM+11E1": 1,
+        "PLI2.OVL+743E": 3,
+        "PLI2.OVL+7566": 15,
+        "PLI2.OVL+7603": 11,
+        "PLI2.OVL+7612": 11,
+        "PLI2.OVL+7711": 7,
+        "PLI2.OVL+775A": 7,
+        "PLI2.OVL+777D": 7,
+        "PLI2.OVL+77A2": 35,
+        "PLI2.OVL+75C7": 1,
+        "PLI2.OVL+82E1": 1,
+        "PLI2.OVL+82F0": 1,
+        "PLI.COM+126E": 1
+      },
+      "remaining_external_serializer": 140,
+      "remaining_external_callers": {
+        "PLI0.OVL+188F": 1,
+        "PLI0.OVL+1993": 4,
+        "PLI0.OVL+19A5": 24,
+        "PLI0.OVL+189E": 1,
+        "PLI0.OVL+18AD": 1,
+        "PLI0.OVL+18BC": 1,
+        "PLI0.OVL+3D33": 1,
+        "PLI0.OVL+3D4E": 6,
+        "PLI2.OVL+82A6": 1,
+        "PLI2.OVL+743E": 3,
+        "PLI2.OVL+7566": 15,
+        "PLI2.OVL+7603": 11,
+        "PLI2.OVL+7612": 11,
+        "PLI2.OVL+7711": 7,
+        "PLI2.OVL+775A": 7,
+        "PLI2.OVL+777D": 7,
+        "PLI2.OVL+77A2": 35,
+        "PLI2.OVL+75C7": 1,
+        "PLI2.OVL+82E1": 1,
+        "PLI2.OVL+82F0": 1,
+        "PLI.COM+126E": 1
+      },
+      "pre_native_internal_serializer": 0
+    }
+  },
+  "contracts": {
+    "PLI.COM+1140": {
+      "hash": "d24042cb70146e7ad2ac123b354691b4a39e717ad515174b6963aab89a813a90",
+      "completeness": {
+        "bounds": "provisional",
+        "control_flow": "partial",
+        "contract": "partial"
+      }
+    },
+    "PLI.COM+02EE": {
+      "hash": "235892dabf85c80edaf99f4cdec126a32dee15c6b5149c82d6a950647038ceab",
+      "completeness": {
+        "bounds": "stable",
+        "control_flow": "complete",
+        "contract": "partial"
+      }
+    },
+    "PLI.COM+0328": {
+      "hash": "5ee7423ec1b0b33511871827828007d10d791b95da7c81fbebfdab1bb9ace7aa",
+      "completeness": {
+        "bounds": "stable",
+        "control_flow": "complete",
+        "contract": "partial"
+      }
+    },
+    "PLI.COM+19BB": {
+      "hash": "41dedb995cfca294d9de6d70ad8c447bd18656326a208380382e949ff7c7e22b",
+      "completeness": {
+        "bounds": "provisional",
+        "control_flow": "partial",
+        "contract": "partial"
+      }
+    },
+    "PLI.COM+1272": {
+      "hash": "5a6702a9a6294938a14f1e596179dd34be362a8d0a842fd47211c646dc842761",
+      "completeness": {
+        "bounds": "stable",
+        "control_flow": "partial",
+        "contract": "partial"
+      }
+    }
+  },
+  "CFG": {
+    "PLI.COM+119E": {
+      "hash": "5efc8dd83d7c1020a47b550f926c7a6f4d33541a3fe96730d7cd7383a7e5fcb3",
+      "instructions": 18
+    },
+    "PLI.COM+11C3": {
+      "hash": "5d388fb207fa235e2d1406379ee33b293dd13e95efd801f3903c21b2355f3edf",
+      "instructions": 18
+    },
+    "PLI.COM+11E5": {
+      "hash": "b0cb383160b246187187b2d3917368724896f3748c472521dfdbe471b2af9915",
+      "instructions": 18
+    },
+    "PLI.COM+1207": {
+      "hash": "15283cf6aecfccfa21126ec68a3f36ad8023fe0ac6cc8071fe5267b896ac90bd",
+      "instructions": 18
+    }
+  },
+  "stack_pattern": "No persistent wrapper frame. Original CALL slotS unchanged.119E CALL wordS-2,1140 wordS-4,shifted PSW S-6; service frames derive deeper residue only on successful flush. EachRET consumes its own hardware word; outerSP=S+2. No N2/N8/XTHL reached.",
+  "oracle_queries": 0,
+  "candidates": [
+    {
+      "level": "119E leaf",
+      "decision": "reject global interception;1089 historical logical calls,1050 post51 external leaf roots versus110 external family transactions"
+    },
+    {
+      "level": "individual wrappers",
+      "decision": "accept as adapters of one canonical parameterized law, not separate passes"
+    },
+    {
+      "level": "resident family",
+      "decision": "selected generic representational boundary"
+    },
+    {
+      "level": "immediate overlay callers",
+      "decision": "defer compiler-phase semantics; shared resident operation is generic"
+    },
+    {
+      "level": "PLI0/PLI1/PLI2 emission wrappers",
+      "decision": "cross-phase anti-overfitting evidence, not part of this generic family"
+    }
+  ],
+  "proofs": {
+    "root": "0107f16e249c5813990381d625cb7dccf254bd0ec582bc0771b51720c8d5ce4c",
+    "hierarchy": "0bad1d689dd2462519cdc0e7a62c22f9f4f33cf9fd86b62af041e62eb17c1edd",
+    "writer_routes": "5ec53a2528bf30bd44b574eab2e7aca7dda0d0c4b83899840bcf759b699393cf",
+    "oracle_queries": 0
+  },
+  "parent_assessment_hash": "5701fe49ee8def217d9a2e396897d961178a302725858ddbc4e1c269e557334e",
+  "static_normalized_family_sha256": "8af6a18e9513cb9dcdeddc6c1711533fba34d3db30177f48f0de1e9be27844ac"
+}
