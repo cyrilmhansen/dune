@@ -1,0 +1,31 @@
+{
+  "selected": [
+    "PLI2.OVL+7557",
+    "PLI2.OVL+756D",
+    "PLI2.OVL+75A7",
+    "PLI2.OVL+75CE",
+    "PLI2.OVL+75F1",
+    "PLI2.OVL+7619"
+  ],
+  "candidate_correction": {
+    "search_anchor": "75D0",
+    "actual": "75CE",
+    "interpretation": "75D0 is third byte of LXI H,ADD7 at75CE, not an instruction boundary. Pass53825E CALL95D0 actually targets73D0 at runtime base2200; coordinate/report discovery, not behavior correction."
+  },
+  "immediate_parent_assessment": {
+    "rejected": [
+      "78E9 adds independent7897 policy andADFF carrier;one byte child,no transition advantage",
+      "7903 addsAE00/AE01 type comparisons andADCA publication before73A7/75CE",
+      "793C copies indexedADAB/ADB3 channels before emission",
+      "7B1B addsA8/07 masks,B8 branch and7397 policy",
+      "7701 pointer-dependent general generation",
+      "8225 joins79E2/7A17/73D0/756D/7701",
+      "8072 and8145 independent register/context generation",
+      "793C/7B1B structure/index-dependent generation",
+      "7D05/7D47/7E05 pointer generation"
+    ],
+    "selected": "756D/75CE absorb7557;7619 absorbs75F1. Other7557/75F1 calls and75A7 remain accepted compact roots. No climb beyond general-generation boundary."
+  },
+  "next": "Assess general PLI2+7701 pointer-dependent generation as a separate semantic family;its seven/25/seven calls contain the dominant remaining PLI2 serializer classes7711/775A/777D/77A2. Also retain independent PLI0 emitter and lifecycle82A6/82E1/82F0 boundaries.",
+  "unsupported": "201D gate-set carrier/75A7 error arms,753C zero-wrap,1140 write errors and arbitrary aliases remain outside bounded contracts."
+}

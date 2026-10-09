@@ -72,14 +72,14 @@ for start,(end,desc,complete,contract,unresolved,blocks)in meta.items():
    counts=callers.setdefault(c['coordinate'],{})
    for source,count in c['counts_by_run'].items():counts[source]=max(counts.get(source,0),count)
   p['callers']=[dict(coordinate=c,counts_by_run=ns)for c,ns in sorted(callers.items())]
-  p['contract']='Previous bounded contract retained: '+prior['contract']+' Pass52 extension: '+contract
-  p['contract_scope']=prior['contract_scope']+'; additionally the exact Pass52 family/root states and nonalias scopes.'
+  p['contract']='Previous bounded contract retained: '+prior['contract']+f' Pass{PASS} extension: '+contract
+  p['contract_scope']=prior['contract_scope']+f'; additionally the exact Pass{PASS} family/root states and nonalias scopes.'
   p['unresolved_paths']=list(dict.fromkeys(prior['unresolved_paths']+unresolved))
   if key=='PLI1.OVL+4802':p['unresolved_paths']=['Initial4813 nonborrowRET and47E2 overflow/error arms remainRAW; delegated3563 zero-high alternative remainsRAW.',prior['unresolved_paths'][1]]+unresolved
   if key=='PLI1.OVL+4890':p['unresolved_paths']=['All local blocks now represented; delegated3563 zero-high branch remainsRAW. Required field3/mode arm is proved only at the declared bounded scope.',prior['unresolved_paths'][1]]+unresolved
   p['local_comments']={**p['local_comments'],**prior.get('local_comments',{})}
   p['blocks']=prior.get('blocks',[])+[b for b in p['blocks']if b['offset']not in {q['offset']for q in prior.get('blocks',[])}]
-  p['pseudocode']=prior.get('pseudocode','')+'; Pass52: '+p['pseudocode']
+  p['pseudocode']=prior.get('pseudocode','')+f'; Pass{PASS}: '+p['pseudocode']
   p['data_role_ids']=prior.get('data_role_ids',[])
   if key=='PLI1.OVL+6708':
    p['returns']=prior['returns'];p['outputs']='Exact path-specific registers/flags; consume eight caller bytes separately from original continuation, copied continuation at entrySP+8; final SP=entrySP+10 and PC=original continuation.'

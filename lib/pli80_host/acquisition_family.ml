@@ -385,8 +385,45 @@ let run operation memory ~entry ~write ~compatibility ~adjust ~sp ~guard_field ~
   resident 0x7545 0x1a29(fun()->q:=Resident_reader.run Resident_reader.Byte_difference memory ~entry:!q ~write ~compatibility ~sp ~invoke:native);
   logical false(!q.hl land 255);need(not !q.flags.zero)"753C wrapped zero position/error alternative" in
  let position_pair()=call 0x7550 0x753c position_step;call 0x7553 0x753c position_step in
+ let carrier offset cache word_input ()=
+  hl(if word_input then cache+1 else cache);
+  put(offset+3)!q.hl(if word_input then !q.bc lsr 8 else !q.bc land 255);
+  if word_input then(hl( !q.hl-1);put(offset+5)!q.hl(!q.bc land 255));
+  a(read 0x201d);rar();need(not !q.flags.carry)"compact field carrier gate/error alternative" in
+ let byte_bits()=
+  hl 0xadd2;put 0x755a !q.hl(!q.bc land 255);c 0;resident 0x755d 0x1140 bit_write;
+  pair 0xadd2;c(!q.hl land 255);e 8;resident 0x7566 0x119e bits_write;call 0x7569 0x753c position_step in
+ let word_bytes()=
+  hl 0xadd9;put 0x75f4 !q.hl(!q.bc lsr 8);hl( !q.hl-1);put 0x75f6 !q.hl(!q.bc land 255);
+  c 0;resident 0x75f9 0x1140 bit_write;pair 0xadd8;a(!q.hl land 255);c !q.a;e 8;resident 0x7603 0x119e bits_write;
+  c 0;resident 0x7608 0x1140 bit_write;pair 0xadd8;a(!q.hl lsr 8);c !q.a;e 8;resident 0x7612 0x119e bits_write;
+  call 0x7615 0x7550 position_pair in
  let pli2_output offset=match offset with
  |0x753c->position_step()|0x7550->position_pair()
+ |0x746f->carrier 0x746f 0xadcc false ()
+ |0x74c7->carrier 0x74c7 0xadcf false ()
+ |0x7510->carrier 0x7510 0xadd0 true ()
+ |0x7557->byte_bits()
+ |0x756d->
+  hl 0xadd4;put 0x7570 !q.hl(!q.de land 255);hl( !q.hl-1);put 0x7572 !q.hl(!q.bc land 255);
+  a(read 0xadd3);sub 0xc2;sub 1;mask();push 0x757b((!q.a lsl 8)lor psw());
+  a(read 0xadd4);sub 9;sub 1;mask();bc(pop());c(!q.bc lsr 8);logical true(!q.bc land 255);rar();
+  if !q.flags.carry then(hl 0xadd4;put 0x758e !q.hl 1);
+  a(read 0xadd4);hl 0xadd3;logical false(read !q.hl);c !q.a;call 0x7598 0x746f(carrier 0x746f 0xadcc false);
+  a(read 0xadd4);hl 0xadd3;logical false(read !q.hl);c !q.a;call 0x75a3 0x7557 byte_bits
+ |0x75a7->
+  hl 0xadd5;put 0x75aa !q.hl(!q.bc land 255);a(read 0x201d);rar();need(not !q.flags.carry)"75A7 gate/error alternative";
+  c 0;resident 0x75be 0x1140 bit_write;pair 0xadd5;c(!q.hl land 255);e 8;resident 0x75c7 0x119e bits_write;call 0x75ca 0x753c position_step
+ |0x75ce->
+  hl 0xadd7;put 0x75d1 !q.hl(!q.de land 255);hl( !q.hl-1);put 0x75d3 !q.hl(!q.bc land 255);
+  pair 0xadd6;c(!q.hl land 255);call 0x75d8 0x746f(carrier 0x746f 0xadcc false);
+  pair 0xadd7;c(!q.hl land 255);call 0x75df 0x74c7(carrier 0x74c7 0xadcf false);
+  a(read 0xadd7);add !q.a;add !q.a;add !q.a;hl 0xadd6;logical false(read !q.hl);c !q.a;call 0x75ed 0x7557 byte_bits
+ |0x75f1->word_bytes()
+ |0x7619->
+  hl 0xaddb;put 0x761c !q.hl(!q.bc lsr 8);hl( !q.hl-1);put 0x761e !q.hl(!q.bc land 255);
+  pair 0xadda;bc !q.hl;call 0x7624 0x7510(carrier 0x7510 0xadd0 true);
+  pair 0xadda;bc !q.hl;call 0x762c 0x75f1 word_bytes
  |0x7434->
   hl 0xadc7;put 0x7437 !q.hl(!q.bc lsr 8);hl( !q.hl-1);put 0x7439 !q.hl(!q.bc land 255);
   e 7;c 0x96;resident 0x743e 0x119e bits_write;

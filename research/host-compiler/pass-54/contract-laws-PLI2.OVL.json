@@ -1,0 +1,92 @@
+{
+  "PLI2.OVL+746F": {
+    "end": 29895,
+    "description": "Byte carrier with fresh clear policy gate",
+    "completeness": [
+      "stable",
+      "partial",
+      "partial"
+    ],
+    "contract": "Save C atADCC. Fresh LDA201D;RAR;JNC74C6 consumes actual bit0. RET preserves RAR flags and all other channels except HL=ADCC. Gate-set [747A,74C6) remainsRAW. Current-state bounded successful output:2029.bit0 clear,index<128,bit<8,nonzero wrapping position after each753C;immutable code/CALL word and nonalias scratch/stack/FCB/buffer/sentinel. Errors and unsupported aliases reject copied staging without live mutation. Canonical1140/119E/753C/7550 reused."
+  },
+  "PLI2.OVL+74C7": {
+    "end": 29968,
+    "description": "Second byte carrier with fresh clear policy gate",
+    "completeness": [
+      "stable",
+      "partial",
+      "partial"
+    ],
+    "contract": "Save C atADCF. Independently fresh LDA201D;RAR;JNC750F;RET with HL=ADCF. Gate-set [74D2,750F) remainsRAW. Current-state bounded successful output:2029.bit0 clear,index<128,bit<8,nonzero wrapping position after each753C;immutable code/CALL word and nonalias scratch/stack/FCB/buffer/sentinel. Errors and unsupported aliases reject copied staging without live mutation. Canonical1140/119E/753C/7550 reused."
+  },
+  "PLI2.OVL+7510": {
+    "end": 29993,
+    "description": "Word carrier with fresh clear policy gate",
+    "completeness": [
+      "stable",
+      "partial",
+      "partial"
+    ],
+    "contract": "Save B atADD1 then C atADD0. Fresh LDA201D;RAR;JNC7528. RET with HL=ADD0 and actual RAR flags. Gate-set [751D,7528) remainsRAW. Current-state bounded successful output:2029.bit0 clear,index<128,bit<8,nonzero wrapping position after each753C;immutable code/CALL word and nonalias scratch/stack/FCB/buffer/sentinel. Errors and unsupported aliases reject copied staging without live mutation. Canonical1140/119E/753C/7550 reused."
+  },
+  "PLI2.OVL+7557": {
+    "end": 30061,
+    "description": "Zero-prefixed byte with one position publication",
+    "completeness": [
+      "stable",
+      "complete",
+      "partial"
+    ],
+    "contract": "Save C atADD2. Set C0;CALL1140 at755D. Independently paired-read ADD2 (adjacent ADD3 also read);C=L,E8;CALL119E at7566. CALL753C at7569;RET actual child state. Current-state bounded successful output:2029.bit0 clear,index<128,bit<8,nonzero wrapping position after each753C;immutable code/CALL word and nonalias scratch/stack/FCB/buffer/sentinel. Errors and unsupported aliases reject copied staging without live mutation. Canonical1140/119E/753C/7550 reused."
+  },
+  "PLI2.OVL+756D": {
+    "end": 30119,
+    "description": "Combined byte-field carrier and emission policy",
+    "completeness": [
+      "stable",
+      "complete",
+      "partial"
+    ],
+    "contract": "Save E atADD4 then C atADD3. Fresh saved C minusC2 then minus1 followed by SBB A forms equality mask; PUSH PSW. Independently saved E minus09 then minus1/SBB A forms second mask. POP B preserves first A/mask in B;C=B;ANA C;RAR;when CY1 set ADD4=1. Fresh saved E OR saved C to C;CALL746F at7598. Independently reread both carriers and OR again;CALL7557 at75A3. RET actual final state. Normalization requires C=C2 and E=09 from arithmetic, never invocation identity. Current-state bounded successful output:2029.bit0 clear,index<128,bit<8,nonzero wrapping position after each753C;immutable code/CALL word and nonalias scratch/stack/FCB/buffer/sentinel. Errors and unsupported aliases reject copied staging without live mutation. Canonical1140/119E/753C/7550 reused."
+  },
+  "PLI2.OVL+75A7": {
+    "end": 30158,
+    "description": "Guarded zero-prefixed byte with position publication",
+    "completeness": [
+      "stable",
+      "partial",
+      "partial"
+    ],
+    "contract": "Save C atADD5. Fresh201D;RAR;JNC75BC. Gate-set [75B2,75BC) unsupported. C0 CALL1140 at75BE;independent paired-readADD5,C=L,E8 CALL119E at75C7;CALL753C at75CA;RET actual state. Current-state bounded successful output:2029.bit0 clear,index<128,bit<8,nonzero wrapping position after each753C;immutable code/CALL word and nonalias scratch/stack/FCB/buffer/sentinel. Errors and unsupported aliases reject copied staging without live mutation. Canonical1140/119E/753C/7550 reused."
+  },
+  "PLI2.OVL+75CE": {
+    "end": 30193,
+    "description": "Shifted field byte carrier and emission policy",
+    "completeness": [
+      "stable",
+      "complete",
+      "partial"
+    ],
+    "contract": "Save E atADD7 then C atADD6. Fresh paired-readADD6;C=L;CALL746F at75D8. Independently paired-readADD7 includingADD8;C=L;CALL74C7 at75DF. Fresh saved E;three ADD A modulo256;fresh saved C OR shifted E;C=A;CALL7557 at75ED. RET actual final state. No modern field masks introduced. Current-state bounded successful output:2029.bit0 clear,index<128,bit<8,nonzero wrapping position after each753C;immutable code/CALL word and nonalias scratch/stack/FCB/buffer/sentinel. Errors and unsupported aliases reject copied staging without live mutation. Canonical1140/119E/753C/7550 reused."
+  },
+  "PLI2.OVL+75F1": {
+    "end": 30233,
+    "description": "Two independently zero-prefixed cached word bytes",
+    "completeness": [
+      "stable",
+      "complete",
+      "partial"
+    ],
+    "contract": "Save B atADD9 then C atADD8. C0 CALL1140 at75F9;paired-readADD8,A=L,C=A,E8 CALL119E at7603. Independently C0 CALL1140 at7608;paired-readADD8 again,A=H,C=A,E8 CALL119E at7612. CALL7550 at7615 for two independent753C operations;RET actual state. No tagged-word substitution. Current-state bounded successful output:2029.bit0 clear,index<128,bit<8,nonzero wrapping position after each753C;immutable code/CALL word and nonalias scratch/stack/FCB/buffer/sentinel. Errors and unsupported aliases reject copied staging without live mutation. Canonical1140/119E/753C/7550 reused."
+  },
+  "PLI2.OVL+7619": {
+    "end": 30256,
+    "description": "Cached word carrier policy and two-byte emission",
+    "completeness": [
+      "stable",
+      "complete",
+      "partial"
+    ],
+    "contract": "Save B atADDB then C atADDA. Fresh paired-readADDA toBC;CALL7510 at7624. Independently paired-readADDA again toBC;CALL75F1 at762C;RET actual child state. Current-state bounded successful output:2029.bit0 clear,index<128,bit<8,nonzero wrapping position after each753C;immutable code/CALL word and nonalias scratch/stack/FCB/buffer/sentinel. Errors and unsupported aliases reject copied staging without live mutation. Canonical1140/119E/753C/7550 reused."
+  }
+}

@@ -144,3 +144,7 @@
 (executable
  (name native_pli2_emission_adapters)
  (libraries pli80 pli80_host cpm i8080 runner analysis unix))
+
+(executable
+ (name native_pli2_compact_emission)
+ (libraries pli80 pli80_host cpm i8080 runner analysis unix))

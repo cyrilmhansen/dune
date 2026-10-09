@@ -58,6 +58,7 @@ cmds['pass43']=['python3','tools/annotated-assembly/test_native_5929_pass_43.py'
 cmds['acquisition-parent-unit']=['_build/default/test/native_acquisition_parent.exe']
 for name,file in [('pass44-roots','test_reentrant_acquisition_pass_44.py'),('pass44-family','test_acquisition_family_pass_44.py'),('pass44-numeric','test_numeric_acquisition_pass_44.py'),('pass44-hybrids','test_native_reentry_hybrids_pass_44.py')]:
  cmds[name]=['python3','tools/annotated-assembly/'+file,'--images',images,'-q']
+cmds['pass54']=['python3','tools/annotated-assembly/test_pli2_compact_emission_pass_54.py','--images',images,'-q']
 cmds['pass53']=['python3','tools/annotated-assembly/test_pli2_emission_adapters_pass_53.py','--images',images,'-q']
 cmds['pass52']=['python3','tools/annotated-assembly/test_buffered_rel_emission_pass_52.py','--images',images,'-q']
 cmds['pass51']=['python3','tools/annotated-assembly/test_output_termination_pass_51.py','--images',images,'-q']

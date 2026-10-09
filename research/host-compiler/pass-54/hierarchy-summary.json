@@ -1,0 +1,113 @@
+{
+  "sources": [
+    {
+      "source": "MINIMAL",
+      "roots": 25,
+      "absorbed_native": {},
+      "logical_internal": {
+        "PLI.COM+1140": 315,
+        "PLI.COM+119E": 35,
+        "PLI2.OVL+753C": 35,
+        "PLI2.OVL+7550": 10
+      },
+      "serializer_absorbed": 35,
+      "serializer_remaining": 92,
+      "remaining_callers": {
+        "PLI0.OVL+188F": 1,
+        "PLI0.OVL+1993": 4,
+        "PLI0.OVL+19A5": 24,
+        "PLI0.OVL+189E": 1,
+        "PLI0.OVL+18AD": 1,
+        "PLI0.OVL+18BC": 1,
+        "PLI2.OVL+82A6": 1,
+        "PLI2.OVL+7711": 7,
+        "PLI2.OVL+775A": 7,
+        "PLI2.OVL+777D": 7,
+        "PLI2.OVL+77A2": 35,
+        "PLI2.OVL+82E1": 1,
+        "PLI2.OVL+82F0": 1,
+        "PLI.COM+126E": 1
+      },
+      "pre_guest": 335133,
+      "post_guest": 320378,
+      "instructions_saved": 14755,
+      "pre_host": 89,
+      "post_host": 114,
+      "net_host_delta": 25
+    },
+    {
+      "source": "FIZZBUZ",
+      "roots": 148,
+      "absorbed_native": {},
+      "logical_internal": {
+        "PLI.COM+1140": 1719,
+        "PLI.COM+119E": 191,
+        "PLI2.OVL+753C": 191,
+        "PLI2.OVL+7550": 43
+      },
+      "serializer_absorbed": 191,
+      "serializer_remaining": 236,
+      "remaining_callers": {
+        "PLI0.OVL+188F": 1,
+        "PLI0.OVL+1993": 4,
+        "PLI0.OVL+19A5": 24,
+        "PLI0.OVL+189E": 1,
+        "PLI0.OVL+18AD": 1,
+        "PLI0.OVL+18BC": 1,
+        "PLI2.OVL+82A6": 1,
+        "PLI2.OVL+7711": 25,
+        "PLI2.OVL+775A": 25,
+        "PLI2.OVL+777D": 25,
+        "PLI2.OVL+77A2": 125,
+        "PLI2.OVL+82E1": 1,
+        "PLI2.OVL+82F0": 1,
+        "PLI.COM+126E": 1
+      },
+      "pre_guest": 723107,
+      "post_guest": 642630,
+      "instructions_saved": 80477,
+      "pre_host": 171,
+      "post_host": 319,
+      "net_host_delta": 148
+    },
+    {
+      "source": "PICTURE",
+      "roots": 27,
+      "absorbed_native": {},
+      "logical_internal": {
+        "PLI.COM+1140": 342,
+        "PLI.COM+119E": 38,
+        "PLI2.OVL+753C": 38,
+        "PLI2.OVL+7550": 11
+      },
+      "serializer_absorbed": 38,
+      "serializer_remaining": 99,
+      "remaining_callers": {
+        "PLI0.OVL+188F": 1,
+        "PLI0.OVL+1993": 4,
+        "PLI0.OVL+19A5": 24,
+        "PLI0.OVL+189E": 1,
+        "PLI0.OVL+18AD": 1,
+        "PLI0.OVL+18BC": 1,
+        "PLI0.OVL+3D33": 1,
+        "PLI0.OVL+3D4E": 6,
+        "PLI2.OVL+82A6": 1,
+        "PLI2.OVL+7711": 7,
+        "PLI2.OVL+775A": 7,
+        "PLI2.OVL+777D": 7,
+        "PLI2.OVL+77A2": 35,
+        "PLI2.OVL+82E1": 1,
+        "PLI2.OVL+82F0": 1,
+        "PLI.COM+126E": 1
+      },
+      "pre_guest": 382741,
+      "post_guest": 366662,
+      "instructions_saved": 16079,
+      "pre_host": 76,
+      "post_host": 103,
+      "net_host_delta": 27
+    }
+  ],
+  "suppression": "Exact corrected outer windows;756D/75CE absorb7557 and7619 absorbs75F1. Canonical writer/serializer/position children internal. Pass53/resident/acquisition roots remain enabled elsewhere.",
+  "economics": "New roots25/148/27;no existing Runner roots contained. Serializer leaves35/191/38 would add264 boundaries;compact roots200 save64 compared with that inferior leaf design. Higher callers add general pointer/structure generation, not a compact emission adapter."
+}

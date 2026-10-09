@@ -1,0 +1,405 @@
+{
+  "task": "PLI2_COMPACT_BYTE_FIELD_EMISSION_PASS_54",
+  "baseline": "3ea8fa04b3aee725a772f1365763306ea4ee4f62",
+  "selected_entries": [
+    "PLI2.OVL+7557",
+    "PLI2.OVL+756D",
+    "PLI2.OVL+75A7",
+    "PLI2.OVL+75CE",
+    "PLI2.OVL+75F1",
+    "PLI2.OVL+7619"
+  ],
+  "entrypoint_discovery": {
+    "search_anchor": "75D0",
+    "actual": "75CE",
+    "interpretation": "75D0 is third byte of LXI H,ADD7 at75CE, not an instruction boundary. Pass53825E CALL95D0 actually targets73D0 at runtime base2200; coordinate/report discovery, not behavior correction."
+  },
+  "laws": {
+    "PLI2.OVL+746F": {
+      "end": 29895,
+      "description": "Byte carrier with fresh clear policy gate",
+      "completeness": [
+        "stable",
+        "partial",
+        "partial"
+      ],
+      "contract": "Save C atADCC. Fresh LDA201D;RAR;JNC74C6 consumes actual bit0. RET preserves RAR flags and all other channels except HL=ADCC. Gate-set [747A,74C6) remainsRAW. Current-state bounded successful output:2029.bit0 clear,index<128,bit<8,nonzero wrapping position after each753C;immutable code/CALL word and nonalias scratch/stack/FCB/buffer/sentinel. Errors and unsupported aliases reject copied staging without live mutation. Canonical1140/119E/753C/7550 reused."
+    },
+    "PLI2.OVL+74C7": {
+      "end": 29968,
+      "description": "Second byte carrier with fresh clear policy gate",
+      "completeness": [
+        "stable",
+        "partial",
+        "partial"
+      ],
+      "contract": "Save C atADCF. Independently fresh LDA201D;RAR;JNC750F;RET with HL=ADCF. Gate-set [74D2,750F) remainsRAW. Current-state bounded successful output:2029.bit0 clear,index<128,bit<8,nonzero wrapping position after each753C;immutable code/CALL word and nonalias scratch/stack/FCB/buffer/sentinel. Errors and unsupported aliases reject copied staging without live mutation. Canonical1140/119E/753C/7550 reused."
+    },
+    "PLI2.OVL+7510": {
+      "end": 29993,
+      "description": "Word carrier with fresh clear policy gate",
+      "completeness": [
+        "stable",
+        "partial",
+        "partial"
+      ],
+      "contract": "Save B atADD1 then C atADD0. Fresh LDA201D;RAR;JNC7528. RET with HL=ADD0 and actual RAR flags. Gate-set [751D,7528) remainsRAW. Current-state bounded successful output:2029.bit0 clear,index<128,bit<8,nonzero wrapping position after each753C;immutable code/CALL word and nonalias scratch/stack/FCB/buffer/sentinel. Errors and unsupported aliases reject copied staging without live mutation. Canonical1140/119E/753C/7550 reused."
+    },
+    "PLI2.OVL+7557": {
+      "end": 30061,
+      "description": "Zero-prefixed byte with one position publication",
+      "completeness": [
+        "stable",
+        "complete",
+        "partial"
+      ],
+      "contract": "Save C atADD2. Set C0;CALL1140 at755D. Independently paired-read ADD2 (adjacent ADD3 also read);C=L,E8;CALL119E at7566. CALL753C at7569;RET actual child state. Current-state bounded successful output:2029.bit0 clear,index<128,bit<8,nonzero wrapping position after each753C;immutable code/CALL word and nonalias scratch/stack/FCB/buffer/sentinel. Errors and unsupported aliases reject copied staging without live mutation. Canonical1140/119E/753C/7550 reused."
+    },
+    "PLI2.OVL+756D": {
+      "end": 30119,
+      "description": "Combined byte-field carrier and emission policy",
+      "completeness": [
+        "stable",
+        "complete",
+        "partial"
+      ],
+      "contract": "Save E atADD4 then C atADD3. Fresh saved C minusC2 then minus1 followed by SBB A forms equality mask; PUSH PSW. Independently saved E minus09 then minus1/SBB A forms second mask. POP B preserves first A/mask in B;C=B;ANA C;RAR;when CY1 set ADD4=1. Fresh saved E OR saved C to C;CALL746F at7598. Independently reread both carriers and OR again;CALL7557 at75A3. RET actual final state. Normalization requires C=C2 and E=09 from arithmetic, never invocation identity. Current-state bounded successful output:2029.bit0 clear,index<128,bit<8,nonzero wrapping position after each753C;immutable code/CALL word and nonalias scratch/stack/FCB/buffer/sentinel. Errors and unsupported aliases reject copied staging without live mutation. Canonical1140/119E/753C/7550 reused."
+    },
+    "PLI2.OVL+75A7": {
+      "end": 30158,
+      "description": "Guarded zero-prefixed byte with position publication",
+      "completeness": [
+        "stable",
+        "partial",
+        "partial"
+      ],
+      "contract": "Save C atADD5. Fresh201D;RAR;JNC75BC. Gate-set [75B2,75BC) unsupported. C0 CALL1140 at75BE;independent paired-readADD5,C=L,E8 CALL119E at75C7;CALL753C at75CA;RET actual state. Current-state bounded successful output:2029.bit0 clear,index<128,bit<8,nonzero wrapping position after each753C;immutable code/CALL word and nonalias scratch/stack/FCB/buffer/sentinel. Errors and unsupported aliases reject copied staging without live mutation. Canonical1140/119E/753C/7550 reused."
+    },
+    "PLI2.OVL+75CE": {
+      "end": 30193,
+      "description": "Shifted field byte carrier and emission policy",
+      "completeness": [
+        "stable",
+        "complete",
+        "partial"
+      ],
+      "contract": "Save E atADD7 then C atADD6. Fresh paired-readADD6;C=L;CALL746F at75D8. Independently paired-readADD7 includingADD8;C=L;CALL74C7 at75DF. Fresh saved E;three ADD A modulo256;fresh saved C OR shifted E;C=A;CALL7557 at75ED. RET actual final state. No modern field masks introduced. Current-state bounded successful output:2029.bit0 clear,index<128,bit<8,nonzero wrapping position after each753C;immutable code/CALL word and nonalias scratch/stack/FCB/buffer/sentinel. Errors and unsupported aliases reject copied staging without live mutation. Canonical1140/119E/753C/7550 reused."
+    },
+    "PLI2.OVL+75F1": {
+      "end": 30233,
+      "description": "Two independently zero-prefixed cached word bytes",
+      "completeness": [
+        "stable",
+        "complete",
+        "partial"
+      ],
+      "contract": "Save B atADD9 then C atADD8. C0 CALL1140 at75F9;paired-readADD8,A=L,C=A,E8 CALL119E at7603. Independently C0 CALL1140 at7608;paired-readADD8 again,A=H,C=A,E8 CALL119E at7612. CALL7550 at7615 for two independent753C operations;RET actual state. No tagged-word substitution. Current-state bounded successful output:2029.bit0 clear,index<128,bit<8,nonzero wrapping position after each753C;immutable code/CALL word and nonalias scratch/stack/FCB/buffer/sentinel. Errors and unsupported aliases reject copied staging without live mutation. Canonical1140/119E/753C/7550 reused."
+    },
+    "PLI2.OVL+7619": {
+      "end": 30256,
+      "description": "Cached word carrier policy and two-byte emission",
+      "completeness": [
+        "stable",
+        "complete",
+        "partial"
+      ],
+      "contract": "Save B atADDB then C atADDA. Fresh paired-readADDA toBC;CALL7510 at7624. Independently paired-readADDA again toBC;CALL75F1 at762C;RET actual child state. Current-state bounded successful output:2029.bit0 clear,index<128,bit<8,nonzero wrapping position after each753C;immutable code/CALL word and nonalias scratch/stack/FCB/buffer/sentinel. Errors and unsupported aliases reject copied staging without live mutation. Canonical1140/119E/753C/7550 reused."
+    }
+  },
+  "topology": {
+    "MINIMAL": {
+      "members": {
+        "PLI2.OVL+7557": {
+          "logical": 13,
+          "external": 0
+        },
+        "PLI2.OVL+756D": {
+          "logical": 7,
+          "external": 7
+        },
+        "PLI2.OVL+75A7": {
+          "logical": 2,
+          "external": 2
+        },
+        "PLI2.OVL+75CE": {
+          "logical": 6,
+          "external": 6
+        },
+        "PLI2.OVL+75F1": {
+          "logical": 10,
+          "external": 7
+        },
+        "PLI2.OVL+7619": {
+          "logical": 3,
+          "external": 3
+        }
+      },
+      "roots": 25,
+      "absorbed_native": {},
+      "net_new_transitions": 25,
+      "serializer_before": 127,
+      "serializer_absorbed": 35,
+      "serializer_remaining": 92,
+      "remaining_callers": {
+        "PLI0.OVL+188F": 1,
+        "PLI0.OVL+1993": 4,
+        "PLI0.OVL+19A5": 24,
+        "PLI0.OVL+189E": 1,
+        "PLI0.OVL+18AD": 1,
+        "PLI0.OVL+18BC": 1,
+        "PLI2.OVL+82A6": 1,
+        "PLI2.OVL+7711": 7,
+        "PLI2.OVL+775A": 7,
+        "PLI2.OVL+777D": 7,
+        "PLI2.OVL+77A2": 35,
+        "PLI2.OVL+82E1": 1,
+        "PLI2.OVL+82F0": 1,
+        "PLI.COM+126E": 1
+      },
+      "logical_children": {
+        "PLI.COM+1140": 315,
+        "PLI.COM+119E": 35,
+        "PLI2.OVL+753C": 35,
+        "PLI2.OVL+7550": 10
+      }
+    },
+    "FIZZBUZ": {
+      "members": {
+        "PLI2.OVL+7557": {
+          "logical": 94,
+          "external": 28
+        },
+        "PLI2.OVL+756D": {
+          "logical": 33,
+          "external": 33
+        },
+        "PLI2.OVL+75A7": {
+          "logical": 11,
+          "external": 11
+        },
+        "PLI2.OVL+75CE": {
+          "logical": 33,
+          "external": 33
+        },
+        "PLI2.OVL+75F1": {
+          "logical": 43,
+          "external": 25
+        },
+        "PLI2.OVL+7619": {
+          "logical": 18,
+          "external": 18
+        }
+      },
+      "roots": 148,
+      "absorbed_native": {},
+      "net_new_transitions": 148,
+      "serializer_before": 427,
+      "serializer_absorbed": 191,
+      "serializer_remaining": 236,
+      "remaining_callers": {
+        "PLI0.OVL+188F": 1,
+        "PLI0.OVL+1993": 4,
+        "PLI0.OVL+19A5": 24,
+        "PLI0.OVL+189E": 1,
+        "PLI0.OVL+18AD": 1,
+        "PLI0.OVL+18BC": 1,
+        "PLI2.OVL+82A6": 1,
+        "PLI2.OVL+7711": 25,
+        "PLI2.OVL+775A": 25,
+        "PLI2.OVL+777D": 25,
+        "PLI2.OVL+77A2": 125,
+        "PLI2.OVL+82E1": 1,
+        "PLI2.OVL+82F0": 1,
+        "PLI.COM+126E": 1
+      },
+      "logical_children": {
+        "PLI.COM+1140": 1719,
+        "PLI.COM+119E": 191,
+        "PLI2.OVL+753C": 191,
+        "PLI2.OVL+7550": 43
+      }
+    },
+    "PICTURE": {
+      "members": {
+        "PLI2.OVL+7557": {
+          "logical": 15,
+          "external": 2
+        },
+        "PLI2.OVL+756D": {
+          "logical": 7,
+          "external": 7
+        },
+        "PLI2.OVL+75A7": {
+          "logical": 1,
+          "external": 1
+        },
+        "PLI2.OVL+75CE": {
+          "logical": 6,
+          "external": 6
+        },
+        "PLI2.OVL+75F1": {
+          "logical": 11,
+          "external": 7
+        },
+        "PLI2.OVL+7619": {
+          "logical": 4,
+          "external": 4
+        }
+      },
+      "roots": 27,
+      "absorbed_native": {},
+      "net_new_transitions": 27,
+      "serializer_before": 137,
+      "serializer_absorbed": 38,
+      "serializer_remaining": 99,
+      "remaining_callers": {
+        "PLI0.OVL+188F": 1,
+        "PLI0.OVL+1993": 4,
+        "PLI0.OVL+19A5": 24,
+        "PLI0.OVL+189E": 1,
+        "PLI0.OVL+18AD": 1,
+        "PLI0.OVL+18BC": 1,
+        "PLI0.OVL+3D33": 1,
+        "PLI0.OVL+3D4E": 6,
+        "PLI2.OVL+82A6": 1,
+        "PLI2.OVL+7711": 7,
+        "PLI2.OVL+775A": 7,
+        "PLI2.OVL+777D": 7,
+        "PLI2.OVL+77A2": 35,
+        "PLI2.OVL+82E1": 1,
+        "PLI2.OVL+82F0": 1,
+        "PLI.COM+126E": 1
+      },
+      "logical_children": {
+        "PLI.COM+1140": 342,
+        "PLI.COM+119E": 38,
+        "PLI2.OVL+753C": 38,
+        "PLI2.OVL+7550": 11
+      }
+    }
+  },
+  "contracts": {
+    "PLI.COM+1140": {
+      "hash": "d24042cb70146e7ad2ac123b354691b4a39e717ad515174b6963aab89a813a90",
+      "completeness": {
+        "bounds": "provisional",
+        "control_flow": "partial",
+        "contract": "partial"
+      }
+    },
+    "PLI.COM+119E": {
+      "hash": "1d2e7ccc485f38fc13d48e57bd128e1288398c5242784cb07f92172e8a0256d1",
+      "completeness": {
+        "bounds": "stable",
+        "control_flow": "complete",
+        "contract": "partial"
+      }
+    },
+    "PLI.COM+11E5": {
+      "hash": "5639543e380f3e8d044c01054fed6a6e37e2dcf62214ef3b5ca374317d7c4c65",
+      "completeness": {
+        "bounds": "stable",
+        "control_flow": "complete",
+        "contract": "partial"
+      }
+    },
+    "PLI.COM+1207": {
+      "hash": "06d06c5cb853a98078eda10aeb2ea524e1018888a776fc31bfbd7a78efc52ac0",
+      "completeness": {
+        "bounds": "stable",
+        "control_flow": "complete",
+        "contract": "partial"
+      }
+    },
+    "PLI.COM+1A29": {
+      "hash": "6e3ce06bac1e65a6aa806bc57537cc544724c709c66aa77d7486b9323fd2f96d",
+      "completeness": {
+        "bounds": "stable",
+        "control_flow": "complete",
+        "contract": "complete"
+      }
+    },
+    "PLI2.OVL+753C": {
+      "hash": "de3c1e58fda0b4ebb593a5e6a19c3388c8ace6576a83b8d7b7e85bc575625399",
+      "completeness": {
+        "bounds": "stable",
+        "control_flow": "partial",
+        "contract": "partial"
+      }
+    },
+    "PLI2.OVL+7550": {
+      "hash": "d172ed5938646ef834b94fc0b93150133228877860c625a5bba29e3fdfc00f76",
+      "completeness": {
+        "bounds": "stable",
+        "control_flow": "complete",
+        "contract": "partial"
+      }
+    }
+  },
+  "stack": "Original CALL slotS retained;ordinary child CALL words belowS.756D PUSH PSW at757B later POP B carries first mask, not flags. No invented private frame;RET outerSP=S+2. Writer/service/position frames preserved canonically.",
+  "immediate_parents": {
+    "rejected": [
+      "78E9 adds independent7897 policy andADFF carrier;one byte child,no transition advantage",
+      "7903 addsAE00/AE01 type comparisons andADCA publication before73A7/75CE",
+      "793C copies indexedADAB/ADB3 channels before emission",
+      "7B1B addsA8/07 masks,B8 branch and7397 policy",
+      "7701 pointer-dependent general generation",
+      "8225 joins79E2/7A17/73D0/756D/7701",
+      "8072 and8145 independent register/context generation",
+      "793C/7B1B structure/index-dependent generation",
+      "7D05/7D47/7E05 pointer generation"
+    ],
+    "selected": "756D/75CE absorb7557;7619 absorbs75F1. Other7557/75F1 calls and75A7 remain accepted compact roots. No climb beyond general-generation boundary."
+  },
+  "oracle_queries": 0,
+  "proof_counts": {
+    "MINIMAL": {
+      "PLI2.OVL+7557": 13,
+      "PLI2.OVL+756D": 7,
+      "PLI2.OVL+75A7": 2,
+      "PLI2.OVL+75CE": 6,
+      "PLI2.OVL+75F1": 10,
+      "PLI2.OVL+7619": 3,
+      "PLI2.OVL+746F": 13,
+      "PLI2.OVL+74C7": 6,
+      "PLI2.OVL+7510": 3,
+      "PLI2.OVL+7550": 12,
+      "PLI2.OVL+753C": 39,
+      "PLI.COM+1A29": 43
+    },
+    "FIZZBUZ": {
+      "PLI2.OVL+7557": 94,
+      "PLI2.OVL+756D": 33,
+      "PLI2.OVL+75A7": 11,
+      "PLI2.OVL+75CE": 33,
+      "PLI2.OVL+75F1": 43,
+      "PLI2.OVL+7619": 18,
+      "PLI2.OVL+746F": 94,
+      "PLI2.OVL+74C7": 63,
+      "PLI2.OVL+7510": 19,
+      "PLI2.OVL+7550": 66,
+      "PLI2.OVL+753C": 237,
+      "PLI.COM+1A29": 249
+    },
+    "PICTURE": {
+      "PLI2.OVL+7557": 15,
+      "PLI2.OVL+756D": 7,
+      "PLI2.OVL+75A7": 1,
+      "PLI2.OVL+75CE": 6,
+      "PLI2.OVL+75F1": 11,
+      "PLI2.OVL+7619": 4,
+      "PLI2.OVL+746F": 15,
+      "PLI2.OVL+74C7": 6,
+      "PLI2.OVL+7510": 4,
+      "PLI2.OVL+7550": 15,
+      "PLI2.OVL+753C": 46,
+      "PLI.COM+1A29": 52
+    }
+  },
+  "proof_hashes": {
+    "shadow-summary.json": "33c8b142d737f1d38f2de129f24aa223761a2b33767696bde00d8f5c3b0ce033",
+    "hierarchy-summary.json": "9e4f54acd6002b324114dcc37813f0533be58b5d5d8d5802a5178b24351db2e2",
+    "single-hybrid-summary.json": "3d83935b6704a6086c3254f1b314d1961ee76cafbeb40729a348639eb004d09a",
+    "cumulative-hybrid-summary.json": "9c142e84b46cc3f9de51c8fbf49a0418dc0e08db6903bdb0ff776e6c8e375062"
+  }
+}

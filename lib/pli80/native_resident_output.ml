@@ -44,7 +44,7 @@ let shadow ?(offset=0x1272) ?(within=[]) ?(run_negatives=true) input=
     let planned_calls=List.filter_map(fun(w:B.write)->if w.kind="compatibility"&&w.address mod 2=entry.sp mod 2&&Char.code(Bytes.get (if w.writer>=0x2200 then input.pli2_ovl else input.pli_com)(w.writer-(if w.writer>=0x2200 then 0x2200 else 0x100)))=0xcd then Some w.writer else None)p.journal in
     require(List.rev !calls=planned_calls)"child CALL chronology";
     require(not(Hashtbl.mem latest entry.sp)&&not(Hashtbl.mem latest(entry.sp+1)))"original continuation lifetime";
-    cases:={Q.caller=call.coordinate;entry_step;return_step=step_index-1;input=entry;output=state;route=(if offset=0x1272 then"pending_REL_padding_and_close"else if offset=0x119e then"counted_bits"else if offset=0x1140 then"append_bit"else"tagged_cached_word");entry_memory_sha256=Experiment.sha256_hex ram;post_memory_sha256=Experiment.sha256_hex preview.memory;stack_cells=List.length(compatibility_writes p);logical_writes=List.length p.logical_writes;prepared=p;services=preview.services;entry_dma=dma;post_dma=preview.dma}::!cases;
+    cases:={Q.caller=call.coordinate;entry_step;return_step=step_index-1;input=entry;output=state;route=(if offset=0x1272 then"pending_REL_padding_and_close"else if offset=0x119e then"counted_bits"else if offset=0x1140 then"append_bit"else match List.assoc_opt offset[0x7557,"zero_prefixed_byte";0x756d,"normalized_combined_field";0x75a7,"clear_gate_zero_prefixed_byte";0x75ce,"shifted_field_byte";0x75f1,"two_zero_prefixed_word_bytes";0x7619,"word_carrier_and_byte_pair";0x746f,"clear_gate_byte_carrier";0x74c7,"clear_gate_second_byte_carrier";0x7510,"clear_gate_word_carrier"]with Some route->route|None->"tagged_cached_word");entry_memory_sha256=Experiment.sha256_hex ram;post_memory_sha256=Experiment.sha256_hex preview.memory;stack_cells=List.length(compatibility_writes p);logical_writes=List.length p.logical_writes;prepared=p;services=preview.services;entry_dma=dma;post_dma=preview.dma}::!cases;
     snapshots:=(entry_step,{Q.entry_memory=ram;post_memory=preview.memory;entry_files=files;post_files=boundary.copy_filesystem()})::!snapshots;active:=None
    |_->());
   (match !active with Some(_,_,_,_,_,_,_,(preview:Runner.host_program_result),_,_,_)when state.pc=5->
@@ -66,7 +66,7 @@ let shadow ?(offset=0x1272) ?(within=[]) ?(run_negatives=true) input=
    rejects(fun()->prepare bridge offset ~call ~origin:o{boundary with state={state with sp=0x20b6}});
    rejects(fun()->prepare bridge offset ~call ~origin:o(altered[state.pc,0]));
    rejects(fun()->prepare bridge offset ~call ~origin:o(altered[state.sp,(Char.code(Bytes.get ram state.sp) lxor 1)]));
-   if not(List.mem offset[0x7550;0x753c])then List.iter(fun edits->rejects(fun()->prepare bridge offset ~call ~origin:o(altered edits)))[[0x2029,1];[0x1d8a,128];[0x1d8b,8];[0x2155,0x0a;0x2156,0x1d]];
+   if not(List.mem offset[0x7550;0x753c;0x746f;0x74c7;0x7510])then List.iter(fun edits->rejects(fun()->prepare bridge offset ~call ~origin:o(altered edits)))[[0x2029,1];[0x1d8a,128];[0x1d8b,8];[0x2155,0x0a;0x2156,0x1d]];
    if offset=0x1272 then(
     rejects(fun()->prepare bridge offset ~call ~origin:o(altered[0x1d05,0]));
     (* Synthetic current indices drive padding; no oracle or live mutation. *)
@@ -98,9 +98,29 @@ let shadow ?(offset=0x1272) ?(within=[]) ?(run_negatives=true) input=
      require(List.map(fun(s:Runner.host_service)->s.call_state.c)result.services=(if !records=[]then[]else[26;21]))"synthetic flush service chronology"
     )[1,0,0x0001;1,0,0x0100;127,7,0xa55a]);
    if run_negatives && offset>=0x2200 then(
+    if List.mem offset[0x746f;0x74c7;0x7510;0x756d;0x75a7;0x75ce;0x7619]then rejects(fun()->prepare bridge offset ~call ~origin:o(altered[0x201d,1]));
     rejects(fun()->prepare bridge offset ~call ~origin:o(altered[0x9745,0]));
     let cache=if offset=0x7434 then 0xadc6 else if offset=0x7630 then 0xaddc else 0xade0 in
     rejects(fun()->prepare bridge offset ~call ~origin:o(altered[0x2155,cache land 255;0x2156,cache lsr 8]));
+    if List.mem offset[0x7557;0x756d;0x75a7;0x75ce;0x75f1;0x7619]then(
+     rejects(fun()->prepare bridge offset ~call ~origin:o(altered[0x1c2c,0xff;0x1c2d,0xff]));
+     List.iter(fun(index,bits,value,field)->
+      let staged=altered[0x1d8a,index;0x1d8b,bits;0x1c2c,0;0x1c2d,0]in
+      let staged={staged with state={state with b=value lsr 8;c=value land 255;e=field}}in
+      let plan=prepare bridge offset ~call ~origin:o staged in
+      let result=match staged.preview_host_program plan.program with Ok r->r|Error e->failwith e in
+      let byte=if offset=0x756d then (value land 255)lor(if value land 255=0xc2&&field=9 then 1 else field)
+       else if offset=0x75ce then(value land 255)lor((field lsl 3)land 255)else value land 255 in
+      let bytes=if List.mem offset[0x75f1;0x7619]then[value land 255;value lsr 8]else[byte]in
+      let incoming=List.concat_map(fun v->0::List.init 8(fun i->(v lsr(7-i))land 1))bytes in
+      let buffer=Bytes.sub ram 0x1d0a 128 and cursor=ref index and bit=ref bits and records=ref[]in
+      List.iter(fun value->let old=Char.code(Bytes.get buffer !cursor)in Bytes.set buffer !cursor(Char.chr(((old lsl 1)lor value)land 255));incr bit;if !bit=8 then(bit:=0;incr cursor;if !cursor=128 then(records:=Bytes.copy buffer::!records;cursor:=0)))incoming;
+      require(Bytes.sub result.memory 0x1d0a 128=buffer)"independent compact field bit stream";
+      require(Char.code(Bytes.get result.memory 0x1d8a)= !cursor&&Char.code(Bytes.get result.memory 0x1d8b)= !bit)"compact wrapping cursor";
+      let actual=List.concat_map(fun(s:Runner.host_service)->List.filter_map(function Cpm.Bdos.Write_record r->Some r.data|_->None)s.events)result.services in
+      require(actual=List.rev !records)"compact synthetic record chronology";
+      require(Char.code(Bytes.get result.memory 0x1c2c)=List.length bytes&&Char.code(Bytes.get result.memory 0x1c2d)=0)"compact position law"
+     )[1,0,0,0;1,0,0x0080,1;1,0,0x0100,8;127,7,0xa5c2,9;1,0,0xc2,8;1,0,0xc3,9]);
     if List.mem offset[0x7434;0x7630;0x765e]then(
      List.iter(fun(index,bits,value)->
       let staged=altered[0x1d8a,index;0x1d8b,bits;0x1c2c,0;0x1c2d,0]in
