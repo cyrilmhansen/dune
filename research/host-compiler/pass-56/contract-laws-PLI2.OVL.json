@@ -1,0 +1,52 @@
+{
+  "PLI2.OVL+79E2": {
+    "end": 31255,
+    "description": "Fresh AE05 zero preparation gate",
+    "contract": "Fresh LDA AE05;CPI0;actual Z selects early RET79EA. A=0,BC/DE/HL preserved,flags from comparison. Nonzero JNZ79EB enters unproved arm,fail closed. Envelope provisional;only9 own bytes causally understood. Copied transactional staging validates immutable code,CALL/continuation,nonalias scratch/stack/buffer/FCB/sentinel. Successful writer,clear201C/201D bit0,nonzero753C position increments and nonwrapping pointed field scope inherited from canonical7701/756D;unsupported states reject before live mutation. No source/caller/call-step/snapshot semantics.",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ]
+  },
+  "PLI2.OVL+7A17": {
+    "end": 31310,
+    "description": "Fresh AE04 zero preparation gate",
+    "contract": "Independently fresh LDA AE04;CPI0;actual Z selects RET7A1F. A=0,BC/DE/HL preserved,flags from comparison. Nonzero7A20..7A4D alternatives unsupported;three FIZZBUZ calls via79B6/7903 are outside required root and retained as counter-scope evidence. Only9 own bytes promoted. Copied transactional staging validates immutable code,CALL/continuation,nonalias scratch/stack/buffer/FCB/sentinel. Successful writer,clear201C/201D bit0,nonzero753C position increments and nonwrapping pointed field scope inherited from canonical7701/756D;unsupported states reject before live mutation. No source/caller/call-step/snapshot semantics.",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ]
+  },
+  "PLI2.OVL+73D0": {
+    "end": 29694,
+    "description": "Bit-gated eight-byte carrier reset",
+    "contract": "Fresh LDA ADAA;RAR;JC consumes actual oldA.bit0. If clear,RET73D7 with actual rotated A and preserved NZPA. If set,publish ADAA=0,ADC4=0;loop fresh index,compare literal7 with memoryADC4,exit iff index>7;paired-read ADC4 includingADC5,zeroextendL,add ADAB modulo16,publish byte=0;independently reread/increment ADC4;INR Z selects repeat;RET73FD. No fixed fixture iteration schedule;literal7 and initialization0 are encoded historical operations. Final index8;BC=ADAB,HL=ADC4,A7;flags from finalCMP,DE preserved. Copied transactional staging validates immutable code,CALL/continuation,nonalias scratch/stack/buffer/FCB/sentinel. Successful writer,clear201C/201D bit0,nonzero753C position increments and nonwrapping pointed field scope inherited from canonical7701/756D;unsupported states reject before live mutation. No source/caller/call-step/snapshot semantics.",
+    "completeness": [
+      "stable",
+      "complete",
+      "complete"
+    ]
+  },
+  "PLI2.OVL+8225": {
+    "end": 33352,
+    "description": "Saved tag/pointer preparation and REL generation",
+    "contract": "Save D atAE63,E atAE62,C atAE61 high/pointer/tag order. Canonical79E2 then7A17 then73D0. Fresh paired-readAE61 includes pointer-low channel;C=L,E9;canonical756D. Fresh paired-readAE62 toBC;canonical7701. RET actual child state. Preparation only supported at AE05=AE04=0;no tag semantic interpretation. C2/09 normalization remains canonical756D algorithm. All visible publications retained. Copied transactional staging validates immutable code,CALL/continuation,nonalias scratch/stack/buffer/FCB/sentinel. Successful writer,clear201C/201D bit0,nonzero753C position increments and nonwrapping pointed field scope inherited from canonical7701/756D;unsupported states reject before live mutation. No source/caller/call-step/snapshot semantics.",
+    "completeness": [
+      "stable",
+      "complete",
+      "partial"
+    ]
+  },
+  "PLI2.OVL+8248": {
+    "end": 33368,
+    "description": "Fixed-C4 saved-pointer generation adapter",
+    "contract": "Save B atAE65 then C atAE64. Independently LHLD AE64;XCHG;DE=fresh saved pointer. Literal C=C4 encoded at entry. Invoke canonical8225;RET actual child state. C4 item meaning remains unproved. Copied transactional staging validates immutable code,CALL/continuation,nonalias scratch/stack/buffer/FCB/sentinel. Successful writer,clear201C/201D bit0,nonzero753C position increments and nonwrapping pointed field scope inherited from canonical7701/756D;unsupported states reject before live mutation. No source/caller/call-step/snapshot semantics.",
+    "completeness": [
+      "stable",
+      "complete",
+      "partial"
+    ]
+  }
+}

@@ -419,7 +419,24 @@ let run operation memory ~entry ~write ~compatibility ~adjust ~sp ~guard_field ~
     c !q.a;e 8;resident 0x77a2 0x119e bits_write;
     a(read 0x201c);hl 0x201d;logical false(read !q.hl);rar();need(not !q.flags.carry)"7701 combined mode alternative";
     hl 0xadec;let value=inc(read !q.hl)in put 0x77ba !q.hl value;if not !q.flags.zero then emit())in emit()in
- let pli2_output offset=match offset with
+ let preparation79e2()=a(read 0xae05);cmp 0;need !q.flags.zero "79E2 nonzero preparation arm"in
+ let preparation7a17()=a(read 0xae04);cmp 0;need !q.flags.zero "7A17 nonzero generation arm"in
+ let reset73d0()=
+  a(read 0xadaa);rar();if !q.flags.carry then(
+   hl 0xadaa;put 0x73db !q.hl 0;hl 0xadc4;put 0x73e0 !q.hl 0;
+   let rec clear()=a 7;hl 0xadc4;cmp(read !q.hl);if not !q.flags.carry then(
+    pair 0xadc4;hl(!q.hl land 255);bc 0xadab;dad !q.bc;put 0x73f4 !q.hl 0;
+    hl 0xadc4;let value=inc(read !q.hl)in put 0x73f9 !q.hl value;if not !q.flags.zero then clear())in clear())in
+ let rec pli2_output offset=match offset with
+ |0x79e2->preparation79e2()|0x7a17->preparation7a17()|0x73d0->reset73d0()
+ |0x8225->
+  hl 0xae63;put 0x8228 !q.hl(!q.de lsr 8);hl(!q.hl-1);put 0x822a !q.hl(!q.de land 255);hl(!q.hl-1);put 0x822c !q.hl(!q.bc land 255);
+  call 0x822d 0x79e2 preparation79e2;call 0x8230 0x7a17 preparation7a17;call 0x8233 0x73d0 reset73d0;
+  pair 0xae61;c(!q.hl land 255);e 9;call 0x823c 0x756d(fun()->pli2_output 0x756d);
+  pair 0xae62;bc !q.hl;call 0x8244 0x7701 pointer_generation
+ |0x8248->
+  hl 0xae65;put 0x824b !q.hl(!q.bc lsr 8);hl(!q.hl-1);put 0x824d !q.hl(!q.bc land 255);
+  pair 0xae64;exchange();c 0xc4;call 0x8254 0x8225(fun()->pli2_output 0x8225)
  |0x7701->pointer_generation()
  |0x753c->position_step()|0x7550->position_pair()
  |0x746f->carrier 0x746f 0xadcc false ()

@@ -152,3 +152,7 @@
 (executable
  (name native_pli2_pointer_generation)
  (libraries pli80 pli80_host cpm i8080 runner analysis unix))
+
+(executable
+ (name native_external_reference_generation)
+ (libraries pli80 unix))
