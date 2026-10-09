@@ -1,0 +1,998 @@
+{
+  "MINIMAL": {
+    "PLI.COM+1272": {
+      "count": 1,
+      "callers": {
+        "PLI.COM+02E3": 1
+      },
+      "services": {
+        "26": 2,
+        "21": 1,
+        "16": 1
+      },
+      "cases": [
+        {
+          "call": 409235,
+          "ret": 440427,
+          "caller": "PLI.COM+02E3",
+          "services": {
+            "26": 2,
+            "21": 1,
+            "16": 1
+          },
+          "console": "",
+          "file_event_count": 3,
+          "file_event_hash": "e53bfa8c481ca376d33aa70eca4a9893118b5a031c95f63db9479e2951fbbdf5",
+          "file_events": [
+            {
+              "step": 440324,
+              "operation": "write_record",
+              "file": {
+                "drive": 0,
+                "user": 0,
+                "name": "MINIMAL.REL",
+                "identity": "0:0:MINIMAL.REL"
+              },
+              "record": 1
+            },
+            {
+              "step": 440324,
+              "operation": "sequential_write",
+              "file": {
+                "drive": 0,
+                "user": 0,
+                "name": "MINIMAL.REL",
+                "identity": "0:0:MINIMAL.REL"
+              },
+              "record": 1
+            },
+            {
+              "step": 440422,
+              "operation": "close",
+              "file": {
+                "drive": 0,
+                "user": 0,
+                "name": "MINIMAL.REL",
+                "identity": "0:0:MINIMAL.REL"
+              },
+              "record": null
+            }
+          ]
+        }
+      ]
+    },
+    "PLI.COM+119E": {
+      "count": 189,
+      "callers": {
+        "PLI0.OVL+188F": 1,
+        "PLI0.OVL+1993": 4,
+        "PLI0.OVL+19A5": 24,
+        "PLI0.OVL+189E": 1,
+        "PLI0.OVL+18AD": 1,
+        "PLI0.OVL+18BC": 1,
+        "PLI.COM+11EF": 14,
+        "PLI.COM+11F9": 14,
+        "PLI.COM+1203": 14,
+        "PLI1.OVL+6692": 1,
+        "PLI.COM+1211": 2,
+        "PLI.COM+121B": 2,
+        "PLI.COM+1225": 2,
+        "PLI1.OVL+66EF": 7,
+        "PLI2.OVL+82A6": 1,
+        "PLI.COM+11CD": 1,
+        "PLI.COM+11D7": 1,
+        "PLI.COM+11E1": 1,
+        "PLI2.OVL+743E": 3,
+        "PLI2.OVL+7566": 13,
+        "PLI2.OVL+7603": 10,
+        "PLI2.OVL+7612": 10,
+        "PLI2.OVL+7711": 7,
+        "PLI2.OVL+775A": 7,
+        "PLI2.OVL+777D": 7,
+        "PLI2.OVL+77A2": 35,
+        "PLI2.OVL+75C7": 2,
+        "PLI2.OVL+82E1": 1,
+        "PLI2.OVL+82F0": 1,
+        "PLI.COM+126E": 1
+      },
+      "services": {
+        "26": 1,
+        "21": 1
+      },
+      "cases": [
+        {
+          "call": 79021,
+          "ret": 79324,
+          "caller": "PLI0.OVL+188F",
+          "services": {},
+          "console": "",
+          "file_event_count": 0,
+          "file_event_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "call": 79369,
+          "ret": 79509,
+          "caller": "PLI0.OVL+1993",
+          "services": {},
+          "console": "",
+          "file_event_count": 0,
+          "file_event_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "call": 79517,
+          "ret": 79867,
+          "caller": "PLI0.OVL+19A5",
+          "services": {},
+          "console": "",
+          "file_event_count": 0,
+          "file_event_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        }
+      ]
+    },
+    "PLI.COM+0692": {
+      "count": 3,
+      "callers": {
+        "PLI.COM+0283": 3
+      },
+      "services": {
+        "26": 689,
+        "15": 3,
+        "20": 680,
+        "16": 3
+      },
+      "cases": [
+        {
+          "call": 470,
+          "ret": 14305,
+          "caller": "PLI.COM+0283",
+          "services": {
+            "26": 145,
+            "15": 1,
+            "20": 142,
+            "16": 1
+          },
+          "console": "",
+          "file_event_count": 285,
+          "file_event_hash": "04780123649110accc48b31d82dc73be8ae0247ab778f7047e472b73f38c8221"
+        },
+        {
+          "call": 189525,
+          "ret": 215936,
+          "caller": "PLI.COM+0283",
+          "services": {
+            "26": 276,
+            "15": 1,
+            "20": 273,
+            "16": 1
+          },
+          "console": "",
+          "file_event_count": 547,
+          "file_event_hash": "688406de1aefb1bf10b95976dd6a7381f210facc6fd2c88209cc3c04d6f68b75"
+        },
+        {
+          "call": 289834,
+          "ret": 315477,
+          "caller": "PLI.COM+0283",
+          "services": {
+            "26": 268,
+            "15": 1,
+            "20": 265,
+            "16": 1
+          },
+          "console": "",
+          "file_event_count": 531,
+          "file_event_hash": "6266cfee0ba4d502db27e25787b4c88c2c44238c45c2f1204e44de085095f50c"
+        }
+      ]
+    },
+    "PLI.COM+0D09": {
+      "count": 2,
+      "callers": {
+        "PLI0.OVL+01DA": 1,
+        "PLI1.OVL+0135": 1
+      },
+      "services": {
+        "11": 4,
+        "2": 56
+      },
+      "cases": [
+        {
+          "call": 187690,
+          "ret": 189510,
+          "caller": "PLI0.OVL+01DA",
+          "services": {
+            "11": 2,
+            "2": 28
+          },
+          "console": "\r\n   NO ERROR(S) IN PASS 1\r\n",
+          "file_event_count": 0,
+          "file_event_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "call": 287979,
+          "ret": 289799,
+          "caller": "PLI1.OVL+0135",
+          "services": {
+            "11": 2,
+            "2": 28
+          },
+          "console": "\r\n   NO ERROR(S) IN PASS 2\r\n",
+          "file_event_count": 0,
+          "file_event_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        }
+      ]
+    },
+    "PLI.COM+1031": {
+      "count": 3,
+      "callers": {
+        "PLI0.OVL+01C6": 1,
+        "PLI1.OVL+010B": 1,
+        "PLI2.OVL+045A": 1
+      },
+      "services": {
+        "2": 290,
+        "11": 6,
+        "26": 16,
+        "19": 2,
+        "22": 2,
+        "15": 4,
+        "20": 6,
+        "21": 1,
+        "16": 1
+      },
+      "cases": [
+        {
+          "call": 49696,
+          "ret": 73254,
+          "caller": "PLI0.OVL+01C6",
+          "services": {
+            "2": 290,
+            "11": 4,
+            "26": 5,
+            "19": 1,
+            "22": 1,
+            "15": 1,
+            "20": 2
+          },
+          "console": "\f\r\n--------------------------------------------------\r\nPL/I-80 Compiler                       Version 1.4\r\nSerial No. 3032-0000-001130    All Rights Reserved\r\nCopyright (c) 1980-1982     Digital Research, Inc.\r\n--------------------------------------------------\r\n\r\nCOMPILATION OF: MINIMAL\r\n",
+          "file_event_count": 6,
+          "file_event_hash": "dc4ca0beb7f8861a82471ea2cc82d88398e30b376d58e3a48520d97720c708aa"
+        },
+        {
+          "call": 218262,
+          "ret": 223596,
+          "caller": "PLI1.OVL+010B",
+          "services": {
+            "26": 5,
+            "19": 1,
+            "22": 1,
+            "15": 1,
+            "11": 1,
+            "20": 2
+          },
+          "console": "",
+          "file_event_count": 6,
+          "file_event_hash": "8ad0fcb71b020977699abe700169ed6493ccf9a93da4ab74604ed1d4f8e90a7e"
+        },
+        {
+          "call": 318417,
+          "ret": 325135,
+          "caller": "PLI2.OVL+045A",
+          "services": {
+            "26": 6,
+            "21": 1,
+            "16": 1,
+            "15": 2,
+            "11": 1,
+            "20": 2
+          },
+          "console": "",
+          "file_event_count": 8,
+          "file_event_hash": "ec0e4fdb980090835abf0b72e3186b90b402a40ef98e1b8a232ffea8c51249fd"
+        }
+      ]
+    },
+    "PLI.COM+0611": {
+      "count": 3,
+      "callers": {
+        "PLI0.OVL+3760": 1,
+        "PLI1.OVL+0132": 1,
+        "PLI2.OVL+046B": 1
+      },
+      "services": {},
+      "cases": [
+        {
+          "call": 187661,
+          "ret": 187685,
+          "caller": "PLI0.OVL+3760",
+          "services": {},
+          "console": "",
+          "file_event_count": 0,
+          "file_event_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "call": 287954,
+          "ret": 287978,
+          "caller": "PLI1.OVL+0132",
+          "services": {},
+          "console": "",
+          "file_event_count": 0,
+          "file_event_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "call": 402795,
+          "ret": 402817,
+          "caller": "PLI2.OVL+046B",
+          "services": {},
+          "console": "",
+          "file_event_count": 0,
+          "file_event_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        }
+      ]
+    }
+  },
+  "FIZZBUZ": {
+    "PLI.COM+1272": {
+      "count": 1,
+      "callers": {
+        "PLI.COM+02E3": 1
+      },
+      "services": {
+        "26": 2,
+        "21": 1,
+        "16": 1
+      },
+      "cases": [
+        {
+          "call": 1099096,
+          "ret": 1144089,
+          "caller": "PLI.COM+02E3",
+          "services": {
+            "26": 2,
+            "21": 1,
+            "16": 1
+          },
+          "console": "",
+          "file_event_count": 3,
+          "file_event_hash": "0edd695ee119d9dae20414b80fb9cb3078928701debd9a2bcd44421cfc2b99da",
+          "file_events": [
+            {
+              "step": 1143986,
+              "operation": "write_record",
+              "file": {
+                "drive": 0,
+                "user": 0,
+                "name": "FIZZBUZ.REL",
+                "identity": "0:0:FIZZBUZ.REL"
+              },
+              "record": 5
+            },
+            {
+              "step": 1143986,
+              "operation": "sequential_write",
+              "file": {
+                "drive": 0,
+                "user": 0,
+                "name": "FIZZBUZ.REL",
+                "identity": "0:0:FIZZBUZ.REL"
+              },
+              "record": 5
+            },
+            {
+              "step": 1144084,
+              "operation": "close",
+              "file": {
+                "drive": 0,
+                "user": 0,
+                "name": "FIZZBUZ.REL",
+                "identity": "0:0:FIZZBUZ.REL"
+              },
+              "record": null
+            }
+          ]
+        }
+      ]
+    },
+    "PLI.COM+119E": {
+      "count": 703,
+      "callers": {
+        "PLI0.OVL+188F": 1,
+        "PLI0.OVL+1993": 4,
+        "PLI0.OVL+19A5": 24,
+        "PLI0.OVL+189E": 1,
+        "PLI0.OVL+18AD": 1,
+        "PLI0.OVL+18BC": 1,
+        "PLI.COM+11EF": 63,
+        "PLI.COM+11F9": 63,
+        "PLI.COM+1203": 63,
+        "PLI1.OVL+6692": 3,
+        "PLI.COM+1211": 14,
+        "PLI.COM+121B": 14,
+        "PLI.COM+1225": 14,
+        "PLI1.OVL+66EF": 16,
+        "PLI2.OVL+82A6": 1,
+        "PLI.COM+11CD": 1,
+        "PLI.COM+11D7": 1,
+        "PLI.COM+11E1": 1,
+        "PLI2.OVL+743E": 23,
+        "PLI2.OVL+7566": 94,
+        "PLI2.OVL+7603": 43,
+        "PLI2.OVL+7612": 43,
+        "PLI2.OVL+7711": 25,
+        "PLI2.OVL+775A": 25,
+        "PLI2.OVL+777D": 25,
+        "PLI2.OVL+77A2": 125,
+        "PLI2.OVL+75C7": 11,
+        "PLI2.OVL+82E1": 1,
+        "PLI2.OVL+82F0": 1,
+        "PLI.COM+126E": 1
+      },
+      "services": {
+        "26": 5,
+        "21": 5
+      },
+      "cases": [
+        {
+          "call": 79041,
+          "ret": 79344,
+          "caller": "PLI0.OVL+188F",
+          "services": {},
+          "console": "",
+          "file_event_count": 0,
+          "file_event_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "call": 79389,
+          "ret": 79529,
+          "caller": "PLI0.OVL+1993",
+          "services": {},
+          "console": "",
+          "file_event_count": 0,
+          "file_event_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "call": 79537,
+          "ret": 79887,
+          "caller": "PLI0.OVL+19A5",
+          "services": {},
+          "console": "",
+          "file_event_count": 0,
+          "file_event_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        }
+      ]
+    },
+    "PLI.COM+0692": {
+      "count": 3,
+      "callers": {
+        "PLI.COM+0283": 3
+      },
+      "services": {
+        "26": 689,
+        "15": 3,
+        "20": 680,
+        "16": 3
+      },
+      "cases": [
+        {
+          "call": 470,
+          "ret": 14305,
+          "caller": "PLI.COM+0283",
+          "services": {
+            "26": 145,
+            "15": 1,
+            "20": 142,
+            "16": 1
+          },
+          "console": "",
+          "file_event_count": 285,
+          "file_event_hash": "04780123649110accc48b31d82dc73be8ae0247ab778f7047e472b73f38c8221"
+        },
+        {
+          "call": 293341,
+          "ret": 319752,
+          "caller": "PLI.COM+0283",
+          "services": {
+            "26": 276,
+            "15": 1,
+            "20": 273,
+            "16": 1
+          },
+          "console": "",
+          "file_event_count": 547,
+          "file_event_hash": "841251258d08b2a8a7e08cb5df5f4f7718aea82d88c57eb2bb47311421795d88"
+        },
+        {
+          "call": 639268,
+          "ret": 664911,
+          "caller": "PLI.COM+0283",
+          "services": {
+            "26": 268,
+            "15": 1,
+            "20": 265,
+            "16": 1
+          },
+          "console": "",
+          "file_event_count": 531,
+          "file_event_hash": "878ab8f3b2eab9931cfa80100d48af61af949c643d5c76d056707cd085711ed7"
+        }
+      ]
+    },
+    "PLI.COM+0D09": {
+      "count": 2,
+      "callers": {
+        "PLI0.OVL+01DA": 1,
+        "PLI1.OVL+0135": 1
+      },
+      "services": {
+        "11": 4,
+        "2": 56
+      },
+      "cases": [
+        {
+          "call": 291506,
+          "ret": 293326,
+          "caller": "PLI0.OVL+01DA",
+          "services": {
+            "11": 2,
+            "2": 28
+          },
+          "console": "\r\n   NO ERROR(S) IN PASS 1\r\n",
+          "file_event_count": 0,
+          "file_event_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "call": 637413,
+          "ret": 639233,
+          "caller": "PLI1.OVL+0135",
+          "services": {
+            "11": 2,
+            "2": 28
+          },
+          "console": "\r\n   NO ERROR(S) IN PASS 2\r\n",
+          "file_event_count": 0,
+          "file_event_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        }
+      ]
+    },
+    "PLI.COM+1031": {
+      "count": 3,
+      "callers": {
+        "PLI0.OVL+01C6": 1,
+        "PLI1.OVL+010B": 1,
+        "PLI2.OVL+045A": 1
+      },
+      "services": {
+        "2": 290,
+        "11": 6,
+        "26": 22,
+        "19": 2,
+        "22": 2,
+        "15": 4,
+        "20": 12,
+        "21": 1,
+        "16": 1
+      },
+      "cases": [
+        {
+          "call": 49696,
+          "ret": 73454,
+          "caller": "PLI0.OVL+01C6",
+          "services": {
+            "2": 290,
+            "11": 4,
+            "26": 7,
+            "19": 1,
+            "22": 1,
+            "15": 1,
+            "20": 4
+          },
+          "console": "\f\r\n--------------------------------------------------\r\nPL/I-80 Compiler                       Version 1.4\r\nSerial No. 3032-0000-001130    All Rights Reserved\r\nCopyright (c) 1980-1982     Digital Research, Inc.\r\n--------------------------------------------------\r\n\r\nCOMPILATION OF: FIZZBUZ\r\n",
+          "file_event_count": 10,
+          "file_event_hash": "a1846c8a68575373a6fff24c007a53987e7fd473169989d7b4be5c1cc6f0d8a2"
+        },
+        {
+          "call": 322078,
+          "ret": 327612,
+          "caller": "PLI1.OVL+010B",
+          "services": {
+            "26": 7,
+            "19": 1,
+            "22": 1,
+            "15": 1,
+            "11": 1,
+            "20": 4
+          },
+          "console": "",
+          "file_event_count": 10,
+          "file_event_hash": "ebadb9221e7855615d5bed6d034fe2a0883153dc082459d4145f0694dfcf20aa"
+        },
+        {
+          "call": 668614,
+          "ret": 675992,
+          "caller": "PLI2.OVL+045A",
+          "services": {
+            "26": 8,
+            "21": 1,
+            "16": 1,
+            "15": 2,
+            "11": 1,
+            "20": 4
+          },
+          "console": "",
+          "file_event_count": 12,
+          "file_event_hash": "68c5fa36464a1cd292955bc977383d35e7469611d16cd8f1a138f340e80aec94"
+        }
+      ]
+    },
+    "PLI.COM+0611": {
+      "count": 3,
+      "callers": {
+        "PLI0.OVL+3760": 1,
+        "PLI1.OVL+0132": 1,
+        "PLI2.OVL+046B": 1
+      },
+      "services": {},
+      "cases": [
+        {
+          "call": 291477,
+          "ret": 291501,
+          "caller": "PLI0.OVL+3760",
+          "services": {},
+          "console": "",
+          "file_event_count": 0,
+          "file_event_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "call": 637388,
+          "ret": 637412,
+          "caller": "PLI1.OVL+0132",
+          "services": {},
+          "console": "",
+          "file_event_count": 0,
+          "file_event_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "call": 1092724,
+          "ret": 1092746,
+          "caller": "PLI2.OVL+046B",
+          "services": {},
+          "console": "",
+          "file_event_count": 0,
+          "file_event_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        }
+      ]
+    }
+  },
+  "PICTURE": {
+    "PLI.COM+1272": {
+      "count": 1,
+      "callers": {
+        "PLI.COM+02E3": 1
+      },
+      "services": {
+        "26": 2,
+        "21": 1,
+        "16": 1
+      },
+      "cases": [
+        {
+          "call": 488204,
+          "ret": 516785,
+          "caller": "PLI.COM+02E3",
+          "services": {
+            "26": 2,
+            "21": 1,
+            "16": 1
+          },
+          "console": "",
+          "file_event_count": 3,
+          "file_event_hash": "b3e4e07ecbcf3429286193b48ebb590147951ebaba502f48b614bcc4de1df081",
+          "file_events": [
+            {
+              "step": 516682,
+              "operation": "write_record",
+              "file": {
+                "drive": 0,
+                "user": 0,
+                "name": "PICTURE.REL",
+                "identity": "0:0:PICTURE.REL"
+              },
+              "record": 1
+            },
+            {
+              "step": 516682,
+              "operation": "sequential_write",
+              "file": {
+                "drive": 0,
+                "user": 0,
+                "name": "PICTURE.REL",
+                "identity": "0:0:PICTURE.REL"
+              },
+              "record": 1
+            },
+            {
+              "step": 516780,
+              "operation": "close",
+              "file": {
+                "drive": 0,
+                "user": 0,
+                "name": "PICTURE.REL",
+                "identity": "0:0:PICTURE.REL"
+              },
+              "record": null
+            }
+          ]
+        }
+      ]
+    },
+    "PLI.COM+119E": {
+      "count": 197,
+      "callers": {
+        "PLI0.OVL+188F": 1,
+        "PLI0.OVL+1993": 4,
+        "PLI0.OVL+19A5": 24,
+        "PLI0.OVL+189E": 1,
+        "PLI0.OVL+18AD": 1,
+        "PLI0.OVL+18BC": 1,
+        "PLI.COM+11EF": 14,
+        "PLI.COM+11F9": 14,
+        "PLI.COM+1203": 14,
+        "PLI0.OVL+3D33": 1,
+        "PLI.COM+1211": 4,
+        "PLI.COM+121B": 4,
+        "PLI.COM+1225": 4,
+        "PLI0.OVL+3D4E": 6,
+        "PLI2.OVL+82A6": 1,
+        "PLI.COM+11CD": 1,
+        "PLI.COM+11D7": 1,
+        "PLI.COM+11E1": 1,
+        "PLI2.OVL+743E": 3,
+        "PLI2.OVL+7566": 15,
+        "PLI2.OVL+7603": 11,
+        "PLI2.OVL+7612": 11,
+        "PLI2.OVL+7711": 7,
+        "PLI2.OVL+775A": 7,
+        "PLI2.OVL+777D": 7,
+        "PLI2.OVL+77A2": 35,
+        "PLI2.OVL+75C7": 1,
+        "PLI2.OVL+82E1": 1,
+        "PLI2.OVL+82F0": 1,
+        "PLI.COM+126E": 1
+      },
+      "services": {
+        "26": 1,
+        "21": 1
+      },
+      "cases": [
+        {
+          "call": 79080,
+          "ret": 79383,
+          "caller": "PLI0.OVL+188F",
+          "services": {},
+          "console": "",
+          "file_event_count": 0,
+          "file_event_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "call": 79428,
+          "ret": 79568,
+          "caller": "PLI0.OVL+1993",
+          "services": {},
+          "console": "",
+          "file_event_count": 0,
+          "file_event_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "call": 79576,
+          "ret": 79926,
+          "caller": "PLI0.OVL+19A5",
+          "services": {},
+          "console": "",
+          "file_event_count": 0,
+          "file_event_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        }
+      ]
+    },
+    "PLI.COM+0692": {
+      "count": 3,
+      "callers": {
+        "PLI.COM+0283": 3
+      },
+      "services": {
+        "26": 689,
+        "15": 3,
+        "20": 680,
+        "16": 3
+      },
+      "cases": [
+        {
+          "call": 470,
+          "ret": 14305,
+          "caller": "PLI.COM+0283",
+          "services": {
+            "26": 145,
+            "15": 1,
+            "20": 142,
+            "16": 1
+          },
+          "console": "",
+          "file_event_count": 285,
+          "file_event_hash": "04780123649110accc48b31d82dc73be8ae0247ab778f7047e472b73f38c8221"
+        },
+        {
+          "call": 226129,
+          "ret": 252540,
+          "caller": "PLI.COM+0283",
+          "services": {
+            "26": 276,
+            "15": 1,
+            "20": 273,
+            "16": 1
+          },
+          "console": "",
+          "file_event_count": 547,
+          "file_event_hash": "b721d983f66a83b1a5b80cda68442346e8182d2dfdb1461d7031ea88cf6be943"
+        },
+        {
+          "call": 355383,
+          "ret": 381026,
+          "caller": "PLI.COM+0283",
+          "services": {
+            "26": 268,
+            "15": 1,
+            "20": 265,
+            "16": 1
+          },
+          "console": "",
+          "file_event_count": 531,
+          "file_event_hash": "4a59988d61b935eebbc13df5b568e57de9cd417eeb11f41e5b7dc6ba18435cc2"
+        }
+      ]
+    },
+    "PLI.COM+0D09": {
+      "count": 2,
+      "callers": {
+        "PLI0.OVL+01DA": 1,
+        "PLI1.OVL+0135": 1
+      },
+      "services": {
+        "11": 4,
+        "2": 56
+      },
+      "cases": [
+        {
+          "call": 224294,
+          "ret": 226114,
+          "caller": "PLI0.OVL+01DA",
+          "services": {
+            "11": 2,
+            "2": 28
+          },
+          "console": "\r\n   NO ERROR(S) IN PASS 1\r\n",
+          "file_event_count": 0,
+          "file_event_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "call": 353528,
+          "ret": 355348,
+          "caller": "PLI1.OVL+0135",
+          "services": {
+            "11": 2,
+            "2": 28
+          },
+          "console": "\r\n   NO ERROR(S) IN PASS 2\r\n",
+          "file_event_count": 0,
+          "file_event_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        }
+      ]
+    },
+    "PLI.COM+1031": {
+      "count": 3,
+      "callers": {
+        "PLI0.OVL+01C6": 1,
+        "PLI1.OVL+010B": 1,
+        "PLI2.OVL+045A": 1
+      },
+      "services": {
+        "2": 290,
+        "11": 6,
+        "26": 19,
+        "19": 2,
+        "22": 2,
+        "15": 4,
+        "20": 9,
+        "21": 1,
+        "16": 1
+      },
+      "cases": [
+        {
+          "call": 49696,
+          "ret": 73866,
+          "caller": "PLI0.OVL+01C6",
+          "services": {
+            "2": 290,
+            "11": 4,
+            "26": 6,
+            "19": 1,
+            "22": 1,
+            "15": 1,
+            "20": 3
+          },
+          "console": "\f\r\n--------------------------------------------------\r\nPL/I-80 Compiler                       Version 1.4\r\nSerial No. 3032-0000-001130    All Rights Reserved\r\nCopyright (c) 1980-1982     Digital Research, Inc.\r\n--------------------------------------------------\r\n\r\nCOMPILATION OF: PICTURE\r\n",
+          "file_event_count": 8,
+          "file_event_hash": "7cc8bfb724caf3c1cb8da1778621ccba2ea978b4e8f8357da0bfb324e6867273"
+        },
+        {
+          "call": 254866,
+          "ret": 260812,
+          "caller": "PLI1.OVL+010B",
+          "services": {
+            "26": 6,
+            "19": 1,
+            "22": 1,
+            "15": 1,
+            "11": 1,
+            "20": 3
+          },
+          "console": "",
+          "file_event_count": 8,
+          "file_event_hash": "d767de44263262919755d1ca461a9dd661db93532cc9e31953e83536ff2edcd3"
+        },
+        {
+          "call": 384202,
+          "ret": 391212,
+          "caller": "PLI2.OVL+045A",
+          "services": {
+            "26": 7,
+            "21": 1,
+            "16": 1,
+            "15": 2,
+            "11": 1,
+            "20": 3
+          },
+          "console": "",
+          "file_event_count": 10,
+          "file_event_hash": "4f75f76db8a3f6b093955a77ca7c60055e82df53cb8786341d135afcc44737b2"
+        }
+      ]
+    },
+    "PLI.COM+0611": {
+      "count": 3,
+      "callers": {
+        "PLI0.OVL+3760": 1,
+        "PLI1.OVL+0132": 1,
+        "PLI2.OVL+046B": 1
+      },
+      "services": {},
+      "cases": [
+        {
+          "call": 224265,
+          "ret": 224289,
+          "caller": "PLI0.OVL+3760",
+          "services": {},
+          "console": "",
+          "file_event_count": 0,
+          "file_event_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "call": 353503,
+          "ret": 353527,
+          "caller": "PLI1.OVL+0132",
+          "services": {},
+          "console": "",
+          "file_event_count": 0,
+          "file_event_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "call": 481762,
+          "ret": 481784,
+          "caller": "PLI2.OVL+046B",
+          "services": {},
+          "console": "",
+          "file_event_count": 0,
+          "file_event_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        }
+      ]
+    }
+  }
+}

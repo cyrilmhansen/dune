@@ -1,0 +1,52 @@
+{
+  "PLI.COM+1272": {
+    "end": 4782,
+    "description": "Bounded pending REL bit padding and file close",
+    "completeness": [
+      "stable",
+      "partial",
+      "partial"
+    ],
+    "contract": "Fresh1D05 RAR must produceCY1; fresh2029 RAR CY0. Independently form zero-equality masks from fresh1D8A and1D8B through SUI00/ADIFF/SBB A; preserve first via PUSH PSW/POP B/MOV C,B, OR second and RAR. While either byte is nonzero, setC0 and compose canonical1140, then freshly retest both indices. No fixed padding count. Once both zero, BC1CE4 calls064C; return its actual state unchanged. Current index<128, bit<8, successful output/service guards and valid nonaliasing FCB/buffer/stack required. Unopened and suppressed-output alternatives remain RAW/unsupported; arbitrary failure/capacity behavior is not claimed."
+  },
+  "PLI.COM+1140": {
+    "end": 4510,
+    "description": "Bounded REL bit append with successful full-record flush",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ],
+    "contract": "Retain previous bit-append law. Canonical host bit_write now additionally composes the required successful flush: C saved20B6; fresh2029.bit0=0; independently paired1D8A/1D8B reads supply low-byte offset and bit cursor. Shift buffer[1D0A+index] by ADD A; PUSH PSW retains shifted byte, independently read20B6 ANI1, POP B/MOV C,B/ORA C; fresh cursor reread selects destination. Increment/mask bit cursor; when zero advance byte cursor. Exactly128 selects BC1D0A ->02EE SetDMA; BC1CE4 ->0328 sequential-write; CPI00 must be zero; then HL1D8A/MVI M0 clears byte cursor. Preserve service-return BC/DE and CPI flags. Gate-set return and write-error alternative unsupported. No changes to existing canonical no-flush child scope."
+  },
+  "PLI.COM+064C": {
+    "end": 1648,
+    "description": "Bounded saved-FCB close with default DMA restoration",
+    "completeness": [
+      "provisional",
+      "partial",
+      "partial"
+    ],
+    "contract": "PUSH BC retains original FCB word; call02FE restores DMA0080H. LXI H0/DAD SP reads saved low/high FCB independently into DE; setC16; compose canonical19BB service gate and real BDOS close. CPIFF controls error branch; supported successful nonFF result skips error adapter, POP H consumes saved FCB and ordinary RET consumes original continuation. ReturnedA/BC/DE are actual service channels, HL=saved originalBC, comparison flags retained. Error adapter path unsupported."
+  },
+  "PLI.COM+0328": {
+    "end": 824,
+    "description": "Canonical sequential-write service wrapper at successful REL scope",
+    "completeness": [
+      "stable",
+      "complete",
+      "partial"
+    ],
+    "contract": "Existing local law retained. Independently proved all current natural sequential-write wrapper cases: B->2066 then C->2065; paired LHLD2065/XCHG passes originalBC as DE; C21; canonical19BB guards and real staged BDOS sequential write. Actual record/FCB/DMA/file-service effects preserved, no copied oracle memory. Successful bounded filesystem scope; arbitrary write failure remains unsupported."
+  },
+  "PLI.COM+02FE": {
+    "end": 773,
+    "description": "Default DMA wrapper through canonical SetDMA",
+    "completeness": [
+      "stable",
+      "complete",
+      "partial"
+    ],
+    "contract": "SetBC0080H; CALL02EE; ordinaryRET of exact child registers/flags. Canonical02EE publishes BC to2060 then205F, freshly rereads pointer, exchanges into DE and sets C26 before canonical19BB. No own logical writes; derived CALL residue only. Actual staged DMA service effects and successful guard scope inherited."
+  }
+}

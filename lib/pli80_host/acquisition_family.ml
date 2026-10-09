@@ -8,7 +8,7 @@ module U=U16
 module B=U8
 module H=Acquisition_parent
 module K=Classifier
-type operation=Adapter of int|Context|Field|Attribute|Spine|Resident|Pair_gate|Selected_transform|Table_adapter|Wrapper|Repeat|Copy05|Traversal|Construction|Record_output|Index_one|Parent|Reader of Reader_construction.operation|Recursive of Recursive_parent.operation
+type operation=Output of int|Adapter of int|Context|Field|Attribute|Spine|Resident|Pair_gate|Selected_transform|Table_adapter|Wrapper|Repeat|Copy05|Traversal|Construction|Record_output|Index_one|Parent|Reader of Reader_construction.operation|Recursive of Recursive_parent.operation
 type result={returned:R.returned;field:int option}
 let run operation memory ~entry ~write ~compatibility ~adjust ~sp ~guard_field ~native ~follow_spine ~software =
  B.check entry.R.a;List.iter U.check[entry.bc;entry.de;entry.hl;sp()];
@@ -361,7 +361,11 @@ let run operation memory ~entry ~write ~compatibility ~adjust ~sp ~guard_field ~
   a(read 0x20b6);ani 1;restore();logical false(!q.bc land 255);
   address();resident_put 0x1169 !q.hl !q.a;
   a(read 0x1d8b);a(inc !q.a);ani 7;resident_put 0x1170 0x1d8b !q.a;cmp 0;
-  if !q.flags.zero then(a(read 0x1d8a);a(inc !q.a);resident_put 0x117c 0x1d8a !q.a;cmp 128;need(not !q.flags.zero)"1140 refill/flush outside no-flush scope")in
+  if !q.flags.zero then(a(read 0x1d8a);a(inc !q.a);resident_put 0x117c 0x1d8a !q.a;cmp 128;if !q.flags.zero then(
+   need (match operation with Output _->true|_->false) "1140 refill/flush outside no-flush scope";
+   bc 0x1d0a;resident_call 0x1187 0x02ee(fun()->q:=native ~site:0x1287 ~target:0x03ee !q);
+   bc 0x1ce4;resident_call 0x118d 0x0328(fun()->q:=native ~site:0x128d ~target:0x0428 !q);
+   cmp 0;need !q.flags.zero "1140 write error";hl 0x1d8a;resident_put 0x119b !q.hl 0))in
  let bits_write()=
   hl 0x20b8;resident_put 0x11a1 !q.hl(!q.de land 255);hl(U.wrap(!q.hl-1));resident_put 0x11a3 !q.hl(!q.bc land 255);
   let rec loop()=
@@ -793,6 +797,14 @@ let run operation memory ~entry ~write ~compatibility ~adjust ~sp ~guard_field ~
    |target when List.mem_assoc target [0x3de8,Reader_construction.False_probe;0x35e3,Descriptor_marker;0x2f6e,Field_setup;0x2f94,Field_literal;0x3da8,Construction_start;0x3dbf,Descriptor_build;0x3f13,Reader_prefix;0x3621,Descriptor_sort;0x360d,Mode_finish;0x376d,Require_close;0xa0d7,Reader_construction.Map_rotate;0x36d4,Descriptor_mask;0x36e4,Descriptor_add;0xa586,Shift_right;0xa54f,Bit_union;0xa580,Shift_left;0xa468,Mode;0xa367,Range_finish]->
     q:=Reader_construction.run(List.assoc target [0x3de8,Reader_construction.False_probe;0x35e3,Descriptor_marker;0x2f6e,Field_setup;0x2f94,Field_literal;0x3da8,Construction_start;0x3dbf,Descriptor_build;0x3f13,Reader_prefix;0x3621,Descriptor_sort;0x360d,Mode_finish;0x376d,Require_close;0xa0d7,Reader_construction.Map_rotate;0x36d4,Descriptor_mask;0x36e4,Descriptor_add;0xa586,Shift_right;0xa54f,Bit_union;0xa580,Shift_left;0xa468,Mode;0xa367,Range_finish]) memory ~entry:!q ~write ~compatibility ~sp ~invoke
    |_->q:=native ~site ~target !q);!q in
- (match operation with Adapter offset->ignore(invoke ~site:0 ~target:(offset+0x2200)!q)|Context->context()|Field->field_acquisition()|Attribute->attribute_dispatch()|Spine->recursive_spine()|Resident->reuse H.Resident_acquisition|Pair_gate->pair_gate()|Selected_transform->selected_transform()|Table_adapter->table_adapter()|Wrapper->counted_spine()|Repeat->counted_spine ~repeat_only:true ()|Copy05->copy_arguments()|Traversal->traversal()|Construction->construction()|Record_output->record_output()|Index_one->acquire_index_one()|Parent->parent()|Recursive op->(match op with Recursive_parent.Initialization Initialization_parent.Advance->guard_field(word 0xa861)1|Initialization Structure->guard_field(word 0xa863)6|_->());q:=Recursive_parent.run op memory ~entry:!q ~write ~compatibility ~adjust ~sp ~invoke|Reader op->
+ let finalize_output()=
+  a(read 0x1d05);rar();need !q.flags.carry "1272 unopened output";
+  a(read 0x2029);rar();need(not !q.flags.carry) "1272 suppressed-output close-only route";
+  let rec pad()=
+   a(read 0x1d8a);sub 0;add 255;mask();compatibility(H.Push(0x138f,(!q.a lsl 8)lor psw()));
+   a(read 0x1d8b);sub 0;add 255;mask();restore();logical false(!q.bc land 255);rar();
+   if !q.flags.carry then(c 0;resident_call 0x12a1 0x1140 bit_write;pad())in pad();
+  bc 0x1ce4;resident_call 0x12aa 0x064c(fun()->q:=native ~site:0x13aa ~target:0x074c !q)in
+ (match operation with Output offset->(match offset with 0x1272->finalize_output()|0x1140->bit_write()|0x119e->bits_write()|_->invalid_arg"output operation")| Adapter offset->ignore(invoke ~site:0 ~target:(offset+0x2200)!q)|Context->context()|Field->field_acquisition()|Attribute->attribute_dispatch()|Spine->recursive_spine()|Resident->reuse H.Resident_acquisition|Pair_gate->pair_gate()|Selected_transform->selected_transform()|Table_adapter->table_adapter()|Wrapper->counted_spine()|Repeat->counted_spine ~repeat_only:true ()|Copy05->copy_arguments()|Traversal->traversal()|Construction->construction()|Record_output->record_output()|Index_one->acquire_index_one()|Parent->parent()|Recursive op->(match op with Recursive_parent.Initialization Initialization_parent.Advance->guard_field(word 0xa861)1|Initialization Structure->guard_field(word 0xa863)6|_->());q:=Recursive_parent.run op memory ~entry:!q ~write ~compatibility ~adjust ~sp ~invoke|Reader op->
   if List.mem_assoc op [Reader_construction.Reader_setup,0x4206;Reader_parent,0x3cfd;Reader_entry,0x3e07;Select_structure,0x6c26;Publish_structure,0x7abb]then ignore(invoke ~site:0 ~target:(List.assoc op [Reader_construction.Reader_setup,0x4206;Reader_parent,0x3cfd;Reader_entry,0x3e07;Select_structure,0x6c26;Publish_structure,0x7abb])!q)else q:=Reader_construction.run op memory ~entry:!q ~write ~compatibility ~sp ~invoke);
  {returned= !q;field= !acquired_field}

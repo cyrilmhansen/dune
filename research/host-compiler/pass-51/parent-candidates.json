@@ -1,0 +1,77 @@
+{
+  "selected": "PLI.COM+1272",
+  "candidates": [
+    {
+      "coordinate": "PLI.COM+1272",
+      "logical_counts": [
+        1,
+        1,
+        1
+      ],
+      "callers": [
+        "PLI.COM+02E3"
+      ],
+      "residual_ranking": [
+        31192,
+        44993,
+        28581
+      ],
+      "purpose": "REL pending record padding, flush and close",
+      "decision": "selected coherent bounded finalization"
+    },
+    {
+      "coordinate": "PLI.COM+0D09",
+      "logical_counts": [
+        2,
+        2,
+        2
+      ],
+      "callers": [
+        "PLI0.OVL+01DA",
+        "PLI1.OVL+0135"
+      ],
+      "residual_ranking": [
+        3640,
+        3640,
+        3640
+      ],
+      "purpose": "console PASS summaries",
+      "decision": "separate console lifecycle, lower leverage"
+    },
+    {
+      "coordinate": "PLI.COM+119E",
+      "logical_counts": [
+        189,
+        703,
+        197
+      ],
+      "purpose": "repeated bit-field output within compiler phases",
+      "decision": "defer broader emission for Pass52"
+    },
+    {
+      "coordinate": "PLI.COM+1031",
+      "logical_counts": [
+        3,
+        3,
+        3
+      ],
+      "purpose": "per-phase input/output opening and startup state",
+      "decision": "exclude independent startup lifecycle"
+    },
+    {
+      "coordinate": "PLI.COM+0692",
+      "logical_counts": [
+        3,
+        3,
+        3
+      ],
+      "purpose": "overlay file loading",
+      "decision": "exclude independent loader family"
+    },
+    {
+      "coordinate": "PLI1.OVL+011E",
+      "purpose": "callsite in non-returning mixed startup sequence",
+      "decision": "not an ordinary parent/root; do not intercept whole compiler phases"
+    }
+  ]
+}

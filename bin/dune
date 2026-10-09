@@ -131,3 +131,8 @@
  (name native_delimiter_driver_hybrids)
  (public_name pli80-native-delimiter-driver-hybrids)
  (libraries pli80 pli80_host cpm i8080 runner analysis unix))
+
+(executable
+ (name native_output_finalization_hybrids)
+ (public_name pli80-native-output-finalization-hybrids)
+ (libraries pli80 pli80_host cpm i8080 runner analysis unix))

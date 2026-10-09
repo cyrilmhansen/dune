@@ -1,0 +1,324 @@
+{
+  "root_shadows": 3,
+  "all_passed": true,
+  "cases": [
+    {
+      "source": "MINIMAL",
+      "caller": "PLI.COM+02E3",
+      "entry_step": 409236,
+      "return_step": 440427,
+      "input": {
+        "a": 2,
+        "b": 77,
+        "c": 2,
+        "d": 0,
+        "e": 66,
+        "h": 32,
+        "l": 15,
+        "sp": 65532,
+        "pc": 4978,
+        "flags": {
+          "sign": true,
+          "zero": false,
+          "auxiliary_carry": false,
+          "parity": true,
+          "carry": true
+        }
+      },
+      "output": {
+        "a": 0,
+        "b": 0,
+        "c": 16,
+        "d": 28,
+        "e": 228,
+        "h": 28,
+        "l": 228,
+        "sp": 65534,
+        "pc": 998,
+        "flags": {
+          "sign": false,
+          "zero": false,
+          "auxiliary_carry": false,
+          "parity": false,
+          "carry": true
+        }
+      },
+      "entry_memory_hash": "0e7d4af5df3c4ef1942a58d09e13a3529bc29ec7a60cdde1e25a62ac79bb0345",
+      "post_memory_hash": "330996b7b38dbb1e01171e095ba678cb21e955d280025b5eaa4333f62a9e763a",
+      "journal_hash": "5be05644a19446482cfc1dd24e8f1221485ec8a0aa32f84ab41872b3e72037bc",
+      "ordered_logical_writes": 2086,
+      "surviving_writer_cells": 107,
+      "stack_writers": [
+        1018,
+        1025,
+        1076,
+        1868,
+        1869,
+        1881,
+        4695,
+        4743,
+        4749,
+        5007,
+        5025,
+        5034,
+        6843,
+        6844,
+        6851
+      ],
+      "service_functions": [
+        26,
+        21,
+        26,
+        16
+      ],
+      "post_DMA": 128,
+      "full_state": "matched",
+      "direct_child_chronology": "matched",
+      "N2_N8": "not reached",
+      "internal_canonical_acquisition_parents": "none"
+    },
+    {
+      "source": "FIZZBUZ",
+      "caller": "PLI.COM+02E3",
+      "entry_step": 1099097,
+      "return_step": 1144089,
+      "input": {
+        "a": 2,
+        "b": 76,
+        "c": 2,
+        "d": 0,
+        "e": 49,
+        "h": 32,
+        "l": 15,
+        "sp": 65532,
+        "pc": 4978,
+        "flags": {
+          "sign": true,
+          "zero": false,
+          "auxiliary_carry": false,
+          "parity": true,
+          "carry": true
+        }
+      },
+      "output": {
+        "a": 0,
+        "b": 0,
+        "c": 16,
+        "d": 28,
+        "e": 228,
+        "h": 28,
+        "l": 228,
+        "sp": 65534,
+        "pc": 998,
+        "flags": {
+          "sign": false,
+          "zero": false,
+          "auxiliary_carry": false,
+          "parity": false,
+          "carry": true
+        }
+      },
+      "entry_memory_hash": "80f874912466f5bb07994a3170e321dfe5eddbbd52b7dbf2416ca090a137a8b8",
+      "post_memory_hash": "525722d5618cdc121a608a3a2ccfe2650a85ceec46abc3bafb7fa8026feb1e5f",
+      "journal_hash": "0d65ab9e7c27f80701cacc2a6168a4b67416c0609a66534db915f69f8450930d",
+      "ordered_logical_writes": 3011,
+      "surviving_writer_cells": 144,
+      "stack_writers": [
+        1018,
+        1025,
+        1076,
+        1868,
+        1869,
+        1881,
+        4695,
+        4743,
+        4749,
+        5007,
+        5025,
+        5034,
+        6843,
+        6844,
+        6851
+      ],
+      "service_functions": [
+        26,
+        21,
+        26,
+        16
+      ],
+      "post_DMA": 128,
+      "full_state": "matched",
+      "direct_child_chronology": "matched",
+      "N2_N8": "not reached",
+      "internal_canonical_acquisition_parents": "none"
+    },
+    {
+      "source": "PICTURE",
+      "caller": "PLI.COM+02E3",
+      "entry_step": 488205,
+      "return_step": 516785,
+      "input": {
+        "a": 2,
+        "b": 77,
+        "c": 2,
+        "d": 0,
+        "e": 48,
+        "h": 32,
+        "l": 15,
+        "sp": 65532,
+        "pc": 4978,
+        "flags": {
+          "sign": true,
+          "zero": false,
+          "auxiliary_carry": false,
+          "parity": true,
+          "carry": true
+        }
+      },
+      "output": {
+        "a": 0,
+        "b": 0,
+        "c": 16,
+        "d": 28,
+        "e": 228,
+        "h": 28,
+        "l": 228,
+        "sp": 65534,
+        "pc": 998,
+        "flags": {
+          "sign": false,
+          "zero": false,
+          "auxiliary_carry": false,
+          "parity": false,
+          "carry": true
+        }
+      },
+      "entry_memory_hash": "de381ff95b18d9441d6b6e753a668f0d2516db35672b2fb968d6d34b77188a19",
+      "post_memory_hash": "150739f72a51027887f3507345018fa08ca5fe3847d301d7d14ced71e1cb0f82",
+      "journal_hash": "1c843d76668712a3e5592dad7a49a26bc09fceaa9a63bef092f91ecfe3637f81",
+      "ordered_logical_writes": 1911,
+      "surviving_writer_cells": 100,
+      "stack_writers": [
+        1018,
+        1025,
+        1076,
+        1868,
+        1869,
+        1881,
+        4695,
+        4743,
+        4749,
+        5007,
+        5025,
+        5034,
+        6843,
+        6844,
+        6851
+      ],
+      "service_functions": [
+        26,
+        21,
+        26,
+        16
+      ],
+      "post_DMA": 128,
+      "full_state": "matched",
+      "direct_child_chronology": "matched",
+      "N2_N8": "not reached",
+      "internal_canonical_acquisition_parents": "none"
+    }
+  ],
+  "components": {
+    "sources": [
+      {
+        "source": "MINIMAL",
+        "bit_writer_required_shadows": 665,
+        "service_wrapper_shadows": [
+          [
+            1612,
+            5
+          ],
+          [
+            808,
+            3
+          ],
+          [
+            766,
+            20
+          ]
+        ]
+      },
+      {
+        "source": "FIZZBUZ",
+        "bit_writer_required_shadows": 961,
+        "service_wrapper_shadows": [
+          [
+            1612,
+            5
+          ],
+          [
+            808,
+            9
+          ],
+          [
+            766,
+            20
+          ]
+        ]
+      },
+      {
+        "source": "PICTURE",
+        "bit_writer_required_shadows": 609,
+        "service_wrapper_shadows": [
+          [
+            1612,
+            5
+          ],
+          [
+            808,
+            3
+          ],
+          [
+            766,
+            20
+          ]
+        ]
+      }
+    ],
+    "all_passed": true
+  },
+  "synthetic_padding_states": [
+    [
+      0,
+      0
+    ],
+    [
+      127,
+      7
+    ],
+    [
+      127,
+      1
+    ],
+    [
+      1,
+      0
+    ]
+  ],
+  "negatives": [
+    "wrong CALL origin",
+    "entry PC/register range",
+    "code corruption",
+    "continuation corruption",
+    "index128",
+    "bit8",
+    "output gate1",
+    "unopened file",
+    "guard/buffer alias",
+    "stack/scratch alias",
+    "returned flags",
+    "publication ordering",
+    "stack last writer",
+    "proof-source mismatch"
+  ]
+}

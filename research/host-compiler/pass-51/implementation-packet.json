@@ -1,0 +1,290 @@
+{
+  "task": "RESIDUAL_OUTPUT_TERMINATION_PARENT_PASS_51",
+  "baseline": "f7b744e2560c0de8ac1115cf91d4beb190f2e7c2",
+  "selected_root": "PLI.COM+1272",
+  "logical_counts": {
+    "MINIMAL": 1,
+    "FIZZBUZ": 1,
+    "PICTURE": 1
+  },
+  "outer_counts": {
+    "MINIMAL": 1,
+    "FIZZBUZ": 1,
+    "PICTURE": 1
+  },
+  "root_rationale": "One coherent pending REL record padding/flush and close operation; separate from console pass summaries, startup/open and PLI2 generation phase. No widening to mixed non-returning overlay/startup driver.",
+  "phases": [
+    "startup/compiler state and input/output file opening",
+    "canonical0C75 delimiter/input driver",
+    "canonical80B7 independent output then pointer statistics0611",
+    "console0D09 PASS summary",
+    "resident1272 pending REL padding/flush/close",
+    "separate END COMPILATION console and warm-boot driver"
+  ],
+  "laws": {
+    "PLI.COM+1272": {
+      "end": 4782,
+      "description": "Bounded pending REL bit padding and file close",
+      "completeness": [
+        "stable",
+        "partial",
+        "partial"
+      ],
+      "contract": "Fresh1D05 RAR must produceCY1; fresh2029 RAR CY0. Independently form zero-equality masks from fresh1D8A and1D8B through SUI00/ADIFF/SBB A; preserve first via PUSH PSW/POP B/MOV C,B, OR second and RAR. While either byte is nonzero, setC0 and compose canonical1140, then freshly retest both indices. No fixed padding count. Once both zero, BC1CE4 calls064C; return its actual state unchanged. Current index<128, bit<8, successful output/service guards and valid nonaliasing FCB/buffer/stack required. Unopened and suppressed-output alternatives remain RAW/unsupported; arbitrary failure/capacity behavior is not claimed."
+    },
+    "PLI.COM+1140": {
+      "end": 4510,
+      "description": "Bounded REL bit append with successful full-record flush",
+      "completeness": [
+        "provisional",
+        "partial",
+        "partial"
+      ],
+      "contract": "Retain previous bit-append law. Canonical host bit_write now additionally composes the required successful flush: C saved20B6; fresh2029.bit0=0; independently paired1D8A/1D8B reads supply low-byte offset and bit cursor. Shift buffer[1D0A+index] by ADD A; PUSH PSW retains shifted byte, independently read20B6 ANI1, POP B/MOV C,B/ORA C; fresh cursor reread selects destination. Increment/mask bit cursor; when zero advance byte cursor. Exactly128 selects BC1D0A ->02EE SetDMA; BC1CE4 ->0328 sequential-write; CPI00 must be zero; then HL1D8A/MVI M0 clears byte cursor. Preserve service-return BC/DE and CPI flags. Gate-set return and write-error alternative unsupported. No changes to existing canonical no-flush child scope."
+    },
+    "PLI.COM+064C": {
+      "end": 1648,
+      "description": "Bounded saved-FCB close with default DMA restoration",
+      "completeness": [
+        "provisional",
+        "partial",
+        "partial"
+      ],
+      "contract": "PUSH BC retains original FCB word; call02FE restores DMA0080H. LXI H0/DAD SP reads saved low/high FCB independently into DE; setC16; compose canonical19BB service gate and real BDOS close. CPIFF controls error branch; supported successful nonFF result skips error adapter, POP H consumes saved FCB and ordinary RET consumes original continuation. ReturnedA/BC/DE are actual service channels, HL=saved originalBC, comparison flags retained. Error adapter path unsupported."
+    },
+    "PLI.COM+0328": {
+      "end": 824,
+      "description": "Canonical sequential-write service wrapper at successful REL scope",
+      "completeness": [
+        "stable",
+        "complete",
+        "partial"
+      ],
+      "contract": "Existing local law retained. Independently proved all current natural sequential-write wrapper cases: B->2066 then C->2065; paired LHLD2065/XCHG passes originalBC as DE; C21; canonical19BB guards and real staged BDOS sequential write. Actual record/FCB/DMA/file-service effects preserved, no copied oracle memory. Successful bounded filesystem scope; arbitrary write failure remains unsupported."
+    },
+    "PLI.COM+02FE": {
+      "end": 773,
+      "description": "Default DMA wrapper through canonical SetDMA",
+      "completeness": [
+        "stable",
+        "complete",
+        "partial"
+      ],
+      "contract": "SetBC0080H; CALL02EE; ordinaryRET of exact child registers/flags. Canonical02EE publishes BC to2060 then205F, freshly rereads pointer, exchanges into DE and sets C26 before canonical19BB. No own logical writes; derived CALL residue only. Actual staged DMA service effects and successful guard scope inherited."
+    }
+  },
+  "cases": {
+    "MINIMAL": {
+      "call": 409235,
+      "ret": 440427,
+      "entry": {
+        "a": 2,
+        "b": 77,
+        "c": 2,
+        "d": 0,
+        "e": 66,
+        "h": 32,
+        "l": 15,
+        "sp": 65532,
+        "pc": 4978,
+        "flags": {
+          "sign": true,
+          "zero": false,
+          "auxiliary_carry": false,
+          "parity": true,
+          "carry": true
+        }
+      },
+      "output": {
+        "a": 0,
+        "b": 0,
+        "c": 16,
+        "d": 28,
+        "e": 228,
+        "h": 28,
+        "l": 228,
+        "sp": 65534,
+        "pc": 998,
+        "flags": {
+          "sign": false,
+          "zero": false,
+          "auxiliary_carry": false,
+          "parity": false,
+          "carry": true
+        }
+      },
+      "indices": [
+        44,
+        7
+      ],
+      "padding_calls": 665,
+      "direct_child_pattern": [
+        "1140 repeated from current indices",
+        "064C once"
+      ],
+      "own_cfg_hash": "747af90ad37c3527292571965a0c562a09a5e43c369c5af31023c57acf0880b4",
+      "components": {
+        "PLI.COM+1272": 1,
+        "PLI.COM+1140": 2048,
+        "PLI.COM+064C": 5,
+        "PLI.COM+0328": 3,
+        "PLI.COM+02FE": 20
+      }
+    },
+    "FIZZBUZ": {
+      "call": 1099096,
+      "ret": 1144089,
+      "entry": {
+        "a": 2,
+        "b": 76,
+        "c": 2,
+        "d": 0,
+        "e": 49,
+        "h": 32,
+        "l": 15,
+        "sp": 65532,
+        "pc": 4978,
+        "flags": {
+          "sign": true,
+          "zero": false,
+          "auxiliary_carry": false,
+          "parity": true,
+          "carry": true
+        }
+      },
+      "output": {
+        "a": 0,
+        "b": 0,
+        "c": 16,
+        "d": 28,
+        "e": 228,
+        "h": 28,
+        "l": 228,
+        "sp": 65534,
+        "pc": 998,
+        "flags": {
+          "sign": false,
+          "zero": false,
+          "auxiliary_carry": false,
+          "parity": false,
+          "carry": true
+        }
+      },
+      "indices": [
+        7,
+        7
+      ],
+      "padding_calls": 961,
+      "direct_child_pattern": [
+        "1140 repeated from current indices",
+        "064C once"
+      ],
+      "own_cfg_hash": "bb405065875a0cb88d3d98f1a2f7927e6162a96413b07ebbf5b55e2dfca4d296",
+      "components": {
+        "PLI.COM+1272": 1,
+        "PLI.COM+1140": 6144,
+        "PLI.COM+064C": 5,
+        "PLI.COM+0328": 9,
+        "PLI.COM+02FE": 20
+      }
+    },
+    "PICTURE": {
+      "call": 488204,
+      "ret": 516785,
+      "entry": {
+        "a": 2,
+        "b": 77,
+        "c": 2,
+        "d": 0,
+        "e": 48,
+        "h": 32,
+        "l": 15,
+        "sp": 65532,
+        "pc": 4978,
+        "flags": {
+          "sign": true,
+          "zero": false,
+          "auxiliary_carry": false,
+          "parity": true,
+          "carry": true
+        }
+      },
+      "output": {
+        "a": 0,
+        "b": 0,
+        "c": 16,
+        "d": 28,
+        "e": 228,
+        "h": 28,
+        "l": 228,
+        "sp": 65534,
+        "pc": 998,
+        "flags": {
+          "sign": false,
+          "zero": false,
+          "auxiliary_carry": false,
+          "parity": false,
+          "carry": true
+        }
+      },
+      "indices": [
+        51,
+        7
+      ],
+      "padding_calls": 609,
+      "direct_child_pattern": [
+        "1140 repeated from current indices",
+        "064C once"
+      ],
+      "own_cfg_hash": "eb9bb768fe2053b9b645ed4b2d0dea5396528b3a40a4dfb1e6aa4ff7399e7fda",
+      "components": {
+        "PLI.COM+1272": 1,
+        "PLI.COM+1140": 2048,
+        "PLI.COM+064C": 5,
+        "PLI.COM+0328": 3,
+        "PLI.COM+02FE": 20
+      }
+    }
+  },
+  "contracts": {
+    "PLI.COM+02EE": {
+      "hash": "235892dabf85c80edaf99f4cdec126a32dee15c6b5149c82d6a950647038ceab",
+      "completeness": {
+        "bounds": "stable",
+        "control_flow": "complete",
+        "contract": "partial"
+      }
+    },
+    "PLI.COM+19BB": {
+      "hash": "41dedb995cfca294d9de6d70ad8c447bd18656326a208380382e949ff7c7e22b",
+      "completeness": {
+        "bounds": "provisional",
+        "control_flow": "partial",
+        "contract": "partial"
+      }
+    },
+    "PLI.COM+1A0F": {
+      "hash": "f06a0d6ce9a48e0d7b817470d3a8378898e9666046872e4da2c907cf5cbc6a96",
+      "completeness": {
+        "bounds": "stable",
+        "control_flow": "complete",
+        "contract": "complete"
+      }
+    }
+  },
+  "oracle_queries": 0,
+  "stack_pattern": "1272 has no persistent frame. Mask PSW at entrySP-2 is consumed into BC; each1140 hardware child uses S-2, its PSW S-4; flush wrappers/service CALL and BC/DE pushes derive deeper residue.064C hardware child atS-2 owns savedBC atS-4;02FE/02EE nestedCALLs restore defaultDMA; POP H consumes FCB carrier. Original root continuation atS is never written; RET12AD yieldsSP=S+2. No software continuation or recursion occurs in this root.",
+  "unsupported": [
+    "unopened output",
+    "suppressed-output arm",
+    "index>=128 or bit>=8",
+    "write/close errors",
+    "invalid BDOS guards",
+    "code/scratch/stack aliases"
+  ],
+  "native_descendants_absorbed": {
+    "MINIMAL": {},
+    "FIZZBUZ": {},
+    "PICTURE": {}
+  }
+}

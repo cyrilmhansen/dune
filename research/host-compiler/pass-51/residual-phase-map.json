@@ -1,0 +1,1718 @@
+{
+  "MINIMAL": {
+    "guest": 380445,
+    "host": 72,
+    "around_011E": [
+      {
+        "call": 215960,
+        "caller": "PLI1.OVL+0105",
+        "target": "PLI.COM+166E",
+        "sp": 65530,
+        "continuation": 8968,
+        "ret": 215971,
+        "residual": 11,
+        "historical_body": 11,
+        "native_descendants": {},
+        "events_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "event_types": {}
+      },
+      {
+        "call": 215972,
+        "caller": "PLI1.OVL+0108",
+        "target": "PLI1.OVL+4B69",
+        "sp": 65530,
+        "continuation": 8971,
+        "ret": 218261,
+        "residual": 2289,
+        "historical_body": 2289,
+        "native_descendants": {},
+        "events_hash": "b2d87c04591394da89b3de63be78a6ae0b354b09bf227cd1d705ca6dccf2384e",
+        "event_types": {
+          "software_continuation_return": 1
+        }
+      },
+      {
+        "call": 218262,
+        "caller": "PLI1.OVL+010B",
+        "target": "PLI.COM+1031",
+        "sp": 65530,
+        "continuation": 8974,
+        "ret": 223596,
+        "residual": 5334,
+        "historical_body": 5334,
+        "native_descendants": {},
+        "events_hash": "34fe058eeded9e36c5c296a6123e36ed208f306d76e52db51c724e128e30a632",
+        "event_types": {
+          "bdos_call": 11,
+          "host_effect": 88,
+          "bdos_resume": 11,
+          "file_operation": 5,
+          "bdos_record": 1
+        }
+      },
+      {
+        "call": 223601,
+        "caller": "PLI1.OVL+0118",
+        "target": "PLI1.OVL+784E",
+        "sp": 65530,
+        "continuation": 8987,
+        "ret": 225482,
+        "residual": 1881,
+        "historical_body": 1881,
+        "native_descendants": {},
+        "events_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "event_types": {}
+      },
+      {
+        "call": 225483,
+        "caller": "PLI1.OVL+011B",
+        "target": "PLI1.OVL+8273",
+        "sp": 65530,
+        "continuation": 8990,
+        "ret": 227586,
+        "residual": 2103,
+        "historical_body": 2103,
+        "native_descendants": {},
+        "events_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "event_types": {}
+      },
+      {
+        "call": 227587,
+        "caller": "PLI1.OVL+011E",
+        "target": "PLI1.OVL+0C75",
+        "sp": 65530,
+        "continuation": 8993,
+        "ret": 287883,
+        "residual": 0,
+        "historical_body": 60296,
+        "native_descendants": {},
+        "events_hash": "dcd954c877bb115ec6fad78863639a442723c2abc44ff9853a37a7f3b70b14f8",
+        "event_types": {
+          "software_continuation_return": 4
+        }
+      },
+      {
+        "call": 287885,
+        "caller": "PLI1.OVL+0123",
+        "target": "PLI1.OVL+80B7",
+        "sp": 65530,
+        "continuation": 8998,
+        "ret": 287939,
+        "residual": 0,
+        "historical_body": 54,
+        "native_descendants": {},
+        "events_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "event_types": {}
+      },
+      {
+        "call": 287942,
+        "caller": "PLI1.OVL+012C",
+        "target": "PLI.COM+1A38",
+        "sp": 65530,
+        "continuation": 9007,
+        "ret": 287950,
+        "residual": 8,
+        "historical_body": 8,
+        "native_descendants": {},
+        "events_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "event_types": {}
+      },
+      {
+        "call": 287954,
+        "caller": "PLI1.OVL+0132",
+        "target": "PLI.COM+0611",
+        "sp": 65530,
+        "continuation": 9013,
+        "ret": 287978,
+        "residual": 24,
+        "historical_body": 24,
+        "native_descendants": {},
+        "events_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "event_types": {}
+      },
+      {
+        "call": 287979,
+        "caller": "PLI1.OVL+0135",
+        "target": "PLI.COM+0D09",
+        "sp": 65530,
+        "continuation": 9016,
+        "ret": 289799,
+        "residual": 1820,
+        "historical_body": 1820,
+        "native_descendants": {},
+        "events_hash": "662a175fa608fe8710909d2e791c0590d55c86dabb314245a95af5429fdc68e5",
+        "event_types": {
+          "bdos_call": 30,
+          "host_effect": 120,
+          "bdos_resume": 30
+        }
+      }
+    ],
+    "ancestors": [],
+    "residual_candidates": {
+      "PLI2.OVL+11E6": {
+        "logical": 2,
+        "residual_inclusive": 121320,
+        "maximum_window": 77063,
+        "callers": {
+          "PLI2.OVL+152F": 1,
+          "PLI2.OVL+27F7": 1
+        },
+        "native_descendants": {}
+      },
+      "PLI2.OVL+1FB5": {
+        "logical": 11,
+        "residual_inclusive": 105585,
+        "maximum_window": 44912,
+        "callers": {
+          "PLI2.OVL+2149": 8,
+          "PLI2.OVL+6FFA": 1,
+          "PLI2.OVL+6FA0": 1,
+          "PLI2.OVL+6862": 1
+        },
+        "native_descendants": {}
+      },
+      "PLI2.OVL+111F": {
+        "logical": 8,
+        "residual_inclusive": 94650,
+        "maximum_window": 44979,
+        "callers": {
+          "PLI2.OVL+12B1": 8
+        },
+        "native_descendants": {}
+      },
+      "PLI2.OVL+2129": {
+        "logical": 8,
+        "residual_inclusive": 94290,
+        "maximum_window": 44934,
+        "callers": {
+          "PLI2.OVL+1182": 8
+        },
+        "native_descendants": {}
+      },
+      "PLI2.OVL+151B": {
+        "logical": 1,
+        "residual_inclusive": 77645,
+        "maximum_window": 77645,
+        "callers": {
+          "PLI2.OVL+045D": 1
+        },
+        "native_descendants": {}
+      },
+      "PLI0.OVL+374C": {
+        "logical": 1,
+        "residual_inclusive": 68575,
+        "maximum_window": 68575,
+        "callers": {
+          "PLI0.OVL+01D7": 1
+        },
+        "native_descendants": {}
+      },
+      "PLI.COM+0692": {
+        "logical": 3,
+        "residual_inclusive": 65889,
+        "maximum_window": 26411,
+        "callers": {
+          "PLI.COM+0283": 3
+        },
+        "native_descendants": {}
+      },
+      "PLI.COM+119E": {
+        "logical": 178,
+        "residual_inclusive": 55177,
+        "maximum_window": 430,
+        "callers": {
+          "PLI0.OVL+188F": 1,
+          "PLI0.OVL+1993": 4,
+          "PLI0.OVL+19A5": 24,
+          "PLI0.OVL+189E": 1,
+          "PLI0.OVL+18AD": 1,
+          "PLI0.OVL+18BC": 1,
+          "PLI.COM+11EF": 14,
+          "PLI.COM+11F9": 14,
+          "PLI.COM+1203": 14,
+          "PLI2.OVL+82A6": 1,
+          "PLI.COM+11CD": 1,
+          "PLI.COM+11D7": 1,
+          "PLI.COM+11E1": 1,
+          "PLI2.OVL+743E": 3,
+          "PLI2.OVL+7566": 13,
+          "PLI2.OVL+7603": 10,
+          "PLI2.OVL+7612": 10,
+          "PLI2.OVL+7711": 7,
+          "PLI2.OVL+775A": 7,
+          "PLI2.OVL+777D": 7,
+          "PLI2.OVL+77A2": 35,
+          "PLI2.OVL+75C7": 2,
+          "PLI.COM+1211": 1,
+          "PLI.COM+121B": 1,
+          "PLI.COM+1225": 1,
+          "PLI2.OVL+82E1": 1,
+          "PLI2.OVL+82F0": 1,
+          "PLI.COM+126E": 1
+        },
+        "native_descendants": {}
+      },
+      "PLI0.OVL+1839": {
+        "logical": 1,
+        "residual_inclusive": 43568,
+        "maximum_window": 43568,
+        "callers": {
+          "PLI0.OVL+01D4": 1
+        },
+        "native_descendants": {}
+      },
+      "PLI0.OVL+28CB": {
+        "logical": 1,
+        "residual_inclusive": 35895,
+        "maximum_window": 35895,
+        "callers": {
+          "PLI0.OVL+374F": 1
+        },
+        "native_descendants": {}
+      },
+      "PLI0.OVL+1FA9": {
+        "logical": 1,
+        "residual_inclusive": 35365,
+        "maximum_window": 35365,
+        "callers": {
+          "PLI0.OVL+01C3": 1
+        },
+        "native_descendants": {}
+      },
+      "PLI.COM+1031": {
+        "logical": 3,
+        "residual_inclusive": 34550,
+        "maximum_window": 23558,
+        "callers": {
+          "PLI0.OVL+01C6": 1,
+          "PLI1.OVL+010B": 1,
+          "PLI2.OVL+045A": 1
+        },
+        "native_descendants": {
+          "PLI.COM+0EF6": 70
+        }
+      },
+      "PLI2.OVL+8248": {
+        "logical": 7,
+        "residual_inclusive": 34371,
+        "maximum_window": 4944,
+        "callers": {
+          "PLI2.OVL+2949": 1,
+          "PLI2.OVL+6F15": 1,
+          "PLI2.OVL+700E": 1,
+          "PLI2.OVL+6871": 1,
+          "PLI2.OVL+6FB3": 1,
+          "PLI2.OVL+701C": 1,
+          "PLI2.OVL+2958": 1
+        },
+        "native_descendants": {}
+      },
+      "PLI2.OVL+8225": {
+        "logical": 7,
+        "residual_inclusive": 34308,
+        "maximum_window": 4935,
+        "callers": {
+          "PLI2.OVL+8254": 7
+        },
+        "native_descendants": {}
+      },
+      "PLI0.OVL+1A47": {
+        "logical": 3,
+        "residual_inclusive": 32825,
+        "maximum_window": 31754,
+        "callers": {
+          "PLI0.OVL+2DE6": 1,
+          "PLI0.OVL+1A88": 2
+        },
+        "native_descendants": {}
+      },
+      "PLI0.OVL+1A7D": {
+        "logical": 2,
+        "residual_inclusive": 32635,
+        "maximum_window": 31760,
+        "callers": {
+          "PLI0.OVL+374C": 1,
+          "PLI0.OVL+3752": 1
+        },
+        "native_descendants": {}
+      },
+      "PLI.COM+1272": {
+        "logical": 1,
+        "residual_inclusive": 31192,
+        "maximum_window": 31192,
+        "callers": {
+          "PLI.COM+02E3": 1
+        },
+        "native_descendants": {}
+      },
+      "PLI2.OVL+7701": {
+        "logical": 7,
+        "residual_inclusive": 30590,
+        "maximum_window": 4440,
+        "callers": {
+          "PLI2.OVL+8244": 7
+        },
+        "native_descendants": {}
+      },
+      "PLI0.OVL+15A6": {
+        "logical": 1,
+        "residual_inclusive": 28551,
+        "maximum_window": 28551,
+        "callers": {
+          "PLI0.OVL+18D2": 1
+        },
+        "native_descendants": {}
+      },
+      "PLI.COM+02EE": {
+        "logical": 709,
+        "residual_inclusive": 25524,
+        "maximum_window": 36,
+        "callers": {
+          "PLI.COM+0301": 20,
+          "PLI.COM+06D3": 3,
+          "PLI.COM+06FC": 677,
+          "PLI.COM+074F": 6,
+          "PLI.COM+0F38": 1,
+          "PLI.COM+1187": 2
+        },
+        "native_descendants": {}
+      },
+      "PLI.COM+0318": {
+        "logical": 687,
+        "residual_inclusive": 24732,
+        "maximum_window": 36,
+        "callers": {
+          "PLI.COM+06D9": 680,
+          "PLI.COM+0755": 6,
+          "PLI.COM+0F3E": 1
+        },
+        "native_descendants": {}
+      },
+      "PLI0.OVL+24BC": {
+        "logical": 85,
+        "residual_inclusive": 24277,
+        "maximum_window": 1368,
+        "callers": {
+          "PLI0.OVL+2B33": 65,
+          "PLI0.OVL+27B4": 10,
+          "PLI0.OVL+2819": 4,
+          "PLI0.OVL+2808": 6
+        },
+        "native_descendants": {}
+      },
+      "PLI.COM+03F4": {
+        "logical": 13,
+        "residual_inclusive": 23830,
+        "maximum_window": 3240,
+        "callers": {
+          "PLI.COM+103C": 1,
+          "PLI.COM+060D": 6,
+          "PLI.COM+0F6B": 1,
+          "PLI.COM+0F71": 1,
+          "PLI.COM+0F77": 1,
+          "PLI.COM+0F7D": 1,
+          "PLI.COM+1059": 1,
+          "PLI.COM+0488": 1
+        },
+        "native_descendants": {}
+      },
+      "PLI0.OVL+42D4": {
+        "logical": 19,
+        "residual_inclusive": 21932,
+        "maximum_window": 5546,
+        "callers": {
+          "PLI0.OVL+01D1": 1,
+          "PLI0.OVL+186D": 1,
+          "PLI0.OVL+02AD": 9,
+          "PLI0.OVL+161A": 1,
+          "PLI0.OVL+401B": 1,
+          "PLI0.OVL+034F": 4,
+          "PLI0.OVL+0355": 1,
+          "PLI0.OVL+13C8": 1
+        },
+        "native_descendants": {}
+      },
+      "PLI.COM+0D40": {
+        "logical": 7,
+        "residual_inclusive": 20260,
+        "maximum_window": 4782,
+        "callers": {
+          "PLI.COM+113C": 3,
+          "PLI.COM+12B8": 4
+        },
+        "native_descendants": {}
+      }
+    },
+    "local_cfg": [
+      [
+        256,
+        "2134A9",
+        "LXI H,A934H"
+      ],
+      [
+        259,
+        "3600",
+        "MVI M,00H"
+      ],
+      [
+        261,
+        "CD6E17",
+        "CALL 176EH"
+      ],
+      [
+        264,
+        "CD696D",
+        "CALL 6D69H"
+      ],
+      [
+        267,
+        "CD3111",
+        "CALL 1131H"
+      ],
+      [
+        270,
+        "213D20",
+        "LXI H,203DH"
+      ],
+      [
+        273,
+        "3661",
+        "MVI M,61H"
+      ],
+      [
+        275,
+        "21ACA5",
+        "LXI H,A5ACH"
+      ],
+      [
+        278,
+        "3650",
+        "MVI M,50H"
+      ],
+      [
+        280,
+        "CD4E9A",
+        "CALL 9A4EH"
+      ],
+      [
+        283,
+        "CD73A4",
+        "CALL A473H"
+      ],
+      [
+        286,
+        "CD752E",
+        "CALL 2E75H"
+      ],
+      [
+        289,
+        "0EFF",
+        "MVI C,FFH"
+      ],
+      [
+        291,
+        "CDB7A2",
+        "CALL A2B7H"
+      ],
+      [
+        294,
+        "017AAE",
+        "LXI B,AE7AH"
+      ],
+      [
+        297,
+        "11361C",
+        "LXI D,1C36H"
+      ],
+      [
+        300,
+        "CD381B",
+        "CALL 1B38H"
+      ],
+      [
+        303,
+        "23",
+        "INX H"
+      ],
+      [
+        304,
+        "44",
+        "MOV B,H"
+      ],
+      [
+        305,
+        "4D",
+        "MOV C,L"
+      ],
+      [
+        306,
+        "CD1107",
+        "CALL 0711H"
+      ],
+      [
+        309,
+        "CD090E",
+        "CALL 0E09H"
+      ],
+      [
+        312,
+        "C38E03",
+        "JMP 038EH"
+      ]
+    ]
+  },
+  "FIZZBUZ": {
+    "guest": 838187,
+    "host": 95,
+    "around_011E": [
+      {
+        "call": 319776,
+        "caller": "PLI1.OVL+0105",
+        "target": "PLI.COM+166E",
+        "sp": 65530,
+        "continuation": 8968,
+        "ret": 319787,
+        "residual": 11,
+        "historical_body": 11,
+        "native_descendants": {},
+        "events_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "event_types": {}
+      },
+      {
+        "call": 319788,
+        "caller": "PLI1.OVL+0108",
+        "target": "PLI1.OVL+4B69",
+        "sp": 65530,
+        "continuation": 8971,
+        "ret": 322077,
+        "residual": 2289,
+        "historical_body": 2289,
+        "native_descendants": {},
+        "events_hash": "305f3aa5f4347f78d9c792c52c4e9de9aa5e8b19c6e521da430c6312a4fd5fcd",
+        "event_types": {
+          "software_continuation_return": 1
+        }
+      },
+      {
+        "call": 322078,
+        "caller": "PLI1.OVL+010B",
+        "target": "PLI.COM+1031",
+        "sp": 65530,
+        "continuation": 8974,
+        "ret": 327612,
+        "residual": 5534,
+        "historical_body": 5534,
+        "native_descendants": {},
+        "events_hash": "025a1d8e672c5e8d84f17be96eddb57e512702a2016cdd616a17554060d17d02",
+        "event_types": {
+          "bdos_call": 15,
+          "host_effect": 112,
+          "bdos_resume": 15,
+          "file_operation": 7,
+          "bdos_record": 3
+        }
+      },
+      {
+        "call": 327617,
+        "caller": "PLI1.OVL+0118",
+        "target": "PLI1.OVL+784E",
+        "sp": 65530,
+        "continuation": 8987,
+        "ret": 329318,
+        "residual": 1701,
+        "historical_body": 1701,
+        "native_descendants": {},
+        "events_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "event_types": {}
+      },
+      {
+        "call": 329319,
+        "caller": "PLI1.OVL+011B",
+        "target": "PLI1.OVL+8273",
+        "sp": 65530,
+        "continuation": 8990,
+        "ret": 331422,
+        "residual": 2103,
+        "historical_body": 2103,
+        "native_descendants": {},
+        "events_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "event_types": {}
+      },
+      {
+        "call": 331423,
+        "caller": "PLI1.OVL+011E",
+        "target": "PLI1.OVL+0C75",
+        "sp": 65530,
+        "continuation": 8993,
+        "ret": 637317,
+        "residual": 0,
+        "historical_body": 305894,
+        "native_descendants": {},
+        "events_hash": "bc1185faeac6809a9652d77c48e52aeb39205f0addb64bf6a9d9ef965cd93a48",
+        "event_types": {
+          "software_continuation_return": 26,
+          "bdos_call": 4,
+          "host_effect": 24,
+          "bdos_resume": 4,
+          "bdos_record": 2,
+          "file_operation": 2
+        }
+      },
+      {
+        "call": 637319,
+        "caller": "PLI1.OVL+0123",
+        "target": "PLI1.OVL+80B7",
+        "sp": 65530,
+        "continuation": 8998,
+        "ret": 637373,
+        "residual": 0,
+        "historical_body": 54,
+        "native_descendants": {},
+        "events_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "event_types": {}
+      },
+      {
+        "call": 637376,
+        "caller": "PLI1.OVL+012C",
+        "target": "PLI.COM+1A38",
+        "sp": 65530,
+        "continuation": 9007,
+        "ret": 637384,
+        "residual": 8,
+        "historical_body": 8,
+        "native_descendants": {},
+        "events_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "event_types": {}
+      },
+      {
+        "call": 637388,
+        "caller": "PLI1.OVL+0132",
+        "target": "PLI.COM+0611",
+        "sp": 65530,
+        "continuation": 9013,
+        "ret": 637412,
+        "residual": 24,
+        "historical_body": 24,
+        "native_descendants": {},
+        "events_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "event_types": {}
+      },
+      {
+        "call": 637413,
+        "caller": "PLI1.OVL+0135",
+        "target": "PLI.COM+0D09",
+        "sp": 65530,
+        "continuation": 9016,
+        "ret": 639233,
+        "residual": 1820,
+        "historical_body": 1820,
+        "native_descendants": {},
+        "events_hash": "0a5a481a2cdce3dc9dd4f281ae4543b18bc30ca4173e3aa8e3f247649d9f83b3",
+        "event_types": {
+          "bdos_call": 30,
+          "host_effect": 120,
+          "bdos_resume": 30
+        }
+      }
+    ],
+    "ancestors": [],
+    "residual_candidates": {
+      "PLI2.OVL+11E6": {
+        "logical": 9,
+        "residual_inclusive": 1721754,
+        "maximum_window": 416135,
+        "callers": {
+          "PLI2.OVL+152F": 1,
+          "PLI2.OVL+27F7": 1,
+          "PLI2.OVL+23B9": 1,
+          "PLI2.OVL+2423": 3,
+          "PLI2.OVL+244E": 3
+        },
+        "native_descendants": {}
+      },
+      "PLI2.OVL+1FB5": {
+        "logical": 61,
+        "residual_inclusive": 1710878,
+        "maximum_window": 393215,
+        "callers": {
+          "PLI2.OVL+2149": 34,
+          "PLI2.OVL+2399": 1,
+          "PLI2.OVL+3740": 4,
+          "PLI2.OVL+2403": 3,
+          "PLI2.OVL+3756": 3,
+          "PLI2.OVL+374B": 3,
+          "PLI2.OVL+6FFA": 4,
+          "PLI2.OVL+6FA0": 3,
+          "PLI2.OVL+6862": 3,
+          "PLI2.OVL+6F85": 1,
+          "PLI2.OVL+33D2": 1,
+          "PLI2.OVL+3CAE": 1
+        },
+        "native_descendants": {}
+      },
+      "PLI2.OVL+111F": {
+        "logical": 34,
+        "residual_inclusive": 1566712,
+        "maximum_window": 393282,
+        "callers": {
+          "PLI2.OVL+12B1": 34
+        },
+        "native_descendants": {}
+      },
+      "PLI2.OVL+2129": {
+        "logical": 34,
+        "residual_inclusive": 1565182,
+        "maximum_window": 393237,
+        "callers": {
+          "PLI2.OVL+1182": 34
+        },
+        "native_descendants": {}
+      },
+      "PLI2.OVL+151B": {
+        "logical": 1,
+        "residual_inclusive": 416717,
+        "maximum_window": 416717,
+        "callers": {
+          "PLI2.OVL+045D": 1
+        },
+        "native_descendants": {}
+      },
+      "PLI0.OVL+1028": {
+        "logical": 8,
+        "residual_inclusive": 334777,
+        "maximum_window": 103114,
+        "callers": {
+          "PLI0.OVL+1529": 2,
+          "PLI0.OVL+114F": 3,
+          "PLI0.OVL+1168": 3
+        },
+        "native_descendants": {}
+      },
+      "PLI.COM+119E": {
+        "logical": 675,
+        "residual_inclusive": 208893,
+        "maximum_window": 430,
+        "callers": {
+          "PLI0.OVL+188F": 1,
+          "PLI0.OVL+1993": 4,
+          "PLI0.OVL+19A5": 24,
+          "PLI0.OVL+189E": 1,
+          "PLI0.OVL+18AD": 1,
+          "PLI0.OVL+18BC": 1,
+          "PLI.COM+11EF": 63,
+          "PLI.COM+11F9": 63,
+          "PLI.COM+1203": 63,
+          "PLI2.OVL+82A6": 1,
+          "PLI.COM+11CD": 1,
+          "PLI.COM+11D7": 1,
+          "PLI.COM+11E1": 1,
+          "PLI2.OVL+743E": 23,
+          "PLI2.OVL+7566": 94,
+          "PLI2.OVL+7603": 43,
+          "PLI2.OVL+7612": 43,
+          "PLI2.OVL+7711": 25,
+          "PLI2.OVL+775A": 25,
+          "PLI2.OVL+777D": 25,
+          "PLI2.OVL+77A2": 125,
+          "PLI.COM+1211": 11,
+          "PLI.COM+121B": 11,
+          "PLI.COM+1225": 11,
+          "PLI2.OVL+75C7": 11,
+          "PLI2.OVL+82E1": 1,
+          "PLI2.OVL+82F0": 1,
+          "PLI.COM+126E": 1
+        },
+        "native_descendants": {}
+      },
+      "PLI0.OVL+11F0": {
+        "logical": 2,
+        "residual_inclusive": 204951,
+        "maximum_window": 113358,
+        "callers": {
+          "PLI0.OVL+180E": 1,
+          "PLI0.OVL+11CB": 1
+        },
+        "native_descendants": {}
+      },
+      "PLI0.OVL+1839": {
+        "logical": 1,
+        "residual_inclusive": 144435,
+        "maximum_window": 144435,
+        "callers": {
+          "PLI0.OVL+01D4": 1
+        },
+        "native_descendants": {}
+      },
+      "PLI0.OVL+15A6": {
+        "logical": 1,
+        "residual_inclusive": 129418,
+        "maximum_window": 129418,
+        "callers": {
+          "PLI0.OVL+18D2": 1
+        },
+        "native_descendants": {}
+      },
+      "PLI2.OVL+8248": {
+        "logical": 25,
+        "residual_inclusive": 122974,
+        "maximum_window": 5024,
+        "callers": {
+          "PLI2.OVL+2949": 1,
+          "PLI2.OVL+43B3": 3,
+          "PLI2.OVL+6F15": 4,
+          "PLI2.OVL+700E": 4,
+          "PLI2.OVL+6871": 3,
+          "PLI2.OVL+6FB3": 3,
+          "PLI2.OVL+701C": 4,
+          "PLI2.OVL+33EF": 1,
+          "PLI2.OVL+6F98": 1,
+          "PLI2.OVL+2958": 1
+        },
+        "native_descendants": {}
+      },
+      "PLI2.OVL+8225": {
+        "logical": 25,
+        "residual_inclusive": 122749,
+        "maximum_window": 5015,
+        "callers": {
+          "PLI2.OVL+8254": 25
+        },
+        "native_descendants": {}
+      },
+      "PLI2.OVL+7701": {
+        "logical": 25,
+        "residual_inclusive": 109290,
+        "maximum_window": 4440,
+        "callers": {
+          "PLI2.OVL+8244": 25
+        },
+        "native_descendants": {}
+      },
+      "PLI0.OVL+42D4": {
+        "logical": 86,
+        "residual_inclusive": 107140,
+        "maximum_window": 7062,
+        "callers": {
+          "PLI0.OVL+01D1": 1,
+          "PLI0.OVL+186D": 1,
+          "PLI0.OVL+02AD": 25,
+          "PLI0.OVL+161A": 1,
+          "PLI0.OVL+1402": 1,
+          "PLI0.OVL+0F96": 1,
+          "PLI0.OVL+08FD": 1,
+          "PLI0.OVL+034F": 21,
+          "PLI0.OVL+0355": 5,
+          "PLI0.OVL+100D": 24,
+          "PLI0.OVL+401B": 4,
+          "PLI0.OVL+13C8": 1
+        },
+        "native_descendants": {}
+      },
+      "PLI2.OVL+0BD9": {
+        "logical": 34,
+        "residual_inclusive": 96273,
+        "maximum_window": 8137,
+        "callers": {
+          "PLI2.OVL+1296": 34
+        },
+        "native_descendants": {}
+      },
+      "PLI.COM+1376": {
+        "logical": 87,
+        "residual_inclusive": 72344,
+        "maximum_window": 6011,
+        "callers": {
+          "PLI0.OVL+42D4": 86,
+          "PLI1.OVL+784E": 1
+        },
+        "native_descendants": {}
+      },
+      "PLI0.OVL+374C": {
+        "logical": 1,
+        "residual_inclusive": 71504,
+        "maximum_window": 71504,
+        "callers": {
+          "PLI0.OVL+01D7": 1
+        },
+        "native_descendants": {}
+      },
+      "PLI.COM+0692": {
+        "logical": 3,
+        "residual_inclusive": 65889,
+        "maximum_window": 26411,
+        "callers": {
+          "PLI.COM+0283": 3
+        },
+        "native_descendants": {}
+      },
+      "PLI.COM+0D40": {
+        "logical": 17,
+        "residual_inclusive": 55885,
+        "maximum_window": 5051,
+        "callers": {
+          "PLI.COM+113C": 3,
+          "PLI.COM+12B8": 14
+        },
+        "native_descendants": {}
+      },
+      "PLI0.OVL+029F": {
+        "logical": 25,
+        "residual_inclusive": 55536,
+        "maximum_window": 7071,
+        "callers": {
+          "PLI0.OVL+1872": 1,
+          "PLI0.OVL+187B": 1,
+          "PLI0.OVL+162F": 1,
+          "PLI0.OVL+1644": 1,
+          "PLI0.OVL+16E9": 1,
+          "PLI0.OVL+1779": 1,
+          "PLI0.OVL+1456": 1,
+          "PLI0.OVL+1176": 1,
+          "PLI0.OVL+1109": 3,
+          "PLI0.OVL+1143": 3,
+          "PLI0.OVL+1057": 4,
+          "PLI0.OVL+115C": 3,
+          "PLI0.OVL+13BA": 2,
+          "PLI0.OVL+11D0": 1,
+          "PLI0.OVL+1821": 1
+        },
+        "native_descendants": {}
+      },
+      "PLI.COM+11E5": {
+        "logical": 63,
+        "residual_inclusive": 51163,
+        "maximum_window": 816,
+        "callers": {
+          "PLI0.OVL+18C2": 1,
+          "PLI2.OVL+7449": 23,
+          "PLI2.OVL+771B": 25,
+          "PLI2.OVL+7640": 12,
+          "PLI2.OVL+82E9": 1,
+          "PLI2.OVL+82FD": 1
+        },
+        "native_descendants": {}
+      },
+      "PLI.COM+1272": {
+        "logical": 1,
+        "residual_inclusive": 44993,
+        "maximum_window": 44993,
+        "callers": {
+          "PLI.COM+02E3": 1
+        },
+        "native_descendants": {}
+      },
+      "PLI.COM+12D9": {
+        "logical": 13,
+        "residual_inclusive": 41310,
+        "maximum_window": 5086,
+        "callers": {
+          "PLI.COM+13C5": 13
+        },
+        "native_descendants": {}
+      },
+      "PLI.COM+12AE": {
+        "logical": 14,
+        "residual_inclusive": 41241,
+        "maximum_window": 5074,
+        "callers": {
+          "PLI.COM+12D9": 13,
+          "PLI.COM+141A": 1
+        },
+        "native_descendants": {}
+      },
+      "PLI2.OVL+7557": {
+        "logical": 94,
+        "residual_inclusive": 38314,
+        "maximum_window": 486,
+        "callers": {
+          "PLI2.OVL+75ED": 33,
+          "PLI2.OVL+75A3": 33,
+          "PLI2.OVL+78FF": 8,
+          "PLI2.OVL+799E": 10,
+          "PLI2.OVL+7B75": 10
+        },
+        "native_descendants": {}
+      }
+    },
+    "local_cfg": [
+      [
+        256,
+        "2134A9",
+        "LXI H,A934H"
+      ],
+      [
+        259,
+        "3600",
+        "MVI M,00H"
+      ],
+      [
+        261,
+        "CD6E17",
+        "CALL 176EH"
+      ],
+      [
+        264,
+        "CD696D",
+        "CALL 6D69H"
+      ],
+      [
+        267,
+        "CD3111",
+        "CALL 1131H"
+      ],
+      [
+        270,
+        "213D20",
+        "LXI H,203DH"
+      ],
+      [
+        273,
+        "3661",
+        "MVI M,61H"
+      ],
+      [
+        275,
+        "21ACA5",
+        "LXI H,A5ACH"
+      ],
+      [
+        278,
+        "3650",
+        "MVI M,50H"
+      ],
+      [
+        280,
+        "CD4E9A",
+        "CALL 9A4EH"
+      ],
+      [
+        283,
+        "CD73A4",
+        "CALL A473H"
+      ],
+      [
+        286,
+        "CD752E",
+        "CALL 2E75H"
+      ],
+      [
+        289,
+        "0EFF",
+        "MVI C,FFH"
+      ],
+      [
+        291,
+        "CDB7A2",
+        "CALL A2B7H"
+      ],
+      [
+        294,
+        "017AAE",
+        "LXI B,AE7AH"
+      ],
+      [
+        297,
+        "11361C",
+        "LXI D,1C36H"
+      ],
+      [
+        300,
+        "CD381B",
+        "CALL 1B38H"
+      ],
+      [
+        303,
+        "23",
+        "INX H"
+      ],
+      [
+        304,
+        "44",
+        "MOV B,H"
+      ],
+      [
+        305,
+        "4D",
+        "MOV C,L"
+      ],
+      [
+        306,
+        "CD1107",
+        "CALL 0711H"
+      ],
+      [
+        309,
+        "CD090E",
+        "CALL 0E09H"
+      ],
+      [
+        312,
+        "C38E03",
+        "JMP 038EH"
+      ]
+    ]
+  },
+  "PICTURE": {
+    "guest": 428026,
+    "host": 56,
+    "around_011E": [
+      {
+        "call": 252564,
+        "caller": "PLI1.OVL+0105",
+        "target": "PLI.COM+166E",
+        "sp": 65530,
+        "continuation": 8968,
+        "ret": 252575,
+        "residual": 11,
+        "historical_body": 11,
+        "native_descendants": {},
+        "events_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "event_types": {}
+      },
+      {
+        "call": 252576,
+        "caller": "PLI1.OVL+0108",
+        "target": "PLI1.OVL+4B69",
+        "sp": 65530,
+        "continuation": 8971,
+        "ret": 254865,
+        "residual": 2289,
+        "historical_body": 2289,
+        "native_descendants": {},
+        "events_hash": "86a3e60e6405cf123b0427307b31c8615bdab1f680c8be9696827ffe0ff8398b",
+        "event_types": {
+          "software_continuation_return": 1
+        }
+      },
+      {
+        "call": 254866,
+        "caller": "PLI1.OVL+010B",
+        "target": "PLI.COM+1031",
+        "sp": 65530,
+        "continuation": 8974,
+        "ret": 260812,
+        "residual": 5946,
+        "historical_body": 5946,
+        "native_descendants": {},
+        "events_hash": "2e554516bdb2eeefd3fa95aa0903ce20cd067ca5bd7713bdd12bac3f8fce2a88",
+        "event_types": {
+          "bdos_call": 13,
+          "host_effect": 100,
+          "bdos_resume": 13,
+          "file_operation": 6,
+          "bdos_record": 2
+        }
+      },
+      {
+        "call": 260817,
+        "caller": "PLI1.OVL+0118",
+        "target": "PLI1.OVL+784E",
+        "sp": 65530,
+        "continuation": 8987,
+        "ret": 262030,
+        "residual": 1213,
+        "historical_body": 1213,
+        "native_descendants": {},
+        "events_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "event_types": {}
+      },
+      {
+        "call": 262031,
+        "caller": "PLI1.OVL+011B",
+        "target": "PLI1.OVL+8273",
+        "sp": 65530,
+        "continuation": 8990,
+        "ret": 264134,
+        "residual": 2103,
+        "historical_body": 2103,
+        "native_descendants": {},
+        "events_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "event_types": {}
+      },
+      {
+        "call": 264135,
+        "caller": "PLI1.OVL+011E",
+        "target": "PLI1.OVL+0C75",
+        "sp": 65530,
+        "continuation": 8993,
+        "ret": 353432,
+        "residual": 0,
+        "historical_body": 89297,
+        "native_descendants": {},
+        "events_hash": "d5670a84fb14cfd80fd299a70e6203b17c8a33e0b306a8b59d244ff55cab5216",
+        "event_types": {
+          "software_continuation_return": 2
+        }
+      },
+      {
+        "call": 353434,
+        "caller": "PLI1.OVL+0123",
+        "target": "PLI1.OVL+80B7",
+        "sp": 65530,
+        "continuation": 8998,
+        "ret": 353488,
+        "residual": 0,
+        "historical_body": 54,
+        "native_descendants": {},
+        "events_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "event_types": {}
+      },
+      {
+        "call": 353491,
+        "caller": "PLI1.OVL+012C",
+        "target": "PLI.COM+1A38",
+        "sp": 65530,
+        "continuation": 9007,
+        "ret": 353499,
+        "residual": 8,
+        "historical_body": 8,
+        "native_descendants": {},
+        "events_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "event_types": {}
+      },
+      {
+        "call": 353503,
+        "caller": "PLI1.OVL+0132",
+        "target": "PLI.COM+0611",
+        "sp": 65530,
+        "continuation": 9013,
+        "ret": 353527,
+        "residual": 24,
+        "historical_body": 24,
+        "native_descendants": {},
+        "events_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "event_types": {}
+      },
+      {
+        "call": 353528,
+        "caller": "PLI1.OVL+0135",
+        "target": "PLI.COM+0D09",
+        "sp": 65530,
+        "continuation": 9016,
+        "ret": 355348,
+        "residual": 1820,
+        "historical_body": 1820,
+        "native_descendants": {},
+        "events_hash": "299c19df86c9fae0a93492e09946054d3726182ecb3e1820ba152b15dfc3dca8",
+        "event_types": {
+          "bdos_call": 30,
+          "host_effect": 120,
+          "bdos_resume": 30
+        }
+      }
+    ],
+    "ancestors": [],
+    "residual_candidates": {
+      "PLI2.OVL+11E6": {
+        "logical": 2,
+        "residual_inclusive": 143665,
+        "maximum_window": 89953,
+        "callers": {
+          "PLI2.OVL+152F": 1,
+          "PLI2.OVL+27F7": 1
+        },
+        "native_descendants": {}
+      },
+      "PLI2.OVL+1FB5": {
+        "logical": 12,
+        "residual_inclusive": 118222,
+        "maximum_window": 54367,
+        "callers": {
+          "PLI2.OVL+2149": 10,
+          "PLI2.OVL+6F85": 1,
+          "PLI2.OVL+33D2": 1
+        },
+        "native_descendants": {}
+      },
+      "PLI2.OVL+111F": {
+        "logical": 10,
+        "residual_inclusive": 108789,
+        "maximum_window": 54434,
+        "callers": {
+          "PLI2.OVL+12B1": 10
+        },
+        "native_descendants": {}
+      },
+      "PLI2.OVL+2129": {
+        "logical": 10,
+        "residual_inclusive": 108339,
+        "maximum_window": 54389,
+        "callers": {
+          "PLI2.OVL+1182": 10
+        },
+        "native_descendants": {}
+      },
+      "PLI2.OVL+151B": {
+        "logical": 1,
+        "residual_inclusive": 90535,
+        "maximum_window": 90535,
+        "callers": {
+          "PLI2.OVL+045D": 1
+        },
+        "native_descendants": {}
+      },
+      "PLI0.OVL+1839": {
+        "logical": 1,
+        "residual_inclusive": 74407,
+        "maximum_window": 74407,
+        "callers": {
+          "PLI0.OVL+01D4": 1
+        },
+        "native_descendants": {}
+      },
+      "PLI0.OVL+374C": {
+        "logical": 1,
+        "residual_inclusive": 74365,
+        "maximum_window": 74365,
+        "callers": {
+          "PLI0.OVL+01D7": 1
+        },
+        "native_descendants": {}
+      },
+      "PLI.COM+0692": {
+        "logical": 3,
+        "residual_inclusive": 65889,
+        "maximum_window": 26411,
+        "callers": {
+          "PLI.COM+0283": 3
+        },
+        "native_descendants": {}
+      },
+      "PLI.COM+119E": {
+        "logical": 197,
+        "residual_inclusive": 61014,
+        "maximum_window": 430,
+        "callers": {
+          "PLI0.OVL+188F": 1,
+          "PLI0.OVL+1993": 4,
+          "PLI0.OVL+19A5": 24,
+          "PLI0.OVL+189E": 1,
+          "PLI0.OVL+18AD": 1,
+          "PLI0.OVL+18BC": 1,
+          "PLI.COM+11EF": 14,
+          "PLI.COM+11F9": 14,
+          "PLI.COM+1203": 14,
+          "PLI0.OVL+3D33": 1,
+          "PLI.COM+1211": 4,
+          "PLI.COM+121B": 4,
+          "PLI.COM+1225": 4,
+          "PLI0.OVL+3D4E": 6,
+          "PLI2.OVL+82A6": 1,
+          "PLI.COM+11CD": 1,
+          "PLI.COM+11D7": 1,
+          "PLI.COM+11E1": 1,
+          "PLI2.OVL+743E": 3,
+          "PLI2.OVL+7566": 15,
+          "PLI2.OVL+7603": 11,
+          "PLI2.OVL+7612": 11,
+          "PLI2.OVL+7711": 7,
+          "PLI2.OVL+775A": 7,
+          "PLI2.OVL+777D": 7,
+          "PLI2.OVL+77A2": 35,
+          "PLI2.OVL+75C7": 1,
+          "PLI2.OVL+82E1": 1,
+          "PLI2.OVL+82F0": 1,
+          "PLI.COM+126E": 1
+        },
+        "native_descendants": {}
+      },
+      "PLI0.OVL+15A6": {
+        "logical": 1,
+        "residual_inclusive": 59306,
+        "maximum_window": 59306,
+        "callers": {
+          "PLI0.OVL+18D2": 1
+        },
+        "native_descendants": {}
+      },
+      "PLI0.OVL+11F0": {
+        "logical": 1,
+        "residual_inclusive": 41551,
+        "maximum_window": 41551,
+        "callers": {
+          "PLI0.OVL+180E": 1
+        },
+        "native_descendants": {}
+      },
+      "PLI0.OVL+28CB": {
+        "logical": 1,
+        "residual_inclusive": 40119,
+        "maximum_window": 40119,
+        "callers": {
+          "PLI0.OVL+374F": 1
+        },
+        "native_descendants": {}
+      },
+      "PLI0.OVL+42D4": {
+        "logical": 37,
+        "residual_inclusive": 39611,
+        "maximum_window": 5519,
+        "callers": {
+          "PLI0.OVL+01D1": 1,
+          "PLI0.OVL+186D": 1,
+          "PLI0.OVL+02AD": 19,
+          "PLI0.OVL+161A": 1,
+          "PLI0.OVL+1402": 2,
+          "PLI0.OVL+0F96": 2,
+          "PLI0.OVL+08FD": 2,
+          "PLI0.OVL+09F9": 1,
+          "PLI0.OVL+034F": 3,
+          "PLI0.OVL+0355": 1,
+          "PLI0.OVL+0802": 1,
+          "PLI0.OVL+3DC6": 1,
+          "PLI0.OVL+3D74": 1,
+          "PLI0.OVL+13C8": 1
+        },
+        "native_descendants": {}
+      },
+      "PLI.COM+1031": {
+        "logical": 3,
+        "residual_inclusive": 36290,
+        "maximum_window": 24170,
+        "callers": {
+          "PLI0.OVL+01C6": 1,
+          "PLI1.OVL+010B": 1,
+          "PLI2.OVL+045A": 1
+        },
+        "native_descendants": {
+          "PLI.COM+0EF6": 54
+        }
+      },
+      "PLI0.OVL+1A47": {
+        "logical": 3,
+        "residual_inclusive": 35725,
+        "maximum_window": 31870,
+        "callers": {
+          "PLI0.OVL+2DE6": 1,
+          "PLI0.OVL+1A88": 2
+        },
+        "native_descendants": {}
+      },
+      "PLI0.OVL+1FA9": {
+        "logical": 1,
+        "residual_inclusive": 35365,
+        "maximum_window": 35365,
+        "callers": {
+          "PLI0.OVL+01C3": 1
+        },
+        "native_descendants": {}
+      },
+      "PLI2.OVL+8248": {
+        "logical": 7,
+        "residual_inclusive": 34267,
+        "maximum_window": 4944,
+        "callers": {
+          "PLI2.OVL+2949": 1,
+          "PLI2.OVL+6F15": 1,
+          "PLI2.OVL+6FC9": 1,
+          "PLI2.OVL+33EF": 1,
+          "PLI2.OVL+6F5F": 1,
+          "PLI2.OVL+701C": 1,
+          "PLI2.OVL+2958": 1
+        },
+        "native_descendants": {}
+      },
+      "PLI2.OVL+8225": {
+        "logical": 7,
+        "residual_inclusive": 34204,
+        "maximum_window": 4935,
+        "callers": {
+          "PLI2.OVL+8254": 7
+        },
+        "native_descendants": {}
+      },
+      "PLI0.OVL+1A7D": {
+        "logical": 2,
+        "residual_inclusive": 34201,
+        "maximum_window": 31876,
+        "callers": {
+          "PLI0.OVL+374C": 1,
+          "PLI0.OVL+3752": 1
+        },
+        "native_descendants": {}
+      },
+      "PLI.COM+0D40": {
+        "logical": 10,
+        "residual_inclusive": 31620,
+        "maximum_window": 5394,
+        "callers": {
+          "PLI.COM+113C": 3,
+          "PLI.COM+12B8": 7
+        },
+        "native_descendants": {}
+      },
+      "PLI.COM+1376": {
+        "logical": 38,
+        "residual_inclusive": 30984,
+        "maximum_window": 4468,
+        "callers": {
+          "PLI0.OVL+42D4": 37,
+          "PLI1.OVL+784E": 1
+        },
+        "native_descendants": {}
+      },
+      "PLI2.OVL+7701": {
+        "logical": 7,
+        "residual_inclusive": 30595,
+        "maximum_window": 4440,
+        "callers": {
+          "PLI2.OVL+8244": 7
+        },
+        "native_descendants": {}
+      },
+      "PLI.COM+1272": {
+        "logical": 1,
+        "residual_inclusive": 28581,
+        "maximum_window": 28581,
+        "callers": {
+          "PLI.COM+02E3": 1
+        },
+        "native_descendants": {}
+      },
+      "PLI0.OVL+24BC": {
+        "logical": 88,
+        "residual_inclusive": 27954,
+        "maximum_window": 1430,
+        "callers": {
+          "PLI0.OVL+2B33": 68,
+          "PLI0.OVL+27B4": 10,
+          "PLI0.OVL+2819": 4,
+          "PLI0.OVL+2808": 6
+        },
+        "native_descendants": {}
+      },
+      "PLI.COM+02EE": {
+        "logical": 712,
+        "residual_inclusive": 25632,
+        "maximum_window": 36,
+        "callers": {
+          "PLI.COM+0301": 20,
+          "PLI.COM+06D3": 3,
+          "PLI.COM+06FC": 677,
+          "PLI.COM+074F": 9,
+          "PLI.COM+0F38": 1,
+          "PLI.COM+1187": 2
+        },
+        "native_descendants": {}
+      }
+    },
+    "local_cfg": [
+      [
+        256,
+        "2134A9",
+        "LXI H,A934H"
+      ],
+      [
+        259,
+        "3600",
+        "MVI M,00H"
+      ],
+      [
+        261,
+        "CD6E17",
+        "CALL 176EH"
+      ],
+      [
+        264,
+        "CD696D",
+        "CALL 6D69H"
+      ],
+      [
+        267,
+        "CD3111",
+        "CALL 1131H"
+      ],
+      [
+        270,
+        "213D20",
+        "LXI H,203DH"
+      ],
+      [
+        273,
+        "3661",
+        "MVI M,61H"
+      ],
+      [
+        275,
+        "21ACA5",
+        "LXI H,A5ACH"
+      ],
+      [
+        278,
+        "3650",
+        "MVI M,50H"
+      ],
+      [
+        280,
+        "CD4E9A",
+        "CALL 9A4EH"
+      ],
+      [
+        283,
+        "CD73A4",
+        "CALL A473H"
+      ],
+      [
+        286,
+        "CD752E",
+        "CALL 2E75H"
+      ],
+      [
+        289,
+        "0EFF",
+        "MVI C,FFH"
+      ],
+      [
+        291,
+        "CDB7A2",
+        "CALL A2B7H"
+      ],
+      [
+        294,
+        "017AAE",
+        "LXI B,AE7AH"
+      ],
+      [
+        297,
+        "11361C",
+        "LXI D,1C36H"
+      ],
+      [
+        300,
+        "CD381B",
+        "CALL 1B38H"
+      ],
+      [
+        303,
+        "23",
+        "INX H"
+      ],
+      [
+        304,
+        "44",
+        "MOV B,H"
+      ],
+      [
+        305,
+        "4D",
+        "MOV C,L"
+      ],
+      [
+        306,
+        "CD1107",
+        "CALL 0711H"
+      ],
+      [
+        309,
+        "CD090E",
+        "CALL 0E09H"
+      ],
+      [
+        312,
+        "C38E03",
+        "JMP 038EH"
+      ]
+    ]
+  }
+}

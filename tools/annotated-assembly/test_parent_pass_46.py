@@ -55,7 +55,8 @@ class ParentTests(unittest.TestCase):
  def test_compact_packet_contract_identity_and_scoped_catalog(self):
   raw=(REPORT/'implementation-packet.json').read_bytes();self.assertLessEqual(len(raw),32768)
   p=json.loads(raw);self.assertEqual(p['selected_root'],'PLI1.OVL+19F0');self.assertEqual(p['oracle_queries'],0)
-  catalog={q['id']:q for q in load(ROOT/'research/annotated-assembly/procedures.json')['procedures']}
+  from historical_catalog_epoch import frozen_catalog
+  catalog=frozen_catalog({q['id']:q for q in load(ROOT/'research/annotated-assembly/procedures.json')['procedures']},checkpoint='2fc80f0b09af0c07e41ca37ed79e6846e1f600d2')
   for ref in p['reused_contracts']+p['new_contract_references']:
    self.assertEqual(hashlib.sha256(json.dumps(catalog[ref['coordinate']],sort_keys=True,separators=(',',':')).encode()).hexdigest(),ref['procedure_sha256'])
   for key in ['19F0','28AA','6708','46ED','4738','666E']:
