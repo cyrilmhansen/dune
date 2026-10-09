@@ -398,7 +398,29 @@ let run operation memory ~entry ~write ~compatibility ~adjust ~sp ~guard_field ~
   c 0;resident 0x75f9 0x1140 bit_write;pair 0xadd8;a(!q.hl land 255);c !q.a;e 8;resident 0x7603 0x119e bits_write;
   c 0;resident 0x7608 0x1140 bit_write;pair 0xadd8;a(!q.hl lsr 8);c !q.a;e 8;resident 0x7612 0x119e bits_write;
   call 0x7615 0x7550 position_pair in
+ let pointer_generation()=
+  hl 0xadeb;put 0x7704 !q.hl(!q.bc lsr 8);hl( !q.hl-1);put 0x7706 !q.hl(!q.bc land 255);
+  bc 0;call 0x770a 0x75f1 word_bytes;e 7;c 0x8c;resident 0x7711 0x119e bits_write;
+  pair 0x1c2c;hl(U.wrap(!q.hl-1));hl(U.wrap(!q.hl-1));bc !q.hl;resident 0x771b 0x11e5(fun()->word_bits ~entry:0x11e5());
+  hl 0xadee;put 0x7721 !q.hl 4;
+  let rec trim()=
+   pair 0xadee;hl( !q.hl land 255);exchange();pair 0xadea;dad !q.de;a(read !q.hl);sub 0x20;sub 1;mask();save 0x7733;
+   a(read 0xadee);sub 0;add 255;mask();bc(pop());c(!q.bc lsr 8);logical true(!q.bc land 255);rar();
+   if !q.flags.carry then(hl 0xadee;let value=dec(read !q.hl)in put 0x7746 !q.hl value;trim())in
+  trim();hl 0xadee;let value=inc(read !q.hl)in put 0x774d !q.hl value;let value=inc(read !q.hl)in put 0x774e !q.hl value;
+  a(read 0xadee);add !q.a;add !q.a;add !q.a;add !q.a;add !q.a;c !q.a;e 3;resident 0x775a 0x119e bits_write;
+  a(read 0x201d);rar();need(not !q.flags.carry)"7701 201D mode alternative";
+  a(read 0x201c);rar();need(not !q.flags.carry)"7701 201C mode alternative";
+  e 8;c 0x3f;resident 0x777d 0x119e bits_write;hl 0xadec;put 0x7783 !q.hl 0;
+  let rec emit()=
+   a(read 0xadee);a(dec !q.a);a(dec !q.a);hl 0xadec;cmp(read !q.hl);
+   if not !q.flags.carry then(
+    pair 0xadec;hl(!q.hl land 255);exchange();pair 0xadea;dad !q.de;a(read !q.hl);put 0x779c 0xaded !q.a;
+    c !q.a;e 8;resident 0x77a2 0x119e bits_write;
+    a(read 0x201c);hl 0x201d;logical false(read !q.hl);rar();need(not !q.flags.carry)"7701 combined mode alternative";
+    hl 0xadec;let value=inc(read !q.hl)in put 0x77ba !q.hl value;if not !q.flags.zero then emit())in emit()in
  let pli2_output offset=match offset with
+ |0x7701->pointer_generation()
  |0x753c->position_step()|0x7550->position_pair()
  |0x746f->carrier 0x746f 0xadcc false ()
  |0x74c7->carrier 0x74c7 0xadcf false ()

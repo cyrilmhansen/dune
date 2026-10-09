@@ -1,0 +1,396 @@
+{
+  "task": "PLI2_POINTER_GENERATION_7701_PASS_55",
+  "baseline": "ea72db3c376d5f19898e795193fa0e514fbe974f",
+  "selected": "PLI2.OVL+7701",
+  "extent": [
+    30465,
+    30655
+  ],
+  "laws": {
+    "PLI2.OVL+7701": {
+      "end": 30655,
+      "description": "Bounded pointed-field trim, length and byte REL generation",
+      "completeness": [
+        "stable",
+        "partial",
+        "partial"
+      ],
+      "contract": "Save B atADEB then C atADEA. Compose canonical75F1(BC=0);emit8C with119E E7. Fresh LHLD1C2C;subtract2 modulo65536;compose canonical11E5. PublishADEE=4. Repeatedly independently read ADEE and saved pointer,read byte[pointer+zeroextended ADEE];two arithmetic masks select decrement/retry iff byte=20H and ADEE!=0. PUSH PSW/POP B preserves first mask;ANA/RAR directly controls JNC. Decrement sharedADEE and retry;no fixed iteration schedule. IncrementADEE twice;five ADD A produceu8(ADEE<<5);serialize E3. Fresh201D and201C RAR gates must both have bit0 clear;set arms unsupported. Serialize3F,E8. PublishADEC=0. Fresh ADEE minus2 compared with memoryADEC;JC exits iff index>limit. Independently paired-readADEC and saved pointer each iteration;zeroextend index,read actual byte,publishADED;serializeE8. Independently reread201C and201D,ORA/RAR;bit0-set arm unsupported. Increment sharedADEC;JNZ from actual INR flags repeats;RET actual final state. Scanned k in0..4;encoded valuek+2;emitted bytes0..k inclusive, including one space for all-space field. Bounded successful copied staging:nonwrapping BC field of five bytes,nonalias scratch/return/service/REL-buffer/FCB/sentinel;immutable instructions and hardware CALL;2029.bit0 clear,index<128,bit<8,each753C increment nonzero. Fresh mode bit0 gates clear at all historical reads. No source/caller/step/snapshot dispatch. Canonical75F1/11E5/119E/1140/7550/753C reused;no nested Runner. Error/mode/alias alternatives fail closed without live mutation."
+    }
+  },
+  "topology": {
+    "MINIMAL": {
+      "logical": 7,
+      "external": 7,
+      "nested": 0,
+      "absorbed_native": {
+        "PLI2.OVL+75F1": 7,
+        "PLI.COM+11E5": 7
+      },
+      "net_new_transitions": -7,
+      "serializer_before": 92,
+      "serializer_absorbed": 56,
+      "serializer_remaining": 36,
+      "remaining_callers": {
+        "PLI0.OVL+188F": 1,
+        "PLI0.OVL+1993": 4,
+        "PLI0.OVL+19A5": 24,
+        "PLI0.OVL+189E": 1,
+        "PLI0.OVL+18AD": 1,
+        "PLI0.OVL+18BC": 1,
+        "PLI2.OVL+82A6": 1,
+        "PLI2.OVL+82E1": 1,
+        "PLI2.OVL+82F0": 1,
+        "PLI.COM+126E": 1
+      },
+      "logical_children": {
+        "PLI2.OVL+75F1": 7,
+        "PLI.COM+1140": 658,
+        "PLI.COM+119E": 91,
+        "PLI2.OVL+7550": 7,
+        "PLI2.OVL+753C": 14,
+        "PLI.COM+11E5": 7
+      }
+    },
+    "FIZZBUZ": {
+      "logical": 25,
+      "external": 25,
+      "nested": 0,
+      "absorbed_native": {
+        "PLI2.OVL+75F1": 25,
+        "PLI.COM+11E5": 25
+      },
+      "net_new_transitions": -25,
+      "serializer_before": 236,
+      "serializer_absorbed": 200,
+      "serializer_remaining": 36,
+      "remaining_callers": {
+        "PLI0.OVL+188F": 1,
+        "PLI0.OVL+1993": 4,
+        "PLI0.OVL+19A5": 24,
+        "PLI0.OVL+189E": 1,
+        "PLI0.OVL+18AD": 1,
+        "PLI0.OVL+18BC": 1,
+        "PLI2.OVL+82A6": 1,
+        "PLI2.OVL+82E1": 1,
+        "PLI2.OVL+82F0": 1,
+        "PLI.COM+126E": 1
+      },
+      "logical_children": {
+        "PLI2.OVL+75F1": 25,
+        "PLI.COM+1140": 2350,
+        "PLI.COM+119E": 325,
+        "PLI2.OVL+7550": 25,
+        "PLI2.OVL+753C": 50,
+        "PLI.COM+11E5": 25
+      }
+    },
+    "PICTURE": {
+      "logical": 7,
+      "external": 7,
+      "nested": 0,
+      "absorbed_native": {
+        "PLI2.OVL+75F1": 7,
+        "PLI.COM+11E5": 7
+      },
+      "net_new_transitions": -7,
+      "serializer_before": 99,
+      "serializer_absorbed": 56,
+      "serializer_remaining": 43,
+      "remaining_callers": {
+        "PLI0.OVL+188F": 1,
+        "PLI0.OVL+1993": 4,
+        "PLI0.OVL+19A5": 24,
+        "PLI0.OVL+189E": 1,
+        "PLI0.OVL+18AD": 1,
+        "PLI0.OVL+18BC": 1,
+        "PLI0.OVL+3D33": 1,
+        "PLI0.OVL+3D4E": 6,
+        "PLI2.OVL+82A6": 1,
+        "PLI2.OVL+82E1": 1,
+        "PLI2.OVL+82F0": 1,
+        "PLI.COM+126E": 1
+      },
+      "logical_children": {
+        "PLI2.OVL+75F1": 7,
+        "PLI.COM+1140": 658,
+        "PLI.COM+119E": 91,
+        "PLI2.OVL+7550": 7,
+        "PLI2.OVL+753C": 14,
+        "PLI.COM+11E5": 7
+      }
+    }
+  },
+  "natural": {
+    "MINIMAL": {
+      "logical": 7,
+      "callers": {
+        "PLI2.OVL+8244": 7
+      },
+      "trim_counts": {
+        "0": 7
+      },
+      "loop_counts": {
+        "5": 7
+      }
+    },
+    "FIZZBUZ": {
+      "logical": 25,
+      "callers": {
+        "PLI2.OVL+8244": 25
+      },
+      "trim_counts": {
+        "0": 25
+      },
+      "loop_counts": {
+        "5": 25
+      }
+    },
+    "PICTURE": {
+      "logical": 7,
+      "callers": {
+        "PLI2.OVL+8244": 7
+      },
+      "trim_counts": {
+        "0": 7
+      },
+      "loop_counts": {
+        "5": 7
+      }
+    }
+  },
+  "contracts": {
+    "PLI.COM+1140": {
+      "hash": "d24042cb70146e7ad2ac123b354691b4a39e717ad515174b6963aab89a813a90",
+      "completeness": {
+        "bounds": "provisional",
+        "control_flow": "partial",
+        "contract": "partial"
+      }
+    },
+    "PLI.COM+119E": {
+      "hash": "1d2e7ccc485f38fc13d48e57bd128e1288398c5242784cb07f92172e8a0256d1",
+      "completeness": {
+        "bounds": "stable",
+        "control_flow": "complete",
+        "contract": "partial"
+      }
+    },
+    "PLI.COM+11E5": {
+      "hash": "5639543e380f3e8d044c01054fed6a6e37e2dcf62214ef3b5ca374317d7c4c65",
+      "completeness": {
+        "bounds": "stable",
+        "control_flow": "complete",
+        "contract": "partial"
+      }
+    },
+    "PLI.COM+1A29": {
+      "hash": "6e3ce06bac1e65a6aa806bc57537cc544724c709c66aa77d7486b9323fd2f96d",
+      "completeness": {
+        "bounds": "stable",
+        "control_flow": "complete",
+        "contract": "complete"
+      }
+    },
+    "PLI2.OVL+753C": {
+      "hash": "de3c1e58fda0b4ebb593a5e6a19c3388c8ace6576a83b8d7b7e85bc575625399",
+      "completeness": {
+        "bounds": "stable",
+        "control_flow": "partial",
+        "contract": "partial"
+      }
+    },
+    "PLI2.OVL+7550": {
+      "hash": "d172ed5938646ef834b94fc0b93150133228877860c625a5bba29e3fdfc00f76",
+      "completeness": {
+        "bounds": "stable",
+        "control_flow": "complete",
+        "contract": "partial"
+      }
+    },
+    "PLI2.OVL+75F1": {
+      "hash": "70e660c1fac3775bc64e50c45ff70d0d50c39c18dfbdcab864b1a3aa2b4ec802",
+      "completeness": {
+        "bounds": "stable",
+        "control_flow": "complete",
+        "contract": "partial"
+      }
+    }
+  },
+  "static_trim": {
+    "bytes": 7,
+    "evidence": "DEDUCED instructions plus synthetic bit/loop equations;zero natural executions",
+    "predicate": "ADEE!=0 AND fresh byte[pointer+ADEE]==20H",
+    "termination": "strict decrease of4..0;zero prevents decrement;no artificial depth/iteration bound"
+  },
+  "unsupported": {
+    "raw_regions": [
+      [
+        30564,
+        30575
+      ],
+      [
+        30582,
+        30585
+      ],
+      [
+        30640,
+        30647
+      ]
+    ],
+    "modes": "201C.bit0 or201D.bit0 set",
+    "other": "writer errors,position zero-wrap,arbitrary aliases"
+  },
+  "stack": "Original CALL word preserved;ordinary child calls and writer/service frames derived.7733 PUSH PSW and773C POP B carry first equality mask. No private frame or snapshot residue.",
+  "parent": "8244 is a CALL site in8225;8225 combines79E2/7A17/73D0/756D/7701,independent external-reference generation.8248 delegates to8225. Deferred;no root invented at8244.",
+  "oracle_queries": 0,
+  "loops": {
+    "MINIMAL": {
+      "cases": 7,
+      "pointed_fields": {
+        "5354415254": 1,
+        "5359535052": 1,
+        "534b504f50": 1,
+        "534c435453": 1,
+        "504e434f50": 1,
+        "51494f4f50": 1,
+        "53544f5058": 1
+      },
+      "scan_offsets": {
+        "[4]": 7
+      },
+      "trim_counts": {
+        "0": 7
+      },
+      "loop_counts": {
+        "5": 7
+      },
+      "mode_classes": {
+        "[0, 0]": 7
+      },
+      "encoded_fields": {
+        "192": 7
+      },
+      "checkpoints_hash": "dac659ed7a9cd2d5fde49722a8204903d364c1401181a48df14ec4045debd21c",
+      "local_chronology_matches": true
+    },
+    "FIZZBUZ": {
+      "cases": 25,
+      "pointed_fields": {
+        "5354415254": 1,
+        "494d444f50": 3,
+        "5359535052": 4,
+        "534b504f50": 4,
+        "534c435453": 3,
+        "504e434f50": 3,
+        "51494f4f50": 4,
+        "5149434f50": 1,
+        "504e564f50": 1,
+        "53544f5058": 1
+      },
+      "scan_offsets": {
+        "[4]": 25
+      },
+      "trim_counts": {
+        "0": 25
+      },
+      "loop_counts": {
+        "5": 25
+      },
+      "mode_classes": {
+        "[0, 0]": 25
+      },
+      "encoded_fields": {
+        "192": 25
+      },
+      "checkpoints_hash": "8444b6d014d717814d4186331577a6072e3cecfb2108b86ea89dce9213bee235",
+      "local_chronology_matches": true
+    },
+    "PICTURE": {
+      "cases": 7,
+      "pointed_fields": {
+        "5354415254": 1,
+        "5359535052": 1,
+        "4544495446": 1,
+        "5149434f50": 1,
+        "4544544f56": 1,
+        "51494f4f50": 1,
+        "53544f5058": 1
+      },
+      "scan_offsets": {
+        "[4]": 7
+      },
+      "trim_counts": {
+        "0": 7
+      },
+      "loop_counts": {
+        "5": 7
+      },
+      "mode_classes": {
+        "[0, 0]": 7
+      },
+      "encoded_fields": {
+        "192": 7
+      },
+      "checkpoints_hash": "513d8d5479a892f5b1385d58145566efba1b036fff628352ed49f222011d3c72",
+      "local_chronology_matches": true
+    }
+  },
+  "proof_counts": {
+    "MINIMAL": {
+      "PLI2.OVL+7701": 7,
+      "PLI2.OVL+75F1": 10,
+      "PLI2.OVL+7550": 12,
+      "PLI2.OVL+753C": 39,
+      "PLI.COM+1A29": 43
+    },
+    "FIZZBUZ": {
+      "PLI2.OVL+7701": 25,
+      "PLI2.OVL+75F1": 43,
+      "PLI2.OVL+7550": 66,
+      "PLI2.OVL+753C": 237,
+      "PLI.COM+1A29": 249
+    },
+    "PICTURE": {
+      "PLI2.OVL+7701": 7,
+      "PLI2.OVL+75F1": 11,
+      "PLI2.OVL+7550": 15,
+      "PLI2.OVL+753C": 46,
+      "PLI.COM+1A29": 52
+    }
+  },
+  "cross_corpus": {
+    "source": "FACTOR",
+    "natural_calls": 11,
+    "all_full_states_matched": true,
+    "proof_hash": "f9692f1c47db71127e3595346ca14b8c65b7b993fb04df0f04c8fb44e8ac8d5a",
+    "trim_counts": {
+      "0": 11
+    },
+    "loop_counts": {
+      "5": 11
+    },
+    "components": {
+      "sources": [
+        {
+          "source": "FACTOR",
+          "serializer_shadows": 143,
+          "bit_writer_shadows": 1034,
+          "all_passed": true
+        }
+      ],
+      "all_passed": true
+    },
+    "OPTIMIST": "46 historical calls retained;source/corrected trace absent in current cheap capture infrastructure;no new campaign"
+  },
+  "promotions": {
+    "DECODED": 162,
+    "RAW": 7
+  },
+  "proof_hashes": {
+    "shadow-summary.json": "5ef2ea72a3671ce4b583ec1a39f6a3ec316370ccbbe5cbd70b26cefa4fb06553",
+    "hierarchy-summary.json": "0cb5e4dcadf56dfbd7d635c4e09d447ec9b11b120b1fdf76f457735faf23d71a",
+    "single-hybrid-summary.json": "9089811fcf71efc61f06c8d9dbd540b719791abaf932c6f201fcaa99715607c1",
+    "cumulative-hybrid-summary.json": "59141d7a24d1cf555ed891aab94922c3e579cf5d4a102ac581418fe04b20e5ea"
+  }
+}

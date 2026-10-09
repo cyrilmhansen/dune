@@ -44,7 +44,7 @@ let shadow ?(offset=0x1272) ?(within=[]) ?(run_negatives=true) input=
     let planned_calls=List.filter_map(fun(w:B.write)->if w.kind="compatibility"&&w.address mod 2=entry.sp mod 2&&Char.code(Bytes.get (if w.writer>=0x2200 then input.pli2_ovl else input.pli_com)(w.writer-(if w.writer>=0x2200 then 0x2200 else 0x100)))=0xcd then Some w.writer else None)p.journal in
     require(List.rev !calls=planned_calls)"child CALL chronology";
     require(not(Hashtbl.mem latest entry.sp)&&not(Hashtbl.mem latest(entry.sp+1)))"original continuation lifetime";
-    cases:={Q.caller=call.coordinate;entry_step;return_step=step_index-1;input=entry;output=state;route=(if offset=0x1272 then"pending_REL_padding_and_close"else if offset=0x119e then"counted_bits"else if offset=0x1140 then"append_bit"else match List.assoc_opt offset[0x7557,"zero_prefixed_byte";0x756d,"normalized_combined_field";0x75a7,"clear_gate_zero_prefixed_byte";0x75ce,"shifted_field_byte";0x75f1,"two_zero_prefixed_word_bytes";0x7619,"word_carrier_and_byte_pair";0x746f,"clear_gate_byte_carrier";0x74c7,"clear_gate_second_byte_carrier";0x7510,"clear_gate_word_carrier"]with Some route->route|None->"tagged_cached_word");entry_memory_sha256=Experiment.sha256_hex ram;post_memory_sha256=Experiment.sha256_hex preview.memory;stack_cells=List.length(compatibility_writes p);logical_writes=List.length p.logical_writes;prepared=p;services=preview.services;entry_dma=dma;post_dma=preview.dma}::!cases;
+    cases:={Q.caller=call.coordinate;entry_step;return_step=step_index-1;input=entry;output=state;route=(if offset=0x1272 then"pending_REL_padding_and_close"else if offset=0x119e then"counted_bits"else if offset=0x1140 then"append_bit"else match List.assoc_opt offset[0x7701,"pointer_trim_and_byte_generation";0x7557,"zero_prefixed_byte";0x756d,"normalized_combined_field";0x75a7,"clear_gate_zero_prefixed_byte";0x75ce,"shifted_field_byte";0x75f1,"two_zero_prefixed_word_bytes";0x7619,"word_carrier_and_byte_pair";0x746f,"clear_gate_byte_carrier";0x74c7,"clear_gate_second_byte_carrier";0x7510,"clear_gate_word_carrier"]with Some route->route|None->"tagged_cached_word");entry_memory_sha256=Experiment.sha256_hex ram;post_memory_sha256=Experiment.sha256_hex preview.memory;stack_cells=List.length(compatibility_writes p);logical_writes=List.length p.logical_writes;prepared=p;services=preview.services;entry_dma=dma;post_dma=preview.dma}::!cases;
     snapshots:=(entry_step,{Q.entry_memory=ram;post_memory=preview.memory;entry_files=files;post_files=boundary.copy_filesystem()})::!snapshots;active:=None
    |_->());
   (match !active with Some(_,_,_,_,_,_,_,(preview:Runner.host_program_result),_,_,_)when state.pc=5->
@@ -100,8 +100,30 @@ let shadow ?(offset=0x1272) ?(within=[]) ?(run_negatives=true) input=
    if run_negatives && offset>=0x2200 then(
     if List.mem offset[0x746f;0x74c7;0x7510;0x756d;0x75a7;0x75ce;0x7619]then rejects(fun()->prepare bridge offset ~call ~origin:o(altered[0x201d,1]));
     rejects(fun()->prepare bridge offset ~call ~origin:o(altered[0x9745,0]));
-    let cache=if offset=0x7434 then 0xadc6 else if offset=0x7630 then 0xaddc else 0xade0 in
+    let cache=if offset=0x7701 then 0xadea else if offset=0x7434 then 0xadc6 else if offset=0x7630 then 0xaddc else 0xade0 in
     rejects(fun()->prepare bridge offset ~call ~origin:o(altered[0x2155,cache land 255;0x2156,cache lsr 8]));
+    if offset=0x7701 then(
+     List.iter(fun edits->rejects(fun()->prepare bridge offset ~call ~origin:o(altered edits)))[[0x201c,1];[0x201d,1];[0x1c2c,0xff;0x1c2d,0xff]];
+     List.iter(fun pointer->rejects(fun()->prepare bridge offset ~call ~origin:o{boundary with state={state with b=pointer lsr 8;c=pointer land 255}}))[0xadea;0x1d0a;state.sp;0xfffd];
+     let pointer=(state.b lsl 8)lor state.c in
+     List.iter(fun(field,index,bit,position,modes)->
+      let edits=List.mapi(fun i v->pointer+i,v)field@[0x1d8a,index;0x1d8b,bit;0x1c2c,position land 255;0x1c2d,position lsr 8;0x201c,fst modes;0x201d,snd modes]in
+      let staged=altered edits in let plan=prepare bridge offset ~call ~origin:o staged in
+      let result=match staged.preview_host_program plan.program with Ok r->r|Error e->failwith e in
+      let rec last i=if i>0&&List.nth field i=0x20 then last(i-1)else i in
+      let end_index=last 4 in let width=end_index+2 in
+      let bits_of value count=List.init count(fun i->(value lsr(7-i))land 1)in
+      let incoming=0::bits_of 0 8@(0::bits_of 0 8)@bits_of 0x8c 7@bits_of 0x40 2@bits_of(position land 255)8@bits_of(position lsr 8)8@bits_of(width lsl 5)3@bits_of 0x3f 8@List.concat_map(fun v->bits_of v 8)(List.filteri(fun i _->i<=end_index)field)in
+      let buffer=Bytes.sub ram 0x1d0a 128 and cursor=ref index and used=ref bit and records=ref[]in
+      List.iter(fun value->let old=Char.code(Bytes.get buffer !cursor)in Bytes.set buffer !cursor(Char.chr(((old lsl 1)lor value)land 255));incr used;if !used=8 then(used:=0;incr cursor;if !cursor=128 then(records:=Bytes.copy buffer::!records;cursor:=0)))incoming;
+      require(Bytes.sub result.memory 0x1d0a 128=buffer)"independent pointer field bit stream";
+      require(Char.code(Bytes.get result.memory 0xadee)=width&&Char.code(Bytes.get result.memory 0xadec)=end_index+1)"derived trim length/index termination";
+      require(Char.code(Bytes.get result.memory 0xaded)=List.nth field end_index)"last pointed-byte publication";
+      require(List.map(fun(w:B.write)->w.value)(List.filter(fun(w:B.write)->w.writer=0x9946)plan.journal)=List.init(4-end_index)(fun i->3-i))"state-driven trim retries";
+      require(List.length(List.filter(fun(w:B.write)->w.writer=0x999c)plan.journal)=end_index+1)"state-driven byte loop";
+      require(Char.code(Bytes.get result.memory 0x1d8a)= !cursor&&Char.code(Bytes.get result.memory 0x1d8b)= !used)"pointer wrapping output cursor";
+      let actual=List.concat_map(fun(s:Runner.host_service)->List.filter_map(function Cpm.Bdos.Write_record r->Some r.data|_->None)s.events)result.services in require(actual=List.rev !records)"pointer synthetic record chronology"
+     )[[0x41;0x42;0x43;0x44;0x45],1,0,0,(0,0);[0x41;0x42;0x43;0x44;0x20],1,0,0x1234,(0,0);[0x41;0x42;0x20;0x20;0x20],1,0,0,(2,4);[0x20;0x20;0x20;0x20;0x20],127,7,0xfffd,(0,0);[0x41;0x42;0x43;0x44;0x21],1,0,0,(0,0);[0x41;0x42;0x43;0x44;0x1f],1,0,0,(0,0)]);
     if List.mem offset[0x7557;0x756d;0x75a7;0x75ce;0x75f1;0x7619]then(
      rejects(fun()->prepare bridge offset ~call ~origin:o(altered[0x1c2c,0xff;0x1c2d,0xff]));
      List.iter(fun(index,bits,value,field)->

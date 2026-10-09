@@ -148,7 +148,7 @@ def render(root):
                 if offset in comments:
                     statement = line.split(";", 1)[0].rstrip()
                     coordinate = re.search(
-                        r"\+[0-9A-F]+ runtime=[0-9A-F]+H (?:OBSERVED|RAW)", line
+                        r"\+[0-9A-F]+ runtime=[0-9A-F]+H (?:OBSERVED|RAW|DEDUCED STATIC UNOBSERVED)", line
                     )
                     if not coordinate:
                         raise ValueError(f"Missing coordinate at +{offset:04X}")

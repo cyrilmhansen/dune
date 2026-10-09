@@ -10,6 +10,7 @@ image_name=sys.argv[2]; caller_images={n:Path(sys.argv[1],n).read_bytes()for n i
 cat=json.loads((r/'procedures.json').read_text());ev=json.loads((r/'evidence.json').read_text());man=json.loads((r/'manifest.json').read_text());im=next(i for i in man['images']if i['name']==image_name)
 data=json.loads((OUT/('annotation-rows-'+image_name+'.json')).read_text())
 laws=json.loads((REPORT/('contract-laws-'+image_name+'.json')).read_text())
+static_path=OUT/('annotation-static-'+image_name+'.json');static=json.loads(static_path.read_text())if static_path.exists()else{}
 meta={int(k.split('+')[1],16):(v['end'],v['description'],v['completeness'],v['contract'],[f'Scope is the independently shadowed Pass{PASS} routes; sibling RAW arms, arbitrary aliases and inherited child unsupported states remain excluded.'],[(int(k.split('+')[1],16),[v['contract']])])for k,v in laws.items()}
 base=os.environ.get('RUNES_ANNOTATION_BASE','c89fb3be1a5e5f077161c96f6f8b715baad69776');baseline=lambda name:json.loads(subprocess.check_output(['git','show',base+':research/annotated-assembly/'+name+'.json']));old={p['id']:p for p in baseline('procedures')['procedures']};oldseeds={p['id']:p for p in baseline('evidence')['seeds']}
 if not (OUT/('before-'+image_name+'.json')).exists():(OUT/('before-'+image_name+'.json')).write_text(json.dumps({k:old.get(k)for k in laws},indent=2)+'\n')
@@ -56,12 +57,15 @@ def meaning(w):
  raise ValueError(d)
 new={};facts={}
 for start,(end,desc,complete,contract,unresolved,blocks)in meta.items():
- key=f'{image_name}+{start:04X}';groups={s:g[key]for s,g in data.items()};rs=sum(groups.values(),[]);ws={w['origin']['offset']:w for a in rs for w in a['own_witnesses']};facts.update(ws)
+ key=f'{image_name}+{start:04X}';groups={s:g[key]for s,g in data.items()};rs=sum(groups.values(),[]);ws={w['origin']['offset']:w for a in rs for w in a['own_witnesses']};
+ for w in static.get(key,[]):
+  o=w['origin']['offset'];assert image[o:o+len(bytes.fromhex(w['bytes']))]==bytes.fromhex(w['bytes']);assert o not in ws;ws[o]=w
+ facts.update(ws)
  callers={}
  for s,rows in groups.items():
   for c,n in Counter(coord(a['call']['origin'])for a in rows).items():callers.setdefault(c,{})[s]=n
  direct={w['origin']['offset']:dict(callsite_offset=w['origin']['offset'],coordinate=coord(w['target_origin']),runtime_address=w['control']['target'])for w in ws.values()if w['control']['kind']=='call'}
- p=dict(id=key,image=image_name,image_sha256=im['sha256'],stable_label=f"{im['label_prefix']}_{start:04X}",runtime_entry=start+im['runtime_base'],start_offset=start,end_offset=end,length=end-start,byte_status_at_entry='UNDERSTOOD',description=desc,completeness=dict(zip(['bounds','control_flow','contract'],complete)),observed_paths=dict(invocations_by_run={s:len(a)for s,a in groups.items()},represented_bytes=sum(len(bytes.fromhex(w['bytes']))for w in ws.values()),description='OBSERVED corrected ordinary CALL/return windows independently retained for MINIMAL/FIZZBUZ/PICTURE; union of own bytes excludes child bodies.'),unresolved_paths=unresolved,
+ p=dict(id=key,image=image_name,image_sha256=im['sha256'],stable_label=f"{im['label_prefix']}_{start:04X}",runtime_entry=start+im['runtime_base'],start_offset=start,end_offset=end,length=end-start,byte_status_at_entry='UNDERSTOOD',description=desc,completeness=dict(zip(['bounds','control_flow','contract'],complete)),observed_paths=dict(invocations_by_run={s:len(a)for s,a in groups.items()},represented_bytes=sum(len(bytes.fromhex(w['bytes']))for w in ws.values()),description='OBSERVED corrected ordinary CALL/return windows independently retained for MINIMAL/FIZZBUZ/PICTURE; union of own bytes excludes child bodies. Static authored facts, when present, are separately DEDUCED/UNOBSERVED; no natural executions fabricated.'),unresolved_paths=unresolved,
  inputs='Actual entry registers and selected shared byte-addressed memory; child scopes inherited; executable code, selected scratch/publications/read carriers and active return/save slots nonaliasing where their operation requires it. No table capacity or ownership assumption.',
  outputs='Path-specific A/BC/DE/HL and flags as documented below and in correlated natural cases; SP=entry_SP+2; PC=original CALL continuation.',clobbers='Path-specific A/BC/DE/HL/flags; local scratch/publications stated below; delegated child effects; proven CALL/PUSH stack residue.',memory_state=['All numerical addresses denote historical runtime bytes, not separate host arrays.','F=entry_SP; original hardware CALL word at F; body CALL/save traffic below F; preserved per-invocation last writers.'],data_role_ids=[],callers=[dict(coordinate=c,counts_by_run=ns)for c,ns in sorted(callers.items())],returns=dict(convention='ordinary hardware CALL word; original slot unchanged; SP after RET=entry_SP+2',observed_file_offsets=sorted({a['ret']['origin']['offset']for a in rs}),sites_description='; '.join(sorted({coord(a['ret']['origin'])for a in rs}))),direct_callees=list(direct.values()),overlapping_entries=[],contract_scope='Bounded accumulated-natural routes and exact represented local operations; delegated partial/opaque children and unexecuted local arms are not silently implemented.',contract=contract,semantic_hypothesis=None,pseudocode='; '.join(t for o,ts in blocks for t in ts),evidence_refs=[f'evidence.json#seeds/{key}',f'../host-compiler/pass-{PASS}/README.md',f'../host-compiler/pass-{PASS}/shadow-summary.json'],blocks=[dict(offset=o,pseudocode=ts)for o,ts in blocks],local_comments={f'{o:04X}':meaning(w)for o,w in sorted(ws.items())})
  if key in old:
@@ -89,6 +93,7 @@ for start,(end,desc,complete,contract,unresolved,blocks)in meta.items():
  instructions=[]
  for o,w in sorted(ws.items()):
   ins=dict(offset=o,runtime_pc=o+im['runtime_base'],bytes=w['bytes'],decoded=w['disassembly'],runs=[])
+  if w.get('evidence_class'):ins['evidence_class']=w['evidence_class']
   for s,rows in groups.items():
    hits=[q for a in rows for q in a['own_witnesses']if q['origin']['offset']==o]
    if hits:ins['runs'].append(dict(run=s,execution_count=len(hits),first_step=min(q['step_index']for q in hits),last_step=max(q['step_index']for q in hits)))
@@ -147,7 +152,7 @@ for line in source_lines:
    if pos in promoted and pos not in facts:pos+=1;continue
    if pos in starts:s=starts[pos];result.append(f"; SECTION [{pos:04X},{s['end_offset']:04X}) {s['status']}")
    if pos in facts:
-    w=facts[pos];statement=re.sub(r'\b([A-F][0-9A-F]*)H\b',r'0\1H',w['disassembly']);result.append(f"{im['label_prefix']}_{pos:04X}: {statement} ; +{pos:04X} runtime={pos+im['runtime_base']:04X}H OBSERVED");keptlabels.add(pos);pos+=len(bytes.fromhex(w['bytes']))
+    w=facts[pos];statement=re.sub(r'\b([A-F][0-9A-F]*)H\b',r'0\1H',w['disassembly']);result.append(f"{im['label_prefix']}_{pos:04X}: {statement} ; +{pos:04X} runtime={pos+im['runtime_base']:04X}H {w.get('evidence_class','OBSERVED')}");keptlabels.add(pos);pos+=len(bytes.fromhex(w['bytes']))
    else:
     end=min([b]+[x for x in starts if pos<x<b]+[x for x in facts if pos<x<b]);statement=','.join(f'0{v:02X}H'for v in image[pos:end]);result.append(f"{im['label_prefix']}_{pos:04X}: DB {statement} ; +{pos:04X} runtime={pos+im['runtime_base']:04X}H RAW");keptlabels.add(pos);pos=end
   continue

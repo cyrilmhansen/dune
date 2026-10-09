@@ -1,0 +1,230 @@
+{
+  "validation_tier": "incremental",
+  "full_checkpoint_base": "3ea8fa04b3aee725a772f1365763306ea4ee4f62",
+  "status": "passed initially",
+  "workers": 4,
+  "historical_bytes": 94720,
+  "reruns": [],
+  "all_passed": true,
+  "category_count": 16,
+  "unique_python_test_count": 92,
+  "dune_test_rule_stanzas": 39,
+  "validation_wall_seconds": 732.044,
+  "summed_category_seconds": 2125.293,
+  "slowest_categories": [
+    {
+      "category": "pass55",
+      "elapsed_seconds": 407.279
+    },
+    {
+      "category": "pass54",
+      "elapsed_seconds": 406.181
+    },
+    {
+      "category": "pass53",
+      "elapsed_seconds": 389.573
+    },
+    {
+      "category": "pass52",
+      "elapsed_seconds": 360.191
+    },
+    {
+      "category": "pass51",
+      "elapsed_seconds": 291.501
+    },
+    {
+      "category": "packet-continuation",
+      "elapsed_seconds": 142.607
+    },
+    {
+      "category": "roundtrip-tests",
+      "elapsed_seconds": 55.726
+    },
+    {
+      "category": "V1",
+      "elapsed_seconds": 38.768
+    },
+    {
+      "category": "roundtrip",
+      "elapsed_seconds": 27.619
+    },
+    {
+      "category": "build",
+      "elapsed_seconds": 3.914
+    }
+  ],
+  "categories": {
+    "build": {
+      "return_code": 0,
+      "elapsed_seconds": 3.914,
+      "command": [
+        "dune",
+        "build",
+        "@all",
+        "-j",
+        "4"
+      ],
+      "python_tests": 0
+    },
+    "project": {
+      "return_code": 0,
+      "elapsed_seconds": 0.338,
+      "command": [
+        "dune",
+        "runtest",
+        "-j",
+        "4"
+      ],
+      "python_tests": 0
+    },
+    "roundtrip": {
+      "return_code": 0,
+      "elapsed_seconds": 27.619,
+      "command": [
+        "python3",
+        "tools/annotated-assembly/verify.py",
+        "--images",
+        "/home/john/pli/cpm/pli80/DISK1"
+      ],
+      "python_tests": 0
+    },
+    "emitter-unit": {
+      "return_code": 0,
+      "elapsed_seconds": 0.036,
+      "command": [
+        "_build/default/test/resident_int_emitter.exe"
+      ],
+      "python_tests": 0
+    },
+    "native-emitter-unit": {
+      "return_code": 0,
+      "elapsed_seconds": 1.254,
+      "command": [
+        "_build/default/test/native_int_emitter.exe"
+      ],
+      "python_tests": 0
+    },
+    "word-emitter-unit": {
+      "return_code": 0,
+      "elapsed_seconds": 0.099,
+      "command": [
+        "_build/default/test/native_word_emitters.exe"
+      ],
+      "python_tests": 0
+    },
+    "V1": {
+      "return_code": 0,
+      "elapsed_seconds": 38.768,
+      "command": [
+        "python3",
+        "tools/annotated-assembly/test_decompilation_annotations.py",
+        "-v"
+      ],
+      "python_tests": 9
+    },
+    "roundtrip-tests": {
+      "return_code": 0,
+      "elapsed_seconds": 55.726,
+      "command": [
+        "python3",
+        "tools/annotated-assembly/test_verify.py",
+        "--images",
+        "/home/john/pli/cpm/pli80/DISK1",
+        "-v"
+      ],
+      "python_tests": 11
+    },
+    "packet-continuation": {
+      "return_code": 0,
+      "elapsed_seconds": 142.607,
+      "command": [
+        "python3",
+        "tools/annotated-assembly/test_procedure_evidence_packet.py",
+        "--images",
+        "/home/john/pli/cpm/pli80/DISK1",
+        "-v"
+      ],
+      "python_tests": 27
+    },
+    "pass55": {
+      "return_code": 0,
+      "elapsed_seconds": 407.279,
+      "command": [
+        "python3",
+        "tools/annotated-assembly/test_pli2_pointer_generation_pass_55.py",
+        "--images",
+        "/home/john/pli/cpm/pli80/DISK1",
+        "-q"
+      ],
+      "python_tests": 9
+    },
+    "pass54": {
+      "return_code": 0,
+      "elapsed_seconds": 406.181,
+      "command": [
+        "python3",
+        "tools/annotated-assembly/test_pli2_compact_emission_pass_54.py",
+        "--images",
+        "/home/john/pli/cpm/pli80/DISK1",
+        "-q"
+      ],
+      "python_tests": 11
+    },
+    "dynamic-progress": {
+      "return_code": 0,
+      "elapsed_seconds": 0.139,
+      "command": [
+        "python3",
+        "-c",
+        "import json,subprocess;from pathlib import Path;p=Path('/home/john/pli/lab/_build/host-compiler-pass-55/incremental-validation/dynamic-progress.json');subprocess.run(['python3','tools/annotated-assembly/minimal_dynamic_progress.py','--output',str(p)],check=True);assert json.loads(p.read_text())==json.loads(Path('research/minimal-baseline/dynamic-progress.json').read_text())"
+      ],
+      "python_tests": 0
+    },
+    "diff-check": {
+      "return_code": 0,
+      "elapsed_seconds": 0.068,
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "python_tests": 0
+    },
+    "pass53": {
+      "return_code": 0,
+      "elapsed_seconds": 389.573,
+      "command": [
+        "python3",
+        "tools/annotated-assembly/test_pli2_emission_adapters_pass_53.py",
+        "--images",
+        "/home/john/pli/cpm/pli80/DISK1",
+        "-q"
+      ],
+      "python_tests": 9
+    },
+    "pass52": {
+      "return_code": 0,
+      "elapsed_seconds": 360.191,
+      "command": [
+        "python3",
+        "tools/annotated-assembly/test_buffered_rel_emission_pass_52.py",
+        "--images",
+        "/home/john/pli/cpm/pli80/DISK1",
+        "-q"
+      ],
+      "python_tests": 8
+    },
+    "pass51": {
+      "return_code": 0,
+      "elapsed_seconds": 291.501,
+      "command": [
+        "python3",
+        "tools/annotated-assembly/test_output_termination_pass_51.py",
+        "--images",
+        "/home/john/pli/cpm/pli80/DISK1",
+        "-q"
+      ],
+      "python_tests": 8
+    }
+  }
+}

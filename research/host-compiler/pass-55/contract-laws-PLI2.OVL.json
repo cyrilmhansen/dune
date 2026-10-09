@@ -1,0 +1,12 @@
+{
+  "PLI2.OVL+7701": {
+    "end": 30655,
+    "description": "Bounded pointed-field trim, length and byte REL generation",
+    "completeness": [
+      "stable",
+      "partial",
+      "partial"
+    ],
+    "contract": "Save B atADEB then C atADEA. Compose canonical75F1(BC=0);emit8C with119E E7. Fresh LHLD1C2C;subtract2 modulo65536;compose canonical11E5. PublishADEE=4. Repeatedly independently read ADEE and saved pointer,read byte[pointer+zeroextended ADEE];two arithmetic masks select decrement/retry iff byte=20H and ADEE!=0. PUSH PSW/POP B preserves first mask;ANA/RAR directly controls JNC. Decrement sharedADEE and retry;no fixed iteration schedule. IncrementADEE twice;five ADD A produceu8(ADEE<<5);serialize E3. Fresh201D and201C RAR gates must both have bit0 clear;set arms unsupported. Serialize3F,E8. PublishADEC=0. Fresh ADEE minus2 compared with memoryADEC;JC exits iff index>limit. Independently paired-readADEC and saved pointer each iteration;zeroextend index,read actual byte,publishADED;serializeE8. Independently reread201C and201D,ORA/RAR;bit0-set arm unsupported. Increment sharedADEC;JNZ from actual INR flags repeats;RET actual final state. Scanned k in0..4;encoded valuek+2;emitted bytes0..k inclusive, including one space for all-space field. Bounded successful copied staging:nonwrapping BC field of five bytes,nonalias scratch/return/service/REL-buffer/FCB/sentinel;immutable instructions and hardware CALL;2029.bit0 clear,index<128,bit<8,each753C increment nonzero. Fresh mode bit0 gates clear at all historical reads. No source/caller/step/snapshot dispatch. Canonical75F1/11E5/119E/1140/7550/753C reused;no nested Runner. Error/mode/alias alternatives fail closed without live mutation."
+  }
+}

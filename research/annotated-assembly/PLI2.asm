@@ -3997,40 +3997,76 @@ PLI2_76ED: DB 012H,02AH,02CH,01CH,02BH,02BH,044H,04DH,0CDH,0E5H,012H,02AH,0E8H,0
 PLI2_76FD: DB 0CDH,065H,037H,0C9H ; +76FD runtime=98FDH RAW
 
 ; @procedure-v1 PLI2.OVL+7701
-; ProcedureHypothesis: emit LINK-80 CHAIN EXTERNAL item
+; ProcedureHypothesis: Bounded pointed-field trim, length and byte REL generation
 ; Entry: PLI2_7701 = PLI2.OVL+7701 @ 9901H; SHA-256
 ;   80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a
 ; Extent: HYPOTHESIS [7701,77BF) file offsets; overlapping entries: none established
-; Callers: OBSERVED PLI2.OVL+8244 (FACTOR=11, FIZZBUZ=25, MINIMAL=7, OPTIMIST=46)
-; Returns: OBSERVED/DEDUCED ordinary hardware CALL word; observed SP after RET = (entry SP + 2)
-;   mod 65536; PLI2.OVL+77BE
-; Inputs: DEDUCED BC=pointer saved at ADEA/ADEB; scratch/mode state
-; Outputs: DEDUCED serialization/helper effects along witnessed scan paths; full result unresolved
-; Clobbers: DEDUCED A,BC,DE,HL,flags
-; Memory: DEDUCED program_position_word=1C2CH (word read by existing emission seed);
-;   emitter_mode_201C=201CH (mode flag; general meaning unresolved); emitter_mode_201D=201DH
-;   (mode flag; general meaning unresolved); chain_input_pointer=ADEAH (saved emission
-;   pointer BC); chain_byte_index=ADECH (byte serialization loop index); chain_byte=ADEDH
-;   (saved pointed byte); chain_length=ADEEH (length scan scratch)
+; Callers: OBSERVED PLI2.OVL+8244 (FACTOR=11, FIZZBUZ=25, MINIMAL=7, OPTIMIST=46, PICTURE=7)
+; Returns: OBSERVED/DEDUCED ordinary hardware CALL word; original slot unchanged; SP after
+;   RET=entry_SP+2; PLI2.OVL+77BE
+; Inputs: DEDUCED Actual entry registers and selected shared byte-addressed memory; child scopes
+;   inherited; executable code, selected scratch/publications/read carriers and active
+;   return/save slots nonaliasing where their operation requires it. No table capacity or
+;   ownership assumption.
+; Outputs: DEDUCED Path-specific A/BC/DE/HL and flags as documented below and in correlated
+;   natural cases; SP=entry_SP+2; PC=original CALL continuation.
+; Clobbers: DEDUCED Path-specific A/BC/DE/HL/flags; local scratch/publications stated below;
+;   delegated child effects; proven CALL/PUSH stack residue.
+; Memory: DEDUCED All numerical addresses denote historical runtime bytes, not separate host
+;   arrays.; F=entry_SP; original hardware CALL word at F; body CALL/save traffic below F;
+;   preserved per-invocation last writers.
 ; Direct callees: OBSERVED PLI2.OVL+75F1 @97F1H; PLI.COM+119E @129EH; PLI.COM+11E5 @12E5H;
 ;   PLI.COM+119E @129EH; PLI.COM+119E @129EH; PLI.COM+119E @129EH
 ; Coverage: OBSERVED FACTOR: 11 CALLs; FIZZBUZ: 25 CALLs; MINIMAL: 7 CALLs; OPTIMIST: 46 CALLs;
-;   162/190 bytes represented as instructions; fetched path fragments only; name
-;   trimming/mode branches not fully exercised; item meaning remains hypothesis
-; Unresolved: name trimming/mode branches not fully exercised; item meaning remains hypothesis
-; Contract: DEDUCED (partial; scope: own low-level operation; opaque callees explicitly delegated)
-;   BC pointer saved at ADEAH/ADEBH; scratch ADECH/ADEDH/ADEEH; reads 1C2CH,201CH,201DH
-; Hypothesis: HYPOTHESIS CHAIN EXTERNAL construction
-; Completeness: bounds=provisional; control_flow=partial; contract=partial
-; Evidence: evidence.json#seeds/PLI2.OVL+7701
+;   PICTURE: 7 CALLs; 169/190 bytes represented as instructions; OBSERVED corrected
+;   ordinary CALL/return windows independently retained for MINIMAL/FIZZBUZ/PICTURE; union
+;   of own bytes excludes child bodies. Static authored facts, when present, are
+;   separately DEDUCED/UNOBSERVED; no natural executions fabricated.
+; Unresolved: Mode-bit0-set arms[7764,776F),[7776,7779),[77B0,77B7) remain RAW / STATIC /
+;   UNOBSERVED; no inferred item semantics. / Writer failure,753C zero-wrap and
+;   arbitrary alias/nonwrapping pointer violations remain unsupported. / Seven-byte
+;   decrement/retry at7743 is DEDUCED / STATIC / UNOBSERVED with synthetic proof; not
+;   naturally executed.
+; Contract: DEDUCED (partial; scope: own low-level operation; opaque callees explicitly delegated;
+;   additionally the exact Pass55 family/root states and nonalias scopes.) Save B atADEB
+;   then C atADEA. Compose canonical75F1(BC=0);emit8C with119E E7. Fresh
+;   LHLD1C2C;subtract2 modulo65536;compose canonical11E5. PublishADEE=4. Repeatedly
+;   independently read ADEE and saved pointer,read byte[pointer+zeroextended ADEE];two
+;   arithmetic masks select decrement/retry iff byte=20H and ADEE!=0. PUSH PSW/POP B
+;   preserves first mask;ANA/RAR directly controls JNC. Decrement sharedADEE and retry;no
+;   fixed iteration schedule. IncrementADEE twice;five ADD A produceu8(ADEE<<5);serialize
+;   E3. Fresh201D and201C RAR gates must both have bit0 clear;set arms unsupported.
+;   Serialize3F,E8. PublishADEC=0. Fresh ADEE minus2 compared with memoryADEC;JC exits iff
+;   index>limit. Independently paired-readADEC and saved pointer each iteration;zeroextend
+;   index,read actual byte,publishADED;serializeE8. Independently reread201C
+;   and201D,ORA/RAR;bit0-set arm unsupported. Increment sharedADEC;JNZ from actual INR
+;   flags repeats;RET actual final state. Scanned k in0..4;encoded valuek+2;emitted
+;   bytes0..k inclusive, including one space for all-space field. Bounded successful
+;   copied staging:nonwrapping BC field of five bytes,nonalias
+;   scratch/return/service/REL-buffer/FCB/sentinel;immutable instructions and hardware
+;   CALL;2029.bit0 clear,index<128,bit<8,each753C increment nonzero. Fresh mode bit0 gates
+;   clear at all historical reads. No source/caller/step/snapshot dispatch.
+;   Canonical75F1/11E5/119E/1140/7550/753C reused;no nested Runner. Error/mode/alias
+;   alternatives fail closed without live mutation.
+; Hypothesis: none beyond the low-level operational description
+; Completeness: bounds=stable; control_flow=partial; contract=partial
+; Evidence: evidence.json#seeds/PLI2.OVL+7701; ../host-compiler/pass-55/README.md;
+;   ../host-compiler/pass-55/shadow-summary.json
 ; Procedure pseudo (operational; byte/word arithmetic wraps):
-;   save pointer; emit prefix and adjusted program address; scan/trim pointed bytes; emit
-;   length/prefix and bytes; RET on observed path
+;   save BC pointer high then low;75F1(0);119E(8C,7);fresh1C2C minus2;canonical tag40 word;
+;   ADEE=4;while ADEE!=0 and fresh byte[fresh pointer+ADEE]==20H: decrement sharedADEE and
+;   retry;independent masks via PSW/B carrier; DEDUCED STATIC UNOBSERVED: LXI H,ADEE;DCR
+;   M;JMP7723. Natural executions0;synthetic retries prove state-driven decrement; ADEE+=2;five
+;   byte doublings;119E(ADEE shifted5,3); fresh201D then201C RAR bit0 gates;set alternatives
+;   RAW/unsupported; 119E(3F,8);ADEC=0; fresh ADEE minus2;CMP memoryADEC;JC exits only when
+;   index>limit; independently fresh index and pointer;read pointed byte;publishADED;119E(byte,8);
+;   fresh201C OR fresh201D;RAR bit0;set console/mode operation remains RAW,meaning unclaimed;
+;   increment sharedADEC;actual INR Z controls JNZ;RET consumes original CALL word
 ; @end-procedure-v1 PLI2.OVL+7701
-; SECTION [7701,7743) DECODED
+; SECTION [7701,7743) UNDERSTOOD
 ; @block-pseudo 7701
 ; pseudo:
-; | save pointer; invoke prefix/address serializers
+; | save BC pointer high then low;75F1(0);119E(8C,7);fresh1C2C minus2;canonical tag40 word
 PLI2_7701: LXI H,0ADEBH ; HL = ADEBH ; +7701 runtime=9901H OBSERVED
 PLI2_7704: MOV M,B ; byte[ADEBH] = B ; +7704 runtime=9904H OBSERVED
 PLI2_7705: DCX H ; HL = (HL - 1) & FFFF; flags preserved ; +7705 runtime=9905H OBSERVED
@@ -4048,7 +4084,7 @@ PLI2_771A: MOV C,L ; C = L ; +771A runtime=991AH OBSERVED
 PLI2_771B: CALL 12E5H ; push following PC; invoke PLI.COM+11E5; result effects belong to callee ; +771B runtime=991BH OBSERVED
 ; @block-pseudo 771E
 ; pseudo:
-; | initialize length scan; unobserved trimming path stays RAW
+; | ADEE=4;while ADEE!=0 and fresh byte[fresh pointer+ADEE]==20H: decrement sharedADEE and retry;independent masks via PSW/B carrier
 PLI2_771E: LXI H,0ADEEH ; HL = &chain_length (ADEEH) ; +771E runtime=991EH OBSERVED
 PLI2_7721: MVI M,04H ; byte[chain_length (ADEEH)] = 04H ; +7721 runtime=9921H OBSERVED
 PLI2_7723: LHLD 0ADEEH ; L = byte[chain_length (ADEEH)]; H = byte[ADEFH] ; +7723 runtime=9923H OBSERVED
@@ -4070,12 +4106,17 @@ PLI2_773D: MOV C,B ; C = B ; +773D runtime=993DH OBSERVED
 PLI2_773E: ANA C ; A = A & C; logical byte flags, CY=0 ; +773E runtime=993EH OBSERVED
 PLI2_773F: RAR ; A = (old_CY<<7) | (old_A>>1); CY=old_A bit0; NZPA preserved ; +773F runtime=993FH OBSERVED
 PLI2_7740: JNC 994AH ; if CY=0: PC -> PLI2.OVL+774A; flags preserved ; +7740 runtime=9940H OBSERVED
-; SECTION [7743,774A) RAW
-PLI2_7743: DB 021H,0EEH,0ADH,035H,0C3H,023H,099H ; +7743 runtime=9943H RAW
-; SECTION [774A,7764) DECODED
+; SECTION [7743,774A) UNDERSTOOD
+; @block-pseudo 7743
+; pseudo:
+; | DEDUCED STATIC UNOBSERVED: LXI H,ADEE;DCR M;JMP7723. Natural executions0;synthetic retries prove state-driven decrement
+PLI2_7743: LXI H,0ADEEH ; H pair = literal ADEEH; flags preserved ; +7743 runtime=9943H DEDUCED STATIC UNOBSERVED
+PLI2_7746: DCR M ; M=u8(M-1); NZPA from decrement; CY preserved ; +7746 runtime=9946H DEDUCED STATIC UNOBSERVED
+PLI2_7747: JMP 9923H ; unconditionally: PC=9923H; flags preserved ; +7747 runtime=9947H DEDUCED STATIC UNOBSERVED
+; SECTION [774A,7764) UNDERSTOOD
 ; @block-pseudo 774A
 ; pseudo:
-; | form length bits and pass them to serializer
+; | ADEE+=2;five byte doublings;119E(ADEE shifted5,3)
 PLI2_774A: LXI H,0ADEEH ; HL = &chain_length (ADEEH) ; +774A runtime=994AH OBSERVED
 PLI2_774D: INR M ; byte[chain_length (ADEEH)] = (byte[chain_length (ADEEH)] + 1) & FF; NZPA updated, CY preserved ; +774D runtime=994DH OBSERVED
 PLI2_774E: INR M ; byte[chain_length (ADEEH)] = (byte[chain_length (ADEEH)] + 1) & FF; NZPA updated, CY preserved ; +774E runtime=994EH OBSERVED
@@ -4088,21 +4129,24 @@ PLI2_7756: ADD A ; A = (A + A) & FF; arithmetic flags updated ; +7756 runtime=99
 PLI2_7757: MOV C,A ; C = A ; +7757 runtime=9957H OBSERVED
 PLI2_7758: MVI E,03H ; E = 03H ; +7758 runtime=9958H OBSERVED
 PLI2_775A: CALL 129EH ; push following PC; invoke PLI.COM+119E; result effects belong to callee ; +775A runtime=995AH OBSERVED
+; @block-pseudo 775D
+; pseudo:
+; | fresh201D then201C RAR bit0 gates;set alternatives RAW/unsupported
 PLI2_775D: LDA 201DH ; A = byte[emitter_mode_201D (201DH)] ; +775D runtime=995DH OBSERVED
 PLI2_7760: RAR ; A = (old_CY<<7) | (old_A>>1); CY=old_A bit0; NZPA preserved ; +7760 runtime=9960H OBSERVED
 PLI2_7761: JNC 996FH ; if CY=0: PC -> PLI2.OVL+776F; flags preserved ; +7761 runtime=9961H OBSERVED
 ; SECTION [7764,776F) RAW
 PLI2_7764: DB 0CDH,04DH,096H,00EH,03FH,0CDH,090H,004H,0C3H,079H,099H ; +7764 runtime=9964H RAW
-; SECTION [776F,7776) DECODED
+; SECTION [776F,7776) UNDERSTOOD
 PLI2_776F: LDA 201CH ; A = byte[emitter_mode_201C (201CH)] ; +776F runtime=996FH OBSERVED
 PLI2_7772: RAR ; A = (old_CY<<7) | (old_A>>1); CY=old_A bit0; NZPA preserved ; +7772 runtime=9972H OBSERVED
 PLI2_7773: JNC 9979H ; if CY=0: PC -> PLI2.OVL+7779; flags preserved ; +7773 runtime=9973H OBSERVED
 ; SECTION [7776,7779) RAW
 PLI2_7776: DB 0CDH,05AH,096H ; +7776 runtime=9976H RAW
-; SECTION [7779,77B0) DECODED
+; SECTION [7779,77B0) UNDERSTOOD
 ; @block-pseudo 7779
 ; pseudo:
-; | emit prefix and initialize byte loop
+; | 119E(3F,8);ADEC=0
 PLI2_7779: MVI E,08H ; E = 08H ; +7779 runtime=9979H OBSERVED
 PLI2_777B: MVI C,3FH ; C = 3FH ; +777B runtime=997BH OBSERVED
 PLI2_777D: CALL 129EH ; push following PC; invoke PLI.COM+119E; result effects belong to callee ; +777D runtime=997DH OBSERVED
@@ -4110,7 +4154,7 @@ PLI2_7780: LXI H,0ADECH ; HL = &chain_byte_index (ADECH) ; +7780 runtime=9980H O
 PLI2_7783: MVI M,00H ; byte[chain_byte_index (ADECH)] = 00H ; +7783 runtime=9983H OBSERVED
 ; @block-pseudo 7785
 ; pseudo:
-; | check loop limit
+; | fresh ADEE minus2;CMP memoryADEC;JC exits only when index>limit
 PLI2_7785: LDA 0ADEEH ; A = byte[chain_length (ADEEH)] ; +7785 runtime=9985H OBSERVED
 PLI2_7788: DCR A ; A = (A - 1) & FF; NZPA updated, CY preserved ; +7788 runtime=9988H OBSERVED
 PLI2_7789: DCR A ; A = (A - 1) & FF; NZPA updated, CY preserved ; +7789 runtime=9989H OBSERVED
@@ -4119,7 +4163,7 @@ PLI2_778D: CMP M ; flags = compare_unsigned(A, byte[chain_byte_index (ADECH)]); 
 PLI2_778E: JC 99BEH ; if CY=1: PC -> PLI2.OVL+77BE; flags preserved ; +778E runtime=998EH OBSERVED
 ; @block-pseudo 7791
 ; pseudo:
-; | load next pointed byte and serialize 8 bits
+; | independently fresh index and pointer;read pointed byte;publishADED;119E(byte,8)
 PLI2_7791: LHLD 0ADECH ; L = byte[chain_byte_index (ADECH)]; H = byte[chain_byte (ADEDH)] ; +7791 runtime=9991H OBSERVED
 PLI2_7794: MVI H,00H ; HL = zero_extend(L); flags preserved ; +7794 runtime=9994H OBSERVED
 PLI2_7796: XCHG ; swap HL and DE; flags preserved ; +7796 runtime=9996H OBSERVED
@@ -4130,6 +4174,9 @@ PLI2_779C: STA 0ADEDH ; byte[chain_byte (ADEDH)] = A ; +779C runtime=999CH OBSER
 PLI2_779F: MOV C,A ; C = A ; +779F runtime=999FH OBSERVED
 PLI2_77A0: MVI E,08H ; E = 08H ; +77A0 runtime=99A0H OBSERVED
 PLI2_77A2: CALL 129EH ; push following PC; invoke PLI.COM+119E; result effects belong to callee ; +77A2 runtime=99A2H OBSERVED
+; @block-pseudo 77A5
+; pseudo:
+; | fresh201C OR fresh201D;RAR bit0;set console/mode operation remains RAW,meaning unclaimed
 PLI2_77A5: LDA 201CH ; A = byte[emitter_mode_201C (201CH)] ; +77A5 runtime=99A5H OBSERVED
 PLI2_77A8: LXI H,201DH ; HL = &emitter_mode_201D (201DH) ; +77A8 runtime=99A8H OBSERVED
 PLI2_77AB: ORA M ; A = A | byte[emitter_mode_201D (201DH)]; logical byte flags, CY=0 ; +77AB runtime=99ABH OBSERVED
@@ -4137,10 +4184,10 @@ PLI2_77AC: RAR ; A = (old_CY<<7) | (old_A>>1); CY=old_A bit0; NZPA preserved ; +
 PLI2_77AD: JNC 99B7H ; if CY=0: PC -> PLI2.OVL+77B7; flags preserved ; +77AD runtime=99ADH OBSERVED
 ; SECTION [77B0,77B7) RAW
 PLI2_77B0: DB 02AH,0EDH,0ADH,04DH,0CDH,090H,004H ; +77B0 runtime=99B0H RAW
-; SECTION [77B7,77BF) DECODED
+; SECTION [77B7,77BF) UNDERSTOOD
 ; @block-pseudo 77B7
 ; pseudo:
-; | advance loop index; repeat/return
+; | increment sharedADEC;actual INR Z controls JNZ;RET consumes original CALL word
 PLI2_77B7: LXI H,0ADECH ; HL = &chain_byte_index (ADECH) ; +77B7 runtime=99B7H OBSERVED
 PLI2_77BA: INR M ; byte[chain_byte_index (ADECH)] = (byte[chain_byte_index (ADECH)] + 1) & FF; NZPA updated, CY preserved ; +77BA runtime=99BAH OBSERVED
 PLI2_77BB: JNZ 9985H ; if Z=0: PC -> PLI2.OVL+7785; flags preserved ; +77BB runtime=99BBH OBSERVED

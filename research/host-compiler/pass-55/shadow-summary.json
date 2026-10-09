@@ -1,0 +1,202 @@
+{
+  "all_passed": true,
+  "sources": [
+    {
+      "source": "MINIMAL",
+      "entries": [
+        {
+          "coordinate": "PLI2.OVL+7701",
+          "natural_calls": 7,
+          "all_full_states_matched": true,
+          "proof_hash": "6a6157a5fb5ba6652eb10615efdc86978130067d482c11a47d36553b76a68c16",
+          "services": {
+            "26": 1,
+            "21": 1
+          }
+        },
+        {
+          "coordinate": "PLI2.OVL+75F1",
+          "natural_calls": 10,
+          "all_full_states_matched": true,
+          "proof_hash": "67e44e7838543131da4fda9b59f79799482b92a80b5cd411fc19aa31de77dc27",
+          "services": {}
+        },
+        {
+          "coordinate": "PLI2.OVL+7550",
+          "natural_calls": 12,
+          "all_full_states_matched": true,
+          "proof_hash": "2a29c532ec6b9bce35a3d75ae3e7f295d277e05e9cfdf145f1c9076f162f4fd8",
+          "services": {}
+        },
+        {
+          "coordinate": "PLI2.OVL+753C",
+          "natural_calls": 39,
+          "all_full_states_matched": true,
+          "proof_hash": "cb6f235c96149a08d4b603d95939bbc8ea9d8a6927ead8ad070df45ba4841a55",
+          "services": {}
+        },
+        {
+          "coordinate": "PLI.COM+1A29",
+          "natural_calls": 43,
+          "all_full_states_matched": true,
+          "proof_hash": "d7751704302da291d76bafe4b0dbd964f03834d9d39564ab25b54822cf26fc3f",
+          "services": {}
+        }
+      ]
+    },
+    {
+      "source": "FIZZBUZ",
+      "entries": [
+        {
+          "coordinate": "PLI2.OVL+7701",
+          "natural_calls": 25,
+          "all_full_states_matched": true,
+          "proof_hash": "25b0380490d7fdaf5e2314e4c0a9fc5045c761b7feac9dce1ecb69140721ef1c",
+          "services": {
+            "26": 4,
+            "21": 4
+          }
+        },
+        {
+          "coordinate": "PLI2.OVL+75F1",
+          "natural_calls": 43,
+          "all_full_states_matched": true,
+          "proof_hash": "739791c3da169e8b0924af4f2ed0b9a6feaa2fcdd3a30054ba3492a5b19f8b46",
+          "services": {}
+        },
+        {
+          "coordinate": "PLI2.OVL+7550",
+          "natural_calls": 66,
+          "all_full_states_matched": true,
+          "proof_hash": "fabba9ee3415a73de81bcda41ee8103f02108d0a9654a0d6dfcee7a86ec76dd8",
+          "services": {}
+        },
+        {
+          "coordinate": "PLI2.OVL+753C",
+          "natural_calls": 237,
+          "all_full_states_matched": true,
+          "proof_hash": "c4d2ec57c1bcbea6ee91fdd0e8b78d2373fbf7c468240e60a88adc27ce812c5a",
+          "services": {}
+        },
+        {
+          "coordinate": "PLI.COM+1A29",
+          "natural_calls": 249,
+          "all_full_states_matched": true,
+          "proof_hash": "9dac8fabf2157d62bfa87413d56e695b2eee402b63763c9e28a7f6f9a96ea1ce",
+          "services": {}
+        }
+      ]
+    },
+    {
+      "source": "PICTURE",
+      "entries": [
+        {
+          "coordinate": "PLI2.OVL+7701",
+          "natural_calls": 7,
+          "all_full_states_matched": true,
+          "proof_hash": "9f6e23e1c14867f499198c3cc773307cef709c587b179c4f6e7400bdb18efb2f",
+          "services": {
+            "26": 1,
+            "21": 1
+          }
+        },
+        {
+          "coordinate": "PLI2.OVL+75F1",
+          "natural_calls": 11,
+          "all_full_states_matched": true,
+          "proof_hash": "cabba543bec0737119563c8e7335487a87714db451951d507109704f53ba4926",
+          "services": {
+            "26": 1,
+            "21": 1
+          }
+        },
+        {
+          "coordinate": "PLI2.OVL+7550",
+          "natural_calls": 15,
+          "all_full_states_matched": true,
+          "proof_hash": "fc4275c1fe9a0a8a91254c34b52fbd08ff2cbeb8b63a29b8b2a7ba5f5ee2eb34",
+          "services": {}
+        },
+        {
+          "coordinate": "PLI2.OVL+753C",
+          "natural_calls": 46,
+          "all_full_states_matched": true,
+          "proof_hash": "81c352225d7a900665634c625b378e1b5dff36ed7573fff8b285fd777c2f15fc",
+          "services": {}
+        },
+        {
+          "coordinate": "PLI.COM+1A29",
+          "natural_calls": 52,
+          "all_full_states_matched": true,
+          "proof_hash": "6b07674b8417f7d5e90dd947724b3499ff3d323466c01aa885300a670ef085b3",
+          "services": {}
+        }
+      ]
+    }
+  ],
+  "components": {
+    "sources": [
+      {
+        "source": "MINIMAL",
+        "serializer_shadows": 91,
+        "bit_writer_shadows": 658,
+        "all_passed": true
+      },
+      {
+        "source": "FIZZBUZ",
+        "serializer_shadows": 325,
+        "bit_writer_shadows": 2350,
+        "all_passed": true
+      },
+      {
+        "source": "PICTURE",
+        "serializer_shadows": 91,
+        "bit_writer_shadows": 658,
+        "all_passed": true
+      }
+    ],
+    "all_passed": true
+  },
+  "cross_corpus": {
+    "source": "FACTOR",
+    "natural_calls": 11,
+    "all_full_states_matched": true,
+    "proof_hash": "f9692f1c47db71127e3595346ca14b8c65b7b993fb04df0f04c8fb44e8ac8d5a",
+    "trim_counts": {
+      "0": 11
+    },
+    "loop_counts": {
+      "5": 11
+    },
+    "components": {
+      "sources": [
+        {
+          "source": "FACTOR",
+          "serializer_shadows": 143,
+          "bit_writer_shadows": 1034,
+          "all_passed": true
+        }
+      ],
+      "all_passed": true
+    },
+    "OPTIMIST": "46 historical calls retained;source/corrected trace absent in current cheap capture infrastructure;no new campaign"
+  },
+  "comparisons": [
+    "all registers/flags/SP/PC",
+    "ordered logical writes",
+    "65536 RAM bytes",
+    "final stack last writers",
+    "actual child CALL chronology",
+    "DMA/filesystem",
+    "service boundary state/record bytes/chronology"
+  ],
+  "synthetic": [
+    "trim retries0/1/3/4",
+    "all-space retains byte0",
+    "21H and1FH nonspace discriminants",
+    "higher mode bits2/4 clearbit0",
+    "127:7 record flush with positionFFFD",
+    "mode-set,position-wrap,pointer/cache/stack/code/continuation alias rejection"
+  ],
+  "root_count": 39
+}

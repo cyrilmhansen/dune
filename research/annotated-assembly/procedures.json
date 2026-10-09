@@ -5180,10 +5180,10 @@
       "start_offset": 30465,
       "end_offset": 30655,
       "length": 190,
-      "byte_status_at_entry": "DECODED",
-      "description": "emit LINK-80 CHAIN EXTERNAL item",
+      "byte_status_at_entry": "UNDERSTOOD",
+      "description": "Bounded pointed-field trim, length and byte REL generation",
       "completeness": {
-        "bounds": "provisional",
+        "bounds": "stable",
         "control_flow": "partial",
         "contract": "partial"
       },
@@ -5192,25 +5192,23 @@
           "MINIMAL": 7,
           "FIZZBUZ": 25,
           "FACTOR": 11,
-          "OPTIMIST": 46
+          "OPTIMIST": 46,
+          "PICTURE": 7
         },
-        "represented_bytes": 162,
-        "description": "fetched path fragments only; name trimming/mode branches not fully exercised; item meaning remains hypothesis"
+        "represented_bytes": 169,
+        "description": "OBSERVED corrected ordinary CALL/return windows independently retained for MINIMAL/FIZZBUZ/PICTURE; union of own bytes excludes child bodies. Static authored facts, when present, are separately DEDUCED/UNOBSERVED; no natural executions fabricated."
       },
       "unresolved_paths": [
-        "name trimming/mode branches not fully exercised; item meaning remains hypothesis"
+        "Mode-bit0-set arms[7764,776F),[7776,7779),[77B0,77B7) remain RAW / STATIC / UNOBSERVED; no inferred item semantics.",
+        "Writer failure,753C zero-wrap and arbitrary alias/nonwrapping pointer violations remain unsupported.",
+        "Seven-byte decrement/retry at7743 is DEDUCED / STATIC / UNOBSERVED with synthetic proof; not naturally executed."
       ],
-      "inputs": "BC=pointer saved at ADEA/ADEB; scratch/mode state",
-      "outputs": "serialization/helper effects along witnessed scan paths; full result unresolved",
-      "clobbers": "A,BC,DE,HL,flags",
+      "inputs": "Actual entry registers and selected shared byte-addressed memory; child scopes inherited; executable code, selected scratch/publications/read carriers and active return/save slots nonaliasing where their operation requires it. No table capacity or ownership assumption.",
+      "outputs": "Path-specific A/BC/DE/HL and flags as documented below and in correlated natural cases; SP=entry_SP+2; PC=original CALL continuation.",
+      "clobbers": "Path-specific A/BC/DE/HL/flags; local scratch/publications stated below; delegated child effects; proven CALL/PUSH stack residue.",
       "memory_state": [
-        "program_position_word=1C2CH (word read by existing emission seed)",
-        "emitter_mode_201C=201CH (mode flag; general meaning unresolved)",
-        "emitter_mode_201D=201DH (mode flag; general meaning unresolved)",
-        "chain_input_pointer=ADEAH (saved emission pointer BC)",
-        "chain_byte_index=ADECH (byte serialization loop index)",
-        "chain_byte=ADEDH (saved pointed byte)",
-        "chain_length=ADEEH (length scan scratch)"
+        "All numerical addresses denote historical runtime bytes, not separate host arrays.",
+        "F=entry_SP; original hardware CALL word at F; body CALL/save traffic below F; preserved per-invocation last writers."
       ],
       "data_role_ids": [
         "PLI2.OVL:program_position_word",
@@ -5227,13 +5225,14 @@
           "counts_by_run": {
             "MINIMAL": 7,
             "FIZZBUZ": 25,
+            "PICTURE": 7,
             "FACTOR": 11,
             "OPTIMIST": 46
           }
         }
       ],
       "returns": {
-        "convention": "ordinary hardware CALL word; observed SP after RET = (entry SP + 2) mod 65536",
+        "convention": "ordinary hardware CALL word; original slot unchanged; SP after RET=entry_SP+2",
         "observed_file_offsets": [
           30654
         ],
@@ -5272,54 +5271,74 @@
         }
       ],
       "overlapping_entries": [],
-      "contract_scope": "own low-level operation; opaque callees explicitly delegated",
-      "contract": "BC pointer saved at ADEAH/ADEBH; scratch ADECH/ADEDH/ADEEH; reads 1C2CH,201CH,201DH",
-      "semantic_hypothesis": "CHAIN EXTERNAL construction",
-      "pseudocode": "save pointer; emit prefix and adjusted program address; scan/trim pointed bytes; emit length/prefix and bytes; RET on observed path",
+      "contract_scope": "own low-level operation; opaque callees explicitly delegated; additionally the exact Pass55 family/root states and nonalias scopes.",
+      "contract": "Save B atADEB then C atADEA. Compose canonical75F1(BC=0);emit8C with119E E7. Fresh LHLD1C2C;subtract2 modulo65536;compose canonical11E5. PublishADEE=4. Repeatedly independently read ADEE and saved pointer,read byte[pointer+zeroextended ADEE];two arithmetic masks select decrement/retry iff byte=20H and ADEE!=0. PUSH PSW/POP B preserves first mask;ANA/RAR directly controls JNC. Decrement sharedADEE and retry;no fixed iteration schedule. IncrementADEE twice;five ADD A produceu8(ADEE<<5);serialize E3. Fresh201D and201C RAR gates must both have bit0 clear;set arms unsupported. Serialize3F,E8. PublishADEC=0. Fresh ADEE minus2 compared with memoryADEC;JC exits iff index>limit. Independently paired-readADEC and saved pointer each iteration;zeroextend index,read actual byte,publishADED;serializeE8. Independently reread201C and201D,ORA/RAR;bit0-set arm unsupported. Increment sharedADEC;JNZ from actual INR flags repeats;RET actual final state. Scanned k in0..4;encoded valuek+2;emitted bytes0..k inclusive, including one space for all-space field. Bounded successful copied staging:nonwrapping BC field of five bytes,nonalias scratch/return/service/REL-buffer/FCB/sentinel;immutable instructions and hardware CALL;2029.bit0 clear,index<128,bit<8,each753C increment nonzero. Fresh mode bit0 gates clear at all historical reads. No source/caller/step/snapshot dispatch. Canonical75F1/11E5/119E/1140/7550/753C reused;no nested Runner. Error/mode/alias alternatives fail closed without live mutation.",
+      "semantic_hypothesis": null,
+      "pseudocode": "save BC pointer high then low;75F1(0);119E(8C,7);fresh1C2C minus2;canonical tag40 word; ADEE=4;while ADEE!=0 and fresh byte[fresh pointer+ADEE]==20H: decrement sharedADEE and retry;independent masks via PSW/B carrier; DEDUCED STATIC UNOBSERVED: LXI H,ADEE;DCR M;JMP7723. Natural executions0;synthetic retries prove state-driven decrement; ADEE+=2;five byte doublings;119E(ADEE shifted5,3); fresh201D then201C RAR bit0 gates;set alternatives RAW/unsupported; 119E(3F,8);ADEC=0; fresh ADEE minus2;CMP memoryADEC;JC exits only when index>limit; independently fresh index and pointer;read pointed byte;publishADED;119E(byte,8); fresh201C OR fresh201D;RAR bit0;set console/mode operation remains RAW,meaning unclaimed; increment sharedADEC;actual INR Z controls JNZ;RET consumes original CALL word",
       "evidence_refs": [
-        "evidence.json#seeds/PLI2.OVL+7701"
+        "evidence.json#seeds/PLI2.OVL+7701",
+        "../host-compiler/pass-55/README.md",
+        "../host-compiler/pass-55/shadow-summary.json"
       ],
       "blocks": [
         {
           "offset": 30465,
           "pseudocode": [
-            "save pointer; invoke prefix/address serializers"
+            "save BC pointer high then low;75F1(0);119E(8C,7);fresh1C2C minus2;canonical tag40 word"
           ]
         },
         {
           "offset": 30494,
           "pseudocode": [
-            "initialize length scan; unobserved trimming path stays RAW"
+            "ADEE=4;while ADEE!=0 and fresh byte[fresh pointer+ADEE]==20H: decrement sharedADEE and retry;independent masks via PSW/B carrier"
+          ]
+        },
+        {
+          "offset": 30531,
+          "pseudocode": [
+            "DEDUCED STATIC UNOBSERVED: LXI H,ADEE;DCR M;JMP7723. Natural executions0;synthetic retries prove state-driven decrement"
           ]
         },
         {
           "offset": 30538,
           "pseudocode": [
-            "form length bits and pass them to serializer"
+            "ADEE+=2;five byte doublings;119E(ADEE shifted5,3)"
+          ]
+        },
+        {
+          "offset": 30557,
+          "pseudocode": [
+            "fresh201D then201C RAR bit0 gates;set alternatives RAW/unsupported"
           ]
         },
         {
           "offset": 30585,
           "pseudocode": [
-            "emit prefix and initialize byte loop"
+            "119E(3F,8);ADEC=0"
           ]
         },
         {
           "offset": 30597,
           "pseudocode": [
-            "check loop limit"
+            "fresh ADEE minus2;CMP memoryADEC;JC exits only when index>limit"
           ]
         },
         {
           "offset": 30609,
           "pseudocode": [
-            "load next pointed byte and serialize 8 bits"
+            "independently fresh index and pointer;read pointed byte;publishADED;119E(byte,8)"
+          ]
+        },
+        {
+          "offset": 30629,
+          "pseudocode": [
+            "fresh201C OR fresh201D;RAR bit0;set console/mode operation remains RAW,meaning unclaimed"
           ]
         },
         {
           "offset": 30647,
           "pseudocode": [
-            "advance loop index; repeat/return"
+            "increment sharedADEC;actual INR Z controls JNZ;RET consumes original CALL word"
           ]
         }
       ],
@@ -5360,6 +5379,9 @@
         "773E": "A = A & C; logical byte flags, CY=0",
         "773F": "A = (old_CY<<7) | (old_A>>1); CY=old_A bit0; NZPA preserved",
         "7740": "if CY=0: PC -> PLI2.OVL+774A; flags preserved",
+        "7743": "H pair = literal ADEEH; flags preserved",
+        "7746": "M=u8(M-1); NZPA from decrement; CY preserved",
+        "7747": "unconditionally: PC=9923H; flags preserved",
         "774A": "HL = &chain_length (ADEEH)",
         "774D": "byte[chain_length (ADEEH)] = (byte[chain_length (ADEEH)] + 1) & FF; NZPA updated, CY preserved",
         "774E": "byte[chain_length (ADEEH)] = (byte[chain_length (ADEEH)] + 1) & FF; NZPA updated, CY preserved",
