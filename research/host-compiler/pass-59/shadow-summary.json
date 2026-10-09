@@ -1,0 +1,127 @@
+{
+  "all_passed": true,
+  "sources": [
+    {
+      "source": "MINIMAL",
+      "entries": [
+        {
+          "coordinate": "PLI2.OVL+7B1B",
+          "cases": 0,
+          "proof_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "coordinate": "PLI2.OVL+7314",
+          "cases": 8,
+          "proof_hash": "e3c536f03ae204985c2c5a5bf586ca19a677e5ef16b12c09cf97402da7d836fb"
+        },
+        {
+          "coordinate": "PLI2.OVL+7365",
+          "cases": 0,
+          "proof_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "coordinate": "PLI2.OVL+7397",
+          "cases": 2,
+          "proof_hash": "17a1e4460a2c020c5e2f7018263bb19cd73cfe488bfd4d3ca44a8ee90fbd5a07"
+        }
+      ]
+    },
+    {
+      "source": "FIZZBUZ",
+      "entries": [
+        {
+          "coordinate": "PLI2.OVL+7B1B",
+          "cases": 10,
+          "proof_hash": "1ef6ce7c3f0be5cb920f3dfba69705dd904fd0196f5dba87201c136cc1c64b6b"
+        },
+        {
+          "coordinate": "PLI2.OVL+7314",
+          "cases": 33,
+          "proof_hash": "a9b54b549546d1888b7f5f7c4960a20f2c3917d47444fc0f8f732434b70f2764"
+        },
+        {
+          "coordinate": "PLI2.OVL+7365",
+          "cases": 0,
+          "proof_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "coordinate": "PLI2.OVL+7397",
+          "cases": 36,
+          "proof_hash": "1a6d2563d35125e656922d027b2a0a873dd0fd635f23add263f5b474546e953b"
+        }
+      ]
+    },
+    {
+      "source": "PICTURE",
+      "entries": [
+        {
+          "coordinate": "PLI2.OVL+7B1B",
+          "cases": 0,
+          "proof_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "coordinate": "PLI2.OVL+7314",
+          "cases": 9,
+          "proof_hash": "2bce818ab1d1c5f7420939eedd785e9f97a46df8a1dae05cff68fb08e4f32e92"
+        },
+        {
+          "coordinate": "PLI2.OVL+7365",
+          "cases": 16,
+          "proof_hash": "161c8c5deed23281649ddf30192320057fc986102124e2b8fea39df72792ec3b"
+        },
+        {
+          "coordinate": "PLI2.OVL+7397",
+          "cases": 4,
+          "proof_hash": "6053155deb6e180fcfa0fec88387912be182d96afdb2faf12b55623d6aff7221"
+        }
+      ]
+    }
+  ],
+  "components": {
+    "sources": [
+      {
+        "source": "MINIMAL",
+        "serializer_shadows": 189,
+        "bit_writer_shadows": 665,
+        "all_passed": true
+      },
+      {
+        "source": "FIZZBUZ",
+        "serializer_shadows": 10,
+        "bit_writer_shadows": 90,
+        "all_passed": true
+      },
+      {
+        "source": "PICTURE",
+        "serializer_shadows": 197,
+        "bit_writer_shadows": 609,
+        "all_passed": true
+      }
+    ],
+    "all_passed": true
+  },
+  "checkpoints": {
+    "MINIMAL": "269206890fb71907f73ea2341376d0e6f61d8e33f295a206a5582607caf0c4a8",
+    "FIZZBUZ": "d983478c5a21f2add2764f1c57ddee90efccfcfc4aff2be846d065ac9a206d35",
+    "PICTURE": "8357dd2760bfc8f11dd6fe32842394045200102b2f20b75572bdf5ea591430c4"
+  },
+  "comparison": [
+    "registers/flags/SP/PC",
+    "orderedwrites/full65536RAM",
+    "stacklastwriters",
+    "childCALLchronology",
+    "DMA/filesystem/record/servicechronology"
+  ],
+  "natural_special_cases": 0,
+  "natural_B8_cases": 0,
+  "synthetic": [
+    "A8/E7 early RET",
+    "A8/E7 publication and tail with gate0/1",
+    "A8/E5 normal",
+    "B8/E7 andB8/E5 skip",
+    "80/98/B0 normal",
+    "cursor127:7",
+    "exactPSW high/low",
+    "rejectedcode/continuation/stack/sentinel/nonzeroAE05"
+  ]
+}

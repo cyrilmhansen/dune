@@ -1,0 +1,32 @@
+{
+  "PLI2.OVL+7B1B": {
+    "end": 31609,
+    "description": "Carrier-pair classification, optional index7 clear and component-field emission",
+    "contract": "Save E atAE0D then C atAE0C. Fresh AE0C SUI A8/SUI1/SBB A yields FF exactly when equalA8,else00;PUSH PSW. Independently freshAE0D SUI7/SUI1/SBB A yields equality7 mask;POP B,MOV C,B transports firstmask;ANA C,RAR converts conjunction intoCY with exact flags/stack residue. Nonconjunction: freshAE0C CPIB8;unless equalB8 literalC7 canonical7397. Special conjunction:canonical79E2 atzeroAE05;E0/C7 canonical7365;RAR,ifCY1 RET7B47;otherwiseE0/C7 canonical7314,JMP7B5F (skip7397). Tail:pairedfreshAE0C/0D,C=L canonical746F;pairedfreshAE0D/0E,C=L canonical74C7;freshAE0D OR freshAE0C,C=A canonical7557;RET. Normalnatural,syntheticB8 skip andspecialearly/construction routes independently scoped. No retainedhost carrier copies;child outputs consumed. Bounded current canonicalchildren;code/stack/sentinel nonalias,201D clear,successfuloutput,nonwrapposition;specialrequiresAE05zero. Special25bytes STATIC UNOBSERVED,notnaturalcoverage.",
+    "completeness": [
+      "stable",
+      "complete",
+      "partial"
+    ]
+  },
+  "PLI2.OVL+7314": {
+    "end": 29496,
+    "description": "Indexed carrier-present and value publication",
+    "contract": "Scope C0..7,Ebyte. Save E atADBC thenC atADBB;publishADAA=1. PUSH H carryingADAA;freshpairedADBB/ADBC,zeroextendL;POP B,INX B toADAB,DAD B;publish1 atADAB+C. IndependentpairedADBB/ADBC zeroextendL,BC=ADB3,DAD;freshLDAADBC thenpublishatADB3+C. ReturnactualDAD CY,preservedNZPA,sourceaddressPUSH residue;nochildren. Exactwidths,orderedwrites/freshreads;boundedindices andnonaliasstack/sentinel.",
+    "completeness": [
+      "stable",
+      "complete",
+      "partial"
+    ]
+  },
+  "PLI2.OVL+7365": {
+    "end": 29591,
+    "description": "Gated indexed carrier-value equality mask",
+    "contract": "ScopeC0..7,Ebyte. SaveE atADC1 thenC atADC0. Fresh202B RAR:ifCY1 literalA0 RET7374 preservingRAR flags. Otherwise pairedADC0/ADC1 zeroextendL,BCADAB,DAD,freshMOV A,M,RAR:ifCY0 literalA0 RET7385 preservingflags. Otherwise independentpairedADC0/ADC1 zeroextendL,BCADB3,DAD,freshLDAADC1,SUBfreshM,SUI1,SBB A =>FF exactlysavedE equalsfreshADB3[C],otherwise00;RET7396 withmaskarithmeticflags. Nochildren;partialbounded index/nonalias scope. Firstgate literalreturn3bytes STATIC UNOBSERVED,synthetically proved;naturalPICTURE12falsecarrier/4comparisoncases.",
+    "completeness": [
+      "stable",
+      "complete",
+      "partial"
+    ]
+  }
+}

@@ -66,8 +66,30 @@ let shadow ?(offset=0x1272) ?(within=[]) ?(run_negatives=true) input=
    rejects(fun()->prepare bridge offset ~call ~origin:o{boundary with state={state with sp=0x20b6}});
    rejects(fun()->prepare bridge offset ~call ~origin:o(altered[state.pc,0]));
    rejects(fun()->prepare bridge offset ~call ~origin:o(altered[state.sp,(Char.code(Bytes.get ram state.sp) lxor 1)]));
-   if not(List.mem offset[0x7397;0x73a7;0x7ac4;0x7ad4;0x7ae4;0x79e2;0x7a17;0x73d0;0x7550;0x753c;0x746f;0x74c7;0x7510])then List.iter(fun edits->rejects(fun()->prepare bridge offset ~call ~origin:o(altered edits)))[[0x2029,1];[0x1d8a,128];[0x1d8b,8];[0x2155,0x0a;0x2156,0x1d]];
+   if not(List.mem offset[0x7314;0x7365;0x7397;0x73a7;0x7ac4;0x7ad4;0x7ae4;0x79e2;0x7a17;0x73d0;0x7550;0x753c;0x746f;0x74c7;0x7510])then List.iter(fun edits->rejects(fun()->prepare bridge offset ~call ~origin:o(altered edits)))[[0x2029,1];[0x1d8a,128];[0x1d8b,8];[0x2155,0x0a;0x2156,0x1d]];
    if List.mem offset[0x79e2;0x7a17]then rejects(fun()->prepare bridge offset ~call ~origin:o(altered[(if offset=0x79e2 then 0xae05 else 0xae04),(if offset=0x79e2 then 1 else 2)]));
+   if offset=0x7b1b then(
+    List.iter(fun(selector,field,gate,bank)->
+     let edits=[0xae05,0;0xae0e,0xa5;0x202b,gate;0xadab+7,1;0xadb3+7,bank;0xadaa,0;0x201d,0;0x1d8a,127;0x1d8b,7]in
+     let staged=altered edits in let staged={staged with state={state with c=selector;e=field}}in
+     let plan=prepare bridge offset ~call ~origin:o staged in
+     let result=match staged.preview_host_program plan.program with Ok r->r|Error e->failwith e in
+     let special=selector=0xa8&&field=7 in let early=special&&gate land 1=0&&bank=0 in
+     require(Char.code(Bytes.get result.memory 0xae0c)=selector&&Char.code(Bytes.get result.memory 0xae0d)=field)"saved selector/field carrier chronology";
+     let mask=if selector=0xa8 then 255 else 0 in let psw=if mask=255 then 0x87 else 0x56 in
+     require(List.map(fun(w:B.write)->w.value)(List.filter(fun(w:B.write)->w.writer=0x9d29)plan.journal)=[mask;psw])"exact equality-mask PSW carrier high/low";
+     let clears=List.filter(fun(w:B.write)->w.writer=0x95a4)plan.journal in
+     require(List.length clears=(if not special&&selector<>0xb8 then 1 else 0))"B8 and special routes skip literal-index7 clear";
+     if not special then require(Char.code(Bytes.get result.memory(0xadab+7))=(if selector=0xb8 then 1 else 0))"normal clear versus B8 persistence";
+     require(List.map(fun(w:B.write)->w.value)(List.filter(fun(w:B.write)->w.writer=0x975a)plan.journal)=(if early then[]else[selector lor field]))"fresh OR field publication or early return";
+     if special&&not early then require(Char.code(Bytes.get result.memory 0xadaa)=1&&Char.code(Bytes.get result.memory(0xadab+7))=1&&Char.code(Bytes.get result.memory(0xadb3+7))=0)"special construction publishes carrier and zero value";
+     if early then require(plan.state.a=0xff&&plan.state.carry&&plan.state.sign&&plan.state.parity&&not plan.state.zero&&not plan.state.auxiliary_carry)(Printf.sprintf"special equality-mask RAR early-return flags A=%02X S%b Z%b P%b AC%b CY%b"plan.state.a plan.state.sign plan.state.zero plan.state.parity plan.state.auxiliary_carry plan.state.carry);
+     require(plan.state.sp=state.sp+2)"carrier-clear stack ABI"
+    )[0x80,7,0,0;0x98,7,0,0;0xb0,5,0,0;0xa8,5,0,0;0xb8,7,0,0;0xb8,5,0,0;0xa8,7,0,0;0xa8,7,0,99;0xa8,7,1,0];
+    rejects(fun()->prepare bridge offset ~call ~origin:o{boundary with state={state with c=0xa8;e=7};copy_memory=(fun()->let b=Bytes.copy ram in Bytes.set b 0xae05 '\001';b)});
+    rejects(fun()->prepare bridge offset ~call ~origin:o(altered[0x2155,0xab;0x2156,0xad]))
+   );
+   if offset=0x7b1b then rejects(fun()->prepare bridge offset ~call ~origin:o(altered[0x2155,0xaa;0x2156,0xad]));
    if List.mem offset[0x793c;0x7b99]then(
     List.iter(fun(index,source)->
      let edits=List.init 8(fun i->0xadab+i,0x20+i)@List.init 8(fun i->0xadb3+i,0x90+i)@[0xae04,0;0xae05,0;0xae06,9;0xae12,0xa5;0x1d8a,127;0x1d8b,7]in

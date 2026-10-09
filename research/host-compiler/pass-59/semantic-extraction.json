@@ -1,0 +1,34 @@
+{
+  "historical_root": "PLI2.OVL+7B1B",
+  "semantic_inputs": [
+    "primary carrier field C",
+    "secondary field E",
+    "current carrier flags/values for special policy",
+    "buffered output position"
+  ],
+  "semantic_outputs": [
+    "normal nonB8 clearscarrier7",
+    "component fields and C OR E byte emitted",
+    "special mayreturnearly orpublishcarrier7 beforeemission"
+  ],
+  "shared_historical_state": [
+    "AE0C/AE0D andpairedAE0E channel",
+    "ADAA/ADAB/ADB3 indexedstate",
+    "ADBB/ADBC,ADC0/ADC1 helperscratch",
+    "AE05/202B gates andemissionbuffers/position"
+  ],
+  "historical_mechanism": [
+    "SUI/SUI/SBB equalitymasks",
+    "PUSH PSW/POP B/MOV C,B maskcarrier",
+    "ANA/RAR carryconversion",
+    "literalindex7 clear",
+    "pairedfreshreads,individualcanonicalhelpers andexactCALL/PUSH residue"
+  ],
+  "candidate_modern_operation": "Classify carrier fields, apply optional carrier policy and emit components",
+  "confidence": {
+    "normal": "OBSERVED primaryandFACTOR",
+    "special_and_B8": "DEDUCED STATIC UNOBSERVED/synthetic",
+    "modern_description": "HYPOTHESIS"
+  },
+  "mir_relevance": "Documentationonly;futurestatefulcarrierpolicy concept,no MIR interface orfaithful-code refactor."
+}

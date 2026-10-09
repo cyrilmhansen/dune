@@ -1,0 +1,609 @@
+{
+  "task": "PLI2_CARRIER_CLEAR_EMISSION_7B1B_PASS_59",
+  "baseline": "3cd5b72edd2a5bf7456b3370c10f8de6705e16fe",
+  "boundary": {
+    "selected": "PLI2.OVL+7B1B",
+    "extent": [
+      31515,
+      31609
+    ],
+    "overlapping_entries": "No naturally called overlappingentry withinbody.",
+    "special": "ExactCALLs79E2/7365/7314;validhelperentries establishedfromnaturalCALLs. ParentA8/E7 remainsSTATIC UNOBSERVED withboundedsyntheticproof;AE05nonzero rejected.",
+    "B8": "Zero naturalprimaryandFACTOR cases;syntheticboundedskip accepted.",
+    "sibling": "7B99 preparesselectors andcopiesindexedbanks;7B1B classifiesbytepair,optionallyclearsliteralindex7,andemitsORfield. Sharedrepresentation helpers;differentABI/stateeffect/lifetime,notmerged.",
+    "broader": "7E05 separateAE36/37,ADAA,202B,7314/multiplefieldpolicy;notabsorbed.",
+    "next": "Assess7E05 broadercarrier-generationpolicy forPass60."
+  },
+  "laws": {
+    "PLI2.OVL+7B1B": {
+      "end": 31609,
+      "description": "Carrier-pair classification, optional index7 clear and component-field emission",
+      "contract": "Save E atAE0D then C atAE0C. Fresh AE0C SUI A8/SUI1/SBB A yields FF exactly when equalA8,else00;PUSH PSW. Independently freshAE0D SUI7/SUI1/SBB A yields equality7 mask;POP B,MOV C,B transports firstmask;ANA C,RAR converts conjunction intoCY with exact flags/stack residue. Nonconjunction: freshAE0C CPIB8;unless equalB8 literalC7 canonical7397. Special conjunction:canonical79E2 atzeroAE05;E0/C7 canonical7365;RAR,ifCY1 RET7B47;otherwiseE0/C7 canonical7314,JMP7B5F (skip7397). Tail:pairedfreshAE0C/0D,C=L canonical746F;pairedfreshAE0D/0E,C=L canonical74C7;freshAE0D OR freshAE0C,C=A canonical7557;RET. Normalnatural,syntheticB8 skip andspecialearly/construction routes independently scoped. No retainedhost carrier copies;child outputs consumed. Bounded current canonicalchildren;code/stack/sentinel nonalias,201D clear,successfuloutput,nonwrapposition;specialrequiresAE05zero. Special25bytes STATIC UNOBSERVED,notnaturalcoverage.",
+      "completeness": [
+        "stable",
+        "complete",
+        "partial"
+      ]
+    },
+    "PLI2.OVL+7314": {
+      "end": 29496,
+      "description": "Indexed carrier-present and value publication",
+      "contract": "Scope C0..7,Ebyte. Save E atADBC thenC atADBB;publishADAA=1. PUSH H carryingADAA;freshpairedADBB/ADBC,zeroextendL;POP B,INX B toADAB,DAD B;publish1 atADAB+C. IndependentpairedADBB/ADBC zeroextendL,BC=ADB3,DAD;freshLDAADBC thenpublishatADB3+C. ReturnactualDAD CY,preservedNZPA,sourceaddressPUSH residue;nochildren. Exactwidths,orderedwrites/freshreads;boundedindices andnonaliasstack/sentinel.",
+      "completeness": [
+        "stable",
+        "complete",
+        "partial"
+      ]
+    },
+    "PLI2.OVL+7365": {
+      "end": 29591,
+      "description": "Gated indexed carrier-value equality mask",
+      "contract": "ScopeC0..7,Ebyte. SaveE atADC1 thenC atADC0. Fresh202B RAR:ifCY1 literalA0 RET7374 preservingRAR flags. Otherwise pairedADC0/ADC1 zeroextendL,BCADAB,DAD,freshMOV A,M,RAR:ifCY0 literalA0 RET7385 preservingflags. Otherwise independentpairedADC0/ADC1 zeroextendL,BCADB3,DAD,freshLDAADC1,SUBfreshM,SUI1,SBB A =>FF exactlysavedE equalsfreshADB3[C],otherwise00;RET7396 withmaskarithmeticflags. Nochildren;partialbounded index/nonalias scope. Firstgate literalreturn3bytes STATIC UNOBSERVED,synthetically proved;naturalPICTURE12falsecarrier/4comparisoncases.",
+      "completeness": [
+        "stable",
+        "complete",
+        "partial"
+      ]
+    }
+  },
+  "inventory": {
+    "MINIMAL": {
+      "PLI2.OVL+7B1B": {
+        "calls": 0,
+        "callers": {},
+        "pairs": {},
+        "returns": {},
+        "children": {}
+      },
+      "PLI2.OVL+7314": {
+        "calls": 8,
+        "callers": {
+          "PLI2.OVL+7352": 3,
+          "PLI2.OVL+7361": 3,
+          "PLI2.OVL+7EC2": 2
+        },
+        "pairs": {
+          "00/02": 1,
+          "01/00": 2,
+          "02/02": 1,
+          "03/52": 1,
+          "00/00": 1,
+          "07/01": 1,
+          "07/07": 1
+        },
+        "returns": {
+          "PLI2.OVL+7337": 8
+        },
+        "children": {
+          "": 8
+        }
+      },
+      "PLI2.OVL+7365": {
+        "calls": 0,
+        "callers": {},
+        "pairs": {},
+        "returns": {},
+        "children": {}
+      }
+    },
+    "FIZZBUZ": {
+      "PLI2.OVL+7B1B": {
+        "calls": 10,
+        "callers": {
+          "PLI2.OVL+31E7": 1,
+          "PLI2.OVL+36FA": 3,
+          "PLI2.OVL+3701": 3,
+          "PLI2.OVL+420C": 3
+        },
+        "pairs": {
+          "B0/07": 1,
+          "80/07": 3,
+          "98/07": 3,
+          "B0/05": 3
+        },
+        "returns": {
+          "PLI2.OVL+7B78": 10
+        },
+        "children": {
+          "PLI2.OVL+7397/PLI2.OVL+746F/PLI2.OVL+74C7/PLI2.OVL+7557": 10
+        }
+      },
+      "PLI2.OVL+7314": {
+        "calls": 33,
+        "callers": {
+          "PLI2.OVL+7352": 11,
+          "PLI2.OVL+7361": 11,
+          "PLI2.OVL+7EC2": 11
+        },
+        "pairs": {
+          "00/02": 1,
+          "01/00": 5,
+          "04/00": 1,
+          "05/01": 1,
+          "00/FF": 1,
+          "01/F0": 1,
+          "07/0F": 1,
+          "02/02": 4,
+          "03/52": 4,
+          "00/00": 4,
+          "07/01": 4,
+          "07/08": 1,
+          "07/03": 1,
+          "07/04": 2,
+          "07/05": 1,
+          "07/09": 1
+        },
+        "returns": {
+          "PLI2.OVL+7337": 33
+        },
+        "children": {
+          "": 33
+        }
+      },
+      "PLI2.OVL+7365": {
+        "calls": 0,
+        "callers": {},
+        "pairs": {},
+        "returns": {},
+        "children": {}
+      }
+    },
+    "PICTURE": {
+      "PLI2.OVL+7B1B": {
+        "calls": 0,
+        "callers": {},
+        "pairs": {},
+        "returns": {},
+        "children": {}
+      },
+      "PLI2.OVL+7314": {
+        "calls": 9,
+        "callers": {
+          "PLI2.OVL+7352": 4,
+          "PLI2.OVL+7361": 4,
+          "PLI2.OVL+7EC2": 1
+        },
+        "pairs": {
+          "00/02": 1,
+          "01/00": 2,
+          "04/00": 1,
+          "05/07": 1,
+          "02/02": 1,
+          "03/52": 1,
+          "00/00": 1,
+          "07/09": 1
+        },
+        "returns": {
+          "PLI2.OVL+7337": 9
+        },
+        "children": {
+          "": 9
+        }
+      },
+      "PLI2.OVL+7365": {
+        "calls": 16,
+        "callers": {
+          "PLI2.OVL+7FBA": 1,
+          "PLI2.OVL+7FD9": 1,
+          "PLI2.OVL+8015": 7,
+          "PLI2.OVL+802B": 7
+        },
+        "pairs": {
+          "02/02": 2,
+          "03/52": 2,
+          "00/02": 1,
+          "00/52": 1,
+          "01/02": 1,
+          "01/52": 1,
+          "02/52": 1,
+          "03/02": 1,
+          "04/02": 1,
+          "04/52": 1,
+          "05/02": 1,
+          "05/52": 1,
+          "07/02": 1,
+          "07/52": 1
+        },
+        "returns": {
+          "PLI2.OVL+7385": 12,
+          "PLI2.OVL+7396": 4
+        },
+        "children": {
+          "": 16
+        }
+      }
+    }
+  },
+  "cross": {
+    "FACTOR": {
+      "PLI2.OVL+7B1B": {
+        "calls": 1,
+        "pairs": {
+          "B0/06": 1
+        },
+        "proof_hash": "8bee052215668d070f6be0150c2b33fb74704f5e8a0d9ce7123ee270c77f7167",
+        "independent_full_state_shadow": true
+      },
+      "PLI2.OVL+7314": {
+        "calls": 12,
+        "pairs": {
+          "00/02": 1,
+          "01/00": 2,
+          "02/02": 1,
+          "03/52": 1,
+          "00/00": 2,
+          "07/01": 1,
+          "07/09": 1,
+          "01/08": 1,
+          "04/00": 1,
+          "05/01": 1
+        },
+        "proof_hash": "4ba0c14a82bef36d41776802df4ad3713a2c2d8936414c1f31562495de8aa6e4",
+        "independent_full_state_shadow": true
+      },
+      "PLI2.OVL+7365": {
+        "calls": 0,
+        "pairs": {},
+        "proof_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "independent_full_state_shadow": true
+      },
+      "PLI2.OVL+7397": {
+        "calls": 19,
+        "pairs": {
+          "04/7D": 1,
+          "05/7D": 1,
+          "04/AD": 1,
+          "05/AD": 1,
+          "02/06": 1,
+          "03/06": 1,
+          "04/E8": 1,
+          "05/E8": 1,
+          "04/F3": 2,
+          "05/F3": 2,
+          "07/06": 1,
+          "04/46": 1,
+          "05/46": 1,
+          "04/00": 1,
+          "05/00": 1,
+          "02/02": 1,
+          "03/02": 1
+        },
+        "proof_hash": "53273c3ef0dfffef277e1216c45de04a1654a1829bd697a263ba6a30efec6ccf",
+        "independent_full_state_shadow": true
+      }
+    },
+    "OPTIMIST": {
+      "historical_emission_ancestor_windows": 3,
+      "parent_state_available": false,
+      "full_state_shadow": false,
+      "description": "Existing buffered-emission journal has3 distinct7B1B ancestors;noentryABI/C/E orcompletecallinventory inferred. No newtracecampaign."
+    }
+  },
+  "topology": {
+    "MINIMAL": {
+      "logical": 0,
+      "external": 0,
+      "callers": {},
+      "absorbed": {},
+      "net_host_delta": 0,
+      "remaining": {
+        "PLI2.OVL+7314": {
+          "calls": 8,
+          "callers": {
+            "PLI2.OVL+7352": 3,
+            "PLI2.OVL+7361": 3,
+            "PLI2.OVL+7EC2": 2
+          }
+        },
+        "PLI2.OVL+7365": {
+          "calls": 0,
+          "callers": {}
+        },
+        "PLI2.OVL+7AE4": {
+          "calls": 2,
+          "callers": {
+            "PLI2.OVL+7E0F": 2
+          }
+        },
+        "PLI2.OVL+7B1B": {
+          "calls": 0,
+          "callers": {}
+        },
+        "PLI2.OVL+7B99": {
+          "calls": 0,
+          "callers": {}
+        },
+        "PLI.COM+119E": {
+          "calls": 36,
+          "callers": {
+            "PLI0.OVL+188F": 1,
+            "PLI0.OVL+1993": 4,
+            "PLI0.OVL+19A5": 24,
+            "PLI0.OVL+189E": 1,
+            "PLI0.OVL+18AD": 1,
+            "PLI0.OVL+18BC": 1,
+            "PLI2.OVL+82A6": 1,
+            "PLI2.OVL+82E1": 1,
+            "PLI2.OVL+82F0": 1,
+            "PLI.COM+126E": 1
+          }
+        }
+      },
+      "logical_internal": {}
+    },
+    "FIZZBUZ": {
+      "logical": 10,
+      "external": 10,
+      "callers": {
+        "PLI2.OVL+31E7": 1,
+        "PLI2.OVL+36FA": 3,
+        "PLI2.OVL+3701": 3,
+        "PLI2.OVL+420C": 3
+      },
+      "absorbed": {
+        "PLI2.OVL+7557": 10
+      },
+      "net_host_delta": 0,
+      "remaining": {
+        "PLI2.OVL+7314": {
+          "calls": 33,
+          "callers": {
+            "PLI2.OVL+7352": 11,
+            "PLI2.OVL+7361": 11,
+            "PLI2.OVL+7EC2": 11
+          }
+        },
+        "PLI2.OVL+7365": {
+          "calls": 0,
+          "callers": {}
+        },
+        "PLI2.OVL+7AE4": {
+          "calls": 11,
+          "callers": {
+            "PLI2.OVL+7E0F": 11
+          }
+        },
+        "PLI2.OVL+7B1B": {
+          "calls": 0,
+          "callers": {}
+        },
+        "PLI2.OVL+7B99": {
+          "calls": 10,
+          "callers": {
+            "PLI2.OVL+3AE8": 1,
+            "PLI2.OVL+36F3": 3,
+            "PLI2.OVL+3708": 3,
+            "PLI2.OVL+4205": 3
+          }
+        },
+        "PLI.COM+119E": {
+          "calls": 36,
+          "callers": {
+            "PLI0.OVL+188F": 1,
+            "PLI0.OVL+1993": 4,
+            "PLI0.OVL+19A5": 24,
+            "PLI0.OVL+189E": 1,
+            "PLI0.OVL+18AD": 1,
+            "PLI0.OVL+18BC": 1,
+            "PLI2.OVL+82A6": 1,
+            "PLI2.OVL+82E1": 1,
+            "PLI2.OVL+82F0": 1,
+            "PLI.COM+126E": 1
+          }
+        }
+      },
+      "logical_internal": {
+        "PLI2.OVL+7397": 10,
+        "PLI2.OVL+746F": 10,
+        "PLI2.OVL+74C7": 10,
+        "PLI2.OVL+7557": 10,
+        "PLI.COM+1140": 90,
+        "PLI.COM+119E": 10,
+        "PLI2.OVL+753C": 10,
+        "PLI.COM+1A29": 10
+      }
+    },
+    "PICTURE": {
+      "logical": 0,
+      "external": 0,
+      "callers": {},
+      "absorbed": {},
+      "net_host_delta": 0,
+      "remaining": {
+        "PLI2.OVL+7314": {
+          "calls": 9,
+          "callers": {
+            "PLI2.OVL+7352": 4,
+            "PLI2.OVL+7361": 4,
+            "PLI2.OVL+7EC2": 1
+          }
+        },
+        "PLI2.OVL+7365": {
+          "calls": 16,
+          "callers": {
+            "PLI2.OVL+7FBA": 1,
+            "PLI2.OVL+7FD9": 1,
+            "PLI2.OVL+8015": 7,
+            "PLI2.OVL+802B": 7
+          }
+        },
+        "PLI2.OVL+7AE4": {
+          "calls": 1,
+          "callers": {
+            "PLI2.OVL+7E0F": 1
+          }
+        },
+        "PLI2.OVL+7B1B": {
+          "calls": 0,
+          "callers": {}
+        },
+        "PLI2.OVL+7B99": {
+          "calls": 0,
+          "callers": {}
+        },
+        "PLI.COM+119E": {
+          "calls": 43,
+          "callers": {
+            "PLI0.OVL+188F": 1,
+            "PLI0.OVL+1993": 4,
+            "PLI0.OVL+19A5": 24,
+            "PLI0.OVL+189E": 1,
+            "PLI0.OVL+18AD": 1,
+            "PLI0.OVL+18BC": 1,
+            "PLI0.OVL+3D33": 1,
+            "PLI0.OVL+3D4E": 6,
+            "PLI2.OVL+82A6": 1,
+            "PLI2.OVL+82E1": 1,
+            "PLI2.OVL+82F0": 1,
+            "PLI.COM+126E": 1
+          }
+        }
+      },
+      "logical_internal": {}
+    }
+  },
+  "proofs": [
+    {
+      "source": "MINIMAL",
+      "entries": [
+        {
+          "coordinate": "PLI2.OVL+7B1B",
+          "cases": 0,
+          "proof_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "coordinate": "PLI2.OVL+7314",
+          "cases": 8,
+          "proof_hash": "e3c536f03ae204985c2c5a5bf586ca19a677e5ef16b12c09cf97402da7d836fb"
+        },
+        {
+          "coordinate": "PLI2.OVL+7365",
+          "cases": 0,
+          "proof_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "coordinate": "PLI2.OVL+7397",
+          "cases": 2,
+          "proof_hash": "17a1e4460a2c020c5e2f7018263bb19cd73cfe488bfd4d3ca44a8ee90fbd5a07"
+        }
+      ]
+    },
+    {
+      "source": "FIZZBUZ",
+      "entries": [
+        {
+          "coordinate": "PLI2.OVL+7B1B",
+          "cases": 10,
+          "proof_hash": "1ef6ce7c3f0be5cb920f3dfba69705dd904fd0196f5dba87201c136cc1c64b6b"
+        },
+        {
+          "coordinate": "PLI2.OVL+7314",
+          "cases": 33,
+          "proof_hash": "a9b54b549546d1888b7f5f7c4960a20f2c3917d47444fc0f8f732434b70f2764"
+        },
+        {
+          "coordinate": "PLI2.OVL+7365",
+          "cases": 0,
+          "proof_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "coordinate": "PLI2.OVL+7397",
+          "cases": 36,
+          "proof_hash": "1a6d2563d35125e656922d027b2a0a873dd0fd635f23add263f5b474546e953b"
+        }
+      ]
+    },
+    {
+      "source": "PICTURE",
+      "entries": [
+        {
+          "coordinate": "PLI2.OVL+7B1B",
+          "cases": 0,
+          "proof_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "coordinate": "PLI2.OVL+7314",
+          "cases": 9,
+          "proof_hash": "2bce818ab1d1c5f7420939eedd785e9f97a46df8a1dae05cff68fb08e4f32e92"
+        },
+        {
+          "coordinate": "PLI2.OVL+7365",
+          "cases": 16,
+          "proof_hash": "161c8c5deed23281649ddf30192320057fc986102124e2b8fea39df72792ec3b"
+        },
+        {
+          "coordinate": "PLI2.OVL+7397",
+          "cases": 4,
+          "proof_hash": "6053155deb6e180fcfa0fec88387912be182d96afdb2faf12b55623d6aff7221"
+        }
+      ]
+    }
+  ],
+  "checkpoint_hashes": {
+    "MINIMAL": "269206890fb71907f73ea2341376d0e6f61d8e33f295a206a5582607caf0c4a8",
+    "FIZZBUZ": "d983478c5a21f2add2764f1c57ddee90efccfcfc4aff2be846d065ac9a206d35",
+    "PICTURE": "8357dd2760bfc8f11dd6fe32842394045200102b2f20b75572bdf5ea591430c4"
+  },
+  "promotions": {
+    "RAW": 180
+  },
+  "canonical_children": {
+    "PLI2.OVL+7397": {
+      "contract_hash": "a350d74d8ed6b7c2203790a2410fee8b7e20f586532691c22f1c2c478b715ed5",
+      "completeness": {
+        "bounds": "stable",
+        "control_flow": "complete",
+        "contract": "complete"
+      }
+    },
+    "PLI2.OVL+746F": {
+      "contract_hash": "1ae5b8221035fe2550f74c4a3bedbefe7609b9020df78eb26fdf896396785bc4",
+      "completeness": {
+        "bounds": "stable",
+        "control_flow": "partial",
+        "contract": "partial"
+      }
+    },
+    "PLI2.OVL+74C7": {
+      "contract_hash": "84f70badfd64c4ee74770d494af08dae2886e8d5b66f862ce7e1df7dffcb1ee7",
+      "completeness": {
+        "bounds": "stable",
+        "control_flow": "partial",
+        "contract": "partial"
+      }
+    },
+    "PLI2.OVL+7557": {
+      "contract_hash": "fd491d7bcad34d5f79662d49fe8d52226d022b4f295b18644feb6b0bb5d62eab",
+      "completeness": {
+        "bounds": "stable",
+        "control_flow": "complete",
+        "contract": "partial"
+      }
+    },
+    "PLI2.OVL+79E2": {
+      "contract_hash": "6c8e457c97add3d668ef9380583812659155826cd968f96d1b494ecc1c42e77e",
+      "completeness": {
+        "bounds": "provisional",
+        "control_flow": "partial",
+        "contract": "partial"
+      }
+    },
+    "PLI.COM+119E": {
+      "contract_hash": "1d2e7ccc485f38fc13d48e57bd128e1288398c5242784cb07f92172e8a0256d1",
+      "completeness": {
+        "bounds": "stable",
+        "control_flow": "complete",
+        "contract": "partial"
+      }
+    },
+    "PLI.COM+1140": {
+      "contract_hash": "d24042cb70146e7ad2ac123b354691b4a39e717ad515174b6963aab89a813a90",
+      "completeness": {
+        "bounds": "provisional",
+        "control_flow": "partial",
+        "contract": "partial"
+      }
+    }
+  },
+  "oracle_queries": 0
+}

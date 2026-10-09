@@ -433,6 +433,32 @@ let run operation memory ~entry ~write ~compatibility ~adjust ~sp ~guard_field ~
   hl 0xadc3;put 0x73aa !q.hl(!q.bc land 255);a(read 0xadc3);cmp 6;
   need(not !q.flags.zero)"73A7 index6 early return unobserved";
   if not !q.flags.zero then(pair 0xadc3;c(!q.hl land 255);call 0x73b8 0x7397(fun()->pli2_output 0x7397);a(read 0xadc3);a(inc !q.a);c !q.a;call 0x73c0 0x7397(fun()->pli2_output 0x7397))
+ |0x7314->
+  need(!q.bc land 255<8)"7314 bounded carrier index";
+  hl 0xadbc;put 0x7317 !q.hl(!q.de land 255);hl(!q.hl-1);put 0x7319 !q.hl(!q.bc land 255);
+  hl 0xadaa;put 0x731d !q.hl 1;push 0x731f !q.hl;
+  pair 0xadbb;hl(!q.hl land 255);bc(pop());bc(!q.bc+1);dad !q.bc;put 0x7328 !q.hl 1;
+  pair 0xadbb;hl(!q.hl land 255);bc 0xadb3;dad !q.bc;a(read 0xadbc);put 0x7336 !q.hl !q.a
+ |0x7365->
+  need(!q.bc land 255<8)"7365 bounded carrier index";
+  hl 0xadc1;put 0x7368 !q.hl(!q.de land 255);hl(!q.hl-1);put 0x736a !q.hl(!q.bc land 255);
+  a(read 0x202b);rar();if !q.flags.carry then a 0
+  else(pair 0xadc0;hl(!q.hl land 255);bc 0xadab;dad !q.bc;a(read !q.hl);rar();
+   if not !q.flags.carry then a 0
+   else(pair 0xadc0;hl(!q.hl land 255);bc 0xadb3;dad !q.bc;a(read 0xadc1);sub(read !q.hl);sub 1;mask()))
+ |0x7b1b->
+  hl 0xae0d;put 0x7b1e !q.hl(!q.de land 255);hl(!q.hl-1);put 0x7b20 !q.hl(!q.bc land 255);
+  a(read 0xae0c);sub 0xa8;sub 1;mask();save 0x7b29;
+  a(read 0xae0d);sub 7;sub 1;mask();bc(pop());c(!q.bc lsr 8);logical true(!q.bc land 255);rar();
+  let special= !q.flags.carry in
+  let early=if special then(
+   call 0x7b39 0x79e2 preparation79e2;e 0;c 7;call 0x7b40 0x7365(fun()->pli2_output 0x7365);rar();
+   if !q.flags.carry then true else(e 0;c 7;call 0x7b4c 0x7314(fun()->pli2_output 0x7314);false))else false in
+  if not early then(
+   if not special then(a(read 0xae0c);cmp 0xb8;if not !q.flags.zero then(c 7;call 0x7b5c 0x7397(fun()->pli2_output 0x7397)));
+   pair 0xae0c;c(!q.hl land 255);call 0x7b63 0x746f(carrier 0x746f 0xadcc false);
+   pair 0xae0d;c(!q.hl land 255);call 0x7b6a 0x74c7(carrier 0x74c7 0xadcf false);
+   a(read 0xae0d);hl 0xae0c;logical false(read !q.hl);c !q.a;call 0x7b75 0x7557 byte_bits)
  |0x793c->
   need(!q.bc land 255<8&& !q.de land 255<8)"793C bounded byte indices";
   hl 0xae03;put 0x793f !q.hl(!q.de land 255);hl(!q.hl-1);put 0x7941 !q.hl(!q.bc land 255);
