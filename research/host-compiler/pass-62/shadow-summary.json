@@ -1,0 +1,98 @@
+{
+  "all_passed": true,
+  "sources": [
+    {
+      "source": "MINIMAL",
+      "entries": [
+        {
+          "coordinate": "PLI2.OVL+7338",
+          "count": 3,
+          "proof_hash": "84471da1b5a8b9767c0c3835162bd70e1ff8d7d83d8b0f5da4492ec0ab01055b",
+          "stack_pattern": "original_CALL;childCALL;PSW_PUSH_POP_B;childCALL;original_RET"
+        },
+        {
+          "coordinate": "PLI2.OVL+7314",
+          "count": 8,
+          "proof_hash": "e3c536f03ae204985c2c5a5bf586ca19a677e5ef16b12c09cf97402da7d836fb",
+          "stack_pattern": "original_CALL;childCALL;PSW_PUSH_POP_B;childCALL;original_RET"
+        }
+      ]
+    },
+    {
+      "source": "FIZZBUZ",
+      "entries": [
+        {
+          "coordinate": "PLI2.OVL+7338",
+          "count": 11,
+          "proof_hash": "6a0c189256ba9be9e250c58999e59c00342b0722389521458e5a79ceea068f14",
+          "stack_pattern": "original_CALL;childCALL;PSW_PUSH_POP_B;childCALL;original_RET"
+        },
+        {
+          "coordinate": "PLI2.OVL+7314",
+          "count": 33,
+          "proof_hash": "a9b54b549546d1888b7f5f7c4960a20f2c3917d47444fc0f8f732434b70f2764",
+          "stack_pattern": "original_CALL;childCALL;PSW_PUSH_POP_B;childCALL;original_RET"
+        }
+      ]
+    },
+    {
+      "source": "PICTURE",
+      "entries": [
+        {
+          "coordinate": "PLI2.OVL+7338",
+          "count": 4,
+          "proof_hash": "a779d1bbbf4e1619162f3789692012fc4e2889206cb544551b5ef2319f6d33ab",
+          "stack_pattern": "original_CALL;childCALL;PSW_PUSH_POP_B;childCALL;original_RET"
+        },
+        {
+          "coordinate": "PLI2.OVL+7314",
+          "count": 9,
+          "proof_hash": "2bce818ab1d1c5f7420939eedd785e9f97a46df8a1dae05cff68fb08e4f32e92",
+          "stack_pattern": "original_CALL;childCALL;PSW_PUSH_POP_B;childCALL;original_RET"
+        }
+      ]
+    }
+  ],
+  "components": {
+    "sources": [
+      {
+        "source": "MINIMAL",
+        "canonical_7314_shadows": 8,
+        "all_passed": true
+      },
+      {
+        "source": "FIZZBUZ",
+        "canonical_7314_shadows": 33,
+        "all_passed": true
+      },
+      {
+        "source": "PICTURE",
+        "canonical_7314_shadows": 9,
+        "all_passed": true
+      }
+    ],
+    "all_passed": true
+  },
+  "checkpoint_hashes": {
+    "MINIMAL": "93756072e5e87ab6fcc872d1eb217803cfb2258c3359be837ae8a953fb1aeebf",
+    "FIZZBUZ": "f28b38511aab60d3d7e69768305091642149e302be4b251daa531f9452c37cb2",
+    "PICTURE": "eda56afa5552f8e9eec03b5c0b4eeec64327fe4eac569a564d72dbed501c0602"
+  },
+  "synthetic": {
+    "cases": 54,
+    "routes": {
+      "7338_C00_distinct_DE": 18,
+      "7338_C05_distinct_DE": 18,
+      "7338_C06_distinct_DE": 18
+    },
+    "proof_hash": "673afe563480d308681349930382cd264843eb07d97f081b0d8ab2d229df5401",
+    "classification": "DEDUCED STATIC UNOBSERVED original concreteCPU full-state proof"
+  },
+  "comparison": [
+    "all registers/flags",
+    "SP/PC/continuation",
+    "ordered writes/full65536RAM",
+    "stack last writers/child chronology",
+    "DMA/filesystem/record/service chronology"
+  ]
+}

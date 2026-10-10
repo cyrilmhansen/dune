@@ -46575,6 +46575,140 @@
         "82D9": "push following PC; invoke PLI2.OVL+79A2; child state/effects at the explicitly scoped contract",
         "82DC": "consume original hardware return word; SP=entry_SP+2; preserve final path flags and registers"
       }
+    },
+    {
+      "id": "PLI2.OVL+7338",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "stable_label": "PLI2_7338",
+      "runtime_entry": 38200,
+      "start_offset": 29496,
+      "end_offset": 29541,
+      "length": 45,
+      "byte_status_at_entry": "UNDERSTOOD",
+      "description": "Save three carriers and publish a bounded adjacent relation pair",
+      "completeness": {
+        "bounds": "stable",
+        "control_flow": "complete",
+        "contract": "partial"
+      },
+      "observed_paths": {
+        "invocations_by_run": {
+          "MINIMAL": 3,
+          "FIZZBUZ": 11,
+          "PICTURE": 4,
+          "FACTOR": 5
+        },
+        "represented_bytes": 45,
+        "description": "OBSERVED corrected ordinary CALL/return windows independently retained for MINIMAL/FIZZBUZ/PICTURE; union of own bytes excludes child bodies. Static authored facts, when present, are separately DEDUCED/UNOBSERVED; no natural executions fabricated."
+      },
+      "unresolved_paths": [
+        "Only C0..5 paired publications and C6 early return are accepted; C>=7 fails before live mutation because both child indices must be supported.",
+        "Code/caller/continuation/scratch/table/stack/sentinel aliases reject; higher compiler meaning unproved."
+      ],
+      "inputs": "Actual entry registers and selected shared byte-addressed memory; child scopes inherited; executable code, selected scratch/publications/read carriers and active return/save slots nonaliasing where their operation requires it. No table capacity or ownership assumption.",
+      "outputs": "Path-specific A/BC/DE/HL and flags as documented below and in correlated natural cases; SP=entry_SP+2; PC=original CALL continuation.",
+      "clobbers": "Path-specific A/BC/DE/HL/flags; local scratch/publications stated below; delegated child effects; proven CALL/PUSH stack residue.",
+      "memory_state": [
+        "ADBF=D then ADBE=E then ADBD=C; independently paired-read ADBE/ADBF and ADBD/ADBE.",
+        "Canonical7314 scratch ADBB/ADBC and indexed ADAB/ADB3 tables do not overlap saved carriers for accepted indices.",
+        "Original hardware CALL word; PSW below entrySP transported into BC; child CALL/PUSH residues retained."
+      ],
+      "data_role_ids": [],
+      "callers": [
+        {
+          "coordinate": "PLI2.OVL+809D",
+          "counts_by_run": {
+            "MINIMAL": 3,
+            "FIZZBUZ": 11,
+            "PICTURE": 4,
+            "FACTOR": 5
+          }
+        }
+      ],
+      "returns": {
+        "convention": "ordinary hardware CALL word; original slot unchanged; SP after RET=entry_SP+2",
+        "observed_file_offsets": [
+          29540
+        ],
+        "sites_description": "OBSERVED RET7364; DEDUCED STATIC UNOBSERVED early RET7348. Exact extent45bytes."
+      },
+      "direct_callees": [
+        {
+          "callsite_offset": 29522,
+          "coordinate": "PLI2.OVL+7314",
+          "runtime_address": 38164
+        },
+        {
+          "callsite_offset": 29537,
+          "coordinate": "PLI2.OVL+7314",
+          "runtime_address": 38164
+        }
+      ],
+      "overlapping_entries": [],
+      "contract_scope": "Bounded accumulated-natural routes and exact represented local operations; delegated partial/opaque children and unexecuted local arms are not silently implemented.",
+      "contract": "Save D atADBF then E atADBE then C atADBD, preserving flags. FreshADBD CPI6: C6 returns immediately with comparison flags (DEDUCED STATIC UNOBSERVED). Otherwise requireC0..5 so both canonical7314 indices are supported. PairedLHLDADBE ->L=E,H=D;A=H;independentpairedLHLDADBD ->L=C,H=E;E=A,C=L;CALL7314 at7352 publishes(C,D). FreshLDAADBD INR A computesu8(C+1), NZPA fromINR, CY preserved. IndependentpairedLHLDADBE;PUSHPSW735C writes accumulator high then packedflags low;A=L;E=A;POPB735F restoresB=incrementedselector andC=packedflags;MOVC,B;CALL7314 at7361 publishes(u8(C+1),E). RET7364 consumes original hardware word. Savedbytes freshly reread;no privateframe/host-local replacement. All childflags/stack residue retained. C>=7 rejects before mutation;FF increment wouldwrap but first canonical indexFF unsupported. Code/caller/continuation/scratch/table/stack/sentinel aliases excluded;no source/caller/ordinal dispatch.",
+      "semantic_hypothesis": null,
+      "pseudocode": "Save D/E/C at descending ADBF/ADBE/ADBD; flags preserved. Fresh C CPI6; early RET7348 is DEDUCED STATIC UNOBSERVED synthetic CPU proof.; Paired rereads select saved C and saved D; canonical7314 publishes(C,D).; Fresh saved C INR modulo256 with CY preserved; paired saved E/D. PUSHPSW, move savedE, POPB then MOVC,B transports incremented selector with exact stack/register channels.; Canonical7314 publishes(C+1,E); final RET7364 consumes original continuation.",
+      "evidence_refs": [
+        "evidence.json#seeds/PLI2.OVL+7338",
+        "../host-compiler/pass-62/README.md",
+        "../host-compiler/pass-62/shadow-summary.json"
+      ],
+      "blocks": [
+        {
+          "offset": 29496,
+          "pseudocode": [
+            "Save D/E/C at descending ADBF/ADBE/ADBD; flags preserved. Fresh C CPI6; early RET7348 is DEDUCED STATIC UNOBSERVED synthetic CPU proof."
+          ]
+        },
+        {
+          "offset": 29513,
+          "pseudocode": [
+            "Paired rereads select saved C and saved D; canonical7314 publishes(C,D)."
+          ]
+        },
+        {
+          "offset": 29525,
+          "pseudocode": [
+            "Fresh saved C INR modulo256 with CY preserved; paired saved E/D. PUSHPSW, move savedE, POPB then MOVC,B transports incremented selector with exact stack/register channels."
+          ]
+        },
+        {
+          "offset": 29537,
+          "pseudocode": [
+            "Canonical7314 publishes(C+1,E); final RET7364 consumes original continuation."
+          ]
+        }
+      ],
+      "local_comments": {
+        "7338": "H pair = literal ADBFH; flags preserved",
+        "733B": "byte[HL]=D; flags preserved",
+        "733C": "H=u16(H -1); flags preserved",
+        "733D": "byte[HL]=E; flags preserved",
+        "733E": "H=u16(H -1); flags preserved",
+        "733F": "byte[HL]=C; flags preserved",
+        "7340": "A=fresh byte[ADBDH]; flags preserved",
+        "7343": "flags=unsigned byte comparison A-06H; A preserved",
+        "7345": "if Z=0: PC=9549H; flags preserved",
+        "7348": "consume original hardware return word; SP=entry_SP+2; preserve final path flags and registers",
+        "7349": "HL=fresh little_endian_word[ADBEH]; low then high read; flags preserved",
+        "734C": "A=H; flags preserved",
+        "734D": "HL=fresh little_endian_word[ADBDH]; low then high read; flags preserved",
+        "7350": "E=A; flags preserved",
+        "7351": "C=L; flags preserved",
+        "7352": "push following PC; invoke PLI2.OVL+7314; child state/effects at the explicitly scoped contract",
+        "7355": "A=fresh byte[ADBDH]; flags preserved",
+        "7358": "A=u8(A+1); NZPA from byte increment; CY preserved",
+        "7359": "HL=fresh little_endian_word[ADBEH]; low then high read; flags preserved",
+        "735C": "write high then low PSW below SP; SP-=2; preserve flags; compatibility residue retained",
+        "735D": "A=L; flags preserved",
+        "735E": "E=A; flags preserved",
+        "735F": "read low then high into B pair; SP+=2; flags preserved; residue remains",
+        "7360": "C=B; flags preserved",
+        "7361": "push following PC; invoke PLI2.OVL+7314; child state/effects at the explicitly scoped contract",
+        "7364": "consume original hardware return word; SP=entry_SP+2; preserve final path flags and registers"
+      }
     }
   ]
 }

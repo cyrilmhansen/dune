@@ -1,0 +1,24 @@
+{
+  "validation_tier": "FULL",
+  "full_checkpoint_base": "a3ca60c886833e1bdae92e1334504c9acd5fabd8",
+  "status": "pending: aggregate interrupted at user request; no FULL success claimed",
+  "initial_all_passed": null,
+  "reruns": [],
+  "historical_bytes": 94720,
+  "focused_validation": {
+    "primary_root_shadows": 18,
+    "FACTOR_root_shadows": 5,
+    "primary_synthetic_CPU_proofs": 54,
+    "focused_Python_tests": 12,
+    "V1_tests": 9,
+    "standalone_hybrids": "passed",
+    "cumulative_hybrids": "passed",
+    "exact_reconstruction": "94720 bytes verified"
+  },
+  "workers": 4,
+  "category_count": null,
+  "distinct_python_tests": null,
+  "checkpoint_wall_seconds": null,
+  "manual_command": "python3 tools/annotated-assembly/run_paired_carrier_publication_pass_62.py validate",
+  "manual_results": "_build/host-compiler-pass-62/full-validation/results.json"
+}

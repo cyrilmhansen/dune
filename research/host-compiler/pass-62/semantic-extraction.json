@@ -1,0 +1,30 @@
+{
+  "historical_root": "PLI2.OVL+7338",
+  "semantic_inputs": [
+    "base carrier selector C",
+    "first value D",
+    "second value E"
+  ],
+  "semantic_outputs": [
+    "C6: no table publication;three scratch saves remain observable",
+    "C0..5:publish relation D at C and relation E at u8(C+1)"
+  ],
+  "shared_historical_state": [
+    "ADBD/ADBE/ADBF savedC/E/D",
+    "canonicalADBB/ADBC scratch;ADAA gate;ADAB/ADB3 indexed state"
+  ],
+  "historical_mechanism": [
+    "reverse-address save order D,E,C",
+    "independent pairedLHLD reads",
+    "INR byte NZPA andpreservedCY",
+    "PUSHPSW/POPB transports selector through actualstack andpackedflags",
+    "two canonical7314 operations;exact hardwareCALL/RET residue"
+  ],
+  "candidate_modern_operation": "Publish adjacent carrier relation pair unless selector is six",
+  "confidence": {
+    "publication_law": "OBSERVED primary andFACTOR;DEDUCED instructions",
+    "early_return": "DEDUCED STATIC UNOBSERVED synthetic CPU",
+    "future_semantic_name": "HYPOTHESIS;no source-language meaning assigned"
+  },
+  "mir_relevance": "Documentation only;no MIR/API or faithful-code refactor."
+}

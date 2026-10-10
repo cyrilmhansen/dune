@@ -1,0 +1,12 @@
+{
+  "PLI2.OVL+7338": {
+    "end": 29541,
+    "description": "Save three carriers and publish a bounded adjacent relation pair",
+    "completeness": [
+      "stable",
+      "complete",
+      "partial"
+    ],
+    "contract": "Save D atADBF then E atADBE then C atADBD, preserving flags. FreshADBD CPI6: C6 returns immediately with comparison flags (DEDUCED STATIC UNOBSERVED). Otherwise requireC0..5 so both canonical7314 indices are supported. PairedLHLDADBE ->L=E,H=D;A=H;independentpairedLHLDADBD ->L=C,H=E;E=A,C=L;CALL7314 at7352 publishes(C,D). FreshLDAADBD INR A computesu8(C+1), NZPA fromINR, CY preserved. IndependentpairedLHLDADBE;PUSHPSW735C writes accumulator high then packedflags low;A=L;E=A;POPB735F restoresB=incrementedselector andC=packedflags;MOVC,B;CALL7314 at7361 publishes(u8(C+1),E). RET7364 consumes original hardware word. Savedbytes freshly reread;no privateframe/host-local replacement. All childflags/stack residue retained. C>=7 rejects before mutation;FF increment wouldwrap but first canonical indexFF unsupported. Code/caller/continuation/scratch/table/stack/sentinel aliases excluded;no source/caller/ordinal dispatch."
+  }
+}

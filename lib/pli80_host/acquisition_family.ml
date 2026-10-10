@@ -428,6 +428,16 @@ let run operation memory ~entry ~write ~compatibility ~adjust ~sp ~guard_field ~
     hl 0xadc4;let value=inc(read !q.hl)in put 0x73f9 !q.hl value;if not !q.flags.zero then clear())in clear())in
  let rec pli2_output offset=match offset with
  |0x79e2->preparation79e2()|0x73d0->reset73d0()
+ |0x7338->
+  need(!q.bc land 255<=6)"7338 both publication indices bounded or C6 early return";
+  hl 0xadbf;put 0x733b !q.hl(!q.de lsr 8);hl(!q.hl-1);put 0x733d !q.hl(!q.de land 255);hl(!q.hl-1);put 0x733f !q.hl(!q.bc land 255);
+  a(read 0xadbd);cmp 6;
+  if not !q.flags.zero then(
+   pair 0xadbe;a(!q.hl lsr 8);pair 0xadbd;e !q.a;c(!q.hl land 255);
+   call 0x7352 0x7314(fun()->pli2_output 0x7314);
+   a(read 0xadbd);a(inc !q.a);pair 0xadbe;save 0x735c;
+   a(!q.hl land 255);e !q.a;bc(pop());c(!q.bc lsr 8);
+   call 0x7361 0x7314(fun()->pli2_output 0x7314))
  |0x7423->hl 0xffff;store 0x7426 0xada6 !q.hl
  |0x79a2->hl 0xae04;put 0x79a5 !q.hl 0;hl(!q.hl+1);put 0x79a8 !q.hl 0;hl(!q.hl+1);put 0x79ab !q.hl 0
  |0x742a->call 0x742a 0x73d0(fun()->pli2_output 0x73d0);call 0x742d 0x7423(fun()->pli2_output 0x7423);pair 0x1c2c
