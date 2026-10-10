@@ -206,3 +206,8 @@
  (name native_generation_composition)
  (modules native_generation_composition)
  (libraries pli80 pli80_host runner unix))
+
+(executable
+ (name native_generation_parent)
+ (modules native_generation_parent)
+ (libraries pli80 pli80_host runner unix))

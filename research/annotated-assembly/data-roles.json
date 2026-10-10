@@ -2980,6 +2980,56 @@
       "width": 2,
       "role": "E low/D high input word saved high-to-low; independently reread for7ED6,7338,7619.",
       "scope": "Pass66 +8072 bounded generation composition."
+    },
+    {
+      "id": "PLI2.OVL:paired_handler_word",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "name": "paired_handler_word",
+      "runtime_address": 44450,
+      "width": 2,
+      "role": "Actual mapped word; fresh DE acquisition for first8072 and later pointed mask.",
+      "scope": "Pass67 bounded software handler and mapped-word descendants."
+    },
+    {
+      "id": "PLI2.OVL:paired_handler_gate",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "name": "paired_handler_gate",
+      "runtime_address": 44452,
+      "width": 1,
+      "role": "Published0400 nonzero mask; independently reread after paired operations.",
+      "scope": "Pass67 bounded software handler and mapped-word descendants."
+    },
+    {
+      "id": "PLI2.OVL:paired_handler_position",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "name": "paired_handler_position",
+      "runtime_address": 44448,
+      "width": 2,
+      "role": "Actual742A returned fresh1C2C, published low then high.",
+      "scope": "Pass67 bounded software handler and mapped-word descendants."
+    },
+    {
+      "id": "PLI2.OVL:mapped_word_selector",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "name": "mapped_word_selector",
+      "runtime_address": 44033,
+      "width": 1,
+      "role": "Saved low selector independently reread for the two byte lookups.",
+      "scope": "Pass67 bounded software handler and mapped-word descendants."
+    },
+    {
+      "id": "PLI2.OVL:mapped_word_components",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "name": "mapped_word_components",
+      "runtime_address": 44031,
+      "width": 2,
+      "role": "Low C atABFF, high E atAC00; paired read and shift/OR composition.",
+      "scope": "Pass67 bounded software handler and mapped-word descendants."
     }
   ]
 }

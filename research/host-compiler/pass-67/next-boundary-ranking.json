@@ -1,0 +1,79 @@
+{
+  "recommended": "Fresh bounded child/predicate discovery for the true3D10 context, before its migration; do not widen to1FB5 or18B3.",
+  "ranks": [
+    {
+      "candidate": "PLI2.OVL+3D10",
+      "natural": {
+        "MINIMAL": {
+          "calls": 0,
+          "spans": []
+        },
+        "FIZZBUZ": {
+          "calls": 1,
+          "spans": [
+            3145
+          ]
+        },
+        "PICTURE": {
+          "calls": 1,
+          "spans": [
+            3145
+          ]
+        }
+      },
+      "classification": "additional compiler predicates and private frame"
+    },
+    {
+      "candidate": "PLI2.OVL+397F",
+      "natural": {
+        "MINIMAL": {
+          "calls": 0,
+          "spans": []
+        },
+        "FIZZBUZ": {
+          "calls": 1,
+          "spans": [
+            4454
+          ]
+        },
+        "PICTURE": {
+          "calls": 0,
+          "spans": []
+        }
+      },
+      "classification": "broader independent policy; not inferred from inclusive span"
+    },
+    {
+      "candidate": "PLI2.OVL+18B3",
+      "natural": {
+        "MINIMAL": {
+          "calls": 1,
+          "spans": [
+            1566
+          ]
+        },
+        "FIZZBUZ": {
+          "calls": 1,
+          "spans": [
+            2185
+          ]
+        },
+        "PICTURE": {
+          "calls": 1,
+          "spans": [
+            1818
+          ]
+        }
+      },
+      "classification": "broader independent policy; not inferred from inclusive span"
+    }
+  ],
+  "software_owner": "1FB5 is the larger dispatch/save/restore gateway;6EA5 is now a distinct bounded software handler below it.",
+  "rejected": [
+    "6ED7/6EE5 are CALL instructions, not entries",
+    "6ED1 is a branch target/internal argument setup, not a procedure",
+    "6EE0 is sequential literal setup; no independently entered procedure",
+    "nearest retained1FB5 inclusive window is not a6Exx procedure extent",
+    "numeric prior RET6EA4 does not create a hardware CALL entry at6EA5"
+  ]
+}

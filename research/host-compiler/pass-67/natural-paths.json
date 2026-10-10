@@ -1,0 +1,2372 @@
+{
+  "MINIMAL": [
+    {
+      "entry": {
+        "a": 0,
+        "b": 0,
+        "c": 0,
+        "d": 0,
+        "e": 2,
+        "h": 144,
+        "l": 165,
+        "sp": 65480,
+        "pc": 37029,
+        "flags": {
+          "sign": false,
+          "zero": true,
+          "auxiliary_carry": true,
+          "parity": true,
+          "carry": false
+        }
+      },
+      "output": {
+        "a": 4,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 8,
+        "h": 173,
+        "l": 236,
+        "sp": 65482,
+        "pc": 17076,
+        "flags": {
+          "sign": true,
+          "zero": false,
+          "auxiliary_carry": false,
+          "parity": true,
+          "carry": true
+        }
+      },
+      "first": {
+        "callsite": 28375,
+        "target": "PLI2.OVL+8072",
+        "entry": {
+          "a": 0,
+          "b": 82,
+          "c": 2,
+          "d": 2,
+          "e": 82,
+          "h": 0,
+          "l": 0,
+          "sp": 65478,
+          "pc": 41586,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "output": {
+          "a": 255,
+          "b": 29,
+          "c": 10,
+          "d": 0,
+          "e": 0,
+          "h": 255,
+          "l": 247,
+          "sp": 65480,
+          "pc": 37082,
+          "flags": {
+            "sign": true,
+            "zero": false,
+            "auxiliary_carry": false,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "call_step": 351445,
+        "return_step": 352832
+      },
+      "second": {
+        "callsite": 28389,
+        "target": "PLI2.OVL+8072",
+        "entry": {
+          "a": 7,
+          "b": 173,
+          "c": 0,
+          "d": 0,
+          "e": 0,
+          "h": 0,
+          "l": 9,
+          "sp": 65478,
+          "pc": 41586,
+          "flags": {
+            "sign": true,
+            "zero": false,
+            "auxiliary_carry": false,
+            "parity": true,
+            "carry": true
+          }
+        },
+        "output": {
+          "a": 255,
+          "b": 29,
+          "c": 10,
+          "d": 0,
+          "e": 0,
+          "h": 255,
+          "l": 244,
+          "sp": 65480,
+          "pc": 37096,
+          "flags": {
+            "sign": true,
+            "zero": false,
+            "auxiliary_carry": false,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "call_step": 352952,
+        "return_step": 354334
+      },
+      "branches": [
+        {
+          "offset": 28359,
+          "taken": true,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        },
+        {
+          "offset": 28396,
+          "taken": true,
+          "flags": {
+            "sign": true,
+            "zero": false,
+            "auxiliary_carry": false,
+            "parity": true,
+            "carry": false
+          }
+        },
+        {
+          "offset": 28422,
+          "taken": true,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": false,
+            "parity": true,
+            "carry": false
+          }
+        }
+      ],
+      "reads": [
+        {
+          "offset": 28330,
+          "reads": [
+            {
+              "address": 44300,
+              "value": 7
+            },
+            {
+              "address": 44301,
+              "value": 6
+            }
+          ]
+        },
+        {
+          "offset": 28369,
+          "reads": [
+            {
+              "address": 44450,
+              "value": 82
+            },
+            {
+              "address": 44451,
+              "value": 2
+            }
+          ]
+        },
+        {
+          "offset": 28392,
+          "reads": [
+            {
+              "address": 44452,
+              "value": 0
+            }
+          ]
+        },
+        {
+          "offset": 28440,
+          "reads": [
+            {
+              "address": 65480,
+              "value": 180
+            },
+            {
+              "address": 65481,
+              "value": 66
+            }
+          ]
+        }
+      ],
+      "writes": [
+        {
+          "offset": 28328,
+          "writes": [
+            {
+              "address": 44447,
+              "old_value": null,
+              "new_value": 0
+            }
+          ]
+        },
+        {
+          "offset": 28334,
+          "writes": [
+            {
+              "address": 65479,
+              "old_value": null,
+              "new_value": 144
+            },
+            {
+              "address": 65478,
+              "old_value": null,
+              "new_value": 177
+            }
+          ]
+        },
+        {
+          "offset": 28337,
+          "writes": [
+            {
+              "address": 44450,
+              "old_value": null,
+              "new_value": 82
+            },
+            {
+              "address": 44451,
+              "old_value": null,
+              "new_value": 2
+            }
+          ]
+        },
+        {
+          "offset": 28343,
+          "writes": [
+            {
+              "address": 65479,
+              "old_value": null,
+              "new_value": 144
+            },
+            {
+              "address": 65478,
+              "old_value": null,
+              "new_value": 186
+            }
+          ]
+        },
+        {
+          "offset": 28348,
+          "writes": [
+            {
+              "address": 65479,
+              "old_value": null,
+              "new_value": 144
+            },
+            {
+              "address": 65478,
+              "old_value": null,
+              "new_value": 191
+            }
+          ]
+        },
+        {
+          "offset": 28355,
+          "writes": [
+            {
+              "address": 44452,
+              "old_value": null,
+              "new_value": 0
+            }
+          ]
+        },
+        {
+          "offset": 28375,
+          "writes": [
+            {
+              "address": 65479,
+              "old_value": null,
+              "new_value": 144
+            },
+            {
+              "address": 65478,
+              "old_value": null,
+              "new_value": 218
+            }
+          ]
+        },
+        {
+          "offset": 28378,
+          "writes": [
+            {
+              "address": 65479,
+              "old_value": null,
+              "new_value": 144
+            },
+            {
+              "address": 65478,
+              "old_value": null,
+              "new_value": 221
+            }
+          ]
+        },
+        {
+          "offset": 28381,
+          "writes": [
+            {
+              "address": 44448,
+              "old_value": null,
+              "new_value": 9
+            },
+            {
+              "address": 44449,
+              "old_value": null,
+              "new_value": 0
+            }
+          ]
+        },
+        {
+          "offset": 28389,
+          "writes": [
+            {
+              "address": 65479,
+              "old_value": null,
+              "new_value": 144
+            },
+            {
+              "address": 65478,
+              "old_value": null,
+              "new_value": 232
+            }
+          ]
+        },
+        {
+          "offset": 28413,
+          "writes": [
+            {
+              "address": 65479,
+              "old_value": null,
+              "new_value": 145
+            },
+            {
+              "address": 65478,
+              "old_value": null,
+              "new_value": 0
+            }
+          ]
+        },
+        {
+          "offset": 28418,
+          "writes": [
+            {
+              "address": 65479,
+              "old_value": null,
+              "new_value": 145
+            },
+            {
+              "address": 65478,
+              "old_value": null,
+              "new_value": 5
+            }
+          ]
+        },
+        {
+          "offset": 28437,
+          "writes": [
+            {
+              "address": 65479,
+              "old_value": null,
+              "new_value": 145
+            },
+            {
+              "address": 65478,
+              "old_value": null,
+              "new_value": 24
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "FIZZBUZ": [
+    {
+      "entry": {
+        "a": 0,
+        "b": 0,
+        "c": 0,
+        "d": 0,
+        "e": 2,
+        "h": 144,
+        "l": 165,
+        "sp": 65430,
+        "pc": 37029,
+        "flags": {
+          "sign": false,
+          "zero": true,
+          "auxiliary_carry": true,
+          "parity": true,
+          "carry": false
+        }
+      },
+      "output": {
+        "a": 4,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 8,
+        "h": 173,
+        "l": 236,
+        "sp": 65432,
+        "pc": 17076,
+        "flags": {
+          "sign": true,
+          "zero": false,
+          "auxiliary_carry": false,
+          "parity": true,
+          "carry": true
+        }
+      },
+      "first": {
+        "callsite": 28375,
+        "target": "PLI2.OVL+8072",
+        "entry": {
+          "a": 0,
+          "b": 82,
+          "c": 2,
+          "d": 2,
+          "e": 82,
+          "h": 0,
+          "l": 0,
+          "sp": 65428,
+          "pc": 41586,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "output": {
+          "a": 255,
+          "b": 29,
+          "c": 10,
+          "d": 0,
+          "e": 0,
+          "h": 255,
+          "l": 210,
+          "sp": 65430,
+          "pc": 37082,
+          "flags": {
+            "sign": true,
+            "zero": false,
+            "auxiliary_carry": false,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "call_step": 769504,
+        "return_step": 770891
+      },
+      "second": {
+        "callsite": 28389,
+        "target": "PLI2.OVL+8072",
+        "entry": {
+          "a": 7,
+          "b": 173,
+          "c": 0,
+          "d": 0,
+          "e": 0,
+          "h": 0,
+          "l": 46,
+          "sp": 65428,
+          "pc": 41586,
+          "flags": {
+            "sign": true,
+            "zero": false,
+            "auxiliary_carry": false,
+            "parity": true,
+            "carry": true
+          }
+        },
+        "output": {
+          "a": 255,
+          "b": 29,
+          "c": 10,
+          "d": 0,
+          "e": 0,
+          "h": 255,
+          "l": 207,
+          "sp": 65430,
+          "pc": 37096,
+          "flags": {
+            "sign": true,
+            "zero": false,
+            "auxiliary_carry": false,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "call_step": 771011,
+        "return_step": 772393
+      },
+      "branches": [
+        {
+          "offset": 28359,
+          "taken": true,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        },
+        {
+          "offset": 28396,
+          "taken": true,
+          "flags": {
+            "sign": true,
+            "zero": false,
+            "auxiliary_carry": false,
+            "parity": true,
+            "carry": false
+          }
+        },
+        {
+          "offset": 28422,
+          "taken": true,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": false,
+            "parity": true,
+            "carry": false
+          }
+        }
+      ],
+      "reads": [
+        {
+          "offset": 28330,
+          "reads": [
+            {
+              "address": 44300,
+              "value": 29
+            },
+            {
+              "address": 44301,
+              "value": 28
+            }
+          ]
+        },
+        {
+          "offset": 28369,
+          "reads": [
+            {
+              "address": 44450,
+              "value": 82
+            },
+            {
+              "address": 44451,
+              "value": 2
+            }
+          ]
+        },
+        {
+          "offset": 28392,
+          "reads": [
+            {
+              "address": 44452,
+              "value": 0
+            }
+          ]
+        },
+        {
+          "offset": 28440,
+          "reads": [
+            {
+              "address": 65430,
+              "value": 180
+            },
+            {
+              "address": 65431,
+              "value": 66
+            }
+          ]
+        }
+      ],
+      "writes": [
+        {
+          "offset": 28328,
+          "writes": [
+            {
+              "address": 44447,
+              "old_value": null,
+              "new_value": 0
+            }
+          ]
+        },
+        {
+          "offset": 28334,
+          "writes": [
+            {
+              "address": 65429,
+              "old_value": null,
+              "new_value": 144
+            },
+            {
+              "address": 65428,
+              "old_value": null,
+              "new_value": 177
+            }
+          ]
+        },
+        {
+          "offset": 28337,
+          "writes": [
+            {
+              "address": 44450,
+              "old_value": null,
+              "new_value": 82
+            },
+            {
+              "address": 44451,
+              "old_value": null,
+              "new_value": 2
+            }
+          ]
+        },
+        {
+          "offset": 28343,
+          "writes": [
+            {
+              "address": 65429,
+              "old_value": null,
+              "new_value": 144
+            },
+            {
+              "address": 65428,
+              "old_value": null,
+              "new_value": 186
+            }
+          ]
+        },
+        {
+          "offset": 28348,
+          "writes": [
+            {
+              "address": 65429,
+              "old_value": null,
+              "new_value": 144
+            },
+            {
+              "address": 65428,
+              "old_value": null,
+              "new_value": 191
+            }
+          ]
+        },
+        {
+          "offset": 28355,
+          "writes": [
+            {
+              "address": 44452,
+              "old_value": null,
+              "new_value": 0
+            }
+          ]
+        },
+        {
+          "offset": 28375,
+          "writes": [
+            {
+              "address": 65429,
+              "old_value": null,
+              "new_value": 144
+            },
+            {
+              "address": 65428,
+              "old_value": null,
+              "new_value": 218
+            }
+          ]
+        },
+        {
+          "offset": 28378,
+          "writes": [
+            {
+              "address": 65429,
+              "old_value": null,
+              "new_value": 144
+            },
+            {
+              "address": 65428,
+              "old_value": null,
+              "new_value": 221
+            }
+          ]
+        },
+        {
+          "offset": 28381,
+          "writes": [
+            {
+              "address": 44448,
+              "old_value": null,
+              "new_value": 46
+            },
+            {
+              "address": 44449,
+              "old_value": null,
+              "new_value": 0
+            }
+          ]
+        },
+        {
+          "offset": 28389,
+          "writes": [
+            {
+              "address": 65429,
+              "old_value": null,
+              "new_value": 144
+            },
+            {
+              "address": 65428,
+              "old_value": null,
+              "new_value": 232
+            }
+          ]
+        },
+        {
+          "offset": 28413,
+          "writes": [
+            {
+              "address": 65429,
+              "old_value": null,
+              "new_value": 145
+            },
+            {
+              "address": 65428,
+              "old_value": null,
+              "new_value": 0
+            }
+          ]
+        },
+        {
+          "offset": 28418,
+          "writes": [
+            {
+              "address": 65429,
+              "old_value": null,
+              "new_value": 145
+            },
+            {
+              "address": 65428,
+              "old_value": null,
+              "new_value": 5
+            }
+          ]
+        },
+        {
+          "offset": 28437,
+          "writes": [
+            {
+              "address": 65429,
+              "old_value": null,
+              "new_value": 145
+            },
+            {
+              "address": 65428,
+              "old_value": null,
+              "new_value": 24
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "entry": {
+        "a": 0,
+        "b": 0,
+        "c": 0,
+        "d": 0,
+        "e": 2,
+        "h": 144,
+        "l": 165,
+        "sp": 65406,
+        "pc": 37029,
+        "flags": {
+          "sign": false,
+          "zero": true,
+          "auxiliary_carry": true,
+          "parity": true,
+          "carry": false
+        }
+      },
+      "output": {
+        "a": 4,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 8,
+        "h": 173,
+        "l": 236,
+        "sp": 65408,
+        "pc": 17076,
+        "flags": {
+          "sign": true,
+          "zero": false,
+          "auxiliary_carry": false,
+          "parity": true,
+          "carry": true
+        }
+      },
+      "first": {
+        "callsite": 28375,
+        "target": "PLI2.OVL+8072",
+        "entry": {
+          "a": 0,
+          "b": 82,
+          "c": 2,
+          "d": 2,
+          "e": 82,
+          "h": 0,
+          "l": 0,
+          "sp": 65404,
+          "pc": 41586,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "output": {
+          "a": 255,
+          "b": 29,
+          "c": 10,
+          "d": 0,
+          "e": 0,
+          "h": 255,
+          "l": 160,
+          "sp": 65406,
+          "pc": 37082,
+          "flags": {
+            "sign": true,
+            "zero": false,
+            "auxiliary_carry": false,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "call_step": 860122,
+        "return_step": 861504
+      },
+      "second": {
+        "callsite": 28389,
+        "target": "PLI2.OVL+8072",
+        "entry": {
+          "a": 7,
+          "b": 173,
+          "c": 0,
+          "d": 0,
+          "e": 0,
+          "h": 0,
+          "l": 96,
+          "sp": 65404,
+          "pc": 41586,
+          "flags": {
+            "sign": true,
+            "zero": false,
+            "auxiliary_carry": false,
+            "parity": true,
+            "carry": true
+          }
+        },
+        "output": {
+          "a": 255,
+          "b": 29,
+          "c": 10,
+          "d": 0,
+          "e": 0,
+          "h": 255,
+          "l": 157,
+          "sp": 65406,
+          "pc": 37096,
+          "flags": {
+            "sign": true,
+            "zero": false,
+            "auxiliary_carry": false,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "call_step": 861624,
+        "return_step": 863011
+      },
+      "branches": [
+        {
+          "offset": 28359,
+          "taken": true,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        },
+        {
+          "offset": 28396,
+          "taken": true,
+          "flags": {
+            "sign": true,
+            "zero": false,
+            "auxiliary_carry": false,
+            "parity": true,
+            "carry": false
+          }
+        },
+        {
+          "offset": 28422,
+          "taken": true,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": false,
+            "parity": true,
+            "carry": false
+          }
+        }
+      ],
+      "reads": [
+        {
+          "offset": 28330,
+          "reads": [
+            {
+              "address": 44300,
+              "value": 51
+            },
+            {
+              "address": 44301,
+              "value": 50
+            }
+          ]
+        },
+        {
+          "offset": 28369,
+          "reads": [
+            {
+              "address": 44450,
+              "value": 82
+            },
+            {
+              "address": 44451,
+              "value": 2
+            }
+          ]
+        },
+        {
+          "offset": 28392,
+          "reads": [
+            {
+              "address": 44452,
+              "value": 0
+            }
+          ]
+        },
+        {
+          "offset": 28440,
+          "reads": [
+            {
+              "address": 65406,
+              "value": 180
+            },
+            {
+              "address": 65407,
+              "value": 66
+            }
+          ]
+        }
+      ],
+      "writes": [
+        {
+          "offset": 28328,
+          "writes": [
+            {
+              "address": 44447,
+              "old_value": null,
+              "new_value": 0
+            }
+          ]
+        },
+        {
+          "offset": 28334,
+          "writes": [
+            {
+              "address": 65405,
+              "old_value": null,
+              "new_value": 144
+            },
+            {
+              "address": 65404,
+              "old_value": null,
+              "new_value": 177
+            }
+          ]
+        },
+        {
+          "offset": 28337,
+          "writes": [
+            {
+              "address": 44450,
+              "old_value": null,
+              "new_value": 82
+            },
+            {
+              "address": 44451,
+              "old_value": null,
+              "new_value": 2
+            }
+          ]
+        },
+        {
+          "offset": 28343,
+          "writes": [
+            {
+              "address": 65405,
+              "old_value": null,
+              "new_value": 144
+            },
+            {
+              "address": 65404,
+              "old_value": null,
+              "new_value": 186
+            }
+          ]
+        },
+        {
+          "offset": 28348,
+          "writes": [
+            {
+              "address": 65405,
+              "old_value": null,
+              "new_value": 144
+            },
+            {
+              "address": 65404,
+              "old_value": null,
+              "new_value": 191
+            }
+          ]
+        },
+        {
+          "offset": 28355,
+          "writes": [
+            {
+              "address": 44452,
+              "old_value": null,
+              "new_value": 0
+            }
+          ]
+        },
+        {
+          "offset": 28375,
+          "writes": [
+            {
+              "address": 65405,
+              "old_value": null,
+              "new_value": 144
+            },
+            {
+              "address": 65404,
+              "old_value": null,
+              "new_value": 218
+            }
+          ]
+        },
+        {
+          "offset": 28378,
+          "writes": [
+            {
+              "address": 65405,
+              "old_value": null,
+              "new_value": 144
+            },
+            {
+              "address": 65404,
+              "old_value": null,
+              "new_value": 221
+            }
+          ]
+        },
+        {
+          "offset": 28381,
+          "writes": [
+            {
+              "address": 44448,
+              "old_value": null,
+              "new_value": 96
+            },
+            {
+              "address": 44449,
+              "old_value": null,
+              "new_value": 0
+            }
+          ]
+        },
+        {
+          "offset": 28389,
+          "writes": [
+            {
+              "address": 65405,
+              "old_value": null,
+              "new_value": 144
+            },
+            {
+              "address": 65404,
+              "old_value": null,
+              "new_value": 232
+            }
+          ]
+        },
+        {
+          "offset": 28413,
+          "writes": [
+            {
+              "address": 65405,
+              "old_value": null,
+              "new_value": 145
+            },
+            {
+              "address": 65404,
+              "old_value": null,
+              "new_value": 0
+            }
+          ]
+        },
+        {
+          "offset": 28418,
+          "writes": [
+            {
+              "address": 65405,
+              "old_value": null,
+              "new_value": 145
+            },
+            {
+              "address": 65404,
+              "old_value": null,
+              "new_value": 5
+            }
+          ]
+        },
+        {
+          "offset": 28437,
+          "writes": [
+            {
+              "address": 65405,
+              "old_value": null,
+              "new_value": 145
+            },
+            {
+              "address": 65404,
+              "old_value": null,
+              "new_value": 24
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "entry": {
+        "a": 0,
+        "b": 0,
+        "c": 0,
+        "d": 0,
+        "e": 2,
+        "h": 144,
+        "l": 165,
+        "sp": 65382,
+        "pc": 37029,
+        "flags": {
+          "sign": false,
+          "zero": true,
+          "auxiliary_carry": true,
+          "parity": true,
+          "carry": false
+        }
+      },
+      "output": {
+        "a": 4,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 8,
+        "h": 173,
+        "l": 236,
+        "sp": 65384,
+        "pc": 17076,
+        "flags": {
+          "sign": true,
+          "zero": false,
+          "auxiliary_carry": false,
+          "parity": true,
+          "carry": true
+        }
+      },
+      "first": {
+        "callsite": 28375,
+        "target": "PLI2.OVL+8072",
+        "entry": {
+          "a": 0,
+          "b": 82,
+          "c": 2,
+          "d": 2,
+          "e": 82,
+          "h": 0,
+          "l": 0,
+          "sp": 65380,
+          "pc": 41586,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "output": {
+          "a": 255,
+          "b": 29,
+          "c": 10,
+          "d": 0,
+          "e": 0,
+          "h": 255,
+          "l": 110,
+          "sp": 65382,
+          "pc": 37082,
+          "flags": {
+            "sign": true,
+            "zero": false,
+            "auxiliary_carry": false,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "call_step": 950660,
+        "return_step": 952042
+      },
+      "second": {
+        "callsite": 28389,
+        "target": "PLI2.OVL+8072",
+        "entry": {
+          "a": 7,
+          "b": 173,
+          "c": 0,
+          "d": 0,
+          "e": 0,
+          "h": 0,
+          "l": 146,
+          "sp": 65380,
+          "pc": 41586,
+          "flags": {
+            "sign": true,
+            "zero": false,
+            "auxiliary_carry": false,
+            "parity": true,
+            "carry": true
+          }
+        },
+        "output": {
+          "a": 255,
+          "b": 29,
+          "c": 10,
+          "d": 0,
+          "e": 0,
+          "h": 255,
+          "l": 107,
+          "sp": 65382,
+          "pc": 37096,
+          "flags": {
+            "sign": true,
+            "zero": false,
+            "auxiliary_carry": false,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "call_step": 952162,
+        "return_step": 953544
+      },
+      "branches": [
+        {
+          "offset": 28359,
+          "taken": true,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        },
+        {
+          "offset": 28396,
+          "taken": true,
+          "flags": {
+            "sign": true,
+            "zero": false,
+            "auxiliary_carry": false,
+            "parity": true,
+            "carry": false
+          }
+        },
+        {
+          "offset": 28422,
+          "taken": true,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": false,
+            "parity": true,
+            "carry": false
+          }
+        }
+      ],
+      "reads": [
+        {
+          "offset": 28330,
+          "reads": [
+            {
+              "address": 44300,
+              "value": 73
+            },
+            {
+              "address": 44301,
+              "value": 72
+            }
+          ]
+        },
+        {
+          "offset": 28369,
+          "reads": [
+            {
+              "address": 44450,
+              "value": 82
+            },
+            {
+              "address": 44451,
+              "value": 2
+            }
+          ]
+        },
+        {
+          "offset": 28392,
+          "reads": [
+            {
+              "address": 44452,
+              "value": 0
+            }
+          ]
+        },
+        {
+          "offset": 28440,
+          "reads": [
+            {
+              "address": 65382,
+              "value": 180
+            },
+            {
+              "address": 65383,
+              "value": 66
+            }
+          ]
+        }
+      ],
+      "writes": [
+        {
+          "offset": 28328,
+          "writes": [
+            {
+              "address": 44447,
+              "old_value": null,
+              "new_value": 0
+            }
+          ]
+        },
+        {
+          "offset": 28334,
+          "writes": [
+            {
+              "address": 65381,
+              "old_value": null,
+              "new_value": 144
+            },
+            {
+              "address": 65380,
+              "old_value": null,
+              "new_value": 177
+            }
+          ]
+        },
+        {
+          "offset": 28337,
+          "writes": [
+            {
+              "address": 44450,
+              "old_value": null,
+              "new_value": 82
+            },
+            {
+              "address": 44451,
+              "old_value": null,
+              "new_value": 2
+            }
+          ]
+        },
+        {
+          "offset": 28343,
+          "writes": [
+            {
+              "address": 65381,
+              "old_value": null,
+              "new_value": 144
+            },
+            {
+              "address": 65380,
+              "old_value": null,
+              "new_value": 186
+            }
+          ]
+        },
+        {
+          "offset": 28348,
+          "writes": [
+            {
+              "address": 65381,
+              "old_value": null,
+              "new_value": 144
+            },
+            {
+              "address": 65380,
+              "old_value": null,
+              "new_value": 191
+            }
+          ]
+        },
+        {
+          "offset": 28355,
+          "writes": [
+            {
+              "address": 44452,
+              "old_value": null,
+              "new_value": 0
+            }
+          ]
+        },
+        {
+          "offset": 28375,
+          "writes": [
+            {
+              "address": 65381,
+              "old_value": null,
+              "new_value": 144
+            },
+            {
+              "address": 65380,
+              "old_value": null,
+              "new_value": 218
+            }
+          ]
+        },
+        {
+          "offset": 28378,
+          "writes": [
+            {
+              "address": 65381,
+              "old_value": null,
+              "new_value": 144
+            },
+            {
+              "address": 65380,
+              "old_value": null,
+              "new_value": 221
+            }
+          ]
+        },
+        {
+          "offset": 28381,
+          "writes": [
+            {
+              "address": 44448,
+              "old_value": null,
+              "new_value": 146
+            },
+            {
+              "address": 44449,
+              "old_value": null,
+              "new_value": 0
+            }
+          ]
+        },
+        {
+          "offset": 28389,
+          "writes": [
+            {
+              "address": 65381,
+              "old_value": null,
+              "new_value": 144
+            },
+            {
+              "address": 65380,
+              "old_value": null,
+              "new_value": 232
+            }
+          ]
+        },
+        {
+          "offset": 28413,
+          "writes": [
+            {
+              "address": 65381,
+              "old_value": null,
+              "new_value": 145
+            },
+            {
+              "address": 65380,
+              "old_value": null,
+              "new_value": 0
+            }
+          ]
+        },
+        {
+          "offset": 28418,
+          "writes": [
+            {
+              "address": 65381,
+              "old_value": null,
+              "new_value": 145
+            },
+            {
+              "address": 65380,
+              "old_value": null,
+              "new_value": 5
+            }
+          ]
+        },
+        {
+          "offset": 28437,
+          "writes": [
+            {
+              "address": 65381,
+              "old_value": null,
+              "new_value": 145
+            },
+            {
+              "address": 65380,
+              "old_value": null,
+              "new_value": 24
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "entry": {
+        "a": 0,
+        "b": 0,
+        "c": 0,
+        "d": 0,
+        "e": 2,
+        "h": 144,
+        "l": 165,
+        "sp": 65382,
+        "pc": 37029,
+        "flags": {
+          "sign": false,
+          "zero": true,
+          "auxiliary_carry": true,
+          "parity": true,
+          "carry": false
+        }
+      },
+      "output": {
+        "a": 4,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 8,
+        "h": 173,
+        "l": 236,
+        "sp": 65384,
+        "pc": 17076,
+        "flags": {
+          "sign": true,
+          "zero": false,
+          "auxiliary_carry": false,
+          "parity": true,
+          "carry": true
+        }
+      },
+      "first": {
+        "callsite": 28375,
+        "target": "PLI2.OVL+8072",
+        "entry": {
+          "a": 0,
+          "b": 82,
+          "c": 2,
+          "d": 2,
+          "e": 82,
+          "h": 0,
+          "l": 0,
+          "sp": 65380,
+          "pc": 41586,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "output": {
+          "a": 255,
+          "b": 29,
+          "c": 10,
+          "d": 0,
+          "e": 0,
+          "h": 255,
+          "l": 79,
+          "sp": 65382,
+          "pc": 37082,
+          "flags": {
+            "sign": true,
+            "zero": false,
+            "auxiliary_carry": false,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "call_step": 1010900,
+        "return_step": 1012287
+      },
+      "second": {
+        "callsite": 28389,
+        "target": "PLI2.OVL+8072",
+        "entry": {
+          "a": 7,
+          "b": 173,
+          "c": 0,
+          "d": 0,
+          "e": 0,
+          "h": 0,
+          "l": 177,
+          "sp": 65380,
+          "pc": 41586,
+          "flags": {
+            "sign": true,
+            "zero": false,
+            "auxiliary_carry": false,
+            "parity": true,
+            "carry": true
+          }
+        },
+        "output": {
+          "a": 255,
+          "b": 29,
+          "c": 10,
+          "d": 0,
+          "e": 0,
+          "h": 255,
+          "l": 76,
+          "sp": 65382,
+          "pc": 37096,
+          "flags": {
+            "sign": true,
+            "zero": false,
+            "auxiliary_carry": false,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "call_step": 1012407,
+        "return_step": 1013789
+      },
+      "branches": [
+        {
+          "offset": 28359,
+          "taken": true,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        },
+        {
+          "offset": 28396,
+          "taken": true,
+          "flags": {
+            "sign": true,
+            "zero": false,
+            "auxiliary_carry": false,
+            "parity": true,
+            "carry": false
+          }
+        },
+        {
+          "offset": 28422,
+          "taken": true,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": false,
+            "parity": true,
+            "carry": false
+          }
+        }
+      ],
+      "reads": [
+        {
+          "offset": 28330,
+          "reads": [
+            {
+              "address": 44300,
+              "value": 85
+            },
+            {
+              "address": 44301,
+              "value": 84
+            }
+          ]
+        },
+        {
+          "offset": 28369,
+          "reads": [
+            {
+              "address": 44450,
+              "value": 82
+            },
+            {
+              "address": 44451,
+              "value": 2
+            }
+          ]
+        },
+        {
+          "offset": 28392,
+          "reads": [
+            {
+              "address": 44452,
+              "value": 0
+            }
+          ]
+        },
+        {
+          "offset": 28440,
+          "reads": [
+            {
+              "address": 65382,
+              "value": 180
+            },
+            {
+              "address": 65383,
+              "value": 66
+            }
+          ]
+        }
+      ],
+      "writes": [
+        {
+          "offset": 28328,
+          "writes": [
+            {
+              "address": 44447,
+              "old_value": null,
+              "new_value": 0
+            }
+          ]
+        },
+        {
+          "offset": 28334,
+          "writes": [
+            {
+              "address": 65381,
+              "old_value": null,
+              "new_value": 144
+            },
+            {
+              "address": 65380,
+              "old_value": null,
+              "new_value": 177
+            }
+          ]
+        },
+        {
+          "offset": 28337,
+          "writes": [
+            {
+              "address": 44450,
+              "old_value": null,
+              "new_value": 82
+            },
+            {
+              "address": 44451,
+              "old_value": null,
+              "new_value": 2
+            }
+          ]
+        },
+        {
+          "offset": 28343,
+          "writes": [
+            {
+              "address": 65381,
+              "old_value": null,
+              "new_value": 144
+            },
+            {
+              "address": 65380,
+              "old_value": null,
+              "new_value": 186
+            }
+          ]
+        },
+        {
+          "offset": 28348,
+          "writes": [
+            {
+              "address": 65381,
+              "old_value": null,
+              "new_value": 144
+            },
+            {
+              "address": 65380,
+              "old_value": null,
+              "new_value": 191
+            }
+          ]
+        },
+        {
+          "offset": 28355,
+          "writes": [
+            {
+              "address": 44452,
+              "old_value": null,
+              "new_value": 0
+            }
+          ]
+        },
+        {
+          "offset": 28375,
+          "writes": [
+            {
+              "address": 65381,
+              "old_value": null,
+              "new_value": 144
+            },
+            {
+              "address": 65380,
+              "old_value": null,
+              "new_value": 218
+            }
+          ]
+        },
+        {
+          "offset": 28378,
+          "writes": [
+            {
+              "address": 65381,
+              "old_value": null,
+              "new_value": 144
+            },
+            {
+              "address": 65380,
+              "old_value": null,
+              "new_value": 221
+            }
+          ]
+        },
+        {
+          "offset": 28381,
+          "writes": [
+            {
+              "address": 44448,
+              "old_value": null,
+              "new_value": 177
+            },
+            {
+              "address": 44449,
+              "old_value": null,
+              "new_value": 0
+            }
+          ]
+        },
+        {
+          "offset": 28389,
+          "writes": [
+            {
+              "address": 65381,
+              "old_value": null,
+              "new_value": 144
+            },
+            {
+              "address": 65380,
+              "old_value": null,
+              "new_value": 232
+            }
+          ]
+        },
+        {
+          "offset": 28413,
+          "writes": [
+            {
+              "address": 65381,
+              "old_value": null,
+              "new_value": 145
+            },
+            {
+              "address": 65380,
+              "old_value": null,
+              "new_value": 0
+            }
+          ]
+        },
+        {
+          "offset": 28418,
+          "writes": [
+            {
+              "address": 65381,
+              "old_value": null,
+              "new_value": 145
+            },
+            {
+              "address": 65380,
+              "old_value": null,
+              "new_value": 5
+            }
+          ]
+        },
+        {
+          "offset": 28437,
+          "writes": [
+            {
+              "address": 65381,
+              "old_value": null,
+              "new_value": 145
+            },
+            {
+              "address": 65380,
+              "old_value": null,
+              "new_value": 24
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "PICTURE": [
+    {
+      "entry": {
+        "a": 0,
+        "b": 0,
+        "c": 0,
+        "d": 0,
+        "e": 2,
+        "h": 144,
+        "l": 165,
+        "sp": 65480,
+        "pc": 37029,
+        "flags": {
+          "sign": false,
+          "zero": true,
+          "auxiliary_carry": true,
+          "parity": true,
+          "carry": false
+        }
+      },
+      "output": {
+        "a": 4,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 8,
+        "h": 173,
+        "l": 236,
+        "sp": 65482,
+        "pc": 17076,
+        "flags": {
+          "sign": true,
+          "zero": false,
+          "auxiliary_carry": false,
+          "parity": true,
+          "carry": true
+        }
+      },
+      "first": {
+        "callsite": 28375,
+        "target": "PLI2.OVL+8072",
+        "entry": {
+          "a": 0,
+          "b": 82,
+          "c": 2,
+          "d": 2,
+          "e": 82,
+          "h": 0,
+          "l": 0,
+          "sp": 65478,
+          "pc": 41586,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "output": {
+          "a": 255,
+          "b": 29,
+          "c": 10,
+          "d": 0,
+          "e": 0,
+          "h": 255,
+          "l": 241,
+          "sp": 65480,
+          "pc": 37082,
+          "flags": {
+            "sign": true,
+            "zero": false,
+            "auxiliary_carry": false,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "call_step": 425140,
+        "return_step": 427087
+      },
+      "second": {
+        "callsite": 28389,
+        "target": "PLI2.OVL+8072",
+        "entry": {
+          "a": 7,
+          "b": 173,
+          "c": 0,
+          "d": 0,
+          "e": 0,
+          "h": 0,
+          "l": 15,
+          "sp": 65478,
+          "pc": 41586,
+          "flags": {
+            "sign": true,
+            "zero": false,
+            "auxiliary_carry": false,
+            "parity": true,
+            "carry": true
+          }
+        },
+        "output": {
+          "a": 255,
+          "b": 29,
+          "c": 10,
+          "d": 0,
+          "e": 0,
+          "h": 255,
+          "l": 238,
+          "sp": 65480,
+          "pc": 37096,
+          "flags": {
+            "sign": true,
+            "zero": false,
+            "auxiliary_carry": false,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "call_step": 427207,
+        "return_step": 428594
+      },
+      "branches": [
+        {
+          "offset": 28359,
+          "taken": true,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        },
+        {
+          "offset": 28396,
+          "taken": true,
+          "flags": {
+            "sign": true,
+            "zero": false,
+            "auxiliary_carry": false,
+            "parity": true,
+            "carry": false
+          }
+        },
+        {
+          "offset": 28422,
+          "taken": true,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": false,
+            "parity": true,
+            "carry": false
+          }
+        }
+      ],
+      "reads": [
+        {
+          "offset": 28330,
+          "reads": [
+            {
+              "address": 44300,
+              "value": 12
+            },
+            {
+              "address": 44301,
+              "value": 11
+            }
+          ]
+        },
+        {
+          "offset": 28369,
+          "reads": [
+            {
+              "address": 44450,
+              "value": 82
+            },
+            {
+              "address": 44451,
+              "value": 2
+            }
+          ]
+        },
+        {
+          "offset": 28392,
+          "reads": [
+            {
+              "address": 44452,
+              "value": 0
+            }
+          ]
+        },
+        {
+          "offset": 28440,
+          "reads": [
+            {
+              "address": 65480,
+              "value": 180
+            },
+            {
+              "address": 65481,
+              "value": 66
+            }
+          ]
+        }
+      ],
+      "writes": [
+        {
+          "offset": 28328,
+          "writes": [
+            {
+              "address": 44447,
+              "old_value": null,
+              "new_value": 0
+            }
+          ]
+        },
+        {
+          "offset": 28334,
+          "writes": [
+            {
+              "address": 65479,
+              "old_value": null,
+              "new_value": 144
+            },
+            {
+              "address": 65478,
+              "old_value": null,
+              "new_value": 177
+            }
+          ]
+        },
+        {
+          "offset": 28337,
+          "writes": [
+            {
+              "address": 44450,
+              "old_value": null,
+              "new_value": 82
+            },
+            {
+              "address": 44451,
+              "old_value": null,
+              "new_value": 2
+            }
+          ]
+        },
+        {
+          "offset": 28343,
+          "writes": [
+            {
+              "address": 65479,
+              "old_value": null,
+              "new_value": 144
+            },
+            {
+              "address": 65478,
+              "old_value": null,
+              "new_value": 186
+            }
+          ]
+        },
+        {
+          "offset": 28348,
+          "writes": [
+            {
+              "address": 65479,
+              "old_value": null,
+              "new_value": 144
+            },
+            {
+              "address": 65478,
+              "old_value": null,
+              "new_value": 191
+            }
+          ]
+        },
+        {
+          "offset": 28355,
+          "writes": [
+            {
+              "address": 44452,
+              "old_value": null,
+              "new_value": 0
+            }
+          ]
+        },
+        {
+          "offset": 28375,
+          "writes": [
+            {
+              "address": 65479,
+              "old_value": null,
+              "new_value": 144
+            },
+            {
+              "address": 65478,
+              "old_value": null,
+              "new_value": 218
+            }
+          ]
+        },
+        {
+          "offset": 28378,
+          "writes": [
+            {
+              "address": 65479,
+              "old_value": null,
+              "new_value": 144
+            },
+            {
+              "address": 65478,
+              "old_value": null,
+              "new_value": 221
+            }
+          ]
+        },
+        {
+          "offset": 28381,
+          "writes": [
+            {
+              "address": 44448,
+              "old_value": null,
+              "new_value": 15
+            },
+            {
+              "address": 44449,
+              "old_value": null,
+              "new_value": 0
+            }
+          ]
+        },
+        {
+          "offset": 28389,
+          "writes": [
+            {
+              "address": 65479,
+              "old_value": null,
+              "new_value": 144
+            },
+            {
+              "address": 65478,
+              "old_value": null,
+              "new_value": 232
+            }
+          ]
+        },
+        {
+          "offset": 28413,
+          "writes": [
+            {
+              "address": 65479,
+              "old_value": null,
+              "new_value": 145
+            },
+            {
+              "address": 65478,
+              "old_value": null,
+              "new_value": 0
+            }
+          ]
+        },
+        {
+          "offset": 28418,
+          "writes": [
+            {
+              "address": 65479,
+              "old_value": null,
+              "new_value": 145
+            },
+            {
+              "address": 65478,
+              "old_value": null,
+              "new_value": 5
+            }
+          ]
+        },
+        {
+          "offset": 28437,
+          "writes": [
+            {
+              "address": 65479,
+              "old_value": null,
+              "new_value": 145
+            },
+            {
+              "address": 65478,
+              "old_value": null,
+              "new_value": 24
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

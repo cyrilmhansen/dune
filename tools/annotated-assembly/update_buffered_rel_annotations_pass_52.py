@@ -29,6 +29,7 @@ def meaning(w):
  if op=='LHLD':return 'HL=fresh little_endian_word['+arg+']; low then high read; flags preserved'
  if op=='SHLD':return 'byte['+arg+']=L then byte[address+1]=H; flags preserved'
  if op=='LDAX':return 'A=fresh byte['+arg+' pair]; flags preserved'
+ if op=='LDAX':return 'A=fresh byte['+arg+' pair]; pair and flags preserved'
  if op=='LDA':return 'A=fresh byte['+arg+']; flags preserved'
  if op=='STA':return 'unconditionally publish A to byte['+arg+']; flags preserved'
  if op=='MVI':return ('byte[HL]'if arg.split(',')[0]=='M'else arg.split(',')[0])+'='+arg.split(',')[1]+'; flags preserved'

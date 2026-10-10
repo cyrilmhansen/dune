@@ -441,6 +441,39 @@ let run operation memory ~entry ~write ~compatibility ~adjust ~sp ~guard_field ~
     hl 0xadc4;let value=inc(read !q.hl)in put 0x73f9 !q.hl value;if not !q.flags.zero then clear())in clear())in
  let rec pli2_output offset=match offset with
  |0x79e2->preparation79e2()|0x73d0->reset73d0()
+ |0x04e9|0x04ff->
+  let saved,table=if offset=0x04e9 then 0xabfd,0xa795 else 0xabfe,0xa7f8 in
+  hl saved;put(offset+3)!q.hl(!q.bc land 255);pair saved;hl(!q.hl land 255);bc 0xaab0;dad !q.bc;
+  c(read !q.hl);bc(!q.bc land 255);
+  hl table;dad !q.bc;a(read !q.hl)
+ |0x0515->
+  hl 0xac00;put 0x0518 !q.hl(!q.de land 255);hl(!q.hl-1);put 0x051a !q.hl(!q.bc land 255);
+  pair 0xac00;hl(!q.hl land 255);c 8;call 0x0522 0x83b4(fun()->pli2_output 0x83b4);
+  a(read 0xabff);call 0x0528 0x8398(fun()->pli2_output 0x8398)
+ |0x052c->
+  hl 0xac01;put 0x052f !q.hl(!q.bc land 255);pair 0xac01;c(!q.hl land 255);
+  call 0x0534 0x04ff(fun()->pli2_output 0x04ff);save 0x0537;
+  pair 0xac01;c(!q.hl land 255);call 0x053c 0x04e9(fun()->pli2_output 0x04e9);e !q.a;restore();
+  call 0x0542 0x0515(fun()->pli2_output 0x0515)
+ |0x8350->
+  a(!q.de land 255);logical true(!q.hl land 255);hl((!q.hl land 0xff00)lor !q.a);
+  a(!q.de lsr 8);logical true(!q.hl lsr 8);hl(!q.a lsl 8 lor(!q.hl land 255))
+ |0x8357->
+  exchange();e !q.a;de(!q.de land 255);exchange();a(read !q.de);logical true(!q.hl land 255);hl((!q.hl land 0xff00)lor !q.a);
+  de(U.wrap(!q.de+1));a(read !q.de);logical true(!q.hl lsr 8);hl(!q.a lsl 8 lor(!q.hl land 255))
+ |0x6ea5->
+  hl 0xad9f;put 0x6ea8 !q.hl 0;pair 0xad0c;c(!q.hl land 255);call 0x6eae 0x052c(fun()->pli2_output 0x052c);
+  store 0x6eb1 0xada2 !q.hl;de 0x0400;call 0x6eb7 0x8350(fun()->pli2_output 0x8350);
+  a 0;resident 0x6ebc 0x1a29(fun()->q:=Resident_reader.run Resident_reader.Byte_difference memory ~entry:!q ~write ~compatibility ~sp ~invoke:native);
+  logical false(!q.hl land 255);add 255;mask();put 0x6ec3 0xada4 !q.a;rar();need(not !q.flags.carry)"6EA5 recursive gateway alternative";
+  pair 0xada2;exchange();c 2;call 0x6ed7 0x8072(fun()->pli2_output 0x8072);
+  call 0x6eda 0x742a(fun()->pli2_output 0x742a);store 0x6edd 0xada0 !q.hl;
+  de 0;c 0;call 0x6ee5 0x8072(fun()->pli2_output 0x8072);
+  a(read 0xada4);rar();need(not !q.flags.carry)"6EA5 pending recursive gateway alternative";
+  a 0x80;de 0xada2;call 0x6efd 0x8357(fun()->pli2_output 0x8357);
+  a 0;resident 0x6f02 0x1a29(fun()->q:=Resident_reader.run Resident_reader.Byte_difference memory ~entry:!q ~write ~compatibility ~sp ~invoke:native);
+  logical false(!q.hl land 255);bc(if !q.flags.zero then 0x8f6e else 0x8f69);
+  call (if !q.flags.zero then 0x6f15 else 0x6f0c) 0x8248(fun()->pli2_output 0x8248)
  |0x8072->
   hl 0xae46;put 0x8075 !q.hl(!q.de lsr 8);hl(!q.hl-1);put 0x8077 !q.hl(!q.de land 255);hl(!q.hl-1);put 0x8079 !q.hl(!q.bc land 255);
   a(read 0xae44);cmp 4;if !q.flags.zero then call 0x8082 0x7a17(fun()->pli2_output 0x7a17);

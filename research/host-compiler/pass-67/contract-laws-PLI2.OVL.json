@@ -1,0 +1,72 @@
+{
+  "PLI2.OVL+6EA5": {
+    "end": 28441,
+    "description": "Mapped-word paired-generation software handler",
+    "contract": "Clear AD9F. Fresh low AD0C -> canonical052C mapped word; publish low/high toADA2. Mask HL with DE0400 through8350; canonical resident1A29(A0), OR L, ADI FF, SBB A -> publishADA4; RAR. Supported zero mask skips recursive1FB5 arm. Fresh ADA2 word ->DE, C2 ->canonical8072. Canonical742A ->fresh position HL; low/high publishADA0. Literal DE0,C0 ->canonical8072. FreshADA4 RAR must remainclear.8357(A80,DEADA2) freshly masks pointed word. Canonical1A29(A0), OR L; zero selects literalBC8F6E, nonzeroBC8F69; canonical8248, RET6F18 consumes PUSH-H softwarecontinuation42B4. No hardware CALL at6EA5; supported recursive-gate-clear routes only.",
+    "completeness": [
+      "stable",
+      "partial",
+      "partial"
+    ]
+  },
+  "PLI2.OVL+04E9": {
+    "end": 1279,
+    "description": "Mapped high byte",
+    "contract": "Save C atABFD; paired LHLD ABFD, zero-extend low selector; fresh byte[AAB0+selector] ->C; zero-extend mapped byte; fresh byte[A795+mapped] ->A. DE preserved, BC=mapped, HL=address. DAD sets CY0; NZPA preserved; scratch write and paired high read retained. Byte indices are zero-extended, not bounded by an inferred table capacity.",
+    "completeness": [
+      "stable",
+      "complete",
+      "complete"
+    ]
+  },
+  "PLI2.OVL+04FF": {
+    "end": 1301,
+    "description": "Mapped low byte",
+    "contract": "Save C atABFE; paired LHLD ABFE, zero-extend low selector; fresh byte[AAB0+selector] ->C; zero-extend mapped byte; fresh byte[A7F8+mapped] ->A. DE preserved, BC=mapped, HL=address. DAD CY0 and preserved NZPA, scratch and adjacent paired read retained.",
+    "completeness": [
+      "stable",
+      "complete",
+      "complete"
+    ]
+  },
+  "PLI2.OVL+0515": {
+    "end": 1324,
+    "description": "Saved byte word composition",
+    "contract": "Save E atAC00 then C atABFF. Fresh paired AC00, zero-extend low byte; C8 ->canonical83B4 shift. Fresh ABFF ->A ->canonical8398 OR word. Result HL=(savedE<<8)|savedC, with actual children flags/registers/stack residue.",
+    "completeness": [
+      "stable",
+      "complete",
+      "complete"
+    ]
+  },
+  "PLI2.OVL+052C": {
+    "end": 1350,
+    "description": "Mapped word acquisition",
+    "contract": "Save C atAC01. Fresh paired AC01 lowC ->04FF low lookup. PUSH PSW. Independent fresh pairedAC01 lowC ->04E9 high lookup; E=A. POP B; C=B carries the first actual returned A without restoring flags. Canonical0515 composes the independently acquired low and high bytes; RET0545.",
+    "completeness": [
+      "stable",
+      "complete",
+      "complete"
+    ]
+  },
+  "PLI2.OVL+8350": {
+    "end": 33623,
+    "description": "DE and HL word-mask shared tail",
+    "contract": "A=E; ANA L; L=A. Independently A=D; ANA H; H=A. HL=entryHL AND entryDE, A=high result, BC/DE preserved; final logical flags from high ANA; RET8356. Actual alternate CALL target8350; static preceding834D prefix is not absorbed.",
+    "completeness": [
+      "stable",
+      "complete",
+      "complete"
+    ]
+  },
+  "PLI2.OVL+8357": {
+    "end": 33636,
+    "description": "Pointed word byte-mask acquisition",
+    "contract": "XCHG; E=A; D0; XCHG. Fresh LDAX D AND low mask ->L. Increment DE modulo65536. Fresh LDAX D AND high mask ->H. HL=pointedWord AND zeroextended entryA, A=high result, DE=originalDE+1, BC preserved; exact two reads and logical flags; RET8363.",
+    "completeness": [
+      "stable",
+      "complete",
+      "complete"
+    ]
+  }
+}

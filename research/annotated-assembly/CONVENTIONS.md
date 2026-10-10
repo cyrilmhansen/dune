@@ -216,3 +216,14 @@ before/after executable/directive-surface and stable-label hashes, unchanged
 historical image identities, and the qualification list. All 94,720 bytes remain
 exact. Future semantic promotions must preserve the conventions, while this
 review remains a historical audit of the comment-only change.
+
+## Explicit PUSH-H/PCHL handler evidence
+
+Pass67 records the canonical PLI2+6EA5 handler with a separately typed
+`pass67_push_h_pchl` software-return witness. Its gateway has exact LXI H,42B4 /
+PUSH H / fresh LHLD AD1F / PCHL ancestry. PCHL creates no CALL word. The
+observed caller uses `transfer_kind=PCHL`, while child calls remain hardware
+CALLs. The dedicated narrow check validates actual prefix bytes, contiguous
+state/step ancestry, fresh pointer bytes, ordered PUSH writes and the RET
+consumer. Existing CALL and N2/N8 witness checks are unchanged; this evidence
+does not infer a general handler ABI or promote unobserved gateway arms.

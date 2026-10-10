@@ -1,0 +1,4088 @@
+{
+  "MINIMAL": [
+    {
+      "entry_step": 351327,
+      "return_step": 359312,
+      "software_entry": "PLI2.OVL+6EA5",
+      "software_continuation": 17076,
+      "entry_SP": 65480,
+      "gateway": [
+        {
+          "step_index": 351323,
+          "pc": 17068,
+          "pc_after": 17071,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI2.OVL",
+              "identity": "0:0:PLI2.OVL"
+            },
+            "offset": 8364
+          },
+          "target_origin": null,
+          "runtime_pc": 17068,
+          "bytes": "21B442",
+          "disassembly": "LXI H,42B4H",
+          "source": "memory",
+          "before": {
+            "a": 0,
+            "b": 0,
+            "c": 0,
+            "d": 0,
+            "e": 2,
+            "h": 172,
+            "l": 60,
+            "sp": 65482,
+            "pc": 17068,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 0,
+            "b": 0,
+            "c": 0,
+            "d": 0,
+            "e": 2,
+            "h": 66,
+            "l": 180,
+            "sp": 65482,
+            "pc": 17071,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "sp_before": 65482,
+          "sp_after": 65482,
+          "call_return_address": null,
+          "reads": [],
+          "writes": [],
+          "control": {
+            "kind": "sequential"
+          }
+        },
+        {
+          "step_index": 351324,
+          "pc": 17071,
+          "pc_after": 17072,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI2.OVL",
+              "identity": "0:0:PLI2.OVL"
+            },
+            "offset": 8367
+          },
+          "target_origin": null,
+          "runtime_pc": 17071,
+          "bytes": "E5",
+          "disassembly": "PUSH H",
+          "source": "memory",
+          "before": {
+            "a": 0,
+            "b": 0,
+            "c": 0,
+            "d": 0,
+            "e": 2,
+            "h": 66,
+            "l": 180,
+            "sp": 65482,
+            "pc": 17071,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 0,
+            "b": 0,
+            "c": 0,
+            "d": 0,
+            "e": 2,
+            "h": 66,
+            "l": 180,
+            "sp": 65480,
+            "pc": 17072,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "sp_before": 65482,
+          "sp_after": 65480,
+          "call_return_address": null,
+          "reads": [],
+          "writes": [
+            {
+              "address": 65481,
+              "old_value": null,
+              "new_value": 66
+            },
+            {
+              "address": 65480,
+              "old_value": null,
+              "new_value": 180
+            }
+          ],
+          "control": {
+            "kind": "sequential"
+          }
+        },
+        {
+          "step_index": 351325,
+          "pc": 17072,
+          "pc_after": 17075,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI2.OVL",
+              "identity": "0:0:PLI2.OVL"
+            },
+            "offset": 8368
+          },
+          "target_origin": null,
+          "runtime_pc": 17072,
+          "bytes": "2A1FAD",
+          "disassembly": "LHLD AD1FH",
+          "source": "memory",
+          "before": {
+            "a": 0,
+            "b": 0,
+            "c": 0,
+            "d": 0,
+            "e": 2,
+            "h": 66,
+            "l": 180,
+            "sp": 65480,
+            "pc": 17072,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 0,
+            "b": 0,
+            "c": 0,
+            "d": 0,
+            "e": 2,
+            "h": 144,
+            "l": 165,
+            "sp": 65480,
+            "pc": 17075,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "sp_before": 65480,
+          "sp_after": 65480,
+          "call_return_address": null,
+          "reads": [
+            {
+              "address": 44319,
+              "value": 165
+            },
+            {
+              "address": 44320,
+              "value": 144
+            }
+          ],
+          "writes": [],
+          "control": {
+            "kind": "sequential"
+          }
+        },
+        {
+          "step_index": 351326,
+          "pc": 17075,
+          "pc_after": 37029,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI2.OVL",
+              "identity": "0:0:PLI2.OVL"
+            },
+            "offset": 8371
+          },
+          "target_origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI2.OVL",
+              "identity": "0:0:PLI2.OVL"
+            },
+            "offset": 28325
+          },
+          "runtime_pc": 17075,
+          "bytes": "E9",
+          "disassembly": "PCHL",
+          "source": "memory",
+          "before": {
+            "a": 0,
+            "b": 0,
+            "c": 0,
+            "d": 0,
+            "e": 2,
+            "h": 144,
+            "l": 165,
+            "sp": 65480,
+            "pc": 17075,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 0,
+            "b": 0,
+            "c": 0,
+            "d": 0,
+            "e": 2,
+            "h": 144,
+            "l": 165,
+            "sp": 65480,
+            "pc": 37029,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "sp_before": 65480,
+          "sp_after": 65480,
+          "call_return_address": null,
+          "reads": [],
+          "writes": [],
+          "control": {
+            "kind": "jump",
+            "target": 37029,
+            "taken": true
+          }
+        }
+      ],
+      "nearest_hardware_owner": {
+        "call": 350927,
+        "ret": 359391,
+        "target": "PLI2.OVL+1FB5",
+        "caller": "PLI2.OVL+2149",
+        "sp": 65494
+      },
+      "prior_RET": "PLI2.OVL+1FB4",
+      "root_witness_hash": "c62f0109b5419ba79262e6dda1cd140243a2975dd137deae44bdd5ae20c333b3",
+      "child_sequence": [
+        {
+          "callsite": 28334,
+          "target": "PLI2.OVL+052C",
+          "input": {
+            "a": 0,
+            "b": 0,
+            "c": 7,
+            "d": 0,
+            "e": 2,
+            "h": 6,
+            "l": 7,
+            "sp": 65478,
+            "pc": 10028,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 2,
+            "b": 82,
+            "c": 0,
+            "d": 0,
+            "e": 82,
+            "h": 2,
+            "l": 82,
+            "sp": 65480,
+            "pc": 37041,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "call_step": 351331,
+          "return_step": 351414
+        },
+        {
+          "callsite": 28343,
+          "target": "PLI2.OVL+8350",
+          "input": {
+            "a": 2,
+            "b": 82,
+            "c": 0,
+            "d": 4,
+            "e": 0,
+            "h": 2,
+            "l": 82,
+            "sp": 65478,
+            "pc": 42320,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 0,
+            "b": 82,
+            "c": 0,
+            "d": 4,
+            "e": 0,
+            "h": 0,
+            "l": 0,
+            "sp": 65480,
+            "pc": 37050,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "call_step": 351417,
+          "return_step": 351424
+        },
+        {
+          "callsite": 28348,
+          "target": "PLI.COM+1A29",
+          "input": {
+            "a": 0,
+            "b": 82,
+            "c": 0,
+            "d": 4,
+            "e": 0,
+            "h": 0,
+            "l": 0,
+            "sp": 65478,
+            "pc": 6953,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 0,
+            "b": 82,
+            "c": 0,
+            "d": 0,
+            "e": 0,
+            "h": 0,
+            "l": 0,
+            "sp": 65480,
+            "pc": 37055,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "call_step": 351426,
+          "return_step": 351435
+        },
+        {
+          "callsite": 28375,
+          "target": "PLI2.OVL+8072",
+          "input": {
+            "a": 0,
+            "b": 82,
+            "c": 2,
+            "d": 2,
+            "e": 82,
+            "h": 0,
+            "l": 0,
+            "sp": 65478,
+            "pc": 41586,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 255,
+            "b": 29,
+            "c": 10,
+            "d": 0,
+            "e": 0,
+            "h": 255,
+            "l": 247,
+            "sp": 65480,
+            "pc": 37082,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "call_step": 351445,
+          "return_step": 352832
+        },
+        {
+          "callsite": 28378,
+          "target": "PLI2.OVL+742A",
+          "input": {
+            "a": 255,
+            "b": 29,
+            "c": 10,
+            "d": 0,
+            "e": 0,
+            "h": 255,
+            "l": 247,
+            "sp": 65478,
+            "pc": 38442,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 7,
+            "b": 173,
+            "c": 171,
+            "d": 0,
+            "e": 0,
+            "h": 0,
+            "l": 9,
+            "sp": 65480,
+            "pc": 37085,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": true
+            }
+          },
+          "call_step": 352833,
+          "return_step": 352948
+        },
+        {
+          "callsite": 28389,
+          "target": "PLI2.OVL+8072",
+          "input": {
+            "a": 7,
+            "b": 173,
+            "c": 0,
+            "d": 0,
+            "e": 0,
+            "h": 0,
+            "l": 9,
+            "sp": 65478,
+            "pc": 41586,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": true
+            }
+          },
+          "output": {
+            "a": 255,
+            "b": 29,
+            "c": 10,
+            "d": 0,
+            "e": 0,
+            "h": 255,
+            "l": 244,
+            "sp": 65480,
+            "pc": 37096,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "call_step": 352952,
+          "return_step": 354334
+        },
+        {
+          "callsite": 28413,
+          "target": "PLI2.OVL+8357",
+          "input": {
+            "a": 128,
+            "b": 29,
+            "c": 10,
+            "d": 173,
+            "e": 162,
+            "h": 255,
+            "l": 244,
+            "sp": 65478,
+            "pc": 42327,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 0,
+            "b": 29,
+            "c": 10,
+            "d": 173,
+            "e": 163,
+            "h": 0,
+            "l": 0,
+            "sp": 65480,
+            "pc": 37120,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "call_step": 354340,
+          "return_step": 354352
+        },
+        {
+          "callsite": 28418,
+          "target": "PLI.COM+1A29",
+          "input": {
+            "a": 0,
+            "b": 29,
+            "c": 10,
+            "d": 173,
+            "e": 163,
+            "h": 0,
+            "l": 0,
+            "sp": 65478,
+            "pc": 6953,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 0,
+            "b": 29,
+            "c": 10,
+            "d": 0,
+            "e": 0,
+            "h": 0,
+            "l": 0,
+            "sp": 65480,
+            "pc": 37125,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "call_step": 354354,
+          "return_step": 354363
+        },
+        {
+          "callsite": 28437,
+          "target": "PLI2.OVL+8248",
+          "input": {
+            "a": 0,
+            "b": 143,
+            "c": 110,
+            "d": 0,
+            "e": 0,
+            "h": 0,
+            "l": 0,
+            "sp": 65478,
+            "pc": 42056,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 4,
+            "b": 29,
+            "c": 10,
+            "d": 0,
+            "e": 8,
+            "h": 173,
+            "l": 236,
+            "sp": 65480,
+            "pc": 37144,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": true
+            }
+          },
+          "call_step": 354367,
+          "return_step": 359311
+        }
+      ]
+    }
+  ],
+  "FIZZBUZ": [
+    {
+      "entry_step": 769386,
+      "return_step": 777371,
+      "software_entry": "PLI2.OVL+6EA5",
+      "software_continuation": 17076,
+      "entry_SP": 65430,
+      "gateway": [
+        {
+          "step_index": 769382,
+          "pc": 17068,
+          "pc_after": 17071,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI2.OVL",
+              "identity": "0:0:PLI2.OVL"
+            },
+            "offset": 8364
+          },
+          "target_origin": null,
+          "runtime_pc": 17068,
+          "bytes": "21B442",
+          "disassembly": "LXI H,42B4H",
+          "source": "memory",
+          "before": {
+            "a": 0,
+            "b": 0,
+            "c": 0,
+            "d": 0,
+            "e": 2,
+            "h": 172,
+            "l": 60,
+            "sp": 65432,
+            "pc": 17068,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 0,
+            "b": 0,
+            "c": 0,
+            "d": 0,
+            "e": 2,
+            "h": 66,
+            "l": 180,
+            "sp": 65432,
+            "pc": 17071,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "sp_before": 65432,
+          "sp_after": 65432,
+          "call_return_address": null,
+          "reads": [],
+          "writes": [],
+          "control": {
+            "kind": "sequential"
+          }
+        },
+        {
+          "step_index": 769383,
+          "pc": 17071,
+          "pc_after": 17072,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI2.OVL",
+              "identity": "0:0:PLI2.OVL"
+            },
+            "offset": 8367
+          },
+          "target_origin": null,
+          "runtime_pc": 17071,
+          "bytes": "E5",
+          "disassembly": "PUSH H",
+          "source": "memory",
+          "before": {
+            "a": 0,
+            "b": 0,
+            "c": 0,
+            "d": 0,
+            "e": 2,
+            "h": 66,
+            "l": 180,
+            "sp": 65432,
+            "pc": 17071,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 0,
+            "b": 0,
+            "c": 0,
+            "d": 0,
+            "e": 2,
+            "h": 66,
+            "l": 180,
+            "sp": 65430,
+            "pc": 17072,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "sp_before": 65432,
+          "sp_after": 65430,
+          "call_return_address": null,
+          "reads": [],
+          "writes": [
+            {
+              "address": 65431,
+              "old_value": null,
+              "new_value": 66
+            },
+            {
+              "address": 65430,
+              "old_value": null,
+              "new_value": 180
+            }
+          ],
+          "control": {
+            "kind": "sequential"
+          }
+        },
+        {
+          "step_index": 769384,
+          "pc": 17072,
+          "pc_after": 17075,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI2.OVL",
+              "identity": "0:0:PLI2.OVL"
+            },
+            "offset": 8368
+          },
+          "target_origin": null,
+          "runtime_pc": 17072,
+          "bytes": "2A1FAD",
+          "disassembly": "LHLD AD1FH",
+          "source": "memory",
+          "before": {
+            "a": 0,
+            "b": 0,
+            "c": 0,
+            "d": 0,
+            "e": 2,
+            "h": 66,
+            "l": 180,
+            "sp": 65430,
+            "pc": 17072,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 0,
+            "b": 0,
+            "c": 0,
+            "d": 0,
+            "e": 2,
+            "h": 144,
+            "l": 165,
+            "sp": 65430,
+            "pc": 17075,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "sp_before": 65430,
+          "sp_after": 65430,
+          "call_return_address": null,
+          "reads": [
+            {
+              "address": 44319,
+              "value": 165
+            },
+            {
+              "address": 44320,
+              "value": 144
+            }
+          ],
+          "writes": [],
+          "control": {
+            "kind": "sequential"
+          }
+        },
+        {
+          "step_index": 769385,
+          "pc": 17075,
+          "pc_after": 37029,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI2.OVL",
+              "identity": "0:0:PLI2.OVL"
+            },
+            "offset": 8371
+          },
+          "target_origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI2.OVL",
+              "identity": "0:0:PLI2.OVL"
+            },
+            "offset": 28325
+          },
+          "runtime_pc": 17075,
+          "bytes": "E9",
+          "disassembly": "PCHL",
+          "source": "memory",
+          "before": {
+            "a": 0,
+            "b": 0,
+            "c": 0,
+            "d": 0,
+            "e": 2,
+            "h": 144,
+            "l": 165,
+            "sp": 65430,
+            "pc": 17075,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 0,
+            "b": 0,
+            "c": 0,
+            "d": 0,
+            "e": 2,
+            "h": 144,
+            "l": 165,
+            "sp": 65430,
+            "pc": 37029,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "sp_before": 65430,
+          "sp_after": 65430,
+          "call_return_address": null,
+          "reads": [],
+          "writes": [],
+          "control": {
+            "kind": "jump",
+            "target": 37029,
+            "taken": true
+          }
+        }
+      ],
+      "nearest_hardware_owner": {
+        "call": 768986,
+        "ret": 777450,
+        "target": "PLI2.OVL+1FB5",
+        "caller": "PLI2.OVL+2149",
+        "sp": 65444
+      },
+      "prior_RET": "PLI2.OVL+1FB4",
+      "root_witness_hash": "aadb0979137641aa9e21d9fb8b31a105054eb14e95aa37678d90bc8cb97c8f69",
+      "child_sequence": [
+        {
+          "callsite": 28334,
+          "target": "PLI2.OVL+052C",
+          "input": {
+            "a": 0,
+            "b": 0,
+            "c": 29,
+            "d": 0,
+            "e": 2,
+            "h": 28,
+            "l": 29,
+            "sp": 65428,
+            "pc": 10028,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 2,
+            "b": 82,
+            "c": 0,
+            "d": 0,
+            "e": 82,
+            "h": 2,
+            "l": 82,
+            "sp": 65430,
+            "pc": 37041,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "call_step": 769390,
+          "return_step": 769473
+        },
+        {
+          "callsite": 28343,
+          "target": "PLI2.OVL+8350",
+          "input": {
+            "a": 2,
+            "b": 82,
+            "c": 0,
+            "d": 4,
+            "e": 0,
+            "h": 2,
+            "l": 82,
+            "sp": 65428,
+            "pc": 42320,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 0,
+            "b": 82,
+            "c": 0,
+            "d": 4,
+            "e": 0,
+            "h": 0,
+            "l": 0,
+            "sp": 65430,
+            "pc": 37050,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "call_step": 769476,
+          "return_step": 769483
+        },
+        {
+          "callsite": 28348,
+          "target": "PLI.COM+1A29",
+          "input": {
+            "a": 0,
+            "b": 82,
+            "c": 0,
+            "d": 4,
+            "e": 0,
+            "h": 0,
+            "l": 0,
+            "sp": 65428,
+            "pc": 6953,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 0,
+            "b": 82,
+            "c": 0,
+            "d": 0,
+            "e": 0,
+            "h": 0,
+            "l": 0,
+            "sp": 65430,
+            "pc": 37055,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "call_step": 769485,
+          "return_step": 769494
+        },
+        {
+          "callsite": 28375,
+          "target": "PLI2.OVL+8072",
+          "input": {
+            "a": 0,
+            "b": 82,
+            "c": 2,
+            "d": 2,
+            "e": 82,
+            "h": 0,
+            "l": 0,
+            "sp": 65428,
+            "pc": 41586,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 255,
+            "b": 29,
+            "c": 10,
+            "d": 0,
+            "e": 0,
+            "h": 255,
+            "l": 210,
+            "sp": 65430,
+            "pc": 37082,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "call_step": 769504,
+          "return_step": 770891
+        },
+        {
+          "callsite": 28378,
+          "target": "PLI2.OVL+742A",
+          "input": {
+            "a": 255,
+            "b": 29,
+            "c": 10,
+            "d": 0,
+            "e": 0,
+            "h": 255,
+            "l": 210,
+            "sp": 65428,
+            "pc": 38442,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 7,
+            "b": 173,
+            "c": 171,
+            "d": 0,
+            "e": 0,
+            "h": 0,
+            "l": 46,
+            "sp": 65430,
+            "pc": 37085,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": true
+            }
+          },
+          "call_step": 770892,
+          "return_step": 771007
+        },
+        {
+          "callsite": 28389,
+          "target": "PLI2.OVL+8072",
+          "input": {
+            "a": 7,
+            "b": 173,
+            "c": 0,
+            "d": 0,
+            "e": 0,
+            "h": 0,
+            "l": 46,
+            "sp": 65428,
+            "pc": 41586,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": true
+            }
+          },
+          "output": {
+            "a": 255,
+            "b": 29,
+            "c": 10,
+            "d": 0,
+            "e": 0,
+            "h": 255,
+            "l": 207,
+            "sp": 65430,
+            "pc": 37096,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "call_step": 771011,
+          "return_step": 772393
+        },
+        {
+          "callsite": 28413,
+          "target": "PLI2.OVL+8357",
+          "input": {
+            "a": 128,
+            "b": 29,
+            "c": 10,
+            "d": 173,
+            "e": 162,
+            "h": 255,
+            "l": 207,
+            "sp": 65428,
+            "pc": 42327,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 0,
+            "b": 29,
+            "c": 10,
+            "d": 173,
+            "e": 163,
+            "h": 0,
+            "l": 0,
+            "sp": 65430,
+            "pc": 37120,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "call_step": 772399,
+          "return_step": 772411
+        },
+        {
+          "callsite": 28418,
+          "target": "PLI.COM+1A29",
+          "input": {
+            "a": 0,
+            "b": 29,
+            "c": 10,
+            "d": 173,
+            "e": 163,
+            "h": 0,
+            "l": 0,
+            "sp": 65428,
+            "pc": 6953,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 0,
+            "b": 29,
+            "c": 10,
+            "d": 0,
+            "e": 0,
+            "h": 0,
+            "l": 0,
+            "sp": 65430,
+            "pc": 37125,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "call_step": 772413,
+          "return_step": 772422
+        },
+        {
+          "callsite": 28437,
+          "target": "PLI2.OVL+8248",
+          "input": {
+            "a": 0,
+            "b": 143,
+            "c": 110,
+            "d": 0,
+            "e": 0,
+            "h": 0,
+            "l": 0,
+            "sp": 65428,
+            "pc": 42056,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 4,
+            "b": 29,
+            "c": 10,
+            "d": 0,
+            "e": 8,
+            "h": 173,
+            "l": 236,
+            "sp": 65430,
+            "pc": 37144,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": true
+            }
+          },
+          "call_step": 772426,
+          "return_step": 777370
+        }
+      ]
+    },
+    {
+      "entry_step": 860004,
+      "return_step": 867989,
+      "software_entry": "PLI2.OVL+6EA5",
+      "software_continuation": 17076,
+      "entry_SP": 65406,
+      "gateway": [
+        {
+          "step_index": 860000,
+          "pc": 17068,
+          "pc_after": 17071,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI2.OVL",
+              "identity": "0:0:PLI2.OVL"
+            },
+            "offset": 8364
+          },
+          "target_origin": null,
+          "runtime_pc": 17068,
+          "bytes": "21B442",
+          "disassembly": "LXI H,42B4H",
+          "source": "memory",
+          "before": {
+            "a": 0,
+            "b": 0,
+            "c": 0,
+            "d": 0,
+            "e": 2,
+            "h": 172,
+            "l": 60,
+            "sp": 65408,
+            "pc": 17068,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 0,
+            "b": 0,
+            "c": 0,
+            "d": 0,
+            "e": 2,
+            "h": 66,
+            "l": 180,
+            "sp": 65408,
+            "pc": 17071,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "sp_before": 65408,
+          "sp_after": 65408,
+          "call_return_address": null,
+          "reads": [],
+          "writes": [],
+          "control": {
+            "kind": "sequential"
+          }
+        },
+        {
+          "step_index": 860001,
+          "pc": 17071,
+          "pc_after": 17072,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI2.OVL",
+              "identity": "0:0:PLI2.OVL"
+            },
+            "offset": 8367
+          },
+          "target_origin": null,
+          "runtime_pc": 17071,
+          "bytes": "E5",
+          "disassembly": "PUSH H",
+          "source": "memory",
+          "before": {
+            "a": 0,
+            "b": 0,
+            "c": 0,
+            "d": 0,
+            "e": 2,
+            "h": 66,
+            "l": 180,
+            "sp": 65408,
+            "pc": 17071,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 0,
+            "b": 0,
+            "c": 0,
+            "d": 0,
+            "e": 2,
+            "h": 66,
+            "l": 180,
+            "sp": 65406,
+            "pc": 17072,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "sp_before": 65408,
+          "sp_after": 65406,
+          "call_return_address": null,
+          "reads": [],
+          "writes": [
+            {
+              "address": 65407,
+              "old_value": null,
+              "new_value": 66
+            },
+            {
+              "address": 65406,
+              "old_value": null,
+              "new_value": 180
+            }
+          ],
+          "control": {
+            "kind": "sequential"
+          }
+        },
+        {
+          "step_index": 860002,
+          "pc": 17072,
+          "pc_after": 17075,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI2.OVL",
+              "identity": "0:0:PLI2.OVL"
+            },
+            "offset": 8368
+          },
+          "target_origin": null,
+          "runtime_pc": 17072,
+          "bytes": "2A1FAD",
+          "disassembly": "LHLD AD1FH",
+          "source": "memory",
+          "before": {
+            "a": 0,
+            "b": 0,
+            "c": 0,
+            "d": 0,
+            "e": 2,
+            "h": 66,
+            "l": 180,
+            "sp": 65406,
+            "pc": 17072,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 0,
+            "b": 0,
+            "c": 0,
+            "d": 0,
+            "e": 2,
+            "h": 144,
+            "l": 165,
+            "sp": 65406,
+            "pc": 17075,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "sp_before": 65406,
+          "sp_after": 65406,
+          "call_return_address": null,
+          "reads": [
+            {
+              "address": 44319,
+              "value": 165
+            },
+            {
+              "address": 44320,
+              "value": 144
+            }
+          ],
+          "writes": [],
+          "control": {
+            "kind": "sequential"
+          }
+        },
+        {
+          "step_index": 860003,
+          "pc": 17075,
+          "pc_after": 37029,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI2.OVL",
+              "identity": "0:0:PLI2.OVL"
+            },
+            "offset": 8371
+          },
+          "target_origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI2.OVL",
+              "identity": "0:0:PLI2.OVL"
+            },
+            "offset": 28325
+          },
+          "runtime_pc": 17075,
+          "bytes": "E9",
+          "disassembly": "PCHL",
+          "source": "memory",
+          "before": {
+            "a": 0,
+            "b": 0,
+            "c": 0,
+            "d": 0,
+            "e": 2,
+            "h": 144,
+            "l": 165,
+            "sp": 65406,
+            "pc": 17075,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 0,
+            "b": 0,
+            "c": 0,
+            "d": 0,
+            "e": 2,
+            "h": 144,
+            "l": 165,
+            "sp": 65406,
+            "pc": 37029,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "sp_before": 65406,
+          "sp_after": 65406,
+          "call_return_address": null,
+          "reads": [],
+          "writes": [],
+          "control": {
+            "kind": "jump",
+            "target": 37029,
+            "taken": true
+          }
+        }
+      ],
+      "nearest_hardware_owner": {
+        "call": 859604,
+        "ret": 868068,
+        "target": "PLI2.OVL+1FB5",
+        "caller": "PLI2.OVL+2149",
+        "sp": 65420
+      },
+      "prior_RET": "PLI2.OVL+1FB4",
+      "root_witness_hash": "87a8ae577403dab116c97f138e3aab860707e7c38dc9d7836c023103e48e8ee7",
+      "child_sequence": [
+        {
+          "callsite": 28334,
+          "target": "PLI2.OVL+052C",
+          "input": {
+            "a": 0,
+            "b": 0,
+            "c": 51,
+            "d": 0,
+            "e": 2,
+            "h": 50,
+            "l": 51,
+            "sp": 65404,
+            "pc": 10028,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 2,
+            "b": 82,
+            "c": 0,
+            "d": 0,
+            "e": 82,
+            "h": 2,
+            "l": 82,
+            "sp": 65406,
+            "pc": 37041,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "call_step": 860008,
+          "return_step": 860091
+        },
+        {
+          "callsite": 28343,
+          "target": "PLI2.OVL+8350",
+          "input": {
+            "a": 2,
+            "b": 82,
+            "c": 0,
+            "d": 4,
+            "e": 0,
+            "h": 2,
+            "l": 82,
+            "sp": 65404,
+            "pc": 42320,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 0,
+            "b": 82,
+            "c": 0,
+            "d": 4,
+            "e": 0,
+            "h": 0,
+            "l": 0,
+            "sp": 65406,
+            "pc": 37050,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "call_step": 860094,
+          "return_step": 860101
+        },
+        {
+          "callsite": 28348,
+          "target": "PLI.COM+1A29",
+          "input": {
+            "a": 0,
+            "b": 82,
+            "c": 0,
+            "d": 4,
+            "e": 0,
+            "h": 0,
+            "l": 0,
+            "sp": 65404,
+            "pc": 6953,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 0,
+            "b": 82,
+            "c": 0,
+            "d": 0,
+            "e": 0,
+            "h": 0,
+            "l": 0,
+            "sp": 65406,
+            "pc": 37055,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "call_step": 860103,
+          "return_step": 860112
+        },
+        {
+          "callsite": 28375,
+          "target": "PLI2.OVL+8072",
+          "input": {
+            "a": 0,
+            "b": 82,
+            "c": 2,
+            "d": 2,
+            "e": 82,
+            "h": 0,
+            "l": 0,
+            "sp": 65404,
+            "pc": 41586,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 255,
+            "b": 29,
+            "c": 10,
+            "d": 0,
+            "e": 0,
+            "h": 255,
+            "l": 160,
+            "sp": 65406,
+            "pc": 37082,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "call_step": 860122,
+          "return_step": 861504
+        },
+        {
+          "callsite": 28378,
+          "target": "PLI2.OVL+742A",
+          "input": {
+            "a": 255,
+            "b": 29,
+            "c": 10,
+            "d": 0,
+            "e": 0,
+            "h": 255,
+            "l": 160,
+            "sp": 65404,
+            "pc": 38442,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 7,
+            "b": 173,
+            "c": 171,
+            "d": 0,
+            "e": 0,
+            "h": 0,
+            "l": 96,
+            "sp": 65406,
+            "pc": 37085,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": true
+            }
+          },
+          "call_step": 861505,
+          "return_step": 861620
+        },
+        {
+          "callsite": 28389,
+          "target": "PLI2.OVL+8072",
+          "input": {
+            "a": 7,
+            "b": 173,
+            "c": 0,
+            "d": 0,
+            "e": 0,
+            "h": 0,
+            "l": 96,
+            "sp": 65404,
+            "pc": 41586,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": true
+            }
+          },
+          "output": {
+            "a": 255,
+            "b": 29,
+            "c": 10,
+            "d": 0,
+            "e": 0,
+            "h": 255,
+            "l": 157,
+            "sp": 65406,
+            "pc": 37096,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "call_step": 861624,
+          "return_step": 863011
+        },
+        {
+          "callsite": 28413,
+          "target": "PLI2.OVL+8357",
+          "input": {
+            "a": 128,
+            "b": 29,
+            "c": 10,
+            "d": 173,
+            "e": 162,
+            "h": 255,
+            "l": 157,
+            "sp": 65404,
+            "pc": 42327,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 0,
+            "b": 29,
+            "c": 10,
+            "d": 173,
+            "e": 163,
+            "h": 0,
+            "l": 0,
+            "sp": 65406,
+            "pc": 37120,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "call_step": 863017,
+          "return_step": 863029
+        },
+        {
+          "callsite": 28418,
+          "target": "PLI.COM+1A29",
+          "input": {
+            "a": 0,
+            "b": 29,
+            "c": 10,
+            "d": 173,
+            "e": 163,
+            "h": 0,
+            "l": 0,
+            "sp": 65404,
+            "pc": 6953,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 0,
+            "b": 29,
+            "c": 10,
+            "d": 0,
+            "e": 0,
+            "h": 0,
+            "l": 0,
+            "sp": 65406,
+            "pc": 37125,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "call_step": 863031,
+          "return_step": 863040
+        },
+        {
+          "callsite": 28437,
+          "target": "PLI2.OVL+8248",
+          "input": {
+            "a": 0,
+            "b": 143,
+            "c": 110,
+            "d": 0,
+            "e": 0,
+            "h": 0,
+            "l": 0,
+            "sp": 65404,
+            "pc": 42056,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 4,
+            "b": 29,
+            "c": 10,
+            "d": 0,
+            "e": 8,
+            "h": 173,
+            "l": 236,
+            "sp": 65406,
+            "pc": 37144,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": true
+            }
+          },
+          "call_step": 863044,
+          "return_step": 867988
+        }
+      ]
+    },
+    {
+      "entry_step": 950542,
+      "return_step": 958522,
+      "software_entry": "PLI2.OVL+6EA5",
+      "software_continuation": 17076,
+      "entry_SP": 65382,
+      "gateway": [
+        {
+          "step_index": 950538,
+          "pc": 17068,
+          "pc_after": 17071,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI2.OVL",
+              "identity": "0:0:PLI2.OVL"
+            },
+            "offset": 8364
+          },
+          "target_origin": null,
+          "runtime_pc": 17068,
+          "bytes": "21B442",
+          "disassembly": "LXI H,42B4H",
+          "source": "memory",
+          "before": {
+            "a": 0,
+            "b": 0,
+            "c": 0,
+            "d": 0,
+            "e": 2,
+            "h": 172,
+            "l": 60,
+            "sp": 65384,
+            "pc": 17068,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 0,
+            "b": 0,
+            "c": 0,
+            "d": 0,
+            "e": 2,
+            "h": 66,
+            "l": 180,
+            "sp": 65384,
+            "pc": 17071,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "sp_before": 65384,
+          "sp_after": 65384,
+          "call_return_address": null,
+          "reads": [],
+          "writes": [],
+          "control": {
+            "kind": "sequential"
+          }
+        },
+        {
+          "step_index": 950539,
+          "pc": 17071,
+          "pc_after": 17072,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI2.OVL",
+              "identity": "0:0:PLI2.OVL"
+            },
+            "offset": 8367
+          },
+          "target_origin": null,
+          "runtime_pc": 17071,
+          "bytes": "E5",
+          "disassembly": "PUSH H",
+          "source": "memory",
+          "before": {
+            "a": 0,
+            "b": 0,
+            "c": 0,
+            "d": 0,
+            "e": 2,
+            "h": 66,
+            "l": 180,
+            "sp": 65384,
+            "pc": 17071,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 0,
+            "b": 0,
+            "c": 0,
+            "d": 0,
+            "e": 2,
+            "h": 66,
+            "l": 180,
+            "sp": 65382,
+            "pc": 17072,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "sp_before": 65384,
+          "sp_after": 65382,
+          "call_return_address": null,
+          "reads": [],
+          "writes": [
+            {
+              "address": 65383,
+              "old_value": null,
+              "new_value": 66
+            },
+            {
+              "address": 65382,
+              "old_value": null,
+              "new_value": 180
+            }
+          ],
+          "control": {
+            "kind": "sequential"
+          }
+        },
+        {
+          "step_index": 950540,
+          "pc": 17072,
+          "pc_after": 17075,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI2.OVL",
+              "identity": "0:0:PLI2.OVL"
+            },
+            "offset": 8368
+          },
+          "target_origin": null,
+          "runtime_pc": 17072,
+          "bytes": "2A1FAD",
+          "disassembly": "LHLD AD1FH",
+          "source": "memory",
+          "before": {
+            "a": 0,
+            "b": 0,
+            "c": 0,
+            "d": 0,
+            "e": 2,
+            "h": 66,
+            "l": 180,
+            "sp": 65382,
+            "pc": 17072,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 0,
+            "b": 0,
+            "c": 0,
+            "d": 0,
+            "e": 2,
+            "h": 144,
+            "l": 165,
+            "sp": 65382,
+            "pc": 17075,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "sp_before": 65382,
+          "sp_after": 65382,
+          "call_return_address": null,
+          "reads": [
+            {
+              "address": 44319,
+              "value": 165
+            },
+            {
+              "address": 44320,
+              "value": 144
+            }
+          ],
+          "writes": [],
+          "control": {
+            "kind": "sequential"
+          }
+        },
+        {
+          "step_index": 950541,
+          "pc": 17075,
+          "pc_after": 37029,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI2.OVL",
+              "identity": "0:0:PLI2.OVL"
+            },
+            "offset": 8371
+          },
+          "target_origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI2.OVL",
+              "identity": "0:0:PLI2.OVL"
+            },
+            "offset": 28325
+          },
+          "runtime_pc": 17075,
+          "bytes": "E9",
+          "disassembly": "PCHL",
+          "source": "memory",
+          "before": {
+            "a": 0,
+            "b": 0,
+            "c": 0,
+            "d": 0,
+            "e": 2,
+            "h": 144,
+            "l": 165,
+            "sp": 65382,
+            "pc": 17075,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 0,
+            "b": 0,
+            "c": 0,
+            "d": 0,
+            "e": 2,
+            "h": 144,
+            "l": 165,
+            "sp": 65382,
+            "pc": 37029,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "sp_before": 65382,
+          "sp_after": 65382,
+          "call_return_address": null,
+          "reads": [],
+          "writes": [],
+          "control": {
+            "kind": "jump",
+            "target": 37029,
+            "taken": true
+          }
+        }
+      ],
+      "nearest_hardware_owner": {
+        "call": 950142,
+        "ret": 958601,
+        "target": "PLI2.OVL+1FB5",
+        "caller": "PLI2.OVL+2149",
+        "sp": 65396
+      },
+      "prior_RET": "PLI2.OVL+1FB4",
+      "root_witness_hash": "0cac3aec1b1c0f7a0f9b89fe52efad3eea7a29c8ddf9b765401d2a360feb6a99",
+      "child_sequence": [
+        {
+          "callsite": 28334,
+          "target": "PLI2.OVL+052C",
+          "input": {
+            "a": 0,
+            "b": 0,
+            "c": 73,
+            "d": 0,
+            "e": 2,
+            "h": 72,
+            "l": 73,
+            "sp": 65380,
+            "pc": 10028,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 2,
+            "b": 82,
+            "c": 0,
+            "d": 0,
+            "e": 82,
+            "h": 2,
+            "l": 82,
+            "sp": 65382,
+            "pc": 37041,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "call_step": 950546,
+          "return_step": 950629
+        },
+        {
+          "callsite": 28343,
+          "target": "PLI2.OVL+8350",
+          "input": {
+            "a": 2,
+            "b": 82,
+            "c": 0,
+            "d": 4,
+            "e": 0,
+            "h": 2,
+            "l": 82,
+            "sp": 65380,
+            "pc": 42320,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 0,
+            "b": 82,
+            "c": 0,
+            "d": 4,
+            "e": 0,
+            "h": 0,
+            "l": 0,
+            "sp": 65382,
+            "pc": 37050,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "call_step": 950632,
+          "return_step": 950639
+        },
+        {
+          "callsite": 28348,
+          "target": "PLI.COM+1A29",
+          "input": {
+            "a": 0,
+            "b": 82,
+            "c": 0,
+            "d": 4,
+            "e": 0,
+            "h": 0,
+            "l": 0,
+            "sp": 65380,
+            "pc": 6953,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 0,
+            "b": 82,
+            "c": 0,
+            "d": 0,
+            "e": 0,
+            "h": 0,
+            "l": 0,
+            "sp": 65382,
+            "pc": 37055,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "call_step": 950641,
+          "return_step": 950650
+        },
+        {
+          "callsite": 28375,
+          "target": "PLI2.OVL+8072",
+          "input": {
+            "a": 0,
+            "b": 82,
+            "c": 2,
+            "d": 2,
+            "e": 82,
+            "h": 0,
+            "l": 0,
+            "sp": 65380,
+            "pc": 41586,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 255,
+            "b": 29,
+            "c": 10,
+            "d": 0,
+            "e": 0,
+            "h": 255,
+            "l": 110,
+            "sp": 65382,
+            "pc": 37082,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "call_step": 950660,
+          "return_step": 952042
+        },
+        {
+          "callsite": 28378,
+          "target": "PLI2.OVL+742A",
+          "input": {
+            "a": 255,
+            "b": 29,
+            "c": 10,
+            "d": 0,
+            "e": 0,
+            "h": 255,
+            "l": 110,
+            "sp": 65380,
+            "pc": 38442,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 7,
+            "b": 173,
+            "c": 171,
+            "d": 0,
+            "e": 0,
+            "h": 0,
+            "l": 146,
+            "sp": 65382,
+            "pc": 37085,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": true
+            }
+          },
+          "call_step": 952043,
+          "return_step": 952158
+        },
+        {
+          "callsite": 28389,
+          "target": "PLI2.OVL+8072",
+          "input": {
+            "a": 7,
+            "b": 173,
+            "c": 0,
+            "d": 0,
+            "e": 0,
+            "h": 0,
+            "l": 146,
+            "sp": 65380,
+            "pc": 41586,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": true
+            }
+          },
+          "output": {
+            "a": 255,
+            "b": 29,
+            "c": 10,
+            "d": 0,
+            "e": 0,
+            "h": 255,
+            "l": 107,
+            "sp": 65382,
+            "pc": 37096,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "call_step": 952162,
+          "return_step": 953544
+        },
+        {
+          "callsite": 28413,
+          "target": "PLI2.OVL+8357",
+          "input": {
+            "a": 128,
+            "b": 29,
+            "c": 10,
+            "d": 173,
+            "e": 162,
+            "h": 255,
+            "l": 107,
+            "sp": 65380,
+            "pc": 42327,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 0,
+            "b": 29,
+            "c": 10,
+            "d": 173,
+            "e": 163,
+            "h": 0,
+            "l": 0,
+            "sp": 65382,
+            "pc": 37120,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "call_step": 953550,
+          "return_step": 953562
+        },
+        {
+          "callsite": 28418,
+          "target": "PLI.COM+1A29",
+          "input": {
+            "a": 0,
+            "b": 29,
+            "c": 10,
+            "d": 173,
+            "e": 163,
+            "h": 0,
+            "l": 0,
+            "sp": 65380,
+            "pc": 6953,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 0,
+            "b": 29,
+            "c": 10,
+            "d": 0,
+            "e": 0,
+            "h": 0,
+            "l": 0,
+            "sp": 65382,
+            "pc": 37125,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "call_step": 953564,
+          "return_step": 953573
+        },
+        {
+          "callsite": 28437,
+          "target": "PLI2.OVL+8248",
+          "input": {
+            "a": 0,
+            "b": 143,
+            "c": 110,
+            "d": 0,
+            "e": 0,
+            "h": 0,
+            "l": 0,
+            "sp": 65380,
+            "pc": 42056,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 4,
+            "b": 29,
+            "c": 10,
+            "d": 0,
+            "e": 8,
+            "h": 173,
+            "l": 236,
+            "sp": 65382,
+            "pc": 37144,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": true
+            }
+          },
+          "call_step": 953577,
+          "return_step": 958521
+        }
+      ]
+    },
+    {
+      "entry_step": 1010782,
+      "return_step": 1018847,
+      "software_entry": "PLI2.OVL+6EA5",
+      "software_continuation": 17076,
+      "entry_SP": 65382,
+      "gateway": [
+        {
+          "step_index": 1010778,
+          "pc": 17068,
+          "pc_after": 17071,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI2.OVL",
+              "identity": "0:0:PLI2.OVL"
+            },
+            "offset": 8364
+          },
+          "target_origin": null,
+          "runtime_pc": 17068,
+          "bytes": "21B442",
+          "disassembly": "LXI H,42B4H",
+          "source": "memory",
+          "before": {
+            "a": 0,
+            "b": 0,
+            "c": 0,
+            "d": 0,
+            "e": 2,
+            "h": 172,
+            "l": 60,
+            "sp": 65384,
+            "pc": 17068,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 0,
+            "b": 0,
+            "c": 0,
+            "d": 0,
+            "e": 2,
+            "h": 66,
+            "l": 180,
+            "sp": 65384,
+            "pc": 17071,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "sp_before": 65384,
+          "sp_after": 65384,
+          "call_return_address": null,
+          "reads": [],
+          "writes": [],
+          "control": {
+            "kind": "sequential"
+          }
+        },
+        {
+          "step_index": 1010779,
+          "pc": 17071,
+          "pc_after": 17072,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI2.OVL",
+              "identity": "0:0:PLI2.OVL"
+            },
+            "offset": 8367
+          },
+          "target_origin": null,
+          "runtime_pc": 17071,
+          "bytes": "E5",
+          "disassembly": "PUSH H",
+          "source": "memory",
+          "before": {
+            "a": 0,
+            "b": 0,
+            "c": 0,
+            "d": 0,
+            "e": 2,
+            "h": 66,
+            "l": 180,
+            "sp": 65384,
+            "pc": 17071,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 0,
+            "b": 0,
+            "c": 0,
+            "d": 0,
+            "e": 2,
+            "h": 66,
+            "l": 180,
+            "sp": 65382,
+            "pc": 17072,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "sp_before": 65384,
+          "sp_after": 65382,
+          "call_return_address": null,
+          "reads": [],
+          "writes": [
+            {
+              "address": 65383,
+              "old_value": null,
+              "new_value": 66
+            },
+            {
+              "address": 65382,
+              "old_value": null,
+              "new_value": 180
+            }
+          ],
+          "control": {
+            "kind": "sequential"
+          }
+        },
+        {
+          "step_index": 1010780,
+          "pc": 17072,
+          "pc_after": 17075,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI2.OVL",
+              "identity": "0:0:PLI2.OVL"
+            },
+            "offset": 8368
+          },
+          "target_origin": null,
+          "runtime_pc": 17072,
+          "bytes": "2A1FAD",
+          "disassembly": "LHLD AD1FH",
+          "source": "memory",
+          "before": {
+            "a": 0,
+            "b": 0,
+            "c": 0,
+            "d": 0,
+            "e": 2,
+            "h": 66,
+            "l": 180,
+            "sp": 65382,
+            "pc": 17072,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 0,
+            "b": 0,
+            "c": 0,
+            "d": 0,
+            "e": 2,
+            "h": 144,
+            "l": 165,
+            "sp": 65382,
+            "pc": 17075,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "sp_before": 65382,
+          "sp_after": 65382,
+          "call_return_address": null,
+          "reads": [
+            {
+              "address": 44319,
+              "value": 165
+            },
+            {
+              "address": 44320,
+              "value": 144
+            }
+          ],
+          "writes": [],
+          "control": {
+            "kind": "sequential"
+          }
+        },
+        {
+          "step_index": 1010781,
+          "pc": 17075,
+          "pc_after": 37029,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI2.OVL",
+              "identity": "0:0:PLI2.OVL"
+            },
+            "offset": 8371
+          },
+          "target_origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI2.OVL",
+              "identity": "0:0:PLI2.OVL"
+            },
+            "offset": 28325
+          },
+          "runtime_pc": 17075,
+          "bytes": "E9",
+          "disassembly": "PCHL",
+          "source": "memory",
+          "before": {
+            "a": 0,
+            "b": 0,
+            "c": 0,
+            "d": 0,
+            "e": 2,
+            "h": 144,
+            "l": 165,
+            "sp": 65382,
+            "pc": 17075,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 0,
+            "b": 0,
+            "c": 0,
+            "d": 0,
+            "e": 2,
+            "h": 144,
+            "l": 165,
+            "sp": 65382,
+            "pc": 37029,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "sp_before": 65382,
+          "sp_after": 65382,
+          "call_return_address": null,
+          "reads": [],
+          "writes": [],
+          "control": {
+            "kind": "jump",
+            "target": 37029,
+            "taken": true
+          }
+        }
+      ],
+      "nearest_hardware_owner": {
+        "call": 1010382,
+        "ret": 1018926,
+        "target": "PLI2.OVL+1FB5",
+        "caller": "PLI2.OVL+2149",
+        "sp": 65396
+      },
+      "prior_RET": "PLI2.OVL+1FB4",
+      "root_witness_hash": "cd94b41490696ea218fe968ea8c9dd4f47a6033a419c96edd13970318d780542",
+      "child_sequence": [
+        {
+          "callsite": 28334,
+          "target": "PLI2.OVL+052C",
+          "input": {
+            "a": 0,
+            "b": 0,
+            "c": 85,
+            "d": 0,
+            "e": 2,
+            "h": 84,
+            "l": 85,
+            "sp": 65380,
+            "pc": 10028,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 2,
+            "b": 82,
+            "c": 0,
+            "d": 0,
+            "e": 82,
+            "h": 2,
+            "l": 82,
+            "sp": 65382,
+            "pc": 37041,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "call_step": 1010786,
+          "return_step": 1010869
+        },
+        {
+          "callsite": 28343,
+          "target": "PLI2.OVL+8350",
+          "input": {
+            "a": 2,
+            "b": 82,
+            "c": 0,
+            "d": 4,
+            "e": 0,
+            "h": 2,
+            "l": 82,
+            "sp": 65380,
+            "pc": 42320,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 0,
+            "b": 82,
+            "c": 0,
+            "d": 4,
+            "e": 0,
+            "h": 0,
+            "l": 0,
+            "sp": 65382,
+            "pc": 37050,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "call_step": 1010872,
+          "return_step": 1010879
+        },
+        {
+          "callsite": 28348,
+          "target": "PLI.COM+1A29",
+          "input": {
+            "a": 0,
+            "b": 82,
+            "c": 0,
+            "d": 4,
+            "e": 0,
+            "h": 0,
+            "l": 0,
+            "sp": 65380,
+            "pc": 6953,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 0,
+            "b": 82,
+            "c": 0,
+            "d": 0,
+            "e": 0,
+            "h": 0,
+            "l": 0,
+            "sp": 65382,
+            "pc": 37055,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "call_step": 1010881,
+          "return_step": 1010890
+        },
+        {
+          "callsite": 28375,
+          "target": "PLI2.OVL+8072",
+          "input": {
+            "a": 0,
+            "b": 82,
+            "c": 2,
+            "d": 2,
+            "e": 82,
+            "h": 0,
+            "l": 0,
+            "sp": 65380,
+            "pc": 41586,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 255,
+            "b": 29,
+            "c": 10,
+            "d": 0,
+            "e": 0,
+            "h": 255,
+            "l": 79,
+            "sp": 65382,
+            "pc": 37082,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "call_step": 1010900,
+          "return_step": 1012287
+        },
+        {
+          "callsite": 28378,
+          "target": "PLI2.OVL+742A",
+          "input": {
+            "a": 255,
+            "b": 29,
+            "c": 10,
+            "d": 0,
+            "e": 0,
+            "h": 255,
+            "l": 79,
+            "sp": 65380,
+            "pc": 38442,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 7,
+            "b": 173,
+            "c": 171,
+            "d": 0,
+            "e": 0,
+            "h": 0,
+            "l": 177,
+            "sp": 65382,
+            "pc": 37085,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": true
+            }
+          },
+          "call_step": 1012288,
+          "return_step": 1012403
+        },
+        {
+          "callsite": 28389,
+          "target": "PLI2.OVL+8072",
+          "input": {
+            "a": 7,
+            "b": 173,
+            "c": 0,
+            "d": 0,
+            "e": 0,
+            "h": 0,
+            "l": 177,
+            "sp": 65380,
+            "pc": 41586,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": true
+            }
+          },
+          "output": {
+            "a": 255,
+            "b": 29,
+            "c": 10,
+            "d": 0,
+            "e": 0,
+            "h": 255,
+            "l": 76,
+            "sp": 65382,
+            "pc": 37096,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "call_step": 1012407,
+          "return_step": 1013789
+        },
+        {
+          "callsite": 28413,
+          "target": "PLI2.OVL+8357",
+          "input": {
+            "a": 128,
+            "b": 29,
+            "c": 10,
+            "d": 173,
+            "e": 162,
+            "h": 255,
+            "l": 76,
+            "sp": 65380,
+            "pc": 42327,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 0,
+            "b": 29,
+            "c": 10,
+            "d": 173,
+            "e": 163,
+            "h": 0,
+            "l": 0,
+            "sp": 65382,
+            "pc": 37120,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "call_step": 1013795,
+          "return_step": 1013807
+        },
+        {
+          "callsite": 28418,
+          "target": "PLI.COM+1A29",
+          "input": {
+            "a": 0,
+            "b": 29,
+            "c": 10,
+            "d": 173,
+            "e": 163,
+            "h": 0,
+            "l": 0,
+            "sp": 65380,
+            "pc": 6953,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 0,
+            "b": 29,
+            "c": 10,
+            "d": 0,
+            "e": 0,
+            "h": 0,
+            "l": 0,
+            "sp": 65382,
+            "pc": 37125,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "call_step": 1013809,
+          "return_step": 1013818
+        },
+        {
+          "callsite": 28437,
+          "target": "PLI2.OVL+8248",
+          "input": {
+            "a": 0,
+            "b": 143,
+            "c": 110,
+            "d": 0,
+            "e": 0,
+            "h": 0,
+            "l": 0,
+            "sp": 65380,
+            "pc": 42056,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 4,
+            "b": 29,
+            "c": 10,
+            "d": 0,
+            "e": 8,
+            "h": 173,
+            "l": 236,
+            "sp": 65382,
+            "pc": 37144,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": true
+            }
+          },
+          "call_step": 1013822,
+          "return_step": 1018846
+        }
+      ]
+    }
+  ],
+  "PICTURE": [
+    {
+      "entry_step": 425022,
+      "return_step": 433572,
+      "software_entry": "PLI2.OVL+6EA5",
+      "software_continuation": 17076,
+      "entry_SP": 65480,
+      "gateway": [
+        {
+          "step_index": 425018,
+          "pc": 17068,
+          "pc_after": 17071,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI2.OVL",
+              "identity": "0:0:PLI2.OVL"
+            },
+            "offset": 8364
+          },
+          "target_origin": null,
+          "runtime_pc": 17068,
+          "bytes": "21B442",
+          "disassembly": "LXI H,42B4H",
+          "source": "memory",
+          "before": {
+            "a": 0,
+            "b": 0,
+            "c": 0,
+            "d": 0,
+            "e": 2,
+            "h": 172,
+            "l": 60,
+            "sp": 65482,
+            "pc": 17068,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 0,
+            "b": 0,
+            "c": 0,
+            "d": 0,
+            "e": 2,
+            "h": 66,
+            "l": 180,
+            "sp": 65482,
+            "pc": 17071,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "sp_before": 65482,
+          "sp_after": 65482,
+          "call_return_address": null,
+          "reads": [],
+          "writes": [],
+          "control": {
+            "kind": "sequential"
+          }
+        },
+        {
+          "step_index": 425019,
+          "pc": 17071,
+          "pc_after": 17072,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI2.OVL",
+              "identity": "0:0:PLI2.OVL"
+            },
+            "offset": 8367
+          },
+          "target_origin": null,
+          "runtime_pc": 17071,
+          "bytes": "E5",
+          "disassembly": "PUSH H",
+          "source": "memory",
+          "before": {
+            "a": 0,
+            "b": 0,
+            "c": 0,
+            "d": 0,
+            "e": 2,
+            "h": 66,
+            "l": 180,
+            "sp": 65482,
+            "pc": 17071,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 0,
+            "b": 0,
+            "c": 0,
+            "d": 0,
+            "e": 2,
+            "h": 66,
+            "l": 180,
+            "sp": 65480,
+            "pc": 17072,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "sp_before": 65482,
+          "sp_after": 65480,
+          "call_return_address": null,
+          "reads": [],
+          "writes": [
+            {
+              "address": 65481,
+              "old_value": null,
+              "new_value": 66
+            },
+            {
+              "address": 65480,
+              "old_value": null,
+              "new_value": 180
+            }
+          ],
+          "control": {
+            "kind": "sequential"
+          }
+        },
+        {
+          "step_index": 425020,
+          "pc": 17072,
+          "pc_after": 17075,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI2.OVL",
+              "identity": "0:0:PLI2.OVL"
+            },
+            "offset": 8368
+          },
+          "target_origin": null,
+          "runtime_pc": 17072,
+          "bytes": "2A1FAD",
+          "disassembly": "LHLD AD1FH",
+          "source": "memory",
+          "before": {
+            "a": 0,
+            "b": 0,
+            "c": 0,
+            "d": 0,
+            "e": 2,
+            "h": 66,
+            "l": 180,
+            "sp": 65480,
+            "pc": 17072,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 0,
+            "b": 0,
+            "c": 0,
+            "d": 0,
+            "e": 2,
+            "h": 144,
+            "l": 165,
+            "sp": 65480,
+            "pc": 17075,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "sp_before": 65480,
+          "sp_after": 65480,
+          "call_return_address": null,
+          "reads": [
+            {
+              "address": 44319,
+              "value": 165
+            },
+            {
+              "address": 44320,
+              "value": 144
+            }
+          ],
+          "writes": [],
+          "control": {
+            "kind": "sequential"
+          }
+        },
+        {
+          "step_index": 425021,
+          "pc": 17075,
+          "pc_after": 37029,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI2.OVL",
+              "identity": "0:0:PLI2.OVL"
+            },
+            "offset": 8371
+          },
+          "target_origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI2.OVL",
+              "identity": "0:0:PLI2.OVL"
+            },
+            "offset": 28325
+          },
+          "runtime_pc": 17075,
+          "bytes": "E9",
+          "disassembly": "PCHL",
+          "source": "memory",
+          "before": {
+            "a": 0,
+            "b": 0,
+            "c": 0,
+            "d": 0,
+            "e": 2,
+            "h": 144,
+            "l": 165,
+            "sp": 65480,
+            "pc": 17075,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 0,
+            "b": 0,
+            "c": 0,
+            "d": 0,
+            "e": 2,
+            "h": 144,
+            "l": 165,
+            "sp": 65480,
+            "pc": 37029,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "sp_before": 65480,
+          "sp_after": 65480,
+          "call_return_address": null,
+          "reads": [],
+          "writes": [],
+          "control": {
+            "kind": "jump",
+            "target": 37029,
+            "taken": true
+          }
+        }
+      ],
+      "nearest_hardware_owner": {
+        "call": 424622,
+        "ret": 433651,
+        "target": "PLI2.OVL+1FB5",
+        "caller": "PLI2.OVL+2149",
+        "sp": 65494
+      },
+      "prior_RET": "PLI2.OVL+1FB4",
+      "root_witness_hash": "c4aed7fe96e1d0587afb72140dd99c8a41d33f3ad928c4700456496924a70583",
+      "child_sequence": [
+        {
+          "callsite": 28334,
+          "target": "PLI2.OVL+052C",
+          "input": {
+            "a": 0,
+            "b": 0,
+            "c": 12,
+            "d": 0,
+            "e": 2,
+            "h": 11,
+            "l": 12,
+            "sp": 65478,
+            "pc": 10028,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 2,
+            "b": 82,
+            "c": 0,
+            "d": 0,
+            "e": 82,
+            "h": 2,
+            "l": 82,
+            "sp": 65480,
+            "pc": 37041,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "call_step": 425026,
+          "return_step": 425109
+        },
+        {
+          "callsite": 28343,
+          "target": "PLI2.OVL+8350",
+          "input": {
+            "a": 2,
+            "b": 82,
+            "c": 0,
+            "d": 4,
+            "e": 0,
+            "h": 2,
+            "l": 82,
+            "sp": 65478,
+            "pc": 42320,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": false,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 0,
+            "b": 82,
+            "c": 0,
+            "d": 4,
+            "e": 0,
+            "h": 0,
+            "l": 0,
+            "sp": 65480,
+            "pc": 37050,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "call_step": 425112,
+          "return_step": 425119
+        },
+        {
+          "callsite": 28348,
+          "target": "PLI.COM+1A29",
+          "input": {
+            "a": 0,
+            "b": 82,
+            "c": 0,
+            "d": 4,
+            "e": 0,
+            "h": 0,
+            "l": 0,
+            "sp": 65478,
+            "pc": 6953,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 0,
+            "b": 82,
+            "c": 0,
+            "d": 0,
+            "e": 0,
+            "h": 0,
+            "l": 0,
+            "sp": 65480,
+            "pc": 37055,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "call_step": 425121,
+          "return_step": 425130
+        },
+        {
+          "callsite": 28375,
+          "target": "PLI2.OVL+8072",
+          "input": {
+            "a": 0,
+            "b": 82,
+            "c": 2,
+            "d": 2,
+            "e": 82,
+            "h": 0,
+            "l": 0,
+            "sp": 65478,
+            "pc": 41586,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 255,
+            "b": 29,
+            "c": 10,
+            "d": 0,
+            "e": 0,
+            "h": 255,
+            "l": 241,
+            "sp": 65480,
+            "pc": 37082,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "call_step": 425140,
+          "return_step": 427087
+        },
+        {
+          "callsite": 28378,
+          "target": "PLI2.OVL+742A",
+          "input": {
+            "a": 255,
+            "b": 29,
+            "c": 10,
+            "d": 0,
+            "e": 0,
+            "h": 255,
+            "l": 241,
+            "sp": 65478,
+            "pc": 38442,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 7,
+            "b": 173,
+            "c": 171,
+            "d": 0,
+            "e": 0,
+            "h": 0,
+            "l": 15,
+            "sp": 65480,
+            "pc": 37085,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": true
+            }
+          },
+          "call_step": 427088,
+          "return_step": 427203
+        },
+        {
+          "callsite": 28389,
+          "target": "PLI2.OVL+8072",
+          "input": {
+            "a": 7,
+            "b": 173,
+            "c": 0,
+            "d": 0,
+            "e": 0,
+            "h": 0,
+            "l": 15,
+            "sp": 65478,
+            "pc": 41586,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": true
+            }
+          },
+          "output": {
+            "a": 255,
+            "b": 29,
+            "c": 10,
+            "d": 0,
+            "e": 0,
+            "h": 255,
+            "l": 238,
+            "sp": 65480,
+            "pc": 37096,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "call_step": 427207,
+          "return_step": 428594
+        },
+        {
+          "callsite": 28413,
+          "target": "PLI2.OVL+8357",
+          "input": {
+            "a": 128,
+            "b": 29,
+            "c": 10,
+            "d": 173,
+            "e": 162,
+            "h": 255,
+            "l": 238,
+            "sp": 65478,
+            "pc": 42327,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 0,
+            "b": 29,
+            "c": 10,
+            "d": 173,
+            "e": 163,
+            "h": 0,
+            "l": 0,
+            "sp": 65480,
+            "pc": 37120,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "call_step": 428600,
+          "return_step": 428612
+        },
+        {
+          "callsite": 28418,
+          "target": "PLI.COM+1A29",
+          "input": {
+            "a": 0,
+            "b": 29,
+            "c": 10,
+            "d": 173,
+            "e": 163,
+            "h": 0,
+            "l": 0,
+            "sp": 65478,
+            "pc": 6953,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 0,
+            "b": 29,
+            "c": 10,
+            "d": 0,
+            "e": 0,
+            "h": 0,
+            "l": 0,
+            "sp": 65480,
+            "pc": 37125,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "call_step": 428614,
+          "return_step": 428623
+        },
+        {
+          "callsite": 28437,
+          "target": "PLI2.OVL+8248",
+          "input": {
+            "a": 0,
+            "b": 143,
+            "c": 110,
+            "d": 0,
+            "e": 0,
+            "h": 0,
+            "l": 0,
+            "sp": 65478,
+            "pc": 42056,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "output": {
+            "a": 4,
+            "b": 29,
+            "c": 10,
+            "d": 0,
+            "e": 8,
+            "h": 173,
+            "l": 236,
+            "sp": 65480,
+            "pc": 37144,
+            "flags": {
+              "sign": true,
+              "zero": false,
+              "auxiliary_carry": false,
+              "parity": true,
+              "carry": true
+            }
+          },
+          "call_step": 428627,
+          "return_step": 433571
+        }
+      ]
+    }
+  ]
+}
