@@ -1,0 +1,687 @@
+{
+  "task": "PLI2_CARRIER_GENERATION_7E05_PASS_60",
+  "baseline": "a3ca60c886833e1bdae92e1334504c9acd5fabd8",
+  "boundary": {
+    "selected": "PLI2.OVL+7E05",
+    "extent": [
+      32261,
+      32470
+    ],
+    "early_returns": [
+      32332,
+      32351,
+      32370,
+      32434
+    ],
+    "helpers": {
+      "7DC3": [
+        32195,
+        32228
+      ],
+      "7DE4": [
+        32228,
+        32261
+      ]
+    },
+    "overlapping_entries": "No natural overlapping CALL targets in selected body.",
+    "immediate_callers": "3E71/33E9 belong to1FB5 stack-local table/PCHL compiler dispatch;6722 belongs to6704 with665B/059E preparation. Separate compiler operations;not widened.",
+    "next": "Investigate remaining73D0 callers742A/825E/82BA andtheirvalidparententries;keepremainingserializer82A6/82E1/82F0 lifecycles distinct.",
+    "unsupported": "Coutside0..7,pending/emissionchildunsupportedstates,201Dnonclear,positionwrap,writererrors,code/stack/sentinelaliases;noarbitraryglobalcarriermeaning."
+  },
+  "laws": {
+    "PLI2.OVL+7E05": {
+      "end": 32470,
+      "description": "Gated indexed carrier reuse/search or publication with field emission",
+      "contract": "Bounded C0..7,Ebyte. Save E atAE37 thenC atAE36;paired freshAE36,C=L canonical7AE4. FreshC SUI6/ADIFF/SBB A produces FF iffC!=6. ANA freshADAA;PUSH PSW;fresh202B,CMA;POP B,MOV C,B,ANA C,RAR:CY=(C!=6)&ADAA.bit0&!202B.bit0. Clear gate enterspublication. Set gate:pairedfreshC zeroextend,ADAB+C,DAD,MOV A,M,RAR testsactivity. Active:independentfreshC zeroextend,ADB3+C,read/storebyteAE38;freshE CMP;equalRET7E4C. FreshAE38 INR/CMPfreshE,equalcanonical7DC3 RET7E5F. IndependentfreshAE38 DCR/CMPfreshE,equalcanonical7DE4 RET7E72. Otherwise search:AE39=0;freshindex bounded0..7;activity RAR thenindex6 exclusion thenfreshADB3[index] comparedagainstfreshAE37. Match pairedfreshC andpairedfreshindex=>DE,canonical793C RET7EB2. Failedcandidate publishesINR AE39,loops;index8 enterspublication. Final pairedfreshC=>C;independentpairedfreshE=>DE canonical7314;pairedfreshC=>DE,C6 canonical75CE;independentpairedfreshE=>C canonical75A7;RET7ED5. Freshreads,flags,PUSH/POP carriers,orderedwrites andcalltraffic retained. Natural14roots gateclear;other routes STATIC UNOBSERVED independently comparedwithhistoricalCPU syntheticstates. Successfulwriter,201Dclear,nonwrapposition,currentpendingchildren,code/stack/sentinel nonalias required. Boundsstable;localCFGcomplete;contractpartial.",
+      "completeness": [
+        "stable",
+        "complete",
+        "partial"
+      ]
+    },
+    "PLI2.OVL+7DC3": {
+      "end": 32228,
+      "description": "Saved indexed carrier emission then conditional value increment",
+      "contract": "C0..7. SaveC AE34;pairedfreshAE34/35=>DE,C4 canonical75CE. FreshAE34 CPI6;equalRET7DD8. OtherwiseindependentpairedAE34,zeroextendL,BCADB3,DAD;INRfreshM publishesat7DE2;RET7DE3. Modulo8bitincrement,NZPA fromINR,CY fromDAD. Naturalprimaryzero;STATIC UNOBSERVED,synthetic parentplusrelations independentlyCPU-shadowed. C6literalreturnstatic;partialchildren/output/nonalias scope.",
+      "completeness": [
+        "stable",
+        "complete",
+        "partial"
+      ]
+    },
+    "PLI2.OVL+7DE4": {
+      "end": 32261,
+      "description": "Saved indexed carrier emission then conditional value decrement",
+      "contract": "C0..7. SaveC AE35;pairedfreshAE35/36=>DE,C5 canonical75CE. FreshAE35 CPI6;equalRET7DF9. OtherwiseindependentpairedAE35,zeroextendL,BCADB3,DAD;DCRfreshM publishesat7E03;RET7E04. Modulo8bitdecrement,NZPA fromDCR,CY fromDAD. Naturalprimaryzero;STATIC UNOBSERVED,synthetic parentminusrelations independentlyCPU-shadowed. C6literalreturnstatic;partialchildren/output/nonalias scope.",
+      "completeness": [
+        "stable",
+        "complete",
+        "partial"
+      ]
+    }
+  },
+  "inventory": {
+    "MINIMAL": {
+      "PLI2.OVL+7E05": {
+        "calls": 2,
+        "callers": {
+          "PLI2.OVL+3E71": 1,
+          "PLI2.OVL+6722": 1
+        },
+        "pairs": {
+          "07/01": 1,
+          "07/07": 1
+        },
+        "returns": {
+          "PLI2.OVL+7ED5": 2
+        },
+        "children": {
+          "PLI2.OVL+7AE4/PLI2.OVL+7314/PLI2.OVL+75CE/PLI2.OVL+75A7": 2
+        }
+      },
+      "PLI2.OVL+7DC3": {
+        "calls": 0,
+        "callers": {},
+        "pairs": {},
+        "returns": {},
+        "children": {}
+      },
+      "PLI2.OVL+7DE4": {
+        "calls": 0,
+        "callers": {},
+        "pairs": {},
+        "returns": {},
+        "children": {}
+      }
+    },
+    "FIZZBUZ": {
+      "PLI2.OVL+7E05": {
+        "calls": 11,
+        "callers": {
+          "PLI2.OVL+3E71": 7,
+          "PLI2.OVL+6722": 3,
+          "PLI2.OVL+33E9": 1
+        },
+        "pairs": {
+          "07/0F": 1,
+          "07/01": 4,
+          "07/08": 1,
+          "07/03": 1,
+          "07/04": 2,
+          "07/05": 1,
+          "07/09": 1
+        },
+        "returns": {
+          "PLI2.OVL+7ED5": 11
+        },
+        "children": {
+          "PLI2.OVL+7AE4/PLI2.OVL+7314/PLI2.OVL+75CE/PLI2.OVL+75A7": 11
+        }
+      },
+      "PLI2.OVL+7DC3": {
+        "calls": 0,
+        "callers": {},
+        "pairs": {},
+        "returns": {},
+        "children": {}
+      },
+      "PLI2.OVL+7DE4": {
+        "calls": 0,
+        "callers": {},
+        "pairs": {},
+        "returns": {},
+        "children": {}
+      }
+    },
+    "PICTURE": {
+      "PLI2.OVL+7E05": {
+        "calls": 1,
+        "callers": {
+          "PLI2.OVL+33E9": 1
+        },
+        "pairs": {
+          "07/09": 1
+        },
+        "returns": {
+          "PLI2.OVL+7ED5": 1
+        },
+        "children": {
+          "PLI2.OVL+7AE4/PLI2.OVL+7314/PLI2.OVL+75CE/PLI2.OVL+75A7": 1
+        }
+      },
+      "PLI2.OVL+7DC3": {
+        "calls": 0,
+        "callers": {},
+        "pairs": {},
+        "returns": {},
+        "children": {}
+      },
+      "PLI2.OVL+7DE4": {
+        "calls": 0,
+        "callers": {},
+        "pairs": {},
+        "returns": {},
+        "children": {}
+      }
+    }
+  },
+  "routes": {
+    "MINIMAL": {
+      "natural_gate_clear": 2,
+      "natural_direct": 0,
+      "natural_search": 0,
+      "natural_search_iterations": {
+        "0": 2
+      },
+      "natural_ADAA": {
+        "0": 2
+      },
+      "natural_202B": {
+        "0": 2
+      },
+      "pairs": {
+        "07/01": 1,
+        "07/07": 1
+      }
+    },
+    "FIZZBUZ": {
+      "natural_gate_clear": 11,
+      "natural_direct": 0,
+      "natural_search": 0,
+      "natural_search_iterations": {
+        "0": 11
+      },
+      "natural_ADAA": {
+        "0": 11
+      },
+      "natural_202B": {
+        "0": 11
+      },
+      "pairs": {
+        "07/0F": 1,
+        "07/01": 4,
+        "07/08": 1,
+        "07/03": 1,
+        "07/04": 2,
+        "07/05": 1,
+        "07/09": 1
+      }
+    },
+    "PICTURE": {
+      "natural_gate_clear": 1,
+      "natural_direct": 0,
+      "natural_search": 0,
+      "natural_search_iterations": {
+        "0": 1
+      },
+      "natural_ADAA": {
+        "0": 1
+      },
+      "natural_202B": {
+        "0": 1
+      },
+      "pairs": {
+        "07/09": 1
+      }
+    }
+  },
+  "cross": {
+    "FACTOR": {
+      "PLI2.OVL+7E05": {
+        "calls": 2,
+        "pairs": {
+          "07/01": 1,
+          "07/09": 1
+        },
+        "proof_hash": "0259970c29c12857206a641b32436f60a184da09b253ab84095e57aec1f608c1"
+      },
+      "PLI2.OVL+7DC3": {
+        "calls": 0,
+        "pairs": {},
+        "proof_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "PLI2.OVL+7DE4": {
+        "calls": 0,
+        "pairs": {},
+        "proof_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      }
+    },
+    "OPTIMIST": "No new trace campaign;prior durable totals retained."
+  },
+  "topology": {
+    "MINIMAL": {
+      "logical": 2,
+      "external": 2,
+      "callers": {
+        "PLI2.OVL+3E71": 1,
+        "PLI2.OVL+6722": 1
+      },
+      "absorbed": {
+        "PLI2.OVL+7AE4": 2,
+        "PLI2.OVL+75CE": 2,
+        "PLI2.OVL+75A7": 2
+      },
+      "net_host_delta": -4,
+      "remaining": {
+        "PLI2.OVL+7314": {
+          "calls": 6,
+          "callers": {
+            "PLI2.OVL+7352": 3,
+            "PLI2.OVL+7361": 3
+          }
+        },
+        "PLI2.OVL+7365": {
+          "calls": 0,
+          "callers": {}
+        },
+        "PLI2.OVL+7AE4": {
+          "calls": 0,
+          "callers": {}
+        },
+        "PLI2.OVL+793C": {
+          "calls": 0,
+          "callers": {}
+        },
+        "PLI2.OVL+7E05": {
+          "calls": 0,
+          "callers": {}
+        },
+        "PLI2.OVL+73D0": {
+          "calls": 5,
+          "callers": {
+            "PLI2.OVL+82BA": 1,
+            "PLI2.OVL+742A": 3,
+            "PLI2.OVL+825E": 1
+          }
+        },
+        "PLI.COM+119E": {
+          "calls": 36,
+          "callers": {
+            "PLI0.OVL+188F": 1,
+            "PLI0.OVL+1993": 4,
+            "PLI0.OVL+19A5": 24,
+            "PLI0.OVL+189E": 1,
+            "PLI0.OVL+18AD": 1,
+            "PLI0.OVL+18BC": 1,
+            "PLI2.OVL+82A6": 1,
+            "PLI2.OVL+82E1": 1,
+            "PLI2.OVL+82F0": 1,
+            "PLI.COM+126E": 1
+          }
+        }
+      },
+      "logical_internal": {
+        "PLI2.OVL+7AE4": 2,
+        "PLI2.OVL+7AC4": 2,
+        "PLI2.OVL+79E2": 2,
+        "PLI2.OVL+7AD4": 2,
+        "PLI2.OVL+7314": 2,
+        "PLI2.OVL+75CE": 2,
+        "PLI2.OVL+746F": 2,
+        "PLI2.OVL+74C7": 2,
+        "PLI2.OVL+7557": 2,
+        "PLI.COM+1140": 36,
+        "PLI.COM+119E": 4,
+        "PLI2.OVL+753C": 4,
+        "PLI.COM+1A29": 4,
+        "PLI2.OVL+75A7": 2
+      }
+    },
+    "FIZZBUZ": {
+      "logical": 11,
+      "external": 11,
+      "callers": {
+        "PLI2.OVL+3E71": 7,
+        "PLI2.OVL+6722": 3,
+        "PLI2.OVL+33E9": 1
+      },
+      "absorbed": {
+        "PLI2.OVL+7AE4": 11,
+        "PLI2.OVL+75CE": 11,
+        "PLI2.OVL+75A7": 11
+      },
+      "net_host_delta": -22,
+      "remaining": {
+        "PLI2.OVL+7314": {
+          "calls": 22,
+          "callers": {
+            "PLI2.OVL+7352": 11,
+            "PLI2.OVL+7361": 11
+          }
+        },
+        "PLI2.OVL+7365": {
+          "calls": 0,
+          "callers": {}
+        },
+        "PLI2.OVL+7AE4": {
+          "calls": 0,
+          "callers": {}
+        },
+        "PLI2.OVL+793C": {
+          "calls": 0,
+          "callers": {}
+        },
+        "PLI2.OVL+7E05": {
+          "calls": 0,
+          "callers": {}
+        },
+        "PLI2.OVL+73D0": {
+          "calls": 26,
+          "callers": {
+            "PLI2.OVL+82BA": 1,
+            "PLI2.OVL+742A": 14,
+            "PLI2.OVL+825E": 11
+          }
+        },
+        "PLI.COM+119E": {
+          "calls": 36,
+          "callers": {
+            "PLI0.OVL+188F": 1,
+            "PLI0.OVL+1993": 4,
+            "PLI0.OVL+19A5": 24,
+            "PLI0.OVL+189E": 1,
+            "PLI0.OVL+18AD": 1,
+            "PLI0.OVL+18BC": 1,
+            "PLI2.OVL+82A6": 1,
+            "PLI2.OVL+82E1": 1,
+            "PLI2.OVL+82F0": 1,
+            "PLI.COM+126E": 1
+          }
+        }
+      },
+      "logical_internal": {
+        "PLI2.OVL+7AE4": 11,
+        "PLI2.OVL+7AC4": 11,
+        "PLI2.OVL+79E2": 11,
+        "PLI2.OVL+7AD4": 11,
+        "PLI2.OVL+7314": 11,
+        "PLI2.OVL+75CE": 11,
+        "PLI2.OVL+746F": 11,
+        "PLI2.OVL+74C7": 11,
+        "PLI2.OVL+7557": 11,
+        "PLI.COM+1140": 198,
+        "PLI.COM+119E": 22,
+        "PLI2.OVL+753C": 22,
+        "PLI.COM+1A29": 22,
+        "PLI2.OVL+75A7": 11
+      }
+    },
+    "PICTURE": {
+      "logical": 1,
+      "external": 1,
+      "callers": {
+        "PLI2.OVL+33E9": 1
+      },
+      "absorbed": {
+        "PLI2.OVL+7AE4": 1,
+        "PLI2.OVL+75CE": 1,
+        "PLI2.OVL+75A7": 1
+      },
+      "net_host_delta": -2,
+      "remaining": {
+        "PLI2.OVL+7314": {
+          "calls": 8,
+          "callers": {
+            "PLI2.OVL+7352": 4,
+            "PLI2.OVL+7361": 4
+          }
+        },
+        "PLI2.OVL+7365": {
+          "calls": 16,
+          "callers": {
+            "PLI2.OVL+7FBA": 1,
+            "PLI2.OVL+7FD9": 1,
+            "PLI2.OVL+8015": 7,
+            "PLI2.OVL+802B": 7
+          }
+        },
+        "PLI2.OVL+7AE4": {
+          "calls": 0,
+          "callers": {}
+        },
+        "PLI2.OVL+793C": {
+          "calls": 0,
+          "callers": {}
+        },
+        "PLI2.OVL+7E05": {
+          "calls": 0,
+          "callers": {}
+        },
+        "PLI2.OVL+73D0": {
+          "calls": 5,
+          "callers": {
+            "PLI2.OVL+82BA": 1,
+            "PLI2.OVL+742A": 3,
+            "PLI2.OVL+825E": 1
+          }
+        },
+        "PLI.COM+119E": {
+          "calls": 43,
+          "callers": {
+            "PLI0.OVL+188F": 1,
+            "PLI0.OVL+1993": 4,
+            "PLI0.OVL+19A5": 24,
+            "PLI0.OVL+189E": 1,
+            "PLI0.OVL+18AD": 1,
+            "PLI0.OVL+18BC": 1,
+            "PLI0.OVL+3D33": 1,
+            "PLI0.OVL+3D4E": 6,
+            "PLI2.OVL+82A6": 1,
+            "PLI2.OVL+82E1": 1,
+            "PLI2.OVL+82F0": 1,
+            "PLI.COM+126E": 1
+          }
+        }
+      },
+      "logical_internal": {
+        "PLI2.OVL+7AE4": 1,
+        "PLI2.OVL+7AC4": 1,
+        "PLI2.OVL+79E2": 1,
+        "PLI2.OVL+7AD4": 1,
+        "PLI2.OVL+7314": 1,
+        "PLI2.OVL+75CE": 1,
+        "PLI2.OVL+746F": 1,
+        "PLI2.OVL+74C7": 1,
+        "PLI2.OVL+7557": 1,
+        "PLI.COM+1140": 18,
+        "PLI.COM+119E": 2,
+        "PLI2.OVL+753C": 2,
+        "PLI.COM+1A29": 2,
+        "PLI2.OVL+75A7": 1
+      }
+    }
+  },
+  "proofs": [
+    {
+      "source": "MINIMAL",
+      "entries": [
+        {
+          "coordinate": "PLI2.OVL+7E05",
+          "cases": 2,
+          "proof_hash": "40f53aae4e696d29cd5f5f3824484870004bdf9c31ad25afb7676a82f0dc9918"
+        },
+        {
+          "coordinate": "PLI2.OVL+7314",
+          "cases": 8,
+          "proof_hash": "e3c536f03ae204985c2c5a5bf586ca19a677e5ef16b12c09cf97402da7d836fb"
+        },
+        {
+          "coordinate": "PLI2.OVL+7AE4",
+          "cases": 2,
+          "proof_hash": "4332e2bd90d2cf3e68f226a2708d750d1e797e2d16fee37ed1ca3369452cef1b"
+        },
+        {
+          "coordinate": "PLI2.OVL+75CE",
+          "cases": 6,
+          "proof_hash": "8b516ed8abb0215a0fe4e194717a7cddb17ed08560aa1132d400d6db1ea1810f"
+        },
+        {
+          "coordinate": "PLI2.OVL+75A7",
+          "cases": 2,
+          "proof_hash": "18017681de6660a1d48491029b73c7c92cdb30d4cc14abe66b2589e6259dd645"
+        },
+        {
+          "coordinate": "PLI2.OVL+7DC3",
+          "cases": 0,
+          "proof_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "coordinate": "PLI2.OVL+7DE4",
+          "cases": 0,
+          "proof_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        }
+      ]
+    },
+    {
+      "source": "FIZZBUZ",
+      "entries": [
+        {
+          "coordinate": "PLI2.OVL+7E05",
+          "cases": 11,
+          "proof_hash": "6bc871438748a098dab4c7d565dee410740e73e5351afd928178e1c60e08412b"
+        },
+        {
+          "coordinate": "PLI2.OVL+7314",
+          "cases": 33,
+          "proof_hash": "a9b54b549546d1888b7f5f7c4960a20f2c3917d47444fc0f8f732434b70f2764"
+        },
+        {
+          "coordinate": "PLI2.OVL+7AE4",
+          "cases": 21,
+          "proof_hash": "8528d3fb6d5ef672e3e8c5c51d0cb10384de36289a94ff71af0ec38dd44e3115"
+        },
+        {
+          "coordinate": "PLI2.OVL+75CE",
+          "cases": 33,
+          "proof_hash": "a82045ecec51c48799fd3767d231c2a59b4b773503a8f7812554061f066c4825"
+        },
+        {
+          "coordinate": "PLI2.OVL+75A7",
+          "cases": 11,
+          "proof_hash": "905a4c4cdc1cc5b792877ed138fb49e26ba67be4376b14d7a63971ff714ac973"
+        },
+        {
+          "coordinate": "PLI2.OVL+7DC3",
+          "cases": 0,
+          "proof_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "coordinate": "PLI2.OVL+7DE4",
+          "cases": 0,
+          "proof_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        }
+      ]
+    },
+    {
+      "source": "PICTURE",
+      "entries": [
+        {
+          "coordinate": "PLI2.OVL+7E05",
+          "cases": 1,
+          "proof_hash": "0813050656874d5cb9ba3036dc937f43d562c48b533c0892fe43a2c85e515995"
+        },
+        {
+          "coordinate": "PLI2.OVL+7314",
+          "cases": 9,
+          "proof_hash": "2bce818ab1d1c5f7420939eedd785e9f97a46df8a1dae05cff68fb08e4f32e92"
+        },
+        {
+          "coordinate": "PLI2.OVL+7AE4",
+          "cases": 1,
+          "proof_hash": "17c86fae1e8fa6f474927b60a481828f8213ce984f4a6e0e11d4da07366e7669"
+        },
+        {
+          "coordinate": "PLI2.OVL+75CE",
+          "cases": 6,
+          "proof_hash": "3e614818b0b7970ef7901e21f0a7c7fdc5bd6a8a26753500bd5f38b9f434b9e4"
+        },
+        {
+          "coordinate": "PLI2.OVL+75A7",
+          "cases": 1,
+          "proof_hash": "fc8f13b618a8606aec46846ad528186d56cf021efe3c109445414837231c0530"
+        },
+        {
+          "coordinate": "PLI2.OVL+7DC3",
+          "cases": 0,
+          "proof_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "coordinate": "PLI2.OVL+7DE4",
+          "cases": 0,
+          "proof_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        }
+      ]
+    }
+  ],
+  "checkpoint_hashes": {
+    "MINIMAL": "755811e9fa7430b77e2a6e0a527b4509564d8f4022423db06c0dbb6a11180f62",
+    "FIZZBUZ": "f5cf840a99749e8d30d826651c8e9e21a7c5f891d514b6a95dbc704614307687",
+    "PICTURE": "1f4fd3a3ed56c940f4ed7c023cc27bb86a66f68fd968e2cf7c5944af5f52f482"
+  },
+  "promotions": {
+    "RAW": 275
+  },
+  "evidence_classes": {
+    "observed": 65,
+    "static": 210
+  },
+  "canonical_children": {
+    "PLI2.OVL+7AE4": {
+      "contract_hash": "c3cfbb837b7a0b8eb575712bf7b2dc43c445f11f951161ae38cd7c1d9bcbf896",
+      "completeness": {
+        "bounds": "stable",
+        "control_flow": "complete",
+        "contract": "partial"
+      }
+    },
+    "PLI2.OVL+7314": {
+      "contract_hash": "11f1abbba302af50c42cdbd2e5d2040d3ecffec3a48e96e10e0e22d13b0ce49d",
+      "completeness": {
+        "bounds": "stable",
+        "control_flow": "complete",
+        "contract": "partial"
+      }
+    },
+    "PLI2.OVL+793C": {
+      "contract_hash": "5e55c965632731cf0f65759d5c9ed59aeebf3bd600cbe29f05069b8b947fd650",
+      "completeness": {
+        "bounds": "stable",
+        "control_flow": "complete",
+        "contract": "partial"
+      }
+    },
+    "PLI2.OVL+75CE": {
+      "contract_hash": "1d4d93a623e6ad5ca1f1165253b37287663e2fd2d8e5861f53f6084b79a73bcf",
+      "completeness": {
+        "bounds": "stable",
+        "control_flow": "complete",
+        "contract": "partial"
+      }
+    },
+    "PLI2.OVL+75A7": {
+      "contract_hash": "16f360c36902795516495996ebbbfcae5734080f0ef69457d2b8675ca9754d3a",
+      "completeness": {
+        "bounds": "stable",
+        "control_flow": "partial",
+        "contract": "partial"
+      }
+    },
+    "PLI.COM+119E": {
+      "contract_hash": "1d2e7ccc485f38fc13d48e57bd128e1288398c5242784cb07f92172e8a0256d1",
+      "completeness": {
+        "bounds": "stable",
+        "control_flow": "complete",
+        "contract": "partial"
+      }
+    },
+    "PLI.COM+1140": {
+      "contract_hash": "d24042cb70146e7ad2ac123b354691b4a39e717ad515174b6963aab89a813a90",
+      "completeness": {
+        "bounds": "provisional",
+        "control_flow": "partial",
+        "contract": "partial"
+      }
+    }
+  },
+  "oracle_queries": 0
+}

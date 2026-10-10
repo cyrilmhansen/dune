@@ -433,6 +433,43 @@ let run operation memory ~entry ~write ~compatibility ~adjust ~sp ~guard_field ~
   hl 0xadc3;put 0x73aa !q.hl(!q.bc land 255);a(read 0xadc3);cmp 6;
   need(not !q.flags.zero)"73A7 index6 early return unobserved";
   if not !q.flags.zero then(pair 0xadc3;c(!q.hl land 255);call 0x73b8 0x7397(fun()->pli2_output 0x7397);a(read 0xadc3);a(inc !q.a);c !q.a;call 0x73c0 0x7397(fun()->pli2_output 0x7397))
+ |0x7dc3|0x7de4->
+  need(!q.bc land 255<8)"carrier adjustment bounded index";
+  let first,cell,tag,site,write=if offset=0x7dc3 then 0x7dc3,0xae34,4,0x7dcd,0x7de2 else 0x7de4,0xae35,5,0x7dee,0x7e03 in
+  hl cell;put(first+3)!q.hl(!q.bc land 255);pair cell;exchange();c tag;call site 0x75ce(fun()->pli2_output 0x75ce);
+  a(read cell);cmp 6;if not !q.flags.zero then(pair cell;hl(!q.hl land 255);bc 0xadb3;dad !q.bc;
+   let value=(if offset=0x7dc3 then inc else dec)(read !q.hl)in put write !q.hl value)
+ |0x7e05->
+  need(!q.bc land 255<8)"7E05 bounded destination carrier";
+  hl 0xae37;put 0x7e08 !q.hl(!q.de land 255);hl(!q.hl-1);put 0x7e0a !q.hl(!q.bc land 255);
+  pair 0xae36;c(!q.hl land 255);call 0x7e0f 0x7ae4(fun()->pli2_output 0x7ae4);
+  a(read 0xae36);sub 6;add 255;mask();hl 0xadaa;logical true(read !q.hl);save 0x7e1e;
+  a(read 0x202b);a(!q.a lxor 255);bc(pop());c(!q.bc lsr 8);logical true(!q.bc land 255);rar();
+  let final()=
+   pair 0xae36;c(!q.hl land 255);pair 0xae37;exchange();call 0x7ec2 0x7314(fun()->pli2_output 0x7314);
+   pair 0xae36;exchange();c 6;call 0x7ecb 0x75ce(fun()->pli2_output 0x75ce);
+   pair 0xae37;c(!q.hl land 255);call 0x7ed2 0x75a7(fun()->pli2_output 0x75a7)in
+  let search()=
+   hl 0xae39;put 0x7e76 !q.hl 0;
+   let rec scan()=
+    a 7;hl 0xae39;cmp(read !q.hl);
+    if !q.flags.carry then final()else(
+     pair 0xae39;hl(!q.hl land 255);bc 0xadab;dad !q.bc;a(read !q.hl);rar();
+     let match_carrier=if not !q.flags.carry then false else(
+      a(read 0xae39);cmp 6;if !q.flags.zero then false else(
+       pair 0xae39;hl(!q.hl land 255);bc 0xadb3;dad !q.bc;a(read 0xae37);cmp(read !q.hl);!q.flags.zero))in
+     if match_carrier then(pair 0xae36;c(!q.hl land 255);pair 0xae39;exchange();call 0x7eaf 0x793c(fun()->pli2_output 0x793c))
+     else(hl 0xae39;let value=inc(read !q.hl)in put 0x7eb6 !q.hl value;if not !q.flags.zero then scan()else final()))in scan()in
+  if not !q.flags.carry then final()else(
+   pair 0xae36;hl(!q.hl land 255);bc 0xadab;dad !q.bc;a(read !q.hl);rar();
+   if not !q.flags.carry then search()else(
+    pair 0xae36;hl(!q.hl land 255);bc 0xadb3;dad !q.bc;a(read !q.hl);put 0x7e42 0xae38 !q.a;
+    hl 0xae37;cmp(read !q.hl);
+    if not !q.flags.zero then(
+     a(read 0xae38);a(inc !q.a);hl 0xae37;cmp(read !q.hl);
+     if !q.flags.zero then(pair 0xae36;c(!q.hl land 255);call 0x7e5c 0x7dc3(fun()->pli2_output 0x7dc3))
+     else(a(read 0xae38);a(dec !q.a);hl 0xae37;cmp(read !q.hl);
+      if !q.flags.zero then(pair 0xae36;c(!q.hl land 255);call 0x7e6f 0x7de4(fun()->pli2_output 0x7de4))else search()))))
  |0x7314->
   need(!q.bc land 255<8)"7314 bounded carrier index";
   hl 0xadbc;put 0x7317 !q.hl(!q.de land 255);hl(!q.hl-1);put 0x7319 !q.hl(!q.bc land 255);

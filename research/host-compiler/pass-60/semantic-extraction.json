@@ -1,0 +1,39 @@
+{
+  "historical_root": "PLI2.OVL+7E05",
+  "semantic_inputs": [
+    "destinationcarrierC",
+    "relationbyteE",
+    "globalpresent/gatebytes",
+    "indexedactivityandvaluebytes",
+    "bufferedoutputposition"
+  ],
+  "semantic_outputs": [
+    "existingrelationmayreturnwithoutemission",
+    "adjacentrelationmayadjustvalueandemit",
+    "matchingindexmaytransferstateandemit",
+    "otherwisepublishindexedrelationandemitfields"
+  ],
+  "shared_historical_state": [
+    "AE36/37/38/39 andpairedadjacentreads",
+    "ADAA/202B",
+    "ADAB/ADB3",
+    "AE34/35 adjustmentscratch",
+    "canonicalchildscratchandoutputbuffers/position"
+  ],
+  "historical_mechanism": [
+    "SUI/ADI/SBB mask",
+    "PUSH PSW/POP B masktransport",
+    "ANA/CMA/RAR gates",
+    "zeroextendedindexedaddresses",
+    "freshscanactivitythenindex6exclusionthenvalue",
+    "separatecanonical7314/793C/emissionchildren",
+    "exactflagsandCALL/PUSHresidue"
+  ],
+  "candidate_modern_operation": "Reuse, adjust, transfer or publish indexed carrier relations and emit representation",
+  "confidence": {
+    "publication": "OBSERVED primaryandFACTOR",
+    "alternatives": "DEDUCED STATIC UNOBSERVED / independentCPU synthetic",
+    "modern_name": "HYPOTHESIS"
+  },
+  "mir_relevance": "Documentationonly;no MIR interface,no faithful-code refactor."
+}

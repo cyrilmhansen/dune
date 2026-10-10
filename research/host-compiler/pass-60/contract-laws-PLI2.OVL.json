@@ -1,0 +1,32 @@
+{
+  "PLI2.OVL+7E05": {
+    "end": 32470,
+    "description": "Gated indexed carrier reuse/search or publication with field emission",
+    "contract": "Bounded C0..7,Ebyte. Save E atAE37 thenC atAE36;paired freshAE36,C=L canonical7AE4. FreshC SUI6/ADIFF/SBB A produces FF iffC!=6. ANA freshADAA;PUSH PSW;fresh202B,CMA;POP B,MOV C,B,ANA C,RAR:CY=(C!=6)&ADAA.bit0&!202B.bit0. Clear gate enterspublication. Set gate:pairedfreshC zeroextend,ADAB+C,DAD,MOV A,M,RAR testsactivity. Active:independentfreshC zeroextend,ADB3+C,read/storebyteAE38;freshE CMP;equalRET7E4C. FreshAE38 INR/CMPfreshE,equalcanonical7DC3 RET7E5F. IndependentfreshAE38 DCR/CMPfreshE,equalcanonical7DE4 RET7E72. Otherwise search:AE39=0;freshindex bounded0..7;activity RAR thenindex6 exclusion thenfreshADB3[index] comparedagainstfreshAE37. Match pairedfreshC andpairedfreshindex=>DE,canonical793C RET7EB2. Failedcandidate publishesINR AE39,loops;index8 enterspublication. Final pairedfreshC=>C;independentpairedfreshE=>DE canonical7314;pairedfreshC=>DE,C6 canonical75CE;independentpairedfreshE=>C canonical75A7;RET7ED5. Freshreads,flags,PUSH/POP carriers,orderedwrites andcalltraffic retained. Natural14roots gateclear;other routes STATIC UNOBSERVED independently comparedwithhistoricalCPU syntheticstates. Successfulwriter,201Dclear,nonwrapposition,currentpendingchildren,code/stack/sentinel nonalias required. Boundsstable;localCFGcomplete;contractpartial.",
+    "completeness": [
+      "stable",
+      "complete",
+      "partial"
+    ]
+  },
+  "PLI2.OVL+7DC3": {
+    "end": 32228,
+    "description": "Saved indexed carrier emission then conditional value increment",
+    "contract": "C0..7. SaveC AE34;pairedfreshAE34/35=>DE,C4 canonical75CE. FreshAE34 CPI6;equalRET7DD8. OtherwiseindependentpairedAE34,zeroextendL,BCADB3,DAD;INRfreshM publishesat7DE2;RET7DE3. Modulo8bitincrement,NZPA fromINR,CY fromDAD. Naturalprimaryzero;STATIC UNOBSERVED,synthetic parentplusrelations independentlyCPU-shadowed. C6literalreturnstatic;partialchildren/output/nonalias scope.",
+    "completeness": [
+      "stable",
+      "complete",
+      "partial"
+    ]
+  },
+  "PLI2.OVL+7DE4": {
+    "end": 32261,
+    "description": "Saved indexed carrier emission then conditional value decrement",
+    "contract": "C0..7. SaveC AE35;pairedfreshAE35/36=>DE,C5 canonical75CE. FreshAE35 CPI6;equalRET7DF9. OtherwiseindependentpairedAE35,zeroextendL,BCADB3,DAD;DCRfreshM publishesat7E03;RET7E04. Modulo8bitdecrement,NZPA fromDCR,CY fromDAD. Naturalprimaryzero;STATIC UNOBSERVED,synthetic parentminusrelations independentlyCPU-shadowed. C6literalreturnstatic;partialchildren/output/nonalias scope.",
+    "completeness": [
+      "stable",
+      "complete",
+      "partial"
+    ]
+  }
+}
