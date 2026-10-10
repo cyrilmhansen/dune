@@ -428,6 +428,14 @@ let run operation memory ~entry ~write ~compatibility ~adjust ~sp ~guard_field ~
     hl 0xadc4;let value=inc(read !q.hl)in put 0x73f9 !q.hl value;if not !q.flags.zero then clear())in clear())in
  let rec pli2_output offset=match offset with
  |0x79e2->preparation79e2()|0x73d0->reset73d0()
+ |0x829c->
+  (* Source acquisition precedes the header; the payload pointer is freshly
+     reread after the canonical serializer, not retained from entry. *)
+  pair 0xaca3;store 0x829f 0xac9f !q.hl;
+  e 7;c 0x94;resident 0x82a6 0x119e bits_write;
+  pair 0xac9f;hl(U.wrap(!q.hl+1));hl(U.wrap(!q.hl+1));c(read !q.hl);
+  hl(U.wrap(!q.hl+1));bc((read !q.hl lsl 8)lor(!q.bc land 255));
+  resident 0x82b1 0x11c3(fun()->word_bits ~entry:0x11c3())
  |0x7338->
   need(!q.bc land 255<=6)"7338 both publication indices bounded or C6 early return";
   hl 0xadbf;put 0x733b !q.hl(!q.de lsr 8);hl(!q.hl-1);put 0x733d !q.hl(!q.de land 255);hl(!q.hl-1);put 0x733f !q.hl(!q.bc land 255);

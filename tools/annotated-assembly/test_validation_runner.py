@@ -17,7 +17,7 @@ class Profiles(unittest.TestCase):
  def test_historical_full_preserves_every_certified_category(self):
   old=json.loads((ROOT/POLICY['current_full_epoch']['receipt']).read_text())
   names=set(self.select(profile='historical-full')[1]);self.assertEqual(len(old['categories']),92)
-  self.assertTrue(set(old['categories'])<=names);self.assertEqual(names-set(old['categories']),{'validation-runner-tests'})
+  self.assertTrue(set(old['categories'])<=names);self.assertEqual(names,set(AVAILABLE));self.assertIn('validation-runner-tests',names-set(old['categories']))
  def test_plain_invocation_remains_exhaustive(self):self.assertEqual(self.select(),self.select(profile='historical-full'))
  def test_active_global_and_unit_core(self):
   names=set(self.select(profile='active')[1]);required={'build','project','baseline','V1','roundtrip','roundtrip-tests','packet-continuation','dynamic-progress','diff-check','historical-leaf-queries','validation-runner-tests'}

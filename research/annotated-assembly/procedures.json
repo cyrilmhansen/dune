@@ -46709,6 +46709,133 @@
         "7361": "push following PC; invoke PLI2.OVL+7314; child state/effects at the explicitly scoped contract",
         "7364": "consume original hardware return word; SP=entry_SP+2; preserve final path flags and registers"
       }
+    },
+    {
+      "id": "PLI2.OVL+829C",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "stable_label": "PLI2_829C",
+      "runtime_entry": 42140,
+      "start_offset": 33436,
+      "end_offset": 33461,
+      "length": 25,
+      "byte_status_at_entry": "UNDERSTOOD",
+      "description": "Structure-pointer publication and counted header/tagged payload emission",
+      "completeness": {
+        "bounds": "stable",
+        "control_flow": "complete",
+        "contract": "partial"
+      },
+      "observed_paths": {
+        "invocations_by_run": {
+          "MINIMAL": 1,
+          "FIZZBUZ": 1,
+          "PICTURE": 1,
+          "FACTOR": 1,
+          "OPTIMIST": 1
+        },
+        "represented_bytes": 25,
+        "description": "OBSERVED corrected ordinary CALL/return windows independently retained for MINIMAL/FIZZBUZ/PICTURE; union of own bytes excludes child bodies. Static authored facts, when present, are separately DEDUCED/UNOBSERVED; no natural executions fabricated."
+      },
+      "unresolved_paths": [
+        "Pointer-source/compiler structure meaning is unproved; this is a representation-level operation.",
+        "Wrapping and source/publication/code/output/stack/sentinel aliases unsupported; canonical child successful-writer scope inherited."
+      ],
+      "inputs": "Fresh word[ACA3] selects supported four-byte structure target; actual entry register/flag channels are preserved or overwritten instructionally; canonical119E/11C3 output scope inherited. Target is nonwrapping, disjoint from code/output/source/publication/stack/sentinel.",
+      "outputs": "Path-specific A/BC/DE/HL and flags as documented below and in correlated natural cases; SP=entry_SP+2; PC=original CALL continuation.",
+      "clobbers": "Path-specific A/BC/DE/HL/flags; local scratch/publications stated below; delegated child effects; proven CALL/PUSH stack residue.",
+      "memory_state": [
+        "ACA3/A4 source pointer, low then high read. AC9F/A0 publication low then high, freshly reread after header child.",
+        "Target+2 -> C then target+3 -> B; target+0/+1 are not read by this operation.",
+        "Canonical20B7/B8 counted serializer;20B9/BA tagged-word cache;REL buffer/index/bit/FCB/DMA state inherited.",
+        "Original hardware return word; childCALL and writerPSW/service residue below entrySP; no private frame."
+      ],
+      "data_role_ids": [
+        "PLI2.OVL:structure_field_source_pointer",
+        "PLI2.OVL:structure_field_pointer_publication"
+      ],
+      "callers": [
+        {
+          "coordinate": "PLI2.OVL+19A7",
+          "counts_by_run": {
+            "MINIMAL": 1,
+            "FIZZBUZ": 1,
+            "PICTURE": 1,
+            "FACTOR": 1,
+            "OPTIMIST": 1
+          }
+        }
+      ],
+      "returns": {
+        "convention": "ordinary hardware CALL word; original slot unchanged; SP after RET=entry_SP+2",
+        "observed_file_offsets": [
+          33460
+        ],
+        "sites_description": "PLI2.OVL+82B4"
+      },
+      "direct_callees": [
+        {
+          "callsite_offset": 33446,
+          "coordinate": "PLI.COM+119E",
+          "runtime_address": 4766
+        },
+        {
+          "callsite_offset": 33457,
+          "coordinate": "PLI.COM+11C3",
+          "runtime_address": 4803
+        }
+      ],
+      "overlapping_entries": [],
+      "contract_scope": "Bounded accumulated-natural routes and exact represented local operations; delegated partial/opaque children and unexecuted local arms are not silently implemented.",
+      "contract": "Fresh little-endian ACA3/A4 word -> HL; SHLD publishes L then H at AC9F/A0. E=7,C=94H; canonical119E emits bits7..1, 1001010. Fresh AC9F/A0 reread after child; INX twice modulo65536; C=fresh byte[pointer+2]; INX; B=fresh byte[pointer+3]; canonical11C3 emits tag00 then low/high bytes. Final state/flags from canonical word serializer; RET consumes original CALL. Accepted nonwrapping four-byte target domain excludes code/output/source/publication/stack/sentinel aliases and inherits child writer/error scope; general structure meaning unknown.",
+      "semantic_hypothesis": null,
+      "pseudocode": "Fresh ACA3 pointer acquisition; SHLD AC9F low then high. This is direct word copying, not a dereference at ACA3.; Literal C94,E7 invokes canonical119E: seven MSB-first rotations select bits7..1; output bit sequence1001010.; After child, independently reread AC9F. Two INX H; fresh payload low at p+2; one INX H; fresh high at p+3. Flags preserved by INX/MOV.; Canonical11C3 receives BC=payload little-endian word; tag00/low8/high8. RET82B4 preserves final canonical child register/flag channels.",
+      "evidence_refs": [
+        "evidence.json#seeds/PLI2.OVL+829C",
+        "../host-compiler/pass-63/README.md",
+        "../host-compiler/pass-63/shadow-summary.json"
+      ],
+      "blocks": [
+        {
+          "offset": 33436,
+          "pseudocode": [
+            "Fresh ACA3 pointer acquisition; SHLD AC9F low then high. This is direct word copying, not a dereference at ACA3."
+          ]
+        },
+        {
+          "offset": 33442,
+          "pseudocode": [
+            "Literal C94,E7 invokes canonical119E: seven MSB-first rotations select bits7..1; output bit sequence1001010."
+          ]
+        },
+        {
+          "offset": 33449,
+          "pseudocode": [
+            "After child, independently reread AC9F. Two INX H; fresh payload low at p+2; one INX H; fresh high at p+3. Flags preserved by INX/MOV."
+          ]
+        },
+        {
+          "offset": 33457,
+          "pseudocode": [
+            "Canonical11C3 receives BC=payload little-endian word; tag00/low8/high8. RET82B4 preserves final canonical child register/flag channels."
+          ]
+        }
+      ],
+      "local_comments": {
+        "829C": "HL=fresh little_endian_word[structure_field_source_pointer (ACA3H)]; low then high read; flags preserved",
+        "829F": "Publish L then H to structure_field_pointer_publication (AC9FH); same-valued writes retained; flags preserved",
+        "82A2": "E=07H; flags preserved",
+        "82A4": "C=94H; flags preserved",
+        "82A6": "push following PC; invoke PLI.COM+119E; child state/effects at the explicitly scoped contract",
+        "82A9": "HL=fresh little_endian_word[structure_field_pointer_publication (AC9FH)] after header child; independently reacquired low/high bytes",
+        "82AC": "H=u16(H +1); flags preserved",
+        "82AD": "H=u16(H +1); flags preserved",
+        "82AE": "C=fresh byte[HL]; flags preserved",
+        "82AF": "H=u16(H +1); flags preserved",
+        "82B0": "B=fresh byte[HL]; flags preserved",
+        "82B1": "push following PC; invoke PLI.COM+11C3; child state/effects at the explicitly scoped contract",
+        "82B4": "consume original hardware return word; SP=entry_SP+2; preserve final path flags and registers"
+      }
     }
   ]
 }

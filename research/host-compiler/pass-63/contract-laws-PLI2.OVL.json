@@ -1,0 +1,12 @@
+{
+  "PLI2.OVL+829C": {
+    "end": 33461,
+    "description": "Structure-pointer publication and counted header/tagged payload emission",
+    "completeness": [
+      "stable",
+      "complete",
+      "partial"
+    ],
+    "contract": "Fresh little-endian ACA3/A4 word -> HL; SHLD publishes L then H at AC9F/A0. E=7,C=94H; canonical119E emits bits7..1, 1001010. Fresh AC9F/A0 reread after child; INX twice modulo65536; C=fresh byte[pointer+2]; INX; B=fresh byte[pointer+3]; canonical11C3 emits tag00 then low/high bytes. Final state/flags from canonical word serializer; RET consumes original CALL. Accepted nonwrapping four-byte target domain excludes code/output/source/publication/stack/sentinel aliases and inherits child writer/error scope; general structure meaning unknown."
+  }
+}

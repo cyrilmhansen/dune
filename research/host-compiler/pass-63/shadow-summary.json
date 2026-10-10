@@ -1,0 +1,195 @@
+{
+  "all_passed": true,
+  "natural": [
+    {
+      "source": "MINIMAL",
+      "entries": [
+        {
+          "coordinate": "PLI2.OVL+829C",
+          "calls": 1,
+          "proof_hash": "0ce366cd57546046f1e0399fabf7d3e1d0042d4b03e61c089b1c65b0328a4a69"
+        },
+        {
+          "coordinate": "PLI.COM+119E",
+          "calls": 4,
+          "proof_hash": "273fdb31911170eaaa1b513741601363f01e3d01618a6546dbd9205dcbce5676"
+        },
+        {
+          "coordinate": "PLI.COM+11C3",
+          "calls": 1,
+          "proof_hash": "3250476aa6e22b3c986e5fa8d7cbbe38722043f4bb86a25f4c1e5680d7fd0327"
+        }
+      ],
+      "instruction_checkpoint_hash": "d45e5f7b86d4c73b66a6b8104c0ec9d814366761e96ca23ae5290e93bbe79012"
+    },
+    {
+      "source": "FIZZBUZ",
+      "entries": [
+        {
+          "coordinate": "PLI2.OVL+829C",
+          "calls": 1,
+          "proof_hash": "da554ab90c858f7f263ecbfd76cca60ff476758402b63248ad563f4fcb9c50bd"
+        },
+        {
+          "coordinate": "PLI.COM+119E",
+          "calls": 4,
+          "proof_hash": "3cde9d32f1083be8a0130073d752f5cf3ca925ec15422380df6249f2ea1bcbd9"
+        },
+        {
+          "coordinate": "PLI.COM+11C3",
+          "calls": 1,
+          "proof_hash": "5a452d7648490f7e855fd0aabded9097faa9a88668614da3a21f5fd2844796c8"
+        }
+      ],
+      "instruction_checkpoint_hash": "8289a0f9ac2855751d8e9073d6c5403a19d675453f88d0bfd62f715030a469e5"
+    },
+    {
+      "source": "PICTURE",
+      "entries": [
+        {
+          "coordinate": "PLI2.OVL+829C",
+          "calls": 1,
+          "proof_hash": "dea5c81623798cc26f2740e9754008a048e7123e411b308032fcf66038731d52"
+        },
+        {
+          "coordinate": "PLI.COM+119E",
+          "calls": 4,
+          "proof_hash": "6fb298295d93bd17e754c0befbd8cb3a214c5a166f6a0aacd2f5af398f44700c"
+        },
+        {
+          "coordinate": "PLI.COM+11C3",
+          "calls": 1,
+          "proof_hash": "03705a386d6f53ca84c014e00cb622a0f6a19ed641233e4b3d4534fd79f87c99"
+        }
+      ],
+      "instruction_checkpoint_hash": "5ba7591a19c07820e56d77f49eb47e908d34689d3a39cc50d987c0d2d8e171a8"
+    }
+  ],
+  "cross": {
+    "FACTOR": {
+      "natural_roots": 1,
+      "callers": {
+        "PLI2.OVL+19A7": 1
+      },
+      "proof_hash": "f355d129e13725927518db44ea22034faa1a54098d425d2b857fadc0ce877a67",
+      "members": [
+        {
+          "input": {
+            "a": 0,
+            "b": 251,
+            "c": 145,
+            "d": 172,
+            "e": 160,
+            "h": 0,
+            "l": 0,
+            "sp": 65526,
+            "pc": 42140,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "pointer": 64401,
+          "payload_low": 14,
+          "payload_high": 0,
+          "output": {
+            "a": 0,
+            "b": 29,
+            "c": 10,
+            "d": 172,
+            "e": 8,
+            "h": 32,
+            "l": 184,
+            "sp": 65528,
+            "pc": 15274,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          }
+        }
+      ]
+    },
+    "OPTIMIST": {
+      "natural_roots": 1,
+      "callers": {
+        "PLI2.OVL+19A7": 1
+      },
+      "proof_hash": "fb06e7959a552d329e1b480c4c8e3fbccf8dcb13582e012bed5d62a9ded49634",
+      "members": [
+        {
+          "input": {
+            "a": 0,
+            "b": 250,
+            "c": 237,
+            "d": 172,
+            "e": 160,
+            "h": 0,
+            "l": 0,
+            "sp": 65526,
+            "pc": 42140,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "pointer": 64237,
+          "payload_low": 6,
+          "payload_high": 2,
+          "output": {
+            "a": 0,
+            "b": 29,
+            "c": 10,
+            "d": 172,
+            "e": 8,
+            "h": 32,
+            "l": 184,
+            "sp": 65528,
+            "pc": 15274,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          }
+        }
+      ]
+    }
+  },
+  "synthetic": {
+    "cases": 30,
+    "original_CPU_full_state_cases": 27,
+    "independent_bit_record_boundary_cases": 3,
+    "route_counts": {
+      "829C_distinct": 3,
+      "829C_published_carrier_only": 3,
+      "829C_low_only": 3,
+      "829C_high_only": 3,
+      "829C_neighbor_only": 3,
+      "829C_pointer_low": 3,
+      "829C_pointer_high": 3,
+      "829C_page_cross": 3,
+      "829C_nonwrapping_FFFC": 3,
+      "829C_record_boundary": 3
+    },
+    "proof_hash": "68c258e50b6d6e032bb36fa7c45fc71f9b936cabd1402162cdf73d280463eee7"
+  },
+  "comparison": [
+    "all registers/flags/SP/PC",
+    "ordered writes/full65536RAM",
+    "stack last writers/child CALL chronology",
+    "DMA/filesystem/REL record/service chronology"
+  ],
+  "journals": "ignored _build/host-compiler-pass-63/proof"
+}

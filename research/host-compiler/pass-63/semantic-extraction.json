@@ -1,0 +1,35 @@
+{
+  "historical_root": "PLI2.OVL+829C",
+  "semantic_inputs": [
+    "little-endian pointer from word ACA3",
+    "fresh low/high payload bytes at pointer+2/+3",
+    "current buffered REL output state"
+  ],
+  "semantic_outputs": [
+    "visible pointer publication at AC9F",
+    "7-bit1001010 header then tag00 then payload low8/high8",
+    "actual canonical returned registers/flags/stack/output chronology"
+  ],
+  "shared_historical_state": [
+    "ACA3/A4",
+    "AC9F/A0",
+    "target+2/+3",
+    "20B7/B8 serializer",
+    "20B9/BA tagged-word cache",
+    "REL buffer/cursor/FCB/DMA and hardware stack"
+  ],
+  "historical_mechanism": [
+    "LHLD low/high acquisition and SHLD low/high publication",
+    "independent post-header LHLD",
+    "three flag-preserving INX H and separate MOV C,M / MOV B,M",
+    "literalC94 E7 RLC serializer chronology",
+    "canonical11C3 and actual hardwareCALL/RET/PSW/service residue"
+  ],
+  "candidate_modern_operation": "Emit a structure-derived representation field",
+  "confidence": {
+    "low_level_law": "OBSERVED primary plus FACTOR/OPTIMIST; DEDUCED exact instructions",
+    "semantic_name": "HYPOTHESIS; compiler structure/type meaning unproved",
+    "synthetic_variants": "DEDUCED STATIC UNOBSERVED"
+  },
+  "mir_relevance": "Documentation only; no MIR API or faithful-code refactor."
+}

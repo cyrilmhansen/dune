@@ -6382,9 +6382,85 @@ PLI2_8294: MOV C,L ; C=L; flags preserved ; +8294 runtime=A494H OBSERVED
 PLI2_8295: CALL 9634H ; push following PC; invoke PLI2.OVL+7434; child state/effects at the explicitly scoped contract ; +8295 runtime=A495H OBSERVED
 PLI2_8298: CALL 9623H ; push following PC; invoke PLI2.OVL+7423; child state/effects at the explicitly scoped contract ; +8298 runtime=A498H OBSERVED
 PLI2_829B: RET ; consume original hardware return word; SP=entry_SP+2; preserve final path flags and registers ; +829B runtime=A49BH OBSERVED
-; SECTION [829C,82B5) RAW
-PLI2_829C: DB 02AH,0A3H,0ACH,022H,09FH,0ACH,01EH,007H,00EH,094H,0CDH,09EH ; +829C runtime=A49CH RAW
-PLI2_82A8: DB 012H,02AH,09FH,0ACH,023H,023H,04EH,023H,046H,0CDH,0C3H,012H,0C9H ; +82A8 runtime=A4A8H RAW
+
+; @procedure-v1 PLI2.OVL+829C
+; ProcedureHypothesis: Structure-pointer publication and counted header/tagged payload emission
+; Entry: PLI2_829C = PLI2.OVL+829C @ A49CH; SHA-256
+;   80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a
+; Extent: HYPOTHESIS [829C,82B5) file offsets; overlapping entries: none established
+; Callers: OBSERVED PLI2.OVL+19A7 (FACTOR=1, FIZZBUZ=1, MINIMAL=1, OPTIMIST=1, PICTURE=1)
+; Returns: OBSERVED/DEDUCED ordinary hardware CALL word; original slot unchanged; SP after
+;   RET=entry_SP+2; PLI2.OVL+82B4
+; Inputs: DEDUCED Fresh word[ACA3] selects supported four-byte structure target; actual entry
+;   register/flag channels are preserved or overwritten instructionally; canonical119E/11C3
+;   output scope inherited. Target is nonwrapping, disjoint from
+;   code/output/source/publication/stack/sentinel.
+; Outputs: DEDUCED Path-specific A/BC/DE/HL and flags as documented below and in correlated
+;   natural cases; SP=entry_SP+2; PC=original CALL continuation.
+; Clobbers: DEDUCED Path-specific A/BC/DE/HL/flags; local scratch/publications stated below;
+;   delegated child effects; proven CALL/PUSH stack residue.
+; Memory: DEDUCED ACA3/A4 source pointer, low then high read. AC9F/A0 publication low then high,
+;   freshly reread after header child.; Target+2 -> C then target+3 -> B; target+0/+1 are
+;   not read by this operation.; Canonical20B7/B8 counted serializer;20B9/BA tagged-word
+;   cache;REL buffer/index/bit/FCB/DMA state inherited.; Original hardware return word;
+;   childCALL and writerPSW/service residue below entrySP; no private frame.
+; Direct callees: OBSERVED PLI.COM+119E @129EH; PLI.COM+11C3 @12C3H
+; Coverage: OBSERVED FACTOR: 1 CALLs; FIZZBUZ: 1 CALLs; MINIMAL: 1 CALLs; OPTIMIST: 1 CALLs;
+;   PICTURE: 1 CALLs; 25/25 bytes represented as instructions; OBSERVED corrected ordinary
+;   CALL/return windows independently retained for MINIMAL/FIZZBUZ/PICTURE; union of own
+;   bytes excludes child bodies. Static authored facts, when present, are separately
+;   DEDUCED/UNOBSERVED; no natural executions fabricated.
+; Unresolved: Pointer-source/compiler structure meaning is unproved; this is a
+;   representation-level operation. / Wrapping and
+;   source/publication/code/output/stack/sentinel aliases unsupported; canonical child
+;   successful-writer scope inherited.
+; Contract: DEDUCED (partial; scope: Bounded accumulated-natural routes and exact represented
+;   local operations; delegated partial/opaque children and unexecuted local arms are not
+;   silently implemented.) Fresh little-endian ACA3/A4 word -> HL; SHLD publishes L then H
+;   at AC9F/A0. E=7,C=94H; canonical119E emits bits7..1, 1001010. Fresh AC9F/A0 reread
+;   after child; INX twice modulo65536; C=fresh byte[pointer+2]; INX; B=fresh
+;   byte[pointer+3]; canonical11C3 emits tag00 then low/high bytes. Final state/flags from
+;   canonical word serializer; RET consumes original CALL. Accepted nonwrapping four-byte
+;   target domain excludes code/output/source/publication/stack/sentinel aliases and
+;   inherits child writer/error scope; general structure meaning unknown.
+; Hypothesis: none beyond the low-level operational description
+; Completeness: bounds=stable; control_flow=complete; contract=partial
+; Evidence: evidence.json#seeds/PLI2.OVL+829C; ../host-compiler/pass-63/README.md;
+;   ../host-compiler/pass-63/shadow-summary.json
+; Procedure pseudo (operational; byte/word arithmetic wraps):
+;   Fresh ACA3 pointer acquisition; SHLD AC9F low then high. This is direct word copying, not a
+;   dereference at ACA3.; Literal C94,E7 invokes canonical119E: seven MSB-first rotations select
+;   bits7..1; output bit sequence1001010.; After child, independently reread AC9F. Two INX H;
+;   fresh payload low at p+2; one INX H; fresh high at p+3. Flags preserved by INX/MOV.;
+;   Canonical11C3 receives BC=payload little-endian word; tag00/low8/high8. RET82B4 preserves
+;   final canonical child register/flag channels.
+; @end-procedure-v1 PLI2.OVL+829C
+; SECTION [829C,82B5) UNDERSTOOD
+; @block-pseudo 829C
+; pseudo:
+; | Fresh ACA3 pointer acquisition; SHLD AC9F low then high. This is direct word copying, not a dereference at ACA3.
+PLI2_829C: LHLD 0ACA3H ; HL=fresh little_endian_word[structure_field_source_pointer (ACA3H)]; low then high read; flags preserved ; +829C runtime=A49CH OBSERVED
+PLI2_829F: SHLD 0AC9FH ; Publish L then H to structure_field_pointer_publication (AC9FH); same-valued writes retained; flags preserved ; +829F runtime=A49FH OBSERVED
+; @block-pseudo 82A2
+; pseudo:
+; | Literal C94,E7 invokes canonical119E: seven MSB-first rotations select bits7..1; output bit sequence1001010.
+PLI2_82A2: MVI E,07H ; E=07H; flags preserved ; +82A2 runtime=A4A2H OBSERVED
+PLI2_82A4: MVI C,94H ; C=94H; flags preserved ; +82A4 runtime=A4A4H OBSERVED
+PLI2_82A6: CALL 129EH ; push following PC; invoke PLI.COM+119E; child state/effects at the explicitly scoped contract ; +82A6 runtime=A4A6H OBSERVED
+; @block-pseudo 82A9
+; pseudo:
+; | After child, independently reread AC9F. Two INX H; fresh payload low at p+2; one INX H; fresh high at p+3. Flags preserved by INX/MOV.
+PLI2_82A9: LHLD 0AC9FH ; HL=fresh little_endian_word[structure_field_pointer_publication (AC9FH)] after header child; independently reacquired low/high bytes ; +82A9 runtime=A4A9H OBSERVED
+PLI2_82AC: INX H ; H=u16(H +1); flags preserved ; +82AC runtime=A4ACH OBSERVED
+PLI2_82AD: INX H ; H=u16(H +1); flags preserved ; +82AD runtime=A4ADH OBSERVED
+PLI2_82AE: MOV C,M ; C=fresh byte[HL]; flags preserved ; +82AE runtime=A4AEH OBSERVED
+PLI2_82AF: INX H ; H=u16(H +1); flags preserved ; +82AF runtime=A4AFH OBSERVED
+PLI2_82B0: MOV B,M ; B=fresh byte[HL]; flags preserved ; +82B0 runtime=A4B0H OBSERVED
+; @block-pseudo 82B1
+; pseudo:
+; | Canonical11C3 receives BC=payload little-endian word; tag00/low8/high8. RET82B4 preserves final canonical child register/flag channels.
+PLI2_82B1: CALL 12C3H ; push following PC; invoke PLI.COM+11C3; child state/effects at the explicitly scoped contract ; +82B1 runtime=A4B1H OBSERVED
+PLI2_82B4: RET ; consume original hardware return word; SP=entry_SP+2; preserve final path flags and registers ; +82B4 runtime=A4B4H OBSERVED
 
 ; @procedure-v1 PLI2.OVL+82B5
 ; ProcedureHypothesis: Reset carrier and preparation state with fixed zero field emission
@@ -6529,4 +6605,5 @@ PLI2_82D8: EQU 0A4D8H ; +82D8 runtime=A4D8H coordinate-only preserved label
 PLI2_733A: EQU 0953AH ; +733A runtime=953AH coordinate-only preserved label
 PLI2_734A: EQU 0954AH ; +734A runtime=954AH coordinate-only preserved label
 PLI2_735A: EQU 0955AH ; +735A runtime=955AH coordinate-only preserved label
+PLI2_82A8: EQU 0A4A8H ; +82A8 runtime=A4A8H coordinate-only preserved label
     END

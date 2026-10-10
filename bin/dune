@@ -186,3 +186,8 @@
  (name native_paired_carrier_publication)
  (modules native_paired_carrier_publication)
  (libraries pli80 unix))
+
+(executable
+ (name native_structure_field_generation)
+ (modules native_structure_field_generation)
+ (libraries pli80 pli80_host runner unix))

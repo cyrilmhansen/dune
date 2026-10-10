@@ -2770,6 +2770,26 @@
       "width": 2,
       "role": "Saved BC for BDOS21 sequential-write wrapper; high-first scratch publication, then fresh little-endian read",
       "scope": "PLI.COM+0328 local setup; not an application-level file identity"
+    },
+    {
+      "id": "PLI2.OVL:structure_field_source_pointer",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "name": "structure_field_source_pointer",
+      "runtime_address": 44195,
+      "width": 2,
+      "role": "Fresh low/high source pointer acquired by829C before header emission.",
+      "scope": "Pass63 bounded829C only; compiler type/ownership meaning unproved."
+    },
+    {
+      "id": "PLI2.OVL:structure_field_pointer_publication",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "name": "structure_field_pointer_publication",
+      "runtime_address": 44191,
+      "width": 2,
+      "role": "Low/high pointer publication reread after canonical header serialization.",
+      "scope": "Pass63 bounded829C only; compiler type/ownership meaning unproved."
     }
   ]
 }

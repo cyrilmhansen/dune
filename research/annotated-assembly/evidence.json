@@ -259025,6 +259025,556 @@
         }
       },
       "behavioral_contract": "Save D atADBF then E atADBE then C atADBD, preserving flags. FreshADBD CPI6: C6 returns immediately with comparison flags (DEDUCED STATIC UNOBSERVED). Otherwise requireC0..5 so both canonical7314 indices are supported. PairedLHLDADBE ->L=E,H=D;A=H;independentpairedLHLDADBD ->L=C,H=E;E=A,C=L;CALL7314 at7352 publishes(C,D). FreshLDAADBD INR A computesu8(C+1), NZPA fromINR, CY preserved. IndependentpairedLHLDADBE;PUSHPSW735C writes accumulator high then packedflags low;A=L;E=A;POPB735F restoresB=incrementedselector andC=packedflags;MOVC,B;CALL7314 at7361 publishes(u8(C+1),E). RET7364 consumes original hardware word. Savedbytes freshly reread;no privateframe/host-local replacement. All childflags/stack residue retained. C>=7 rejects before mutation;FF increment wouldwrap but first canonical indexFF unsupported. Code/caller/continuation/scratch/table/stack/sentinel aliases excluded;no source/caller/ordinal dispatch."
+    },
+    {
+      "id": "PLI2.OVL+829C",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "start_offset": 33436,
+      "end_offset": 33461,
+      "description": "Structure-pointer publication and counted header/tagged payload emission",
+      "inputs_and_effects": "Actual entry registers and selected shared byte-addressed memory; child scopes inherited; executable code, selected scratch/publications/read carriers and active return/save slots nonaliasing where their operation requires it. No table capacity or ownership assumption.; Path-specific A/BC/DE/HL and flags as documented below and in correlated natural cases; SP=entry_SP+2; PC=original CALL continuation.",
+      "downstream_helpers_runtime": "PLI.COM+119E; PLI.COM+11C3",
+      "unresolved": "Scope is the independently shadowed Pass63 routes; sibling RAW arms, arbitrary aliases and inherited child unsupported states remain excluded.",
+      "instructions": [
+        {
+          "offset": 33436,
+          "runtime_pc": 42140,
+          "bytes": "2AA3AC",
+          "decoded": "LHLD ACA3H",
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 1,
+              "first_step": 316016,
+              "last_step": 316016
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 1,
+              "first_step": 666213,
+              "last_step": 666213
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 1,
+              "first_step": 381801,
+              "last_step": 381801
+            }
+          ]
+        },
+        {
+          "offset": 33439,
+          "runtime_pc": 42143,
+          "bytes": "229FAC",
+          "decoded": "SHLD AC9FH",
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 1,
+              "first_step": 316017,
+              "last_step": 316017
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 1,
+              "first_step": 666214,
+              "last_step": 666214
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 1,
+              "first_step": 381802,
+              "last_step": 381802
+            }
+          ]
+        },
+        {
+          "offset": 33442,
+          "runtime_pc": 42146,
+          "bytes": "1E07",
+          "decoded": "MVI E,07H",
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 1,
+              "first_step": 316018,
+              "last_step": 316018
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 1,
+              "first_step": 666215,
+              "last_step": 666215
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 1,
+              "first_step": 381803,
+              "last_step": 381803
+            }
+          ]
+        },
+        {
+          "offset": 33444,
+          "runtime_pc": 42148,
+          "bytes": "0E94",
+          "decoded": "MVI C,94H",
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 1,
+              "first_step": 316019,
+              "last_step": 316019
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 1,
+              "first_step": 666216,
+              "last_step": 666216
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 1,
+              "first_step": 381804,
+              "last_step": 381804
+            }
+          ]
+        },
+        {
+          "offset": 33446,
+          "runtime_pc": 42150,
+          "bytes": "CD9E12",
+          "decoded": "CALL 129EH",
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 1,
+              "first_step": 316020,
+              "last_step": 316020
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 1,
+              "first_step": 666217,
+              "last_step": 666217
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 1,
+              "first_step": 381805,
+              "last_step": 381805
+            }
+          ]
+        },
+        {
+          "offset": 33449,
+          "runtime_pc": 42153,
+          "bytes": "2A9FAC",
+          "decoded": "LHLD AC9FH",
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 1,
+              "first_step": 316329,
+              "last_step": 316329
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 1,
+              "first_step": 666526,
+              "last_step": 666526
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 1,
+              "first_step": 382114,
+              "last_step": 382114
+            }
+          ]
+        },
+        {
+          "offset": 33452,
+          "runtime_pc": 42156,
+          "bytes": "23",
+          "decoded": "INX H",
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 1,
+              "first_step": 316330,
+              "last_step": 316330
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 1,
+              "first_step": 666527,
+              "last_step": 666527
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 1,
+              "first_step": 382115,
+              "last_step": 382115
+            }
+          ]
+        },
+        {
+          "offset": 33453,
+          "runtime_pc": 42157,
+          "bytes": "23",
+          "decoded": "INX H",
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 1,
+              "first_step": 316331,
+              "last_step": 316331
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 1,
+              "first_step": 666528,
+              "last_step": 666528
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 1,
+              "first_step": 382116,
+              "last_step": 382116
+            }
+          ]
+        },
+        {
+          "offset": 33454,
+          "runtime_pc": 42158,
+          "bytes": "4E",
+          "decoded": "MOV C,M",
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 1,
+              "first_step": 316332,
+              "last_step": 316332
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 1,
+              "first_step": 666529,
+              "last_step": 666529
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 1,
+              "first_step": 382117,
+              "last_step": 382117
+            }
+          ]
+        },
+        {
+          "offset": 33455,
+          "runtime_pc": 42159,
+          "bytes": "23",
+          "decoded": "INX H",
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 1,
+              "first_step": 316333,
+              "last_step": 316333
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 1,
+              "first_step": 666530,
+              "last_step": 666530
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 1,
+              "first_step": 382118,
+              "last_step": 382118
+            }
+          ]
+        },
+        {
+          "offset": 33456,
+          "runtime_pc": 42160,
+          "bytes": "46",
+          "decoded": "MOV B,M",
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 1,
+              "first_step": 316334,
+              "last_step": 316334
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 1,
+              "first_step": 666531,
+              "last_step": 666531
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 1,
+              "first_step": 382119,
+              "last_step": 382119
+            }
+          ]
+        },
+        {
+          "offset": 33457,
+          "runtime_pc": 42161,
+          "bytes": "CDC312",
+          "decoded": "CALL 12C3H",
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 1,
+              "first_step": 316335,
+              "last_step": 316335
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 1,
+              "first_step": 666532,
+              "last_step": 666532
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 1,
+              "first_step": 382120,
+              "last_step": 382120
+            }
+          ]
+        },
+        {
+          "offset": 33460,
+          "runtime_pc": 42164,
+          "bytes": "C9",
+          "decoded": "RET",
+          "runs": [
+            {
+              "run": "MINIMAL",
+              "execution_count": 1,
+              "first_step": 317147,
+              "last_step": 317147
+            },
+            {
+              "run": "FIZZBUZ",
+              "execution_count": 1,
+              "first_step": 667344,
+              "last_step": 667344
+            },
+            {
+              "run": "PICTURE",
+              "execution_count": 1,
+              "first_step": 382932,
+              "last_step": 382932
+            }
+          ]
+        }
+      ],
+      "observed_callers": [
+        {
+          "run": "MINIMAL",
+          "image": "PLI2.OVL",
+          "offset": 6567,
+          "bytes": "CD9CA4",
+          "execution_count": 1,
+          "first_step": 316015
+        },
+        {
+          "run": "FIZZBUZ",
+          "image": "PLI2.OVL",
+          "offset": 6567,
+          "bytes": "CD9CA4",
+          "execution_count": 1,
+          "first_step": 666212
+        },
+        {
+          "run": "PICTURE",
+          "image": "PLI2.OVL",
+          "offset": 6567,
+          "bytes": "CD9CA4",
+          "execution_count": 1,
+          "first_step": 381800
+        }
+      ],
+      "observed_return_offsets": [
+        33460
+      ],
+      "matched_return_sample": {
+        "relation": "OBSERVED corrected original CALL word/RET ancestry",
+        "call": {
+          "step_index": 316015,
+          "pc": 15271,
+          "pc_after": 42140,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI2.OVL",
+              "identity": "0:0:PLI2.OVL"
+            },
+            "offset": 6567
+          },
+          "target_origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI2.OVL",
+              "identity": "0:0:PLI2.OVL"
+            },
+            "offset": 33436
+          },
+          "runtime_pc": 15271,
+          "bytes": "CD9CA4",
+          "disassembly": "CALL A49CH",
+          "source": "memory",
+          "before": {
+            "a": 0,
+            "b": 251,
+            "c": 225,
+            "d": 172,
+            "e": 160,
+            "h": 0,
+            "l": 0,
+            "sp": 65528,
+            "pc": 15271,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 0,
+            "b": 251,
+            "c": 225,
+            "d": 172,
+            "e": 160,
+            "h": 0,
+            "l": 0,
+            "sp": 65526,
+            "pc": 42140,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "sp_before": 65528,
+          "sp_after": 65526,
+          "call_return_address": 15274,
+          "reads": [],
+          "writes": [
+            {
+              "address": 65527,
+              "old_value": null,
+              "new_value": 59
+            },
+            {
+              "address": 65526,
+              "old_value": null,
+              "new_value": 170
+            }
+          ],
+          "control": {
+            "kind": "call",
+            "target": 42140,
+            "taken": true
+          }
+        },
+        "ret": {
+          "step_index": 317147,
+          "pc": 42164,
+          "pc_after": 15274,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI2.OVL",
+              "identity": "0:0:PLI2.OVL"
+            },
+            "offset": 33460
+          },
+          "target_origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI2.OVL",
+              "identity": "0:0:PLI2.OVL"
+            },
+            "offset": 6570
+          },
+          "runtime_pc": 42164,
+          "bytes": "C9",
+          "disassembly": "RET",
+          "source": "memory",
+          "before": {
+            "a": 0,
+            "b": 29,
+            "c": 10,
+            "d": 172,
+            "e": 8,
+            "h": 32,
+            "l": 184,
+            "sp": 65526,
+            "pc": 42164,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 0,
+            "b": 29,
+            "c": 10,
+            "d": 172,
+            "e": 8,
+            "h": 32,
+            "l": 184,
+            "sp": 65528,
+            "pc": 15274,
+            "flags": {
+              "sign": false,
+              "zero": true,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "sp_before": 65526,
+          "sp_after": 65528,
+          "call_return_address": null,
+          "reads": [
+            {
+              "address": 65526,
+              "value": 170
+            },
+            {
+              "address": 65527,
+              "value": 59
+            }
+          ],
+          "writes": [],
+          "control": {
+            "kind": "return",
+            "target": 15274,
+            "taken": true
+          }
+        }
+      },
+      "behavioral_contract": "Fresh little-endian ACA3/A4 word -> HL; SHLD publishes L then H at AC9F/A0. E=7,C=94H; canonical119E emits bits7..1, 1001010. Fresh AC9F/A0 reread after child; INX twice modulo65536; C=fresh byte[pointer+2]; INX; B=fresh byte[pointer+3]; canonical11C3 emits tag00 then low/high bytes. Final state/flags from canonical word serializer; RET consumes original CALL. Accepted nonwrapping four-byte target domain excludes code/output/source/publication/stack/sentinel aliases and inherits child writer/error scope; general structure meaning unknown."
     }
   ]
 }
