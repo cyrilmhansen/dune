@@ -1,0 +1,60 @@
+{
+  "historical_roots": [
+    "PLI2.OVL+742A",
+    "PLI2.OVL+8258",
+    "PLI2.OVL+82B5"
+  ],
+  "semantic_inputs": {
+    "742A": [
+      "shared reset gate/carrier activity",
+      "current emitted position"
+    ],
+    "8258": [
+      "input wordBC",
+      "current position captured afterreset",
+      "201D clear mode"
+    ],
+    "82B5": [
+      "current generation/output state"
+    ]
+  },
+  "semantic_outputs": {
+    "742A": [
+      "reset indexedcarrier state if gate active",
+      "FFFFpublication",
+      "returnfreshposition"
+    ],
+    "8258": [
+      "emit incrementedinput andcapturedposition fields",
+      "restorecapturedposition publication",
+      "FFFFpublication"
+    ],
+    "82B5": [
+      "reset selectedcarrier/preparation bytes",
+      "emitfixedzero field",
+      "FFFFpublication"
+    ]
+  },
+  "shared_historical_state": [
+    "ADAA/ADAB canonicalreset andADC4/5scan",
+    "ADA6/7 FFFF;ADA8/9zero",
+    "AE66/67 savedword;AE68/69capturedposition;201D",
+    "ADC9/ADCA/AE6A;AE04/AE05/AE06",
+    "1C2C andcanonicalRELbuffer/cursor/scratch"
+  ],
+  "historical_mechanism": [
+    "high-before-low entrysave",
+    "LHLD/SHLD paired low/high reads/writes",
+    "INXH modulo 65536",
+    "RAR bit0 mode selection",
+    "literaloutput adapters",
+    "exact flags andordinary hardwareCALL/RET residue;no private frame"
+  ],
+  "candidate_modern_operation": "Distinct generation-state reset, captured-position emission and fixed-state initialization policies",
+  "confidence": {
+    "low_level_laws": "OBSERVED primary andFACTOR;DEDUCED instruction semantics",
+    "wrap": "DEDUCED synthetic independentCPU",
+    "modern_description": "HYPOTHESIS;no source-language meaning claimed"
+  },
+  "mir_relevance": "Documentation only;no common API/MIR design or faithful-code refactor."
+}

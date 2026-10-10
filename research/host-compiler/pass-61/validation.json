@@ -1,0 +1,254 @@
+{
+  "all_passed": true,
+  "wall_seconds": 809.009,
+  "sum_category_seconds": 2632.273,
+  "safe_parallel_workers": 4,
+  "serial_categories": [
+    "build",
+    "project"
+  ],
+  "categories": {
+    "build": {
+      "return_code": 0,
+      "elapsed_seconds": 4.236,
+      "command": [
+        "dune",
+        "build",
+        "@all",
+        "-j",
+        "4"
+      ],
+      "python_tests": 0
+    },
+    "project": {
+      "return_code": 0,
+      "elapsed_seconds": 0.354,
+      "command": [
+        "dune",
+        "runtest",
+        "-j",
+        "4"
+      ],
+      "python_tests": 0
+    },
+    "roundtrip": {
+      "return_code": 0,
+      "elapsed_seconds": 27.301,
+      "command": [
+        "python3",
+        "tools/annotated-assembly/verify.py",
+        "--images",
+        "/home/john/pli/cpm/pli80/DISK1"
+      ],
+      "python_tests": 0
+    },
+    "V1": {
+      "return_code": 0,
+      "elapsed_seconds": 39.25,
+      "command": [
+        "python3",
+        "tools/annotated-assembly/test_decompilation_annotations.py",
+        "-v"
+      ],
+      "python_tests": 9
+    },
+    "roundtrip-tests": {
+      "return_code": 0,
+      "elapsed_seconds": 55.296,
+      "command": [
+        "python3",
+        "tools/annotated-assembly/test_verify.py",
+        "--images",
+        "/home/john/pli/cpm/pli80/DISK1",
+        "-v"
+      ],
+      "python_tests": 11
+    },
+    "packet-continuation": {
+      "return_code": 0,
+      "elapsed_seconds": 143.024,
+      "command": [
+        "python3",
+        "tools/annotated-assembly/test_procedure_evidence_packet.py",
+        "--images",
+        "/home/john/pli/cpm/pli80/DISK1",
+        "-v"
+      ],
+      "python_tests": 27
+    },
+    "pass60": {
+      "return_code": 0,
+      "elapsed_seconds": 419.739,
+      "command": [
+        "python3",
+        "tools/annotated-assembly/test_carrier_generation_pass_60.py",
+        "--images",
+        "/home/john/pli/cpm/pli80/DISK1",
+        "-q"
+      ],
+      "python_tests": 10
+    },
+    "pass61": {
+      "return_code": 0,
+      "elapsed_seconds": 432.67,
+      "command": [
+        "python3",
+        "tools/annotated-assembly/test_73d0_parent_family_pass_61.py",
+        "--images",
+        "/home/john/pli/cpm/pli80/DISK1",
+        "-q"
+      ],
+      "python_tests": 11
+    },
+    "pass59": {
+      "return_code": 0,
+      "elapsed_seconds": 419.628,
+      "command": [
+        "python3",
+        "tools/annotated-assembly/test_carrier_clear_emission_pass_59.py",
+        "--images",
+        "/home/john/pli/cpm/pli80/DISK1",
+        "-q"
+      ],
+      "python_tests": 9
+    },
+    "dynamic-progress": {
+      "return_code": 0,
+      "elapsed_seconds": 0.133,
+      "command": [
+        "python3",
+        "-c",
+        "import json,subprocess;from pathlib import Path;p=Path('/home/john/pli/lab/_build/host-compiler-pass-61/incremental-validation/dynamic-progress.json');subprocess.run(['python3','tools/annotated-assembly/minimal_dynamic_progress.py','--output',str(p)],check=True);assert json.loads(p.read_text())==json.loads(Path('research/minimal-baseline/dynamic-progress.json').read_text())"
+      ],
+      "python_tests": 0
+    },
+    "diff-check": {
+      "return_code": 0,
+      "elapsed_seconds": 0.057,
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "python_tests": 0
+    },
+    "pass58": {
+      "return_code": 0,
+      "elapsed_seconds": 401.113,
+      "command": [
+        "python3",
+        "tools/annotated-assembly/test_indexed_carrier_transfer_pass_58.py",
+        "--images",
+        "/home/john/pli/cpm/pli80/DISK1",
+        "-q"
+      ],
+      "python_tests": 8
+    },
+    "pass53": {
+      "return_code": 0,
+      "elapsed_seconds": 332.096,
+      "command": [
+        "python3",
+        "tools/annotated-assembly/test_pli2_emission_adapters_pass_53.py",
+        "--images",
+        "/home/john/pli/cpm/pli80/DISK1",
+        "-q"
+      ],
+      "python_tests": 9
+    },
+    "pass57": {
+      "return_code": 0,
+      "elapsed_seconds": 357.376,
+      "command": [
+        "python3",
+        "tools/annotated-assembly/test_pending_generation_pass_57.py",
+        "--images",
+        "/home/john/pli/cpm/pli80/DISK1",
+        "-q"
+      ],
+      "python_tests": 8
+    }
+  },
+  "top_10_slowest": [
+    {
+      "category": "pass61",
+      "elapsed_seconds": 432.67
+    },
+    {
+      "category": "pass60",
+      "elapsed_seconds": 419.739
+    },
+    {
+      "category": "pass59",
+      "elapsed_seconds": 419.628
+    },
+    {
+      "category": "pass58",
+      "elapsed_seconds": 401.113
+    },
+    {
+      "category": "pass57",
+      "elapsed_seconds": 357.376
+    },
+    {
+      "category": "pass53",
+      "elapsed_seconds": 332.096
+    },
+    {
+      "category": "packet-continuation",
+      "elapsed_seconds": 143.024
+    },
+    {
+      "category": "roundtrip-tests",
+      "elapsed_seconds": 55.296
+    },
+    {
+      "category": "V1",
+      "elapsed_seconds": 39.25
+    },
+    {
+      "category": "roundtrip",
+      "elapsed_seconds": 27.301
+    }
+  ],
+  "isolation": "Serial shared Dune build/tests; later categories read prebuilt binaries and immutable captures, with unique temporary outputs; PYTHONDONTWRITEBYTECODE=1; Dune-exec launcher rejects build commands",
+  "binary_hashes": {
+    "pli80-run": "8c4b985a63d26f76aeb0ee4ea3fd9be58557403216c8092b8812c971afb5a584",
+    "pli80-analyze": "e153ef9cd7d93320cc38fdf3b5fb98179c83b21ac8f8e7a31a2c95539699d982",
+    "pli80-native-7bbf": "e17e21a5b10fe44ce94c5c0ab253c30755a9408338c522cf100515357d237118",
+    "pli80-native-7b7a": "9084eaa8e77193bd69553bfa8a3c33bef0fe9c70a33ff4e89441cc26aa76099c",
+    "pli80-native-7c1b": "69d03921b7afbd87cfe776e7cf2f465048d8b31475e8cff0e0ce3766d52b1271",
+    "pli80-native-mapped-publication": "1c37e0e114cf6066b9fb674e4e992bea12e207b40be5d89a47ea074b1cd8108c",
+    "pli80-native-attribute-auxiliary": "572cbfb51d1f97c296ad74d3836287b0f4fc7e738fddd5670c904361e3a7171a",
+    "pli80-int-emitter-audit": "035effc34b97a65842ce1a2322ebb8d1c81eb61249063fb19f0ed5533a1148bf",
+    "pli80-native-int-emitter": "45468d69c601f077299a89d979c20f5cfa2907a89d4382454048007654fb09e2",
+    "pli80-native-word-emitters": "f9d36948ed9befffb1d21152e8ebb507944a73cc4be39a81bdd1a8c229733e69",
+    "pli80-native-range-processing": "aad5032c2e442a5188b034236f491b201dc67702dd33ba73bc06d53a620ebc0f",
+    "pli80-native-publication-primitives": "25eea0c24e3dc1b474672e7201d6522c4ac3a3ceb8aa347b7583b72e5ece8272",
+    "pli80-native-range-publication": "c0fddb9e82fe8ed55d8d0782d0740043e48b2db8a777e97447b740a2a3d86bea",
+    "pli80-native-input-processing": "57bc915d550d99ff76dbc3ea852edf3d638e23a1b3218b7aabfe2c3ae9fdfe4d",
+    "pli80-native-attribute-gate": "3de4ffada91d1ef9309fd08584fdb846b693bbd67e1dfc0a6fe6ea7700a34f0c",
+    "pli80-native-state-adaptation": "aa0cfe45f0c391514dee42b8d0935f9936e1b2215bcefa8d3f898417500440ea",
+    "pli80-native-acquisition-parent": "8a396deab75e5a7be738280704281d0cc88d5d1fc464d149658bd2b00835c418",
+    "pli80-native-reentrant-acquisition": "7c53a054c9cf6910377e5e164993a31013395d362ce53c7d57c3927ad8b157c0",
+    "pli80-native-acquisition-family": "e3d7fa8ec5a639c2ae960b5b51ecd77569a3546e950b45062d88a074bfdb3be9",
+    "pli80-native-numeric-acquisition": "bedf9dfa21c0268b799aa0c98ecfab7633e40cd30fa03e3a35e1524be71b1b28",
+    "pli80-native-reentrant-hybrids": "654e5487d10e6620ec811fad8c91418c6b31aaece3dc5baf34a49a00b92bb85c",
+    "pli80-native-wrapper-hybrids": "9e1b714a1883188ec079ad34a615f812bd9f7df52ab6ba371b12803cdea8863e",
+    "pli80-native-selection-hybrids": "fcee347be9b84735766369c8b2bf94abbb6eafe130a29383f4a304084f46d53e",
+    "pli80-native-recursive-hybrids": "8dca25376aea053762a9cc6befc0d91abe28446b2a058ae0c5cc841ad972061c",
+    "pli80-native-acquisition-frame-hybrids": "24c6c737714e383f46bacce2d240677da5ba242fdf0d9abb38714b34e0f10047",
+    "pli80-native-initialization-parent-hybrids": "f7753599f5faab5f1f57819ae97b3e7edaa4bd1f2807458198a498bbddf5ddc8",
+    "pli80-native-delimiter-driver-hybrids": "a88cb50f1be1493f3cf926d66c0d3fbcdf9b604710ef5ed3a98294dc630ce82b",
+    "pli80-native-output-finalization-hybrids": "d40512390c16608671d09c2cd2916281d7d0271fa4a791a30e12da7d0b889417"
+  },
+  "validation_tier": "INCREMENTAL",
+  "full_checkpoint_base": "a3ca60c886833e1bdae92e1334504c9acd5fabd8",
+  "status": "passed initially",
+  "initial_all_passed": true,
+  "reruns": [],
+  "historical_bytes": 94720,
+  "category_count": 14,
+  "distinct_python_tests": 102,
+  "dune_stanzas": 39
+}

@@ -1,0 +1,52 @@
+{
+  "PLI2.OVL+7423": {
+    "end": 29738,
+    "description": "Publish literal FFFF word at ADA6",
+    "contract": "HL=FFFF;SHLD ADA6 writes low FF then high FF;RET consumes original hardware word. All flags and other registers preserved; no children or private frame.",
+    "completeness": [
+      "stable",
+      "complete",
+      "complete"
+    ]
+  },
+  "PLI2.OVL+79A2": {
+    "end": 31150,
+    "description": "Zero three consecutive preparation gate bytes",
+    "contract": "LXI H AE04;publish zero AE04; INX H;publish zero AE05;INX H;publish zero AE06;RET. Final HL=AE06;all flags and other registers preserved. Sequential same-valued writes retained;independent following79AF entry excluded.",
+    "completeness": [
+      "stable",
+      "complete",
+      "complete"
+    ]
+  },
+  "PLI2.OVL+742A": {
+    "end": 29748,
+    "description": "Reset indexed carriers, publish FFFF and freshly return position word",
+    "contract": "CALL canonical73D0 at742A;CALL canonical7423 at742D;fresh LHLD1C2C low/high;RET7433. FinalHL=freshposition;otherregisters/flags actual73D0 outputs. No private frame;child CALL words survive belowentrySP. Canonicalchild/nonalias scope inherited.",
+    "completeness": [
+      "stable",
+      "complete",
+      "partial"
+    ]
+  },
+  "PLI2.OVL+8258": {
+    "end": 33436,
+    "description": "Save word and position, emit incremented word and captured position fields",
+    "contract": "Save B atAE67 thenC atAE66;canonical73D0. FreshLHLD1C2C thenSHLD AE68 low/high captures position. IndependentLHLD AE66;INXH modulo 65536;BC=HL;canonical7434. Fresh 201D RAR;requirebit0clear. FreshAE68 pairedword ->BC canonical7630;independentfreshAE68 pairedword ->BC canonical7434;canonical7423;RET829B. Same-valuedwrites/freshreads/flags/callresidue retained. 201D-set arm8277..8288 STATIC UNOBSERVED unsupported:CALL745A;literalBC94E5;resident03F4;freshsavedposition;resident0466. Successfulwriter,nonwrapposition andcanonicalchild/noalias scope required;no source/caller/fixture dispatch.",
+    "completeness": [
+      "stable",
+      "partial",
+      "partial"
+    ]
+  },
+  "PLI2.OVL+82B5": {
+    "end": 33501,
+    "description": "Reset carrier and preparation state with fixed zero field emission",
+    "contract": "PublishADAA=1;canonical73D0 clearsADAA andADAB[0..7]. HL0 SHLDADA8 low/high;BC0 canonical7434;canonical7423 publishesFFFF ADA6. ZeroADC9 thenADCA;zeroAE6A;canonical79A2 sequentiallyzeroAE04..AE06;RET82DC. FinalHL=AE06;flags/registers actual7434 outputs. Ordered same-valuedwrites andhardwareCALLresidue retained. Canonicalwriter/position/nonalias scope inherited.",
+    "completeness": [
+      "stable",
+      "complete",
+      "partial"
+    ]
+  }
+}

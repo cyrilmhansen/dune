@@ -59,6 +59,7 @@ cmds['acquisition-parent-unit']=['_build/default/test/native_acquisition_parent.
 for name,file in [('pass44-roots','test_reentrant_acquisition_pass_44.py'),('pass44-family','test_acquisition_family_pass_44.py'),('pass44-numeric','test_numeric_acquisition_pass_44.py'),('pass44-hybrids','test_native_reentry_hybrids_pass_44.py')]:
  cmds[name]=['python3','tools/annotated-assembly/'+file,'--images',images,'-q']
 cmds['pass60']=['python3','tools/annotated-assembly/test_carrier_generation_pass_60.py','--images',images,'-q']
+cmds['pass61']=['python3','tools/annotated-assembly/test_73d0_parent_family_pass_61.py','--images',images,'-q']
 cmds['pass59']=['python3','tools/annotated-assembly/test_carrier_clear_emission_pass_59.py','--images',images,'-q']
 cmds['pass58']=['python3','tools/annotated-assembly/test_indexed_carrier_transfer_pass_58.py','--images',images,'-q']
 cmds['pass57']=['python3','tools/annotated-assembly/test_pending_generation_pass_57.py','--images',images,'-q']

@@ -428,6 +428,22 @@ let run operation memory ~entry ~write ~compatibility ~adjust ~sp ~guard_field ~
     hl 0xadc4;let value=inc(read !q.hl)in put 0x73f9 !q.hl value;if not !q.flags.zero then clear())in clear())in
  let rec pli2_output offset=match offset with
  |0x79e2->preparation79e2()|0x73d0->reset73d0()
+ |0x7423->hl 0xffff;store 0x7426 0xada6 !q.hl
+ |0x79a2->hl 0xae04;put 0x79a5 !q.hl 0;hl(!q.hl+1);put 0x79a8 !q.hl 0;hl(!q.hl+1);put 0x79ab !q.hl 0
+ |0x742a->call 0x742a 0x73d0(fun()->pli2_output 0x73d0);call 0x742d 0x7423(fun()->pli2_output 0x7423);pair 0x1c2c
+ |0x8258->
+  hl 0xae67;put 0x825b !q.hl(!q.bc lsr 8);hl(!q.hl-1);put 0x825d !q.hl(!q.bc land 255);
+  call 0x825e 0x73d0(fun()->pli2_output 0x73d0);pair 0x1c2c;store 0x8264 0xae68 !q.hl;
+  pair 0xae66;hl(U.wrap(!q.hl+1));bc !q.hl;call 0x826d 0x7434(fun()->pli2_output 0x7434);
+  a(read 0x201d);rar();need(not !q.flags.carry)"8258 201D-set arm unobserved";
+  pair 0xae68;bc !q.hl;call 0x828d 0x7630(fun()->pli2_output 0x7630);
+  pair 0xae68;bc !q.hl;call 0x8295 0x7434(fun()->pli2_output 0x7434);call 0x8298 0x7423(fun()->pli2_output 0x7423)
+ |0x82b5->
+  hl 0xadaa;put 0x82b8 !q.hl 1;call 0x82ba 0x73d0(fun()->pli2_output 0x73d0);
+  hl 0;store 0x82c0 0xada8 !q.hl;bc 0;call 0x82c6 0x7434(fun()->pli2_output 0x7434);
+  call 0x82c9 0x7423(fun()->pli2_output 0x7423);hl 0xadc9;put 0x82cf !q.hl 0;hl(!q.hl+1);put 0x82d2 !q.hl 0;
+  hl 0xae6a;put 0x82d7 !q.hl 0;call 0x82d9 0x79a2(fun()->pli2_output 0x79a2)
+
  |0x7397->need(!q.bc land 255<8)"7397 carrier index scope";hl 0xadc2;put 0x739a !q.hl(!q.bc land 255);pair 0xadc2;hl(!q.hl land 255);bc 0xadab;dad !q.bc;put 0x73a4 !q.hl 0
  |0x73a7->
   hl 0xadc3;put 0x73aa !q.hl(!q.bc land 255);a(read 0xadc3);cmp 6;
