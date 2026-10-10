@@ -1,14 +1,8 @@
 # Pass62 — paired carrier publication
 
-The baseline is published Pass61 `a409348e69e69e6760a0defc9b275ec1d30393c0`. The scheduled FULL aggregate was interrupted at the user’s request before completion. The implementation is published with FULL validation pending; no aggregate success is claimed. [validation.json](validation.json) records focused evidence and pending status.
+The implementation baseline is published Pass61 `a409348e69e69e6760a0defc9b275ec1d30393c0`. Pass62 implementation was published separately as `90a7e9b8dc45f75fb8d158a6f2c7fc9fb3281694`, and the scheduled FULL checkpoint was subsequently completed manually and certified by commit `6d736b084417a64464d5868cf1946f735298a611`.
 
-To run the full checkpoint later from `/home/john/pli/lab`:
-
-```bash
-python3 tools/annotated-assembly/run_paired_carrier_publication_pass_62.py validate
-```
-
-This uses all categories and four workers, records detailed results under `_build/host-compiler-pass-62/full-validation/`, and updates the durable validation receipt. The previous completed FULL checkpoint remains Pass59 until this aggregate succeeds.
+The FULL checkpoint passed initially: **92 categories, 643 distinct Python tests, 39 Dune stanzas, four workers, 2932.110 seconds wall time, 10788.750 summed category seconds, zero reruns**. Historical reconstruction remains exactly **94,720 bytes**. Pass62 is now the current FULL-checkpoint baseline. See [validation.json](validation.json) for the complete receipt.
 
 ## Entry, topology and scope
 
