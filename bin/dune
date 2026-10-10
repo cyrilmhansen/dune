@@ -191,3 +191,8 @@
  (name native_structure_field_generation)
  (modules native_structure_field_generation)
  (libraries pli80 pli80_host runner unix))
+
+(executable
+ (name native_output_lifecycle)
+ (modules native_output_lifecycle)
+ (libraries pli80 pli80_host runner unix))

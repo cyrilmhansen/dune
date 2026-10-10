@@ -1,0 +1,39 @@
+{
+  "historical_root": "PLI2.OVL+82DD",
+  "semantic_inputs": [
+    "fresh words1C2C and1C2E",
+    "freshAE6A bit0",
+    "freshACA3 pointer andtarget+2 low/+3 high payload",
+    "bufferedREL state andthree dollar-terminated literal strings"
+  ],
+  "semantic_outputs": [
+    "7-bit1001101,tag40word,7-bit1001110,tag40/tag00zero word,byte alignment and7-bit1001111",
+    "three orderedCRLF/string/four-hex-character console groups",
+    "AC9F low/high pointer publication and exact child/service/stack state"
+  ],
+  "shared_historical_state": [
+    "1C2C/1C2E",
+    "ACA3/A4 AC9F/A0 AE6A",
+    "resident206A..2080scratch",
+    "202A/201E console gates",
+    "1D05/2029 output gates",
+    "REL buffer/index/FCB/DMA/sentinel/hardware stack"
+  ],
+  "historical_mechanism": [
+    "RAR bit0 gate anddistinct fixedtag children",
+    "countedRLC serialization andexplicitpadding",
+    "pairedLHLD andlow/highSHLD",
+    "threeINXH payload byte acquisition",
+    "byte indexed dollar loop",
+    "ANI F8/RARx4/ANI0F nibble construction",
+    "canonicalpoll/signature gate andBDOS2 console services",
+    "exactCALL/PSW/RET residue"
+  ],
+  "candidate_modern_operation": "Emit representation trailer and display three hexadecimal words",
+  "confidence": {
+    "low_level_operation": "OBSERVED all five natural sources; DEDUCED exact instruction interpretation",
+    "compiler_lifecycle_meaning": "HYPOTHESIS; no source-language item names or statistics meaning asserted",
+    "AE6A_clear_arm": "DEDUCED STATIC UNOBSERVED"
+  },
+  "mir_relevance": "Documentation only; no MIR/API design or faithful-code refactor."
+}

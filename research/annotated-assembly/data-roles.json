@@ -2790,6 +2790,116 @@
       "width": 2,
       "role": "Low/high pointer publication reread after canonical header serialization.",
       "scope": "Pass63 bounded829C only; compiler type/ownership meaning unproved."
+    },
+    {
+      "id": "PLI2.OVL:lifecycle_payload_pointer",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "name": "lifecycle_payload_pointer",
+      "runtime_address": 44191,
+      "width": 2,
+      "role": "Visible copied ACA3 pointer, freshly reread for p+2/p+3.",
+      "scope": "Pass64 bounded lifecycle and resident console paths."
+    },
+    {
+      "id": "PLI2.OVL:lifecycle_zero_word_tag_gate",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "name": "lifecycle_zero_word_tag_gate",
+      "runtime_address": 44650,
+      "width": 1,
+      "role": "Fresh bit0 selects zero-word tag40 or tag00.",
+      "scope": "Pass64 bounded lifecycle and resident console paths."
+    },
+    {
+      "id": "PLI.COM:console_character_carrier",
+      "image": "PLI.COM",
+      "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+      "name": "console_character_carrier",
+      "runtime_address": 8298,
+      "width": 1,
+      "role": "Saved character zeroextended toDE forBDOS2.",
+      "scope": "Pass64 bounded lifecycle and resident console paths."
+    },
+    {
+      "id": "PLI.COM:console_policy_carrier",
+      "image": "PLI.COM",
+      "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+      "name": "console_policy_carrier",
+      "runtime_address": 8299,
+      "width": 1,
+      "role": "Saved character independently reread after listing/file gates.",
+      "scope": "Pass64 bounded lifecycle and resident console paths."
+    },
+    {
+      "id": "PLI.COM:console_string_index",
+      "image": "PLI.COM",
+      "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+      "name": "console_string_index",
+      "runtime_address": 8300,
+      "width": 1,
+      "role": "Published byte scan index with paired adjacent pointer read.",
+      "scope": "Pass64 bounded lifecycle and resident console paths."
+    },
+    {
+      "id": "PLI.COM:console_string_pointer",
+      "image": "PLI.COM",
+      "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+      "name": "console_string_pointer",
+      "runtime_address": 8301,
+      "width": 2,
+      "role": "Saved little-endian dollar-string pointer.",
+      "scope": "Pass64 bounded lifecycle and resident console paths."
+    },
+    {
+      "id": "PLI.COM:console_string_byte",
+      "image": "PLI.COM",
+      "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+      "name": "console_string_byte",
+      "runtime_address": 8303,
+      "width": 1,
+      "role": "Fresh pointedbyte publication before dollar comparison.",
+      "scope": "Pass64 bounded lifecycle and resident console paths."
+    },
+    {
+      "id": "PLI.COM:console_hex_nibble",
+      "image": "PLI.COM",
+      "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+      "name": "console_hex_nibble",
+      "runtime_address": 8304,
+      "width": 1,
+      "role": "Literal arithmetic character formation carrier.",
+      "scope": "Pass64 bounded lifecycle and resident console paths."
+    },
+    {
+      "id": "PLI.COM:console_hex_byte",
+      "image": "PLI.COM",
+      "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+      "name": "console_hex_byte",
+      "runtime_address": 8305,
+      "width": 1,
+      "role": "Independent high/low nibble reads.",
+      "scope": "Pass64 bounded lifecycle and resident console paths."
+    },
+    {
+      "id": "PLI.COM:console_hex_word",
+      "image": "PLI.COM",
+      "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+      "name": "console_hex_word",
+      "runtime_address": 8306,
+      "width": 2,
+      "role": "B high then C low save;independent high/low byte reads.",
+      "scope": "Pass64 bounded lifecycle and resident console paths."
+    },
+    {
+      "id": "PLI.COM:console_line_string_pointer",
+      "image": "PLI.COM",
+      "image_sha256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+      "name": "console_line_string_pointer",
+      "runtime_address": 8319,
+      "width": 2,
+      "role": "Pointer preserved visibly across poll/CRLF children.",
+      "scope": "Pass64 bounded lifecycle and resident console paths."
     }
   ]
 }

@@ -1,0 +1,102 @@
+{
+  "PLI.COM+124B": {
+    "end": 4722,
+    "description": "Conditional byte alignment and counted trailer",
+    "contract": "Fresh2029 bit0 set returns; otherwise fresh1D05 bit0 clear returns. Active output: while fresh1D8B !=0 call canonical1140(C0); then canonical119E(C9E,E7), bits1001111. No close occurs. Successful bounded writer scope inherited.",
+    "completeness": [
+      "stable",
+      "partial",
+      "partial"
+    ]
+  },
+  "PLI.COM+05FF": {
+    "end": 1553,
+    "description": "Saved pointer line and dollar string output",
+    "contract": "Save B at2080 then C at207F. Canonical05F8 polls then emits CR/LF. Fresh paired207F word becomes BC for03F4 dollar-terminated string. Console-only, no key-present/listing/redirected output.",
+    "completeness": [
+      "stable",
+      "complete",
+      "partial"
+    ]
+  },
+  "PLI.COM+05F8": {
+    "end": 1535,
+    "description": "Poll and CR LF output",
+    "contract": "Canonical05B2 zero-key route then canonical03E9 CR and LF; actual child flags/registers returned.",
+    "completeness": [
+      "stable",
+      "complete",
+      "partial"
+    ]
+  },
+  "PLI.COM+0466": {
+    "end": 1149,
+    "description": "Fresh cached word hexadecimal output",
+    "contract": "Save B at2073 then C at2072; independent paired2072 reads acquire high byte then low byte. Each invokes044B. Four uppercase hexadecimal characters; actual scratch/register/flags/service chronology retained.",
+    "completeness": [
+      "stable",
+      "complete",
+      "partial"
+    ]
+  },
+  "PLI.COM+044B": {
+    "end": 1126,
+    "description": "Cached byte high and low hexadecimal fields",
+    "contract": "Save C2071. Fresh byte ANI F8,RAR four times -> C high nibble;0421. Fresh byte ANI0F -> C low nibble;0421. Fresh independent reads retained.",
+    "completeness": [
+      "stable",
+      "complete",
+      "partial"
+    ]
+  },
+  "PLI.COM+0421": {
+    "end": 1099,
+    "description": "Nibble character construction",
+    "contract": "Save C2070; A9 CMP fresh M. If CY then fresh saved value ADI41,SUI0A; otherwise ADI30. Publish2070; paired reread low to C;0390. Bounded caller nibble0..15.",
+    "completeness": [
+      "stable",
+      "complete",
+      "partial"
+    ]
+  },
+  "PLI.COM+03F4": {
+    "end": 1057,
+    "description": "Indexed dollar-terminated string output",
+    "contract": "Save B206E then C206D;206C=0. Repeated paired206C read with high discarded ->DE zero-extended index; paired206D pointer,DAD D; fresh byte ->206F,CPI24; RET on dollar. Otherwise paired206F low ->C,0390;INR byte206C and retry. Nonwrapping terminator within256 bytes; no scratch/stack alias.",
+    "completeness": [
+      "stable",
+      "complete",
+      "partial"
+    ]
+  },
+  "PLI.COM+03E9": {
+    "end": 1012,
+    "description": "Ordered CR LF output",
+    "contract": "C0D calls0390; C0A calls0390; return actual second child state.",
+    "completeness": [
+      "stable",
+      "complete",
+      "partial"
+    ]
+  },
+  "PLI.COM+0390": {
+    "end": 1001,
+    "description": "Bounded console character policy",
+    "contract": "Save C206B. Fresh202A RAR requires bit0 clear; fresh201E RAR requires bit0 clear. Fresh paired206B low -> C;0380. Listing/page/file routes remain RAW unsupported.",
+    "completeness": [
+      "stable",
+      "partial",
+      "partial"
+    ]
+  },
+  "PLI.COM+0380": {
+    "end": 912,
+    "description": "Character carrier BDOS2 output",
+    "contract": "Save C206A; fresh paired206A high discarded; zeroextended low ->DE viaXCHG; C2; canonical19BB signature/sentinel service gate and BDOS2; exact service returned A/B alias L/H.",
+    "completeness": [
+      "stable",
+      "complete",
+      "partial"
+    ]
+  }
+}

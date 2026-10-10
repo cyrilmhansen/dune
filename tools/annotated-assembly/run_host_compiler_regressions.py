@@ -58,6 +58,7 @@ def commands(images,out):
  for name,file in [('pass44-roots','test_reentrant_acquisition_pass_44.py'),('pass44-family','test_acquisition_family_pass_44.py'),('pass44-numeric','test_numeric_acquisition_pass_44.py'),('pass44-hybrids','test_native_reentry_hybrids_pass_44.py')]:
   cmds[name]=['python3','tools/annotated-assembly/'+file,'--images',images,'-q']
  cmds['pass60']=['python3','tools/annotated-assembly/test_carrier_generation_pass_60.py','--images',images,'-q']
+ cmds['pass64']=['python3','tools/annotated-assembly/test_output_lifecycle_pass_64.py','--images',images,'-q']
  cmds['pass63']=['python3','tools/annotated-assembly/test_structure_field_generation_pass_63.py','--images',images,'-q']
  cmds['pass62']=['python3','tools/annotated-assembly/test_paired_carrier_publication_pass_62.py','--images',images,'-q']
  cmds['pass61']=['python3','tools/annotated-assembly/test_73d0_parent_family_pass_61.py','--images',images,'-q']

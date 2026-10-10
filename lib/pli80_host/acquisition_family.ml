@@ -13,6 +13,7 @@ type result={returned:R.returned;field:int option}
 let run operation memory ~entry ~write ~compatibility ~adjust ~sp ~guard_field ~native ~follow_spine ~software =
  B.check entry.R.a;List.iter U.check[entry.bc;entry.de;entry.hl;sp()];
  let q=ref entry and acquired_field=ref None in
+ let console_entry_sp=sp()in
  let need condition text=if not condition then invalid_arg("Acquisition_family: "^text)in
  let read=S.read memory and word=S.word memory in
  let put site address value=S.write memory address value;write ~site:(site+0x2200) ~address ~value in
@@ -374,6 +375,17 @@ let run operation memory ~entry ~write ~compatibility ~adjust ~sp ~guard_field ~
     a(read 0x20b7);let old= !q.a in q:={!q with R.a=B.wrap(old lsl 1)lor(old lsr 7);flags={!q.flags with carry=old land 128<>0}};
     resident_put 0x11b1 0x20b7 !q.a;c !q.a;resident_call 0x11b5 0x1140 bit_write;
     a(read 0x20b8);a(dec !q.a);resident_put 0x11bc 0x20b8 !q.a;loop())in loop()in
+ let align_output()=
+  a(read 0x2029);rar();if not !q.flags.carry then(
+   a(read 0x1d05);rar();if !q.flags.carry then(
+    let rec pad()=a(read 0x1d8b);cmp 0;if not !q.flags.zero then(c 0;resident_call 0x1264 0x1140 bit_write;pad())in pad();
+    e 7;c 0x9e;resident_call 0x126e 0x119e bits_write))in
+ let console offset=q:=Resident_console.run offset memory ~entry:!q ~write ~compatibility ~invoke:native
+  ~guard_string:(fun pointer->
+   let rec length i=need(i<256&&pointer+i<65536)"console bounded string";if read(pointer+i)=0x24 then i+1 else length(i+1)in
+   let width=length 0 in
+   need(not(List.exists(fun(a,b)->pointer<b&&pointer+width>a)[0x1ce4,0x1d8c;0x205f,0x20c1;0x2155,0x215d]))"console string/output/FCB/scratch alias";
+   need(not(pointer+width>console_entry_sp-512))"console string/stack alias")in
  let word_bits ?(entry=0x1207) ()=
   let cache,prefix=List.assoc entry[0x11c3,(0x20b9,0);0x11e5,(0x20bb,0x40);0x1207,(0x20bd,0x80)]in
   hl(cache+1);resident_put(entry+3)!q.hl(!q.bc lsr 8);hl(U.wrap(!q.hl-1));resident_put(entry+5)!q.hl(!q.bc land 255);
@@ -428,6 +440,20 @@ let run operation memory ~entry ~write ~compatibility ~adjust ~sp ~guard_field ~
     hl 0xadc4;let value=inc(read !q.hl)in put 0x73f9 !q.hl value;if not !q.flags.zero then clear())in clear())in
  let rec pli2_output offset=match offset with
  |0x79e2->preparation79e2()|0x73d0->reset73d0()
+ |0x82dd->
+  e 7;c 0x9a;resident 0x82e1 0x119e bits_write;
+  pair 0x1c2c;bc !q.hl;resident 0x82e9 0x11e5(fun()->word_bits ~entry:0x11e5());
+  e 7;c 0x9c;resident 0x82f0 0x119e bits_write;
+  a(read 0xae6a);rar();let tag,site=if !q.flags.carry then 0x11e5,0x82fd else 0x11c3,0x8306 in
+  bc 0;resident site tag(fun()->word_bits ~entry:tag());resident 0x8309 0x124b align_output;
+  bc 0x94eb;resident 0x830f 0x05ff(fun()->console 0x05ff);
+  pair 0x1c2c;bc !q.hl;resident 0x8317 0x0466(fun()->console 0x0466);
+  bc 0x94fa;resident 0x831d 0x05ff(fun()->console 0x05ff);
+  pair 0xaca3;store 0x8323 0xac9f !q.hl;pair 0xac9f;
+  hl(U.wrap(!q.hl+1));hl(U.wrap(!q.hl+1));c(read !q.hl);hl(U.wrap(!q.hl+1));bc((read !q.hl lsl 8)lor(!q.bc land 255));
+  resident 0x832e 0x0466(fun()->console 0x0466);
+  bc 0x9507;resident 0x8334 0x05ff(fun()->console 0x05ff);
+  pair 0x1c2e;bc !q.hl;resident 0x833c 0x0466(fun()->console 0x0466)
  |0x829c->
   (* Source acquisition precedes the header; the payload pointer is freshly
      reread after the canonical serializer, not retained from entry. *)
@@ -1043,6 +1069,6 @@ let run operation memory ~entry ~write ~compatibility ~adjust ~sp ~guard_field ~
    a(read 0x1d8b);sub 0;add 255;mask();restore();logical false(!q.bc land 255);rar();
    if !q.flags.carry then(c 0;resident_call 0x12a1 0x1140 bit_write;pad())in pad();
   bc 0x1ce4;resident_call 0x12aa 0x064c(fun()->q:=native ~site:0x13aa ~target:0x074c !q)in
- (match operation with Pli2_output offset->pli2_output offset|Output offset->(match offset with 0x1272->finalize_output()|0x1140->bit_write()|0x1a29->q:=Resident_reader.run Resident_reader.Byte_difference memory ~entry:!q ~write ~compatibility ~sp ~invoke:native|0x119e->bits_write()|0x11c3|0x11e5|0x1207->word_bits ~entry:offset ()|_->invalid_arg"output operation")| Adapter offset->ignore(invoke ~site:0 ~target:(offset+0x2200)!q)|Context->context()|Field->field_acquisition()|Attribute->attribute_dispatch()|Spine->recursive_spine()|Resident->reuse H.Resident_acquisition|Pair_gate->pair_gate()|Selected_transform->selected_transform()|Table_adapter->table_adapter()|Wrapper->counted_spine()|Repeat->counted_spine ~repeat_only:true ()|Copy05->copy_arguments()|Traversal->traversal()|Construction->construction()|Record_output->record_output()|Index_one->acquire_index_one()|Parent->parent()|Recursive op->(match op with Recursive_parent.Initialization Initialization_parent.Advance->guard_field(word 0xa861)1|Initialization Structure->guard_field(word 0xa863)6|_->());q:=Recursive_parent.run op memory ~entry:!q ~write ~compatibility ~adjust ~sp ~invoke|Reader op->
+ (match operation with Pli2_output offset->pli2_output offset|Output offset->(match offset with 0x1272->finalize_output()|0x124b->align_output()|offset when List.mem_assoc offset Resident_console.bounds->console offset|0x1140->bit_write()|0x1a29->q:=Resident_reader.run Resident_reader.Byte_difference memory ~entry:!q ~write ~compatibility ~sp ~invoke:native|0x119e->bits_write()|0x11c3|0x11e5|0x1207->word_bits ~entry:offset ()|_->invalid_arg"output operation")| Adapter offset->ignore(invoke ~site:0 ~target:(offset+0x2200)!q)|Context->context()|Field->field_acquisition()|Attribute->attribute_dispatch()|Spine->recursive_spine()|Resident->reuse H.Resident_acquisition|Pair_gate->pair_gate()|Selected_transform->selected_transform()|Table_adapter->table_adapter()|Wrapper->counted_spine()|Repeat->counted_spine ~repeat_only:true ()|Copy05->copy_arguments()|Traversal->traversal()|Construction->construction()|Record_output->record_output()|Index_one->acquire_index_one()|Parent->parent()|Recursive op->(match op with Recursive_parent.Initialization Initialization_parent.Advance->guard_field(word 0xa861)1|Initialization Structure->guard_field(word 0xa863)6|_->());q:=Recursive_parent.run op memory ~entry:!q ~write ~compatibility ~adjust ~sp ~invoke|Reader op->
   if List.mem_assoc op [Reader_construction.Reader_setup,0x4206;Reader_parent,0x3cfd;Reader_entry,0x3e07;Select_structure,0x6c26;Publish_structure,0x7abb]then ignore(invoke ~site:0 ~target:(List.assoc op [Reader_construction.Reader_setup,0x4206;Reader_parent,0x3cfd;Reader_entry,0x3e07;Select_structure,0x6c26;Publish_structure,0x7abb])!q)else q:=Reader_construction.run op memory ~entry:!q ~write ~compatibility ~sp ~invoke);
  {returned= !q;field= !acquired_field}

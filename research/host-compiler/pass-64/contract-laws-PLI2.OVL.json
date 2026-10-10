@@ -1,0 +1,12 @@
+{
+  "PLI2.OVL+82DD": {
+    "end": 33600,
+    "description": "Buffered representation trailer and three console words",
+    "completeness": [
+      "stable",
+      "complete",
+      "partial"
+    ],
+    "contract": "119E(C9A,E7),fresh1C2C ->11E5;119E(C9C,E7);freshAE6A RAR bit0 selects BC0->11E5 if set else11C3.124B aligns and emits7-bit9E trailer. Three05FF calls print CRLF and dollar strings from literal94EB/94FA/9507; three0466 calls emit words from fresh1C2C, freshACA3->SHLDAC9F->freshAC9F->p+2 low/p+3 high, and fresh1C2E respectively. Final RET. Console-only zero-key route, successful writer, nonwrapping/nonalias structure/string/stack/sentinel scope, excluding the full active/inherited stack region; no file close or warm boot inside root. General compiler meaning unknown."
+  }
+}
