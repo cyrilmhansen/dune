@@ -2900,6 +2900,66 @@
       "width": 2,
       "role": "Pointer preserved visibly across poll/CRLF children.",
       "scope": "Pass64 bounded lifecycle and resident console paths."
+    },
+    {
+      "id": "PLI2.OVL:policy_saved_selector",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "name": "policy_saved_selector",
+      "runtime_address": 44602,
+      "width": 1,
+      "role": "Fresh saved C for paired/index policy.",
+      "scope": "Bounded Pass65 +7ED6 generation relation policy."
+    },
+    {
+      "id": "PLI2.OVL:policy_saved_relation_pair",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "name": "policy_saved_relation_pair",
+      "runtime_address": 44603,
+      "width": 2,
+      "role": "Little-endian E low/D high save.",
+      "scope": "Bounded Pass65 +7ED6 generation relation policy."
+    },
+    {
+      "id": "PLI2.OVL:policy_scan_index",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "name": "policy_scan_index",
+      "runtime_address": 44605,
+      "width": 1,
+      "role": "Published scan index0..8,skip6.",
+      "scope": "Bounded Pass65 +7ED6 generation relation policy."
+    },
+    {
+      "id": "PLI2.OVL:policy_current_word",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "name": "policy_current_word",
+      "runtime_address": 44606,
+      "width": 2,
+      "role": "Freshly formed adjacent-table word,independently reread during bounded adjustment.",
+      "scope": "Bounded Pass65 +7ED6 generation relation policy."
+    },
+    {
+      "id": "PLI2.OVL:policy_split_relations",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "name": "policy_split_relations",
+      "runtime_address": 44608,
+      "width": 2,
+      "role": "Saved D atAE40,E atAE41 for independent predicate calls.",
+      "scope": "Bounded Pass65 +7ED6 generation relation policy."
+    },
+    {
+      "id": "PLI2.OVL:policy_candidate_indices",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "name": "policy_candidate_indices",
+      "runtime_address": 44610,
+      "width": 2,
+      "role": "FF sentinels;independent successful candidates persist across iterations.",
+      "scope": "Bounded Pass65 +7ED6 generation relation policy."
     }
   ]
 }

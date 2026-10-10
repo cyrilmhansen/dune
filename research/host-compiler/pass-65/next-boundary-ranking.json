@@ -1,0 +1,33 @@
+{
+  "recommended": "PLI2.OVL+8072",
+  "sources": {
+    "MINIMAL": {
+      "calls": 3,
+      "entry": "PLI2.OVL+8072",
+      "returns": [
+        32945
+      ],
+      "widened": false,
+      "reason": "Separate saved-input,gate,andoutput policy; defer after independent7ED6closure."
+    },
+    "FIZZBUZ": {
+      "calls": 11,
+      "entry": "PLI2.OVL+8072",
+      "returns": [
+        32945
+      ],
+      "widened": false,
+      "reason": "Separate saved-input,gate,andoutput policy; defer after independent7ED6closure."
+    },
+    "PICTURE": {
+      "calls": 4,
+      "entry": "PLI2.OVL+8072",
+      "returns": [
+        32945
+      ],
+      "widened": false,
+      "reason": "Separate saved-input,gate,andoutput policy; defer after independent7ED6closure."
+    }
+  },
+  "comparison": "PLI2.OVL+18B3 remains a separate large traversal with many unrelated children; do not widen for inclusive ranking."
+}

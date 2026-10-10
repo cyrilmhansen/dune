@@ -32,6 +32,7 @@ let run operation memory ~entry ~write ~compatibility ~adjust ~sp ~guard_field ~
  let rar()=let old= !q.a in q:={!q with R.a=(old lsr 1)lor(if !q.flags.carry then 128 else 0);flags={!q.flags with carry=old land 1<>0}}in
  let dad v=let sum= !q.hl+v in q:={!q with R.hl=U.wrap sum;flags={!q.flags with carry=sum>65535}}in
  let inc v=let n=B.wrap(v+1)in q:={!q with R.flags=flags n(v land 15=15)!q.flags.carry};n in
+ let dec v=let n=B.wrap(v-1)in q:={!q with R.flags=flags n(v land 15<>0)!q.flags.carry};n in
  let exchange()=let old= !q.hl in hl !q.de;de old in
  let psw()=let f= !q.flags in (if f.sign then 128 else 0)lor(if f.zero then 64 else 0)lor(if f.auxiliary_carry then 16 else 0)lor(if f.parity then 4 else 0)lor 2 lor(if f.carry then 1 else 0)in
  let push site value=compatibility(H.Push(site+0x2200,value))in
@@ -440,6 +441,71 @@ let run operation memory ~entry ~write ~compatibility ~adjust ~sp ~guard_field ~
     hl 0xadc4;let value=inc(read !q.hl)in put 0x73f9 !q.hl value;if not !q.flags.zero then clear())in clear())in
  let rec pli2_output offset=match offset with
  |0x79e2->preparation79e2()|0x73d0->reset73d0()
+ |0x83b4->
+  need(!q.bc land 255>0&& !q.bc land 255<=8)"83B4 shift count";
+  let rec shift()=dad !q.hl;let old= !q.bc land 255 in let n=dec old in c n;if not !q.flags.zero then shift()in shift()
+ |0x8398->e !q.a;de(!q.de land 255);a(!q.de land 255);logical false(!q.hl land 255);hl((!q.hl land 0xff00)lor !q.a);a(!q.de lsr 8);logical false(!q.hl lsr 8);hl(!q.a lsl 8 lor(!q.hl land 255))
+ |0x83d2->c !q.a;bc(!q.bc land 255);a(!q.de land 255);sub(!q.bc land 255);hl((!q.hl land 0xff00)lor !q.a);
+  let old= !q.de lsr 8 and borrow=if !q.flags.carry then 1 else 0 in let n=B.wrap(old-borrow)in q:={!q with R.a=n;hl=n lsl 8 lor(!q.hl land 255);flags=flags n((old land 15)>=borrow)(old<borrow)}
+ |0x7d47|0x7d85->
+  need(!q.bc land 255<8)"paired adjustment carrier";
+  let forward=offset=0x7d47 in let cell,start,tag=if forward then 0xae32,0x7d47,3 else 0xae33,0x7d85,11 in
+  hl cell;put(start+3)!q.hl(!q.bc land 255);a(read cell);cmp 6;
+  if !q.flags.zero then(hl 0xadc9;put(start+15)!q.hl 1;e 6;c tag;call(start+21)0x75ce(fun()->pli2_output 0x75ce))
+  else(pair cell;exchange();c tag;call(start+31)0x75ce(fun()->pli2_output 0x75ce);
+   pair cell;hl(!q.hl land 255);bc 0xadb4;dad !q.bc;a(read !q.hl);a(if forward then inc !q.a else dec !q.a);put(start+45)!q.hl !q.a;cmp(if forward then 0 else 255);
+   if !q.flags.zero then(pair cell;hl(!q.hl land 255);bc 0xadb3;dad !q.bc;let n=if forward then inc(read !q.hl)else dec(read !q.hl)in put(start+60)!q.hl n))
+ |0x7ed6->
+  hl 0xae3c;put 0x7ed9 !q.hl(!q.de lsr 8);hl(!q.hl-1);put 0x7edb !q.hl(!q.de land 255);hl(!q.hl-1);put 0x7edd !q.hl(!q.bc land 255);
+  a(read 0x202b);rar();if !q.flags.carry then a 0 else(
+   a(read 0xadaa);rar();if not !q.flags.carry then a 0 else(
+    a(read 0xae3a);cmp 6;if !q.flags.zero then a 0 else(
+     need(read 0xae3a<7)"7ED6 adjacent bounded carrier indices";
+     pair 0xae3a;hl(!q.hl land 255);bc 0xadab;dad !q.bc;push 0x7f06 !q.hl;
+     pair 0xae3a;hl(!q.hl land 255);bc(!q.bc+1);dad !q.bc;a(read !q.hl);hl(pop());logical true(read !q.hl);rar();
+     let arithmetic_done=if not !q.flags.carry then false else(
+      pair 0xae3a;hl(!q.hl land 255);bc 0xadb3;dad !q.bc;c(read !q.hl);bc(!q.bc land 255);hl !q.bc;c 8;call 0x7f25 0x83b4(fun()->pli2_output 0x83b4);push 0x7f28 !q.hl;
+      pair 0xae3a;hl(!q.hl land 255);bc 0xadb4;dad !q.bc;a(read !q.hl);hl(pop());call 0x7f34 0x8398(fun()->pli2_output 0x8398);store 0x7f37 0xae3e !q.hl;
+      de 0xae3b;resident 0x7f3d 0x1a43 pointer_minus;exchange();a 3;call 0x7f43 0x83d2(fun()->pli2_output 0x83d2);
+      let rec adjust_word direction remaining=
+       need(remaining>0)"7ED6 bounded adjacent-word adjustment";
+       bc(if direction then 0xae3e else 0xae3b);de(if direction then 0xae3b else 0xae3e);
+       resident (if direction then 0x7f4f else 0x7f87) 0x1a33 pointer_words;
+       a 0;resident (if direction then 0x7f54 else 0x7f8c) 0x1a29(fun()->q:=Resident_reader.run Resident_reader.Byte_difference memory ~entry:!q ~write ~compatibility ~sp ~invoke:native);
+       logical false(!q.hl land 255);
+       if !q.flags.zero then a 1 else(
+        pair 0xae3a;c(!q.hl land 255);call (if direction then 0x7f5f else 0x7f97)(if direction then 0x7d47 else 0x7d85)(fun()->pli2_output(if direction then 0x7d47 else 0x7d85));
+        pair 0xae3e;hl(U.wrap(!q.hl+(if direction then 1 else -1)));store (if direction then 0x7f66 else 0x7f9e) 0xae3e !q.hl;adjust_word direction(remaining-1))in
+      if !q.flags.carry then(adjust_word true 3;true)else(
+       bc 0xae3b;de 0xae3e;resident 0x7f75 0x1a33 pointer_words;exchange();a 3;call 0x7f7b 0x83d2(fun()->pli2_output 0x83d2);
+       if !q.flags.carry then(adjust_word false 3;true)else false))in
+     if not arithmetic_done then(
+     pair 0xae3b;a(!q.hl lsr 8);put 0x7fab 0xae40 !q.a;a(!q.hl land 255);put 0x7faf 0xae41 !q.a;
+     pair 0xae3a;c(!q.hl land 255);pair 0xae40;exchange();call 0x7fba 0x7365(fun()->pli2_output 0x7365);rar();
+     let matched_first= !q.flags.carry in
+     if matched_first then(
+      a(read 0xae3a);a(inc !q.a);pair 0xae41;exchange();c !q.a;call 0x7fca 0x7e05(fun()->pli2_output 0x7e05);a 1)
+     else(
+      a(read 0xae3a);a(inc !q.a);pair 0xae41;exchange();c !q.a;call 0x7fd9 0x7365(fun()->pli2_output 0x7365);rar();
+      if !q.flags.carry then(pair 0xae3a;c(!q.hl land 255);pair 0xae40;exchange();call 0x7fe8 0x7e05(fun()->pli2_output 0x7e05);a 1)
+      else(
+       hl 0xae42;put 0x7ff1 !q.hl 255;hl(!q.hl+1);put 0x7ff4 !q.hl 255;hl 0xae3d;put 0x7ff9 !q.hl 0;
+       let rec search remaining=
+        need(remaining>0)"7ED6 bounded scan";a 7;hl 0xae3d;cmp(read !q.hl);
+        if not !q.flags.carry then(
+         a(read 0xae3d);cmp 6;
+         let found=if !q.flags.zero then false else(
+          pair 0xae3b;a(!q.hl lsr 8);pair 0xae3d;e !q.a;c(!q.hl land 255);call 0x8015 0x7365(fun()->pli2_output 0x7365);rar();
+          if !q.flags.carry then(a(read 0xae3d);put 0x801f 0xae42 !q.a);
+          pair 0xae3b;a(!q.hl land 255);pair 0xae3d;e !q.a;c(!q.hl land 255);call 0x802b 0x7365(fun()->pli2_output 0x7365);rar();
+          if !q.flags.carry then(hl 0xae3a;a(read 0xae3d);cmp(read !q.hl);if not !q.flags.zero then(a(read 0xae3d);put 0x803f 0xae43 !q.a));
+          a(read 0xae43);hl 0xae42;logical false(read !q.hl);let old= !q.a in q:={!q with R.a=B.wrap(old lsl 1)lor(old lsr 7);flags={!q.flags with carry=old land 128<>0}};rar();
+          not !q.flags.carry)in
+         if found then(
+          pair 0xae3a;c(!q.hl land 255);pair 0xae42;exchange();call 0x8056 0x793c(fun()->pli2_output 0x793c);
+          a(read 0xae3a);a(inc !q.a);pair 0xae43;exchange();c !q.a;call 0x8062 0x793c(fun()->pli2_output 0x793c);a 1)
+         else(hl 0xae3d;let n=inc(read !q.hl)in put 0x806b !q.hl n;if not !q.flags.zero then search(remaining-1)else a 0))else a 0 in
+       search 9))))))
  |0x82dd->
   e 7;c 0x9a;resident 0x82e1 0x119e bits_write;
   pair 0x1c2c;bc !q.hl;resident 0x82e9 0x11e5(fun()->word_bits ~entry:0x11e5());

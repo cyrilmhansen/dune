@@ -17,6 +17,8 @@ let prepare bridge offset ~call ~origin boundary=B.prepare bridge (output_operat
    Older cases reject BDOS; Pass64 supplies a concrete copied BDOS callback. *)
 let carrier_synthetic_proofs=ref []
 let carrier_synthetic_pairs=ref []
+(* Pass65-only natural instruction witnesses; archived proof schema is unchanged. *)
+let policy_natural_instructions=ref []
 let synthetic_carrier_cpu ?bdos ?(checkpoint_range=(0x9fc3,0xa0d6)) ~label (entry:Runner.state_snapshot) ram (plan:B.prepared) expected =
  let module S=I8080.State in let module F=I8080.Flags in
  let memory=I8080.Memory.create()in I8080.Memory.load memory ~address:0 ram;
@@ -26,6 +28,7 @@ let synthetic_carrier_cpu ?bdos ?(checkpoint_range=(0x9fc3,0xa0d6)) ~label (entr
  let cpu=I8080.Cpu.create ~state:st ~bus:(I8080.Bus.create memory)in
  let helper_call=ref None in
  let writes=ref[]and calls=ref[]and checkpoints=ref[]and states=ref[]in
+ let pending_helpers=ref[]in
  let rec execute left=
   if S.pc st=plan.state.pc&&S.sp st=entry.sp+2 then()else(
    require(left>0)"bounded synthetic historical route";
@@ -39,6 +42,10 @@ let synthetic_carrier_cpu ?bdos ?(checkpoint_range=(0x9fc3,0xa0d6)) ~label (entr
     let ws=List.filter_map(function I8080.Step.Write w->Some(Printf.sprintf"{\"address\":%d,\"new_value\":%d}"w.address w.value)|_->None)accesses in
     let rs=List.filter_map(function I8080.Step.Read r->Some(Printf.sprintf"{\"address\":%d,\"value\":%d}"r.address r.value)|_->None)accesses in
     Printf.sprintf"{\"origin\":{\"image\":{\"name\":\"PLI2.OVL\"},\"offset\":%d},\"pc\":%d,\"pc_after\":%d,\"sp_before\":%d,\"sp_after\":%d,\"step_index\":%d,\"bytes\":%S,\"control\":{\"kind\":%S},\"writes\":[%s],\"reads\":[%s]}"(site-0x2200)site(S.pc st)before_sp(S.sp st)(100000-left)hex kind(String.concat","ws)(String.concat","rs)in
+   (match I8080.Step.control_flow step with
+    |I8080.Step.Call{taken=true;_}when String.starts_with ~prefix:"7ED6_"label&&List.mem(S.pc st-0x2200)[0x7d47;0x7d85;0x8398;0x83b4;0x83d2]->pending_helpers:=(S.pc st-0x2200,witness "call",S.sp st)::!pending_helpers
+    |I8080.Step.Return{taken=true;_}->(match !pending_helpers with (offset,call,entry_sp)::rest when before_sp=entry_sp->carrier_synthetic_pairs:=(offset,call,witness "return")::!carrier_synthetic_pairs;pending_helpers:=rest|_->())
+    |_->());
    if List.mem site[0xa05c;0xa06f]then helper_call:=Some(S.pc st-0x2200,witness "call");
    if List.mem site[0x9fd8;0x9fe3;0x9ff9;0xa004]then(match !helper_call with None->()|Some(offset,call)->
     carrier_synthetic_pairs:=(offset,call,witness "return")::!carrier_synthetic_pairs;helper_call:=None);
@@ -48,7 +55,7 @@ let synthetic_carrier_cpu ?bdos ?(checkpoint_range=(0x9fc3,0xa0d6)) ~label (entr
     states:=Printf.sprintf"{\"pc\":%d,\"A\":%d,\"BC\":%d,\"DE\":%d,\"HL\":%d,\"SP\":%d,\"PSW\":%d,\"index\":%d}"site(S.a st)(S.bc st)(S.de st)(S.hl st)(S.sp st)(F.to_psw_byte f)(I8080.Memory.read memory 0xae39)::!states);
    execute(left-1))in execute 100000;
  let actual:Runner.state_snapshot={a=S.a st;b=S.b st;c=S.c st;d=S.d st;e=S.e st;h=S.h st;l=S.l st;sp=S.sp st;pc=S.pc st;sign=F.sign f;zero=F.zero f;auxiliary_carry=F.auxiliary_carry f;parity=F.parity f;carry=F.carry f}in
- require(actual=plan.state)"synthetic historical all registers/flags/SP/PC";
+ require(actual=plan.state)(Printf.sprintf "synthetic %s state actual=%d/%d/%d/%d/%d/%d/%d f=%b%b%b%b%b expected=%d/%d/%d/%d/%d/%d/%d f=%b%b%b%b%b" label actual.a actual.b actual.c actual.d actual.e actual.h actual.l actual.sign actual.zero actual.auxiliary_carry actual.parity actual.carry plan.state.a plan.state.b plan.state.c plan.state.d plan.state.e plan.state.h plan.state.l plan.state.sign plan.state.zero plan.state.auxiliary_carry plan.state.parity plan.state.carry);
  require(I8080.Memory.read_range memory ~address:0 ~length:65536=expected)"synthetic historical full RAM";
  require(List.rev !writes=List.map(fun(w:B.write)->w.address,w.value,w.writer)plan.journal)"synthetic ordered writes and stack writer chronology";
  carrier_synthetic_proofs:=Printf.sprintf"{\"route\":%S,\"C\":%d,\"E\":%d,\"full_RAM_sha256\":%S,\"checkpoints\":[%s],\"all_passed\":true}"label entry.c entry.e(Experiment.sha256_hex expected)(String.concat","(List.rev !states))::!carrier_synthetic_proofs;
@@ -61,6 +68,13 @@ let shadow ?(offset=0x1272) ?(within=[]) ?(run_negatives=true) input=
  let on_guest_step ~step_index:_ ~before ~after step=
   previous:=Some{Native_dispatch.origin= !origin;before;after;step};
   match !active with None->()|Some(_,_,_,_,_,_,_,_,writes,latest,calls)->
+   if List.mem offset[0x7ed6;0x7d47;0x7d85;0x8398;0x83b4;0x83d2]then(
+    let lo,hi=B.bounds(output_operation offset)in let off=before.pc-0x2200 in
+    if off>=lo&&off<hi then(
+     let raw=I8080.Step.fetched_bytes step in let hex=String.concat""(List.init(Bytes.length raw)(fun i->Printf.sprintf"%02X"(Char.code(Bytes.get raw i))))in
+     let kind,target=match I8080.Step.control_flow step with I8080.Step.Call q->"call",Some q.target|Jump q->"jump",Some q.target|Return q->"return",q.target|_->"ordinary",None in
+     policy_natural_instructions:=Printf.sprintf"{\"source\":%S,\"owner\":\"PLI2.OVL+%04X\",\"offset\":%d,\"bytes\":%S,\"decoded\":%S,\"kind\":%S,\"target\":%s}"input.module_name offset off hex(I8080.Instr_format.format(I8080.Step.decoded step).instr)kind(match target with None->"null"|Some x->string_of_int x)::!policy_natural_instructions
+    ));
    (match I8080.Step.control_flow step with I8080.Step.Call{taken=true;_}->calls:=before.Runner.pc::!calls|_->());
    List.iter(function I8080.Step.Write w->Hashtbl.replace latest w.address(before.pc,w.value);
     if before.pc<>0x1abb&&before.pc<>0x1abc&&before.pc<>0x1ac3&&
@@ -71,7 +85,7 @@ let shadow ?(offset=0x1272) ?(within=[]) ?(run_negatives=true) input=
    |Some(entry_step,call,(entry:Runner.state_snapshot),ram,files,dma,(p:B.prepared),(preview:Runner.host_program_result),writes,latest,calls)when state.pc=call.B.resume&&state.sp=entry.sp+2->
     let prev=Option.get !previous in
     require(I8080.Step.control_flow prev.step=I8080.Step.Return{target=Some call.resume;taken=true}&&prev.before.sp=entry.sp)"RET consumer";
-    require(state=p.state)"returned state";
+    require(state=p.state)(Printf.sprintf "returned state offset=%04X source=%s actual=%d/%d/%d/%d/%d/%d/%d predicted=%d/%d/%d/%d/%d/%d/%d" offset input.module_name state.a state.b state.c state.d state.e state.h state.l p.state.a p.state.b p.state.c p.state.d p.state.e p.state.h p.state.l);
     require(boundary.copy_memory()=preview.memory)"full64KiB RAM";
     require(boundary.dma=preview.dma&&Cpm.Filesystem.equal(boundary.copy_filesystem())preview.filesystem)"DMA/filesystem";
     require(!service_index=List.length preview.services)"service count/order";
@@ -84,13 +98,13 @@ let shadow ?(offset=0x1272) ?(within=[]) ?(run_negatives=true) input=
     let planned_calls=List.filter_map(fun(w:B.write)->if w.kind="compatibility"&&w.address mod 2=entry.sp mod 2&&Char.code(Bytes.get (if w.writer>=0x2200 then input.pli2_ovl else input.pli_com)(w.writer-(if w.writer>=0x2200 then 0x2200 else 0x100)))=0xcd then Some w.writer else None)p.journal in
     require(List.rev !calls=planned_calls)"child CALL chronology";
     require(not(Hashtbl.mem latest entry.sp)&&not(Hashtbl.mem latest(entry.sp+1)))"original continuation lifetime";
-    cases:={Q.caller=call.coordinate;entry_step;return_step=step_index-1;input=entry;output=state;route=(if offset=0x1272 then"pending_REL_padding_and_close"else if offset=0x119e then"counted_bits"else if offset=0x1140 then"append_bit"else match List.assoc_opt offset[0x82dd,"representation_termination_and_console_words";0x124b,"byte_alignment_and_7bit_trailer";0x05ff,"line_and_dollar_string";0x0466,"hex_word";0x829c,"structure_pointer_payload_emission";0x7338,"paired_carrier_publication";0x7423,"FFFF_word_publication";0x742a,"reset_publish_read_position";0x79a2,"three_gate_bytes_zero";0x8258,"saved_word_position_emission";0x82b5,"reset_state_fixed_field_emission";0x7e05,"gated_indexed_carrier_generation";0x7dc3,"indexed_carrier_increment";0x7de4,"indexed_carrier_decrement";0x79e2,"fresh_AE05_zero_gate";0x7a17,"fresh_AE04_zero_gate";0x73d0,"bit_gated_indexed_clear";0x8225,"saved_tag_pointer_generation";0x8248,"fixed_C4_pointer_adapter";0x7701,"pointer_trim_and_byte_generation";0x7557,"zero_prefixed_byte";0x756d,"normalized_combined_field";0x75a7,"clear_gate_zero_prefixed_byte";0x75ce,"shifted_field_byte";0x75f1,"two_zero_prefixed_word_bytes";0x7619,"word_carrier_and_byte_pair";0x746f,"clear_gate_byte_carrier";0x74c7,"clear_gate_second_byte_carrier";0x7510,"clear_gate_word_carrier"]with Some route->route|None->"tagged_cached_word");entry_memory_sha256=Experiment.sha256_hex ram;post_memory_sha256=Experiment.sha256_hex preview.memory;stack_cells=List.length(compatibility_writes p);logical_writes=List.length p.logical_writes;prepared=p;services=preview.services;entry_dma=dma;post_dma=preview.dma}::!cases;
+    cases:={Q.caller=call.coordinate;entry_step;return_step=step_index-1;input=entry;output=state;route=(if offset=0x1272 then"pending_REL_padding_and_close"else if offset=0x119e then"counted_bits"else if offset=0x1140 then"append_bit"else match List.assoc_opt offset[0x7ed6,"gated_paired_relation_policy";0x82dd,"representation_termination_and_console_words";0x124b,"byte_alignment_and_7bit_trailer";0x05ff,"line_and_dollar_string";0x0466,"hex_word";0x829c,"structure_pointer_payload_emission";0x7338,"paired_carrier_publication";0x7423,"FFFF_word_publication";0x742a,"reset_publish_read_position";0x79a2,"three_gate_bytes_zero";0x8258,"saved_word_position_emission";0x82b5,"reset_state_fixed_field_emission";0x7e05,"gated_indexed_carrier_generation";0x7dc3,"indexed_carrier_increment";0x7de4,"indexed_carrier_decrement";0x79e2,"fresh_AE05_zero_gate";0x7a17,"fresh_AE04_zero_gate";0x73d0,"bit_gated_indexed_clear";0x8225,"saved_tag_pointer_generation";0x8248,"fixed_C4_pointer_adapter";0x7701,"pointer_trim_and_byte_generation";0x7557,"zero_prefixed_byte";0x756d,"normalized_combined_field";0x75a7,"clear_gate_zero_prefixed_byte";0x75ce,"shifted_field_byte";0x75f1,"two_zero_prefixed_word_bytes";0x7619,"word_carrier_and_byte_pair";0x746f,"clear_gate_byte_carrier";0x74c7,"clear_gate_second_byte_carrier";0x7510,"clear_gate_word_carrier"]with Some route->route|None->"tagged_cached_word");entry_memory_sha256=Experiment.sha256_hex ram;post_memory_sha256=Experiment.sha256_hex preview.memory;stack_cells=List.length(compatibility_writes p);logical_writes=List.length p.logical_writes;prepared=p;services=preview.services;entry_dma=dma;post_dma=preview.dma}::!cases;
     snapshots:=(entry_step,{Q.entry_memory=ram;post_memory=preview.memory;entry_files=files;post_files=boundary.copy_filesystem()})::!snapshots;active:=None
    |_->());
   (match !active with Some(_,_,_,_,_,_,_,(preview:Runner.host_program_result),_,_,_)when state.pc=5->
    let service=List.nth preview.services !service_index in incr service_index;
    require(state=service.resume_state&&boundary.copy_memory()=service.memory_after&&boundary.dma=service.dma_after)"historical ordered service resume boundary"|_->());
-  if o=B.origin(image_name offset)offset&&
+  if o=B.origin(image_name offset)offset&&(offset<>0x83b4|| !active=None)&&
    (if within<>[]then List.exists(fun(a,b)->a<step_index&&step_index<b)within
     else offset<>0x1140||(Option.get !previous).before.pc=0x13a1) then(
    require(!active=None)"nested output root";
@@ -106,8 +120,40 @@ let shadow ?(offset=0x1272) ?(within=[]) ?(run_negatives=true) input=
    rejects(fun()->prepare bridge offset ~call ~origin:o{boundary with state={state with sp=0x20b6}});
    rejects(fun()->prepare bridge offset ~call ~origin:o(altered[state.pc,0]));
    rejects(fun()->prepare bridge offset ~call ~origin:o(altered[state.sp,(Char.code(Bytes.get ram state.sp) lxor 1)]));
-   if not(List.mem offset[0x7338;0x7423;0x742a;0x79a2;0x7314;0x7365;0x7397;0x73a7;0x7ac4;0x7ad4;0x7ae4;0x79e2;0x7a17;0x73d0;0x7550;0x753c;0x746f;0x74c7;0x7510])then List.iter(fun edits->rejects(fun()->prepare bridge offset ~call ~origin:o(altered edits)))[[0x2029,1];[0x1d8a,128];[0x1d8b,8];[0x2155,0x0a;0x2156,0x1d]];
+   if not(List.mem offset[0x7ed6;0x7338;0x7423;0x742a;0x79a2;0x7314;0x7365;0x7397;0x73a7;0x7ac4;0x7ad4;0x7ae4;0x79e2;0x7a17;0x73d0;0x7550;0x753c;0x746f;0x74c7;0x7510])then List.iter(fun edits->rejects(fun()->prepare bridge offset ~call ~origin:o(altered edits)))[[0x2029,1];[0x1d8a,128];[0x1d8b,8];[0x2155,0x0a;0x2156,0x1d]];
    if List.mem offset[0x79e2;0x7a17]then rejects(fun()->prepare bridge offset ~call ~origin:o(altered[(if offset=0x79e2 then 0xae05 else 0xae04),(if offset=0x79e2 then 1 else 2)]));
+   if offset=0x7ed6 then(
+    List.iter(fun addr->rejects(fun()->prepare bridge offset ~call ~origin:o(altered[addr,Char.code(Bytes.get ram addr)lxor 1])))[0xa0d6;0x9565];
+
+    List.iter(fun edits->rejects(fun()->prepare bridge offset ~call ~origin:o(altered edits)))[[0x2155,0x3a;0x2156,0xae];[0x2155,0xd6;0x2156,0xa0]];
+    let active_bad=altered[0x202b,0;0xadaa,1]in
+    rejects(fun()->prepare bridge offset ~call ~origin:o{active_bad with Runner.state={active_bad.state with c=7}});
+    let late_bad=altered[0x202b,0;0xadaa,1;0xadad,1;0xadae,0;0xadb5,30;0x1c2c,255;0x1c2d,255;0x201d,0;0xae04,0;0xae05,0]in
+    rejects(fun()->prepare bridge offset ~call ~origin:o{late_bad with Runner.state={late_bad.state with c=2;d=30;e=40}});
+    let setups=["gate202B",1,1,2,30,40,[];"gateADAA",0,0,2,30,40,[];"reserved6",0,1,6,30,40,[];
+     "no_match",0,1,2,30,40,[];"match_first",0,1,2,30,40,[2,30];"match_second",0,1,2,30,40,[3,40];
+     "search_pair",0,1,2,30,40,[0,30;5,40];"search_index7",0,1,2,30,40,[5,30;7,40];
+     "skip_index6",0,1,2,30,40,[6,30;7,40];"same_destination",0,1,2,30,40,[0,30;2,40];
+     "distinct_values",0,1,4,17,99,[1,17;5,99];"equal_values",0,1,2,31,31,[0,31;5,31];
+     "high_gate_bits",0x80,0x81,2,30,40,[];"pair_equal",0,1,2,1,30,[2,1;3,30];"pair_plus1",0,1,2,1,31,[2,1;3,30];"pair_plus2",0,1,2,1,32,[2,1;3,30];"pair_minus1",0,1,2,1,29,[2,1;3,30];"pair_minus2",0,1,2,1,28,[2,1;3,30];"pair_far",0,1,2,1,40,[2,1;3,30];"pair_forward_wrap",0,1,2,0,0,[2,255;3,255];"pair_reverse_wrap",0,1,2,255,255,[2,0;3,0];"pair_last_index",0,1,5,1,31,[5,1;6,30]]in
+    List.iter(fun(label,gate,active,selector,high,low,relations)->
+     let edits=[0x202b,gate;0xadaa,active;0x201d,0;0xae04,0;0xae05,0]@
+      List.concat(List.init 8(fun i->[0xadab+i,(if List.mem_assoc i relations then 1 else 0);0xadb3+i,(match List.assoc_opt i relations with Some v->v|_->0)]))in
+     let base=altered edits in let staged={base with Runner.state={base.state with c=selector;d=high;e=low;carry=not base.state.carry}}in
+     let plan=prepare bridge offset ~call ~origin:o staged in
+     let result=match staged.preview_host_program plan.program with Ok r->r|Error e->failwith e in
+     ignore(synthetic_carrier_cpu ~checkpoint_range:(0x100,0xa600) ~label:("7ED6_"^label)staged.state(staged.copy_memory())plan result.memory)
+    )setups;
+    List.iter(fun(helper,site,selector,value,high)->
+     let op=B.Pli2_output helper in let child_call=B.internal_call bridge op (site+0x2200)in
+     let base=altered[state.sp,child_call.resume land 255;state.sp+1,child_call.resume lsr 8;0x202b,0;0xadaa,1;0x201d,0;0xadb5,high;0xadb6,value]in
+     let staged={base with Runner.state={base.state with pc=helper+0x2200;c=selector;b=0;a=3;d=0;e=30;h=0x12;l=0x34}}in
+     let plan=B.prepare bridge op ~call:child_call ~origin:(B.origin "PLI2.OVL" helper)staged in
+     let result=match staged.preview_host_program plan.program with Ok r->r|Error e->failwith e in
+     ignore(synthetic_carrier_cpu ~checkpoint_range:(0x100,0xa600) ~label:(Printf.sprintf"7ED6_helper_%04X_%d_%d_%d"helper selector value high)staged.state(staged.copy_memory())plan result.memory)
+    )[0x83b4,0x7f25,8,0,0;0x8398,0x7f34,0,0,0;0x83d2,0x7f43,0,0,0;0x7d47,0x7f5f,2,30,1;0x7d47,0x7f5f,2,255,255;0x7d47,0x7f5f,6,0,0;0x7d85,0x7f97,2,30,1;0x7d85,0x7f97,2,0,0;0x7d85,0x7f97,6,0,0];
+    require(boundary.copy_memory()=ram&&filesystem_hash(boundary.copy_filesystem())=filesystem_hash files&&boundary.dma=dma)"7ED6 staging leaves live state unchanged"
+   );
    if offset=0x82dd then(
     rejects(fun()->prepare bridge offset ~call ~origin:o(altered[0x1d05,0]));
     let sentinel=Char.code(Bytes.get ram 0x2155)lor(Char.code(Bytes.get ram 0x2156)lsl 8)in

@@ -196,3 +196,8 @@
  (name native_output_lifecycle)
  (modules native_output_lifecycle)
  (libraries pli80 pli80_host runner unix))
+
+(executable
+ (name native_generation_policy)
+ (modules native_generation_policy)
+ (libraries pli80 pli80_host runner unix))

@@ -1,0 +1,62 @@
+{
+  "PLI2.OVL+7ED6": {
+    "end": 32882,
+    "description": "Gated paired relation adjustment or indexed relation search",
+    "contract": "Save D atAE3C,E atAE3B,C atAE3A in order. Fresh202B RAR bit0set returns A0; otherwise freshADAA RAR bit0clear returns A0; otherwise freshC CPI6 equal returns A0. Active C0..5: independently paired-read/zeroextend C, PUSH ADAB+C, reread C and ADAB+C+1, POP H, ANA first activity and RAR. Both active: independent ADB3[C] high-byte <<8 via83B4 and ADB3[C+1] low OR via8398;SHLD AE3E. FreshwordAE3B minus current via canonical1A43,83D2 subtract3 tests unsigned distance<3. If distance0..2 increment current via7D47 until freshwordcomparison reaches equality; otherwise reverse distance0..2 decrement via7D85; returnA1. Otherwise copy savedD toAE40 andE toAE41. Independent7365(C,savedD) bit0match calls7E05(C+1,savedE),returnA1; independent7365(C+1,savedE) match calls7E05(C,savedD),returnA1. Neither:AE42/43=FF,AE3D=0; scan0..7,skip6. Independent7365(index,savedD) match publishesAE42=index; independent7365(index,savedE) match withindex!=savedC publishesAE43=index. OR candidates,RLC,RAR tests oldbit7; bothnonnegative calls793C(savedC,AE42),then793C(u8(savedC+1),AE43),returnA1. Failedcandidate INR AE3D; freshA7 CMP index,exitindex8 returnsA0 withactualcomparisonflags. No fixednaturaliterationcount. Freshpairedreads,arithmeticflags,PUSH/POP/CALL/RET andorderedwrites preserved. Bounded canonicalchildren,successfuloutput/nonwrapposition,zero pending gates,nonaliasstack/sentinel; no arbitrary compiler-level meaning.",
+    "completeness": [
+      "stable",
+      "complete",
+      "partial"
+    ]
+  },
+  "PLI2.OVL+7D47": {
+    "end": 32133,
+    "description": "Saved selector emission and adjacent word increment",
+    "contract": "C0..7 savedAE32;freshC CPI6 reserved:ADC9=1,E6,C3 canonical75CE,RET. OtherwisepairedfreshAE32->DE,C3 canonical75CE;freshC zeroextend,ADB4+C,INR A,publish,CPI0. On lowwrap freshC zeroextend,ADB3+C,INR M. Actual flag/stack/word byte ordering. Required parentC0..5;syntheticC6 also bounded.",
+    "completeness": [
+      "stable",
+      "complete",
+      "partial"
+    ]
+  },
+  "PLI2.OVL+7D85": {
+    "end": 32195,
+    "description": "Saved selector emission and adjacent word decrement",
+    "contract": "C0..7 savedAE33;freshC CPI6 reserved:ADC9=1,E6,C0B canonical75CE,RET. OtherwisepairedfreshAE33->DE,C0B canonical75CE;freshC zeroextend,ADB4+C,DCR A,publish,CPIFF. On lowborrow freshC zeroextend,ADB3+C,DCR M. Actual flags andwrites retained.",
+    "completeness": [
+      "stable",
+      "complete",
+      "partial"
+    ]
+  },
+  "PLI2.OVL+8398": {
+    "end": 33698,
+    "description": "Byte OR into word",
+    "contract": "E=A,D=0;A=E OR L,L=A;A=D OR H,H=A. Return actual logicalflags,CY0,AC0. No memorywrites otherthanCALL traffic.",
+    "completeness": [
+      "stable",
+      "complete",
+      "complete"
+    ]
+  },
+  "PLI2.OVL+83B4": {
+    "end": 33722,
+    "description": "Repeated word left shift",
+    "contract": "Bounded C1..8. DAD H doublesHL modulo65536,setsCY;DCR C updatesNZPA preservesCY;repeatuntilC0. ActualB preserved andfinalDADcarryretained.",
+    "completeness": [
+      "stable",
+      "complete",
+      "complete"
+    ]
+  },
+  "PLI2.OVL+83D2": {
+    "end": 33756,
+    "description": "Zeroextended byte subtraction from DE",
+    "contract": "C=A,B=0;A=E SUB C,L=A;A=D SBB B,H=A;returnHL=u16(DE-zeroextend(inputA));DE unchanged;actualborrow/AC/NZP fromhigh subtraction.",
+    "completeness": [
+      "stable",
+      "complete",
+      "complete"
+    ]
+  }
+}

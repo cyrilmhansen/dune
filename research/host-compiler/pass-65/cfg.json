@@ -1,0 +1,2820 @@
+[
+  {
+    "offset": 32470,
+    "bytes": "213CAE",
+    "decoded": "LXI H,AE3CH",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32473,
+    "bytes": "72",
+    "decoded": "MOV M,D",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32474,
+    "bytes": "2B",
+    "decoded": "DCX H",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32475,
+    "bytes": "73",
+    "decoded": "MOV M,E",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32476,
+    "bytes": "2B",
+    "decoded": "DCX H",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32477,
+    "bytes": "71",
+    "decoded": "MOV M,C",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32478,
+    "bytes": "3A2B20",
+    "decoded": "LDA 202BH",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32481,
+    "bytes": "1F",
+    "decoded": "RAR",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32482,
+    "bytes": "D2E8A0",
+    "decoded": "JNC A0E8H",
+    "control": {
+      "kind": "jump",
+      "target": 41192
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32485,
+    "bytes": "3E00",
+    "decoded": "MVI A,00H",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32487,
+    "bytes": "C9",
+    "decoded": "RET",
+    "control": {
+      "kind": "return"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32488,
+    "bytes": "3AAAAD",
+    "decoded": "LDA ADAAH",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32491,
+    "bytes": "1F",
+    "decoded": "RAR",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32492,
+    "bytes": "DAF2A0",
+    "decoded": "JC A0F2H",
+    "control": {
+      "kind": "jump",
+      "target": 41202
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32495,
+    "bytes": "3E00",
+    "decoded": "MVI A,00H",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32497,
+    "bytes": "C9",
+    "decoded": "RET",
+    "control": {
+      "kind": "return"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32498,
+    "bytes": "3A3AAE",
+    "decoded": "LDA AE3AH",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32501,
+    "bytes": "FE06",
+    "decoded": "CPI 06H",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32503,
+    "bytes": "C2FDA0",
+    "decoded": "JNZ A0FDH",
+    "control": {
+      "kind": "jump",
+      "target": 41213
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32506,
+    "bytes": "3E00",
+    "decoded": "MVI A,00H",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32508,
+    "bytes": "C9",
+    "decoded": "RET",
+    "control": {
+      "kind": "return"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32509,
+    "bytes": "2A3AAE",
+    "decoded": "LHLD AE3AH",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32512,
+    "bytes": "2600",
+    "decoded": "MVI H,00H",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32514,
+    "bytes": "01ABAD",
+    "decoded": "LXI B,ADABH",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32517,
+    "bytes": "09",
+    "decoded": "DAD B",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32518,
+    "bytes": "E5",
+    "decoded": "PUSH H",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32519,
+    "bytes": "2A3AAE",
+    "decoded": "LHLD AE3AH",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32522,
+    "bytes": "2600",
+    "decoded": "MVI H,00H",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32524,
+    "bytes": "03",
+    "decoded": "INX B",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32525,
+    "bytes": "09",
+    "decoded": "DAD B",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32526,
+    "bytes": "7E",
+    "decoded": "MOV A,M",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32527,
+    "bytes": "E1",
+    "decoded": "POP H",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32528,
+    "bytes": "A6",
+    "decoded": "ANA M",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32529,
+    "bytes": "1F",
+    "decoded": "RAR",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32530,
+    "bytes": "D2A7A1",
+    "decoded": "JNC A1A7H",
+    "control": {
+      "kind": "jump",
+      "target": 41383
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32533,
+    "bytes": "2A3AAE",
+    "decoded": "LHLD AE3AH",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32536,
+    "bytes": "2600",
+    "decoded": "MVI H,00H",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32538,
+    "bytes": "01B3AD",
+    "decoded": "LXI B,ADB3H",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32541,
+    "bytes": "09",
+    "decoded": "DAD B",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32542,
+    "bytes": "4E",
+    "decoded": "MOV C,M",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32543,
+    "bytes": "0600",
+    "decoded": "MVI B,00H",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32545,
+    "bytes": "60",
+    "decoded": "MOV H,B",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32546,
+    "bytes": "69",
+    "decoded": "MOV L,C",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32547,
+    "bytes": "0E08",
+    "decoded": "MVI C,08H",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32549,
+    "bytes": "CDB4A5",
+    "decoded": "CALL A5B4H",
+    "control": {
+      "kind": "call",
+      "target": 42420
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32552,
+    "bytes": "E5",
+    "decoded": "PUSH H",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32553,
+    "bytes": "2A3AAE",
+    "decoded": "LHLD AE3AH",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32556,
+    "bytes": "2600",
+    "decoded": "MVI H,00H",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32558,
+    "bytes": "01B4AD",
+    "decoded": "LXI B,ADB4H",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32561,
+    "bytes": "09",
+    "decoded": "DAD B",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32562,
+    "bytes": "7E",
+    "decoded": "MOV A,M",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32563,
+    "bytes": "E1",
+    "decoded": "POP H",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32564,
+    "bytes": "CD98A5",
+    "decoded": "CALL A598H",
+    "control": {
+      "kind": "call",
+      "target": 42392
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32567,
+    "bytes": "223EAE",
+    "decoded": "SHLD AE3EH",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32570,
+    "bytes": "113BAE",
+    "decoded": "LXI D,AE3BH",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32573,
+    "bytes": "CD431B",
+    "decoded": "CALL 1B43H",
+    "control": {
+      "kind": "call",
+      "target": 6979
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32576,
+    "bytes": "EB",
+    "decoded": "XCHG",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32577,
+    "bytes": "3E03",
+    "decoded": "MVI A,03H",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32579,
+    "bytes": "CDD2A5",
+    "decoded": "CALL A5D2H",
+    "control": {
+      "kind": "call",
+      "target": 42450
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32582,
+    "bytes": "D26FA1",
+    "decoded": "JNC A16FH",
+    "control": {
+      "kind": "jump",
+      "target": 41327
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32585,
+    "bytes": "013EAE",
+    "decoded": "LXI B,AE3EH",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32588,
+    "bytes": "113BAE",
+    "decoded": "LXI D,AE3BH",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32591,
+    "bytes": "CD331B",
+    "decoded": "CALL 1B33H",
+    "control": {
+      "kind": "call",
+      "target": 6963
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32594,
+    "bytes": "3E00",
+    "decoded": "MVI A,00H",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32596,
+    "bytes": "CD291B",
+    "decoded": "CALL 1B29H",
+    "control": {
+      "kind": "call",
+      "target": 6953
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32599,
+    "bytes": "B5",
+    "decoded": "ORA L",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32600,
+    "bytes": "CA6CA1",
+    "decoded": "JZ A16CH",
+    "control": {
+      "kind": "jump",
+      "target": 41324
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32603,
+    "bytes": "2A3AAE",
+    "decoded": "LHLD AE3AH",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32606,
+    "bytes": "4D",
+    "decoded": "MOV C,L",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32607,
+    "bytes": "CD479F",
+    "decoded": "CALL 9F47H",
+    "control": {
+      "kind": "call",
+      "target": 40775
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32610,
+    "bytes": "2A3EAE",
+    "decoded": "LHLD AE3EH",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32613,
+    "bytes": "23",
+    "decoded": "INX H",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32614,
+    "bytes": "223EAE",
+    "decoded": "SHLD AE3EH",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32617,
+    "bytes": "C349A1",
+    "decoded": "JMP A149H",
+    "control": {
+      "kind": "jump",
+      "target": 41289
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32620,
+    "bytes": "3E01",
+    "decoded": "MVI A,01H",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32622,
+    "bytes": "C9",
+    "decoded": "RET",
+    "control": {
+      "kind": "return"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32623,
+    "bytes": "013BAE",
+    "decoded": "LXI B,AE3BH",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32626,
+    "bytes": "113EAE",
+    "decoded": "LXI D,AE3EH",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32629,
+    "bytes": "CD331B",
+    "decoded": "CALL 1B33H",
+    "control": {
+      "kind": "call",
+      "target": 6963
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32632,
+    "bytes": "EB",
+    "decoded": "XCHG",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32633,
+    "bytes": "3E03",
+    "decoded": "MVI A,03H",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32635,
+    "bytes": "CDD2A5",
+    "decoded": "CALL A5D2H",
+    "control": {
+      "kind": "call",
+      "target": 42450
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32638,
+    "bytes": "D2A7A1",
+    "decoded": "JNC A1A7H",
+    "control": {
+      "kind": "jump",
+      "target": 41383
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32641,
+    "bytes": "013BAE",
+    "decoded": "LXI B,AE3BH",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32644,
+    "bytes": "113EAE",
+    "decoded": "LXI D,AE3EH",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32647,
+    "bytes": "CD331B",
+    "decoded": "CALL 1B33H",
+    "control": {
+      "kind": "call",
+      "target": 6963
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32650,
+    "bytes": "3E00",
+    "decoded": "MVI A,00H",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32652,
+    "bytes": "CD291B",
+    "decoded": "CALL 1B29H",
+    "control": {
+      "kind": "call",
+      "target": 6953
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32655,
+    "bytes": "B5",
+    "decoded": "ORA L",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32656,
+    "bytes": "CAA4A1",
+    "decoded": "JZ A1A4H",
+    "control": {
+      "kind": "jump",
+      "target": 41380
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32659,
+    "bytes": "2A3AAE",
+    "decoded": "LHLD AE3AH",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32662,
+    "bytes": "4D",
+    "decoded": "MOV C,L",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32663,
+    "bytes": "CD859F",
+    "decoded": "CALL 9F85H",
+    "control": {
+      "kind": "call",
+      "target": 40837
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32666,
+    "bytes": "2A3EAE",
+    "decoded": "LHLD AE3EH",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32669,
+    "bytes": "2B",
+    "decoded": "DCX H",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32670,
+    "bytes": "223EAE",
+    "decoded": "SHLD AE3EH",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32673,
+    "bytes": "C381A1",
+    "decoded": "JMP A181H",
+    "control": {
+      "kind": "jump",
+      "target": 41345
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32676,
+    "bytes": "3E01",
+    "decoded": "MVI A,01H",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32678,
+    "bytes": "C9",
+    "decoded": "RET",
+    "control": {
+      "kind": "return"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32679,
+    "bytes": "2A3BAE",
+    "decoded": "LHLD AE3BH",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32682,
+    "bytes": "7C",
+    "decoded": "MOV A,H",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32683,
+    "bytes": "3240AE",
+    "decoded": "STA AE40H",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32686,
+    "bytes": "7D",
+    "decoded": "MOV A,L",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32687,
+    "bytes": "3241AE",
+    "decoded": "STA AE41H",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32690,
+    "bytes": "2A3AAE",
+    "decoded": "LHLD AE3AH",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32693,
+    "bytes": "4D",
+    "decoded": "MOV C,L",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32694,
+    "bytes": "2A40AE",
+    "decoded": "LHLD AE40H",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32697,
+    "bytes": "EB",
+    "decoded": "XCHG",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32698,
+    "bytes": "CD6595",
+    "decoded": "CALL 9565H",
+    "control": {
+      "kind": "call",
+      "target": 38245
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32701,
+    "bytes": "1F",
+    "decoded": "RAR",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32702,
+    "bytes": "D2D0A1",
+    "decoded": "JNC A1D0H",
+    "control": {
+      "kind": "jump",
+      "target": 41424
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32705,
+    "bytes": "3A3AAE",
+    "decoded": "LDA AE3AH",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32708,
+    "bytes": "3C",
+    "decoded": "INR A",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32709,
+    "bytes": "2A41AE",
+    "decoded": "LHLD AE41H",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32712,
+    "bytes": "EB",
+    "decoded": "XCHG",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32713,
+    "bytes": "4F",
+    "decoded": "MOV C,A",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32714,
+    "bytes": "CD05A0",
+    "decoded": "CALL A005H",
+    "control": {
+      "kind": "call",
+      "target": 40965
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32717,
+    "bytes": "3E01",
+    "decoded": "MVI A,01H",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32719,
+    "bytes": "C9",
+    "decoded": "RET",
+    "control": {
+      "kind": "return"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32720,
+    "bytes": "3A3AAE",
+    "decoded": "LDA AE3AH",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32723,
+    "bytes": "3C",
+    "decoded": "INR A",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32724,
+    "bytes": "2A41AE",
+    "decoded": "LHLD AE41H",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32727,
+    "bytes": "EB",
+    "decoded": "XCHG",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32728,
+    "bytes": "4F",
+    "decoded": "MOV C,A",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32729,
+    "bytes": "CD6595",
+    "decoded": "CALL 9565H",
+    "control": {
+      "kind": "call",
+      "target": 38245
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32732,
+    "bytes": "1F",
+    "decoded": "RAR",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32733,
+    "bytes": "D2EEA1",
+    "decoded": "JNC A1EEH",
+    "control": {
+      "kind": "jump",
+      "target": 41454
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32736,
+    "bytes": "2A3AAE",
+    "decoded": "LHLD AE3AH",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32739,
+    "bytes": "4D",
+    "decoded": "MOV C,L",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32740,
+    "bytes": "2A40AE",
+    "decoded": "LHLD AE40H",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32743,
+    "bytes": "EB",
+    "decoded": "XCHG",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32744,
+    "bytes": "CD05A0",
+    "decoded": "CALL A005H",
+    "control": {
+      "kind": "call",
+      "target": 40965
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32747,
+    "bytes": "3E01",
+    "decoded": "MVI A,01H",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32749,
+    "bytes": "C9",
+    "decoded": "RET",
+    "control": {
+      "kind": "return"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32750,
+    "bytes": "2142AE",
+    "decoded": "LXI H,AE42H",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32753,
+    "bytes": "36FF",
+    "decoded": "MVI M,FFH",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32755,
+    "bytes": "23",
+    "decoded": "INX H",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32756,
+    "bytes": "36FF",
+    "decoded": "MVI M,FFH",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32758,
+    "bytes": "213DAE",
+    "decoded": "LXI H,AE3DH",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32761,
+    "bytes": "3600",
+    "decoded": "MVI M,00H",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32763,
+    "bytes": "3E07",
+    "decoded": "MVI A,07H",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32765,
+    "bytes": "213DAE",
+    "decoded": "LXI H,AE3DH",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32768,
+    "bytes": "BE",
+    "decoded": "CMP M",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32769,
+    "bytes": "DA6FA2",
+    "decoded": "JC A26FH",
+    "control": {
+      "kind": "jump",
+      "target": 41583
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32772,
+    "bytes": "3A3DAE",
+    "decoded": "LDA AE3DH",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32775,
+    "bytes": "FE06",
+    "decoded": "CPI 06H",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32777,
+    "bytes": "CA68A2",
+    "decoded": "JZ A268H",
+    "control": {
+      "kind": "jump",
+      "target": 41576
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32780,
+    "bytes": "2A3BAE",
+    "decoded": "LHLD AE3BH",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32783,
+    "bytes": "7C",
+    "decoded": "MOV A,H",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32784,
+    "bytes": "2A3DAE",
+    "decoded": "LHLD AE3DH",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32787,
+    "bytes": "5F",
+    "decoded": "MOV E,A",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32788,
+    "bytes": "4D",
+    "decoded": "MOV C,L",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32789,
+    "bytes": "CD6595",
+    "decoded": "CALL 9565H",
+    "control": {
+      "kind": "call",
+      "target": 38245
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32792,
+    "bytes": "1F",
+    "decoded": "RAR",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32793,
+    "bytes": "D222A2",
+    "decoded": "JNC A222H",
+    "control": {
+      "kind": "jump",
+      "target": 41506
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32796,
+    "bytes": "3A3DAE",
+    "decoded": "LDA AE3DH",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32799,
+    "bytes": "3242AE",
+    "decoded": "STA AE42H",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32802,
+    "bytes": "2A3BAE",
+    "decoded": "LHLD AE3BH",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32805,
+    "bytes": "7D",
+    "decoded": "MOV A,L",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32806,
+    "bytes": "2A3DAE",
+    "decoded": "LHLD AE3DH",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32809,
+    "bytes": "5F",
+    "decoded": "MOV E,A",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32810,
+    "bytes": "4D",
+    "decoded": "MOV C,L",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32811,
+    "bytes": "CD6595",
+    "decoded": "CALL 9565H",
+    "control": {
+      "kind": "call",
+      "target": 38245
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32814,
+    "bytes": "1F",
+    "decoded": "RAR",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32815,
+    "bytes": "D242A2",
+    "decoded": "JNC A242H",
+    "control": {
+      "kind": "jump",
+      "target": 41538
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32818,
+    "bytes": "213AAE",
+    "decoded": "LXI H,AE3AH",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32821,
+    "bytes": "3A3DAE",
+    "decoded": "LDA AE3DH",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32824,
+    "bytes": "BE",
+    "decoded": "CMP M",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32825,
+    "bytes": "CA42A2",
+    "decoded": "JZ A242H",
+    "control": {
+      "kind": "jump",
+      "target": 41538
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32828,
+    "bytes": "3A3DAE",
+    "decoded": "LDA AE3DH",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32831,
+    "bytes": "3243AE",
+    "decoded": "STA AE43H",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32834,
+    "bytes": "3A43AE",
+    "decoded": "LDA AE43H",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32837,
+    "bytes": "2142AE",
+    "decoded": "LXI H,AE42H",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32840,
+    "bytes": "B6",
+    "decoded": "ORA M",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32841,
+    "bytes": "07",
+    "decoded": "RLC",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32842,
+    "bytes": "1F",
+    "decoded": "RAR",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32843,
+    "bytes": "DA68A2",
+    "decoded": "JC A268H",
+    "control": {
+      "kind": "jump",
+      "target": 41576
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32846,
+    "bytes": "2A3AAE",
+    "decoded": "LHLD AE3AH",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32849,
+    "bytes": "4D",
+    "decoded": "MOV C,L",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32850,
+    "bytes": "2A42AE",
+    "decoded": "LHLD AE42H",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32853,
+    "bytes": "EB",
+    "decoded": "XCHG",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32854,
+    "bytes": "CD3C9B",
+    "decoded": "CALL 9B3CH",
+    "control": {
+      "kind": "call",
+      "target": 39740
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32857,
+    "bytes": "3A3AAE",
+    "decoded": "LDA AE3AH",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32860,
+    "bytes": "3C",
+    "decoded": "INR A",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32861,
+    "bytes": "2A43AE",
+    "decoded": "LHLD AE43H",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32864,
+    "bytes": "EB",
+    "decoded": "XCHG",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32865,
+    "bytes": "4F",
+    "decoded": "MOV C,A",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32866,
+    "bytes": "CD3C9B",
+    "decoded": "CALL 9B3CH",
+    "control": {
+      "kind": "call",
+      "target": 39740
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32869,
+    "bytes": "3E01",
+    "decoded": "MVI A,01H",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32871,
+    "bytes": "C9",
+    "decoded": "RET",
+    "control": {
+      "kind": "return"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32872,
+    "bytes": "213DAE",
+    "decoded": "LXI H,AE3DH",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32875,
+    "bytes": "34",
+    "decoded": "INR M",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32876,
+    "bytes": "C2FBA1",
+    "decoded": "JNZ A1FBH",
+    "control": {
+      "kind": "jump",
+      "target": 41467
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32879,
+    "bytes": "3E00",
+    "decoded": "MVI A,00H",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32881,
+    "bytes": "C9",
+    "decoded": "RET",
+    "control": {
+      "kind": "return"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7ED6"
+  },
+  {
+    "offset": 32071,
+    "bytes": "2132AE",
+    "decoded": "LXI H,AE32H",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7D47"
+  },
+  {
+    "offset": 32074,
+    "bytes": "71",
+    "decoded": "MOV M,C",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7D47"
+  },
+  {
+    "offset": 32075,
+    "bytes": "3A32AE",
+    "decoded": "LDA AE32H",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7D47"
+  },
+  {
+    "offset": 32078,
+    "bytes": "FE06",
+    "decoded": "CPI 06H",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7D47"
+  },
+  {
+    "offset": 32080,
+    "bytes": "C2609F",
+    "decoded": "JNZ 9F60H",
+    "control": {
+      "kind": "jump",
+      "target": 40800
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7D47"
+  },
+  {
+    "offset": 32083,
+    "bytes": "21C9AD",
+    "decoded": "LXI H,ADC9H",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7D47"
+  },
+  {
+    "offset": 32086,
+    "bytes": "3601",
+    "decoded": "MVI M,01H",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7D47"
+  },
+  {
+    "offset": 32088,
+    "bytes": "1E06",
+    "decoded": "MVI E,06H",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7D47"
+  },
+  {
+    "offset": 32090,
+    "bytes": "0E03",
+    "decoded": "MVI C,03H",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7D47"
+  },
+  {
+    "offset": 32092,
+    "bytes": "CDCE97",
+    "decoded": "CALL 97CEH",
+    "control": {
+      "kind": "call",
+      "target": 38862
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7D47"
+  },
+  {
+    "offset": 32095,
+    "bytes": "C9",
+    "decoded": "RET",
+    "control": {
+      "kind": "return"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7D47"
+  },
+  {
+    "offset": 32096,
+    "bytes": "2A32AE",
+    "decoded": "LHLD AE32H",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7D47"
+  },
+  {
+    "offset": 32099,
+    "bytes": "EB",
+    "decoded": "XCHG",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7D47"
+  },
+  {
+    "offset": 32100,
+    "bytes": "0E03",
+    "decoded": "MVI C,03H",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7D47"
+  },
+  {
+    "offset": 32102,
+    "bytes": "CDCE97",
+    "decoded": "CALL 97CEH",
+    "control": {
+      "kind": "call",
+      "target": 38862
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7D47"
+  },
+  {
+    "offset": 32105,
+    "bytes": "2A32AE",
+    "decoded": "LHLD AE32H",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7D47"
+  },
+  {
+    "offset": 32108,
+    "bytes": "2600",
+    "decoded": "MVI H,00H",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7D47"
+  },
+  {
+    "offset": 32110,
+    "bytes": "01B4AD",
+    "decoded": "LXI B,ADB4H",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7D47"
+  },
+  {
+    "offset": 32113,
+    "bytes": "09",
+    "decoded": "DAD B",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7D47"
+  },
+  {
+    "offset": 32114,
+    "bytes": "7E",
+    "decoded": "MOV A,M",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7D47"
+  },
+  {
+    "offset": 32115,
+    "bytes": "3C",
+    "decoded": "INR A",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7D47"
+  },
+  {
+    "offset": 32116,
+    "bytes": "77",
+    "decoded": "MOV M,A",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7D47"
+  },
+  {
+    "offset": 32117,
+    "bytes": "FE00",
+    "decoded": "CPI 00H",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7D47"
+  },
+  {
+    "offset": 32119,
+    "bytes": "C2849F",
+    "decoded": "JNZ 9F84H",
+    "control": {
+      "kind": "jump",
+      "target": 40836
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7D47"
+  },
+  {
+    "offset": 32122,
+    "bytes": "2A32AE",
+    "decoded": "LHLD AE32H",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7D47"
+  },
+  {
+    "offset": 32125,
+    "bytes": "2600",
+    "decoded": "MVI H,00H",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7D47"
+  },
+  {
+    "offset": 32127,
+    "bytes": "01B3AD",
+    "decoded": "LXI B,ADB3H",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7D47"
+  },
+  {
+    "offset": 32130,
+    "bytes": "09",
+    "decoded": "DAD B",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7D47"
+  },
+  {
+    "offset": 32131,
+    "bytes": "34",
+    "decoded": "INR M",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7D47"
+  },
+  {
+    "offset": 32132,
+    "bytes": "C9",
+    "decoded": "RET",
+    "control": {
+      "kind": "return"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7D47"
+  },
+  {
+    "offset": 32133,
+    "bytes": "2133AE",
+    "decoded": "LXI H,AE33H",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7D85"
+  },
+  {
+    "offset": 32136,
+    "bytes": "71",
+    "decoded": "MOV M,C",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7D85"
+  },
+  {
+    "offset": 32137,
+    "bytes": "3A33AE",
+    "decoded": "LDA AE33H",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7D85"
+  },
+  {
+    "offset": 32140,
+    "bytes": "FE06",
+    "decoded": "CPI 06H",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7D85"
+  },
+  {
+    "offset": 32142,
+    "bytes": "C29E9F",
+    "decoded": "JNZ 9F9EH",
+    "control": {
+      "kind": "jump",
+      "target": 40862
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7D85"
+  },
+  {
+    "offset": 32145,
+    "bytes": "21C9AD",
+    "decoded": "LXI H,ADC9H",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7D85"
+  },
+  {
+    "offset": 32148,
+    "bytes": "3601",
+    "decoded": "MVI M,01H",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7D85"
+  },
+  {
+    "offset": 32150,
+    "bytes": "1E06",
+    "decoded": "MVI E,06H",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7D85"
+  },
+  {
+    "offset": 32152,
+    "bytes": "0E0B",
+    "decoded": "MVI C,0BH",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7D85"
+  },
+  {
+    "offset": 32154,
+    "bytes": "CDCE97",
+    "decoded": "CALL 97CEH",
+    "control": {
+      "kind": "call",
+      "target": 38862
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7D85"
+  },
+  {
+    "offset": 32157,
+    "bytes": "C9",
+    "decoded": "RET",
+    "control": {
+      "kind": "return"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+7D85"
+  },
+  {
+    "offset": 32158,
+    "bytes": "2A33AE",
+    "decoded": "LHLD AE33H",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7D85"
+  },
+  {
+    "offset": 32161,
+    "bytes": "EB",
+    "decoded": "XCHG",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7D85"
+  },
+  {
+    "offset": 32162,
+    "bytes": "0E0B",
+    "decoded": "MVI C,0BH",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7D85"
+  },
+  {
+    "offset": 32164,
+    "bytes": "CDCE97",
+    "decoded": "CALL 97CEH",
+    "control": {
+      "kind": "call",
+      "target": 38862
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7D85"
+  },
+  {
+    "offset": 32167,
+    "bytes": "2A33AE",
+    "decoded": "LHLD AE33H",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7D85"
+  },
+  {
+    "offset": 32170,
+    "bytes": "2600",
+    "decoded": "MVI H,00H",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7D85"
+  },
+  {
+    "offset": 32172,
+    "bytes": "01B4AD",
+    "decoded": "LXI B,ADB4H",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7D85"
+  },
+  {
+    "offset": 32175,
+    "bytes": "09",
+    "decoded": "DAD B",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7D85"
+  },
+  {
+    "offset": 32176,
+    "bytes": "7E",
+    "decoded": "MOV A,M",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7D85"
+  },
+  {
+    "offset": 32177,
+    "bytes": "3D",
+    "decoded": "DCR A",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7D85"
+  },
+  {
+    "offset": 32178,
+    "bytes": "77",
+    "decoded": "MOV M,A",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7D85"
+  },
+  {
+    "offset": 32179,
+    "bytes": "FEFF",
+    "decoded": "CPI FFH",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7D85"
+  },
+  {
+    "offset": 32181,
+    "bytes": "C2C29F",
+    "decoded": "JNZ 9FC2H",
+    "control": {
+      "kind": "jump",
+      "target": 40898
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7D85"
+  },
+  {
+    "offset": 32184,
+    "bytes": "2A33AE",
+    "decoded": "LHLD AE33H",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7D85"
+  },
+  {
+    "offset": 32187,
+    "bytes": "2600",
+    "decoded": "MVI H,00H",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7D85"
+  },
+  {
+    "offset": 32189,
+    "bytes": "01B3AD",
+    "decoded": "LXI B,ADB3H",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7D85"
+  },
+  {
+    "offset": 32192,
+    "bytes": "09",
+    "decoded": "DAD B",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7D85"
+  },
+  {
+    "offset": 32193,
+    "bytes": "35",
+    "decoded": "DCR M",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7D85"
+  },
+  {
+    "offset": 32194,
+    "bytes": "C9",
+    "decoded": "RET",
+    "control": {
+      "kind": "return"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+7D85"
+  },
+  {
+    "offset": 33688,
+    "bytes": "5F",
+    "decoded": "MOV E,A",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+8398"
+  },
+  {
+    "offset": 33689,
+    "bytes": "1600",
+    "decoded": "MVI D,00H",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+8398"
+  },
+  {
+    "offset": 33691,
+    "bytes": "7B",
+    "decoded": "MOV A,E",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+8398"
+  },
+  {
+    "offset": 33692,
+    "bytes": "B5",
+    "decoded": "ORA L",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+8398"
+  },
+  {
+    "offset": 33693,
+    "bytes": "6F",
+    "decoded": "MOV L,A",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+8398"
+  },
+  {
+    "offset": 33694,
+    "bytes": "7A",
+    "decoded": "MOV A,D",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+8398"
+  },
+  {
+    "offset": 33695,
+    "bytes": "B4",
+    "decoded": "ORA H",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+8398"
+  },
+  {
+    "offset": 33696,
+    "bytes": "67",
+    "decoded": "MOV H,A",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+8398"
+  },
+  {
+    "offset": 33697,
+    "bytes": "C9",
+    "decoded": "RET",
+    "control": {
+      "kind": "return"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+8398"
+  },
+  {
+    "offset": 33716,
+    "bytes": "29",
+    "decoded": "DAD H",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+83B4"
+  },
+  {
+    "offset": 33717,
+    "bytes": "0D",
+    "decoded": "DCR C",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+83B4"
+  },
+  {
+    "offset": 33718,
+    "bytes": "C2B4A5",
+    "decoded": "JNZ A5B4H",
+    "control": {
+      "kind": "jump",
+      "target": 42420
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+83B4"
+  },
+  {
+    "offset": 33721,
+    "bytes": "C9",
+    "decoded": "RET",
+    "control": {
+      "kind": "return"
+    },
+    "evidence": "OBSERVED",
+    "owner": "PLI2.OVL+83B4"
+  },
+  {
+    "offset": 33746,
+    "bytes": "4F",
+    "decoded": "MOV C,A",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+83D2"
+  },
+  {
+    "offset": 33747,
+    "bytes": "0600",
+    "decoded": "MVI B,00H",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+83D2"
+  },
+  {
+    "offset": 33749,
+    "bytes": "7B",
+    "decoded": "MOV A,E",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+83D2"
+  },
+  {
+    "offset": 33750,
+    "bytes": "91",
+    "decoded": "SUB C",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+83D2"
+  },
+  {
+    "offset": 33751,
+    "bytes": "6F",
+    "decoded": "MOV L,A",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+83D2"
+  },
+  {
+    "offset": 33752,
+    "bytes": "7A",
+    "decoded": "MOV A,D",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+83D2"
+  },
+  {
+    "offset": 33753,
+    "bytes": "98",
+    "decoded": "SBB B",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+83D2"
+  },
+  {
+    "offset": 33754,
+    "bytes": "67",
+    "decoded": "MOV H,A",
+    "control": {
+      "kind": "ordinary"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+83D2"
+  },
+  {
+    "offset": 33755,
+    "bytes": "C9",
+    "decoded": "RET",
+    "control": {
+      "kind": "return"
+    },
+    "evidence": "DEDUCED STATIC UNOBSERVED",
+    "owner": "PLI2.OVL+83D2"
+  }
+]
