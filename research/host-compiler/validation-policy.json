@@ -1,0 +1,79 @@
+{
+  "schema_version": 1,
+  "current_full_epoch": {
+    "name": "Pass62",
+    "epoch": 0,
+    "implementation_commit": "90a7e9b8dc45f75fb8d158a6f2c7fc9fb3281694",
+    "receipt_commit": "6d736b084417a64464d5868cf1946f735298a611",
+    "documented_baseline_commit": "b192213594cd499953cedf42f08fdad3c833e52d",
+    "receipt": "research/host-compiler/pass-62/validation.json",
+    "category_count": 92,
+    "distinct_python_tests": 643,
+    "dune_stanzas": 39,
+    "wall_seconds": 2932.11,
+    "sum_category_seconds": 10788.75,
+    "workers": 4,
+    "reruns": 0,
+    "historical_bytes": 94720
+  },
+  "historical_proof": "Preserve all exhaustive shadows, synthetic discriminants, journals, historical tests and prior receipts. Age alone never justifies deleting proof.",
+  "profiles": {
+    "historical-full": {
+      "purpose": "Exhaustive historical aggregate for a new certification epoch. Plain invocation remains exhaustive.",
+      "validation_tier": "FULL"
+    },
+    "active": {
+      "purpose": "Routine targeted regression between FULL epochs; never equivalent to certification of every archived proof.",
+      "validation_tier": "ACTIVE/INCREMENTAL",
+      "core_categories": [
+        "build",
+        "project",
+        "baseline",
+        "V1",
+        "roundtrip",
+        "roundtrip-tests",
+        "packet-continuation",
+        "dynamic-progress",
+        "diff-check",
+        "native-unit",
+        "recursive-unit",
+        "balance-unit",
+        "mapped-unit",
+        "attribute-unit",
+        "emitter-unit",
+        "native-emitter-unit",
+        "word-emitter-unit",
+        "range-unit",
+        "publication-unit",
+        "range-publication-unit",
+        "control-unit",
+        "input-unit",
+        "gate-unit",
+        "acquisition-parent-unit",
+        "classifier-unit",
+        "historical-leaf-queries",
+        "validation-runner-tests"
+      ]
+    }
+  },
+  "full_epoch_triggers": [
+    "CPU8080 semantics change",
+    "CP/M or BDOS semantics change",
+    "Runner execution semantics change",
+    "Shared memory/write/stack journal semantics change",
+    "Common native bridge transaction semantics change",
+    "Shared proof/capture schema changes that can alter interpretation",
+    "Material change to exact reconstruction mechanism",
+    "Known historical certificate dependency modified without narrower proof",
+    "Before a major refactor or release milestone",
+    "Scheduled periodic certification due"
+  ],
+  "periodic_policy": {
+    "epoch_zero": "Pass62",
+    "next_ordinary_full_no_later_than_approximately": "Pass67",
+    "semantic_pass_interval": 5,
+    "earlier_if_substantive_trigger": true,
+    "hard_coded_semantic_restriction": false
+  },
+  "certificate_limit": "A certified commit is historical evidence, not an automatic certificate for arbitrary descendant code. No dependency-hash invalidation engine is implemented in Phase 1."
+}
