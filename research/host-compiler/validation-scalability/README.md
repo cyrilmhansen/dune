@@ -2,7 +2,7 @@
 
 Baseline: `b192213594cd499953cedf42f08fdad3c833e52d` (Finalize Pass62 full checkpoint documentation).
 
-Historical proof, active regression and FULL epochs are separate concepts. Every historical test and receipt is preserved. ACTIVE/INCREMENTAL regression does not certify every archived historical proof. Pass62 remains the last certified FULL epoch; ancestry alone does not certify arbitrary future code.
+Historical proof, active regression and FULL epochs are separate concepts. Every historical test and receipt is preserved. ACTIVE/INCREMENTAL regression does not certify every archived historical proof. Pass67 is now the current certified FULL epoch, after documented harness-only reruns; Pass62 remains its preserved historical predecessor. Ancestry alone does not certify arbitrary future code. See [Pass67 certification](../pass-67/validation-full.json).
 
 ## Commands
 
@@ -55,7 +55,7 @@ The inspectable source of membership is `../validation-policy.json`. Archived ex
 - `validation-runner-tests`
 - `word-emitter-unit`
 
-Build/project run serially. Later categories use the existing read-only Dune launcher, at most four workers and unchanged category commands. Pass62 timings only influence start order; missing hints fall back safely and never skip tests.
+Build/project run serially. Later categories use the existing read-only Dune launcher, at most four workers and unchanged category commands. Certified receipt timings only influence start order; missing hints fall back safely and never skip tests.
 
 ## Progress and receipts
 
@@ -65,13 +65,13 @@ Receipts preserve existing fields and add profile, validation tier, selected/ext
 
 ## Historical preservation and epoch policy
 
-`category-set-proof.json` proves all 92 categories in the successful Pass62 receipt are still selectable. Historical-full has 93 categories: the 92 preserved categories plus the cheap validation-runner self-test. No historical test, proof or evidence was deleted or rewritten. This is a selection-set proof; the exhaustive suite was not rerun.
+`category-set-proof.json` proves all 92 categories in the successful Pass62 receipt are still selectable. At the Phase 1 infrastructure baseline, historical-full had 93 categories: the 92 preserved categories plus the cheap validation-runner self-test. No historical test, proof or evidence was deleted or rewritten. That was a selection-set proof; the exhaustive suite was not rerun during the Phase 1 infrastructure task.
 
 Pass62 epoch 0 recorded 643 distinct Python tests, 39 Dune stanzas, four workers, 2932.110 wall seconds, 10788.750 summed category seconds, zero reruns and 94720 exact historical bytes. Implementation, receipt and documentation commit identities are recorded in `../validation-policy.json`.
 
-A new FULL epoch is required for changes to CPU, CP/M/BDOS, Runner, shared journals, common native transactions, interpretation-affecting capture/proof schemas or material reconstruction mechanisms; modifications to known certificate dependencies without narrower proof; major refactor/release milestones; or periodic certification. Plan the next ordinary epoch no later than approximately Pass67, earlier if a trigger fires. This is policy, not a hard-coded semantic constraint. Phase 1 implements no automatic dependency-hash certificate system.
+A new FULL epoch is required for changes to CPU, CP/M/BDOS, Runner, shared journals, common native transactions, interpretation-affecting capture/proof schemas or material reconstruction mechanisms; modifications to known certificate dependencies without narrower proof; major refactor/release milestones; or periodic certification. Pass67 has now completed scheduled certification. Plan the next ordinary epoch no later than approximately Pass72, earlier if a trigger fires. This is policy, not a hard-coded semantic constraint. Phase 1 implements no automatic dependency-hash certificate system.
 
-## Pass63 handoff
+## Original Pass63 handoff (historical)
 
 Assess +829C only in the future semantic pass. Preserve exhaustive Pass63-local shadows/discriminants, run the active core with explicitly selected direct historical dependencies, run standalone/cumulative hybrids, and verify exact goldens/reconstruction. Select dependencies from actual Pass63 evidence. Do not run historical-full unless a trigger fires or periodic certification is due. This infrastructure task performs no new archaeology.
 
@@ -81,6 +81,6 @@ Files changed: the regression runner; its focused self-tests; validation policy;
 
 The single real active execution against `/home/john/pli/cpm/pli80/DISK1` passed initially: **27 categories, 73 Python tests, 39 Dune stanzas, four workers, 123.152 wall seconds and 247.172 summed category seconds**, zero reruns. The 17 focused infrastructure tests also passed, and Python syntax compilation and diff checks passed. Exact reconstruction verified **94720 bytes**; V1, roundtrip tests, packet/continuation integrity and dynamic progress all passed.
 
-Compared with Pass62 FULL at 2932.110 seconds, active took 2m03s instead of 48m52s: **23.81× shorter**, a **95.80% wall-time reduction**. The workloads intentionally differ; this is not an equivalent certification claim. Dune reused its existing build/test cache as usual. No historical-full execution occurred. `active-results.json` preserves the actual receipt and `summary.json` records measurements. Exhaustive journals/logs remain under ignored `_build/validation-scalability/active`.
+Compared with Pass62 FULL at 2932.110 seconds, active took 2m03s instead of 48m52s: **23.81× shorter**, a **95.80% wall-time reduction**. The workloads intentionally differ; this is not an equivalent certification claim. Dune reused its existing build/test cache as usual. No historical-full execution occurred during that infrastructure task. Pass67 was subsequently certified from the external 98-category FULL and complete targeted rerun, with both receipts preserved. `active-results.json` preserves the actual receipt and `summary.json` records measurements. Exhaustive journals/logs remain under ignored `_build/validation-scalability/active`.
 
 Observed progress included `[HEARTBEAT  26/27] active=packet-continuation:01m36s` after all other categories completed, demonstrating that completed and queued jobs do not appear as running.

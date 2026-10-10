@@ -15,9 +15,12 @@ class FlushedBuffer(io.StringIO):
 class Profiles(unittest.TestCase):
  def select(self,**kwargs):return runner.select_categories(AVAILABLE,POLICY,**kwargs)
  def test_historical_full_preserves_every_certified_category(self):
-  old=json.loads((ROOT/POLICY['current_full_epoch']['receipt']).read_text())
+  old=json.loads((ROOT/'research/host-compiler/pass-62/validation.json').read_text())
+  current=json.loads((ROOT/POLICY['current_full_epoch']['receipt']).read_text())
   names=set(self.select(profile='historical-full')[1]);self.assertEqual(len(old['categories']),92)
-  self.assertTrue(set(old['categories'])<=names);self.assertEqual(names,set(AVAILABLE));self.assertIn('validation-runner-tests',names-set(old['categories']))
+  self.assertTrue(set(old['categories'])<=names);self.assertTrue(set(current['categories'])<=names)
+  self.assertEqual(len(current['categories']),POLICY['current_full_epoch']['category_count'])
+  self.assertEqual(names,set(AVAILABLE));self.assertIn('validation-runner-tests',names-set(old['categories']))
  def test_plain_invocation_remains_exhaustive(self):self.assertEqual(self.select(),self.select(profile='historical-full'))
  def test_active_global_and_unit_core(self):
   names=set(self.select(profile='active')[1]);required={'build','project','baseline','V1','roundtrip','roundtrip-tests','packet-continuation','dynamic-progress','diff-check','historical-leaf-queries','validation-runner-tests'}
@@ -42,7 +45,7 @@ class Profiles(unittest.TestCase):
  def test_metadata_never_labels_active_or_legacy_FULL(self):
   for args,tier in[(dict(profile='active'),'ACTIVE/INCREMENTAL'),(dict(categories='pass62'),'INCREMENTAL'),(dict(profile='historical-full'),'FULL')]:
    profile,names,extras=self.select(**args);data=runner.selection_metadata(profile,names,extras,4,POLICY)
-   self.assertEqual(data['validation_tier'],tier);self.assertEqual(data['selected_category_count'],len(names));self.assertEqual(data['last_certified_full_epoch']['name'],'Pass62')
+   self.assertEqual(data['validation_tier'],tier);self.assertEqual(data['selected_category_count'],len(names));self.assertEqual(data['last_certified_full_epoch'],POLICY['current_full_epoch'])
  def test_legacy_command_bodies_are_unchanged(self):
   receipt=json.loads((ROOT/POLICY['current_full_epoch']['receipt']).read_text())
   for name,row in receipt['categories'].items():

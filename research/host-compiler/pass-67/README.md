@@ -38,17 +38,41 @@ Each new handler absorbs two 8072 roots, one 742A root and one 8248 root. Actual
 
 [Semantic extraction](semantic-extraction.json) separates mapped inputs and differentiated generation effects from absolute scratch, PSW transport and software/hardware continuation mechanisms. Compiler-level wording remains HYPOTHESIS; no MIR/API or faithful-code refactor. [Next ranking](next-boundary-ranking.json) recommends fresh bounded predicate/child discovery at the true 3D10 context before migration, ahead of the less converged 397F context and independent large 18B3 traversal. The broader 1FB5 gateway remains separate.
 
-## ACTIVE validation and pending FULL handoff
+## ACTIVE validation and FULL certification
 
 ACTIVE extras: pass67 and pass66. Pass67 supplies exhaustive new local proofs; pass66 protects the materially extended shared PLI2 bridge identity/bounds path and legacy 8072 CALL dispatch. Immutable older child campaigns are not chronologically accumulated. [Receipt](validation.json) records actual category/test/worker/wall/summed timings and reruns. Exact historical reconstruction remains 94720 bytes; oracle queries 0. Packet size is recorded separately and stays below 32 KiB.
 
-**Pass62 remains the last certified FULL epoch. Pass67 FULL status is PENDING EXTERNAL EXECUTION.** Historical-full has not been executed. List-only selection preserves all 92 Pass62 categories, validation-runner-tests, and pass63–67: 98 categories. Policy epoch is unchanged. After this semantic commit is pushed, run:
+The semantic implementation was published as **`28ca74249044408749a875bd9b054f15508a13e8`** with FULL pending external execution. The user subsequently executed the scheduled checkpoint and its targeted harness-only rerun. **Pass67 is now the current certified FULL epoch; Pass62 is the preserved historical predecessor.** The certification/documentation task did not rerun either campaign.
+
+[Composite certification](validation-full.json) preserves coverage of all 98 categories: 87 passed in the initial FULL and all 11 failures passed in a complete targeted rerun. It explicitly records `initial_all_passed = false` and **PASSED AFTER DOCUMENTED HARNESS-ONLY RERUNS**, not an initially green checkpoint.
+
+|Execution|Selected|Passed / failed|Python test executions|Workers|Wall seconds|Summed category seconds|
+|---|---:|---:|---:|---:|---:|---:|
+|Initial historical-full / FULL|98|87 / 11|632|4|3414.239|12698.298|
+|Targeted legacy-categories / INCREMENTAL|13|13 / 0|129|4|365.509|911.362|
+
+The Python execution counts are reported separately; they are not summed and labeled distinct tests. Both original receipts are copied byte-for-byte: [initial FULL](validation-full-initial.json), [targeted rerun](validation-full-rerun.json). Exact historical reconstruction remained **94720 bytes**; 39 Dune test stanzas were retained. All native executable hashes match between receipts. No compiler/native, CPU8080, CP/M/BDOS, Runner, or other runtime semantics changed for the repair.
+
+The failures and narrowly bounded repairs were:
+
+- `pass56`, `pass46`, `pass43`, `pass16`, `minimal-pass-12`, `pass41`, `pass32`, `pass39`, `pass42`, `pass40`: historical catalog assertions had not authorized the seven Pass67 extensions (`PLI2.OVL+04E9`, `+04FF`, `+0515`, `+052C`, `+6EA5`, `+8350`, `+8357`). `historical_catalog_epoch.py` now reads the existing durable `pass-67/contract-laws-PLI2.OVL.json` through its allowed-catalog mechanism; no independent identifier whitelist was introduced.
+- `minimal-pass-2`: remove only the stale RAW requirement for `PLI.COM+05F8 [05F8,05FF)`, independently proved UNDERSTOOD by Pass64. All other historical RAW assertions remain.
+
+Epoch-sensitive runner and Pass67 handoff self-tests were updated to recognize completed certification while preserving the original Pass62 selection checks. This is metadata-only test maintenance; no semantic proof assertions were weakened. Cheap syntax, receipt/provenance, frozen-catalog, focused runner/handoff, and diff checks validate this documentation commit.
+
+The original user-executed FULL command was:
 
 ```sh
 python3 tools/annotated-assembly/run_host_compiler_regressions.py --profile historical-full --images /home/john/pli/cpm/pli80/DISK1 --output _build/host-compiler-pass-67/full-validation --workers 4
 ```
 
-The runner prints START/DONE/WAIT progress. A separate certification task must import the successful external receipt and update the FULL epoch; this semantic commit does not pre-certify it. [Handoff](full-checkpoint-handoff.json) deliberately records PENDING_UNTIL_COMMIT rather than a fabricated self-referencing SHA.
+The user-executed complete affected-category rerun was:
+
+```sh
+python3 tools/annotated-assembly/run_host_compiler_regressions.py --categories pass56,pass46,pass43,pass16,minimal-pass-12,pass41,pass32,pass39,pass42,pass40,minimal-pass-2 --images /home/john/pli/cpm/pli80/DISK1 --output _build/host-compiler-pass-67/full-validation-rerun --workers 4
+```
+
+The [handoff](full-checkpoint-handoff.json) now records the semantic SHA, completed status, both receipts, and the original pending handoff. [Validation policy](../validation-policy.json) records epoch 1 at Pass67 without a self-referential future certification SHA. The next ordinary FULL is approximately **Pass72**, earlier if a substantive trigger fires. ACTIVE remains targeted regression and is not equivalent to FULL certification. The original list-only 98-category preservation proof remains unchanged.
 
 Driver phases: discovery, proof, contracts, annotations, topology, reports, focused, active validation. Exhaustive journals live under ignored _build. No task-owned /tmp directories. User-owned scripts/view-optimist.sh is untouched.
 

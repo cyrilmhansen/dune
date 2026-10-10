@@ -87,8 +87,13 @@ class PairedGenerationParent(unittest.TestCase):
    for s in h['sources']:
     r=s['result'];self.assertTrue(r['PASS1']and r['PASS2']and r['END_COMPILATION']);self.assertEqual(r['termination'],'warm_boot')
     if name.startswith('cumulative'):self.assertEqual((s['pre_guest_instructions'],r['actual_guest_instructions'],sum(s['pre_transition_vector']),r['host_transitions']),expected[r['source']])
- def test_historical_selection_and_pending_EXTERNAL_FULL(self):
-  s=load(REPORT/'historical-full-selection.json');self.assertEqual(s['count'],98);self.assertTrue(s['all_92_preserved']);self.assertFalse(s['executed']);h=load(REPORT/'full-checkpoint-handoff.json');self.assertEqual(h['last_certified_FULL'],'Pass62');self.assertEqual(h['status'],'pending_external_execution');self.assertEqual(h['semantic_commit'],'PENDING_UNTIL_COMMIT');self.assertEqual(load('research/host-compiler/validation-policy.json')['current_full_epoch']['name'],'Pass62')
+ def test_historical_selection_and_FULL_handoff(self):
+  s=load(REPORT/'historical-full-selection.json');self.assertEqual(s['count'],98);self.assertTrue(s['all_92_preserved']);self.assertFalse(s['executed']) # original list-only proof
+  h=load(REPORT/'full-checkpoint-handoff.json');self.assertEqual(h['status'],'certified_after_harness_only_reruns')
+  full=load(REPORT/h['certification_receipt']);self.assertTrue(full['all_passed']);self.assertFalse(full['initial_all_passed']);self.assertEqual(full['category_count'],98)
+  self.assertEqual(h['semantic_commit'],full['semantic_implementation_commit']);self.assertEqual(h['previous_certified_FULL'],'Pass62')
+  policy=load('research/host-compiler/validation-policy.json');epochs=[policy['current_full_epoch'],*policy.get('previous_full_epochs',[])]
+  self.assertTrue(any(e['name']=='Pass67'and e['implementation_commit']==h['semantic_commit']for e in epochs))
  def test_software_gateway_verifier_rejects_false_frames(self):
   import copy
   from software_gateway_pass_67 import prove_gateway

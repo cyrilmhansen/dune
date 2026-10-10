@@ -1,20 +1,31 @@
 {
   "schema_version": 1,
   "current_full_epoch": {
-    "name": "Pass62",
-    "epoch": 0,
-    "implementation_commit": "90a7e9b8dc45f75fb8d158a6f2c7fc9fb3281694",
-    "receipt_commit": "6d736b084417a64464d5868cf1946f735298a611",
-    "documented_baseline_commit": "b192213594cd499953cedf42f08fdad3c833e52d",
-    "receipt": "research/host-compiler/pass-62/validation.json",
-    "category_count": 92,
-    "distinct_python_tests": 643,
+    "name": "Pass67",
+    "epoch": 1,
+    "implementation_commit": "28ca74249044408749a875bd9b054f15508a13e8",
+    "certification_artifact": "research/host-compiler/pass-67/validation-full.json",
+    "receipt": "research/host-compiler/pass-67/validation-full.json",
+    "status": "passed after documented harness-only reruns",
+    "initial_all_passed": false,
+    "category_count": 98,
+    "python_test_execution_counts": {
+      "initial": 632,
+      "targeted_rerun": 129
+    },
     "dune_stanzas": 39,
-    "wall_seconds": 2932.11,
-    "sum_category_seconds": 10788.75,
+    "wall_seconds": 3779.748,
+    "sum_category_seconds": 13609.66,
+    "initial_wall_seconds": 3414.239,
+    "initial_sum_category_seconds": 12698.298,
+    "rerun_wall_seconds": 365.509,
+    "rerun_sum_category_seconds": 911.362,
     "workers": 4,
-    "reruns": 0,
-    "historical_bytes": 94720
+    "reruns": 1,
+    "rerun_category_count": 13,
+    "affected_historical_category_count": 11,
+    "historical_bytes": 94720,
+    "receipt_commit_provenance": "Artifact committed by the separate Pass67 certification commit; actual SHA reported after push, without a self-referential hash"
   },
   "historical_proof": "Preserve all exhaustive shadows, synthetic discriminants, journals, historical tests and prior receipts. Age alone never justifies deleting proof.",
   "profiles": {
@@ -70,10 +81,29 @@
   ],
   "periodic_policy": {
     "epoch_zero": "Pass62",
-    "next_ordinary_full_no_later_than_approximately": "Pass67",
+    "next_ordinary_full_no_later_than_approximately": "Pass72",
     "semantic_pass_interval": 5,
     "earlier_if_substantive_trigger": true,
-    "hard_coded_semantic_restriction": false
+    "hard_coded_semantic_restriction": false,
+    "epoch_base": "Pass67"
   },
-  "certificate_limit": "A certified commit is historical evidence, not an automatic certificate for arbitrary descendant code. No dependency-hash invalidation engine is implemented in Phase 1."
+  "certificate_limit": "A certified commit is historical evidence, not an automatic certificate for arbitrary descendant code. No dependency-hash invalidation engine is implemented in Phase 1.",
+  "previous_full_epochs": [
+    {
+      "name": "Pass62",
+      "epoch": 0,
+      "implementation_commit": "90a7e9b8dc45f75fb8d158a6f2c7fc9fb3281694",
+      "receipt_commit": "6d736b084417a64464d5868cf1946f735298a611",
+      "documented_baseline_commit": "b192213594cd499953cedf42f08fdad3c833e52d",
+      "receipt": "research/host-compiler/pass-62/validation.json",
+      "category_count": 92,
+      "distinct_python_tests": 643,
+      "dune_stanzas": 39,
+      "wall_seconds": 2932.11,
+      "sum_category_seconds": 10788.75,
+      "workers": 4,
+      "reruns": 0,
+      "historical_bytes": 94720
+    }
+  ]
 }

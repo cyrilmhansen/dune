@@ -1,10 +1,26 @@
 {
-  "semantic_commit": "PENDING_UNTIL_COMMIT",
-  "last_certified_FULL": "Pass62",
+  "semantic_commit": "28ca74249044408749a875bd9b054f15508a13e8",
+  "last_certified_FULL": "Pass67",
   "requested_profile": "historical-full",
   "selected_category_count": 98,
   "workers": 4,
   "historical_bytes": 94720,
-  "status": "pending_external_execution",
-  "command": "python3 tools/annotated-assembly/run_host_compiler_regressions.py --profile historical-full --images /home/john/pli/cpm/pli80/DISK1 --output _build/host-compiler-pass-67/full-validation --workers 4"
+  "status": "certified_after_harness_only_reruns",
+  "command": "python3 tools/annotated-assembly/run_host_compiler_regressions.py --profile historical-full --images /home/john/pli/cpm/pli80/DISK1 --output _build/host-compiler-pass-67/full-validation --workers 4",
+  "previous_certified_FULL": "Pass62",
+  "initial_all_passed": false,
+  "certification_receipt": "validation-full.json",
+  "initial_full_receipt": "validation-full-initial.json",
+  "targeted_rerun_receipt": "validation-full-rerun.json",
+  "original_pending_handoff": {
+    "semantic_commit": "PENDING_UNTIL_COMMIT",
+    "last_certified_FULL": "Pass62",
+    "requested_profile": "historical-full",
+    "selected_category_count": 98,
+    "workers": 4,
+    "historical_bytes": 94720,
+    "status": "pending_external_execution",
+    "command": "python3 tools/annotated-assembly/run_host_compiler_regressions.py --profile historical-full --images /home/john/pli/cpm/pli80/DISK1 --output _build/host-compiler-pass-67/full-validation --workers 4"
+  },
+  "targeted_rerun_command": "python3 tools/annotated-assembly/run_host_compiler_regressions.py --categories pass56,pass46,pass43,pass16,minimal-pass-12,pass41,pass32,pass39,pass42,pass40,minimal-pass-2 --images /home/john/pli/cpm/pli80/DISK1 --output _build/host-compiler-pass-67/full-validation-rerun --workers 4"
 }
