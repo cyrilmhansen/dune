@@ -6533,12 +6533,123 @@ PLI2_806B: INR M ; M=u8(M+1); NZPA from byte increment; CY preserved ; +806B run
 PLI2_806C: JNZ 0A1FBH ; if Z=0: PC=A1FBH; flags preserved ; +806C runtime=A26CH OBSERVED
 PLI2_806F: MVI A,00H ; A=00H; flags preserved ; +806F runtime=A26FH OBSERVED
 PLI2_8071: RET ; consume original hardware return word; SP=entry_SP+2; preserve final path flags and registers ; +8071 runtime=A271H OBSERVED
-; SECTION [8072,8225) RAW
-PLI2_8072: DB 021H,046H,0AEH,072H,02BH,073H,02BH,071H,03AH,044H,0AEH,0FEH,004H ; +8072 runtime=A272H RAW
-PLI2_807F: DB 0C2H,085H,0A2H,0CDH,017H,09CH,02AH,044H,0AEH,04DH,02AH,045H,0AEH,0EBH,0CDH,0D6H ; +807F runtime=A27FH RAW
-PLI2_808F: DB 0A0H,01FH,0D2H,095H,0A2H,0C9H,02AH,044H,0AEH,04DH,02AH,045H,0AEH,0EBH,0CDH,038H ; +808F runtime=A28FH RAW
-PLI2_809F: DB 095H,02AH,044H,0AEH,0EBH,00EH,001H,0CDH,0CEH,097H,02AH,045H,0AEH,044H,04DH,0CDH ; +809F runtime=A29FH RAW
-PLI2_80AF: DB 019H,098H,0C9H,021H,047H,0AEH,071H,0CDH,0CAH,095H,03AH,047H,0AEH,0FEH,006H,0C2H ; +80AF runtime=A2AFH RAW
+
+; @procedure-v1 PLI2.OVL+8072
+; ProcedureHypothesis: Saved relation attempt with fallback publication and field emission
+; Entry: PLI2_8072 = PLI2.OVL+8072 @ A272H; SHA-256
+;   80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a
+; Extent: HYPOTHESIS [8072,80B2) file offsets; overlapping entries: none established
+; Callers: OBSERVED PLI2.OVL+2755 (FACTOR=1); PLI2.OVL+2943 (FACTOR=1, FIZZBUZ=1, MINIMAL=1,
+;   OPTIMIST=1, PICTURE=1); PLI2.OVL+38A8 (FIZZBUZ=1, OPTIMIST=1); PLI2.OVL+3D8E
+;   (FIZZBUZ=1, OPTIMIST=1, PICTURE=1); PLI2.OVL+430A (OPTIMIST=3); PLI2.OVL+4447
+;   (FACTOR=1); PLI2.OVL+6ED7 (FACTOR=1, FIZZBUZ=4, MINIMAL=1, OPTIMIST=4, PICTURE=1);
+;   PLI2.OVL+6EE5 (FACTOR=1, FIZZBUZ=4, MINIMAL=1, OPTIMIST=4, PICTURE=1)
+; Returns: OBSERVED/DEDUCED ordinary hardware CALL word; original slot unchanged; SP after
+;   RET=entry_SP+2; Natural RET80B1; synthetic-only success RET8094 consumes actual
+;   original CALL word.
+; Inputs: DEDUCED C/D/E byte carriers; fresh saved selector4 chooses canonical7A17. Entire
+;   required canonical7ED6/7338/75CE/7619 domain, exact code/CALL/continuation, supported
+;   indices/output/position/pending routes and stack/scratch/sentinel nonalias.
+;   State-driven; no source/caller/ordinal dispatch.
+; Outputs: DEDUCED Path-specific A/BC/DE/HL and flags as documented below and in correlated
+;   natural cases; SP=entry_SP+2; PC=original CALL continuation.
+; Clobbers: DEDUCED Path-specific A/BC/DE/HL/flags; local scratch/publications stated below;
+;   delegated child effects; proven CALL/PUSH stack residue.
+; Memory: DEDUCED AE44=C, AE45=E, AE46=D; entry writes D then E then C.; All six parent LHLD
+;   acquisitions read low then high independently, including adjacent E in AE44 word.; No
+;   private frame. Original hardware CALL word persists at entrySP; nested CALL residue
+;   remains below it. Canonical child scratch/table/output effects are inherited.
+; Direct callees: OBSERVED PLI2.OVL+7ED6 @A0D6H; PLI2.OVL+7338 @9538H; PLI2.OVL+75CE @97CEH;
+;   PLI2.OVL+7619 @9819H; PLI2.OVL+7A17 @9C17H
+; Coverage: OBSERVED FACTOR: 5 CALLs; FIZZBUZ: 11 CALLs; MINIMAL: 3 CALLs; OPTIMIST: 14 CALLs;
+;   PICTURE: 4 CALLs; 64/64 bytes represented as instructions; OBSERVED corrected ordinary
+;   CALL/return windows independently retained for MINIMAL/FIZZBUZ/PICTURE; union of own
+;   bytes excludes child bodies. Static authored facts, when present, are separately
+;   DEDUCED/UNOBSERVED; no natural executions fabricated.
+; Unresolved: All primary and cross natural roots take fallback. Success RET8094 independently
+;   concreteCPU proved but DEDUCED STATIC UNOBSERVED. / Arbitrary
+;   pending/error/output/position/index/alias domains outside canonical children remain
+;   unsupported and reject before mutation. / Higher compiler/source-language meaning
+;   remains HYPOTHESIS. +80B2 following operation is separate and unmigrated.
+; Contract: DEDUCED (partial; scope: Bounded accumulated-natural routes and exact represented
+;   local operations; delegated partial/opaque children and unexecuted local arms are not
+;   silently implemented.) Save D at AE46, E at AE45, C at AE44 in order. Fresh AE44 CPI4
+;   selects canonical7A17 only when equal. Independently LHLD AE44 -> C=L; LHLD AE45 -> DE
+;   via XCHG; canonical7ED6. RAR consumes actual returned A: CY=old A.bit0, A=(old
+;   CY<<7)|(old A>>1), NZPA preserved. CYset returns at8094. CYclear: independently reread
+;   AE44 -> C and AE45 -> DE, canonical7338. Fresh LHLD AE44 -> DE via XCHG, C=1,
+;   canonical75CE (E=fresh saved selector, D=adjacent saved E). Fresh LHLD AE45 -> BC
+;   (saved E low/D high), canonical7619, RET80B1 with final child channels. No opaque
+;   cached tuple; all paired reads, same-valued saves, flags and hardware CALL/RET residue
+;   retained. Bounded canonical child index/pending/error/output/position/alias domains;
+;   arbitrary compiler meaning unproved.
+; Hypothesis: none beyond the low-level operational description
+; Completeness: bounds=stable; control_flow=complete; contract=partial
+; Evidence: evidence.json#seeds/PLI2.OVL+8072; ../host-compiler/pass-66/README.md;
+;   ../host-compiler/pass-66/shadow-summary.json;
+;   ../host-compiler/pass-66/cross-evidence.json
+; Procedure pseudo (operational; byte/word arithmetic wraps):
+;   Publish D->AE46,E->AE45,C->AE44 in order. Fresh selector CPI4 selects7A17 when equal.; Fresh
+;   wordAE44 sets C=L; independent wordAE45 XCHG restores E/D. Call canonical7ED6.; RAR actual
+;   child A: CY=oldA.bit0, A=(oldCY<<7)|(oldA>>1), NZPA preserved. Success CYset RET8094; clear
+;   continues.; Fallback only: independently reacquire C fromAE44 and DE fromAE45; canonical7338
+;   publishes adjacent relation pair.; Fresh wordAE44 XCHG ->DE, E=savedC,D=adjacent savedE; C=1;
+;   canonical75CE emits the selector field.; Independent wordAE45 ->BC=savedE low/savedD high;
+;   canonical7619; return final child registers/flags throughRET80B1.
+; @end-procedure-v1 PLI2.OVL+8072
+; SECTION [8072,80B2) UNDERSTOOD
+; @block-pseudo 8072
+; pseudo:
+; | Publish D->AE46,E->AE45,C->AE44 in order. Fresh selector CPI4 selects7A17 when equal.
+PLI2_8072: LXI H,0AE46H ; H pair = literal AE46H; flags preserved ; +8072 runtime=A272H OBSERVED
+PLI2_8075: MOV M,D ; byte[HL]=D; flags preserved ; +8075 runtime=A275H OBSERVED
+PLI2_8076: DCX H ; H=u16(H -1); flags preserved ; +8076 runtime=A276H OBSERVED
+PLI2_8077: MOV M,E ; byte[HL]=E; flags preserved ; +8077 runtime=A277H OBSERVED
+PLI2_8078: DCX H ; H=u16(H -1); flags preserved ; +8078 runtime=A278H OBSERVED
+PLI2_8079: MOV M,C ; byte[HL]=C; flags preserved ; +8079 runtime=A279H OBSERVED
+PLI2_807A: LDA 0AE44H ; A=fresh byte[AE44H]; flags preserved ; +807A runtime=A27AH OBSERVED
+PLI2_807D: CPI 04H ; flags=unsigned byte comparison A-04H; A preserved ; +807D runtime=A27DH OBSERVED
+PLI2_807F: JNZ 0A285H ; if Z=0: PC=A285H; flags preserved ; +807F runtime=A27FH OBSERVED
+PLI2_8082: CALL 9C17H ; push following PC; invoke PLI2.OVL+7A17; child state/effects at the explicitly scoped contract ; +8082 runtime=A282H OBSERVED
+; @block-pseudo 8085
+; pseudo:
+; | Fresh wordAE44 sets C=L; independent wordAE45 XCHG restores E/D. Call canonical7ED6.
+PLI2_8085: LHLD 0AE44H ; HL=fresh little_endian_word[AE44H]; low then high read; flags preserved ; +8085 runtime=A285H OBSERVED
+PLI2_8088: MOV C,L ; C=L; flags preserved ; +8088 runtime=A288H OBSERVED
+PLI2_8089: LHLD 0AE45H ; HL=fresh little_endian_word[AE45H]; low then high read; flags preserved ; +8089 runtime=A289H OBSERVED
+PLI2_808C: XCHG ; exchange DE and HL; flags preserved ; +808C runtime=A28CH OBSERVED
+PLI2_808D: CALL 0A0D6H ; push following PC; invoke PLI2.OVL+7ED6; child state/effects at the explicitly scoped contract ; +808D runtime=A28DH OBSERVED
+; @block-pseudo 8090
+; pseudo:
+; | RAR actual child A: CY=oldA.bit0, A=(oldCY<<7)|(oldA>>1), NZPA preserved. Success CYset RET8094; clear continues.
+PLI2_8090: RAR ; A=(incoming_CY<<7)|(old_A>>1); CY=old_A.bit0; NZPA preserved ; +8090 runtime=A290H OBSERVED
+PLI2_8091: JNC 0A295H ; if CY=0: PC=A295H; flags preserved ; +8091 runtime=A291H OBSERVED
+PLI2_8094: RET ; consume original hardware return word; SP=entry_SP+2; preserve final path flags and registers ; +8094 runtime=A294H DEDUCED STATIC UNOBSERVED
+; @block-pseudo 8095
+; pseudo:
+; | Fallback only: independently reacquire C fromAE44 and DE fromAE45; canonical7338 publishes adjacent relation pair.
+PLI2_8095: LHLD 0AE44H ; HL=fresh little_endian_word[AE44H]; low then high read; flags preserved ; +8095 runtime=A295H OBSERVED
+PLI2_8098: MOV C,L ; C=L; flags preserved ; +8098 runtime=A298H OBSERVED
+PLI2_8099: LHLD 0AE45H ; HL=fresh little_endian_word[AE45H]; low then high read; flags preserved ; +8099 runtime=A299H OBSERVED
+PLI2_809C: XCHG ; exchange DE and HL; flags preserved ; +809C runtime=A29CH OBSERVED
+PLI2_809D: CALL 9538H ; push following PC; invoke PLI2.OVL+7338; child state/effects at the explicitly scoped contract ; +809D runtime=A29DH OBSERVED
+; @block-pseudo 80A0
+; pseudo:
+; | Fresh wordAE44 XCHG ->DE, E=savedC,D=adjacent savedE; C=1; canonical75CE emits the selector field.
+PLI2_80A0: LHLD 0AE44H ; HL=fresh little_endian_word[AE44H]; low then high read; flags preserved ; +80A0 runtime=A2A0H OBSERVED
+PLI2_80A3: XCHG ; exchange DE and HL; flags preserved ; +80A3 runtime=A2A3H OBSERVED
+PLI2_80A4: MVI C,01H ; C=01H; flags preserved ; +80A4 runtime=A2A4H OBSERVED
+PLI2_80A6: CALL 97CEH ; push following PC; invoke PLI2.OVL+75CE; child state/effects at the explicitly scoped contract ; +80A6 runtime=A2A6H OBSERVED
+; @block-pseudo 80A9
+; pseudo:
+; | Independent wordAE45 ->BC=savedE low/savedD high; canonical7619; return final child registers/flags throughRET80B1.
+PLI2_80A9: LHLD 0AE45H ; HL=fresh little_endian_word[AE45H]; low then high read; flags preserved ; +80A9 runtime=A2A9H OBSERVED
+PLI2_80AC: MOV B,H ; B=H; flags preserved ; +80AC runtime=A2ACH OBSERVED
+PLI2_80AD: MOV C,L ; C=L; flags preserved ; +80AD runtime=A2ADH OBSERVED
+PLI2_80AE: CALL 9819H ; push following PC; invoke PLI2.OVL+7619; child state/effects at the explicitly scoped contract ; +80AE runtime=A2AEH OBSERVED
+PLI2_80B1: RET ; consume original hardware return word; SP=entry_SP+2; preserve final path flags and registers ; +80B1 runtime=A2B1H OBSERVED
+; SECTION [80B2,8225) RAW
+PLI2_80B2: DB 021H,047H,0AEH,071H,0CDH,0CAH,095H,03AH,047H,0AEH,0FEH,006H,0C2H ; +80B2 runtime=A2B2H RAW
 PLI2_80BF: DB 0C6H,0A2H,021H,0C9H,0ADH,036H,001H,02AH,047H,0AEH,0EBH,00EH,009H,0CDH,0CEH,097H ; +80BF runtime=A2BFH RAW
 PLI2_80CF: DB 0C9H,021H,048H,0AEH,071H,02AH,048H,0AEH,0EBH,00EH,0C1H,0CDH,003H,09BH,0C9H,021H ; +80CF runtime=A2CFH RAW
 PLI2_80DF: DB 049H,0AEH,071H,02AH,049H,0AEH,0EBH,00EH,0C5H,0CDH,003H,09BH,0C9H,021H,04AH,0AEH ; +80DF runtime=A2DFH RAW
@@ -7354,4 +7465,7 @@ PLI2_7FFF: EQU 0A1FFH ; +7FFF runtime=A1FFH coordinate-only preserved label
 PLI2_804F: EQU 0A24FH ; +804F runtime=A24FH coordinate-only preserved label
 PLI2_805F: EQU 0A25FH ; +805F runtime=A25FH coordinate-only preserved label
 PLI2_83B8: EQU 0A5B8H ; +83B8 runtime=A5B8H coordinate-only preserved label
+PLI2_808F: EQU 0A28FH ; +808F runtime=A28FH coordinate-only preserved label
+PLI2_809F: EQU 0A29FH ; +809F runtime=A29FH coordinate-only preserved label
+PLI2_80AF: EQU 0A2AFH ; +80AF runtime=A2AFH coordinate-only preserved label
     END

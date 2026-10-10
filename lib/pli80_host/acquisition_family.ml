@@ -441,6 +441,14 @@ let run operation memory ~entry ~write ~compatibility ~adjust ~sp ~guard_field ~
     hl 0xadc4;let value=inc(read !q.hl)in put 0x73f9 !q.hl value;if not !q.flags.zero then clear())in clear())in
  let rec pli2_output offset=match offset with
  |0x79e2->preparation79e2()|0x73d0->reset73d0()
+ |0x8072->
+  hl 0xae46;put 0x8075 !q.hl(!q.de lsr 8);hl(!q.hl-1);put 0x8077 !q.hl(!q.de land 255);hl(!q.hl-1);put 0x8079 !q.hl(!q.bc land 255);
+  a(read 0xae44);cmp 4;if !q.flags.zero then call 0x8082 0x7a17(fun()->pli2_output 0x7a17);
+  pair 0xae44;c(!q.hl land 255);pair 0xae45;exchange();call 0x808d 0x7ed6(fun()->pli2_output 0x7ed6);rar();
+  if not !q.flags.carry then(
+   pair 0xae44;c(!q.hl land 255);pair 0xae45;exchange();call 0x809d 0x7338(fun()->pli2_output 0x7338);
+   pair 0xae44;exchange();c 1;call 0x80a6 0x75ce(fun()->pli2_output 0x75ce);
+   pair 0xae45;bc !q.hl;call 0x80ae 0x7619(fun()->pli2_output 0x7619))
  |0x83b4->
   need(!q.bc land 255>0&& !q.bc land 255<=8)"83B4 shift count";
   let rec shift()=dad !q.hl;let old= !q.bc land 255 in let n=dec old in c n;if not !q.flags.zero then shift()in shift()

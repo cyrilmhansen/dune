@@ -1,0 +1,148 @@
+{
+  "all_passed": true,
+  "primary": [
+    {
+      "source": "MINIMAL",
+      "entries": [
+        {
+          "offset": 32882,
+          "calls": 3,
+          "proof_hash": "d87595a3384f44c501126e0309f2cb3d9d43306c3efdd3b472c2ca30e47658cb"
+        },
+        {
+          "offset": 31255,
+          "calls": 0,
+          "proof_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "offset": 32470,
+          "calls": 3,
+          "proof_hash": "2d60b6b22da1a18267c0f059a9c07b187c617d8b3e10ff00cbb5a757cf9677ab"
+        },
+        {
+          "offset": 29496,
+          "calls": 3,
+          "proof_hash": "9d06a578437d48ea9e19e7bfd67b780eaf1d41b6b8a1dee7f64a295254a08cad"
+        },
+        {
+          "offset": 30158,
+          "calls": 3,
+          "proof_hash": "dee796aa45af2277430ef4ff219e3234fd7764141da893d5e5f07118cf6c2865"
+        },
+        {
+          "offset": 30233,
+          "calls": 3,
+          "proof_hash": "949b0140260b85216d3ccabd2ef98176c80b6166dade2b33fb96faabf4c893a7"
+        }
+      ]
+    },
+    {
+      "source": "FIZZBUZ",
+      "entries": [
+        {
+          "offset": 32882,
+          "calls": 11,
+          "proof_hash": "b83588487f44a7b50923413ebd9934c25c5b6ef861751893dece27fa7099f6cb"
+        },
+        {
+          "offset": 31255,
+          "calls": 1,
+          "proof_hash": "b424a45ae27935c010ffe9fba1b48350d0f7c7ea3eec2001a23d730d2de24288"
+        },
+        {
+          "offset": 32470,
+          "calls": 11,
+          "proof_hash": "720d32ff41124c5ecdfff2083f5b729d6b90e1280c81e682138d760009cfbcd9"
+        },
+        {
+          "offset": 29496,
+          "calls": 11,
+          "proof_hash": "0487ca8c56d40f6cecda40d010d6964f726baf15d25a42031f415248bb700ed9"
+        },
+        {
+          "offset": 30158,
+          "calls": 11,
+          "proof_hash": "8829e5f8397b514820f70f8bfd90b2f0bd7a016d140766ab22f896049342195e"
+        },
+        {
+          "offset": 30233,
+          "calls": 11,
+          "proof_hash": "2c18fb71e59385583d890a063027b952dd7a6e3d5347130e424cfa46f10f8650"
+        }
+      ]
+    },
+    {
+      "source": "PICTURE",
+      "entries": [
+        {
+          "offset": 32882,
+          "calls": 4,
+          "proof_hash": "6124eb63037faf96833148a1641312ef4878c5d120d66f32995391924bed02fe"
+        },
+        {
+          "offset": 31255,
+          "calls": 1,
+          "proof_hash": "fdce8657dca4fd649a6a52df3dd97820a15a670d5c78f3c1d71a65d919488e84"
+        },
+        {
+          "offset": 32470,
+          "calls": 4,
+          "proof_hash": "de0fbb4e38d9bd1333d7e22346946d2c0281a8d5a23207d87bea2330110be87e"
+        },
+        {
+          "offset": 29496,
+          "calls": 4,
+          "proof_hash": "7a8c4769b64969d89b6784383c5fb2bf61b58dd78299800c017c7dabf2d3aed8"
+        },
+        {
+          "offset": 30158,
+          "calls": 4,
+          "proof_hash": "505cacf3afa26f96d46d521cda80077dc3666d1b704e2dcc698c664658371c86"
+        },
+        {
+          "offset": 30233,
+          "calls": 4,
+          "proof_hash": "6f04ec80f337a34c9a71afafa331e4f6f50748f32c4c1abdbe5f2a404418073e"
+        }
+      ]
+    }
+  ],
+  "synthetic": {
+    "cases": 432,
+    "routes": {
+      "8072_fallback_C0_CY0": 18,
+      "8072_fallback_C0_CY1": 18,
+      "8072_fallback_C4_CY0": 18,
+      "8072_fallback_C4_CY1": 18,
+      "8072_fallback_C5_CY0": 18,
+      "8072_fallback_C5_CY1": 18,
+      "8072_reserved_C6_CY0": 18,
+      "8072_reserved_C6_CY1": 18,
+      "8072_gate202B_CY0": 18,
+      "8072_gate202B_CY1": 18,
+      "8072_scan_failed_CY0": 18,
+      "8072_scan_failed_CY1": 18,
+      "8072_selector4_pending_CY0": 18,
+      "8072_selector4_pending_CY1": 18,
+      "8072_success_equal_CY0": 18,
+      "8072_success_equal_CY1": 18,
+      "8072_success_C4_CY0": 18,
+      "8072_success_C4_CY1": 18,
+      "8072_success_plus1_CY0": 18,
+      "8072_success_plus1_CY1": 18,
+      "8072_success_first_CY0": 18,
+      "8072_success_first_CY1": 18,
+      "8072_success_search_CY0": 18,
+      "8072_success_search_CY1": 18
+    },
+    "proof_hash": "ead1bc1fb35a29d532434f660ca1ea266df63e02dfb090a59e24b89b41ec6a8f",
+    "original_concrete_CPU": true
+  },
+  "comparison": [
+    "all registers/flags/SP/PC",
+    "ordered writes/full65536 RAM",
+    "stack last writers/child CALL chronology",
+    "DMA/filesystem/record/service/console chronology"
+  ],
+  "journals": "ignored _build/host-compiler-pass-66/proof"
+}

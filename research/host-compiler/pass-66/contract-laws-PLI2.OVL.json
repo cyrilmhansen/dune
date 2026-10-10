@@ -1,0 +1,12 @@
+{
+  "PLI2.OVL+8072": {
+    "end": 32946,
+    "description": "Saved relation attempt with fallback publication and field emission",
+    "contract": "Save D at AE46, E at AE45, C at AE44 in order. Fresh AE44 CPI4 selects canonical7A17 only when equal. Independently LHLD AE44 -> C=L; LHLD AE45 -> DE via XCHG; canonical7ED6. RAR consumes actual returned A: CY=old A.bit0, A=(old CY<<7)|(old A>>1), NZPA preserved. CYset returns at8094. CYclear: independently reread AE44 -> C and AE45 -> DE, canonical7338. Fresh LHLD AE44 -> DE via XCHG, C=1, canonical75CE (E=fresh saved selector, D=adjacent saved E). Fresh LHLD AE45 -> BC (saved E low/D high), canonical7619, RET80B1 with final child channels. No opaque cached tuple; all paired reads, same-valued saves, flags and hardware CALL/RET residue retained. Bounded canonical child index/pending/error/output/position/alias domains; arbitrary compiler meaning unproved.",
+    "completeness": [
+      "stable",
+      "complete",
+      "partial"
+    ]
+  }
+}

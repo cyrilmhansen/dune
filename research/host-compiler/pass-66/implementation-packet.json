@@ -1,0 +1,762 @@
+{
+  "baseline": "9ce85f006bea3969a23decf975497cd8a20afa04",
+  "law": {
+    "PLI2.OVL+8072": {
+      "end": 32946,
+      "description": "Saved relation attempt with fallback publication and field emission",
+      "contract": "Save D at AE46, E at AE45, C at AE44 in order. Fresh AE44 CPI4 selects canonical7A17 only when equal. Independently LHLD AE44 -> C=L; LHLD AE45 -> DE via XCHG; canonical7ED6. RAR consumes actual returned A: CY=old A.bit0, A=(old CY<<7)|(old A>>1), NZPA preserved. CYset returns at8094. CYclear: independently reread AE44 -> C and AE45 -> DE, canonical7338. Fresh LHLD AE44 -> DE via XCHG, C=1, canonical75CE (E=fresh saved selector, D=adjacent saved E). Fresh LHLD AE45 -> BC (saved E low/D high), canonical7619, RET80B1 with final child channels. No opaque cached tuple; all paired reads, same-valued saves, flags and hardware CALL/RET residue retained. Bounded canonical child index/pending/error/output/position/alias domains; arbitrary compiler meaning unproved.",
+      "completeness": [
+        "stable",
+        "complete",
+        "partial"
+      ]
+    }
+  },
+  "knowledge": {
+    "OBSERVED": 63,
+    "DEDUCED STATIC UNOBSERVED": 1,
+    "STATIC UNOBSERVED unsupported": 0
+  },
+  "promotions": {
+    "raw_to_understood": 64,
+    "by_procedure": {
+      "PLI2.OVL+8072": 64
+    },
+    "new_contracts": [
+      "PLI2.OVL+8072"
+    ],
+    "extended_contracts": []
+  },
+  "proofs": {
+    "all_passed": true,
+    "primary": [
+      {
+        "source": "MINIMAL",
+        "entries": [
+          {
+            "offset": 32882,
+            "calls": 3,
+            "proof_hash": "d87595a3384f44c501126e0309f2cb3d9d43306c3efdd3b472c2ca30e47658cb"
+          },
+          {
+            "offset": 31255,
+            "calls": 0,
+            "proof_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+          },
+          {
+            "offset": 32470,
+            "calls": 3,
+            "proof_hash": "2d60b6b22da1a18267c0f059a9c07b187c617d8b3e10ff00cbb5a757cf9677ab"
+          },
+          {
+            "offset": 29496,
+            "calls": 3,
+            "proof_hash": "9d06a578437d48ea9e19e7bfd67b780eaf1d41b6b8a1dee7f64a295254a08cad"
+          },
+          {
+            "offset": 30158,
+            "calls": 3,
+            "proof_hash": "dee796aa45af2277430ef4ff219e3234fd7764141da893d5e5f07118cf6c2865"
+          },
+          {
+            "offset": 30233,
+            "calls": 3,
+            "proof_hash": "949b0140260b85216d3ccabd2ef98176c80b6166dade2b33fb96faabf4c893a7"
+          }
+        ]
+      },
+      {
+        "source": "FIZZBUZ",
+        "entries": [
+          {
+            "offset": 32882,
+            "calls": 11,
+            "proof_hash": "b83588487f44a7b50923413ebd9934c25c5b6ef861751893dece27fa7099f6cb"
+          },
+          {
+            "offset": 31255,
+            "calls": 1,
+            "proof_hash": "b424a45ae27935c010ffe9fba1b48350d0f7c7ea3eec2001a23d730d2de24288"
+          },
+          {
+            "offset": 32470,
+            "calls": 11,
+            "proof_hash": "720d32ff41124c5ecdfff2083f5b729d6b90e1280c81e682138d760009cfbcd9"
+          },
+          {
+            "offset": 29496,
+            "calls": 11,
+            "proof_hash": "0487ca8c56d40f6cecda40d010d6964f726baf15d25a42031f415248bb700ed9"
+          },
+          {
+            "offset": 30158,
+            "calls": 11,
+            "proof_hash": "8829e5f8397b514820f70f8bfd90b2f0bd7a016d140766ab22f896049342195e"
+          },
+          {
+            "offset": 30233,
+            "calls": 11,
+            "proof_hash": "2c18fb71e59385583d890a063027b952dd7a6e3d5347130e424cfa46f10f8650"
+          }
+        ]
+      },
+      {
+        "source": "PICTURE",
+        "entries": [
+          {
+            "offset": 32882,
+            "calls": 4,
+            "proof_hash": "6124eb63037faf96833148a1641312ef4878c5d120d66f32995391924bed02fe"
+          },
+          {
+            "offset": 31255,
+            "calls": 1,
+            "proof_hash": "fdce8657dca4fd649a6a52df3dd97820a15a670d5c78f3c1d71a65d919488e84"
+          },
+          {
+            "offset": 32470,
+            "calls": 4,
+            "proof_hash": "de0fbb4e38d9bd1333d7e22346946d2c0281a8d5a23207d87bea2330110be87e"
+          },
+          {
+            "offset": 29496,
+            "calls": 4,
+            "proof_hash": "7a8c4769b64969d89b6784383c5fb2bf61b58dd78299800c017c7dabf2d3aed8"
+          },
+          {
+            "offset": 30158,
+            "calls": 4,
+            "proof_hash": "505cacf3afa26f96d46d521cda80077dc3666d1b704e2dcc698c664658371c86"
+          },
+          {
+            "offset": 30233,
+            "calls": 4,
+            "proof_hash": "6f04ec80f337a34c9a71afafa331e4f6f50748f32c4c1abdbe5f2a404418073e"
+          }
+        ]
+      }
+    ],
+    "synthetic": {
+      "cases": 432,
+      "routes": {
+        "8072_fallback_C0_CY0": 18,
+        "8072_fallback_C0_CY1": 18,
+        "8072_fallback_C4_CY0": 18,
+        "8072_fallback_C4_CY1": 18,
+        "8072_fallback_C5_CY0": 18,
+        "8072_fallback_C5_CY1": 18,
+        "8072_reserved_C6_CY0": 18,
+        "8072_reserved_C6_CY1": 18,
+        "8072_gate202B_CY0": 18,
+        "8072_gate202B_CY1": 18,
+        "8072_scan_failed_CY0": 18,
+        "8072_scan_failed_CY1": 18,
+        "8072_selector4_pending_CY0": 18,
+        "8072_selector4_pending_CY1": 18,
+        "8072_success_equal_CY0": 18,
+        "8072_success_equal_CY1": 18,
+        "8072_success_C4_CY0": 18,
+        "8072_success_C4_CY1": 18,
+        "8072_success_plus1_CY0": 18,
+        "8072_success_plus1_CY1": 18,
+        "8072_success_first_CY0": 18,
+        "8072_success_first_CY1": 18,
+        "8072_success_search_CY0": 18,
+        "8072_success_search_CY1": 18
+      },
+      "proof_hash": "ead1bc1fb35a29d532434f660ca1ea266df63e02dfb090a59e24b89b41ec6a8f",
+      "original_concrete_CPU": true
+    },
+    "comparison": [
+      "all registers/flags/SP/PC",
+      "ordered writes/full65536 RAM",
+      "stack last writers/child CALL chronology",
+      "DMA/filesystem/record/service/console chronology"
+    ],
+    "journals": "ignored _build/host-compiler-pass-66/proof"
+  },
+  "natural": {
+    "MINIMAL": {
+      "count": 3,
+      "path_signatures": {
+        "9b2c660b84842acd0cc908b32e19fcae022abb2f1191d7de5d9998d8bb12ba08": 3
+      },
+      "triples": {
+        "0/2/0": 1,
+        "2/2/82": 1,
+        "0/0/0": 1
+      },
+      "checkpoint_hashes": [
+        "48bc5c1338580c93a4595c0d32753d855a4c3395556b4f54e769522f671c3471",
+        "85a1c94035cbfe5d5d4db39daf2908b961505a39c0fa4220451a4fed04ad2d1e",
+        "173297c963c748008dacd64a919a6ac033a297983d1f348dbcd0f1c7e3d0eff0"
+      ]
+    },
+    "FIZZBUZ": {
+      "count": 11,
+      "path_signatures": {
+        "9b2c660b84842acd0cc908b32e19fcae022abb2f1191d7de5d9998d8bb12ba08": 10,
+        "07c5d16be73b530ed7f534734c7c22fe12cc9bc44404b22b30adf6e4ff5d7a80": 1
+      },
+      "triples": {
+        "0/2/0": 1,
+        "4/0/1": 1,
+        "0/255/240": 1,
+        "2/2/82": 4,
+        "0/0/0": 4
+      },
+      "checkpoint_hashes": [
+        "b800162f15dcae3878b4a0047841044774a2557334160aab5c63bc4b20828abc",
+        "78ec92a2a5daced966bc1d25487a7fe03634061de748634f2277ddced7a9b835",
+        "5cb49b2d1aaaecf20bb333670639f85bce7a085d6abad29f9b4761fb7ead6e77",
+        "211d7db7e30d07cdbcf8ebbda05919df888adda543203a19172086b6dfad5e03",
+        "e04f555632c42cdda53ba1b5280f84a3788b8b4eb22eea573fe666494b994013",
+        "fbc17a57956151f138e6551a56f0cad97b3935b94a327b0ac5110990c52744b6",
+        "47a3ca5da1e3861792765a7d0bddb7f51c2c788756bb75aafa079ced5f90bee1",
+        "0ab617b31a42b21364d3bd28e23849ae23c907d0d8b8e50ee9bea0a7308d9940",
+        "e75de76ff01d3d3524584cfa29235eff9e601abe7d3681d468c2b6e67cf1d024",
+        "7cfbf55e50a12ec6f8fa4676e03e770f5c05e029621c061430dfc8c23d2165c8",
+        "8501742a797480dcb92d74a0ddd4e62e49d5d9a2a77fb95004cdfdf006690141"
+      ]
+    },
+    "PICTURE": {
+      "count": 4,
+      "path_signatures": {
+        "9b2c660b84842acd0cc908b32e19fcae022abb2f1191d7de5d9998d8bb12ba08": 3,
+        "07c5d16be73b530ed7f534734c7c22fe12cc9bc44404b22b30adf6e4ff5d7a80": 1
+      },
+      "triples": {
+        "0/2/0": 1,
+        "4/0/7": 1,
+        "2/2/82": 1,
+        "0/0/0": 1
+      },
+      "checkpoint_hashes": [
+        "2fa0cfd2ad97c19eadf6ac8a79571eaf8d3332049b2690091875c2be47e5ff73",
+        "4c3e320d51aab340d28b32fb8876eb8f09562c8399bf0c13ee6a43c55b3275cb",
+        "d036891b2c62e4b79fb50f075821037f1ae63267ac118420baff91a42f412c58",
+        "22bb871c054e5d98ebfcf65d60b144bb8a294554f845d64615ba893821c1f60d"
+      ]
+    }
+  },
+  "cross": {
+    "FACTOR": {
+      "natural": true,
+      "entries": [
+        {
+          "offset": 32882,
+          "calls": 5,
+          "callers": {
+            "PLI2.OVL+2943": 1,
+            "PLI2.OVL+6ED7": 1,
+            "PLI2.OVL+6EE5": 1,
+            "PLI2.OVL+2755": 1,
+            "PLI2.OVL+4447": 1
+          },
+          "triples": {
+            "0/2/0": 1,
+            "2/2/82": 1,
+            "0/0/0": 1,
+            "0/0/8": 1,
+            "4/0/1": 1
+          },
+          "continuations": {
+            "19270": 1,
+            "37082": 1,
+            "37096": 1,
+            "18776": 1,
+            "26186": 1
+          },
+          "proof_hash": "f390e3b72e539792994d6df15ea891c53128b1170c495f733249ef2eaa6db90d"
+        },
+        {
+          "offset": 31255,
+          "calls": 1,
+          "callers": {
+            "PLI2.OVL+8082": 1
+          },
+          "triples": {
+            "4/0/1": 1
+          },
+          "continuations": {
+            "41605": 1
+          },
+          "proof_hash": "53e45abc3d338713df88bd779f5bb1024fbd96442cc8d8ad38152e8d0be75beb"
+        },
+        {
+          "offset": 32470,
+          "calls": 5,
+          "callers": {
+            "PLI2.OVL+808D": 5
+          },
+          "triples": {
+            "0/2/0": 1,
+            "2/2/82": 1,
+            "0/0/0": 1,
+            "0/0/8": 1,
+            "4/0/1": 1
+          },
+          "continuations": {
+            "41616": 5
+          },
+          "proof_hash": "92833f96c2f068a1b93bc241b61d752d6a19949e2496f8fedf8cdb31d4c115fa"
+        },
+        {
+          "offset": 29496,
+          "calls": 5,
+          "callers": {
+            "PLI2.OVL+809D": 5
+          },
+          "triples": {
+            "0/2/0": 1,
+            "2/2/82": 1,
+            "0/0/0": 1,
+            "0/0/8": 1,
+            "4/0/1": 1
+          },
+          "continuations": {
+            "41632": 5
+          },
+          "proof_hash": "6f13ba7915e7477c60bc74dd103800b4ab2db85ce5a7df37fdb30508c6ffe2f2"
+        },
+        {
+          "offset": 30158,
+          "calls": 5,
+          "callers": {
+            "PLI2.OVL+80A6": 5
+          },
+          "triples": {
+            "1/0/0": 2,
+            "1/82/2": 1,
+            "1/8/0": 1,
+            "1/1/4": 1
+          },
+          "continuations": {
+            "41641": 5
+          },
+          "proof_hash": "9cc7e909444ca11e3dffed0433d2189462e23840374e765ee4a8f5e5c48cc365"
+        },
+        {
+          "offset": 30233,
+          "calls": 5,
+          "callers": {
+            "PLI2.OVL+80AE": 5
+          },
+          "triples": {
+            "0/0/0": 2,
+            "82/0/0": 1,
+            "8/0/0": 1,
+            "1/0/0": 1
+          },
+          "continuations": {
+            "41649": 5
+          },
+          "proof_hash": "8c40b15e4e50786837cbe5e591348c07c3659a67f27dd11ee08f540eeaa8f4d1"
+        }
+      ],
+      "own_return_sites": {
+        "PLI2.OVL+80B1": 5
+      },
+      "instruction_proof_hash": "5f7c628d366a0bf84a95019cd9226ad917eb5f2d20c1a30ee0acf49ab166ec72"
+    },
+    "OPTIMIST": {
+      "natural": true,
+      "entries": [
+        {
+          "offset": 32882,
+          "calls": 14,
+          "callers": {
+            "PLI2.OVL+2943": 1,
+            "PLI2.OVL+6ED7": 4,
+            "PLI2.OVL+6EE5": 4,
+            "PLI2.OVL+3D8E": 1,
+            "PLI2.OVL+38A8": 1,
+            "PLI2.OVL+430A": 3
+          },
+          "triples": {
+            "0/2/0": 1,
+            "2/2/82": 3,
+            "0/0/0": 4,
+            "2/2/144": 1,
+            "4/0/1": 1,
+            "0/255/249": 1,
+            "2/0/9": 2,
+            "2/0/11": 1
+          },
+          "continuations": {
+            "19270": 1,
+            "37082": 4,
+            "37096": 4,
+            "24465": 1,
+            "23211": 1,
+            "25869": 3
+          },
+          "proof_hash": "d136f011715c57951d094c41cf8914c0f94c935af571bff4e273c90f72852bec"
+        },
+        {
+          "offset": 31255,
+          "calls": 1,
+          "callers": {
+            "PLI2.OVL+8082": 1
+          },
+          "triples": {
+            "4/0/1": 1
+          },
+          "continuations": {
+            "41605": 1
+          },
+          "proof_hash": "d2b96dc8ab0af8a264f65403778bb848c90227e47619960907d0abec0442cc53"
+        },
+        {
+          "offset": 32470,
+          "calls": 14,
+          "callers": {
+            "PLI2.OVL+808D": 14
+          },
+          "triples": {
+            "0/2/0": 1,
+            "2/2/82": 3,
+            "0/0/0": 4,
+            "2/2/144": 1,
+            "4/0/1": 1,
+            "0/255/249": 1,
+            "2/0/9": 2,
+            "2/0/11": 1
+          },
+          "continuations": {
+            "41616": 14
+          },
+          "proof_hash": "331c8c2ca86de7d510c71609bf2ddaeca4fc9f9ccce7daaa78abe207ab36cc34"
+        },
+        {
+          "offset": 29496,
+          "calls": 14,
+          "callers": {
+            "PLI2.OVL+809D": 14
+          },
+          "triples": {
+            "0/2/0": 1,
+            "2/2/82": 3,
+            "0/0/0": 4,
+            "2/2/144": 1,
+            "4/0/1": 1,
+            "0/255/249": 1,
+            "2/0/9": 2,
+            "2/0/11": 1
+          },
+          "continuations": {
+            "41632": 14
+          },
+          "proof_hash": "69d748c626420d9a06d1dda37ab124a61f28bf137a648b97e26b3ab1af20964f"
+        },
+        {
+          "offset": 30158,
+          "calls": 14,
+          "callers": {
+            "PLI2.OVL+80A6": 14
+          },
+          "triples": {
+            "1/0/0": 5,
+            "1/82/2": 3,
+            "1/144/2": 1,
+            "1/1/4": 1,
+            "1/249/0": 1,
+            "1/9/2": 2,
+            "1/11/2": 1
+          },
+          "continuations": {
+            "41641": 14
+          },
+          "proof_hash": "57b420262a3e755d21f1d10f2253211e3b1a18e0e3ab7f1b1e1b0e49f633c77a"
+        },
+        {
+          "offset": 30233,
+          "calls": 14,
+          "callers": {
+            "PLI2.OVL+80AE": 14
+          },
+          "triples": {
+            "0/0/0": 5,
+            "82/0/0": 3,
+            "144/0/0": 1,
+            "1/0/0": 1,
+            "249/0/0": 1,
+            "9/0/0": 2,
+            "11/0/0": 1
+          },
+          "continuations": {
+            "41649": 14
+          },
+          "proof_hash": "45d6ed9aad7692032e730218d78f1051708c53807bd021e1fe0795a31c4610a4"
+        }
+      ],
+      "own_return_sites": {
+        "PLI2.OVL+80B1": 14
+      },
+      "instruction_proof_hash": "07f914dc1d7f89ea57a34fa8eade072b8cd57d38e9f21a5338cad69995c79995"
+    }
+  },
+  "topology": {
+    "MINIMAL": {
+      "logical": 3,
+      "external": 3,
+      "absorbed": {
+        "PLI2.OVL+7ED6": 3,
+        "PLI2.OVL+7338": 3,
+        "PLI2.OVL+75CE": 3,
+        "PLI2.OVL+7619": 3
+      },
+      "delta": -9,
+      "internal": {
+        "PLI2.OVL+7ED6": 3,
+        "PLI2.OVL+7338": 3,
+        "PLI2.OVL+7314": 6,
+        "PLI2.OVL+75CE": 3,
+        "PLI2.OVL+746F": 3,
+        "PLI2.OVL+74C7": 3,
+        "PLI2.OVL+7557": 3,
+        "PLI.COM+1140": 81,
+        "PLI.COM+119E": 9,
+        "PLI2.OVL+753C": 9,
+        "PLI.COM+1A29": 9,
+        "PLI2.OVL+7619": 3,
+        "PLI2.OVL+7510": 3,
+        "PLI2.OVL+75F1": 3,
+        "PLI2.OVL+7550": 3
+      },
+      "remaining": {
+        "PLI2.OVL+7ED6": {
+          "calls": 0,
+          "callers": {}
+        },
+        "PLI2.OVL+7338": {
+          "calls": 0,
+          "callers": {}
+        },
+        "PLI2.OVL+75CE": {
+          "calls": 1,
+          "callers": {
+            "PLI2.OVL+7D25": 1
+          }
+        },
+        "PLI2.OVL+7619": {
+          "calls": 0,
+          "callers": {}
+        },
+        "PLI2.OVL+7A17": {
+          "calls": 1,
+          "callers": {
+            "PLI2.OVL+7D15": 1
+          }
+        },
+        "PLI2.OVL+8072": {
+          "calls": 0,
+          "callers": {}
+        },
+        "PLI2.OVL+18B3": {
+          "calls": 1,
+          "callers": {
+            "PLI2.OVL+19EB": 1
+          }
+        },
+        "PLI.COM+119E": {
+          "calls": 32,
+          "callers": {
+            "PLI0.OVL+188F": 1,
+            "PLI0.OVL+1993": 4,
+            "PLI0.OVL+19A5": 24,
+            "PLI0.OVL+189E": 1,
+            "PLI0.OVL+18AD": 1,
+            "PLI0.OVL+18BC": 1
+          }
+        }
+      }
+    },
+    "FIZZBUZ": {
+      "logical": 11,
+      "external": 11,
+      "absorbed": {
+        "PLI2.OVL+7ED6": 11,
+        "PLI2.OVL+7338": 11,
+        "PLI2.OVL+75CE": 11,
+        "PLI2.OVL+7619": 11
+      },
+      "delta": -33,
+      "internal": {
+        "PLI2.OVL+7ED6": 11,
+        "PLI2.OVL+7338": 11,
+        "PLI2.OVL+7314": 22,
+        "PLI2.OVL+75CE": 11,
+        "PLI2.OVL+746F": 11,
+        "PLI2.OVL+74C7": 11,
+        "PLI2.OVL+7557": 11,
+        "PLI.COM+1140": 297,
+        "PLI.COM+119E": 33,
+        "PLI2.OVL+753C": 33,
+        "PLI.COM+1A29": 33,
+        "PLI2.OVL+7619": 11,
+        "PLI2.OVL+7510": 11,
+        "PLI2.OVL+75F1": 11,
+        "PLI2.OVL+7550": 11,
+        "PLI2.OVL+7A17": 1
+      },
+      "remaining": {
+        "PLI2.OVL+7ED6": {
+          "calls": 0,
+          "callers": {}
+        },
+        "PLI2.OVL+7338": {
+          "calls": 0,
+          "callers": {}
+        },
+        "PLI2.OVL+75CE": {
+          "calls": 8,
+          "callers": {
+            "PLI2.OVL+80CC": 1,
+            "PLI2.OVL+7938": 3,
+            "PLI2.OVL+7D25": 3,
+            "PLI2.OVL+7D66": 1
+          }
+        },
+        "PLI2.OVL+7619": {
+          "calls": 7,
+          "callers": {
+            "PLI2.OVL+815B": 7
+          }
+        },
+        "PLI2.OVL+7A17": {
+          "calls": 9,
+          "callers": {
+            "PLI2.OVL+7BB8": 6,
+            "PLI2.OVL+7D15": 3
+          }
+        },
+        "PLI2.OVL+8072": {
+          "calls": 0,
+          "callers": {}
+        },
+        "PLI2.OVL+18B3": {
+          "calls": 1,
+          "callers": {
+            "PLI2.OVL+19EB": 1
+          }
+        },
+        "PLI.COM+119E": {
+          "calls": 32,
+          "callers": {
+            "PLI0.OVL+188F": 1,
+            "PLI0.OVL+1993": 4,
+            "PLI0.OVL+19A5": 24,
+            "PLI0.OVL+189E": 1,
+            "PLI0.OVL+18AD": 1,
+            "PLI0.OVL+18BC": 1
+          }
+        }
+      }
+    },
+    "PICTURE": {
+      "logical": 4,
+      "external": 4,
+      "absorbed": {
+        "PLI2.OVL+7ED6": 4,
+        "PLI2.OVL+7338": 4,
+        "PLI2.OVL+75CE": 4,
+        "PLI2.OVL+7619": 4
+      },
+      "delta": -12,
+      "internal": {
+        "PLI2.OVL+7ED6": 4,
+        "PLI2.OVL+7338": 4,
+        "PLI2.OVL+7314": 8,
+        "PLI2.OVL+75CE": 4,
+        "PLI2.OVL+746F": 4,
+        "PLI2.OVL+74C7": 4,
+        "PLI2.OVL+7557": 4,
+        "PLI.COM+1140": 108,
+        "PLI.COM+119E": 12,
+        "PLI2.OVL+753C": 12,
+        "PLI.COM+1A29": 12,
+        "PLI2.OVL+7619": 4,
+        "PLI2.OVL+7510": 4,
+        "PLI2.OVL+75F1": 4,
+        "PLI2.OVL+7550": 4,
+        "PLI2.OVL+7A17": 1,
+        "PLI2.OVL+7365": 16
+      },
+      "remaining": {
+        "PLI2.OVL+7ED6": {
+          "calls": 0,
+          "callers": {}
+        },
+        "PLI2.OVL+7338": {
+          "calls": 0,
+          "callers": {}
+        },
+        "PLI2.OVL+75CE": {
+          "calls": 1,
+          "callers": {
+            "PLI2.OVL+7D25": 1
+          }
+        },
+        "PLI2.OVL+7619": {
+          "calls": 0,
+          "callers": {}
+        },
+        "PLI2.OVL+7A17": {
+          "calls": 2,
+          "callers": {
+            "PLI2.OVL+7D15": 1,
+            "PLI2.OVL+7BB8": 1
+          }
+        },
+        "PLI2.OVL+8072": {
+          "calls": 0,
+          "callers": {}
+        },
+        "PLI2.OVL+18B3": {
+          "calls": 1,
+          "callers": {
+            "PLI2.OVL+19EB": 1
+          }
+        },
+        "PLI.COM+119E": {
+          "calls": 39,
+          "callers": {
+            "PLI0.OVL+188F": 1,
+            "PLI0.OVL+1993": 4,
+            "PLI0.OVL+19A5": 24,
+            "PLI0.OVL+189E": 1,
+            "PLI0.OVL+18AD": 1,
+            "PLI0.OVL+18BC": 1,
+            "PLI0.OVL+3D33": 1,
+            "PLI0.OVL+3D4E": 6
+          }
+        }
+      }
+    }
+  },
+  "canonical_children": {
+    "PLI2.OVL+7A17": {
+      "contract_hash": "09b33cb00f9b4b2c340c50d6549d5dbced0492e9898d3019a3ff156340168886"
+    },
+    "PLI2.OVL+7ED6": {
+      "contract_hash": "fa0bce3b33e9b3a64b8ba2a20b7e32343d4d791875c3ae42510deacc665db564"
+    },
+    "PLI2.OVL+7338": {
+      "contract_hash": "d4b829639e80f66c5565318794862e1ba2b9939690acd7868c4ff7dffe175258"
+    },
+    "PLI2.OVL+75CE": {
+      "contract_hash": "1d4d93a623e6ad5ca1f1165253b37287663e2fd2d8e5861f53f6084b79a73bcf"
+    },
+    "PLI2.OVL+7619": {
+      "contract_hash": "cfa74e05e37a320c771b1e9f38855d0cb2ac84a9ff603f90f09bd912b5b67b87"
+    }
+  },
+  "active_extras": [
+    "pass66",
+    "pass65"
+  ],
+  "oracle_queries": 0,
+  "last_full": "Pass62",
+  "full_trigger": false
+}

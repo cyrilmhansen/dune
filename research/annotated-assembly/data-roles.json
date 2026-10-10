@@ -2960,6 +2960,26 @@
       "width": 2,
       "role": "FF sentinels;independent successful candidates persist across iterations.",
       "scope": "Bounded Pass65 +7ED6 generation relation policy."
+    },
+    {
+      "id": "PLI2.OVL:composition_saved_selector",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "name": "composition_saved_selector",
+      "runtime_address": 44612,
+      "width": 1,
+      "role": "Input C, freshly reread for predicate and lower operation arguments.",
+      "scope": "Pass66 +8072 bounded generation composition."
+    },
+    {
+      "id": "PLI2.OVL:composition_saved_relation",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "name": "composition_saved_relation",
+      "runtime_address": 44613,
+      "width": 2,
+      "role": "E low/D high input word saved high-to-low; independently reread for7ED6,7338,7619.",
+      "scope": "Pass66 +8072 bounded generation composition."
     }
   ]
 }

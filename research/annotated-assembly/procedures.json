@@ -48865,6 +48865,233 @@
         "83DA": "H=A; flags preserved",
         "83DB": "consume original hardware return word; SP=entry_SP+2; preserve final path flags and registers"
       }
+    },
+    {
+      "id": "PLI2.OVL+8072",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "stable_label": "PLI2_8072",
+      "runtime_entry": 41586,
+      "start_offset": 32882,
+      "end_offset": 32946,
+      "length": 64,
+      "byte_status_at_entry": "UNDERSTOOD",
+      "description": "Saved relation attempt with fallback publication and field emission",
+      "completeness": {
+        "bounds": "stable",
+        "control_flow": "complete",
+        "contract": "partial"
+      },
+      "observed_paths": {
+        "invocations_by_run": {
+          "MINIMAL": 3,
+          "FIZZBUZ": 11,
+          "PICTURE": 4,
+          "FACTOR": 5,
+          "OPTIMIST": 14
+        },
+        "represented_bytes": 64,
+        "description": "OBSERVED corrected ordinary CALL/return windows independently retained for MINIMAL/FIZZBUZ/PICTURE; union of own bytes excludes child bodies. Static authored facts, when present, are separately DEDUCED/UNOBSERVED; no natural executions fabricated."
+      },
+      "unresolved_paths": [
+        "All primary and cross natural roots take fallback. Success RET8094 independently concreteCPU proved but DEDUCED STATIC UNOBSERVED.",
+        "Arbitrary pending/error/output/position/index/alias domains outside canonical children remain unsupported and reject before mutation.",
+        "Higher compiler/source-language meaning remains HYPOTHESIS. +80B2 following operation is separate and unmigrated."
+      ],
+      "inputs": "C/D/E byte carriers; fresh saved selector4 chooses canonical7A17. Entire required canonical7ED6/7338/75CE/7619 domain, exact code/CALL/continuation, supported indices/output/position/pending routes and stack/scratch/sentinel nonalias. State-driven; no source/caller/ordinal dispatch.",
+      "outputs": "Path-specific A/BC/DE/HL and flags as documented below and in correlated natural cases; SP=entry_SP+2; PC=original CALL continuation.",
+      "clobbers": "Path-specific A/BC/DE/HL/flags; local scratch/publications stated below; delegated child effects; proven CALL/PUSH stack residue.",
+      "memory_state": [
+        "AE44=C, AE45=E, AE46=D; entry writes D then E then C.",
+        "All six parent LHLD acquisitions read low then high independently, including adjacent E in AE44 word.",
+        "No private frame. Original hardware CALL word persists at entrySP; nested CALL residue remains below it. Canonical child scratch/table/output effects are inherited."
+      ],
+      "data_role_ids": [
+        "PLI2.OVL:composition_saved_selector",
+        "PLI2.OVL:composition_saved_relation"
+      ],
+      "callers": [
+        {
+          "coordinate": "PLI2.OVL+2755",
+          "counts_by_run": {
+            "FACTOR": 1
+          }
+        },
+        {
+          "coordinate": "PLI2.OVL+2943",
+          "counts_by_run": {
+            "MINIMAL": 1,
+            "FIZZBUZ": 1,
+            "PICTURE": 1,
+            "FACTOR": 1,
+            "OPTIMIST": 1
+          }
+        },
+        {
+          "coordinate": "PLI2.OVL+38A8",
+          "counts_by_run": {
+            "FIZZBUZ": 1,
+            "OPTIMIST": 1
+          }
+        },
+        {
+          "coordinate": "PLI2.OVL+3D8E",
+          "counts_by_run": {
+            "FIZZBUZ": 1,
+            "PICTURE": 1,
+            "OPTIMIST": 1
+          }
+        },
+        {
+          "coordinate": "PLI2.OVL+430A",
+          "counts_by_run": {
+            "OPTIMIST": 3
+          }
+        },
+        {
+          "coordinate": "PLI2.OVL+4447",
+          "counts_by_run": {
+            "FACTOR": 1
+          }
+        },
+        {
+          "coordinate": "PLI2.OVL+6ED7",
+          "counts_by_run": {
+            "MINIMAL": 1,
+            "FIZZBUZ": 4,
+            "PICTURE": 1,
+            "FACTOR": 1,
+            "OPTIMIST": 4
+          }
+        },
+        {
+          "coordinate": "PLI2.OVL+6EE5",
+          "counts_by_run": {
+            "MINIMAL": 1,
+            "FIZZBUZ": 4,
+            "PICTURE": 1,
+            "FACTOR": 1,
+            "OPTIMIST": 4
+          }
+        }
+      ],
+      "returns": {
+        "convention": "ordinary hardware CALL word; original slot unchanged; SP after RET=entry_SP+2",
+        "observed_file_offsets": [
+          32945
+        ],
+        "sites_description": "Natural RET80B1; synthetic-only success RET8094 consumes actual original CALL word."
+      },
+      "direct_callees": [
+        {
+          "callsite_offset": 32909,
+          "coordinate": "PLI2.OVL+7ED6",
+          "runtime_address": 41174
+        },
+        {
+          "callsite_offset": 32925,
+          "coordinate": "PLI2.OVL+7338",
+          "runtime_address": 38200
+        },
+        {
+          "callsite_offset": 32934,
+          "coordinate": "PLI2.OVL+75CE",
+          "runtime_address": 38862
+        },
+        {
+          "callsite_offset": 32942,
+          "coordinate": "PLI2.OVL+7619",
+          "runtime_address": 38937
+        },
+        {
+          "callsite_offset": 32898,
+          "coordinate": "PLI2.OVL+7A17",
+          "runtime_address": 39959
+        }
+      ],
+      "overlapping_entries": [],
+      "contract_scope": "Bounded accumulated-natural routes and exact represented local operations; delegated partial/opaque children and unexecuted local arms are not silently implemented.",
+      "contract": "Save D at AE46, E at AE45, C at AE44 in order. Fresh AE44 CPI4 selects canonical7A17 only when equal. Independently LHLD AE44 -> C=L; LHLD AE45 -> DE via XCHG; canonical7ED6. RAR consumes actual returned A: CY=old A.bit0, A=(old CY<<7)|(old A>>1), NZPA preserved. CYset returns at8094. CYclear: independently reread AE44 -> C and AE45 -> DE, canonical7338. Fresh LHLD AE44 -> DE via XCHG, C=1, canonical75CE (E=fresh saved selector, D=adjacent saved E). Fresh LHLD AE45 -> BC (saved E low/D high), canonical7619, RET80B1 with final child channels. No opaque cached tuple; all paired reads, same-valued saves, flags and hardware CALL/RET residue retained. Bounded canonical child index/pending/error/output/position/alias domains; arbitrary compiler meaning unproved.",
+      "semantic_hypothesis": null,
+      "pseudocode": "Publish D->AE46,E->AE45,C->AE44 in order. Fresh selector CPI4 selects7A17 when equal.; Fresh wordAE44 sets C=L; independent wordAE45 XCHG restores E/D. Call canonical7ED6.; RAR actual child A: CY=oldA.bit0, A=(oldCY<<7)|(oldA>>1), NZPA preserved. Success CYset RET8094; clear continues.; Fallback only: independently reacquire C fromAE44 and DE fromAE45; canonical7338 publishes adjacent relation pair.; Fresh wordAE44 XCHG ->DE, E=savedC,D=adjacent savedE; C=1; canonical75CE emits the selector field.; Independent wordAE45 ->BC=savedE low/savedD high; canonical7619; return final child registers/flags throughRET80B1.",
+      "evidence_refs": [
+        "evidence.json#seeds/PLI2.OVL+8072",
+        "../host-compiler/pass-66/README.md",
+        "../host-compiler/pass-66/shadow-summary.json",
+        "../host-compiler/pass-66/cross-evidence.json"
+      ],
+      "blocks": [
+        {
+          "offset": 32882,
+          "pseudocode": [
+            "Publish D->AE46,E->AE45,C->AE44 in order. Fresh selector CPI4 selects7A17 when equal."
+          ]
+        },
+        {
+          "offset": 32901,
+          "pseudocode": [
+            "Fresh wordAE44 sets C=L; independent wordAE45 XCHG restores E/D. Call canonical7ED6."
+          ]
+        },
+        {
+          "offset": 32912,
+          "pseudocode": [
+            "RAR actual child A: CY=oldA.bit0, A=(oldCY<<7)|(oldA>>1), NZPA preserved. Success CYset RET8094; clear continues."
+          ]
+        },
+        {
+          "offset": 32917,
+          "pseudocode": [
+            "Fallback only: independently reacquire C fromAE44 and DE fromAE45; canonical7338 publishes adjacent relation pair."
+          ]
+        },
+        {
+          "offset": 32928,
+          "pseudocode": [
+            "Fresh wordAE44 XCHG ->DE, E=savedC,D=adjacent savedE; C=1; canonical75CE emits the selector field."
+          ]
+        },
+        {
+          "offset": 32937,
+          "pseudocode": [
+            "Independent wordAE45 ->BC=savedE low/savedD high; canonical7619; return final child registers/flags throughRET80B1."
+          ]
+        }
+      ],
+      "local_comments": {
+        "8072": "H pair = literal AE46H; flags preserved",
+        "8075": "byte[HL]=D; flags preserved",
+        "8076": "H=u16(H -1); flags preserved",
+        "8077": "byte[HL]=E; flags preserved",
+        "8078": "H=u16(H -1); flags preserved",
+        "8079": "byte[HL]=C; flags preserved",
+        "807A": "A=fresh byte[AE44H]; flags preserved",
+        "807D": "flags=unsigned byte comparison A-04H; A preserved",
+        "807F": "if Z=0: PC=A285H; flags preserved",
+        "8082": "push following PC; invoke PLI2.OVL+7A17; child state/effects at the explicitly scoped contract",
+        "8085": "HL=fresh little_endian_word[AE44H]; low then high read; flags preserved",
+        "8088": "C=L; flags preserved",
+        "8089": "HL=fresh little_endian_word[AE45H]; low then high read; flags preserved",
+        "808C": "exchange DE and HL; flags preserved",
+        "808D": "push following PC; invoke PLI2.OVL+7ED6; child state/effects at the explicitly scoped contract",
+        "8090": "A=(incoming_CY<<7)|(old_A>>1); CY=old_A.bit0; NZPA preserved",
+        "8091": "if CY=0: PC=A295H; flags preserved",
+        "8094": "consume original hardware return word; SP=entry_SP+2; preserve final path flags and registers",
+        "8095": "HL=fresh little_endian_word[AE44H]; low then high read; flags preserved",
+        "8098": "C=L; flags preserved",
+        "8099": "HL=fresh little_endian_word[AE45H]; low then high read; flags preserved",
+        "809C": "exchange DE and HL; flags preserved",
+        "809D": "push following PC; invoke PLI2.OVL+7338; child state/effects at the explicitly scoped contract",
+        "80A0": "HL=fresh little_endian_word[AE44H]; low then high read; flags preserved",
+        "80A3": "exchange DE and HL; flags preserved",
+        "80A4": "C=01H; flags preserved",
+        "80A6": "push following PC; invoke PLI2.OVL+75CE; child state/effects at the explicitly scoped contract",
+        "80A9": "HL=fresh little_endian_word[AE45H]; low then high read; flags preserved",
+        "80AC": "B=H; flags preserved",
+        "80AD": "C=L; flags preserved",
+        "80AE": "push following PC; invoke PLI2.OVL+7619; child state/effects at the explicitly scoped contract",
+        "80B1": "consume original hardware return word; SP=entry_SP+2; preserve final path flags and registers"
+      }
     }
   ]
 }

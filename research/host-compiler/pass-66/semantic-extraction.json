@@ -1,0 +1,32 @@
+{
+  "historical_root": "PLI2.OVL+8072",
+  "semantic_inputs": [
+    "selector C and ordered relation bytes D/E",
+    "fresh AE04 pending state when selector4",
+    "fresh lower indexed-relation gates/tables"
+  ],
+  "semantic_outputs": [
+    "visible input scratch saves and optional pending preparation",
+    "actual lower result bit selects success return or fallback",
+    "fallback adjacent publication and selector/word representations"
+  ],
+  "shared_historical_state": [
+    "AE44=C,AE45=E,AE46=D",
+    "canonical AE3A..AE43, ADAB/ADB3 and pending AE04..06",
+    "canonical publication/output/position scratch and buffers"
+  ],
+  "historical_mechanism": [
+    "high-to-low MOV M saves",
+    "six independent paired LHLD reads and XCHG",
+    "CPI4 conditional preparation",
+    "RAR actual child accumulator through actual returned carry",
+    "canonical7338/75CE/7619 with distinct argument provenance",
+    "exact CALL/RET/flags/stack and same-valued writes"
+  ],
+  "candidate_modern_operation": "Attempt indexed relation reuse; otherwise publish and emit generation state",
+  "confidence": {
+    "low_level": "OBSERVED natural fallback plus DEDUCED STATIC UNOBSERVED success and synthetic pending routes",
+    "compiler_meaning": "HYPOTHESIS; no source-language meaning assigned"
+  },
+  "mir_relevance": "Documentation only; no MIR API or faithful-code modernization."
+}
