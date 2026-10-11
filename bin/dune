@@ -231,3 +231,17 @@
 (executable
  (name selector_dispatch_components)
  (libraries pli80 analysis runner unix))
+
+(executable
+ (name indexed_policy_capture)
+ (libraries pli80 analysis runner unix))
+
+(executable
+ (name indexed_policy_components)
+ (modules indexed_policy_components)
+ (libraries pli80 i8080 cpm unix))
+
+(executable
+ (name indexed_policy_frontend_proof)
+ (modules indexed_policy_frontend_proof)
+ (libraries pli80 i8080 cpm unix))

@@ -59,6 +59,7 @@ def commands(images,out):
   cmds[name]=['python3','tools/annotated-assembly/'+file,'--images',images,'-q']
  cmds['pass60']=['python3','tools/annotated-assembly/test_carrier_generation_pass_60.py','--images',images,'-q']
  cmds['pass68']=['python3','tools/annotated-assembly/test_predicate_generation_pass_68.py','--images',images,'-q']
+ cmds['pass70']=['python3','tools/annotated-assembly/test_indexed_policy_pass_70.py','--images',images,'-q']
  cmds['pass69']=['python3','tools/annotated-assembly/test_selector_dispatch_pass_69.py','--images',images,'-q']
  cmds['pass67']=['python3','tools/annotated-assembly/test_generation_parent_discovery_pass_67.py','--images',images,'-q']
  cmds['pass66']=['python3','tools/annotated-assembly/test_generation_composition_pass_66.py','--images',images,'-q']
