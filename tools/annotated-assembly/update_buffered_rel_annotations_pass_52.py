@@ -20,6 +20,7 @@ def meaning(w):
  d=w['disassembly'];op,_,arg=d.partition(' ');arg=arg.replace('H','H');off=w['origin']['offset']
  if op=='CALL':return 'push following PC; invoke '+coord(w['target_origin'])+'; child state/effects at the explicitly scoped contract'
  if op=='PCHL':return 'PC=HL from freshly selected little-endian jump-table word; no new CALL word or stack frame'
+ if op=='ADC':return 'A=u8(A+fresh '+arg+'+incoming_CY); exact byte addition flags; low-add carry is consumed independently'
  if op=='ADD':return 'A=u8(A+fresh '+arg+'); exact byte addition flags; independent channels retained'
  if op=='RET':return 'consume original hardware return word; SP=entry_SP+2; preserve final path flags and registers'
  if op=='CMA':return 'A=bitwise complement of A; all flags preserved'

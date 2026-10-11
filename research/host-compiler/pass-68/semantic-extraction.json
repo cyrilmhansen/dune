@@ -1,0 +1,28 @@
+{
+  "historical_root": "PLI2.OVL+3D10",
+  "semantic_inputs": [
+    "Fresh mapped selectors and predicate bytes AD08/AD0B/AD0C/AD0D/AD0E",
+    "Supported generation relation/output state"
+  ],
+  "semantic_outputs": [
+    "Predicate-selected canonical generation/emission and exact historical state publications"
+  ],
+  "shared_historical_state": [
+    "AAB0 mapped indices; A609/A9E7/A7F8/A795 mapped channels",
+    "AD4F; ADF3..ADFF; AE19..AE1B; AE25..AE27; AC9F; ADEF",
+    "Canonical carrier/output state and original continuation"
+  ],
+  "historical_mechanism": [
+    "DCX SP/PUSH H creates three mutable bytes, not preserved HL",
+    "Local word overwrites pushed high byte and DCX slot; POP H consumes transformed bytes",
+    "Independent LHLD rereads; equality and less-than masks; actual child-return RAR gates",
+    "Explicit fresh index0..7 scan and separate canonical emission helpers"
+  ],
+  "candidate_modern_operation": "Predicate-directed generation using mapped state and a stack-carried intermediate",
+  "confidence": {
+    "instruction_law": "OBSERVED and DEDUCED within explicit bounded contract",
+    "candidate_modern_operation": "HYPOTHESIS",
+    "excluded_gateway": "STATIC UNOBSERVED unsupported"
+  },
+  "mir_relevance": "Documentation only; separates the bounded state transformation from 8080 realization. No API or compiler-level interpretation is established."
+}

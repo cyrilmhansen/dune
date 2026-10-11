@@ -440,6 +440,82 @@ let run operation memory ~entry ~write ~compatibility ~adjust ~sp ~guard_field ~
     pair 0xadc4;hl(!q.hl land 255);bc 0xadab;dad !q.bc;put 0x73f4 !q.hl 0;
     hl 0xadc4;let value=inc(read !q.hl)in put 0x73f9 !q.hl value;if not !q.flags.zero then clear())in clear())in
  let rec pli2_output offset=match offset with
+ |0x047d|0x059e->
+  let saved,table=if offset=0x047d then 0xabf8,0xa609 else 0xac06,0xa9e7 in
+  hl saved;put(offset+3)!q.hl(!q.bc land 255);pair saved;hl(!q.hl land 255);bc 0xaab0;dad !q.bc;
+  c(read !q.hl);bc(!q.bc land 255);hl table;dad !q.bc;a(read !q.hl)
+ |0x3bfb->pair 0xad0c;c(!q.hl land 255);call 0x3bff 0x047d(fun()->pli2_output 0x047d);sub 5;sub 1;mask()
+ |0x3660->a(read 0xad08);rar();if !q.flags.carry then a 1 else(
+  pair 0xad0b;c(!q.hl land 255);call 0x366e 0x059e(fun()->pli2_output 0x059e);sub 8;mask())
+ |0x3790->
+  hl 0xad4f;put 0x3793 !q.hl(!q.bc land 255);pair 0xad4f;c(!q.hl land 255);
+  call 0x3798 0x059e(fun()->pli2_output 0x059e);cmp 8;
+  if not !q.flags.carry then(a(read 0xad4f);a(dec !q.a);c !q.a;call 0x37c7 0x052c(fun()->pli2_output 0x052c))else(
+   a(read 0xad4f);a(dec !q.a);c !q.a;call 0x37a5 0x04ff(fun()->pli2_output 0x04ff);put 0x37a8 0xad4f !q.a;
+   let old= !q.a in q:={!q with R.a=B.wrap(old lsl 1)lor(old lsr 7);flags={!q.flags with carry=old land 128<>0}};rar();
+   need(not !q.flags.carry)"3790 negative extension alternative";pair 0xad4f;hl(!q.hl land 255))
+ |0x7c22|0x7cb4->
+  let saved=if offset=0x7c22 then 0xae1b else 0xae27 in
+  hl saved;put(offset+3)!q.hl(!q.bc land 255);pair saved;c(!q.hl land 255);
+  call(offset+8)0x052c(fun()->pli2_output 0x052c);bc !q.hl;
+  let target=if offset=0x7c22 then 0x7c0e else 0x7ca0 in call(offset+13)target(fun()->pli2_output target)
+ |0x7c0e|0x7ca0->
+  let saved,tag=if offset=0x7c0e then 0xae19,0x22 else 0xae25,0x32 in
+  hl(saved+1);put(offset+3)!q.hl(!q.bc lsr 8);hl(!q.hl-1);put(offset+5)!q.hl(!q.bc land 255);
+  c tag;call(offset+8)0x7b02(fun()->pli2_output 0x7b02);pair saved;bc !q.hl;call(offset+16)0x785c(fun()->pli2_output 0x785c)
+ |0x7b02->
+  hl 0xae0b;put 0x7b05 !q.hl(!q.bc land 255);pair 0xae0b;c(!q.hl land 255);
+  call 0x7b0a 0x78e9(fun()->pli2_output 0x78e9);a(read 0xae0b);cmp 0xe9;need(not !q.flags.zero)"7B02 E9 alternative"
+ |0x78e9->
+  hl 0xadff;put 0x78ec !q.hl(!q.bc land 255);pair 0xadff;c(!q.hl land 255);call 0x78f1 0x7897(fun()->pli2_output 0x7897);
+  pair 0xadff;c(!q.hl land 255);call 0x78f8 0x746f(fun()->pli2_output 0x746f);
+  pair 0xadff;c(!q.hl land 255);call 0x78ff 0x7557(fun()->pli2_output 0x7557)
+ |0x7897->
+  hl 0xadfd;put 0x789a !q.hl(!q.bc land 255);a(read 0xadaa);rar();if !q.flags.carry then(
+   hl 0xadfe;put 0x78a6 !q.hl 0;
+   let rec scan()=a 7;hl 0xadfe;cmp(read !q.hl);if not !q.flags.carry then(
+    pair 0xadfe;hl(!q.hl land 255);bc 0x94b9;dad !q.bc;a(read 0xadfd);cmp(read !q.hl);
+    need(not !q.flags.zero)"7897 matched selector alternative";
+    hl 0xadfe;let n=inc(read !q.hl)in put 0x78e4 !q.hl n;if not !q.flags.zero then scan())in scan())
+ |0x785c->
+  hl 0xadfa;put 0x785f !q.hl(!q.bc lsr 8);hl(!q.hl-1);put 0x7861 !q.hl(!q.bc land 255);
+  pair 0xadef;store 0x7865 0xadfb !q.hl;pair 0xadf9;bc !q.hl;call 0x786d 0x77cc(fun()->pli2_output 0x77cc);
+  a(read 0x201d);rar();need(not !q.flags.carry)"785C listing alternative"
+ |0x77cc->
+  hl 0xadf4;put 0x77cf !q.hl(!q.bc lsr 8);hl(!q.hl-1);put 0x77d1 !q.hl(!q.bc land 255);
+  pair 0xadf3;guard_field !q.hl 8;need(!q.hl>=0xae6d)"77CC active carrier alias";store 0x77d5 0xac9f !q.hl;hl(U.wrap(!q.hl+2));a(read !q.hl);put 0x77db 0xadf5 !q.a;
+  bc 3;pair 0xac9f;dad !q.bc;a(read !q.hl);put 0x77e6 0xadf6 !q.a;
+  bc 6;pair 0xac9f;dad !q.bc;de 0xadef;call 0x77f3 0x8342(fun()->pli2_output 0x8342);store 0x77f6 0xadf7 !q.hl;
+  a(read 0xadf6);ani 0x1f;cmp 9;
+  if !q.flags.zero then(pair 0xadf7;bc !q.hl;call 0x7808 0x765e(fun()->pli2_output 0x765e))else(
+   a(read 0xadf6);ani 0x1f;cmp 0x11;need(not !q.flags.zero)"77CC type11 pointer generation";
+   a(read 0xadf6);ani 0x1f;cmp 8;
+   if !q.flags.zero then(pair 0xadf7;bc !q.hl;call 0x7832 0x7630(fun()->pli2_output 0x7630))else(
+    a(read 0xadf6);ani 0x1f;cmp 0x10;need(not !q.flags.zero)"77CC type10 pointer generation";
+    pair 0xadf7;bc !q.hl;call 0x7852 0x765e(fun()->pli2_output 0x765e)));
+  hl 0;store 0x7858 0xadef !q.hl
+ |0x8342->
+  c(read !q.hl);hl(U.wrap(!q.hl+1));bc(read !q.hl lsl 8 lor(!q.bc land 255));a(read !q.de);add(!q.bc land 255);hl((!q.hl land 0xff00)lor !q.a);
+  de(U.wrap(!q.de+1));a(read !q.de);let old= !q.a and v= !q.bc lsr 8 and cy=if !q.flags.carry then 1 else 0 in
+  let sum=old+v+cy in a(B.wrap sum);q:={!q with R.flags=flags !q.a((old land 15)+(v land 15)+cy>15)(sum>255)};hl(!q.a lsl 8 lor(!q.hl land 255))
+ |0x3d10->
+  adjust ~site:0x5f10 ~delta:(-1);push 0x3d11 !q.hl;
+  call 0x3d12 0x3bfb(fun()->pli2_output 0x3bfb);rar();need !q.flags.carry "3D10 unresolved 1FB5 gateway route";
+  call 0x3d20 0x3660(fun()->pli2_output 0x3660);rar();
+  if !q.flags.carry then(
+   pair 0xad0e;c(!q.hl land 255);call 0x3d2b 0x04ff(fun()->pli2_output 0x04ff);frame 0;put 0x3d32 !q.hl !q.a;
+   call 0x3d33 0x3bfb(fun()->pli2_output 0x3bfb);rar();need !q.flags.carry "3D10 changed second predicate";
+   frame 0;a(read !q.hl);cmp 0;
+   if !q.flags.zero then(e 7;c 0xa8;call 0x3d48 0x7b1b(fun()->pli2_output 0x7b1b))else(
+    frame 0;e(read !q.hl);c 7;call 0x3d55 0x7e05(fun()->pli2_output 0x7e05));
+   pair 0xad0c;c(!q.hl land 255);call 0x3d5c 0x7cb4(fun()->pli2_output 0x7cb4)
+  )else(
+   pair 0xad0d;c(!q.hl land 255);call 0x3d73 0x3790(fun()->pli2_output 0x3790);exchange();
+   frame 1;put 0x3d7b !q.hl(!q.de land 255);hl(U.wrap(!q.hl+1));put 0x3d7d !q.hl(!q.de lsr 8);
+   call 0x3d7e 0x3bfb(fun()->pli2_output 0x3bfb);rar();need !q.flags.carry "3D10 changed second predicate";
+   frame 1;e(read !q.hl);hl(U.wrap(!q.hl+1));de(read !q.hl lsl 8 lor(!q.de land 255));c 4;
+   call 0x3d8e 0x8072(fun()->pli2_output 0x8072);pair 0xad0c;c(!q.hl land 255);call 0x3d95 0x7c22(fun()->pli2_output 0x7c22));
+  adjust ~site:0x5fe1 ~delta:1;hl(pop())
  |0x79e2->preparation79e2()|0x73d0->reset73d0()
  |0x04e9|0x04ff->
   let saved,table=if offset=0x04e9 then 0xabfd,0xa795 else 0xabfe,0xa7f8 in

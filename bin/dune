@@ -211,3 +211,11 @@
  (name native_generation_parent)
  (modules native_generation_parent)
  (libraries pli80 pli80_host runner unix))
+
+(executable
+ (name predicate_generation_capture)
+ (libraries pli80 analysis runner unix))
+
+(executable
+ (name native_predicate_generation)
+ (libraries pli80 analysis runner unix))

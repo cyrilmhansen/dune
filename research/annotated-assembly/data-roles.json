@@ -3030,6 +3030,46 @@
       "width": 2,
       "role": "Low C atABFF, high E atAC00; paired read and shift/OR composition.",
       "scope": "Pass67 bounded software handler and mapped-word descendants."
+    },
+    {
+      "id": "PLI2.OVL:predicate_handler_state",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "name": "predicate_handler_state",
+      "runtime_address": 44299,
+      "width": 4,
+      "role": "Fresh independent mapped selectors at AD0B/AD0C/AD0D/AD0E; adjacent LHLD channels are retained.",
+      "scope": "Bounded Pass68 predicate handler and required descendants."
+    },
+    {
+      "id": "PLI2.OVL:structure_emission_state",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "name": "structure_emission_state",
+      "runtime_address": 44531,
+      "width": 12,
+      "role": "Saved pointer, fresh target+2/+3, pointed-word sum, position snapshot and selector scan intermediates.",
+      "scope": "Bounded Pass68 predicate handler and required descendants."
+    },
+    {
+      "id": "PLI2.OVL:saved_tag22_word",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "name": "saved_tag22_word",
+      "runtime_address": 44569,
+      "width": 3,
+      "role": "Saved B/C word and independently saved mapped selector for tag22 composition.",
+      "scope": "Bounded Pass68 predicate handler and required descendants."
+    },
+    {
+      "id": "PLI2.OVL:saved_tag32_word",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "name": "saved_tag32_word",
+      "runtime_address": 44581,
+      "width": 3,
+      "role": "Synthetic-only saved B/C word and independently saved mapped selector for tag32 composition.",
+      "scope": "Bounded Pass68 predicate handler and required descendants."
     }
   ]
 }

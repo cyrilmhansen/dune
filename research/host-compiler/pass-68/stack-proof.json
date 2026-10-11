@@ -1,0 +1,1798 @@
+{
+  "MINIMAL": [],
+  "FIZZBUZ": [
+    {
+      "entry_SP": 65478,
+      "original_CALL": {
+        "step_index": 738245,
+        "pc": 24589,
+        "pc_after": 24336,
+        "origin": {
+          "image": {
+            "drive": 0,
+            "user": 0,
+            "name": "PLI2.OVL",
+            "identity": "0:0:PLI2.OVL"
+          },
+          "offset": 15885
+        },
+        "target_origin": {
+          "image": {
+            "drive": 0,
+            "user": 0,
+            "name": "PLI2.OVL",
+            "identity": "0:0:PLI2.OVL"
+          },
+          "offset": 15632
+        },
+        "runtime_pc": 24589,
+        "bytes": "CD105F",
+        "disassembly": "CALL 5F10H",
+        "source": "memory",
+        "before": {
+          "a": 0,
+          "b": 0,
+          "c": 1,
+          "d": 96,
+          "e": 46,
+          "h": 96,
+          "l": 13,
+          "sp": 65480,
+          "pc": 24589,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "after": {
+          "a": 0,
+          "b": 0,
+          "c": 1,
+          "d": 96,
+          "e": 46,
+          "h": 96,
+          "l": 13,
+          "sp": 65478,
+          "pc": 24336,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "sp_before": 65480,
+        "sp_after": 65478,
+        "call_return_address": 24592,
+        "reads": [],
+        "writes": [
+          {
+            "address": 65479,
+            "old_value": null,
+            "new_value": 96
+          },
+          {
+            "address": 65478,
+            "old_value": null,
+            "new_value": 16
+          }
+        ],
+        "control": {
+          "kind": "call",
+          "target": 24336,
+          "taken": true
+        }
+      },
+      "PUSH_H": {
+        "step_index": 738247,
+        "pc": 24337,
+        "pc_after": 24338,
+        "origin": {
+          "image": {
+            "drive": 0,
+            "user": 0,
+            "name": "PLI2.OVL",
+            "identity": "0:0:PLI2.OVL"
+          },
+          "offset": 15633
+        },
+        "target_origin": null,
+        "runtime_pc": 24337,
+        "bytes": "E5",
+        "disassembly": "PUSH H",
+        "source": "memory",
+        "before": {
+          "a": 0,
+          "b": 0,
+          "c": 1,
+          "d": 96,
+          "e": 46,
+          "h": 96,
+          "l": 13,
+          "sp": 65477,
+          "pc": 24337,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "after": {
+          "a": 0,
+          "b": 0,
+          "c": 1,
+          "d": 96,
+          "e": 46,
+          "h": 96,
+          "l": 13,
+          "sp": 65475,
+          "pc": 24338,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "sp_before": 65477,
+        "sp_after": 65475,
+        "call_return_address": null,
+        "reads": [],
+        "writes": [
+          {
+            "address": 65476,
+            "old_value": null,
+            "new_value": 96
+          },
+          {
+            "address": 65475,
+            "old_value": null,
+            "new_value": 13
+          }
+        ],
+        "control": {
+          "kind": "sequential"
+        }
+      },
+      "local_stores": [
+        {
+          "step_index": 738342,
+          "pc": 24443,
+          "pc_after": 24444,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI2.OVL",
+              "identity": "0:0:PLI2.OVL"
+            },
+            "offset": 15739
+          },
+          "target_origin": null,
+          "runtime_pc": 24443,
+          "bytes": "73",
+          "disassembly": "MOV M,E",
+          "source": "memory",
+          "before": {
+            "a": 1,
+            "b": 0,
+            "c": 5,
+            "d": 0,
+            "e": 1,
+            "h": 255,
+            "l": 196,
+            "sp": 65475,
+            "pc": 24443,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 1,
+            "b": 0,
+            "c": 5,
+            "d": 0,
+            "e": 1,
+            "h": 255,
+            "l": 196,
+            "sp": 65475,
+            "pc": 24444,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "sp_before": 65475,
+          "sp_after": 65475,
+          "call_return_address": null,
+          "reads": [],
+          "writes": [
+            {
+              "address": 65476,
+              "old_value": null,
+              "new_value": 1
+            }
+          ],
+          "control": {
+            "kind": "sequential"
+          }
+        },
+        {
+          "step_index": 738344,
+          "pc": 24445,
+          "pc_after": 24446,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI2.OVL",
+              "identity": "0:0:PLI2.OVL"
+            },
+            "offset": 15741
+          },
+          "target_origin": null,
+          "runtime_pc": 24445,
+          "bytes": "72",
+          "disassembly": "MOV M,D",
+          "source": "memory",
+          "before": {
+            "a": 1,
+            "b": 0,
+            "c": 5,
+            "d": 0,
+            "e": 1,
+            "h": 255,
+            "l": 197,
+            "sp": 65475,
+            "pc": 24445,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 1,
+            "b": 0,
+            "c": 5,
+            "d": 0,
+            "e": 1,
+            "h": 255,
+            "l": 197,
+            "sp": 65475,
+            "pc": 24446,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "sp_before": 65475,
+          "sp_after": 65475,
+          "call_return_address": null,
+          "reads": [],
+          "writes": [
+            {
+              "address": 65477,
+              "old_value": null,
+              "new_value": 0
+            }
+          ],
+          "control": {
+            "kind": "sequential"
+          }
+        }
+      ],
+      "POP_H": {
+        "step_index": 741389,
+        "pc": 24546,
+        "pc_after": 24547,
+        "origin": {
+          "image": {
+            "drive": 0,
+            "user": 0,
+            "name": "PLI2.OVL",
+            "identity": "0:0:PLI2.OVL"
+          },
+          "offset": 15842
+        },
+        "target_origin": null,
+        "runtime_pc": 24546,
+        "bytes": "E1",
+        "disassembly": "POP H",
+        "source": "memory",
+        "before": {
+          "a": 0,
+          "b": 29,
+          "c": 10,
+          "d": 0,
+          "e": 0,
+          "h": 0,
+          "l": 0,
+          "sp": 65476,
+          "pc": 24546,
+          "flags": {
+            "sign": true,
+            "zero": false,
+            "auxiliary_carry": false,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "after": {
+          "a": 0,
+          "b": 29,
+          "c": 10,
+          "d": 0,
+          "e": 0,
+          "h": 0,
+          "l": 1,
+          "sp": 65478,
+          "pc": 24547,
+          "flags": {
+            "sign": true,
+            "zero": false,
+            "auxiliary_carry": false,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "sp_before": 65476,
+        "sp_after": 65478,
+        "call_return_address": null,
+        "reads": [
+          {
+            "address": 65476,
+            "value": 1
+          },
+          {
+            "address": 65477,
+            "value": 0
+          }
+        ],
+        "writes": [],
+        "control": {
+          "kind": "sequential"
+        }
+      },
+      "RET": {
+        "step_index": 741390,
+        "pc": 24547,
+        "pc_after": 24592,
+        "origin": {
+          "image": {
+            "drive": 0,
+            "user": 0,
+            "name": "PLI2.OVL",
+            "identity": "0:0:PLI2.OVL"
+          },
+          "offset": 15843
+        },
+        "target_origin": {
+          "image": {
+            "drive": 0,
+            "user": 0,
+            "name": "PLI2.OVL",
+            "identity": "0:0:PLI2.OVL"
+          },
+          "offset": 15888
+        },
+        "runtime_pc": 24547,
+        "bytes": "C9",
+        "disassembly": "RET",
+        "source": "memory",
+        "before": {
+          "a": 0,
+          "b": 29,
+          "c": 10,
+          "d": 0,
+          "e": 0,
+          "h": 0,
+          "l": 1,
+          "sp": 65478,
+          "pc": 24547,
+          "flags": {
+            "sign": true,
+            "zero": false,
+            "auxiliary_carry": false,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "after": {
+          "a": 0,
+          "b": 29,
+          "c": 10,
+          "d": 0,
+          "e": 0,
+          "h": 0,
+          "l": 1,
+          "sp": 65480,
+          "pc": 24592,
+          "flags": {
+            "sign": true,
+            "zero": false,
+            "auxiliary_carry": false,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "sp_before": 65478,
+        "sp_after": 65480,
+        "call_return_address": null,
+        "reads": [
+          {
+            "address": 65478,
+            "value": 16
+          },
+          {
+            "address": 65479,
+            "value": 96
+          }
+        ],
+        "writes": [],
+        "control": {
+          "kind": "return",
+          "target": 24592,
+          "taken": true
+        }
+      },
+      "last_writers": {
+        "65479": {
+          "step": 738245,
+          "writer": "PLI2.OVL+3E0D",
+          "address": 65479,
+          "value": 96
+        },
+        "65478": {
+          "step": 738245,
+          "writer": "PLI2.OVL+3E0D",
+          "address": 65478,
+          "value": 16
+        },
+        "65476": {
+          "step": 738342,
+          "writer": "PLI2.OVL+3D7B",
+          "address": 65476,
+          "value": 1
+        },
+        "65475": {
+          "step": 738247,
+          "writer": "PLI2.OVL+3D11",
+          "address": 65475,
+          "value": 13
+        },
+        "65474": {
+          "step": 739763,
+          "writer": "PLI2.OVL+3D95",
+          "address": 65474,
+          "value": 95
+        },
+        "65473": {
+          "step": 739763,
+          "writer": "PLI2.OVL+3D95",
+          "address": 65473,
+          "value": 152
+        },
+        "65472": {
+          "step": 739854,
+          "writer": "PLI2.OVL+7C2F",
+          "address": 65472,
+          "value": 158
+        },
+        "65471": {
+          "step": 739854,
+          "writer": "PLI2.OVL+7C2F",
+          "address": 65471,
+          "value": 50
+        },
+        "65477": {
+          "step": 738344,
+          "writer": "PLI2.OVL+3D7D",
+          "address": 65477,
+          "value": 0
+        },
+        "65470": {
+          "step": 740421,
+          "writer": "PLI2.OVL+7C1E",
+          "address": 65470,
+          "value": 158
+        },
+        "65469": {
+          "step": 740421,
+          "writer": "PLI2.OVL+7C1E",
+          "address": 65469,
+          "value": 33
+        },
+        "65468": {
+          "step": 740431,
+          "writer": "PLI2.OVL+786D",
+          "address": 65468,
+          "value": 154
+        },
+        "65467": {
+          "step": 740431,
+          "writer": "PLI2.OVL+786D",
+          "address": 65467,
+          "value": 112
+        },
+        "65466": {
+          "step": 740483,
+          "writer": "PLI2.OVL+7852",
+          "address": 65466,
+          "value": 154
+        },
+        "65465": {
+          "step": 740483,
+          "writer": "PLI2.OVL+7852",
+          "address": 65465,
+          "value": 85
+        },
+        "65464": {
+          "step": 741339,
+          "writer": "PLI2.OVL+7671",
+          "address": 65464,
+          "value": 152
+        },
+        "65463": {
+          "step": 741339,
+          "writer": "PLI2.OVL+7671",
+          "address": 65463,
+          "value": 116
+        },
+        "65462": {
+          "step": 741358,
+          "writer": "PLI2.OVL+7553",
+          "address": 65462,
+          "value": 151
+        },
+        "65461": {
+          "step": 741358,
+          "writer": "PLI2.OVL+7553",
+          "address": 65461,
+          "value": 86
+        },
+        "65460": {
+          "step": 741363,
+          "writer": "PLI2.OVL+7545",
+          "address": 65460,
+          "value": 151
+        },
+        "65459": {
+          "step": 741363,
+          "writer": "PLI2.OVL+7545",
+          "address": 65459,
+          "value": 72
+        },
+        "65458": {
+          "step": 741306,
+          "writer": "PLI.COM+1157",
+          "address": 65458,
+          "value": 0
+        },
+        "65457": {
+          "step": 741306,
+          "writer": "PLI.COM+1157",
+          "address": 65457,
+          "value": 70
+        }
+      },
+      "journal_sha256": "d9fd139f571cdd54ef14c2aac10364bfa4242c698e8253ab6537dd39bef48b2d"
+    }
+  ],
+  "PICTURE": [
+    {
+      "entry_SP": 65478,
+      "original_CALL": {
+        "step_index": 420860,
+        "pc": 24589,
+        "pc_after": 24336,
+        "origin": {
+          "image": {
+            "drive": 0,
+            "user": 0,
+            "name": "PLI2.OVL",
+            "identity": "0:0:PLI2.OVL"
+          },
+          "offset": 15885
+        },
+        "target_origin": {
+          "image": {
+            "drive": 0,
+            "user": 0,
+            "name": "PLI2.OVL",
+            "identity": "0:0:PLI2.OVL"
+          },
+          "offset": 15632
+        },
+        "runtime_pc": 24589,
+        "bytes": "CD105F",
+        "disassembly": "CALL 5F10H",
+        "source": "memory",
+        "before": {
+          "a": 0,
+          "b": 0,
+          "c": 1,
+          "d": 96,
+          "e": 46,
+          "h": 96,
+          "l": 13,
+          "sp": 65480,
+          "pc": 24589,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "after": {
+          "a": 0,
+          "b": 0,
+          "c": 1,
+          "d": 96,
+          "e": 46,
+          "h": 96,
+          "l": 13,
+          "sp": 65478,
+          "pc": 24336,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "sp_before": 65480,
+        "sp_after": 65478,
+        "call_return_address": 24592,
+        "reads": [],
+        "writes": [
+          {
+            "address": 65479,
+            "old_value": null,
+            "new_value": 96
+          },
+          {
+            "address": 65478,
+            "old_value": null,
+            "new_value": 16
+          }
+        ],
+        "control": {
+          "kind": "call",
+          "target": 24336,
+          "taken": true
+        }
+      },
+      "PUSH_H": {
+        "step_index": 420862,
+        "pc": 24337,
+        "pc_after": 24338,
+        "origin": {
+          "image": {
+            "drive": 0,
+            "user": 0,
+            "name": "PLI2.OVL",
+            "identity": "0:0:PLI2.OVL"
+          },
+          "offset": 15633
+        },
+        "target_origin": null,
+        "runtime_pc": 24337,
+        "bytes": "E5",
+        "disassembly": "PUSH H",
+        "source": "memory",
+        "before": {
+          "a": 0,
+          "b": 0,
+          "c": 1,
+          "d": 96,
+          "e": 46,
+          "h": 96,
+          "l": 13,
+          "sp": 65477,
+          "pc": 24337,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "after": {
+          "a": 0,
+          "b": 0,
+          "c": 1,
+          "d": 96,
+          "e": 46,
+          "h": 96,
+          "l": 13,
+          "sp": 65475,
+          "pc": 24338,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "sp_before": 65477,
+        "sp_after": 65475,
+        "call_return_address": null,
+        "reads": [],
+        "writes": [
+          {
+            "address": 65476,
+            "old_value": null,
+            "new_value": 96
+          },
+          {
+            "address": 65475,
+            "old_value": null,
+            "new_value": 13
+          }
+        ],
+        "control": {
+          "kind": "sequential"
+        }
+      },
+      "local_stores": [
+        {
+          "step_index": 420957,
+          "pc": 24443,
+          "pc_after": 24444,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI2.OVL",
+              "identity": "0:0:PLI2.OVL"
+            },
+            "offset": 15739
+          },
+          "target_origin": null,
+          "runtime_pc": 24443,
+          "bytes": "73",
+          "disassembly": "MOV M,E",
+          "source": "memory",
+          "before": {
+            "a": 7,
+            "b": 0,
+            "c": 5,
+            "d": 0,
+            "e": 7,
+            "h": 255,
+            "l": 196,
+            "sp": 65475,
+            "pc": 24443,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 7,
+            "b": 0,
+            "c": 5,
+            "d": 0,
+            "e": 7,
+            "h": 255,
+            "l": 196,
+            "sp": 65475,
+            "pc": 24444,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "sp_before": 65475,
+          "sp_after": 65475,
+          "call_return_address": null,
+          "reads": [],
+          "writes": [
+            {
+              "address": 65476,
+              "old_value": null,
+              "new_value": 7
+            }
+          ],
+          "control": {
+            "kind": "sequential"
+          }
+        },
+        {
+          "step_index": 420959,
+          "pc": 24445,
+          "pc_after": 24446,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI2.OVL",
+              "identity": "0:0:PLI2.OVL"
+            },
+            "offset": 15741
+          },
+          "target_origin": null,
+          "runtime_pc": 24445,
+          "bytes": "72",
+          "disassembly": "MOV M,D",
+          "source": "memory",
+          "before": {
+            "a": 7,
+            "b": 0,
+            "c": 5,
+            "d": 0,
+            "e": 7,
+            "h": 255,
+            "l": 197,
+            "sp": 65475,
+            "pc": 24445,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 7,
+            "b": 0,
+            "c": 5,
+            "d": 0,
+            "e": 7,
+            "h": 255,
+            "l": 197,
+            "sp": 65475,
+            "pc": 24446,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "sp_before": 65475,
+          "sp_after": 65475,
+          "call_return_address": null,
+          "reads": [],
+          "writes": [
+            {
+              "address": 65477,
+              "old_value": null,
+              "new_value": 0
+            }
+          ],
+          "control": {
+            "kind": "sequential"
+          }
+        }
+      ],
+      "POP_H": {
+        "step_index": 424004,
+        "pc": 24546,
+        "pc_after": 24547,
+        "origin": {
+          "image": {
+            "drive": 0,
+            "user": 0,
+            "name": "PLI2.OVL",
+            "identity": "0:0:PLI2.OVL"
+          },
+          "offset": 15842
+        },
+        "target_origin": null,
+        "runtime_pc": 24546,
+        "bytes": "E1",
+        "disassembly": "POP H",
+        "source": "memory",
+        "before": {
+          "a": 0,
+          "b": 29,
+          "c": 10,
+          "d": 0,
+          "e": 0,
+          "h": 0,
+          "l": 0,
+          "sp": 65476,
+          "pc": 24546,
+          "flags": {
+            "sign": true,
+            "zero": false,
+            "auxiliary_carry": false,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "after": {
+          "a": 0,
+          "b": 29,
+          "c": 10,
+          "d": 0,
+          "e": 0,
+          "h": 0,
+          "l": 7,
+          "sp": 65478,
+          "pc": 24547,
+          "flags": {
+            "sign": true,
+            "zero": false,
+            "auxiliary_carry": false,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "sp_before": 65476,
+        "sp_after": 65478,
+        "call_return_address": null,
+        "reads": [
+          {
+            "address": 65476,
+            "value": 7
+          },
+          {
+            "address": 65477,
+            "value": 0
+          }
+        ],
+        "writes": [],
+        "control": {
+          "kind": "sequential"
+        }
+      },
+      "RET": {
+        "step_index": 424005,
+        "pc": 24547,
+        "pc_after": 24592,
+        "origin": {
+          "image": {
+            "drive": 0,
+            "user": 0,
+            "name": "PLI2.OVL",
+            "identity": "0:0:PLI2.OVL"
+          },
+          "offset": 15843
+        },
+        "target_origin": {
+          "image": {
+            "drive": 0,
+            "user": 0,
+            "name": "PLI2.OVL",
+            "identity": "0:0:PLI2.OVL"
+          },
+          "offset": 15888
+        },
+        "runtime_pc": 24547,
+        "bytes": "C9",
+        "disassembly": "RET",
+        "source": "memory",
+        "before": {
+          "a": 0,
+          "b": 29,
+          "c": 10,
+          "d": 0,
+          "e": 0,
+          "h": 0,
+          "l": 7,
+          "sp": 65478,
+          "pc": 24547,
+          "flags": {
+            "sign": true,
+            "zero": false,
+            "auxiliary_carry": false,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "after": {
+          "a": 0,
+          "b": 29,
+          "c": 10,
+          "d": 0,
+          "e": 0,
+          "h": 0,
+          "l": 7,
+          "sp": 65480,
+          "pc": 24592,
+          "flags": {
+            "sign": true,
+            "zero": false,
+            "auxiliary_carry": false,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "sp_before": 65478,
+        "sp_after": 65480,
+        "call_return_address": null,
+        "reads": [
+          {
+            "address": 65478,
+            "value": 16
+          },
+          {
+            "address": 65479,
+            "value": 96
+          }
+        ],
+        "writes": [],
+        "control": {
+          "kind": "return",
+          "target": 24592,
+          "taken": true
+        }
+      },
+      "last_writers": {
+        "65479": {
+          "step": 420860,
+          "writer": "PLI2.OVL+3E0D",
+          "address": 65479,
+          "value": 96
+        },
+        "65478": {
+          "step": 420860,
+          "writer": "PLI2.OVL+3E0D",
+          "address": 65478,
+          "value": 16
+        },
+        "65476": {
+          "step": 420957,
+          "writer": "PLI2.OVL+3D7B",
+          "address": 65476,
+          "value": 7
+        },
+        "65475": {
+          "step": 420862,
+          "writer": "PLI2.OVL+3D11",
+          "address": 65475,
+          "value": 13
+        },
+        "65474": {
+          "step": 422383,
+          "writer": "PLI2.OVL+3D95",
+          "address": 65474,
+          "value": 95
+        },
+        "65473": {
+          "step": 422383,
+          "writer": "PLI2.OVL+3D95",
+          "address": 65473,
+          "value": 152
+        },
+        "65472": {
+          "step": 422474,
+          "writer": "PLI2.OVL+7C2F",
+          "address": 65472,
+          "value": 158
+        },
+        "65471": {
+          "step": 422474,
+          "writer": "PLI2.OVL+7C2F",
+          "address": 65471,
+          "value": 50
+        },
+        "65477": {
+          "step": 420959,
+          "writer": "PLI2.OVL+3D7D",
+          "address": 65477,
+          "value": 0
+        },
+        "65470": {
+          "step": 423041,
+          "writer": "PLI2.OVL+7C1E",
+          "address": 65470,
+          "value": 158
+        },
+        "65469": {
+          "step": 423041,
+          "writer": "PLI2.OVL+7C1E",
+          "address": 65469,
+          "value": 33
+        },
+        "65468": {
+          "step": 423051,
+          "writer": "PLI2.OVL+786D",
+          "address": 65468,
+          "value": 154
+        },
+        "65467": {
+          "step": 423051,
+          "writer": "PLI2.OVL+786D",
+          "address": 65467,
+          "value": 112
+        },
+        "65466": {
+          "step": 423103,
+          "writer": "PLI2.OVL+7852",
+          "address": 65466,
+          "value": 154
+        },
+        "65465": {
+          "step": 423103,
+          "writer": "PLI2.OVL+7852",
+          "address": 65465,
+          "value": 85
+        },
+        "65464": {
+          "step": 423954,
+          "writer": "PLI2.OVL+7671",
+          "address": 65464,
+          "value": 152
+        },
+        "65463": {
+          "step": 423954,
+          "writer": "PLI2.OVL+7671",
+          "address": 65463,
+          "value": 116
+        },
+        "65462": {
+          "step": 423973,
+          "writer": "PLI2.OVL+7553",
+          "address": 65462,
+          "value": 151
+        },
+        "65461": {
+          "step": 423973,
+          "writer": "PLI2.OVL+7553",
+          "address": 65461,
+          "value": 86
+        },
+        "65460": {
+          "step": 423978,
+          "writer": "PLI2.OVL+7545",
+          "address": 65460,
+          "value": 151
+        },
+        "65459": {
+          "step": 423978,
+          "writer": "PLI2.OVL+7545",
+          "address": 65459,
+          "value": 72
+        },
+        "65458": {
+          "step": 423926,
+          "writer": "PLI.COM+1157",
+          "address": 65458,
+          "value": 0
+        },
+        "65457": {
+          "step": 423926,
+          "writer": "PLI.COM+1157",
+          "address": 65457,
+          "value": 70
+        }
+      },
+      "journal_sha256": "8bad53693cb664654fadeb5b933599909ba1ecee715573d77a4687229a269ac9"
+    }
+  ],
+  "FACTOR": [],
+  "OPTIMIST": [
+    {
+      "entry_SP": 65452,
+      "original_CALL": {
+        "step_index": 2243028,
+        "pc": 24589,
+        "pc_after": 24336,
+        "origin": {
+          "image": {
+            "drive": 0,
+            "user": 0,
+            "name": "PLI2.OVL",
+            "identity": "0:0:PLI2.OVL"
+          },
+          "offset": 15885
+        },
+        "target_origin": {
+          "image": {
+            "drive": 0,
+            "user": 0,
+            "name": "PLI2.OVL",
+            "identity": "0:0:PLI2.OVL"
+          },
+          "offset": 15632
+        },
+        "runtime_pc": 24589,
+        "bytes": "CD105F",
+        "disassembly": "CALL 5F10H",
+        "source": "memory",
+        "before": {
+          "a": 0,
+          "b": 0,
+          "c": 1,
+          "d": 96,
+          "e": 46,
+          "h": 96,
+          "l": 13,
+          "sp": 65454,
+          "pc": 24589,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "after": {
+          "a": 0,
+          "b": 0,
+          "c": 1,
+          "d": 96,
+          "e": 46,
+          "h": 96,
+          "l": 13,
+          "sp": 65452,
+          "pc": 24336,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "sp_before": 65454,
+        "sp_after": 65452,
+        "call_return_address": 24592,
+        "reads": [],
+        "writes": [
+          {
+            "address": 65453,
+            "old_value": null,
+            "new_value": 96
+          },
+          {
+            "address": 65452,
+            "old_value": null,
+            "new_value": 16
+          }
+        ],
+        "control": {
+          "kind": "call",
+          "target": 24336,
+          "taken": true
+        }
+      },
+      "PUSH_H": {
+        "step_index": 2243030,
+        "pc": 24337,
+        "pc_after": 24338,
+        "origin": {
+          "image": {
+            "drive": 0,
+            "user": 0,
+            "name": "PLI2.OVL",
+            "identity": "0:0:PLI2.OVL"
+          },
+          "offset": 15633
+        },
+        "target_origin": null,
+        "runtime_pc": 24337,
+        "bytes": "E5",
+        "disassembly": "PUSH H",
+        "source": "memory",
+        "before": {
+          "a": 0,
+          "b": 0,
+          "c": 1,
+          "d": 96,
+          "e": 46,
+          "h": 96,
+          "l": 13,
+          "sp": 65451,
+          "pc": 24337,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "after": {
+          "a": 0,
+          "b": 0,
+          "c": 1,
+          "d": 96,
+          "e": 46,
+          "h": 96,
+          "l": 13,
+          "sp": 65449,
+          "pc": 24338,
+          "flags": {
+            "sign": false,
+            "zero": true,
+            "auxiliary_carry": true,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "sp_before": 65451,
+        "sp_after": 65449,
+        "call_return_address": null,
+        "reads": [],
+        "writes": [
+          {
+            "address": 65450,
+            "old_value": null,
+            "new_value": 96
+          },
+          {
+            "address": 65449,
+            "old_value": null,
+            "new_value": 13
+          }
+        ],
+        "control": {
+          "kind": "sequential"
+        }
+      },
+      "local_stores": [
+        {
+          "step_index": 2243125,
+          "pc": 24443,
+          "pc_after": 24444,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI2.OVL",
+              "identity": "0:0:PLI2.OVL"
+            },
+            "offset": 15739
+          },
+          "target_origin": null,
+          "runtime_pc": 24443,
+          "bytes": "73",
+          "disassembly": "MOV M,E",
+          "source": "memory",
+          "before": {
+            "a": 1,
+            "b": 0,
+            "c": 85,
+            "d": 0,
+            "e": 1,
+            "h": 255,
+            "l": 170,
+            "sp": 65449,
+            "pc": 24443,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 1,
+            "b": 0,
+            "c": 85,
+            "d": 0,
+            "e": 1,
+            "h": 255,
+            "l": 170,
+            "sp": 65449,
+            "pc": 24444,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "sp_before": 65449,
+          "sp_after": 65449,
+          "call_return_address": null,
+          "reads": [],
+          "writes": [
+            {
+              "address": 65450,
+              "old_value": null,
+              "new_value": 1
+            }
+          ],
+          "control": {
+            "kind": "sequential"
+          }
+        },
+        {
+          "step_index": 2243127,
+          "pc": 24445,
+          "pc_after": 24446,
+          "origin": {
+            "image": {
+              "drive": 0,
+              "user": 0,
+              "name": "PLI2.OVL",
+              "identity": "0:0:PLI2.OVL"
+            },
+            "offset": 15741
+          },
+          "target_origin": null,
+          "runtime_pc": 24445,
+          "bytes": "72",
+          "disassembly": "MOV M,D",
+          "source": "memory",
+          "before": {
+            "a": 1,
+            "b": 0,
+            "c": 85,
+            "d": 0,
+            "e": 1,
+            "h": 255,
+            "l": 171,
+            "sp": 65449,
+            "pc": 24445,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "after": {
+            "a": 1,
+            "b": 0,
+            "c": 85,
+            "d": 0,
+            "e": 1,
+            "h": 255,
+            "l": 171,
+            "sp": 65449,
+            "pc": 24446,
+            "flags": {
+              "sign": false,
+              "zero": false,
+              "auxiliary_carry": true,
+              "parity": true,
+              "carry": false
+            }
+          },
+          "sp_before": 65449,
+          "sp_after": 65449,
+          "call_return_address": null,
+          "reads": [],
+          "writes": [
+            {
+              "address": 65451,
+              "old_value": null,
+              "new_value": 0
+            }
+          ],
+          "control": {
+            "kind": "sequential"
+          }
+        }
+      ],
+      "POP_H": {
+        "step_index": 2246172,
+        "pc": 24546,
+        "pc_after": 24547,
+        "origin": {
+          "image": {
+            "drive": 0,
+            "user": 0,
+            "name": "PLI2.OVL",
+            "identity": "0:0:PLI2.OVL"
+          },
+          "offset": 15842
+        },
+        "target_origin": null,
+        "runtime_pc": 24546,
+        "bytes": "E1",
+        "disassembly": "POP H",
+        "source": "memory",
+        "before": {
+          "a": 0,
+          "b": 29,
+          "c": 10,
+          "d": 0,
+          "e": 0,
+          "h": 0,
+          "l": 0,
+          "sp": 65450,
+          "pc": 24546,
+          "flags": {
+            "sign": true,
+            "zero": false,
+            "auxiliary_carry": false,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "after": {
+          "a": 0,
+          "b": 29,
+          "c": 10,
+          "d": 0,
+          "e": 0,
+          "h": 0,
+          "l": 1,
+          "sp": 65452,
+          "pc": 24547,
+          "flags": {
+            "sign": true,
+            "zero": false,
+            "auxiliary_carry": false,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "sp_before": 65450,
+        "sp_after": 65452,
+        "call_return_address": null,
+        "reads": [
+          {
+            "address": 65450,
+            "value": 1
+          },
+          {
+            "address": 65451,
+            "value": 0
+          }
+        ],
+        "writes": [],
+        "control": {
+          "kind": "sequential"
+        }
+      },
+      "RET": {
+        "step_index": 2246173,
+        "pc": 24547,
+        "pc_after": 24592,
+        "origin": {
+          "image": {
+            "drive": 0,
+            "user": 0,
+            "name": "PLI2.OVL",
+            "identity": "0:0:PLI2.OVL"
+          },
+          "offset": 15843
+        },
+        "target_origin": {
+          "image": {
+            "drive": 0,
+            "user": 0,
+            "name": "PLI2.OVL",
+            "identity": "0:0:PLI2.OVL"
+          },
+          "offset": 15888
+        },
+        "runtime_pc": 24547,
+        "bytes": "C9",
+        "disassembly": "RET",
+        "source": "memory",
+        "before": {
+          "a": 0,
+          "b": 29,
+          "c": 10,
+          "d": 0,
+          "e": 0,
+          "h": 0,
+          "l": 1,
+          "sp": 65452,
+          "pc": 24547,
+          "flags": {
+            "sign": true,
+            "zero": false,
+            "auxiliary_carry": false,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "after": {
+          "a": 0,
+          "b": 29,
+          "c": 10,
+          "d": 0,
+          "e": 0,
+          "h": 0,
+          "l": 1,
+          "sp": 65454,
+          "pc": 24592,
+          "flags": {
+            "sign": true,
+            "zero": false,
+            "auxiliary_carry": false,
+            "parity": true,
+            "carry": false
+          }
+        },
+        "sp_before": 65452,
+        "sp_after": 65454,
+        "call_return_address": null,
+        "reads": [
+          {
+            "address": 65452,
+            "value": 16
+          },
+          {
+            "address": 65453,
+            "value": 96
+          }
+        ],
+        "writes": [],
+        "control": {
+          "kind": "return",
+          "target": 24592,
+          "taken": true
+        }
+      },
+      "last_writers": {
+        "65453": {
+          "step": 2243028,
+          "writer": "PLI2.OVL+3E0D",
+          "address": 65453,
+          "value": 96
+        },
+        "65452": {
+          "step": 2243028,
+          "writer": "PLI2.OVL+3E0D",
+          "address": 65452,
+          "value": 16
+        },
+        "65450": {
+          "step": 2243125,
+          "writer": "PLI2.OVL+3D7B",
+          "address": 65450,
+          "value": 1
+        },
+        "65449": {
+          "step": 2243030,
+          "writer": "PLI2.OVL+3D11",
+          "address": 65449,
+          "value": 13
+        },
+        "65448": {
+          "step": 2244546,
+          "writer": "PLI2.OVL+3D95",
+          "address": 65448,
+          "value": 95
+        },
+        "65447": {
+          "step": 2244546,
+          "writer": "PLI2.OVL+3D95",
+          "address": 65447,
+          "value": 152
+        },
+        "65446": {
+          "step": 2244637,
+          "writer": "PLI2.OVL+7C2F",
+          "address": 65446,
+          "value": 158
+        },
+        "65445": {
+          "step": 2244637,
+          "writer": "PLI2.OVL+7C2F",
+          "address": 65445,
+          "value": 50
+        },
+        "65451": {
+          "step": 2243127,
+          "writer": "PLI2.OVL+3D7D",
+          "address": 65451,
+          "value": 0
+        },
+        "65444": {
+          "step": 2245204,
+          "writer": "PLI2.OVL+7C1E",
+          "address": 65444,
+          "value": 158
+        },
+        "65443": {
+          "step": 2245204,
+          "writer": "PLI2.OVL+7C1E",
+          "address": 65443,
+          "value": 33
+        },
+        "65442": {
+          "step": 2245214,
+          "writer": "PLI2.OVL+786D",
+          "address": 65442,
+          "value": 154
+        },
+        "65441": {
+          "step": 2245214,
+          "writer": "PLI2.OVL+786D",
+          "address": 65441,
+          "value": 112
+        },
+        "65440": {
+          "step": 2245266,
+          "writer": "PLI2.OVL+7852",
+          "address": 65440,
+          "value": 154
+        },
+        "65439": {
+          "step": 2245266,
+          "writer": "PLI2.OVL+7852",
+          "address": 65439,
+          "value": 85
+        },
+        "65438": {
+          "step": 2246122,
+          "writer": "PLI2.OVL+7671",
+          "address": 65438,
+          "value": 152
+        },
+        "65437": {
+          "step": 2246122,
+          "writer": "PLI2.OVL+7671",
+          "address": 65437,
+          "value": 116
+        },
+        "65436": {
+          "step": 2246141,
+          "writer": "PLI2.OVL+7553",
+          "address": 65436,
+          "value": 151
+        },
+        "65435": {
+          "step": 2246141,
+          "writer": "PLI2.OVL+7553",
+          "address": 65435,
+          "value": 86
+        },
+        "65434": {
+          "step": 2246146,
+          "writer": "PLI2.OVL+7545",
+          "address": 65434,
+          "value": 151
+        },
+        "65433": {
+          "step": 2246146,
+          "writer": "PLI2.OVL+7545",
+          "address": 65433,
+          "value": 72
+        },
+        "65432": {
+          "step": 2246089,
+          "writer": "PLI.COM+1157",
+          "address": 65432,
+          "value": 2
+        },
+        "65431": {
+          "step": 2246089,
+          "writer": "PLI.COM+1157",
+          "address": 65431,
+          "value": 3
+        }
+      },
+      "journal_sha256": "9e0472c50bb231608effa2b834e0623314dc8208ef439f51f7b3c51a2e83bf81"
+    }
+  ]
+}

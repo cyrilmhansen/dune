@@ -1,0 +1,815 @@
+{
+  "task": "RUNES_PLI2_PREDICATE_GENERATION_HANDLER_3D10_PASS_68",
+  "baseline": "3671495556f7be05719713303c25cca21f10b453",
+  "root": {
+    "entry": "PLI2.OVL+3D10",
+    "extent": [
+      15632,
+      15844
+    ],
+    "counts": {
+      "MINIMAL": 0,
+      "FIZZBUZ": 1,
+      "PICTURE": 1,
+      "FACTOR": 0,
+      "OPTIMIST": 1
+    },
+    "caller": "PLI2.OVL+3E0D",
+    "routes": [
+      "OBSERVED mapped nonnegative local word / C4 8072 / tag22 structure emission",
+      "DEDUCED mapped local byte zero / A8-E7 7B1B / tag32 emission",
+      "DEDUCED mapped local byte nonzero / C7 7E05 / tag32 emission"
+    ]
+  },
+  "laws": {
+    "15632": [
+      "Predicate-directed stack-carried generation handler",
+      "DCX SP; PUSH H creates three mutable bytes. Canonical 3BFB, RAR consumes actual A.bit0; clear arm requiring 1FB5 is unsupported. Canonical 3660 result bit0 selects local-byte acquisition via 04FF or local-word acquisition via 3790. Local byte is published at frameSP; nonzero composes C7/E=local byte 7E05, zero composes C=A8/E7 7B1B, then freshly mapped AD0C word feeds 7CB4. Local word is published low/high at frameSP+1/+2; actual repeated 3BFB result selects C4/DE=fresh local word 8072 then fresh AD0C low 7C22. Changed-second-predicate arms remain unsupported. INX SP; POP H consumes overwritten local word or retained pushed-high/stale adjacent byte; RET original continuation, finalSP=entrySP+2. Canonical child domains, immutable mapped state, supported listing/type/index/alias routes only."
+    ],
+    "1149": [
+      "Mapped A609 byte acquisition",
+      "Save C at ABF8; independently paired-read ABF8, zero-extend low selector; fresh AAB0[selector] becomes zeroextended BC; fresh A609[index] becomes A. Exact DAD CY and preserved NZPA, HL=A609+index. Already UNDERSTOOD in prior archaeology; no new byte promotion."
+    ],
+    "1438": [
+      "Mapped A9E7 byte acquisition",
+      "Save C at AC06; independently paired-read AC06, zero-extend selector; fresh AAB0[selector] -> zeroextended BC; fresh A9E7[index] -> A. HL=target, DAD carry0, NZPA preserved."
+    ],
+    "15355": [
+      "Fresh mapped equality-five mask",
+      "Fresh paired AD0C, C=L, canonical 047D; SUI5/SUI1/SBB A returns FF exactly when mapped A=5, otherwise0. Exact subtraction flags and child register result retained."
+    ],
+    "13920": [
+      "AD08 bit gate or mapped-less-than-eight mask",
+      "Fresh AD08 RAR exposes old bit0; set returns literal1 with RAR flags. Clear: fresh paired AD0B, C=L, canonical059E; SUI8/SBB A returns FF iff mapped byte<8, otherwise0, exact arithmetic flags."
+    ],
+    "14224": [
+      "Mapped word acquisition with bounded nonnegative byte route",
+      "Save C AD4F; paired reread C ->059E; CPI8. >=8: fresh AD4F, DCR A,C=A, canonical052C word. <8: fresh AD4F,DCR,C ->04FF, publish A at AD4F; RLC/RAR bit7 gate; supported clear route fresh paired AD4F,H0. Negative shared-tail839B route is static unsupported."
+    ],
+    "31778": [
+      "Fresh mapped-word adapter to tag22 structure emission",
+      "Save C AE1B; paired reread ->052C; BC=actual HL; canonical7C0E; RET."
+    ],
+    "31924": [
+      "Fresh mapped-word adapter to tag32 structure emission",
+      "Save C AE27; paired reread ->052C; BC=actual HL; canonical7CA0; synthetic-only supported route."
+    ],
+    "31758": [
+      "Saved word, tag22, structure emission composition",
+      "Save B at AE1A then C at AE19; C22 ->7B02; fresh paired AE19 ->BC ->785C; RET."
+    ],
+    "31904": [
+      "Saved word, tag32, structure emission composition",
+      "Save B at AE26 then C at AE25; C32 ->7B02; fresh paired AE25 ->BC ->785C; RET. Synthetic-only supported route."
+    ],
+    "31490": [
+      "Saved selector prefix adapter",
+      "Save C AE0B; paired reread ->78E9; fresh AE0B CPI E9; supported nonE9 RET. E9/7413 arm remains unsupported."
+    ],
+    "30953": [
+      "Three independently reread selector operations",
+      "Save C ADFF; independent paired reread before7897,746F,7557, each C=low saved selector. Children reused; actual return state retained."
+    ],
+    "30871": [
+      "Bounded fresh selector scan, supported no-match route",
+      "Save C ADFD; fresh ADAA RAR bit0 clear returns. Set initializes ADFE=0; compare A7 against fresh index; scan0..7: paired ADFE zeroextended plus94B9, fresh ADFD CMP fresh pointed byte; mismatch INR fresh ADFE and loop until index8. Matched selector arms remain unsupported, immutable table data excludes them for literal22/32."
+    ],
+    "30812": [
+      "Saved position and structure emission, listing-clear scope",
+      "Save B ADFA then C ADF9; fresh ADEF word ->ADFB low/high; fresh ADF9 ->BC ->77CC; fresh201D RAR bit0 clear RET. Listing-set arm remains unsupported."
+    ],
+    "30668": [
+      "Structure word sum and type-selected canonical emission",
+      "Save B ADF4 then C ADF3; fresh ADF3 pointer ->AC9F low/high; target+2 ->ADF5; fresh AC9F+3 ->ADF6; fresh AC9F+6 and ADEF ->8342, sum ->ADF7 low/high. Repeated fresh ADF6 ANI1F/CPI comparisons:9 ->765E,11H unsupported pointer generator,8 ->7630,10H unsupported pointer generator,other ->765E. Fresh ADF7 ->BC. Finally HL0 ->ADEF low/high. Nonwrapping nonalias eight-byte structure scope."
+    ],
+    "33602": [
+      "Fresh pointed-word addition",
+      "MOV C,M; INX H; MOV B,M; LDAX D; ADD C; L=A; INX D; LDAX D; ADC B; H=A; RET. Low/high reads independently ordered, HL=u16(firstWord+secondWord), BC=firstWord, DE=originalDE+1; actual final ADC flags."
+    ]
+  },
+  "proof": {
+    "natural_primary": 2,
+    "cross_OPTIMIST": 1,
+    "synthetic_CPU": 48,
+    "comparison": [
+      "all registers/flags/SP/PC",
+      "ordered logical/compatibility writes",
+      "all64KiB RAM",
+      "stack last writers and child CALL chronology",
+      "DMA/filesystem/services/records/console/BDOS chronology"
+    ]
+  },
+  "promotions": {
+    "promotions": {
+      "RAW -> UNDERSTOOD": 558
+    },
+    "promotions_evidence": {
+      "OBSERVED": 425,
+      "DEDUCED STATIC UNOBSERVED": 133
+    },
+    "root_own_promotions": {
+      "OBSERVED": 63,
+      "DEDUCED STATIC UNOBSERVED": 62
+    },
+    "helper_promotions": {
+      "OBSERVED": 362,
+      "DEDUCED STATIC UNOBSERVED": 71
+    }
+  },
+  "topology": {
+    "MINIMAL": {
+      "new_roots": 0,
+      "native_roots_before": 92,
+      "native_roots_after": 92,
+      "absorbed": {},
+      "net_delta": 0,
+      "remaining_external": {
+        "PLI.COM+119E": {
+          "calls": 32,
+          "callers": {
+            "PLI0.OVL+188F": 1,
+            "PLI0.OVL+1993": 4,
+            "PLI0.OVL+19A5": 24,
+            "PLI0.OVL+189E": 1,
+            "PLI0.OVL+18AD": 1,
+            "PLI0.OVL+18BC": 1
+          }
+        },
+        "PLI2.OVL+3D10": {
+          "calls": 0,
+          "callers": {}
+        },
+        "PLI2.OVL+04FF": {
+          "calls": 20,
+          "callers": {
+            "PLI2.OVL+0CA6": 10,
+            "PLI2.OVL+0DA9": 4,
+            "PLI2.OVL+0534": 4,
+            "PLI2.OVL+3E55": 1,
+            "PLI2.OVL+3E6B": 1
+          }
+        },
+        "PLI2.OVL+7B1B": {
+          "calls": 0,
+          "callers": {}
+        },
+        "PLI2.OVL+7B99": {
+          "calls": 0,
+          "callers": {}
+        },
+        "PLI2.OVL+7D47": {
+          "calls": 0,
+          "callers": {}
+        },
+        "PLI2.OVL+7E05": {
+          "calls": 0,
+          "callers": {}
+        },
+        "PLI2.OVL+8072": {
+          "calls": 0,
+          "callers": {}
+        },
+        "PLI2.OVL+3BFB": {
+          "calls": 0,
+          "callers": {}
+        },
+        "PLI2.OVL+3660": {
+          "calls": 1,
+          "callers": {
+            "PLI2.OVL+3E4A": 1
+          }
+        },
+        "PLI2.OVL+3790": {
+          "calls": 0,
+          "callers": {}
+        },
+        "PLI2.OVL+7C22": {
+          "calls": 0,
+          "callers": {}
+        },
+        "PLI2.OVL+7CB4": {
+          "calls": 0,
+          "callers": {}
+        },
+        "PLI2.OVL+83DC": {
+          "calls": 4,
+          "callers": {
+            "PLI2.OVL+25B2": 1,
+            "PLI2.OVL+17CA": 3
+          }
+        },
+        "PLI2.OVL+397F": {
+          "calls": 0,
+          "callers": {}
+        },
+        "PLI2.OVL+18B3": {
+          "calls": 1,
+          "callers": {
+            "PLI2.OVL+19EB": 1
+          }
+        }
+      }
+    },
+    "FIZZBUZ": {
+      "new_roots": 1,
+      "native_roots_before": 223,
+      "native_roots_after": 221,
+      "absorbed": {
+        "PLI2.OVL+8072": 1,
+        "PLI2.OVL+7557": 1,
+        "PLI2.OVL+765E": 1
+      },
+      "net_delta": -2,
+      "remaining_external": {
+        "PLI.COM+119E": {
+          "calls": 32,
+          "callers": {
+            "PLI0.OVL+188F": 1,
+            "PLI0.OVL+1993": 4,
+            "PLI0.OVL+19A5": 24,
+            "PLI0.OVL+189E": 1,
+            "PLI0.OVL+18AD": 1,
+            "PLI0.OVL+18BC": 1
+          }
+        },
+        "PLI2.OVL+3D10": {
+          "calls": 1,
+          "callers": {
+            "PLI2.OVL+3E0D": 1
+          }
+        },
+        "PLI2.OVL+04FF": {
+          "calls": 175,
+          "callers": {
+            "PLI2.OVL+0CA6": 49,
+            "PLI2.OVL+0534": 25,
+            "PLI2.OVL+0FFA": 3,
+            "PLI2.OVL+0DA9": 79,
+            "PLI2.OVL+37A5": 5,
+            "PLI2.OVL+3E55": 7,
+            "PLI2.OVL+3E6B": 7
+          }
+        },
+        "PLI2.OVL+7B1B": {
+          "calls": 0,
+          "callers": {}
+        },
+        "PLI2.OVL+7B99": {
+          "calls": 0,
+          "callers": {}
+        },
+        "PLI2.OVL+7D47": {
+          "calls": 1,
+          "callers": {
+            "PLI2.OVL+3881": 1
+          }
+        },
+        "PLI2.OVL+7E05": {
+          "calls": 0,
+          "callers": {}
+        },
+        "PLI2.OVL+8072": {
+          "calls": 0,
+          "callers": {}
+        },
+        "PLI2.OVL+3BFB": {
+          "calls": 1,
+          "callers": {
+            "PLI2.OVL+3CC5": 1
+          }
+        },
+        "PLI2.OVL+3660": {
+          "calls": 19,
+          "callers": {
+            "PLI2.OVL+3DE4": 2,
+            "PLI2.OVL+3EDD": 6,
+            "PLI2.OVL+3E4A": 7,
+            "PLI2.OVL+375D": 3,
+            "PLI2.OVL+3C2B": 1
+          }
+        },
+        "PLI2.OVL+3790": {
+          "calls": 5,
+          "callers": {
+            "PLI2.OVL+3AD6": 1,
+            "PLI2.OVL+41F7": 3,
+            "PLI2.OVL+3CBB": 1
+          }
+        },
+        "PLI2.OVL+7C22": {
+          "calls": 1,
+          "callers": {
+            "PLI2.OVL+3CD0": 1
+          }
+        },
+        "PLI2.OVL+7CB4": {
+          "calls": 0,
+          "callers": {}
+        },
+        "PLI2.OVL+83DC": {
+          "calls": 4,
+          "callers": {
+            "PLI2.OVL+25B2": 1,
+            "PLI2.OVL+17CA": 3
+          }
+        },
+        "PLI2.OVL+397F": {
+          "calls": 1,
+          "callers": {
+            "PLI2.OVL+4257": 1
+          }
+        },
+        "PLI2.OVL+18B3": {
+          "calls": 1,
+          "callers": {
+            "PLI2.OVL+19EB": 1
+          }
+        }
+      }
+    },
+    "PICTURE": {
+      "new_roots": 1,
+      "native_roots_before": 81,
+      "native_roots_after": 79,
+      "absorbed": {
+        "PLI2.OVL+8072": 1,
+        "PLI2.OVL+7557": 1,
+        "PLI2.OVL+765E": 1
+      },
+      "net_delta": -2,
+      "remaining_external": {
+        "PLI.COM+119E": {
+          "calls": 39,
+          "callers": {
+            "PLI0.OVL+188F": 1,
+            "PLI0.OVL+1993": 4,
+            "PLI0.OVL+19A5": 24,
+            "PLI0.OVL+189E": 1,
+            "PLI0.OVL+18AD": 1,
+            "PLI0.OVL+18BC": 1,
+            "PLI0.OVL+3D33": 1,
+            "PLI0.OVL+3D4E": 6
+          }
+        },
+        "PLI2.OVL+3D10": {
+          "calls": 1,
+          "callers": {
+            "PLI2.OVL+3E0D": 1
+          }
+        },
+        "PLI2.OVL+04FF": {
+          "calls": 26,
+          "callers": {
+            "PLI2.OVL+0CA6": 13,
+            "PLI2.OVL+0FFA": 1,
+            "PLI2.OVL+0DA9": 6,
+            "PLI2.OVL+0534": 6
+          }
+        },
+        "PLI2.OVL+7B1B": {
+          "calls": 0,
+          "callers": {}
+        },
+        "PLI2.OVL+7B99": {
+          "calls": 0,
+          "callers": {}
+        },
+        "PLI2.OVL+7D47": {
+          "calls": 0,
+          "callers": {}
+        },
+        "PLI2.OVL+7E05": {
+          "calls": 0,
+          "callers": {}
+        },
+        "PLI2.OVL+8072": {
+          "calls": 0,
+          "callers": {}
+        },
+        "PLI2.OVL+3BFB": {
+          "calls": 0,
+          "callers": {}
+        },
+        "PLI2.OVL+3660": {
+          "calls": 2,
+          "callers": {
+            "PLI2.OVL+3DE4": 1,
+            "PLI2.OVL+3EDD": 1
+          }
+        },
+        "PLI2.OVL+3790": {
+          "calls": 0,
+          "callers": {}
+        },
+        "PLI2.OVL+7C22": {
+          "calls": 0,
+          "callers": {}
+        },
+        "PLI2.OVL+7CB4": {
+          "calls": 0,
+          "callers": {}
+        },
+        "PLI2.OVL+83DC": {
+          "calls": 4,
+          "callers": {
+            "PLI2.OVL+25B2": 1,
+            "PLI2.OVL+17CA": 3
+          }
+        },
+        "PLI2.OVL+397F": {
+          "calls": 0,
+          "callers": {}
+        },
+        "PLI2.OVL+18B3": {
+          "calls": 1,
+          "callers": {
+            "PLI2.OVL+19EB": 1
+          }
+        }
+      }
+    }
+  },
+  "hybrids": {
+    "sources": [
+      {
+        "result": {
+          "source": "MINIMAL",
+          "invocations": 0,
+          "REL_size": 256,
+          "REL_sha256": "7339d230f13c2614f6b1acb632081959659d7292814c747f7853b6944e91f119",
+          "PASS1": true,
+          "PASS2": true,
+          "END_COMPILATION": true,
+          "termination": "warm_boot",
+          "actual_guest_instructions": 294445,
+          "actual_guest_t_states": 2640069,
+          "host_transitions": 92,
+          "INT_sha256": null,
+          "filesystem_sha256": "7e2db950ed11f4c21fdbb25d6a534575c447a0b8fcb3eb8acb5a84860811ede3"
+        },
+        "transition_vector": [
+          0,
+          1,
+          1,
+          0,
+          1,
+          1,
+          0,
+          2,
+          1,
+          1,
+          2,
+          0,
+          0,
+          0,
+          6,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          1,
+          70
+        ],
+        "pre_transition_vector": [
+          1,
+          1,
+          0,
+          1,
+          1,
+          0,
+          2,
+          1,
+          1,
+          2,
+          0,
+          0,
+          0,
+          6,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          1,
+          70
+        ],
+        "pre_guest_instructions": 294445,
+        "guest_instructions_removed": 0,
+        "family_roots": 0,
+        "record_sha256_sequence": [
+          [
+            "MINIMAL.INT",
+            0,
+            "713dec081e73c533164b9fe151114d1d7dc29acb8017bb0fc226e9ae72658aec"
+          ],
+          [
+            "MINIMAL.REL",
+            0,
+            "2a61700f052fff1db8ce5fba0e3d78f8954908e4e552ea7607f46105403cb240"
+          ],
+          [
+            "MINIMAL.REL",
+            1,
+            "741cd4a347fc4e7d97b391fac91ffc0569450c8e3e5ea1a7041111f444937619"
+          ]
+        ]
+      },
+      {
+        "result": {
+          "source": "FIZZBUZ",
+          "invocations": 1,
+          "REL_size": 768,
+          "REL_sha256": "68ec16931d4dae7a8f0831a29c9ae8b9ca139279f5104bb34e299644a8b2a203",
+          "PASS1": true,
+          "PASS2": true,
+          "END_COMPILATION": true,
+          "termination": "warm_boot",
+          "actual_guest_instructions": 560189,
+          "actual_guest_t_states": 5078208,
+          "host_transitions": 221,
+          "INT_sha256": null,
+          "filesystem_sha256": "38b46b8d3c99eec1ea14db4660b1e049918fab4ee9318a13af2428e47185b43f"
+        },
+        "transition_vector": [
+          1,
+          4,
+          2,
+          0,
+          1,
+          1,
+          0,
+          10,
+          11,
+          1,
+          11,
+          10,
+          10,
+          0,
+          21,
+          0,
+          7,
+          8,
+          0,
+          8,
+          0,
+          7,
+          0,
+          1,
+          10,
+          0,
+          1,
+          0,
+          1,
+          1,
+          1,
+          93
+        ],
+        "pre_transition_vector": [
+          4,
+          3,
+          0,
+          1,
+          1,
+          0,
+          10,
+          11,
+          1,
+          11,
+          10,
+          10,
+          0,
+          21,
+          0,
+          8,
+          8,
+          0,
+          8,
+          0,
+          7,
+          0,
+          1,
+          11,
+          0,
+          1,
+          0,
+          1,
+          1,
+          1,
+          93
+        ],
+        "pre_guest_instructions": 560647,
+        "guest_instructions_removed": 458,
+        "family_roots": 1,
+        "record_sha256_sequence": [
+          [
+            "FIZZBUZ.INT",
+            0,
+            "d573ad1a823a2ef7763333500878bda4e79d0fc8ef4befa2521f90d3bcb64dd1"
+          ],
+          [
+            "FIZZBUZ.INT",
+            1,
+            "bfcf1b230bfd84368c711794d9a05e0c8c9ae030e95d4198d369d2d7af9d307a"
+          ],
+          [
+            "FIZZBUZ.INT",
+            2,
+            "accb72136b1f332260fd30345c4d5a3e409516d10c1ed5447849a8291780b538"
+          ],
+          [
+            "FIZZBUZ.REL",
+            0,
+            "3f3ec48a3f750103671e4bba5b6bdb1ec5f29dc1552c65a19dc9ecb6d3fbb443"
+          ],
+          [
+            "FIZZBUZ.REL",
+            1,
+            "e46c12df6e4e1042d12038697faa2f4bb58ec049970cb8d54415b2d0314a4c98"
+          ],
+          [
+            "FIZZBUZ.REL",
+            2,
+            "701f5401ec5c43763645ddd53621c15dbe5d7117eb7adf25d304f49c35a9cb29"
+          ],
+          [
+            "FIZZBUZ.REL",
+            3,
+            "b8876b5ed7326ed1d1f57ca3c050e5cd806d64ef03ee162a3b21b712921daa43"
+          ],
+          [
+            "FIZZBUZ.REL",
+            4,
+            "73db11062fbc1176047c543c80de1d117380391d3ee83b30f960b9f863b1f66a"
+          ],
+          [
+            "FIZZBUZ.REL",
+            5,
+            "793b77c5429e3c7efe3118a2273de1d45c6b762e755af49e565799f6080dc297"
+          ]
+        ]
+      },
+      {
+        "result": {
+          "source": "PICTURE",
+          "invocations": 1,
+          "REL_size": 256,
+          "REL_sha256": "c02f738a7504384a236289633210d1bf4e7ea5391e51e091e373950eefacc4f1",
+          "PASS1": true,
+          "PASS2": true,
+          "END_COMPILATION": true,
+          "termination": "warm_boot",
+          "actual_guest_instructions": 339852,
+          "actual_guest_t_states": 3057494,
+          "host_transitions": 79,
+          "INT_sha256": null,
+          "filesystem_sha256": "a0e990236746d27cae3c305570e88d737aced15630ab0d6d554115ebd5cc6f4b"
+        },
+        "transition_vector": [
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          0,
+          2,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          6,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          2,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          54
+        ],
+        "pre_transition_vector": [
+          1,
+          2,
+          0,
+          1,
+          1,
+          0,
+          2,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          6,
+          0,
+          2,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          3,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          54
+        ],
+        "pre_guest_instructions": 340310,
+        "guest_instructions_removed": 458,
+        "family_roots": 1,
+        "record_sha256_sequence": [
+          [
+            "PICTURE.INT",
+            0,
+            "f23cb615e2222183e89119bd2579b7900143d1c7e4dc8ddc21d204fc0d24791c"
+          ],
+          [
+            "PICTURE.REL",
+            0,
+            "b004b06f80e1e467cf6dbbfefff6a52831eb5c9db7a24122ee0a157c9534d426"
+          ],
+          [
+            "PICTURE.REL",
+            1,
+            "697369780d9af978206ad7362548d569571f5f2d9adda2e5729abb60767c30bb"
+          ]
+        ]
+      }
+    ],
+    "all_passed": true
+  },
+  "next_boundaries": [
+    {
+      "rank": 1,
+      "candidate": "branch-owned caller context around 3DE4 / CALL site3E0D",
+      "reason": "Small immediate composition converging on 3D10; discover real software-entry/continuation and predicates before selecting a root. 3DE4 has zero hardware CALLs and is not promoted here."
+    },
+    {
+      "rank": 2,
+      "candidate": "PLI2.OVL+397F",
+      "reason": "Independent genuine CALL context in FIZZBUZ and OPTIMIST; prefer bounded predicate/child convergence before migration."
+    },
+    {
+      "rank": 3,
+      "candidate": "PLI2.OVL+18B3",
+      "reason": "One natural call per source but large traversal with unrelated descendants; separate substantial problem."
+    }
+  ],
+  "oracle_queries": 0,
+  "unsupported": [
+    "1FB5 gateway",
+    "changed second3BFB bit",
+    "3790 negative shared tail839B",
+    "7897 matched selector",
+    "785C listing-set",
+    "77CC types11H/10H",
+    "7B02 E9/7413"
+  ],
+  "validation": {
+    "tier": "ACTIVE/INCREMENTAL",
+    "extras": [
+      "pass68",
+      "pass67"
+    ],
+    "last_certified_FULL": "Pass67",
+    "historical_full_executed": false
+  }
+}

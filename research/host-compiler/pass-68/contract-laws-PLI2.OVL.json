@@ -1,0 +1,162 @@
+{
+  "PLI2.OVL+3D10": {
+    "end": 15844,
+    "description": "Predicate-directed stack-carried generation handler",
+    "contract": "DCX SP; PUSH H creates three mutable bytes. Canonical 3BFB, RAR consumes actual A.bit0; clear arm requiring 1FB5 is unsupported. Canonical 3660 result bit0 selects local-byte acquisition via 04FF or local-word acquisition via 3790. Local byte is published at frameSP; nonzero composes C7/E=local byte 7E05, zero composes C=A8/E7 7B1B, then freshly mapped AD0C word feeds 7CB4. Local word is published low/high at frameSP+1/+2; actual repeated 3BFB result selects C4/DE=fresh local word 8072 then fresh AD0C low 7C22. Changed-second-predicate arms remain unsupported. INX SP; POP H consumes overwritten local word or retained pushed-high/stale adjacent byte; RET original continuation, finalSP=entrySP+2. Canonical child domains, immutable mapped state, supported listing/type/index/alias routes only.",
+    "completeness": [
+      "stable",
+      "partial",
+      "partial"
+    ]
+  },
+  "PLI2.OVL+047D": {
+    "end": 1171,
+    "description": "Mapped A609 byte acquisition",
+    "contract": "Save C at ABF8; independently paired-read ABF8, zero-extend low selector; fresh AAB0[selector] becomes zeroextended BC; fresh A609[index] becomes A. Exact DAD CY and preserved NZPA, HL=A609+index. Already UNDERSTOOD in prior archaeology; no new byte promotion.",
+    "completeness": [
+      "stable",
+      "complete",
+      "complete"
+    ]
+  },
+  "PLI2.OVL+059E": {
+    "end": 1460,
+    "description": "Mapped A9E7 byte acquisition",
+    "contract": "Save C at AC06; independently paired-read AC06, zero-extend selector; fresh AAB0[selector] -> zeroextended BC; fresh A9E7[index] -> A. HL=target, DAD carry0, NZPA preserved.",
+    "completeness": [
+      "stable",
+      "complete",
+      "complete"
+    ]
+  },
+  "PLI2.OVL+3BFB": {
+    "end": 15368,
+    "description": "Fresh mapped equality-five mask",
+    "contract": "Fresh paired AD0C, C=L, canonical 047D; SUI5/SUI1/SBB A returns FF exactly when mapped A=5, otherwise0. Exact subtraction flags and child register result retained.",
+    "completeness": [
+      "stable",
+      "complete",
+      "complete"
+    ]
+  },
+  "PLI2.OVL+3660": {
+    "end": 13941,
+    "description": "AD08 bit gate or mapped-less-than-eight mask",
+    "contract": "Fresh AD08 RAR exposes old bit0; set returns literal1 with RAR flags. Clear: fresh paired AD0B, C=L, canonical059E; SUI8/SBB A returns FF iff mapped byte<8, otherwise0, exact arithmetic flags.",
+    "completeness": [
+      "stable",
+      "complete",
+      "complete"
+    ]
+  },
+  "PLI2.OVL+3790": {
+    "end": 14283,
+    "description": "Mapped word acquisition with bounded nonnegative byte route",
+    "contract": "Save C AD4F; paired reread C ->059E; CPI8. >=8: fresh AD4F, DCR A,C=A, canonical052C word. <8: fresh AD4F,DCR,C ->04FF, publish A at AD4F; RLC/RAR bit7 gate; supported clear route fresh paired AD4F,H0. Negative shared-tail839B route is static unsupported.",
+    "completeness": [
+      "stable",
+      "partial",
+      "partial"
+    ]
+  },
+  "PLI2.OVL+7C22": {
+    "end": 31795,
+    "description": "Fresh mapped-word adapter to tag22 structure emission",
+    "contract": "Save C AE1B; paired reread ->052C; BC=actual HL; canonical7C0E; RET.",
+    "completeness": [
+      "stable",
+      "complete",
+      "complete"
+    ]
+  },
+  "PLI2.OVL+7CB4": {
+    "end": 31941,
+    "description": "Fresh mapped-word adapter to tag32 structure emission",
+    "contract": "Save C AE27; paired reread ->052C; BC=actual HL; canonical7CA0; synthetic-only supported route.",
+    "completeness": [
+      "stable",
+      "complete",
+      "complete"
+    ]
+  },
+  "PLI2.OVL+7C0E": {
+    "end": 31778,
+    "description": "Saved word, tag22, structure emission composition",
+    "contract": "Save B at AE1A then C at AE19; C22 ->7B02; fresh paired AE19 ->BC ->785C; RET.",
+    "completeness": [
+      "stable",
+      "complete",
+      "complete"
+    ]
+  },
+  "PLI2.OVL+7CA0": {
+    "end": 31924,
+    "description": "Saved word, tag32, structure emission composition",
+    "contract": "Save B at AE26 then C at AE25; C32 ->7B02; fresh paired AE25 ->BC ->785C; RET. Synthetic-only supported route.",
+    "completeness": [
+      "stable",
+      "complete",
+      "complete"
+    ]
+  },
+  "PLI2.OVL+7B02": {
+    "end": 31515,
+    "description": "Saved selector prefix adapter",
+    "contract": "Save C AE0B; paired reread ->78E9; fresh AE0B CPI E9; supported nonE9 RET. E9/7413 arm remains unsupported.",
+    "completeness": [
+      "stable",
+      "partial",
+      "partial"
+    ]
+  },
+  "PLI2.OVL+78E9": {
+    "end": 30979,
+    "description": "Three independently reread selector operations",
+    "contract": "Save C ADFF; independent paired reread before7897,746F,7557, each C=low saved selector. Children reused; actual return state retained.",
+    "completeness": [
+      "stable",
+      "complete",
+      "complete"
+    ]
+  },
+  "PLI2.OVL+7897": {
+    "end": 30953,
+    "description": "Bounded fresh selector scan, supported no-match route",
+    "contract": "Save C ADFD; fresh ADAA RAR bit0 clear returns. Set initializes ADFE=0; compare A7 against fresh index; scan0..7: paired ADFE zeroextended plus94B9, fresh ADFD CMP fresh pointed byte; mismatch INR fresh ADFE and loop until index8. Matched selector arms remain unsupported, immutable table data excludes them for literal22/32.",
+    "completeness": [
+      "stable",
+      "partial",
+      "partial"
+    ]
+  },
+  "PLI2.OVL+785C": {
+    "end": 30871,
+    "description": "Saved position and structure emission, listing-clear scope",
+    "contract": "Save B ADFA then C ADF9; fresh ADEF word ->ADFB low/high; fresh ADF9 ->BC ->77CC; fresh201D RAR bit0 clear RET. Listing-set arm remains unsupported.",
+    "completeness": [
+      "stable",
+      "partial",
+      "partial"
+    ]
+  },
+  "PLI2.OVL+77CC": {
+    "end": 30812,
+    "description": "Structure word sum and type-selected canonical emission",
+    "contract": "Save B ADF4 then C ADF3; fresh ADF3 pointer ->AC9F low/high; target+2 ->ADF5; fresh AC9F+3 ->ADF6; fresh AC9F+6 and ADEF ->8342, sum ->ADF7 low/high. Repeated fresh ADF6 ANI1F/CPI comparisons:9 ->765E,11H unsupported pointer generator,8 ->7630,10H unsupported pointer generator,other ->765E. Fresh ADF7 ->BC. Finally HL0 ->ADEF low/high. Nonwrapping nonalias eight-byte structure scope.",
+    "completeness": [
+      "stable",
+      "partial",
+      "partial"
+    ]
+  },
+  "PLI2.OVL+8342": {
+    "end": 33613,
+    "description": "Fresh pointed-word addition",
+    "contract": "MOV C,M; INX H; MOV B,M; LDAX D; ADD C; L=A; INX D; LDAX D; ADC B; H=A; RET. Low/high reads independently ordered, HL=u16(firstWord+secondWord), BC=firstWord, DE=originalDE+1; actual final ADC flags.",
+    "completeness": [
+      "stable",
+      "complete",
+      "complete"
+    ]
+  }
+}
