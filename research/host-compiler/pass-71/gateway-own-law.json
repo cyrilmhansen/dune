@@ -1,0 +1,24 @@
+{
+  "extent": [
+    "1FB5",
+    "20EB"
+  ],
+  "fallback": "CMA(AD1B),RAR/JNC: success bit1 skips fallback; else zeroAD0A, fresh k low ->byte[1B4B+k]&7=j; little-endian3C13+2*j pointer+1 ->AD1D; actual1DFF(savedC) result ->AD1B",
+  "frame": "S=entrySP; C atS-12; AD0B..AD14 atS-11..S-2; AD0A atS-1; original CALL word atS/S+1",
+  "full_contract": "not closed; opaque1DFF/handler domains and trace arms excluded from closure; no generic callback architecture",
+  "lookup": "canonical047D consumes fresh saved C; actual A=k ->AD1C; little-endian3C21+2*k ->AD1D; fresh descriptor count ->AD1A; fresh k selects little-endian3DDD+2*k ->AD1F",
+  "own_ranges": {
+    "dispatch": "20AC..20B4",
+    "fallback": "2056..208B",
+    "lookup_tables": "1FDE..2015",
+    "post_gate": "20B4..20C8",
+    "pre_trace": "208B..20AC",
+    "restore": "20C8..20EB",
+    "save": "1FB5..1FDE",
+    "scan": "2015..2056"
+  },
+  "restore": "ordered restoreAD0B..AD14 thenAD0A; finalA=oldAD0A, BC=S-1, DE=AD15, HL=S, flagsS=0,Z=1,AC=1,P=1,CY=0; SPHL thenRET originalCALL ->S+2",
+  "scan": "zero remaining ->2056; otherwise decrementAD1A, incrementAD0A, increment descriptor pointer; actual1DFF(A.bit0) throughRAR drives branch. Success writes0/1 toAD1A/AD1B. Both outcomes reread byte[currentAD1D] as zeroextended skip, add wrapped16-bit and loop.",
+  "software": "LXI H,42B4; PUSH H high then low atS-13/S-14; fresh LHLDAD1F; PCHL leavesSP; handlerRET atS-14 consumes actualPUSH word and resumes42B4",
+  "trace": "fresh202E RAR gates pre/post paths; both bits clear across237 roots; trace-set stillRAW"
+}

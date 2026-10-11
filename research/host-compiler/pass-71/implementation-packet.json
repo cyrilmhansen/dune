@@ -1,0 +1,1286 @@
+{
+  "baseline": "21411f1283b52a0a96e5ae24d55e49637fc9bcad",
+  "blocker_columns": [
+    "source",
+    "caller",
+    "entry_C",
+    "k",
+    "handler",
+    "scan_calls",
+    "fallback"
+  ],
+  "blockers": [
+    [
+      "FIZZBUZ",
+      14144,
+      13,
+      23,
+      24630,
+      1,
+      false
+    ],
+    [
+      "FIZZBUZ",
+      14155,
+      18,
+      23,
+      24630,
+      1,
+      false
+    ],
+    [
+      "FIZZBUZ",
+      14144,
+      20,
+      23,
+      24630,
+      2,
+      true
+    ],
+    [
+      "FIZZBUZ",
+      14155,
+      40,
+      23,
+      24630,
+      1,
+      false
+    ],
+    [
+      "FIZZBUZ",
+      14144,
+      42,
+      23,
+      24630,
+      2,
+      true
+    ],
+    [
+      "FIZZBUZ",
+      14155,
+      62,
+      23,
+      24630,
+      1,
+      false
+    ],
+    [
+      "FIZZBUZ",
+      14144,
+      64,
+      23,
+      24630,
+      2,
+      true
+    ],
+    [
+      "FIZZBUZ",
+      15534,
+      96,
+      23,
+      24630,
+      1,
+      false
+    ],
+    [
+      "FACTOR",
+      14155,
+      10,
+      123,
+      18286,
+      0,
+      true
+    ],
+    [
+      "FACTOR",
+      14155,
+      48,
+      33,
+      25085,
+      1,
+      false
+    ],
+    [
+      "FACTOR",
+      14155,
+      56,
+      123,
+      18286,
+      0,
+      true
+    ],
+    [
+      "FACTOR",
+      14144,
+      58,
+      23,
+      24630,
+      1,
+      false
+    ],
+    [
+      "OPTIMIST",
+      14144,
+      93,
+      23,
+      24630,
+      1,
+      false
+    ],
+    [
+      "OPTIMIST",
+      14155,
+      109,
+      216,
+      36679,
+      4,
+      false
+    ],
+    [
+      "OPTIMIST",
+      14144,
+      133,
+      23,
+      24630,
+      1,
+      false
+    ],
+    [
+      "OPTIMIST",
+      15534,
+      162,
+      23,
+      24630,
+      1,
+      false
+    ]
+  ],
+  "components": {
+    "all_passed": true,
+    "components": [
+      {
+        "count": 27,
+        "full_registers_flags_RAM_ordered_writes_stack_services_compared": true,
+        "offset": 1149,
+        "source": "MINIMAL"
+      },
+      {
+        "count": 1,
+        "full_registers_flags_RAM_ordered_writes_stack_services_compared": true,
+        "offset": 28325,
+        "source": "MINIMAL"
+      },
+      {
+        "count": 538,
+        "full_registers_flags_RAM_ordered_writes_stack_services_compared": true,
+        "offset": 1149,
+        "source": "FIZZBUZ"
+      },
+      {
+        "count": 4,
+        "full_registers_flags_RAM_ordered_writes_stack_services_compared": true,
+        "offset": 28325,
+        "source": "FIZZBUZ"
+      },
+      {
+        "count": 41,
+        "full_registers_flags_RAM_ordered_writes_stack_services_compared": true,
+        "offset": 1149,
+        "source": "PICTURE"
+      },
+      {
+        "count": 1,
+        "full_registers_flags_RAM_ordered_writes_stack_services_compared": true,
+        "offset": 28325,
+        "source": "PICTURE"
+      },
+      {
+        "count": 242,
+        "full_registers_flags_RAM_ordered_writes_stack_services_compared": true,
+        "offset": 1149,
+        "source": "FACTOR"
+      },
+      {
+        "count": 1,
+        "full_registers_flags_RAM_ordered_writes_stack_services_compared": true,
+        "offset": 28325,
+        "source": "FACTOR"
+      },
+      {
+        "count": 1216,
+        "full_registers_flags_RAM_ordered_writes_stack_services_compared": true,
+        "offset": 1149,
+        "source": "OPTIMIST"
+      },
+      {
+        "count": 4,
+        "full_registers_flags_RAM_ordered_writes_stack_services_compared": true,
+        "offset": 28325,
+        "source": "OPTIMIST"
+      }
+    ]
+  },
+  "counts": {
+    "FACTOR": 33,
+    "FIZZBUZ": 61,
+    "MINIMAL": 11,
+    "OPTIMIST": 120,
+    "PICTURE": 12
+  },
+  "current_full": "Pass67",
+  "descriptor_subset": {
+    "calls": 345,
+    "direct_children": {
+      "PLI.COM+1A38": 10,
+      "PLI2.OVL+047D": 231,
+      "PLI2.OVL+052C": 10,
+      "PLI2.OVL+0572": 3,
+      "PLI2.OVL+0588": 2,
+      "PLI2.OVL+059E": 12,
+      "PLI2.OVL+0992": 206,
+      "PLI2.OVL+21AE": 2
+    },
+    "fallback_calls": 184,
+    "natural_tokens": {
+      "10": 32,
+      "105": 11,
+      "19": 4,
+      "20": 16,
+      "23": 76,
+      "237": 2,
+      "238": 3,
+      "239": 20,
+      "246": 8,
+      "247": 4,
+      "251": 161,
+      "252": 42,
+      "253": 1,
+      "26": 18,
+      "30": 5,
+      "33": 3,
+      "5": 32,
+      "6": 2,
+      "74": 12
+    },
+    "observed_instruction_offsets": [
+      7679,
+      7682,
+      7683,
+      7686,
+      7687,
+      7690,
+      7693,
+      7695,
+      7696,
+      7698,
+      7699,
+      7701,
+      7702,
+      7704,
+      7705,
+      7707,
+      7710,
+      7712,
+      7713,
+      7714,
+      7717,
+      7720,
+      7722,
+      7725,
+      7728,
+      7729,
+      7732,
+      7734,
+      7737,
+      7738,
+      7739,
+      7742,
+      7743,
+      7744,
+      7747,
+      7750,
+      7751,
+      7754,
+      7755,
+      7758,
+      7759,
+      7762,
+      7763,
+      7765,
+      7768,
+      7769,
+      7770,
+      7771,
+      7772,
+      7775,
+      7777,
+      7780,
+      7783,
+      7784,
+      7787,
+      7790,
+      7791,
+      7794,
+      7796,
+      7797,
+      7800,
+      7803,
+      7805,
+      7808,
+      7811,
+      7812,
+      7815,
+      7816,
+      7822,
+      7825,
+      7828,
+      7830,
+      7833,
+      7836,
+      7839,
+      7841,
+      7844,
+      7847,
+      7848,
+      7851,
+      7853,
+      7856,
+      7858,
+      7859,
+      7862,
+      7863,
+      7866,
+      7869,
+      7872,
+      7874,
+      7877,
+      7880,
+      7882,
+      7883,
+      7885,
+      7888,
+      7891,
+      7892,
+      7895,
+      7897,
+      7898,
+      7921,
+      7924,
+      7927,
+      7929,
+      7932,
+      7935,
+      7936,
+      7939,
+      7942,
+      7945,
+      7947,
+      7950,
+      7953,
+      7955,
+      7957,
+      7960,
+      7961,
+      7964,
+      7966,
+      7995,
+      7998,
+      8000,
+      8003,
+      8004,
+      8006,
+      8009,
+      8010,
+      8011,
+      8014,
+      8016,
+      8019,
+      8022,
+      8023,
+      8026,
+      8029,
+      8030,
+      8031,
+      8034,
+      8036,
+      8039,
+      8040,
+      8041,
+      8044,
+      8047,
+      8048,
+      8049,
+      8050,
+      8053,
+      8055,
+      8056,
+      8059,
+      8060,
+      8063,
+      8066,
+      8068,
+      8071,
+      8072,
+      8073,
+      8074,
+      8077,
+      8078,
+      8079,
+      8080,
+      8081,
+      8082,
+      8088,
+      8091,
+      8093,
+      8096,
+      8097,
+      8100,
+      8101,
+      8104,
+      8105,
+      8108,
+      8111,
+      8114,
+      8116
+    ],
+    "scan_calls": 161,
+    "scope": "Exact observed result/token/child signatures, including k23 subset, are evidence rather than a source-dispatched model",
+    "status": "partial historical predicate; no independent native1DFF shadow or general contract claimed"
+  },
+  "fragments": {
+    "all_passed": true,
+    "save_restore_cases": 30,
+    "scope": "gateway-own save/restore fragments and success arm only; no opaque child/handler patched or executed",
+    "success_cases": 768
+  },
+  "handler_status_reference": "handler-map.json; only6EA5 scoped canonical, remaining required handlers unresolved",
+  "handler_targets": [
+    [
+      "20F7",
+      30
+    ],
+    [
+      "22EA",
+      3
+    ],
+    [
+      "2352",
+      3
+    ],
+    [
+      "2362",
+      4
+    ],
+    [
+      "2369",
+      4
+    ],
+    [
+      "23F9",
+      6
+    ],
+    [
+      "256E",
+      2
+    ],
+    [
+      "2659",
+      6
+    ],
+    [
+      "28FE",
+      2
+    ],
+    [
+      "2926",
+      5
+    ],
+    [
+      "294D",
+      5
+    ],
+    [
+      "2C6A",
+      1
+    ],
+    [
+      "2D5C",
+      1
+    ],
+    [
+      "2E4F",
+      2
+    ],
+    [
+      "2EF4",
+      1
+    ],
+    [
+      "33CE",
+      3
+    ],
+    [
+      "3B70",
+      2
+    ],
+    [
+      "3DE4",
+      8
+    ],
+    [
+      "3E36",
+      28
+    ],
+    [
+      "3F33",
+      1
+    ],
+    [
+      "3FFD",
+      2
+    ],
+    [
+      "40FF",
+      4
+    ],
+    [
+      "4257",
+      2
+    ],
+    [
+      "425E",
+      2
+    ],
+    [
+      "4316",
+      4
+    ],
+    [
+      "43C9",
+      3
+    ],
+    [
+      "684A",
+      11
+    ],
+    [
+      "6854",
+      15
+    ],
+    [
+      "685E",
+      10
+    ],
+    [
+      "6875",
+      5
+    ],
+    [
+      "6902",
+      6
+    ],
+    [
+      "6A36",
+      1
+    ],
+    [
+      "6A3C",
+      5
+    ],
+    [
+      "6C1C",
+      2
+    ],
+    [
+      "6C26",
+      1
+    ],
+    [
+      "6C30",
+      2
+    ],
+    [
+      "6D1F",
+      1
+    ],
+    [
+      "6D33",
+      1
+    ],
+    [
+      "6D47",
+      1
+    ],
+    [
+      "6EA5",
+      11
+    ],
+    [
+      "6F39",
+      1
+    ],
+    [
+      "6F81",
+      3
+    ],
+    [
+      "6F9C",
+      6
+    ],
+    [
+      "6FB7",
+      1
+    ],
+    [
+      "6FF6",
+      8
+    ],
+    [
+      "7019",
+      11
+    ],
+    [
+      "7028",
+      1
+    ]
+  ],
+  "law": {
+    "extent": [
+      "1FB5",
+      "20EB"
+    ],
+    "fallback": "CMA(AD1B),RAR/JNC: success bit1 skips fallback; else zeroAD0A, fresh k low ->byte[1B4B+k]&7=j; little-endian3C13+2*j pointer+1 ->AD1D; actual1DFF(savedC) result ->AD1B",
+    "frame": "S=entrySP; C atS-12; AD0B..AD14 atS-11..S-2; AD0A atS-1; original CALL word atS/S+1",
+    "full_contract": "not closed; opaque1DFF/handler domains and trace arms excluded from closure; no generic callback architecture",
+    "lookup": "canonical047D consumes fresh saved C; actual A=k ->AD1C; little-endian3C21+2*k ->AD1D; fresh descriptor count ->AD1A; fresh k selects little-endian3DDD+2*k ->AD1F",
+    "own_ranges": {
+      "dispatch": "20AC..20B4",
+      "fallback": "2056..208B",
+      "lookup_tables": "1FDE..2015",
+      "post_gate": "20B4..20C8",
+      "pre_trace": "208B..20AC",
+      "restore": "20C8..20EB",
+      "save": "1FB5..1FDE",
+      "scan": "2015..2056"
+    },
+    "restore": "ordered restoreAD0B..AD14 thenAD0A; finalA=oldAD0A, BC=S-1, DE=AD15, HL=S, flagsS=0,Z=1,AC=1,P=1,CY=0; SPHL thenRET originalCALL ->S+2",
+    "scan": "zero remaining ->2056; otherwise decrementAD1A, incrementAD0A, increment descriptor pointer; actual1DFF(A.bit0) throughRAR drives branch. Success writes0/1 toAD1A/AD1B. Both outcomes reread byte[currentAD1D] as zeroextended skip, add wrapped16-bit and loop.",
+    "software": "LXI H,42B4; PUSH H high then low atS-13/S-14; fresh LHLDAD1F; PCHL leavesSP; handlerRET atS-14 consumes actualPUSH word and resumes42B4",
+    "trace": "fresh202E RAR gates pre/post paths; both bits clear across237 roots; trace-set stillRAW"
+  },
+  "native_root_installed": false,
+  "next_full": "approximately Pass72",
+  "oracle_queries": 0,
+  "outcome": "decomposition plus observed8-byte success publication; gateway remains guest",
+  "promotions": {
+    "DECODED -> UNDERSTOOD": 0,
+    "RAW -> UNDERSTOOD": 8,
+    "STRUCTURED -> UNDERSTOOD": 0
+  },
+  "representative_hashes": {
+    "(False, True, False, True, False)": "6b7fadacfd728cd4326cfccc4513fca76c91a3dd94a87c8f086fc207f4bce863",
+    "(False, True, True, False, False)": "25de61cfd7fae00b5a9fab2998cc2cc623db785fdfb525e09940fc5a4077d7ad",
+    "(False, True, True, True, False)": "9aeb5fbf64d3c53e3e208114a465a24f441b12540ee8d72d32a36daf0c904712",
+    "(False, True, True, True, True)": "df46911229f67bc3f1808b480a647510283ca5e8fca16ece921e6dd24001209c",
+    "(True, False, False, True, False)": "343a46b31e64951659e0db5fc1c65ed433b2bd2405124dd43ece83d9702dfe04"
+  },
+  "table_tuple_columns": [
+    "k",
+    "count",
+    "descriptor_pointers",
+    "handler_pointers",
+    "fallback_indices"
+  ],
+  "table_tuples": [
+    [
+      0,
+      30,
+      [
+        15343
+      ],
+      [
+        17143
+      ],
+      [
+        0
+      ]
+    ],
+    [
+      2,
+      11,
+      [
+        34666
+      ],
+      [
+        35402
+      ],
+      [
+        0
+      ]
+    ],
+    [
+      5,
+      2,
+      [
+        22447
+      ],
+      [
+        23920
+      ],
+      [
+        0
+      ]
+    ],
+    [
+      8,
+      15,
+      [
+        34667
+      ],
+      [
+        35412
+      ],
+      [
+        0
+      ]
+    ],
+    [
+      15,
+      8,
+      [
+        22448
+      ],
+      [
+        24548
+      ],
+      []
+    ],
+    [
+      16,
+      1,
+      [
+        19740
+      ],
+      [
+        20074
+      ],
+      [
+        2
+      ]
+    ],
+    [
+      18,
+      6,
+      [
+        34679
+      ],
+      [
+        35586
+      ],
+      [
+        2
+      ]
+    ],
+    [
+      20,
+      10,
+      [
+        34668
+      ],
+      [
+        35422
+      ],
+      [
+        1
+      ]
+    ],
+    [
+      23,
+      28,
+      [
+        22470
+      ],
+      [
+        24630
+      ],
+      [
+        1
+      ]
+    ],
+    [
+      24,
+      1,
+      [
+        19741
+      ],
+      [
+        20316
+      ],
+      [
+        1
+      ]
+    ],
+    [
+      26,
+      5,
+      [
+        34669
+      ],
+      [
+        35445
+      ],
+      [
+        1
+      ]
+    ],
+    [
+      27,
+      3,
+      [
+        17230
+      ],
+      [
+        17642
+      ],
+      [
+        2
+      ]
+    ],
+    [
+      30,
+      1,
+      [
+        22477
+      ],
+      [
+        24883
+      ],
+      []
+    ],
+    [
+      33,
+      2,
+      [
+        22486
+      ],
+      [
+        25085
+      ],
+      []
+    ],
+    [
+      48,
+      4,
+      [
+        22499
+      ],
+      [
+        25343
+      ],
+      []
+    ],
+    [
+      61,
+      2,
+      [
+        22316
+      ],
+      [
+        25687
+      ],
+      []
+    ],
+    [
+      63,
+      1,
+      [
+        34584
+      ],
+      [
+        35894
+      ],
+      []
+    ],
+    [
+      66,
+      2,
+      [
+        22499
+      ],
+      [
+        25694
+      ],
+      []
+    ],
+    [
+      74,
+      5,
+      [
+        34714
+      ],
+      [
+        35900
+      ],
+      [
+        2
+      ]
+    ],
+    [
+      84,
+      4,
+      [
+        22534
+      ],
+      [
+        25878
+      ],
+      [
+        2
+      ]
+    ],
+    [
+      99,
+      3,
+      [
+        20825
+      ],
+      [
+        21966
+      ],
+      [
+        1
+      ]
+    ],
+    [
+      105,
+      3,
+      [
+        17231
+      ],
+      [
+        17746
+      ],
+      [
+        2
+      ]
+    ],
+    [
+      106,
+      4,
+      [
+        17232
+      ],
+      [
+        17769
+      ],
+      [
+        1
+      ]
+    ],
+    [
+      108,
+      6,
+      [
+        17237
+      ],
+      [
+        17913
+      ],
+      [
+        1
+      ]
+    ],
+    [
+      123,
+      2,
+      [
+        17239
+      ],
+      [
+        18286
+      ],
+      [
+        2
+      ]
+    ],
+    [
+      125,
+      6,
+      [
+        17240
+      ],
+      [
+        18521
+      ],
+      [
+        0
+      ]
+    ],
+    [
+      130,
+      2,
+      [
+        22550
+      ],
+      [
+        19198
+      ],
+      [
+        1
+      ]
+    ],
+    [
+      134,
+      2,
+      [
+        19743
+      ],
+      [
+        20559
+      ],
+      []
+    ],
+    [
+      135,
+      1,
+      [
+        19750
+      ],
+      [
+        20724
+      ],
+      [
+        1
+      ]
+    ],
+    [
+      141,
+      5,
+      [
+        17244
+      ],
+      [
+        19238
+      ],
+      [
+        0
+      ]
+    ],
+    [
+      142,
+      5,
+      [
+        17245
+      ],
+      [
+        19277
+      ],
+      [
+        0
+      ]
+    ],
+    [
+      151,
+      2,
+      [
+        34723
+      ],
+      [
+        36380
+      ],
+      [
+        2
+      ]
+    ],
+    [
+      152,
+      1,
+      [
+        34728
+      ],
+      [
+        36390
+      ],
+      []
+    ],
+    [
+      154,
+      2,
+      [
+        34746
+      ],
+      [
+        36400
+      ],
+      []
+    ],
+    [
+      161,
+      11,
+      [
+        15343
+      ],
+      [
+        37029
+      ],
+      [
+        2
+      ]
+    ],
+    [
+      168,
+      4,
+      [
+        15343
+      ],
+      [
+        17762
+      ],
+      [
+        0
+      ]
+    ],
+    [
+      170,
+      1,
+      [
+        15343
+      ],
+      [
+        37177
+      ],
+      [
+        0
+      ]
+    ],
+    [
+      172,
+      6,
+      [
+        15343
+      ],
+      [
+        37276
+      ],
+      [
+        1
+      ]
+    ],
+    [
+      176,
+      1,
+      [
+        15343
+      ],
+      [
+        37303
+      ],
+      [
+        1
+      ]
+    ],
+    [
+      178,
+      3,
+      [
+        15343
+      ],
+      [
+        37249
+      ],
+      [
+        1
+      ]
+    ],
+    [
+      181,
+      8,
+      [
+        15343
+      ],
+      [
+        37366
+      ],
+      [
+        1
+      ]
+    ],
+    [
+      183,
+      11,
+      [
+        15343
+      ],
+      [
+        37401
+      ],
+      [
+        0
+      ]
+    ],
+    [
+      184,
+      1,
+      [
+        15343
+      ],
+      [
+        37416
+      ],
+      [
+        0
+      ]
+    ],
+    [
+      209,
+      3,
+      [
+        22549
+      ],
+      [
+        26057
+      ],
+      [
+        2
+      ]
+    ],
+    [
+      214,
+      1,
+      [
+        15343
+      ],
+      [
+        36659
+      ],
+      [
+        3
+      ]
+    ],
+    [
+      216,
+      1,
+      [
+        34584
+      ],
+      [
+        36679
+      ],
+      []
+    ],
+    [
+      217,
+      1,
+      [
+        15343
+      ],
+      [
+        36639
+      ],
+      [
+        2
+      ]
+    ]
+  ],
+  "task": "RUNES_PLI2_GATEWAY_1FB5_DECOMPOSITION_PASS_71"
+}

@@ -158,7 +158,8 @@ class MinimalPassOneTests(unittest.TestCase):
 
     def test_unexercised_branches_and_FIZZBUZ_only_constructor_arm(self):
         points = {
-            "PLI2.OVL": [0x203E, 0x2092, 0x20BB],
+            # Pass71 independently observed/proved [203E,2046); trace arms remain RAW.
+            "PLI2.OVL": [0x2092, 0x20BB],
             "PLI.COM": [0x9D9, 0xA0D, 0xA44, 0xA67, 0xAB0],
         }
         for image, offsets in points.items():

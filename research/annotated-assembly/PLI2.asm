@@ -1598,8 +1598,23 @@ PLI2_1FB4: RET ; PC = word[SP]; SP += 2; use the convention in procedure header 
 ; Entry: PLI2_1FB5 = PLI2.OVL+1FB5 @ 41B5H; SHA-256
 ;   80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a
 ; Extent: HYPOTHESIS [1FB5,20EB) file offsets; overlapping entries: none established
-; Callers: OBSERVED PLI2.OVL+2149 (MINIMAL=8); PLI2.OVL+6862 (MINIMAL=1); PLI2.OVL+6FA0
-;   (MINIMAL=1); PLI2.OVL+6FFA (MINIMAL=1)
+; Callers: OBSERVED PLI2.OVL+2149 (FACTOR=20, FIZZBUZ=34, MINIMAL=8, OPTIMIST=48, PICTURE=10);
+;   PLI2.OVL+2329 (OPTIMIST=3); PLI2.OVL+2333 (OPTIMIST=3); PLI2.OVL+2399 (FIZZBUZ=1,
+;   OPTIMIST=2); PLI2.OVL+2403 (FACTOR=1, FIZZBUZ=3, OPTIMIST=2); PLI2.OVL+2CA1 (FACTOR=1);
+;   PLI2.OVL+2D8B (FACTOR=1); PLI2.OVL+33D2 (FACTOR=1, FIZZBUZ=1, PICTURE=1); PLI2.OVL+3740
+;   (FACTOR=1, FIZZBUZ=4, OPTIMIST=2); PLI2.OVL+374B (FACTOR=3, FIZZBUZ=3, OPTIMIST=1);
+;   PLI2.OVL+3756 (FIZZBUZ=3, OPTIMIST=4); PLI2.OVL+3CAE (FIZZBUZ=1, OPTIMIST=1);
+;   PLI2.OVL+3EFD (FACTOR=1, OPTIMIST=1); PLI2.OVL+3FC5 (OPTIMIST=1); PLI2.OVL+41B1
+;   (FACTOR=1, OPTIMIST=1); PLI2.OVL+4451 (FACTOR=1); PLI2.OVL+6691 (OPTIMIST=3);
+;   PLI2.OVL+66A5 (OPTIMIST=1); PLI2.OVL+66D1 (OPTIMIST=1); PLI2.OVL+6784 (OPTIMIST=2);
+;   PLI2.OVL+678E (OPTIMIST=2); PLI2.OVL+6862 (FIZZBUZ=3, MINIMAL=1, OPTIMIST=6);
+;   PLI2.OVL+6879 (OPTIMIST=5); PLI2.OVL+690E (OPTIMIST=4); PLI2.OVL+6918 (OPTIMIST=4);
+;   PLI2.OVL+6A48 (OPTIMIST=2); PLI2.OVL+6A52 (OPTIMIST=2); PLI2.OVL+6A62 (OPTIMIST=3);
+;   PLI2.OVL+6A6C (OPTIMIST=3); PLI2.OVL+6AB1 (OPTIMIST=2); PLI2.OVL+6ABB (OPTIMIST=2);
+;   PLI2.OVL+6B88 (OPTIMIST=1); PLI2.OVL+6B92 (OPTIMIST=1); PLI2.OVL+6C3C (OPTIMIST=2);
+;   PLI2.OVL+6D37 (OPTIMIST=1); PLI2.OVL+6F85 (FACTOR=1, FIZZBUZ=1, PICTURE=1);
+;   PLI2.OVL+6FA0 (FIZZBUZ=3, MINIMAL=1, OPTIMIST=2); PLI2.OVL+6FFA (FACTOR=1, FIZZBUZ=4,
+;   MINIMAL=1, OPTIMIST=2)
 ; Returns: OBSERVED/DEDUCED ordinary hardware CALL word; observed SP after RET = (entry SP + 2)
 ;   mod 65536; PLI2.OVL+20EA
 ; Inputs: DEDUCED C=dispatch argument; dispatch state AD0A/AD0B..AD14
@@ -1618,25 +1633,37 @@ PLI2_1FB4: RET ; PC = word[SP]; SP += 2; use the convention in procedure header 
 ;   handler_pointer=AD1FH (word used by gateway PCHL); stack[S-12]=C;
 ;   stack[S-11..S-2]=AD0B..AD14; stack[S-1]=AD0A; software word at S-14
 ; Direct callees: OBSERVED PLI2.OVL+047D @267DH; PLI2.OVL+1DFF @3FFFH; PLI2.OVL+1DFF @3FFFH
-; Coverage: OBSERVED MINIMAL: 11 CALLs; 263/310 bytes represented as instructions; MINIMAL: 11
-;   hardware returns and 11 software handler returns; trace flags zero; two candidates
-;   fail before fallback
-; Unresolved: Only bit0[202E]=0 observed. +047D is a lookup leaf; +1DFF is a descriptor predicate
-;   with unresolved paths. Two MINIMAL candidate calls fail; fallback succeeds;
-;   candidate-success +203E and tracing paths remain RAW. Distinct PCHL handler bodies
-;   unresolved.
-; Contract: DEDUCED (partial; scope: own low-level operation; opaque callees explicitly delegated)
-;   C saved at entry_SP-12; AD0B..AD14 (10 bytes) saved at entry_SP-11..-2, AD0A at
-;   entry_SP-1. Handler continuation is runtime 42B4H. All 11 MINIMAL calls restore those
-;   11 bytes and return via +20EA on the original CALL slot; A=old AD0A, BC=entry_SP-1,
-;   DE=AD15H, HL=entry_SP. Other scratch AD1A..AD20 and handler effects are not restored.
+; Coverage: OBSERVED FACTOR: 33 CALLs; FIZZBUZ: 61 CALLs; MINIMAL: 11 CALLs; OPTIMIST: 120 CALLs;
+;   PICTURE: 12 CALLs; 271/310 bytes represented as instructions; Pass71: 237
+;   independently nested hardware windows and software handler returns; 53 candidate
+;   successes; both trace gates clear. Native gateway and opaque descriptor/handler
+;   contracts remain unclosed.
+; Unresolved: Trace-set paths 2092..20AC and20BB..20C8 remain RAW / STATIC / UNOBSERVED. / 1DFF
+;   remains a partial descriptor predicate without a canonical native contract; natural
+;   observed token/result signatures do not establish its arbitrary domain. / 47 natural
+;   handler targets; only6EA5 has a demonstrated scoped software-handler canonical
+;   contract here. No callback architecture or native gateway is installed.
+; Contract: DEDUCED (partial; scope: Observed gateway-own state and concrete continuation
+;   mechanics; only203E..2046 gains UNDERSTOOD status. Opaque predicates/handlers and
+;   trace-set branches are not closed.) Gateway-own observations: reserve twelve bytes;
+;   save C atS-12, AD0B..AD14 atS-11..S-2 and AD0A atS-1. Canonical047D consumes saved C;
+;   returned A selects descriptor/handler pointers. Candidate1DFF returned A.bit0 drives
+;   RAR; success publishes AD1A=0 then AD1B=1 with flags preserved, followed by shared
+;   descriptor skip. Fallback selects low3 bits of byte[1B4B+k], then publishes fallback
+;   pointer+1 and actual1DFF result. PUSH42B4/PCHL invokes selected opaque handler.
+;   Trace-clear own restore reads saved state, finalA=oldAD0A, BC=S-1, DE=AD15, HL=S, RET
+;   original CALL, SP=S+2. Full descriptor and handler semantics remain
+;   delegated/unclosed; no executable native parent contract.
 ; Hypothesis: HYPOTHESIS reentrant table/record gateway
-; Completeness: bounds=provisional; control_flow=partial; contract=partial
+; Completeness: bounds=stable; control_flow=partial; contract=partial
 ; Evidence: evidence.json#seeds/PLI2.OVL+1FB5;
-;   ../minimal-baseline/pass-1/regions.json#PLI2.OVL+1FB5
+;   ../minimal-baseline/pass-1/regions.json#PLI2.OVL+1FB5;
+;   ../host-compiler/pass-71/natural-inventory.json; ../host-compiler/pass-71/frames.json;
+;   ../host-compiler/pass-71/fragment-proof.json
 ; Procedure pseudo (operational; byte/word arithmetic wraps):
-;   save C and 11 state bytes; select record/handler via tables; scan/fallback with +1DFF; PUSH
-;   42B4; PCHL handler; restore 11 state bytes; RET original frame
+;   Save twelve-byte local state; canonical047D selects descriptor/handler tables; scan actual1DFF
+;   results, publishing success or selecting fallback; PUSH42B4/PCHL actual handler; trace-clear
+;   restore and original hardware RET. Unresolved child semantics remain explicit.
 ; @end-procedure-v1 PLI2.OVL+1FB5
 ; SECTION [1FB5,203E) STRUCTURED
 ; @block-pseudo 1FB5
@@ -1727,13 +1754,19 @@ PLI2_2036: MOV C,M ; C = byte[HL] ; +2036 runtime=4236H OBSERVED
 PLI2_2037: CALL 3FFFH ; push following PC; invoke PLI2.OVL+1DFF; result effects belong to callee ; +2037 runtime=4237H OBSERVED
 PLI2_203A: RAR ; A = (old_CY<<7) | (old_A>>1); CY=old_A bit0; NZPA preserved ; +203A runtime=423AH OBSERVED
 PLI2_203B: JNC 4246H ; if CY=0: PC -> PLI2.OVL+2046; flags preserved ; +203B runtime=423BH OBSERVED
-; SECTION [203E,2046) RAW
-PLI2_203E: DB 021H,01AH ; +203E runtime=423EH RAW
-PLI2_2040: DB 0ADH,036H,000H,023H,036H,001H ; +2040 runtime=4240H RAW
+; SECTION [203E,2046) UNDERSTOOD
+; @block-pseudo 203E
+; pseudo:
+; | OBSERVED candidate success: AD1A=0 then AD1B=1; all flags preserved; shared skip follows.
+PLI2_203E: LXI H,0AD1AH ; HL = AD1AH; flags preserved ; +203E runtime=423EH OBSERVED
+PLI2_2040: EQU 04240H ; +2040 runtime=4240H coordinate-only label
+PLI2_2041: MVI M,00H ; byte[candidates_remaining (AD1AH)] = 00H; same-valued writes retained; flags preserved ; +2041 runtime=4241H OBSERVED
+PLI2_2043: INX H ; HL = (HL+1)&FFFF; flags preserved ; +2043 runtime=4243H OBSERVED
+PLI2_2044: MVI M,01H ; byte[candidate_success_byte (AD1BH)] = 01H; flags preserved ; +2044 runtime=4244H OBSERVED
 ; SECTION [2046,2092) STRUCTURED
 ; @block-pseudo 2046
 ; pseudo:
-; | observed failure: skip by record byte
+; | Both success and failure use the fresh descriptor record byte as the skip amount; loop back to remaining count.
 PLI2_2046: LHLD 0AD1DH ; HL = little_endian_word[descriptor_pointer (AD1DH)] ; +2046 runtime=4246H OBSERVED
 PLI2_2049: MOV E,M ; E = byte[HL] ; +2049 runtime=4249H OBSERVED
 PLI2_204A: MVI D,00H ; D = 00H ; +204A runtime=424AH OBSERVED

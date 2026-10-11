@@ -6003,19 +6003,25 @@
       "byte_status_at_entry": "STRUCTURED",
       "description": "stack-local save/restore and table-driven PCHL gateway",
       "completeness": {
-        "bounds": "provisional",
+        "bounds": "stable",
         "control_flow": "partial",
         "contract": "partial"
       },
       "observed_paths": {
         "invocations_by_run": {
-          "MINIMAL": 11
+          "MINIMAL": 11,
+          "FIZZBUZ": 61,
+          "PICTURE": 12,
+          "FACTOR": 33,
+          "OPTIMIST": 120
         },
-        "represented_bytes": 263,
-        "description": "MINIMAL: 11 hardware returns and 11 software handler returns; trace flags zero; two candidates fail before fallback"
+        "represented_bytes": 271,
+        "description": "Pass71: 237 independently nested hardware windows and software handler returns; 53 candidate successes; both trace gates clear. Native gateway and opaque descriptor/handler contracts remain unclosed."
       },
       "unresolved_paths": [
-        "Only bit0[202E]=0 observed. +047D is a lookup leaf; +1DFF is a descriptor predicate with unresolved paths. Two MINIMAL candidate calls fail; fallback succeeds; candidate-success +203E and tracing paths remain RAW. Distinct PCHL handler bodies unresolved."
+        "Trace-set paths 2092..20AC and20BB..20C8 remain RAW / STATIC / UNOBSERVED.",
+        "1DFF remains a partial descriptor predicate without a canonical native contract; natural observed token/result signatures do not establish its arbitrary domain.",
+        "47 natural handler targets; only6EA5 has a demonstrated scoped software-handler canonical contract here. No callback architecture or native gateway is installed."
       ],
       "inputs": "C=dispatch argument; dispatch state AD0A/AD0B..AD14",
       "outputs": "saved state restored on observed path; A=old AD0A, BC=S-1, DE=AD15, HL=S before RET; other dispatch/handler effects not restored",
@@ -6051,25 +6057,255 @@
         {
           "coordinate": "PLI2.OVL+2149",
           "counts_by_run": {
-            "MINIMAL": 8
+            "MINIMAL": 8,
+            "FIZZBUZ": 34,
+            "PICTURE": 10,
+            "FACTOR": 20,
+            "OPTIMIST": 48
+          }
+        },
+        {
+          "coordinate": "PLI2.OVL+2329",
+          "counts_by_run": {
+            "OPTIMIST": 3
+          }
+        },
+        {
+          "coordinate": "PLI2.OVL+2333",
+          "counts_by_run": {
+            "OPTIMIST": 3
+          }
+        },
+        {
+          "coordinate": "PLI2.OVL+2399",
+          "counts_by_run": {
+            "FIZZBUZ": 1,
+            "OPTIMIST": 2
+          }
+        },
+        {
+          "coordinate": "PLI2.OVL+2403",
+          "counts_by_run": {
+            "FIZZBUZ": 3,
+            "FACTOR": 1,
+            "OPTIMIST": 2
+          }
+        },
+        {
+          "coordinate": "PLI2.OVL+2CA1",
+          "counts_by_run": {
+            "FACTOR": 1
+          }
+        },
+        {
+          "coordinate": "PLI2.OVL+2D8B",
+          "counts_by_run": {
+            "FACTOR": 1
+          }
+        },
+        {
+          "coordinate": "PLI2.OVL+33D2",
+          "counts_by_run": {
+            "FIZZBUZ": 1,
+            "PICTURE": 1,
+            "FACTOR": 1
+          }
+        },
+        {
+          "coordinate": "PLI2.OVL+3740",
+          "counts_by_run": {
+            "FIZZBUZ": 4,
+            "FACTOR": 1,
+            "OPTIMIST": 2
+          }
+        },
+        {
+          "coordinate": "PLI2.OVL+374B",
+          "counts_by_run": {
+            "FIZZBUZ": 3,
+            "FACTOR": 3,
+            "OPTIMIST": 1
+          }
+        },
+        {
+          "coordinate": "PLI2.OVL+3756",
+          "counts_by_run": {
+            "FIZZBUZ": 3,
+            "OPTIMIST": 4
+          }
+        },
+        {
+          "coordinate": "PLI2.OVL+3CAE",
+          "counts_by_run": {
+            "FIZZBUZ": 1,
+            "OPTIMIST": 1
+          }
+        },
+        {
+          "coordinate": "PLI2.OVL+3EFD",
+          "counts_by_run": {
+            "FACTOR": 1,
+            "OPTIMIST": 1
+          }
+        },
+        {
+          "coordinate": "PLI2.OVL+3FC5",
+          "counts_by_run": {
+            "OPTIMIST": 1
+          }
+        },
+        {
+          "coordinate": "PLI2.OVL+41B1",
+          "counts_by_run": {
+            "FACTOR": 1,
+            "OPTIMIST": 1
+          }
+        },
+        {
+          "coordinate": "PLI2.OVL+4451",
+          "counts_by_run": {
+            "FACTOR": 1
+          }
+        },
+        {
+          "coordinate": "PLI2.OVL+6691",
+          "counts_by_run": {
+            "OPTIMIST": 3
+          }
+        },
+        {
+          "coordinate": "PLI2.OVL+66A5",
+          "counts_by_run": {
+            "OPTIMIST": 1
+          }
+        },
+        {
+          "coordinate": "PLI2.OVL+66D1",
+          "counts_by_run": {
+            "OPTIMIST": 1
+          }
+        },
+        {
+          "coordinate": "PLI2.OVL+6784",
+          "counts_by_run": {
+            "OPTIMIST": 2
+          }
+        },
+        {
+          "coordinate": "PLI2.OVL+678E",
+          "counts_by_run": {
+            "OPTIMIST": 2
           }
         },
         {
           "coordinate": "PLI2.OVL+6862",
           "counts_by_run": {
-            "MINIMAL": 1
+            "MINIMAL": 1,
+            "FIZZBUZ": 3,
+            "OPTIMIST": 6
+          }
+        },
+        {
+          "coordinate": "PLI2.OVL+6879",
+          "counts_by_run": {
+            "OPTIMIST": 5
+          }
+        },
+        {
+          "coordinate": "PLI2.OVL+690E",
+          "counts_by_run": {
+            "OPTIMIST": 4
+          }
+        },
+        {
+          "coordinate": "PLI2.OVL+6918",
+          "counts_by_run": {
+            "OPTIMIST": 4
+          }
+        },
+        {
+          "coordinate": "PLI2.OVL+6A48",
+          "counts_by_run": {
+            "OPTIMIST": 2
+          }
+        },
+        {
+          "coordinate": "PLI2.OVL+6A52",
+          "counts_by_run": {
+            "OPTIMIST": 2
+          }
+        },
+        {
+          "coordinate": "PLI2.OVL+6A62",
+          "counts_by_run": {
+            "OPTIMIST": 3
+          }
+        },
+        {
+          "coordinate": "PLI2.OVL+6A6C",
+          "counts_by_run": {
+            "OPTIMIST": 3
+          }
+        },
+        {
+          "coordinate": "PLI2.OVL+6AB1",
+          "counts_by_run": {
+            "OPTIMIST": 2
+          }
+        },
+        {
+          "coordinate": "PLI2.OVL+6ABB",
+          "counts_by_run": {
+            "OPTIMIST": 2
+          }
+        },
+        {
+          "coordinate": "PLI2.OVL+6B88",
+          "counts_by_run": {
+            "OPTIMIST": 1
+          }
+        },
+        {
+          "coordinate": "PLI2.OVL+6B92",
+          "counts_by_run": {
+            "OPTIMIST": 1
+          }
+        },
+        {
+          "coordinate": "PLI2.OVL+6C3C",
+          "counts_by_run": {
+            "OPTIMIST": 2
+          }
+        },
+        {
+          "coordinate": "PLI2.OVL+6D37",
+          "counts_by_run": {
+            "OPTIMIST": 1
+          }
+        },
+        {
+          "coordinate": "PLI2.OVL+6F85",
+          "counts_by_run": {
+            "FIZZBUZ": 1,
+            "PICTURE": 1,
+            "FACTOR": 1
           }
         },
         {
           "coordinate": "PLI2.OVL+6FA0",
           "counts_by_run": {
-            "MINIMAL": 1
+            "MINIMAL": 1,
+            "FIZZBUZ": 3,
+            "OPTIMIST": 2
           }
         },
         {
           "coordinate": "PLI2.OVL+6FFA",
           "counts_by_run": {
-            "MINIMAL": 1
+            "MINIMAL": 1,
+            "FIZZBUZ": 4,
+            "FACTOR": 1,
+            "OPTIMIST": 2
           }
         }
       ],
@@ -6098,13 +6334,16 @@
         }
       ],
       "overlapping_entries": [],
-      "contract_scope": "own low-level operation; opaque callees explicitly delegated",
-      "contract": "C saved at entry_SP-12; AD0B..AD14 (10 bytes) saved at entry_SP-11..-2, AD0A at entry_SP-1. Handler continuation is runtime 42B4H. All 11 MINIMAL calls restore those 11 bytes and return via +20EA on the original CALL slot; A=old AD0A, BC=entry_SP-1, DE=AD15H, HL=entry_SP. Other scratch AD1A..AD20 and handler effects are not restored.",
+      "contract_scope": "Observed gateway-own state and concrete continuation mechanics; only203E..2046 gains UNDERSTOOD status. Opaque predicates/handlers and trace-set branches are not closed.",
+      "contract": "Gateway-own observations: reserve twelve bytes; save C atS-12, AD0B..AD14 atS-11..S-2 and AD0A atS-1. Canonical047D consumes saved C; returned A selects descriptor/handler pointers. Candidate1DFF returned A.bit0 drives RAR; success publishes AD1A=0 then AD1B=1 with flags preserved, followed by shared descriptor skip. Fallback selects low3 bits of byte[1B4B+k], then publishes fallback pointer+1 and actual1DFF result. PUSH42B4/PCHL invokes selected opaque handler. Trace-clear own restore reads saved state, finalA=oldAD0A, BC=S-1, DE=AD15, HL=S, RET original CALL, SP=S+2. Full descriptor and handler semantics remain delegated/unclosed; no executable native parent contract.",
       "semantic_hypothesis": "reentrant table/record gateway",
-      "pseudocode": "save C and 11 state bytes; select record/handler via tables; scan/fallback with +1DFF; PUSH 42B4; PCHL handler; restore 11 state bytes; RET original frame",
+      "pseudocode": "Save twelve-byte local state; canonical047D selects descriptor/handler tables; scan actual1DFF results, publishing success or selecting fallback; PUSH42B4/PCHL actual handler; trace-clear restore and original hardware RET. Unresolved child semantics remain explicit.",
       "evidence_refs": [
         "evidence.json#seeds/PLI2.OVL+1FB5",
-        "../minimal-baseline/pass-1/regions.json#PLI2.OVL+1FB5"
+        "../minimal-baseline/pass-1/regions.json#PLI2.OVL+1FB5",
+        "../host-compiler/pass-71/natural-inventory.json",
+        "../host-compiler/pass-71/frames.json",
+        "../host-compiler/pass-71/fragment-proof.json"
       ],
       "blocks": [
         {
@@ -6140,7 +6379,7 @@
         {
           "offset": 8262,
           "pseudocode": [
-            "observed failure: skip by record byte"
+            "Both success and failure use the fresh descriptor record byte as the skip amount; loop back to remaining count."
           ]
         },
         {
@@ -6177,6 +6416,12 @@
           "offset": 8413,
           "pseudocode": [
             "restore dispatch byte; discard local frame; RET original CALL word"
+          ]
+        },
+        {
+          "offset": 8254,
+          "pseudocode": [
+            "OBSERVED candidate success: AD1A=0 then AD1B=1; all flags preserved; shared skip follows."
           ]
         }
       ],
@@ -6321,7 +6566,11 @@
         "20E5": "HL = 000CH",
         "20E8": "HL = (HL + SP) & FFFF; only CY changes",
         "20E9": "SP = original entry SP; discard the 12-byte local frame",
-        "20EA": "PC = word[SP]; SP += 2; use the convention in procedure header"
+        "20EA": "PC = word[SP]; SP += 2; use the convention in procedure header",
+        "203E": "HL = AD1AH; flags preserved",
+        "2041": "byte[candidates_remaining (AD1AH)] = 00H; same-valued writes retained; flags preserved",
+        "2043": "HL = (HL+1)&FFFF; flags preserved",
+        "2044": "byte[candidate_success_byte (AD1BH)] = 01H; flags preserved"
       }
     },
     {

@@ -245,3 +245,15 @@
  (name indexed_policy_frontend_proof)
  (modules indexed_policy_frontend_proof)
  (libraries pli80 i8080 cpm unix))
+
+(executable
+ (name gateway_decomposition_capture)
+ (libraries pli80 analysis runner unix))
+
+(executable
+ (name gateway_decomposition_components)
+ (libraries pli80 analysis runner unix))
+
+(executable
+ (name gateway_fragment_proof)
+ (libraries i8080))
