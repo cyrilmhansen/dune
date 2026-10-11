@@ -72,12 +72,12 @@ let shadow ?(offset=0x1272) ?(within=[]) ?(run_negatives=true) ?(pli2=false) inp
  let on_bdos_record ~step_index:_=function Cpm.Bdos.Write_record q->records:=(q.file.name,q.logical_record,Bytes.copy q.data)::!records;(if !active<>None then root_records:=(q.file.name,q.logical_record,Bytes.copy q.data)::!root_records)|_->()in
  let on_guest_step ~step_index ~before ~after step=
   previous:=Some{Native_dispatch.origin= !origin;before;after;step};
-  if offset=0x6ea5&&before.Runner.pc>=0x42ac&&before.pc<=0x42b3 then(
+  if (offset=0x6ea5||offset=0x3e36)&&before.Runner.pc>=0x42ac&&before.pc<=0x42b3 then(
    let writes=List.filter_map(function I8080.Step.Write w->Some(Printf.sprintf"[%d,%d]"w.address w.value)|_->None)(I8080.Step.memory_accesses step)in
    generation_gateway_witnesses:=Printf.sprintf"{\"source\":%S,\"pc\":%d,\"SP_before\":%d,\"SP_after\":%d,\"HL_before\":%d,\"PC_after\":%d,\"writes\":[%s]}"input.module_name before.pc before.sp after.sp(before.h*256+before.l)after.pc(String.concat","writes)::!generation_gateway_witnesses
   );
   match !active with None->()|Some(_,_,_,_,_,_,_,_,writes,latest,calls)->
-   if List.mem offset[0x3d10;0x3bfb;0x3660;0x3790;0x7c22;0x7cb4;0x7c0e;0x7ca0;0x7b02;0x78e9;0x7897;0x785c;0x77cc;0x8342;0x83dc;0x6ea5;0x8072;0x7ed6;0x7d47;0x7d85;0x8398;0x83b4;0x83d2]then(
+   if List.mem offset[0x3e36;0x7bcc;0x7bb2;0x73ca;0x3d10;0x3bfb;0x3660;0x3790;0x7c22;0x7cb4;0x7c0e;0x7ca0;0x7b02;0x78e9;0x7897;0x785c;0x77cc;0x8342;0x83dc;0x6ea5;0x8072;0x7ed6;0x7d47;0x7d85;0x8398;0x83b4;0x83d2]then(
     let lo,hi=B.bounds(output_operation offset)in let off=before.pc-0x2200 in
     if off>=lo&&off<hi then(
      let raw=I8080.Step.fetched_bytes step in let hex=String.concat""(List.init(Bytes.length raw)(fun i->Printf.sprintf"%02X"(Char.code(Bytes.get raw i))))in
@@ -129,8 +129,9 @@ let shadow ?(offset=0x1272) ?(within=[]) ?(run_negatives=true) ?(pli2=false) inp
    rejects(fun()->prepare bridge offset ~call ~origin:o{boundary with state={state with sp=0x20b6}});
    rejects(fun()->prepare bridge offset ~call ~origin:o(altered[state.pc,0]));
    rejects(fun()->prepare bridge offset ~call ~origin:o(altered[state.sp,(Char.code(Bytes.get ram state.sp) lxor 1)]));
-   if not(List.mem offset[0x6ea5;0x8072;0x7ed6;0x7338;0x7423;0x742a;0x79a2;0x7314;0x7365;0x7397;0x73a7;0x7ac4;0x7ad4;0x7ae4;0x79e2;0x7a17;0x73d0;0x7550;0x753c;0x746f;0x74c7;0x7510])then List.iter(fun edits->rejects(fun()->prepare bridge offset ~call ~origin:o(altered edits)))[[0x2029,1];[0x1d8a,128];[0x1d8b,8];[0x2155,0x0a;0x2156,0x1d]];
-   if List.mem offset[0x79e2;0x7a17]then rejects(fun()->prepare bridge offset ~call ~origin:o(altered[(if offset=0x79e2 then 0xae05 else 0xae04),(if offset=0x79e2 then 1 else 2)]));
+   if not(List.mem offset[0x1dff;0x0992;0x04a9;0x6ea5;0x8072;0x7ed6;0x7338;0x7423;0x742a;0x79a2;0x7314;0x7365;0x7397;0x73a7;0x7ac4;0x7ad4;0x7ae4;0x79e2;0x7a17;0x73d0;0x7550;0x753c;0x746f;0x74c7;0x7510])then List.iter(fun edits->rejects(fun()->prepare bridge offset ~call ~origin:o(altered edits)))[[0x2029,1];[0x1d8a,128];[0x1d8b,8];[0x2155,0x0a;0x2156,0x1d]];
+   if offset=0x79e2 then rejects(fun()->prepare bridge offset ~call ~origin:o(altered[0xae05,1]));
+   if offset=0x7a17 then rejects(fun()->prepare bridge offset ~call ~origin:o(altered[0x9c17,0]));
    if offset=0x3d10 then(
     let byte a=Char.code(Bytes.get ram a)in
     let j a=byte(0xaab0+byte a)in
@@ -158,6 +159,56 @@ let shadow ?(offset=0x1272) ?(within=[]) ?(run_negatives=true) ?(pli2=false) inp
      ignore(synthetic_carrier_cpu ~checkpoint_range:(0x100,0xa600) ~label:(Printf.sprintf"3D10_structure_kind%d"kind)bd.state(bd.copy_memory())plan expected)
     )[8;9;0x1f]
    );
+   if pli2&&offset=0x1dff then(
+    List.iter(fun edits->rejects(fun()->prepare bridge offset ~call ~origin:o(altered edits)))[[0xad1c,24];[0xad1d,0];[0xad1d,0xc7;0xad1e,0x57;0x57c8,6];[0xad1d,0xf3;0xad1e,0x3b;0x3bf4,0xfc];[0x2155,0x21;0x2156,0xad]];
+    let forced=altered[0xad1d,0xc9;0xad1e,0x57;0xaab0+((state.c-1)land 255),200;0xa609+200,0x69]in
+    rejects(fun()->prepare bridge offset ~call ~origin:o forced);
+    List.iter(fun(cursor,token_class,pointer,walk)->
+     let positions=List.init 3(fun i->(cursor-1-i)land 255)in
+     let edits=[0xad1c,23;0xad1d,pointer land 255;0xad1e,pointer lsr 8;0xad23,0x71]@
+       List.init 5(fun i->0xad15+i,0x80+i)@
+       List.concat(List.mapi(fun i pos->[0xaab0+pos,200+i;0xa609+200+i,token_class;0xa6cf+200+i,(if walk&&i<2 then 1 else 0)])positions)in
+     let bd=altered edits in let bd={bd with Runner.state={bd.state with c=cursor}}in
+     let plan=prepare bridge offset ~call ~origin:o bd in
+     let expected=match bd.preview_host_program plan.program with Ok r->r.memory|Error e->failwith e in
+     ignore(synthetic_carrier_cpu ~checkpoint_range:(0x100,0xa600) ~label:(Printf.sprintf"1DFF_k23_cursor%d_class%d_pointer%04X_walk%b"cursor token_class pointer walk)bd.state(bd.copy_memory())plan expected)
+    )[0,5,0x57c7,false;17,10,0x57c7,false;255,5,0x57c7,false;17,5,0x57c9,false;17,0,0x3bf3,false;17,0,0x3bf3,true];
+    let endless=altered([0xad1d,0xf3;0xad1e,0x3b;0xa6cf+200,1]@List.init 256(fun i->0xaab0+i,200))in
+    rejects(fun()->prepare bridge offset ~call ~origin:o endless);
+    require(boundary.copy_memory()=ram&&boundary.dma=dma&&Cpm.Filesystem.equal(boundary.copy_filesystem())files)"k23 rejected/accepted preparation does not mutate live state"
+   );
+   if offset=0x3e36 then(
+    let byte a=Char.code(Bytes.get ram a)in
+    List.iter(fun address->rejects(fun()->prepare bridge offset ~call ~origin:o(altered[address,byte address lxor 1])))[0x42af;0x42b3;0x6036;0x272c;0x9dcc;0x95ca];
+    rejects(fun()->prepare bridge offset ~call ~origin:o(altered[0xad0a,2]));
+    rejects(fun()->prepare bridge offset ~call ~origin:o(altered[0xad0a,0;0xa609+byte(0xaab0+byte 0xad0c),5]));
+    rejects(fun()->prepare bridge offset ~call ~origin:o(altered[0x2155,0x58;0x2156,0xad]));
+    let pos=byte 0xad0c in let index=byte(0xaab0+pos)in
+    rejects(fun()->prepare bridge offset ~call ~origin:o(altered[0xad0a,1;0xad08,0;0xa9e7+byte(0xaab0+byte 0xad0b),8;0xa7f8+index,(state.sp-2)land 255;0xa795+index,(state.sp-2)lsr 8]));
+    rejects(fun()->prepare bridge offset ~call ~origin:o(altered[0xad0a,1;0xad08,1]));
+
+    List.iter(fun selector->List.iter(fun low->List.iter(fun carry->
+     let edits=[0xad0a,selector;0xad0c,30;0xad0d,0xf1;0xad59,0xe2;0xadf3,0x80;0xadf4,0xae;0xae82,0x17;0xae83,0x4c;0xae86,3;0xae87,0;0xadef,0;0xadf0,0;0x201d,0;0xaab0+30,200;0xa609+200,10;0xa7f8+200,low;0xa795+200,(if selector=1 then 0xaf else 2);0xaf00+low+2,0x17;0xaf00+low+3,0x4c;0xaf00+low+6,3;0xaf00+low+7,0;0xad08,0;0x202b,0;0xadaa,0;0x1d8a,0;0x1d8b,0]in
+     let bd=altered edits in let bd={bd with Runner.state={bd.state with carry}}in
+     (* Selector1 requires the clear actual3660 bit; choose its mapped predicate. *)
+     let bd=if selector=1 then altered(edits@[0xad08,0;0xa9e7+byte(0xaab0+byte 0xad0b),8])else bd in
+     let bd={bd with Runner.state={bd.state with carry}}in
+     let plan=prepare bridge offset ~call ~origin:o bd in
+     let expected=match bd.preview_host_program plan.program with Ok r->r.memory|Error e->failwith e in
+     ignore(synthetic_carrier_cpu ~checkpoint_range:(0x100,0xa600) ~label:(Printf.sprintf"3E36_selector%d_low%d_CY%b"selector low carry)bd.state(bd.copy_memory())plan expected)
+    )[false;true])[0;1;7;127])[0;1]
+   );
+   if offset=0x3e36 then(
+    let byte a=Char.code(Bytes.get ram a)in
+    List.iter(fun(selector,pending,second,gate)->
+     let low=0x80 and high=0xaf in
+     let edits=[0xad0a,selector;0xad0c,30;0xaab0+30,200;0xa609+200,10;0xa7f8+200,low;0xa795+200,high;0xaf82,0x17;0xaf83,0x4c;0xaf86,3;0xaf87,0;0xadef,0;0xadf0,0;0x201d,0;0xad08,gate;0xa9e7+byte(0xaab0+byte 0xad0b),8;0xae04,pending;0xae05,second;0xae06,9;0x202b,0;0xadaa,0;0x1d8a,0;0x1d8b,0]in
+     let bd=altered edits in let plan=prepare bridge offset ~call ~origin:o bd in
+     let expected=match bd.preview_host_program plan.program with Ok r->r.memory|Error e->failwith e in
+     ignore(synthetic_carrier_cpu ~checkpoint_range:(0x100,0xa600) ~label:(Printf.sprintf"3E36_selector%d_pending%d_E%d_gate%d"selector pending second gate)bd.state(bd.copy_memory())plan expected)
+    )[0,0,0,0;1,0,0,0;1,1,0,0;1,1,2,0;1,2,0,0;1,255,2,0]
+   );
+   if offset=0x3e36 then require(boundary.copy_memory()=ram&&boundary.dma=dma&&Cpm.Filesystem.equal(boundary.copy_filesystem())files)"3E36 complete staging leaves live state unchanged";
    if offset=0x6ea5 then(
     List.iter(fun address->rejects(fun()->prepare bridge offset ~call ~origin:o(altered[address,Char.code(Bytes.get ram address)lxor 1])))[0x42af;0x42b3;0x90a5;0x272c;0xa272;0xa0d6;0xa448];
     rejects(fun()->prepare bridge offset ~call ~origin:o(altered[0x2155,0xa2;0x2156,0xad]));
@@ -196,7 +247,7 @@ let shadow ?(offset=0x1272) ?(within=[]) ?(run_negatives=true) ?(pli2=false) inp
     let bad=altered[0x202b,0;0xadaa,0]in rejects(fun()->prepare bridge offset ~call ~origin:o{bad with Runner.state={bad.state with c=7}});
     let late=altered[0x202b,0;0xadaa,0;0x1c2c,255;0x1c2d,255;0xae04,0]in
     rejects(fun()->prepare bridge offset ~call ~origin:o{late with Runner.state={late.state with c=4}});
-    let bad_pending=altered[0xae04,2]in rejects(fun()->prepare bridge offset ~call ~origin:o{bad_pending with Runner.state={bad_pending.state with c=4}});
+    let bad_pending=altered[0x9c17,0]in rejects(fun()->prepare bridge offset ~call ~origin:o{bad_pending with Runner.state={bad_pending.state with c=4}});
     let setups=["fallback_C0",0,0,0,17,99,0,[];"fallback_C4",0,0,4,17,99,0,[];
      "fallback_C5",0,0,5,0x83,0x2a,0,[];"reserved_C6",0,1,6,17,99,0,[];
      "gate202B",1,1,2,17,99,0,[];"scan_failed",0,1,2,17,99,0,[];
@@ -408,7 +459,7 @@ let shadow ?(offset=0x1272) ?(within=[]) ?(run_negatives=true) ?(pli2=false) inp
    if offset=0x7ae4 then(
     List.iter(fun selector->let bad={boundary with state={state with c=selector}}in
      if selector=7 then rejects(fun()->prepare bridge offset ~call ~origin:o{bad with copy_memory=(fun()->let b=Bytes.copy ram in Bytes.set b 0xae05 '\001';b)})
-     else rejects(fun()->prepare bridge offset ~call ~origin:o{bad with copy_memory=(fun()->let b=Bytes.copy ram in Bytes.set b 0xae04 '\002';b)}))[7;4;5];
+     else rejects(fun()->prepare bridge offset ~call ~origin:o{bad with copy_memory=(fun()->let b=Bytes.copy ram in Bytes.set b 0x9c17 '\000';b)}))[7;4;5];
     List.iter(fun(selector,pending,count)->
      let staged=altered[0xae04,pending;0xae05,0;0xae06,count;0xae0a,0xee;0x1d8a,127;0x1d8b,7]in
      let staged={staged with state={state with c=selector}}in

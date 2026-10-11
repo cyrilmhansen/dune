@@ -1,0 +1,5526 @@
+[
+  {
+    "PCHL": {
+      "accesses": [],
+      "after": {
+        "AC": true,
+        "CY": false,
+        "P": true,
+        "S": false,
+        "Z": true,
+        "a": 0,
+        "b": 0,
+        "c": 0,
+        "d": 0,
+        "e": 1,
+        "h": 96,
+        "l": 54,
+        "pc": 24630,
+        "sp": 65464
+      },
+      "before": {
+        "AC": true,
+        "CY": false,
+        "P": true,
+        "S": false,
+        "Z": true,
+        "a": 0,
+        "b": 0,
+        "c": 0,
+        "d": 0,
+        "e": 1,
+        "h": 96,
+        "l": 54,
+        "pc": 17075,
+        "sp": 65464
+      },
+      "bytes": "E9",
+      "decoded": "PCHL",
+      "id": 6,
+      "image": "PLI2.OVL",
+      "kind": "jump",
+      "offset": 8371,
+      "step": 360259,
+      "taken": true,
+      "target": 24630
+    },
+    "RET": {
+      "accesses": [
+        {
+          "address": 65464,
+          "kind": "read",
+          "value": 180
+        },
+        {
+          "address": 65465,
+          "kind": "read",
+          "value": 66
+        }
+      ],
+      "after": {
+        "AC": false,
+        "CY": false,
+        "P": true,
+        "S": true,
+        "Z": false,
+        "a": 255,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 0,
+        "h": 255,
+        "l": 239,
+        "pc": 17076,
+        "sp": 65466
+      },
+      "before": {
+        "AC": false,
+        "CY": false,
+        "P": true,
+        "S": true,
+        "Z": false,
+        "a": 255,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 0,
+        "h": 255,
+        "l": 239,
+        "pc": 24821,
+        "sp": 65464
+      },
+      "bytes": "C9",
+      "decoded": "RET",
+      "id": 6,
+      "image": "PLI2.OVL",
+      "kind": "return",
+      "offset": 16117,
+      "step": 361271,
+      "taken": true,
+      "target": 17076
+    },
+    "child_CALL_words": [
+      {
+        "ret_reads": [
+          {
+            "address": 65462,
+            "value": 69
+          },
+          {
+            "address": 65463,
+            "value": 96
+          }
+        ],
+        "site": 24642,
+        "slot": 65462,
+        "writes": [
+          {
+            "address": 65463,
+            "new_value": 96
+          },
+          {
+            "address": 65462,
+            "new_value": 69
+          }
+        ]
+      },
+      {
+        "ret_reads": [
+          {
+            "address": 65462,
+            "value": 77
+          },
+          {
+            "address": 65463,
+            "value": 96
+          }
+        ],
+        "site": 24650,
+        "slot": 65462,
+        "writes": [
+          {
+            "address": 65463,
+            "new_value": 96
+          },
+          {
+            "address": 65462,
+            "new_value": 77
+          }
+        ]
+      },
+      {
+        "ret_reads": [
+          {
+            "address": 65462,
+            "value": 88
+          },
+          {
+            "address": 65463,
+            "value": 96
+          }
+        ],
+        "site": 24661,
+        "slot": 65462,
+        "writes": [
+          {
+            "address": 65463,
+            "new_value": 96
+          },
+          {
+            "address": 65462,
+            "new_value": 88
+          }
+        ]
+      },
+      {
+        "ret_reads": [
+          {
+            "address": 65462,
+            "value": 110
+          },
+          {
+            "address": 65463,
+            "value": 96
+          }
+        ],
+        "site": 24683,
+        "slot": 65462,
+        "writes": [
+          {
+            "address": 65463,
+            "new_value": 96
+          },
+          {
+            "address": 65462,
+            "new_value": 110
+          }
+        ]
+      },
+      {
+        "ret_reads": [
+          {
+            "address": 65462,
+            "value": 116
+          },
+          {
+            "address": 65463,
+            "value": 96
+          }
+        ],
+        "site": 24689,
+        "slot": 65462,
+        "writes": [
+          {
+            "address": 65463,
+            "new_value": 96
+          },
+          {
+            "address": 65462,
+            "new_value": 116
+          }
+        ]
+      }
+    ],
+    "continuation": 17076,
+    "gateway_id": 6,
+    "slot": 65464,
+    "software_word_last_writers": [
+      {
+        "image": "PLI2.OVL",
+        "offset": 8367,
+        "step": 360257,
+        "value": 180
+      },
+      {
+        "image": "PLI2.OVL",
+        "offset": 8367,
+        "step": 360257,
+        "value": 66
+      }
+    ],
+    "source": "MINIMAL"
+  },
+  {
+    "PCHL": {
+      "accesses": [],
+      "after": {
+        "AC": true,
+        "CY": false,
+        "P": true,
+        "S": false,
+        "Z": true,
+        "a": 0,
+        "b": 0,
+        "c": 9,
+        "d": 0,
+        "e": 1,
+        "h": 96,
+        "l": 54,
+        "pc": 24630,
+        "sp": 65440
+      },
+      "before": {
+        "AC": true,
+        "CY": false,
+        "P": true,
+        "S": false,
+        "Z": true,
+        "a": 0,
+        "b": 0,
+        "c": 9,
+        "d": 0,
+        "e": 1,
+        "h": 96,
+        "l": 54,
+        "pc": 17075,
+        "sp": 65440
+      },
+      "bytes": "E9",
+      "decoded": "PCHL",
+      "id": 8,
+      "image": "PLI2.OVL",
+      "kind": "jump",
+      "offset": 8371,
+      "step": 745596,
+      "taken": true,
+      "target": 24630
+    },
+    "RET": {
+      "accesses": [
+        {
+          "address": 65440,
+          "kind": "read",
+          "value": 180
+        },
+        {
+          "address": 65441,
+          "kind": "read",
+          "value": 66
+        }
+      ],
+      "after": {
+        "AC": false,
+        "CY": false,
+        "P": true,
+        "S": true,
+        "Z": false,
+        "a": 0,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 0,
+        "h": 0,
+        "l": 0,
+        "pc": 17076,
+        "sp": 65442
+      },
+      "before": {
+        "AC": false,
+        "CY": false,
+        "P": true,
+        "S": true,
+        "Z": false,
+        "a": 0,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 0,
+        "h": 0,
+        "l": 0,
+        "pc": 24821,
+        "sp": 65440
+      },
+      "bytes": "C9",
+      "decoded": "RET",
+      "id": 8,
+      "image": "PLI2.OVL",
+      "kind": "return",
+      "offset": 16117,
+      "step": 747171,
+      "taken": true,
+      "target": 17076
+    },
+    "child_CALL_words": [
+      {
+        "ret_reads": [
+          {
+            "address": 65438,
+            "value": 224
+          },
+          {
+            "address": 65439,
+            "value": 96
+          }
+        ],
+        "site": 24797,
+        "slot": 65438,
+        "writes": [
+          {
+            "address": 65439,
+            "new_value": 96
+          },
+          {
+            "address": 65438,
+            "new_value": 224
+          }
+        ]
+      },
+      {
+        "ret_reads": [
+          {
+            "address": 65438,
+            "value": 245
+          },
+          {
+            "address": 65439,
+            "value": 96
+          }
+        ],
+        "site": 24818,
+        "slot": 65438,
+        "writes": [
+          {
+            "address": 65439,
+            "new_value": 96
+          },
+          {
+            "address": 65438,
+            "new_value": 245
+          }
+        ]
+      }
+    ],
+    "continuation": 17076,
+    "gateway_id": 8,
+    "slot": 65440,
+    "software_word_last_writers": [
+      {
+        "image": "PLI2.OVL",
+        "offset": 8367,
+        "step": 745594,
+        "value": 180
+      },
+      {
+        "image": "PLI2.OVL",
+        "offset": 8367,
+        "step": 745594,
+        "value": 66
+      }
+    ],
+    "source": "FIZZBUZ"
+  },
+  {
+    "PCHL": {
+      "accesses": [],
+      "after": {
+        "AC": true,
+        "CY": false,
+        "P": true,
+        "S": false,
+        "Z": true,
+        "a": 0,
+        "b": 0,
+        "c": 16,
+        "d": 0,
+        "e": 1,
+        "h": 96,
+        "l": 54,
+        "pc": 24630,
+        "sp": 65396
+      },
+      "before": {
+        "AC": true,
+        "CY": false,
+        "P": true,
+        "S": false,
+        "Z": true,
+        "a": 0,
+        "b": 0,
+        "c": 16,
+        "d": 0,
+        "e": 1,
+        "h": 96,
+        "l": 54,
+        "pc": 17075,
+        "sp": 65396
+      },
+      "bytes": "E9",
+      "decoded": "PCHL",
+      "id": 13,
+      "image": "PLI2.OVL",
+      "kind": "jump",
+      "offset": 8371,
+      "step": 754535,
+      "taken": true,
+      "target": 24630
+    },
+    "RET": {
+      "accesses": [
+        {
+          "address": 65396,
+          "kind": "read",
+          "value": 180
+        },
+        {
+          "address": 65397,
+          "kind": "read",
+          "value": 66
+        }
+      ],
+      "after": {
+        "AC": false,
+        "CY": false,
+        "P": true,
+        "S": true,
+        "Z": false,
+        "a": 0,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 0,
+        "h": 0,
+        "l": 0,
+        "pc": 17076,
+        "sp": 65398
+      },
+      "before": {
+        "AC": false,
+        "CY": false,
+        "P": true,
+        "S": true,
+        "Z": false,
+        "a": 0,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 0,
+        "h": 0,
+        "l": 0,
+        "pc": 24821,
+        "sp": 65396
+      },
+      "bytes": "C9",
+      "decoded": "RET",
+      "id": 13,
+      "image": "PLI2.OVL",
+      "kind": "return",
+      "offset": 16117,
+      "step": 756115,
+      "taken": true,
+      "target": 17076
+    },
+    "child_CALL_words": [
+      {
+        "ret_reads": [
+          {
+            "address": 65394,
+            "value": 224
+          },
+          {
+            "address": 65395,
+            "value": 96
+          }
+        ],
+        "site": 24797,
+        "slot": 65394,
+        "writes": [
+          {
+            "address": 65395,
+            "new_value": 96
+          },
+          {
+            "address": 65394,
+            "new_value": 224
+          }
+        ]
+      },
+      {
+        "ret_reads": [
+          {
+            "address": 65394,
+            "value": 245
+          },
+          {
+            "address": 65395,
+            "value": 96
+          }
+        ],
+        "site": 24818,
+        "slot": 65394,
+        "writes": [
+          {
+            "address": 65395,
+            "new_value": 96
+          },
+          {
+            "address": 65394,
+            "new_value": 245
+          }
+        ]
+      }
+    ],
+    "continuation": 17076,
+    "gateway_id": 13,
+    "slot": 65396,
+    "software_word_last_writers": [
+      {
+        "image": "PLI2.OVL",
+        "offset": 8367,
+        "step": 754533,
+        "value": 180
+      },
+      {
+        "image": "PLI2.OVL",
+        "offset": 8367,
+        "step": 754533,
+        "value": 66
+      }
+    ],
+    "source": "FIZZBUZ"
+  },
+  {
+    "PCHL": {
+      "accesses": [],
+      "after": {
+        "AC": true,
+        "CY": false,
+        "P": true,
+        "S": false,
+        "Z": true,
+        "a": 0,
+        "b": 0,
+        "c": 0,
+        "d": 0,
+        "e": 1,
+        "h": 96,
+        "l": 54,
+        "pc": 24630,
+        "sp": 65396
+      },
+      "before": {
+        "AC": true,
+        "CY": false,
+        "P": true,
+        "S": false,
+        "Z": true,
+        "a": 0,
+        "b": 0,
+        "c": 0,
+        "d": 0,
+        "e": 1,
+        "h": 96,
+        "l": 54,
+        "pc": 17075,
+        "sp": 65396
+      },
+      "bytes": "E9",
+      "decoded": "PCHL",
+      "id": 14,
+      "image": "PLI2.OVL",
+      "kind": "jump",
+      "offset": 8371,
+      "step": 756702,
+      "taken": true,
+      "target": 24630
+    },
+    "RET": {
+      "accesses": [
+        {
+          "address": 65396,
+          "kind": "read",
+          "value": 180
+        },
+        {
+          "address": 65397,
+          "kind": "read",
+          "value": 66
+        }
+      ],
+      "after": {
+        "AC": false,
+        "CY": false,
+        "P": true,
+        "S": true,
+        "Z": false,
+        "a": 255,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 0,
+        "h": 255,
+        "l": 227,
+        "pc": 17076,
+        "sp": 65398
+      },
+      "before": {
+        "AC": false,
+        "CY": false,
+        "P": true,
+        "S": true,
+        "Z": false,
+        "a": 255,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 0,
+        "h": 255,
+        "l": 227,
+        "pc": 24821,
+        "sp": 65396
+      },
+      "bytes": "C9",
+      "decoded": "RET",
+      "id": 14,
+      "image": "PLI2.OVL",
+      "kind": "return",
+      "offset": 16117,
+      "step": 757714,
+      "taken": true,
+      "target": 17076
+    },
+    "child_CALL_words": [
+      {
+        "ret_reads": [
+          {
+            "address": 65394,
+            "value": 69
+          },
+          {
+            "address": 65395,
+            "value": 96
+          }
+        ],
+        "site": 24642,
+        "slot": 65394,
+        "writes": [
+          {
+            "address": 65395,
+            "new_value": 96
+          },
+          {
+            "address": 65394,
+            "new_value": 69
+          }
+        ]
+      },
+      {
+        "ret_reads": [
+          {
+            "address": 65394,
+            "value": 77
+          },
+          {
+            "address": 65395,
+            "value": 96
+          }
+        ],
+        "site": 24650,
+        "slot": 65394,
+        "writes": [
+          {
+            "address": 65395,
+            "new_value": 96
+          },
+          {
+            "address": 65394,
+            "new_value": 77
+          }
+        ]
+      },
+      {
+        "ret_reads": [
+          {
+            "address": 65394,
+            "value": 88
+          },
+          {
+            "address": 65395,
+            "value": 96
+          }
+        ],
+        "site": 24661,
+        "slot": 65394,
+        "writes": [
+          {
+            "address": 65395,
+            "new_value": 96
+          },
+          {
+            "address": 65394,
+            "new_value": 88
+          }
+        ]
+      },
+      {
+        "ret_reads": [
+          {
+            "address": 65394,
+            "value": 110
+          },
+          {
+            "address": 65395,
+            "value": 96
+          }
+        ],
+        "site": 24683,
+        "slot": 65394,
+        "writes": [
+          {
+            "address": 65395,
+            "new_value": 96
+          },
+          {
+            "address": 65394,
+            "new_value": 110
+          }
+        ]
+      },
+      {
+        "ret_reads": [
+          {
+            "address": 65394,
+            "value": 116
+          },
+          {
+            "address": 65395,
+            "value": 96
+          }
+        ],
+        "site": 24689,
+        "slot": 65394,
+        "writes": [
+          {
+            "address": 65395,
+            "new_value": 96
+          },
+          {
+            "address": 65394,
+            "new_value": 116
+          }
+        ]
+      }
+    ],
+    "continuation": 17076,
+    "gateway_id": 14,
+    "slot": 65396,
+    "software_word_last_writers": [
+      {
+        "image": "PLI2.OVL",
+        "offset": 8367,
+        "step": 756700,
+        "value": 180
+      },
+      {
+        "image": "PLI2.OVL",
+        "offset": 8367,
+        "step": 756700,
+        "value": 66
+      }
+    ],
+    "source": "FIZZBUZ"
+  },
+  {
+    "PCHL": {
+      "accesses": [],
+      "after": {
+        "AC": true,
+        "CY": false,
+        "P": true,
+        "S": false,
+        "Z": true,
+        "a": 0,
+        "b": 0,
+        "c": 0,
+        "d": 0,
+        "e": 1,
+        "h": 96,
+        "l": 54,
+        "pc": 24630,
+        "sp": 65414
+      },
+      "before": {
+        "AC": true,
+        "CY": false,
+        "P": true,
+        "S": false,
+        "Z": true,
+        "a": 0,
+        "b": 0,
+        "c": 0,
+        "d": 0,
+        "e": 1,
+        "h": 96,
+        "l": 54,
+        "pc": 17075,
+        "sp": 65414
+      },
+      "bytes": "E9",
+      "decoded": "PCHL",
+      "id": 18,
+      "image": "PLI2.OVL",
+      "kind": "jump",
+      "offset": 8371,
+      "step": 778318,
+      "taken": true,
+      "target": 24630
+    },
+    "RET": {
+      "accesses": [
+        {
+          "address": 65414,
+          "kind": "read",
+          "value": 180
+        },
+        {
+          "address": 65415,
+          "kind": "read",
+          "value": 66
+        }
+      ],
+      "after": {
+        "AC": false,
+        "CY": false,
+        "P": true,
+        "S": true,
+        "Z": false,
+        "a": 255,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 0,
+        "h": 255,
+        "l": 202,
+        "pc": 17076,
+        "sp": 65416
+      },
+      "before": {
+        "AC": false,
+        "CY": false,
+        "P": true,
+        "S": true,
+        "Z": false,
+        "a": 255,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 0,
+        "h": 255,
+        "l": 202,
+        "pc": 24821,
+        "sp": 65414
+      },
+      "bytes": "C9",
+      "decoded": "RET",
+      "id": 18,
+      "image": "PLI2.OVL",
+      "kind": "return",
+      "offset": 16117,
+      "step": 779330,
+      "taken": true,
+      "target": 17076
+    },
+    "child_CALL_words": [
+      {
+        "ret_reads": [
+          {
+            "address": 65412,
+            "value": 69
+          },
+          {
+            "address": 65413,
+            "value": 96
+          }
+        ],
+        "site": 24642,
+        "slot": 65412,
+        "writes": [
+          {
+            "address": 65413,
+            "new_value": 96
+          },
+          {
+            "address": 65412,
+            "new_value": 69
+          }
+        ]
+      },
+      {
+        "ret_reads": [
+          {
+            "address": 65412,
+            "value": 77
+          },
+          {
+            "address": 65413,
+            "value": 96
+          }
+        ],
+        "site": 24650,
+        "slot": 65412,
+        "writes": [
+          {
+            "address": 65413,
+            "new_value": 96
+          },
+          {
+            "address": 65412,
+            "new_value": 77
+          }
+        ]
+      },
+      {
+        "ret_reads": [
+          {
+            "address": 65412,
+            "value": 88
+          },
+          {
+            "address": 65413,
+            "value": 96
+          }
+        ],
+        "site": 24661,
+        "slot": 65412,
+        "writes": [
+          {
+            "address": 65413,
+            "new_value": 96
+          },
+          {
+            "address": 65412,
+            "new_value": 88
+          }
+        ]
+      },
+      {
+        "ret_reads": [
+          {
+            "address": 65412,
+            "value": 110
+          },
+          {
+            "address": 65413,
+            "value": 96
+          }
+        ],
+        "site": 24683,
+        "slot": 65412,
+        "writes": [
+          {
+            "address": 65413,
+            "new_value": 96
+          },
+          {
+            "address": 65412,
+            "new_value": 110
+          }
+        ]
+      },
+      {
+        "ret_reads": [
+          {
+            "address": 65412,
+            "value": 116
+          },
+          {
+            "address": 65413,
+            "value": 96
+          }
+        ],
+        "site": 24689,
+        "slot": 65412,
+        "writes": [
+          {
+            "address": 65413,
+            "new_value": 96
+          },
+          {
+            "address": 65412,
+            "new_value": 116
+          }
+        ]
+      }
+    ],
+    "continuation": 17076,
+    "gateway_id": 18,
+    "slot": 65414,
+    "software_word_last_writers": [
+      {
+        "image": "PLI2.OVL",
+        "offset": 8367,
+        "step": 778316,
+        "value": 180
+      },
+      {
+        "image": "PLI2.OVL",
+        "offset": 8367,
+        "step": 778316,
+        "value": 66
+      }
+    ],
+    "source": "FIZZBUZ"
+  },
+  {
+    "PCHL": {
+      "accesses": [],
+      "after": {
+        "AC": true,
+        "CY": false,
+        "P": true,
+        "S": false,
+        "Z": true,
+        "a": 0,
+        "b": 0,
+        "c": 38,
+        "d": 0,
+        "e": 1,
+        "h": 96,
+        "l": 54,
+        "pc": 24630,
+        "sp": 65372
+      },
+      "before": {
+        "AC": true,
+        "CY": false,
+        "P": true,
+        "S": false,
+        "Z": true,
+        "a": 0,
+        "b": 0,
+        "c": 38,
+        "d": 0,
+        "e": 1,
+        "h": 96,
+        "l": 54,
+        "pc": 17075,
+        "sp": 65372
+      },
+      "bytes": "E9",
+      "decoded": "PCHL",
+      "id": 27,
+      "image": "PLI2.OVL",
+      "kind": "jump",
+      "offset": 8371,
+      "step": 845153,
+      "taken": true,
+      "target": 24630
+    },
+    "RET": {
+      "accesses": [
+        {
+          "address": 65372,
+          "kind": "read",
+          "value": 180
+        },
+        {
+          "address": 65373,
+          "kind": "read",
+          "value": 66
+        }
+      ],
+      "after": {
+        "AC": false,
+        "CY": false,
+        "P": true,
+        "S": true,
+        "Z": false,
+        "a": 0,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 0,
+        "h": 0,
+        "l": 0,
+        "pc": 17076,
+        "sp": 65374
+      },
+      "before": {
+        "AC": false,
+        "CY": false,
+        "P": true,
+        "S": true,
+        "Z": false,
+        "a": 0,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 0,
+        "h": 0,
+        "l": 0,
+        "pc": 24821,
+        "sp": 65372
+      },
+      "bytes": "C9",
+      "decoded": "RET",
+      "id": 27,
+      "image": "PLI2.OVL",
+      "kind": "return",
+      "offset": 16117,
+      "step": 846728,
+      "taken": true,
+      "target": 17076
+    },
+    "child_CALL_words": [
+      {
+        "ret_reads": [
+          {
+            "address": 65370,
+            "value": 224
+          },
+          {
+            "address": 65371,
+            "value": 96
+          }
+        ],
+        "site": 24797,
+        "slot": 65370,
+        "writes": [
+          {
+            "address": 65371,
+            "new_value": 96
+          },
+          {
+            "address": 65370,
+            "new_value": 224
+          }
+        ]
+      },
+      {
+        "ret_reads": [
+          {
+            "address": 65370,
+            "value": 245
+          },
+          {
+            "address": 65371,
+            "value": 96
+          }
+        ],
+        "site": 24818,
+        "slot": 65370,
+        "writes": [
+          {
+            "address": 65371,
+            "new_value": 96
+          },
+          {
+            "address": 65370,
+            "new_value": 245
+          }
+        ]
+      }
+    ],
+    "continuation": 17076,
+    "gateway_id": 27,
+    "slot": 65372,
+    "software_word_last_writers": [
+      {
+        "image": "PLI2.OVL",
+        "offset": 8367,
+        "step": 845151,
+        "value": 180
+      },
+      {
+        "image": "PLI2.OVL",
+        "offset": 8367,
+        "step": 845151,
+        "value": 66
+      }
+    ],
+    "source": "FIZZBUZ"
+  },
+  {
+    "PCHL": {
+      "accesses": [],
+      "after": {
+        "AC": true,
+        "CY": false,
+        "P": true,
+        "S": false,
+        "Z": true,
+        "a": 0,
+        "b": 0,
+        "c": 0,
+        "d": 0,
+        "e": 1,
+        "h": 96,
+        "l": 54,
+        "pc": 24630,
+        "sp": 65372
+      },
+      "before": {
+        "AC": true,
+        "CY": false,
+        "P": true,
+        "S": false,
+        "Z": true,
+        "a": 0,
+        "b": 0,
+        "c": 0,
+        "d": 0,
+        "e": 1,
+        "h": 96,
+        "l": 54,
+        "pc": 17075,
+        "sp": 65372
+      },
+      "bytes": "E9",
+      "decoded": "PCHL",
+      "id": 28,
+      "image": "PLI2.OVL",
+      "kind": "jump",
+      "offset": 8371,
+      "step": 847315,
+      "taken": true,
+      "target": 24630
+    },
+    "RET": {
+      "accesses": [
+        {
+          "address": 65372,
+          "kind": "read",
+          "value": 180
+        },
+        {
+          "address": 65373,
+          "kind": "read",
+          "value": 66
+        }
+      ],
+      "after": {
+        "AC": false,
+        "CY": false,
+        "P": true,
+        "S": true,
+        "Z": false,
+        "a": 255,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 0,
+        "h": 255,
+        "l": 177,
+        "pc": 17076,
+        "sp": 65374
+      },
+      "before": {
+        "AC": false,
+        "CY": false,
+        "P": true,
+        "S": true,
+        "Z": false,
+        "a": 255,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 0,
+        "h": 255,
+        "l": 177,
+        "pc": 24821,
+        "sp": 65372
+      },
+      "bytes": "C9",
+      "decoded": "RET",
+      "id": 28,
+      "image": "PLI2.OVL",
+      "kind": "return",
+      "offset": 16117,
+      "step": 848332,
+      "taken": true,
+      "target": 17076
+    },
+    "child_CALL_words": [
+      {
+        "ret_reads": [
+          {
+            "address": 65370,
+            "value": 69
+          },
+          {
+            "address": 65371,
+            "value": 96
+          }
+        ],
+        "site": 24642,
+        "slot": 65370,
+        "writes": [
+          {
+            "address": 65371,
+            "new_value": 96
+          },
+          {
+            "address": 65370,
+            "new_value": 69
+          }
+        ]
+      },
+      {
+        "ret_reads": [
+          {
+            "address": 65370,
+            "value": 77
+          },
+          {
+            "address": 65371,
+            "value": 96
+          }
+        ],
+        "site": 24650,
+        "slot": 65370,
+        "writes": [
+          {
+            "address": 65371,
+            "new_value": 96
+          },
+          {
+            "address": 65370,
+            "new_value": 77
+          }
+        ]
+      },
+      {
+        "ret_reads": [
+          {
+            "address": 65370,
+            "value": 88
+          },
+          {
+            "address": 65371,
+            "value": 96
+          }
+        ],
+        "site": 24661,
+        "slot": 65370,
+        "writes": [
+          {
+            "address": 65371,
+            "new_value": 96
+          },
+          {
+            "address": 65370,
+            "new_value": 88
+          }
+        ]
+      },
+      {
+        "ret_reads": [
+          {
+            "address": 65370,
+            "value": 110
+          },
+          {
+            "address": 65371,
+            "value": 96
+          }
+        ],
+        "site": 24683,
+        "slot": 65370,
+        "writes": [
+          {
+            "address": 65371,
+            "new_value": 96
+          },
+          {
+            "address": 65370,
+            "new_value": 110
+          }
+        ]
+      },
+      {
+        "ret_reads": [
+          {
+            "address": 65370,
+            "value": 116
+          },
+          {
+            "address": 65371,
+            "value": 96
+          }
+        ],
+        "site": 24689,
+        "slot": 65370,
+        "writes": [
+          {
+            "address": 65371,
+            "new_value": 96
+          },
+          {
+            "address": 65370,
+            "new_value": 116
+          }
+        ]
+      }
+    ],
+    "continuation": 17076,
+    "gateway_id": 28,
+    "slot": 65372,
+    "software_word_last_writers": [
+      {
+        "image": "PLI2.OVL",
+        "offset": 8367,
+        "step": 847313,
+        "value": 180
+      },
+      {
+        "image": "PLI2.OVL",
+        "offset": 8367,
+        "step": 847313,
+        "value": 66
+      }
+    ],
+    "source": "FIZZBUZ"
+  },
+  {
+    "PCHL": {
+      "accesses": [],
+      "after": {
+        "AC": true,
+        "CY": false,
+        "P": true,
+        "S": false,
+        "Z": true,
+        "a": 0,
+        "b": 0,
+        "c": 0,
+        "d": 0,
+        "e": 1,
+        "h": 96,
+        "l": 54,
+        "pc": 24630,
+        "sp": 65390
+      },
+      "before": {
+        "AC": true,
+        "CY": false,
+        "P": true,
+        "S": false,
+        "Z": true,
+        "a": 0,
+        "b": 0,
+        "c": 0,
+        "d": 0,
+        "e": 1,
+        "h": 96,
+        "l": 54,
+        "pc": 17075,
+        "sp": 65390
+      },
+      "bytes": "E9",
+      "decoded": "PCHL",
+      "id": 32,
+      "image": "PLI2.OVL",
+      "kind": "jump",
+      "offset": 8371,
+      "step": 868936,
+      "taken": true,
+      "target": 24630
+    },
+    "RET": {
+      "accesses": [
+        {
+          "address": 65390,
+          "kind": "read",
+          "value": 180
+        },
+        {
+          "address": 65391,
+          "kind": "read",
+          "value": 66
+        }
+      ],
+      "after": {
+        "AC": false,
+        "CY": false,
+        "P": true,
+        "S": true,
+        "Z": false,
+        "a": 255,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 0,
+        "h": 255,
+        "l": 152,
+        "pc": 17076,
+        "sp": 65392
+      },
+      "before": {
+        "AC": false,
+        "CY": false,
+        "P": true,
+        "S": true,
+        "Z": false,
+        "a": 255,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 0,
+        "h": 255,
+        "l": 152,
+        "pc": 24821,
+        "sp": 65390
+      },
+      "bytes": "C9",
+      "decoded": "RET",
+      "id": 32,
+      "image": "PLI2.OVL",
+      "kind": "return",
+      "offset": 16117,
+      "step": 869948,
+      "taken": true,
+      "target": 17076
+    },
+    "child_CALL_words": [
+      {
+        "ret_reads": [
+          {
+            "address": 65388,
+            "value": 69
+          },
+          {
+            "address": 65389,
+            "value": 96
+          }
+        ],
+        "site": 24642,
+        "slot": 65388,
+        "writes": [
+          {
+            "address": 65389,
+            "new_value": 96
+          },
+          {
+            "address": 65388,
+            "new_value": 69
+          }
+        ]
+      },
+      {
+        "ret_reads": [
+          {
+            "address": 65388,
+            "value": 77
+          },
+          {
+            "address": 65389,
+            "value": 96
+          }
+        ],
+        "site": 24650,
+        "slot": 65388,
+        "writes": [
+          {
+            "address": 65389,
+            "new_value": 96
+          },
+          {
+            "address": 65388,
+            "new_value": 77
+          }
+        ]
+      },
+      {
+        "ret_reads": [
+          {
+            "address": 65388,
+            "value": 88
+          },
+          {
+            "address": 65389,
+            "value": 96
+          }
+        ],
+        "site": 24661,
+        "slot": 65388,
+        "writes": [
+          {
+            "address": 65389,
+            "new_value": 96
+          },
+          {
+            "address": 65388,
+            "new_value": 88
+          }
+        ]
+      },
+      {
+        "ret_reads": [
+          {
+            "address": 65388,
+            "value": 110
+          },
+          {
+            "address": 65389,
+            "value": 96
+          }
+        ],
+        "site": 24683,
+        "slot": 65388,
+        "writes": [
+          {
+            "address": 65389,
+            "new_value": 96
+          },
+          {
+            "address": 65388,
+            "new_value": 110
+          }
+        ]
+      },
+      {
+        "ret_reads": [
+          {
+            "address": 65388,
+            "value": 116
+          },
+          {
+            "address": 65389,
+            "value": 96
+          }
+        ],
+        "site": 24689,
+        "slot": 65388,
+        "writes": [
+          {
+            "address": 65389,
+            "new_value": 96
+          },
+          {
+            "address": 65388,
+            "new_value": 116
+          }
+        ]
+      }
+    ],
+    "continuation": 17076,
+    "gateway_id": 32,
+    "slot": 65390,
+    "software_word_last_writers": [
+      {
+        "image": "PLI2.OVL",
+        "offset": 8367,
+        "step": 868934,
+        "value": 180
+      },
+      {
+        "image": "PLI2.OVL",
+        "offset": 8367,
+        "step": 868934,
+        "value": 66
+      }
+    ],
+    "source": "FIZZBUZ"
+  },
+  {
+    "PCHL": {
+      "accesses": [],
+      "after": {
+        "AC": true,
+        "CY": false,
+        "P": true,
+        "S": false,
+        "Z": true,
+        "a": 0,
+        "b": 0,
+        "c": 60,
+        "d": 0,
+        "e": 1,
+        "h": 96,
+        "l": 54,
+        "pc": 24630,
+        "sp": 65348
+      },
+      "before": {
+        "AC": true,
+        "CY": false,
+        "P": true,
+        "S": false,
+        "Z": true,
+        "a": 0,
+        "b": 0,
+        "c": 60,
+        "d": 0,
+        "e": 1,
+        "h": 96,
+        "l": 54,
+        "pc": 17075,
+        "sp": 65348
+      },
+      "bytes": "E9",
+      "decoded": "PCHL",
+      "id": 41,
+      "image": "PLI2.OVL",
+      "kind": "jump",
+      "offset": 8371,
+      "step": 935691,
+      "taken": true,
+      "target": 24630
+    },
+    "RET": {
+      "accesses": [
+        {
+          "address": 65348,
+          "kind": "read",
+          "value": 180
+        },
+        {
+          "address": 65349,
+          "kind": "read",
+          "value": 66
+        }
+      ],
+      "after": {
+        "AC": false,
+        "CY": false,
+        "P": true,
+        "S": true,
+        "Z": false,
+        "a": 0,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 0,
+        "h": 0,
+        "l": 0,
+        "pc": 17076,
+        "sp": 65350
+      },
+      "before": {
+        "AC": false,
+        "CY": false,
+        "P": true,
+        "S": true,
+        "Z": false,
+        "a": 0,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 0,
+        "h": 0,
+        "l": 0,
+        "pc": 24821,
+        "sp": 65348
+      },
+      "bytes": "C9",
+      "decoded": "RET",
+      "id": 41,
+      "image": "PLI2.OVL",
+      "kind": "return",
+      "offset": 16117,
+      "step": 937266,
+      "taken": true,
+      "target": 17076
+    },
+    "child_CALL_words": [
+      {
+        "ret_reads": [
+          {
+            "address": 65346,
+            "value": 224
+          },
+          {
+            "address": 65347,
+            "value": 96
+          }
+        ],
+        "site": 24797,
+        "slot": 65346,
+        "writes": [
+          {
+            "address": 65347,
+            "new_value": 96
+          },
+          {
+            "address": 65346,
+            "new_value": 224
+          }
+        ]
+      },
+      {
+        "ret_reads": [
+          {
+            "address": 65346,
+            "value": 245
+          },
+          {
+            "address": 65347,
+            "value": 96
+          }
+        ],
+        "site": 24818,
+        "slot": 65346,
+        "writes": [
+          {
+            "address": 65347,
+            "new_value": 96
+          },
+          {
+            "address": 65346,
+            "new_value": 245
+          }
+        ]
+      }
+    ],
+    "continuation": 17076,
+    "gateway_id": 41,
+    "slot": 65348,
+    "software_word_last_writers": [
+      {
+        "image": "PLI2.OVL",
+        "offset": 8367,
+        "step": 935689,
+        "value": 180
+      },
+      {
+        "image": "PLI2.OVL",
+        "offset": 8367,
+        "step": 935689,
+        "value": 66
+      }
+    ],
+    "source": "FIZZBUZ"
+  },
+  {
+    "PCHL": {
+      "accesses": [],
+      "after": {
+        "AC": true,
+        "CY": false,
+        "P": true,
+        "S": false,
+        "Z": true,
+        "a": 0,
+        "b": 0,
+        "c": 0,
+        "d": 0,
+        "e": 1,
+        "h": 96,
+        "l": 54,
+        "pc": 24630,
+        "sp": 65348
+      },
+      "before": {
+        "AC": true,
+        "CY": false,
+        "P": true,
+        "S": false,
+        "Z": true,
+        "a": 0,
+        "b": 0,
+        "c": 0,
+        "d": 0,
+        "e": 1,
+        "h": 96,
+        "l": 54,
+        "pc": 17075,
+        "sp": 65348
+      },
+      "bytes": "E9",
+      "decoded": "PCHL",
+      "id": 42,
+      "image": "PLI2.OVL",
+      "kind": "jump",
+      "offset": 8371,
+      "step": 937853,
+      "taken": true,
+      "target": 24630
+    },
+    "RET": {
+      "accesses": [
+        {
+          "address": 65348,
+          "kind": "read",
+          "value": 180
+        },
+        {
+          "address": 65349,
+          "kind": "read",
+          "value": 66
+        }
+      ],
+      "after": {
+        "AC": false,
+        "CY": false,
+        "P": true,
+        "S": true,
+        "Z": false,
+        "a": 255,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 0,
+        "h": 255,
+        "l": 127,
+        "pc": 17076,
+        "sp": 65350
+      },
+      "before": {
+        "AC": false,
+        "CY": false,
+        "P": true,
+        "S": true,
+        "Z": false,
+        "a": 255,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 0,
+        "h": 255,
+        "l": 127,
+        "pc": 24821,
+        "sp": 65348
+      },
+      "bytes": "C9",
+      "decoded": "RET",
+      "id": 42,
+      "image": "PLI2.OVL",
+      "kind": "return",
+      "offset": 16117,
+      "step": 938865,
+      "taken": true,
+      "target": 17076
+    },
+    "child_CALL_words": [
+      {
+        "ret_reads": [
+          {
+            "address": 65346,
+            "value": 69
+          },
+          {
+            "address": 65347,
+            "value": 96
+          }
+        ],
+        "site": 24642,
+        "slot": 65346,
+        "writes": [
+          {
+            "address": 65347,
+            "new_value": 96
+          },
+          {
+            "address": 65346,
+            "new_value": 69
+          }
+        ]
+      },
+      {
+        "ret_reads": [
+          {
+            "address": 65346,
+            "value": 77
+          },
+          {
+            "address": 65347,
+            "value": 96
+          }
+        ],
+        "site": 24650,
+        "slot": 65346,
+        "writes": [
+          {
+            "address": 65347,
+            "new_value": 96
+          },
+          {
+            "address": 65346,
+            "new_value": 77
+          }
+        ]
+      },
+      {
+        "ret_reads": [
+          {
+            "address": 65346,
+            "value": 88
+          },
+          {
+            "address": 65347,
+            "value": 96
+          }
+        ],
+        "site": 24661,
+        "slot": 65346,
+        "writes": [
+          {
+            "address": 65347,
+            "new_value": 96
+          },
+          {
+            "address": 65346,
+            "new_value": 88
+          }
+        ]
+      },
+      {
+        "ret_reads": [
+          {
+            "address": 65346,
+            "value": 110
+          },
+          {
+            "address": 65347,
+            "value": 96
+          }
+        ],
+        "site": 24683,
+        "slot": 65346,
+        "writes": [
+          {
+            "address": 65347,
+            "new_value": 96
+          },
+          {
+            "address": 65346,
+            "new_value": 110
+          }
+        ]
+      },
+      {
+        "ret_reads": [
+          {
+            "address": 65346,
+            "value": 116
+          },
+          {
+            "address": 65347,
+            "value": 96
+          }
+        ],
+        "site": 24689,
+        "slot": 65346,
+        "writes": [
+          {
+            "address": 65347,
+            "new_value": 96
+          },
+          {
+            "address": 65346,
+            "new_value": 116
+          }
+        ]
+      }
+    ],
+    "continuation": 17076,
+    "gateway_id": 42,
+    "slot": 65348,
+    "software_word_last_writers": [
+      {
+        "image": "PLI2.OVL",
+        "offset": 8367,
+        "step": 937851,
+        "value": 180
+      },
+      {
+        "image": "PLI2.OVL",
+        "offset": 8367,
+        "step": 937851,
+        "value": 66
+      }
+    ],
+    "source": "FIZZBUZ"
+  },
+  {
+    "PCHL": {
+      "accesses": [],
+      "after": {
+        "AC": true,
+        "CY": false,
+        "P": true,
+        "S": false,
+        "Z": true,
+        "a": 0,
+        "b": 0,
+        "c": 0,
+        "d": 0,
+        "e": 1,
+        "h": 96,
+        "l": 54,
+        "pc": 24630,
+        "sp": 65366
+      },
+      "before": {
+        "AC": true,
+        "CY": false,
+        "P": true,
+        "S": false,
+        "Z": true,
+        "a": 0,
+        "b": 0,
+        "c": 0,
+        "d": 0,
+        "e": 1,
+        "h": 96,
+        "l": 54,
+        "pc": 17075,
+        "sp": 65366
+      },
+      "bytes": "E9",
+      "decoded": "PCHL",
+      "id": 46,
+      "image": "PLI2.OVL",
+      "kind": "jump",
+      "offset": 8371,
+      "step": 959469,
+      "taken": true,
+      "target": 24630
+    },
+    "RET": {
+      "accesses": [
+        {
+          "address": 65366,
+          "kind": "read",
+          "value": 180
+        },
+        {
+          "address": 65367,
+          "kind": "read",
+          "value": 66
+        }
+      ],
+      "after": {
+        "AC": false,
+        "CY": false,
+        "P": true,
+        "S": true,
+        "Z": false,
+        "a": 255,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 0,
+        "h": 255,
+        "l": 102,
+        "pc": 17076,
+        "sp": 65368
+      },
+      "before": {
+        "AC": false,
+        "CY": false,
+        "P": true,
+        "S": true,
+        "Z": false,
+        "a": 255,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 0,
+        "h": 255,
+        "l": 102,
+        "pc": 24821,
+        "sp": 65366
+      },
+      "bytes": "C9",
+      "decoded": "RET",
+      "id": 46,
+      "image": "PLI2.OVL",
+      "kind": "return",
+      "offset": 16117,
+      "step": 960486,
+      "taken": true,
+      "target": 17076
+    },
+    "child_CALL_words": [
+      {
+        "ret_reads": [
+          {
+            "address": 65364,
+            "value": 69
+          },
+          {
+            "address": 65365,
+            "value": 96
+          }
+        ],
+        "site": 24642,
+        "slot": 65364,
+        "writes": [
+          {
+            "address": 65365,
+            "new_value": 96
+          },
+          {
+            "address": 65364,
+            "new_value": 69
+          }
+        ]
+      },
+      {
+        "ret_reads": [
+          {
+            "address": 65364,
+            "value": 77
+          },
+          {
+            "address": 65365,
+            "value": 96
+          }
+        ],
+        "site": 24650,
+        "slot": 65364,
+        "writes": [
+          {
+            "address": 65365,
+            "new_value": 96
+          },
+          {
+            "address": 65364,
+            "new_value": 77
+          }
+        ]
+      },
+      {
+        "ret_reads": [
+          {
+            "address": 65364,
+            "value": 88
+          },
+          {
+            "address": 65365,
+            "value": 96
+          }
+        ],
+        "site": 24661,
+        "slot": 65364,
+        "writes": [
+          {
+            "address": 65365,
+            "new_value": 96
+          },
+          {
+            "address": 65364,
+            "new_value": 88
+          }
+        ]
+      },
+      {
+        "ret_reads": [
+          {
+            "address": 65364,
+            "value": 110
+          },
+          {
+            "address": 65365,
+            "value": 96
+          }
+        ],
+        "site": 24683,
+        "slot": 65364,
+        "writes": [
+          {
+            "address": 65365,
+            "new_value": 96
+          },
+          {
+            "address": 65364,
+            "new_value": 110
+          }
+        ]
+      },
+      {
+        "ret_reads": [
+          {
+            "address": 65364,
+            "value": 116
+          },
+          {
+            "address": 65365,
+            "value": 96
+          }
+        ],
+        "site": 24689,
+        "slot": 65364,
+        "writes": [
+          {
+            "address": 65365,
+            "new_value": 96
+          },
+          {
+            "address": 65364,
+            "new_value": 116
+          }
+        ]
+      }
+    ],
+    "continuation": 17076,
+    "gateway_id": 46,
+    "slot": 65366,
+    "software_word_last_writers": [
+      {
+        "image": "PLI2.OVL",
+        "offset": 8367,
+        "step": 959467,
+        "value": 180
+      },
+      {
+        "image": "PLI2.OVL",
+        "offset": 8367,
+        "step": 959467,
+        "value": 66
+      }
+    ],
+    "source": "FIZZBUZ"
+  },
+  {
+    "PCHL": {
+      "accesses": [],
+      "after": {
+        "AC": true,
+        "CY": false,
+        "P": true,
+        "S": false,
+        "Z": true,
+        "a": 0,
+        "b": 0,
+        "c": 0,
+        "d": 0,
+        "e": 1,
+        "h": 96,
+        "l": 54,
+        "pc": 24630,
+        "sp": 65366
+      },
+      "before": {
+        "AC": true,
+        "CY": false,
+        "P": true,
+        "S": false,
+        "Z": true,
+        "a": 0,
+        "b": 0,
+        "c": 0,
+        "d": 0,
+        "e": 1,
+        "h": 96,
+        "l": 54,
+        "pc": 17075,
+        "sp": 65366
+      },
+      "bytes": "E9",
+      "decoded": "PCHL",
+      "id": 54,
+      "image": "PLI2.OVL",
+      "kind": "jump",
+      "offset": 8371,
+      "step": 1019794,
+      "taken": true,
+      "target": 24630
+    },
+    "RET": {
+      "accesses": [
+        {
+          "address": 65366,
+          "kind": "read",
+          "value": 180
+        },
+        {
+          "address": 65367,
+          "kind": "read",
+          "value": 66
+        }
+      ],
+      "after": {
+        "AC": false,
+        "CY": false,
+        "P": true,
+        "S": true,
+        "Z": false,
+        "a": 255,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 0,
+        "h": 255,
+        "l": 71,
+        "pc": 17076,
+        "sp": 65368
+      },
+      "before": {
+        "AC": false,
+        "CY": false,
+        "P": true,
+        "S": true,
+        "Z": false,
+        "a": 255,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 0,
+        "h": 255,
+        "l": 71,
+        "pc": 24821,
+        "sp": 65366
+      },
+      "bytes": "C9",
+      "decoded": "RET",
+      "id": 54,
+      "image": "PLI2.OVL",
+      "kind": "return",
+      "offset": 16117,
+      "step": 1020806,
+      "taken": true,
+      "target": 17076
+    },
+    "child_CALL_words": [
+      {
+        "ret_reads": [
+          {
+            "address": 65364,
+            "value": 69
+          },
+          {
+            "address": 65365,
+            "value": 96
+          }
+        ],
+        "site": 24642,
+        "slot": 65364,
+        "writes": [
+          {
+            "address": 65365,
+            "new_value": 96
+          },
+          {
+            "address": 65364,
+            "new_value": 69
+          }
+        ]
+      },
+      {
+        "ret_reads": [
+          {
+            "address": 65364,
+            "value": 77
+          },
+          {
+            "address": 65365,
+            "value": 96
+          }
+        ],
+        "site": 24650,
+        "slot": 65364,
+        "writes": [
+          {
+            "address": 65365,
+            "new_value": 96
+          },
+          {
+            "address": 65364,
+            "new_value": 77
+          }
+        ]
+      },
+      {
+        "ret_reads": [
+          {
+            "address": 65364,
+            "value": 88
+          },
+          {
+            "address": 65365,
+            "value": 96
+          }
+        ],
+        "site": 24661,
+        "slot": 65364,
+        "writes": [
+          {
+            "address": 65365,
+            "new_value": 96
+          },
+          {
+            "address": 65364,
+            "new_value": 88
+          }
+        ]
+      },
+      {
+        "ret_reads": [
+          {
+            "address": 65364,
+            "value": 110
+          },
+          {
+            "address": 65365,
+            "value": 96
+          }
+        ],
+        "site": 24683,
+        "slot": 65364,
+        "writes": [
+          {
+            "address": 65365,
+            "new_value": 96
+          },
+          {
+            "address": 65364,
+            "new_value": 110
+          }
+        ]
+      },
+      {
+        "ret_reads": [
+          {
+            "address": 65364,
+            "value": 116
+          },
+          {
+            "address": 65365,
+            "value": 96
+          }
+        ],
+        "site": 24689,
+        "slot": 65364,
+        "writes": [
+          {
+            "address": 65365,
+            "new_value": 96
+          },
+          {
+            "address": 65364,
+            "new_value": 116
+          }
+        ]
+      }
+    ],
+    "continuation": 17076,
+    "gateway_id": 54,
+    "slot": 65366,
+    "software_word_last_writers": [
+      {
+        "image": "PLI2.OVL",
+        "offset": 8367,
+        "step": 1019792,
+        "value": 180
+      },
+      {
+        "image": "PLI2.OVL",
+        "offset": 8367,
+        "step": 1019792,
+        "value": 66
+      }
+    ],
+    "source": "FIZZBUZ"
+  },
+  {
+    "PCHL": {
+      "accesses": [],
+      "after": {
+        "AC": true,
+        "CY": false,
+        "P": true,
+        "S": false,
+        "Z": true,
+        "a": 0,
+        "b": 0,
+        "c": 89,
+        "d": 0,
+        "e": 1,
+        "h": 96,
+        "l": 54,
+        "pc": 24630,
+        "sp": 65350
+      },
+      "before": {
+        "AC": true,
+        "CY": false,
+        "P": true,
+        "S": false,
+        "Z": true,
+        "a": 0,
+        "b": 0,
+        "c": 89,
+        "d": 0,
+        "e": 1,
+        "h": 96,
+        "l": 54,
+        "pc": 17075,
+        "sp": 65350
+      },
+      "bytes": "E9",
+      "decoded": "PCHL",
+      "id": 57,
+      "image": "PLI2.OVL",
+      "kind": "jump",
+      "offset": 8371,
+      "step": 1031728,
+      "taken": true,
+      "target": 24630
+    },
+    "RET": {
+      "accesses": [
+        {
+          "address": 65350,
+          "kind": "read",
+          "value": 180
+        },
+        {
+          "address": 65351,
+          "kind": "read",
+          "value": 66
+        }
+      ],
+      "after": {
+        "AC": false,
+        "CY": false,
+        "P": true,
+        "S": true,
+        "Z": false,
+        "a": 0,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 0,
+        "h": 0,
+        "l": 0,
+        "pc": 17076,
+        "sp": 65352
+      },
+      "before": {
+        "AC": false,
+        "CY": false,
+        "P": true,
+        "S": true,
+        "Z": false,
+        "a": 0,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 0,
+        "h": 0,
+        "l": 0,
+        "pc": 24821,
+        "sp": 65350
+      },
+      "bytes": "C9",
+      "decoded": "RET",
+      "id": 57,
+      "image": "PLI2.OVL",
+      "kind": "return",
+      "offset": 16117,
+      "step": 1033308,
+      "taken": true,
+      "target": 17076
+    },
+    "child_CALL_words": [
+      {
+        "ret_reads": [
+          {
+            "address": 65348,
+            "value": 224
+          },
+          {
+            "address": 65349,
+            "value": 96
+          }
+        ],
+        "site": 24797,
+        "slot": 65348,
+        "writes": [
+          {
+            "address": 65349,
+            "new_value": 96
+          },
+          {
+            "address": 65348,
+            "new_value": 224
+          }
+        ]
+      },
+      {
+        "ret_reads": [
+          {
+            "address": 65348,
+            "value": 245
+          },
+          {
+            "address": 65349,
+            "value": 96
+          }
+        ],
+        "site": 24818,
+        "slot": 65348,
+        "writes": [
+          {
+            "address": 65349,
+            "new_value": 96
+          },
+          {
+            "address": 65348,
+            "new_value": 245
+          }
+        ]
+      }
+    ],
+    "continuation": 17076,
+    "gateway_id": 57,
+    "slot": 65350,
+    "software_word_last_writers": [
+      {
+        "image": "PLI2.OVL",
+        "offset": 8367,
+        "step": 1031726,
+        "value": 180
+      },
+      {
+        "image": "PLI2.OVL",
+        "offset": 8367,
+        "step": 1031726,
+        "value": 66
+      }
+    ],
+    "source": "FIZZBUZ"
+  },
+  {
+    "PCHL": {
+      "accesses": [],
+      "after": {
+        "AC": true,
+        "CY": false,
+        "P": true,
+        "S": false,
+        "Z": true,
+        "a": 0,
+        "b": 0,
+        "c": 95,
+        "d": 0,
+        "e": 1,
+        "h": 96,
+        "l": 54,
+        "pc": 24630,
+        "sp": 65434
+      },
+      "before": {
+        "AC": true,
+        "CY": false,
+        "P": true,
+        "S": false,
+        "Z": true,
+        "a": 0,
+        "b": 0,
+        "c": 95,
+        "d": 0,
+        "e": 1,
+        "h": 96,
+        "l": 54,
+        "pc": 17075,
+        "sp": 65434
+      },
+      "bytes": "E9",
+      "decoded": "PCHL",
+      "id": 60,
+      "image": "PLI2.OVL",
+      "kind": "jump",
+      "offset": 8371,
+      "step": 1075812,
+      "taken": true,
+      "target": 24630
+    },
+    "RET": {
+      "accesses": [
+        {
+          "address": 65434,
+          "kind": "read",
+          "value": 180
+        },
+        {
+          "address": 65435,
+          "kind": "read",
+          "value": 66
+        }
+      ],
+      "after": {
+        "AC": false,
+        "CY": false,
+        "P": true,
+        "S": true,
+        "Z": false,
+        "a": 0,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 0,
+        "h": 0,
+        "l": 0,
+        "pc": 17076,
+        "sp": 65436
+      },
+      "before": {
+        "AC": false,
+        "CY": false,
+        "P": true,
+        "S": true,
+        "Z": false,
+        "a": 0,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 0,
+        "h": 0,
+        "l": 0,
+        "pc": 24821,
+        "sp": 65434
+      },
+      "bytes": "C9",
+      "decoded": "RET",
+      "id": 60,
+      "image": "PLI2.OVL",
+      "kind": "return",
+      "offset": 16117,
+      "step": 1077392,
+      "taken": true,
+      "target": 17076
+    },
+    "child_CALL_words": [
+      {
+        "ret_reads": [
+          {
+            "address": 65432,
+            "value": 224
+          },
+          {
+            "address": 65433,
+            "value": 96
+          }
+        ],
+        "site": 24797,
+        "slot": 65432,
+        "writes": [
+          {
+            "address": 65433,
+            "new_value": 96
+          },
+          {
+            "address": 65432,
+            "new_value": 224
+          }
+        ]
+      },
+      {
+        "ret_reads": [
+          {
+            "address": 65432,
+            "value": 245
+          },
+          {
+            "address": 65433,
+            "value": 96
+          }
+        ],
+        "site": 24818,
+        "slot": 65432,
+        "writes": [
+          {
+            "address": 65433,
+            "new_value": 96
+          },
+          {
+            "address": 65432,
+            "new_value": 245
+          }
+        ]
+      }
+    ],
+    "continuation": 17076,
+    "gateway_id": 60,
+    "slot": 65434,
+    "software_word_last_writers": [
+      {
+        "image": "PLI2.OVL",
+        "offset": 8367,
+        "step": 1075810,
+        "value": 180
+      },
+      {
+        "image": "PLI2.OVL",
+        "offset": 8367,
+        "step": 1075810,
+        "value": 66
+      }
+    ],
+    "source": "FIZZBUZ"
+  },
+  {
+    "PCHL": {
+      "accesses": [],
+      "after": {
+        "AC": true,
+        "CY": false,
+        "P": true,
+        "S": false,
+        "Z": true,
+        "a": 0,
+        "b": 0,
+        "c": 16,
+        "d": 0,
+        "e": 1,
+        "h": 96,
+        "l": 54,
+        "pc": 24630,
+        "sp": 65448
+      },
+      "before": {
+        "AC": true,
+        "CY": false,
+        "P": true,
+        "S": false,
+        "Z": true,
+        "a": 0,
+        "b": 0,
+        "c": 16,
+        "d": 0,
+        "e": 1,
+        "h": 96,
+        "l": 54,
+        "pc": 17075,
+        "sp": 65448
+      },
+      "bytes": "E9",
+      "decoded": "PCHL",
+      "id": 10,
+      "image": "PLI2.OVL",
+      "kind": "jump",
+      "offset": 8371,
+      "step": 450113,
+      "taken": true,
+      "target": 24630
+    },
+    "RET": {
+      "accesses": [
+        {
+          "address": 65448,
+          "kind": "read",
+          "value": 180
+        },
+        {
+          "address": 65449,
+          "kind": "read",
+          "value": 66
+        }
+      ],
+      "after": {
+        "AC": false,
+        "CY": false,
+        "P": true,
+        "S": true,
+        "Z": false,
+        "a": 0,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 0,
+        "h": 0,
+        "l": 0,
+        "pc": 17076,
+        "sp": 65450
+      },
+      "before": {
+        "AC": false,
+        "CY": false,
+        "P": true,
+        "S": true,
+        "Z": false,
+        "a": 0,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 0,
+        "h": 0,
+        "l": 0,
+        "pc": 24821,
+        "sp": 65448
+      },
+      "bytes": "C9",
+      "decoded": "RET",
+      "id": 10,
+      "image": "PLI2.OVL",
+      "kind": "return",
+      "offset": 16117,
+      "step": 451693,
+      "taken": true,
+      "target": 17076
+    },
+    "child_CALL_words": [
+      {
+        "ret_reads": [
+          {
+            "address": 65446,
+            "value": 224
+          },
+          {
+            "address": 65447,
+            "value": 96
+          }
+        ],
+        "site": 24797,
+        "slot": 65446,
+        "writes": [
+          {
+            "address": 65447,
+            "new_value": 96
+          },
+          {
+            "address": 65446,
+            "new_value": 224
+          }
+        ]
+      },
+      {
+        "ret_reads": [
+          {
+            "address": 65446,
+            "value": 245
+          },
+          {
+            "address": 65447,
+            "value": 96
+          }
+        ],
+        "site": 24818,
+        "slot": 65446,
+        "writes": [
+          {
+            "address": 65447,
+            "new_value": 96
+          },
+          {
+            "address": 65446,
+            "new_value": 245
+          }
+        ]
+      }
+    ],
+    "continuation": 17076,
+    "gateway_id": 10,
+    "slot": 65448,
+    "software_word_last_writers": [
+      {
+        "image": "PLI2.OVL",
+        "offset": 8367,
+        "step": 450111,
+        "value": 180
+      },
+      {
+        "image": "PLI2.OVL",
+        "offset": 8367,
+        "step": 450111,
+        "value": 66
+      }
+    ],
+    "source": "PICTURE"
+  },
+  {
+    "PCHL": {
+      "accesses": [],
+      "after": {
+        "AC": true,
+        "CY": false,
+        "P": true,
+        "S": false,
+        "Z": true,
+        "a": 0,
+        "b": 0,
+        "c": 0,
+        "d": 0,
+        "e": 1,
+        "h": 96,
+        "l": 54,
+        "pc": 24630,
+        "sp": 65464
+      },
+      "before": {
+        "AC": true,
+        "CY": false,
+        "P": true,
+        "S": false,
+        "Z": true,
+        "a": 0,
+        "b": 0,
+        "c": 0,
+        "d": 0,
+        "e": 1,
+        "h": 96,
+        "l": 54,
+        "pc": 17075,
+        "sp": 65464
+      },
+      "bytes": "E9",
+      "decoded": "PCHL",
+      "id": 10,
+      "image": "PLI2.OVL",
+      "kind": "jump",
+      "offset": 8371,
+      "step": 647232,
+      "taken": true,
+      "target": 24630
+    },
+    "RET": {
+      "accesses": [
+        {
+          "address": 65464,
+          "kind": "read",
+          "value": 180
+        },
+        {
+          "address": 65465,
+          "kind": "read",
+          "value": 66
+        }
+      ],
+      "after": {
+        "AC": false,
+        "CY": false,
+        "P": true,
+        "S": true,
+        "Z": false,
+        "a": 255,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 0,
+        "h": 255,
+        "l": 230,
+        "pc": 17076,
+        "sp": 65466
+      },
+      "before": {
+        "AC": false,
+        "CY": false,
+        "P": true,
+        "S": true,
+        "Z": false,
+        "a": 255,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 0,
+        "h": 255,
+        "l": 230,
+        "pc": 24821,
+        "sp": 65464
+      },
+      "bytes": "C9",
+      "decoded": "RET",
+      "id": 10,
+      "image": "PLI2.OVL",
+      "kind": "return",
+      "offset": 16117,
+      "step": 648249,
+      "taken": true,
+      "target": 17076
+    },
+    "child_CALL_words": [
+      {
+        "ret_reads": [
+          {
+            "address": 65462,
+            "value": 69
+          },
+          {
+            "address": 65463,
+            "value": 96
+          }
+        ],
+        "site": 24642,
+        "slot": 65462,
+        "writes": [
+          {
+            "address": 65463,
+            "new_value": 96
+          },
+          {
+            "address": 65462,
+            "new_value": 69
+          }
+        ]
+      },
+      {
+        "ret_reads": [
+          {
+            "address": 65462,
+            "value": 77
+          },
+          {
+            "address": 65463,
+            "value": 96
+          }
+        ],
+        "site": 24650,
+        "slot": 65462,
+        "writes": [
+          {
+            "address": 65463,
+            "new_value": 96
+          },
+          {
+            "address": 65462,
+            "new_value": 77
+          }
+        ]
+      },
+      {
+        "ret_reads": [
+          {
+            "address": 65462,
+            "value": 88
+          },
+          {
+            "address": 65463,
+            "value": 96
+          }
+        ],
+        "site": 24661,
+        "slot": 65462,
+        "writes": [
+          {
+            "address": 65463,
+            "new_value": 96
+          },
+          {
+            "address": 65462,
+            "new_value": 88
+          }
+        ]
+      },
+      {
+        "ret_reads": [
+          {
+            "address": 65462,
+            "value": 110
+          },
+          {
+            "address": 65463,
+            "value": 96
+          }
+        ],
+        "site": 24683,
+        "slot": 65462,
+        "writes": [
+          {
+            "address": 65463,
+            "new_value": 96
+          },
+          {
+            "address": 65462,
+            "new_value": 110
+          }
+        ]
+      },
+      {
+        "ret_reads": [
+          {
+            "address": 65462,
+            "value": 116
+          },
+          {
+            "address": 65463,
+            "value": 96
+          }
+        ],
+        "site": 24689,
+        "slot": 65462,
+        "writes": [
+          {
+            "address": 65463,
+            "new_value": 96
+          },
+          {
+            "address": 65462,
+            "new_value": 116
+          }
+        ]
+      }
+    ],
+    "continuation": 17076,
+    "gateway_id": 10,
+    "slot": 65464,
+    "software_word_last_writers": [
+      {
+        "image": "PLI2.OVL",
+        "offset": 8367,
+        "step": 647230,
+        "value": 180
+      },
+      {
+        "image": "PLI2.OVL",
+        "offset": 8367,
+        "step": 647230,
+        "value": 66
+      }
+    ],
+    "source": "FACTOR"
+  },
+  {
+    "PCHL": {
+      "accesses": [],
+      "after": {
+        "AC": true,
+        "CY": false,
+        "P": true,
+        "S": false,
+        "Z": true,
+        "a": 0,
+        "b": 0,
+        "c": 20,
+        "d": 0,
+        "e": 1,
+        "h": 96,
+        "l": 54,
+        "pc": 24630,
+        "sp": 65448
+      },
+      "before": {
+        "AC": true,
+        "CY": false,
+        "P": true,
+        "S": false,
+        "Z": true,
+        "a": 0,
+        "b": 0,
+        "c": 20,
+        "d": 0,
+        "e": 1,
+        "h": 96,
+        "l": 54,
+        "pc": 17075,
+        "sp": 65448
+      },
+      "bytes": "E9",
+      "decoded": "PCHL",
+      "id": 13,
+      "image": "PLI2.OVL",
+      "kind": "jump",
+      "offset": 8371,
+      "step": 659166,
+      "taken": true,
+      "target": 24630
+    },
+    "RET": {
+      "accesses": [
+        {
+          "address": 65448,
+          "kind": "read",
+          "value": 180
+        },
+        {
+          "address": 65449,
+          "kind": "read",
+          "value": 66
+        }
+      ],
+      "after": {
+        "AC": false,
+        "CY": false,
+        "P": true,
+        "S": true,
+        "Z": false,
+        "a": 0,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 0,
+        "h": 0,
+        "l": 0,
+        "pc": 17076,
+        "sp": 65450
+      },
+      "before": {
+        "AC": false,
+        "CY": false,
+        "P": true,
+        "S": true,
+        "Z": false,
+        "a": 0,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 0,
+        "h": 0,
+        "l": 0,
+        "pc": 24821,
+        "sp": 65448
+      },
+      "bytes": "C9",
+      "decoded": "RET",
+      "id": 13,
+      "image": "PLI2.OVL",
+      "kind": "return",
+      "offset": 16117,
+      "step": 660746,
+      "taken": true,
+      "target": 17076
+    },
+    "child_CALL_words": [
+      {
+        "ret_reads": [
+          {
+            "address": 65446,
+            "value": 224
+          },
+          {
+            "address": 65447,
+            "value": 96
+          }
+        ],
+        "site": 24797,
+        "slot": 65446,
+        "writes": [
+          {
+            "address": 65447,
+            "new_value": 96
+          },
+          {
+            "address": 65446,
+            "new_value": 224
+          }
+        ]
+      },
+      {
+        "ret_reads": [
+          {
+            "address": 65446,
+            "value": 245
+          },
+          {
+            "address": 65447,
+            "value": 96
+          }
+        ],
+        "site": 24818,
+        "slot": 65446,
+        "writes": [
+          {
+            "address": 65447,
+            "new_value": 96
+          },
+          {
+            "address": 65446,
+            "new_value": 245
+          }
+        ]
+      }
+    ],
+    "continuation": 17076,
+    "gateway_id": 13,
+    "slot": 65448,
+    "software_word_last_writers": [
+      {
+        "image": "PLI2.OVL",
+        "offset": 8367,
+        "step": 659164,
+        "value": 180
+      },
+      {
+        "image": "PLI2.OVL",
+        "offset": 8367,
+        "step": 659164,
+        "value": 66
+      }
+    ],
+    "source": "FACTOR"
+  },
+  {
+    "PCHL": {
+      "accesses": [],
+      "after": {
+        "AC": true,
+        "CY": false,
+        "P": true,
+        "S": false,
+        "Z": true,
+        "a": 0,
+        "b": 0,
+        "c": 43,
+        "d": 0,
+        "e": 1,
+        "h": 96,
+        "l": 54,
+        "pc": 24630,
+        "sp": 65412
+      },
+      "before": {
+        "AC": true,
+        "CY": false,
+        "P": true,
+        "S": false,
+        "Z": true,
+        "a": 0,
+        "b": 0,
+        "c": 43,
+        "d": 0,
+        "e": 1,
+        "h": 96,
+        "l": 54,
+        "pc": 17075,
+        "sp": 65412
+      },
+      "bytes": "E9",
+      "decoded": "PCHL",
+      "id": 27,
+      "image": "PLI2.OVL",
+      "kind": "jump",
+      "offset": 8371,
+      "step": 772960,
+      "taken": true,
+      "target": 24630
+    },
+    "RET": {
+      "accesses": [
+        {
+          "address": 65412,
+          "kind": "read",
+          "value": 180
+        },
+        {
+          "address": 65413,
+          "kind": "read",
+          "value": 66
+        }
+      ],
+      "after": {
+        "AC": false,
+        "CY": false,
+        "P": true,
+        "S": true,
+        "Z": false,
+        "a": 0,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 0,
+        "h": 0,
+        "l": 0,
+        "pc": 17076,
+        "sp": 65414
+      },
+      "before": {
+        "AC": false,
+        "CY": false,
+        "P": true,
+        "S": true,
+        "Z": false,
+        "a": 0,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 0,
+        "h": 0,
+        "l": 0,
+        "pc": 24821,
+        "sp": 65412
+      },
+      "bytes": "C9",
+      "decoded": "RET",
+      "id": 27,
+      "image": "PLI2.OVL",
+      "kind": "return",
+      "offset": 16117,
+      "step": 774540,
+      "taken": true,
+      "target": 17076
+    },
+    "child_CALL_words": [
+      {
+        "ret_reads": [
+          {
+            "address": 65410,
+            "value": 224
+          },
+          {
+            "address": 65411,
+            "value": 96
+          }
+        ],
+        "site": 24797,
+        "slot": 65410,
+        "writes": [
+          {
+            "address": 65411,
+            "new_value": 96
+          },
+          {
+            "address": 65410,
+            "new_value": 224
+          }
+        ]
+      },
+      {
+        "ret_reads": [
+          {
+            "address": 65410,
+            "value": 245
+          },
+          {
+            "address": 65411,
+            "value": 96
+          }
+        ],
+        "site": 24818,
+        "slot": 65410,
+        "writes": [
+          {
+            "address": 65411,
+            "new_value": 96
+          },
+          {
+            "address": 65410,
+            "new_value": 245
+          }
+        ]
+      }
+    ],
+    "continuation": 17076,
+    "gateway_id": 27,
+    "slot": 65412,
+    "software_word_last_writers": [
+      {
+        "image": "PLI2.OVL",
+        "offset": 8367,
+        "step": 772958,
+        "value": 180
+      },
+      {
+        "image": "PLI2.OVL",
+        "offset": 8367,
+        "step": 772958,
+        "value": 66
+      }
+    ],
+    "source": "FACTOR"
+  },
+  {
+    "PCHL": {
+      "accesses": [],
+      "after": {
+        "AC": true,
+        "CY": false,
+        "P": true,
+        "S": false,
+        "Z": true,
+        "a": 0,
+        "b": 0,
+        "c": 53,
+        "d": 0,
+        "e": 1,
+        "h": 96,
+        "l": 54,
+        "pc": 24630,
+        "sp": 65416
+      },
+      "before": {
+        "AC": true,
+        "CY": false,
+        "P": true,
+        "S": false,
+        "Z": true,
+        "a": 0,
+        "b": 0,
+        "c": 53,
+        "d": 0,
+        "e": 1,
+        "h": 96,
+        "l": 54,
+        "pc": 17075,
+        "sp": 65416
+      },
+      "bytes": "E9",
+      "decoded": "PCHL",
+      "id": 32,
+      "image": "PLI2.OVL",
+      "kind": "jump",
+      "offset": 8371,
+      "step": 786346,
+      "taken": true,
+      "target": 24630
+    },
+    "RET": {
+      "accesses": [
+        {
+          "address": 65416,
+          "kind": "read",
+          "value": 180
+        },
+        {
+          "address": 65417,
+          "kind": "read",
+          "value": 66
+        }
+      ],
+      "after": {
+        "AC": false,
+        "CY": false,
+        "P": true,
+        "S": true,
+        "Z": false,
+        "a": 0,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 0,
+        "h": 0,
+        "l": 0,
+        "pc": 17076,
+        "sp": 65418
+      },
+      "before": {
+        "AC": false,
+        "CY": false,
+        "P": true,
+        "S": true,
+        "Z": false,
+        "a": 0,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 0,
+        "h": 0,
+        "l": 0,
+        "pc": 24821,
+        "sp": 65416
+      },
+      "bytes": "C9",
+      "decoded": "RET",
+      "id": 32,
+      "image": "PLI2.OVL",
+      "kind": "return",
+      "offset": 16117,
+      "step": 788397,
+      "taken": true,
+      "target": 17076
+    },
+    "child_CALL_words": [
+      {
+        "ret_reads": [
+          {
+            "address": 65414,
+            "value": 224
+          },
+          {
+            "address": 65415,
+            "value": 96
+          }
+        ],
+        "site": 24797,
+        "slot": 65414,
+        "writes": [
+          {
+            "address": 65415,
+            "new_value": 96
+          },
+          {
+            "address": 65414,
+            "new_value": 224
+          }
+        ]
+      },
+      {
+        "ret_reads": [
+          {
+            "address": 65414,
+            "value": 245
+          },
+          {
+            "address": 65415,
+            "value": 96
+          }
+        ],
+        "site": 24818,
+        "slot": 65414,
+        "writes": [
+          {
+            "address": 65415,
+            "new_value": 96
+          },
+          {
+            "address": 65414,
+            "new_value": 245
+          }
+        ]
+      }
+    ],
+    "continuation": 17076,
+    "gateway_id": 32,
+    "slot": 65416,
+    "software_word_last_writers": [
+      {
+        "image": "PLI2.OVL",
+        "offset": 8367,
+        "step": 786344,
+        "value": 180
+      },
+      {
+        "image": "PLI2.OVL",
+        "offset": 8367,
+        "step": 786344,
+        "value": 66
+      }
+    ],
+    "source": "FACTOR"
+  },
+  {
+    "PCHL": {
+      "accesses": [],
+      "after": {
+        "AC": true,
+        "CY": false,
+        "P": true,
+        "S": false,
+        "Z": true,
+        "a": 0,
+        "b": 0,
+        "c": 0,
+        "d": 0,
+        "e": 1,
+        "h": 96,
+        "l": 54,
+        "pc": 24630,
+        "sp": 65438
+      },
+      "before": {
+        "AC": true,
+        "CY": false,
+        "P": true,
+        "S": false,
+        "Z": true,
+        "a": 0,
+        "b": 0,
+        "c": 0,
+        "d": 0,
+        "e": 1,
+        "h": 96,
+        "l": 54,
+        "pc": 17075,
+        "sp": 65438
+      },
+      "bytes": "E9",
+      "decoded": "PCHL",
+      "id": 9,
+      "image": "PLI2.OVL",
+      "kind": "jump",
+      "offset": 8371,
+      "step": 1717079,
+      "taken": true,
+      "target": 24630
+    },
+    "RET": {
+      "accesses": [
+        {
+          "address": 65438,
+          "kind": "read",
+          "value": 180
+        },
+        {
+          "address": 65439,
+          "kind": "read",
+          "value": 66
+        }
+      ],
+      "after": {
+        "AC": false,
+        "CY": false,
+        "P": true,
+        "S": true,
+        "Z": false,
+        "a": 255,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 0,
+        "h": 255,
+        "l": 239,
+        "pc": 17076,
+        "sp": 65440
+      },
+      "before": {
+        "AC": false,
+        "CY": false,
+        "P": true,
+        "S": true,
+        "Z": false,
+        "a": 255,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 0,
+        "h": 255,
+        "l": 239,
+        "pc": 24821,
+        "sp": 65438
+      },
+      "bytes": "C9",
+      "decoded": "RET",
+      "id": 9,
+      "image": "PLI2.OVL",
+      "kind": "return",
+      "offset": 16117,
+      "step": 1718091,
+      "taken": true,
+      "target": 17076
+    },
+    "child_CALL_words": [
+      {
+        "ret_reads": [
+          {
+            "address": 65436,
+            "value": 69
+          },
+          {
+            "address": 65437,
+            "value": 96
+          }
+        ],
+        "site": 24642,
+        "slot": 65436,
+        "writes": [
+          {
+            "address": 65437,
+            "new_value": 96
+          },
+          {
+            "address": 65436,
+            "new_value": 69
+          }
+        ]
+      },
+      {
+        "ret_reads": [
+          {
+            "address": 65436,
+            "value": 77
+          },
+          {
+            "address": 65437,
+            "value": 96
+          }
+        ],
+        "site": 24650,
+        "slot": 65436,
+        "writes": [
+          {
+            "address": 65437,
+            "new_value": 96
+          },
+          {
+            "address": 65436,
+            "new_value": 77
+          }
+        ]
+      },
+      {
+        "ret_reads": [
+          {
+            "address": 65436,
+            "value": 88
+          },
+          {
+            "address": 65437,
+            "value": 96
+          }
+        ],
+        "site": 24661,
+        "slot": 65436,
+        "writes": [
+          {
+            "address": 65437,
+            "new_value": 96
+          },
+          {
+            "address": 65436,
+            "new_value": 88
+          }
+        ]
+      },
+      {
+        "ret_reads": [
+          {
+            "address": 65436,
+            "value": 110
+          },
+          {
+            "address": 65437,
+            "value": 96
+          }
+        ],
+        "site": 24683,
+        "slot": 65436,
+        "writes": [
+          {
+            "address": 65437,
+            "new_value": 96
+          },
+          {
+            "address": 65436,
+            "new_value": 110
+          }
+        ]
+      },
+      {
+        "ret_reads": [
+          {
+            "address": 65436,
+            "value": 116
+          },
+          {
+            "address": 65437,
+            "value": 96
+          }
+        ],
+        "site": 24689,
+        "slot": 65436,
+        "writes": [
+          {
+            "address": 65437,
+            "new_value": 96
+          },
+          {
+            "address": 65436,
+            "new_value": 116
+          }
+        ]
+      }
+    ],
+    "continuation": 17076,
+    "gateway_id": 9,
+    "slot": 65438,
+    "software_word_last_writers": [
+      {
+        "image": "PLI2.OVL",
+        "offset": 8367,
+        "step": 1717077,
+        "value": 180
+      },
+      {
+        "image": "PLI2.OVL",
+        "offset": 8367,
+        "step": 1717077,
+        "value": 66
+      }
+    ],
+    "source": "OPTIMIST"
+  },
+  {
+    "PCHL": {
+      "accesses": [],
+      "after": {
+        "AC": true,
+        "CY": false,
+        "P": true,
+        "S": false,
+        "Z": true,
+        "a": 0,
+        "b": 0,
+        "c": 89,
+        "d": 0,
+        "e": 1,
+        "h": 96,
+        "l": 54,
+        "pc": 24630,
+        "sp": 65414
+      },
+      "before": {
+        "AC": true,
+        "CY": false,
+        "P": true,
+        "S": false,
+        "Z": true,
+        "a": 0,
+        "b": 0,
+        "c": 89,
+        "d": 0,
+        "e": 1,
+        "h": 96,
+        "l": 54,
+        "pc": 17075,
+        "sp": 65414
+      },
+      "bytes": "E9",
+      "decoded": "PCHL",
+      "id": 69,
+      "image": "PLI2.OVL",
+      "kind": "jump",
+      "offset": 8371,
+      "step": 2250379,
+      "taken": true,
+      "target": 24630
+    },
+    "RET": {
+      "accesses": [
+        {
+          "address": 65414,
+          "kind": "read",
+          "value": 180
+        },
+        {
+          "address": 65415,
+          "kind": "read",
+          "value": 66
+        }
+      ],
+      "after": {
+        "AC": false,
+        "CY": false,
+        "P": true,
+        "S": true,
+        "Z": false,
+        "a": 0,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 0,
+        "h": 0,
+        "l": 0,
+        "pc": 17076,
+        "sp": 65416
+      },
+      "before": {
+        "AC": false,
+        "CY": false,
+        "P": true,
+        "S": true,
+        "Z": false,
+        "a": 0,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 0,
+        "h": 0,
+        "l": 0,
+        "pc": 24821,
+        "sp": 65414
+      },
+      "bytes": "C9",
+      "decoded": "RET",
+      "id": 69,
+      "image": "PLI2.OVL",
+      "kind": "return",
+      "offset": 16117,
+      "step": 2252034,
+      "taken": true,
+      "target": 17076
+    },
+    "child_CALL_words": [
+      {
+        "ret_reads": [
+          {
+            "address": 65412,
+            "value": 224
+          },
+          {
+            "address": 65413,
+            "value": 96
+          }
+        ],
+        "site": 24797,
+        "slot": 65412,
+        "writes": [
+          {
+            "address": 65413,
+            "new_value": 96
+          },
+          {
+            "address": 65412,
+            "new_value": 224
+          }
+        ]
+      },
+      {
+        "ret_reads": [
+          {
+            "address": 65412,
+            "value": 245
+          },
+          {
+            "address": 65413,
+            "value": 96
+          }
+        ],
+        "site": 24818,
+        "slot": 65412,
+        "writes": [
+          {
+            "address": 65413,
+            "new_value": 96
+          },
+          {
+            "address": 65412,
+            "new_value": 245
+          }
+        ]
+      }
+    ],
+    "continuation": 17076,
+    "gateway_id": 69,
+    "slot": 65414,
+    "software_word_last_writers": [
+      {
+        "image": "PLI2.OVL",
+        "offset": 8367,
+        "step": 2250377,
+        "value": 180
+      },
+      {
+        "image": "PLI2.OVL",
+        "offset": 8367,
+        "step": 2250377,
+        "value": 66
+      }
+    ],
+    "source": "OPTIMIST"
+  },
+  {
+    "PCHL": {
+      "accesses": [],
+      "after": {
+        "AC": true,
+        "CY": false,
+        "P": true,
+        "S": false,
+        "Z": true,
+        "a": 0,
+        "b": 0,
+        "c": 3,
+        "d": 0,
+        "e": 1,
+        "h": 96,
+        "l": 54,
+        "pc": 24630,
+        "sp": 65343
+      },
+      "before": {
+        "AC": true,
+        "CY": false,
+        "P": true,
+        "S": false,
+        "Z": true,
+        "a": 0,
+        "b": 0,
+        "c": 3,
+        "d": 0,
+        "e": 1,
+        "h": 96,
+        "l": 54,
+        "pc": 17075,
+        "sp": 65343
+      },
+      "bytes": "E9",
+      "decoded": "PCHL",
+      "id": 76,
+      "image": "PLI2.OVL",
+      "kind": "jump",
+      "offset": 8371,
+      "step": 2263263,
+      "taken": true,
+      "target": 24630
+    },
+    "RET": {
+      "accesses": [
+        {
+          "address": 65343,
+          "kind": "read",
+          "value": 180
+        },
+        {
+          "address": 65344,
+          "kind": "read",
+          "value": 66
+        }
+      ],
+      "after": {
+        "AC": false,
+        "CY": false,
+        "P": true,
+        "S": true,
+        "Z": false,
+        "a": 0,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 0,
+        "h": 0,
+        "l": 0,
+        "pc": 17076,
+        "sp": 65345
+      },
+      "before": {
+        "AC": false,
+        "CY": false,
+        "P": true,
+        "S": true,
+        "Z": false,
+        "a": 0,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 0,
+        "h": 0,
+        "l": 0,
+        "pc": 24821,
+        "sp": 65343
+      },
+      "bytes": "C9",
+      "decoded": "RET",
+      "id": 76,
+      "image": "PLI2.OVL",
+      "kind": "return",
+      "offset": 16117,
+      "step": 2265309,
+      "taken": true,
+      "target": 17076
+    },
+    "child_CALL_words": [
+      {
+        "ret_reads": [
+          {
+            "address": 65341,
+            "value": 224
+          },
+          {
+            "address": 65342,
+            "value": 96
+          }
+        ],
+        "site": 24797,
+        "slot": 65341,
+        "writes": [
+          {
+            "address": 65342,
+            "new_value": 96
+          },
+          {
+            "address": 65341,
+            "new_value": 224
+          }
+        ]
+      },
+      {
+        "ret_reads": [
+          {
+            "address": 65341,
+            "value": 245
+          },
+          {
+            "address": 65342,
+            "value": 96
+          }
+        ],
+        "site": 24818,
+        "slot": 65341,
+        "writes": [
+          {
+            "address": 65342,
+            "new_value": 96
+          },
+          {
+            "address": 65341,
+            "new_value": 245
+          }
+        ]
+      }
+    ],
+    "continuation": 17076,
+    "gateway_id": 76,
+    "slot": 65343,
+    "software_word_last_writers": [
+      {
+        "image": "PLI2.OVL",
+        "offset": 8367,
+        "step": 2263261,
+        "value": 180
+      },
+      {
+        "image": "PLI2.OVL",
+        "offset": 8367,
+        "step": 2263261,
+        "value": 66
+      }
+    ],
+    "source": "OPTIMIST"
+  },
+  {
+    "PCHL": {
+      "accesses": [],
+      "after": {
+        "AC": true,
+        "CY": false,
+        "P": true,
+        "S": false,
+        "Z": true,
+        "a": 0,
+        "b": 0,
+        "c": 48,
+        "d": 0,
+        "e": 1,
+        "h": 96,
+        "l": 54,
+        "pc": 24630,
+        "sp": 65266
+      },
+      "before": {
+        "AC": true,
+        "CY": false,
+        "P": true,
+        "S": false,
+        "Z": true,
+        "a": 0,
+        "b": 0,
+        "c": 48,
+        "d": 0,
+        "e": 1,
+        "h": 96,
+        "l": 54,
+        "pc": 17075,
+        "sp": 65266
+      },
+      "bytes": "E9",
+      "decoded": "PCHL",
+      "id": 92,
+      "image": "PLI2.OVL",
+      "kind": "jump",
+      "offset": 8371,
+      "step": 2300918,
+      "taken": true,
+      "target": 24630
+    },
+    "RET": {
+      "accesses": [
+        {
+          "address": 65266,
+          "kind": "read",
+          "value": 180
+        },
+        {
+          "address": 65267,
+          "kind": "read",
+          "value": 66
+        }
+      ],
+      "after": {
+        "AC": false,
+        "CY": false,
+        "P": true,
+        "S": true,
+        "Z": false,
+        "a": 0,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 0,
+        "h": 0,
+        "l": 0,
+        "pc": 17076,
+        "sp": 65268
+      },
+      "before": {
+        "AC": false,
+        "CY": false,
+        "P": true,
+        "S": true,
+        "Z": false,
+        "a": 0,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 0,
+        "h": 0,
+        "l": 0,
+        "pc": 24821,
+        "sp": 65266
+      },
+      "bytes": "C9",
+      "decoded": "RET",
+      "id": 92,
+      "image": "PLI2.OVL",
+      "kind": "return",
+      "offset": 16117,
+      "step": 2302969,
+      "taken": true,
+      "target": 17076
+    },
+    "child_CALL_words": [
+      {
+        "ret_reads": [
+          {
+            "address": 65264,
+            "value": 224
+          },
+          {
+            "address": 65265,
+            "value": 96
+          }
+        ],
+        "site": 24797,
+        "slot": 65264,
+        "writes": [
+          {
+            "address": 65265,
+            "new_value": 96
+          },
+          {
+            "address": 65264,
+            "new_value": 224
+          }
+        ]
+      },
+      {
+        "ret_reads": [
+          {
+            "address": 65264,
+            "value": 245
+          },
+          {
+            "address": 65265,
+            "value": 96
+          }
+        ],
+        "site": 24818,
+        "slot": 65264,
+        "writes": [
+          {
+            "address": 65265,
+            "new_value": 96
+          },
+          {
+            "address": 65264,
+            "new_value": 245
+          }
+        ]
+      }
+    ],
+    "continuation": 17076,
+    "gateway_id": 92,
+    "slot": 65266,
+    "software_word_last_writers": [
+      {
+        "image": "PLI2.OVL",
+        "offset": 8367,
+        "step": 2300916,
+        "value": 180
+      },
+      {
+        "image": "PLI2.OVL",
+        "offset": 8367,
+        "step": 2300916,
+        "value": 66
+      }
+    ],
+    "source": "OPTIMIST"
+  },
+  {
+    "PCHL": {
+      "accesses": [],
+      "after": {
+        "AC": true,
+        "CY": false,
+        "P": true,
+        "S": false,
+        "Z": true,
+        "a": 0,
+        "b": 0,
+        "c": 43,
+        "d": 0,
+        "e": 1,
+        "h": 96,
+        "l": 54,
+        "pc": 24630,
+        "sp": 65320
+      },
+      "before": {
+        "AC": true,
+        "CY": false,
+        "P": true,
+        "S": false,
+        "Z": true,
+        "a": 0,
+        "b": 0,
+        "c": 43,
+        "d": 0,
+        "e": 1,
+        "h": 96,
+        "l": 54,
+        "pc": 17075,
+        "sp": 65320
+      },
+      "bytes": "E9",
+      "decoded": "PCHL",
+      "id": 93,
+      "image": "PLI2.OVL",
+      "kind": "jump",
+      "offset": 8371,
+      "step": 2312991,
+      "taken": true,
+      "target": 24630
+    },
+    "RET": {
+      "accesses": [
+        {
+          "address": 65320,
+          "kind": "read",
+          "value": 180
+        },
+        {
+          "address": 65321,
+          "kind": "read",
+          "value": 66
+        }
+      ],
+      "after": {
+        "AC": false,
+        "CY": false,
+        "P": false,
+        "S": true,
+        "Z": false,
+        "a": 0,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 0,
+        "h": 0,
+        "l": 0,
+        "pc": 17076,
+        "sp": 65322
+      },
+      "before": {
+        "AC": false,
+        "CY": false,
+        "P": false,
+        "S": true,
+        "Z": false,
+        "a": 0,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 0,
+        "h": 0,
+        "l": 0,
+        "pc": 24821,
+        "sp": 65320
+      },
+      "bytes": "C9",
+      "decoded": "RET",
+      "id": 93,
+      "image": "PLI2.OVL",
+      "kind": "return",
+      "offset": 16117,
+      "step": 2314684,
+      "taken": true,
+      "target": 17076
+    },
+    "child_CALL_words": [
+      {
+        "ret_reads": [
+          {
+            "address": 65318,
+            "value": 224
+          },
+          {
+            "address": 65319,
+            "value": 96
+          }
+        ],
+        "site": 24797,
+        "slot": 65318,
+        "writes": [
+          {
+            "address": 65319,
+            "new_value": 96
+          },
+          {
+            "address": 65318,
+            "new_value": 224
+          }
+        ]
+      },
+      {
+        "ret_reads": [
+          {
+            "address": 65318,
+            "value": 245
+          },
+          {
+            "address": 65319,
+            "value": 96
+          }
+        ],
+        "site": 24818,
+        "slot": 65318,
+        "writes": [
+          {
+            "address": 65319,
+            "new_value": 96
+          },
+          {
+            "address": 65318,
+            "new_value": 245
+          }
+        ]
+      }
+    ],
+    "continuation": 17076,
+    "gateway_id": 93,
+    "slot": 65320,
+    "software_word_last_writers": [
+      {
+        "image": "PLI2.OVL",
+        "offset": 8367,
+        "step": 2312989,
+        "value": 180
+      },
+      {
+        "image": "PLI2.OVL",
+        "offset": 8367,
+        "step": 2312989,
+        "value": 66
+      }
+    ],
+    "source": "OPTIMIST"
+  },
+  {
+    "PCHL": {
+      "accesses": [],
+      "after": {
+        "AC": true,
+        "CY": false,
+        "P": true,
+        "S": false,
+        "Z": true,
+        "a": 0,
+        "b": 0,
+        "c": 34,
+        "d": 0,
+        "e": 1,
+        "h": 96,
+        "l": 54,
+        "pc": 24630,
+        "sp": 65300
+      },
+      "before": {
+        "AC": true,
+        "CY": false,
+        "P": true,
+        "S": false,
+        "Z": true,
+        "a": 0,
+        "b": 0,
+        "c": 34,
+        "d": 0,
+        "e": 1,
+        "h": 96,
+        "l": 54,
+        "pc": 17075,
+        "sp": 65300
+      },
+      "bytes": "E9",
+      "decoded": "PCHL",
+      "id": 99,
+      "image": "PLI2.OVL",
+      "kind": "jump",
+      "offset": 8371,
+      "step": 2331589,
+      "taken": true,
+      "target": 24630
+    },
+    "RET": {
+      "accesses": [
+        {
+          "address": 65300,
+          "kind": "read",
+          "value": 180
+        },
+        {
+          "address": 65301,
+          "kind": "read",
+          "value": 66
+        }
+      ],
+      "after": {
+        "AC": false,
+        "CY": false,
+        "P": true,
+        "S": true,
+        "Z": false,
+        "a": 0,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 0,
+        "h": 0,
+        "l": 0,
+        "pc": 17076,
+        "sp": 65302
+      },
+      "before": {
+        "AC": false,
+        "CY": false,
+        "P": true,
+        "S": true,
+        "Z": false,
+        "a": 0,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 0,
+        "h": 0,
+        "l": 0,
+        "pc": 24821,
+        "sp": 65300
+      },
+      "bytes": "C9",
+      "decoded": "RET",
+      "id": 99,
+      "image": "PLI2.OVL",
+      "kind": "return",
+      "offset": 16117,
+      "step": 2334100,
+      "taken": true,
+      "target": 17076
+    },
+    "child_CALL_words": [
+      {
+        "ret_reads": [
+          {
+            "address": 65298,
+            "value": 224
+          },
+          {
+            "address": 65299,
+            "value": 96
+          }
+        ],
+        "site": 24797,
+        "slot": 65298,
+        "writes": [
+          {
+            "address": 65299,
+            "new_value": 96
+          },
+          {
+            "address": 65298,
+            "new_value": 224
+          }
+        ]
+      },
+      {
+        "ret_reads": [
+          {
+            "address": 65298,
+            "value": 245
+          },
+          {
+            "address": 65299,
+            "value": 96
+          }
+        ],
+        "site": 24818,
+        "slot": 65298,
+        "writes": [
+          {
+            "address": 65299,
+            "new_value": 96
+          },
+          {
+            "address": 65298,
+            "new_value": 245
+          }
+        ]
+      }
+    ],
+    "continuation": 17076,
+    "gateway_id": 99,
+    "slot": 65300,
+    "software_word_last_writers": [
+      {
+        "image": "PLI2.OVL",
+        "offset": 8367,
+        "step": 2331587,
+        "value": 180
+      },
+      {
+        "image": "PLI2.OVL",
+        "offset": 8367,
+        "step": 2331587,
+        "value": 66
+      }
+    ],
+    "source": "OPTIMIST"
+  },
+  {
+    "PCHL": {
+      "accesses": [],
+      "after": {
+        "AC": true,
+        "CY": false,
+        "P": true,
+        "S": false,
+        "Z": true,
+        "a": 0,
+        "b": 0,
+        "c": 24,
+        "d": 0,
+        "e": 1,
+        "h": 96,
+        "l": 54,
+        "pc": 24630,
+        "sp": 65319
+      },
+      "before": {
+        "AC": true,
+        "CY": false,
+        "P": true,
+        "S": false,
+        "Z": true,
+        "a": 0,
+        "b": 0,
+        "c": 24,
+        "d": 0,
+        "e": 1,
+        "h": 96,
+        "l": 54,
+        "pc": 17075,
+        "sp": 65319
+      },
+      "bytes": "E9",
+      "decoded": "PCHL",
+      "id": 103,
+      "image": "PLI2.OVL",
+      "kind": "jump",
+      "offset": 8371,
+      "step": 2349864,
+      "taken": true,
+      "target": 24630
+    },
+    "RET": {
+      "accesses": [
+        {
+          "address": 65319,
+          "kind": "read",
+          "value": 180
+        },
+        {
+          "address": 65320,
+          "kind": "read",
+          "value": 66
+        }
+      ],
+      "after": {
+        "AC": false,
+        "CY": false,
+        "P": false,
+        "S": true,
+        "Z": false,
+        "a": 0,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 0,
+        "h": 0,
+        "l": 0,
+        "pc": 17076,
+        "sp": 65321
+      },
+      "before": {
+        "AC": false,
+        "CY": false,
+        "P": false,
+        "S": true,
+        "Z": false,
+        "a": 0,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 0,
+        "h": 0,
+        "l": 0,
+        "pc": 24821,
+        "sp": 65319
+      },
+      "bytes": "C9",
+      "decoded": "RET",
+      "id": 103,
+      "image": "PLI2.OVL",
+      "kind": "return",
+      "offset": 16117,
+      "step": 2352375,
+      "taken": true,
+      "target": 17076
+    },
+    "child_CALL_words": [
+      {
+        "ret_reads": [
+          {
+            "address": 65317,
+            "value": 224
+          },
+          {
+            "address": 65318,
+            "value": 96
+          }
+        ],
+        "site": 24797,
+        "slot": 65317,
+        "writes": [
+          {
+            "address": 65318,
+            "new_value": 96
+          },
+          {
+            "address": 65317,
+            "new_value": 224
+          }
+        ]
+      },
+      {
+        "ret_reads": [
+          {
+            "address": 65317,
+            "value": 245
+          },
+          {
+            "address": 65318,
+            "value": 96
+          }
+        ],
+        "site": 24818,
+        "slot": 65317,
+        "writes": [
+          {
+            "address": 65318,
+            "new_value": 96
+          },
+          {
+            "address": 65317,
+            "new_value": 245
+          }
+        ]
+      }
+    ],
+    "continuation": 17076,
+    "gateway_id": 103,
+    "slot": 65319,
+    "software_word_last_writers": [
+      {
+        "image": "PLI2.OVL",
+        "offset": 8367,
+        "step": 2349862,
+        "value": 180
+      },
+      {
+        "image": "PLI2.OVL",
+        "offset": 8367,
+        "step": 2349862,
+        "value": 66
+      }
+    ],
+    "source": "OPTIMIST"
+  },
+  {
+    "PCHL": {
+      "accesses": [],
+      "after": {
+        "AC": true,
+        "CY": false,
+        "P": true,
+        "S": false,
+        "Z": true,
+        "a": 0,
+        "b": 0,
+        "c": 62,
+        "d": 0,
+        "e": 1,
+        "h": 96,
+        "l": 54,
+        "pc": 24630,
+        "sp": 65408
+      },
+      "before": {
+        "AC": true,
+        "CY": false,
+        "P": true,
+        "S": false,
+        "Z": true,
+        "a": 0,
+        "b": 0,
+        "c": 62,
+        "d": 0,
+        "e": 1,
+        "h": 96,
+        "l": 54,
+        "pc": 17075,
+        "sp": 65408
+      },
+      "bytes": "E9",
+      "decoded": "PCHL",
+      "id": 106,
+      "image": "PLI2.OVL",
+      "kind": "jump",
+      "offset": 8371,
+      "step": 2392795,
+      "taken": true,
+      "target": 24630
+    },
+    "RET": {
+      "accesses": [
+        {
+          "address": 65408,
+          "kind": "read",
+          "value": 180
+        },
+        {
+          "address": 65409,
+          "kind": "read",
+          "value": 66
+        }
+      ],
+      "after": {
+        "AC": false,
+        "CY": false,
+        "P": true,
+        "S": true,
+        "Z": false,
+        "a": 0,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 0,
+        "h": 0,
+        "l": 0,
+        "pc": 17076,
+        "sp": 65410
+      },
+      "before": {
+        "AC": false,
+        "CY": false,
+        "P": true,
+        "S": true,
+        "Z": false,
+        "a": 0,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 0,
+        "h": 0,
+        "l": 0,
+        "pc": 24821,
+        "sp": 65408
+      },
+      "bytes": "C9",
+      "decoded": "RET",
+      "id": 106,
+      "image": "PLI2.OVL",
+      "kind": "return",
+      "offset": 16117,
+      "step": 2394370,
+      "taken": true,
+      "target": 17076
+    },
+    "child_CALL_words": [
+      {
+        "ret_reads": [
+          {
+            "address": 65406,
+            "value": 224
+          },
+          {
+            "address": 65407,
+            "value": 96
+          }
+        ],
+        "site": 24797,
+        "slot": 65406,
+        "writes": [
+          {
+            "address": 65407,
+            "new_value": 96
+          },
+          {
+            "address": 65406,
+            "new_value": 224
+          }
+        ]
+      },
+      {
+        "ret_reads": [
+          {
+            "address": 65406,
+            "value": 245
+          },
+          {
+            "address": 65407,
+            "value": 96
+          }
+        ],
+        "site": 24818,
+        "slot": 65406,
+        "writes": [
+          {
+            "address": 65407,
+            "new_value": 96
+          },
+          {
+            "address": 65406,
+            "new_value": 245
+          }
+        ]
+      }
+    ],
+    "continuation": 17076,
+    "gateway_id": 106,
+    "slot": 65408,
+    "software_word_last_writers": [
+      {
+        "image": "PLI2.OVL",
+        "offset": 8367,
+        "step": 2392793,
+        "value": 180
+      },
+      {
+        "image": "PLI2.OVL",
+        "offset": 8367,
+        "step": 2392793,
+        "value": 66
+      }
+    ],
+    "source": "OPTIMIST"
+  },
+  {
+    "PCHL": {
+      "accesses": [],
+      "after": {
+        "AC": true,
+        "CY": false,
+        "P": true,
+        "S": false,
+        "Z": true,
+        "a": 0,
+        "b": 0,
+        "c": 0,
+        "d": 0,
+        "e": 1,
+        "h": 96,
+        "l": 54,
+        "pc": 24630,
+        "sp": 65438
+      },
+      "before": {
+        "AC": true,
+        "CY": false,
+        "P": true,
+        "S": false,
+        "Z": true,
+        "a": 0,
+        "b": 0,
+        "c": 0,
+        "d": 0,
+        "e": 1,
+        "h": 96,
+        "l": 54,
+        "pc": 17075,
+        "sp": 65438
+      },
+      "bytes": "E9",
+      "decoded": "PCHL",
+      "id": 118,
+      "image": "PLI2.OVL",
+      "kind": "jump",
+      "offset": 8371,
+      "step": 2477431,
+      "taken": true,
+      "target": 24630
+    },
+    "RET": {
+      "accesses": [
+        {
+          "address": 65438,
+          "kind": "read",
+          "value": 180
+        },
+        {
+          "address": 65439,
+          "kind": "read",
+          "value": 66
+        }
+      ],
+      "after": {
+        "AC": false,
+        "CY": false,
+        "P": false,
+        "S": true,
+        "Z": false,
+        "a": 254,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 0,
+        "h": 254,
+        "l": 118,
+        "pc": 17076,
+        "sp": 65440
+      },
+      "before": {
+        "AC": false,
+        "CY": false,
+        "P": false,
+        "S": true,
+        "Z": false,
+        "a": 254,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 0,
+        "h": 254,
+        "l": 118,
+        "pc": 24821,
+        "sp": 65438
+      },
+      "bytes": "C9",
+      "decoded": "RET",
+      "id": 118,
+      "image": "PLI2.OVL",
+      "kind": "return",
+      "offset": 16117,
+      "step": 2478443,
+      "taken": true,
+      "target": 17076
+    },
+    "child_CALL_words": [
+      {
+        "ret_reads": [
+          {
+            "address": 65436,
+            "value": 69
+          },
+          {
+            "address": 65437,
+            "value": 96
+          }
+        ],
+        "site": 24642,
+        "slot": 65436,
+        "writes": [
+          {
+            "address": 65437,
+            "new_value": 96
+          },
+          {
+            "address": 65436,
+            "new_value": 69
+          }
+        ]
+      },
+      {
+        "ret_reads": [
+          {
+            "address": 65436,
+            "value": 77
+          },
+          {
+            "address": 65437,
+            "value": 96
+          }
+        ],
+        "site": 24650,
+        "slot": 65436,
+        "writes": [
+          {
+            "address": 65437,
+            "new_value": 96
+          },
+          {
+            "address": 65436,
+            "new_value": 77
+          }
+        ]
+      },
+      {
+        "ret_reads": [
+          {
+            "address": 65436,
+            "value": 88
+          },
+          {
+            "address": 65437,
+            "value": 96
+          }
+        ],
+        "site": 24661,
+        "slot": 65436,
+        "writes": [
+          {
+            "address": 65437,
+            "new_value": 96
+          },
+          {
+            "address": 65436,
+            "new_value": 88
+          }
+        ]
+      },
+      {
+        "ret_reads": [
+          {
+            "address": 65436,
+            "value": 110
+          },
+          {
+            "address": 65437,
+            "value": 96
+          }
+        ],
+        "site": 24683,
+        "slot": 65436,
+        "writes": [
+          {
+            "address": 65437,
+            "new_value": 96
+          },
+          {
+            "address": 65436,
+            "new_value": 110
+          }
+        ]
+      },
+      {
+        "ret_reads": [
+          {
+            "address": 65436,
+            "value": 116
+          },
+          {
+            "address": 65437,
+            "value": 96
+          }
+        ],
+        "site": 24689,
+        "slot": 65436,
+        "writes": [
+          {
+            "address": 65437,
+            "new_value": 96
+          },
+          {
+            "address": 65436,
+            "new_value": 116
+          }
+        ]
+      }
+    ],
+    "continuation": 17076,
+    "gateway_id": 118,
+    "slot": 65438,
+    "software_word_last_writers": [
+      {
+        "image": "PLI2.OVL",
+        "offset": 8367,
+        "step": 2477429,
+        "value": 180
+      },
+      {
+        "image": "PLI2.OVL",
+        "offset": 8367,
+        "step": 2477429,
+        "value": 66
+      }
+    ],
+    "source": "OPTIMIST"
+  }
+]

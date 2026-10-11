@@ -1,0 +1,48 @@
+# Pass72 — k23 descriptor subset and software handler
+
+Baseline `b950f8558c56057c515f172bb32faec111dcacc9`. `PLI2.OVL+3E36 [3E36,3EF6)` now has a bounded partial faithful software-handler contract. The k23 descriptor predicate subset also independently closes. The gateway remains guest; no arbitrary callback or new common transaction semantics were introduced.
+
+Fresh counts MINIMAL/FIZZBUZ/PICTURE/FACTOR/OPTIMIST: 1/13/1/4/9, all 28 entered through gateway20B3 PCHL, with continuation42B4 last-written at20AF. RET3EF5 consumes that same low/high word, SP+=2. There is no private handler frame and no natural hardware CALL entry or nested gateway invocation in these handler windows. Bounds are stable at this evidence scope; the following3EF6 operation is excluded.
+
+Natural path families: {'AD0A_zero_mapped_nonzero_E7_generation': 11, 'AD0A_one_AD58_mapped_word_tag2A': 17}. Selector0 freshly acquires AD0C through047D and all11 cases return10; actual3660 bit selects the mapped-byte arm, which freshly calls04FF twice and supplies actual second A as E/C7 to7E05. Selector1 publishes fresh AD0C toAD58, calls3660, consumes actual A.bit0 throughRAR, then freshly paired-reads AD58/AD59 and passes low to7BCC. All17 take the clear arm. Load/store/JMP/RET preserve the actual child flags; RAR preserves NZPA and consumes incoming carry into A.
+
+The complete static CFG is retained in [cfg.json](cfg.json). Selector0 mapped047D other than10 calls1FB5 at3E8B, but that arm is unobserved in all28 invocations and unsupported. Other AD0A values and selector1 bit-set7E75 arm are also excluded. Supported synthetic mapped-byte-zero and actual3660-clear mapped-word/8072 routes are explicitly DEDUCED / STATIC / UNOBSERVED.
+
+New compact adapters: 7BCC saves C atAE14, freshly reads it with adjacentAE15, invokes canonical052C and passes actual HL as BC to7BB2. 7BB2 saves B then C atAE13/AE12, calls7A17, literal-four73CA (canonical73A7 clearing4/5), emits literal2A through canonical7B02, freshly rereads saved word and calls canonical785C. Existing structure acquisition/emission machinery is reused. 73CA is [73CA,73D0); 7BB2 [7BB2,7BCC); 7BCC [7BCC,7BDD).
+
+OPTIMIST naturally requires the nonzero-other AE04 arm of7A17. Its compact79AE adapter [79AE,79B6) supplies C=C5/E6 to canonical7903. Extended7A17 keeps the exact old zero/one paths; AE05=2 publishes1 before clearingAE04 and decrementingAE06. Other nonzeroAE04 calls79AE,79B6,79A2 in order. Synthetic cases prove zero/one/two/FF pending states and the previously unobserved AE05=2 write. Archived negative expectations for now-supported pending states were replaced with child-code corruption, while live-state rejection checks remain.
+
+The 50 k23 predicates comprise28 token05,11 token69 and11 tokenFB invocations. Descriptor pointers are57C7 (count1/token05),57C9 (count3/body69,0A,ED; natural mismatch stops at69), and fallback3BF3 (count1/tokenFB). The predicate decrements fresh cursorAD21, incrementsAD22, and transports the cursor through PUSH PSW/POP B into AD0B+processed. Literal047D consumes the actual decremented cursor; mismatch returns A0 with CMP flags, exhaustion returns A1 with fresh count-CPI flags. No source-language token meaning is assigned.
+
+Every natural FB case is first-use slot0: the predicate resetsAD15..AD19 toFF, normalizes tokenFB toslot0, recordsAD23=FF, writes processed position1 toAD15, calls0992 and publishes its actual cursor return toAD21. There are no natural repeated-cache paths. 0992 [0992,09BA) is a bounded state-driven backward mapped-count walk, not a token-name abstraction: AC3B=C, AC3C=1; actual04A9(AAB0 thenA6CF) result plus fresh count minus1 is published each iteration; nonzero decrements the cursor byte. Accepted scope terminates within256 iterations; infinite wrapping states reject transactionally. 04A9 [04A9,04BF) retains its paired read, zero-extension and final DAD flags.
+
+Scoped1DFF is independently executable only for AD1C=23 and the stated actual descriptor pointer/count/token families. Token69 match requiring later tokens, repeated-cache and other descriptor families remain unsupported. The full [1DFF,1FB5) procedure remains partial; only represented scoped bytes are promoted. No global1DFF or1FB5 Runner boundary is installed.
+
+Each native preparation uses copied state and validates the entire selected child chain before live effects. Own/child code, original continuation, exact gateway prefix and fresh AD1F, stack geometry, mapped/descriptor domain, structure/pending/output child scopes and scratch/table/code/sentinel exclusions are checked. Negative cases include late structure/stack alias, software continuation and child-code corruption, unsupported handler predicates/descriptors, and nonterminating0992 state. No CPU, CP/M, Runner, shared capture or common transaction semantics changed; the added software-witness verifier is coordinate-specific and leaves existing CALL/PCHL proof kinds intact. No FULL trigger fired.
+
+All28 natural handler root shadows and all50 predicate shadows independently match registers, flags, SP/PC, full64KiB RAM, ordered writes, surviving stack writers, child chronology, DMA/filesystem and service/record events. Canonical children are independently component-shadowed. Concrete CPU synthetic proofs: 630. Exhaustive journals remain under ignored `_build/host-compiler-pass-72`. Oracle queries:0.
+
+Knowledge accounting: {'transitions': {'RAW -> UNDERSTOOD': 190, 'STRUCTURED -> UNDERSTOOD': 203, 'DECODED -> UNDERSTOOD': 0}, 'evidence': {'OBSERVED': 365, 'DEDUCED STATIC UNOBSERVED': 28}, 'by_owner': {'PLI2.OVL+04A9': Counter(), 'PLI2.OVL+0992': Counter(), 'PLI2.OVL+1DFF': Counter({'STRUCTURED -> UNDERSTOOD': 203, 'RAW -> UNDERSTOOD': 3}), 'PLI2.OVL+3E36': Counter({'RAW -> UNDERSTOOD': 116}), 'PLI2.OVL+73CA': Counter({'RAW -> UNDERSTOOD': 6}), 'PLI2.OVL+79AE': Counter({'RAW -> UNDERSTOOD': 8}), 'PLI2.OVL+7A17': Counter({'RAW -> UNDERSTOOD': 14}), 'PLI2.OVL+7BB2': Counter({'RAW -> UNDERSTOOD': 26}), 'PLI2.OVL+7BCC': Counter({'RAW -> UNDERSTOOD': 17})}, 'no_unused_handler_or_general_predicate_promotion': True}. Prior general predicate STRUCTURED bytes and unused handler arms retain their baseline status; no bulk envelope promotion. Reviewed unrelated headers, especially047D, are preserved.
+
+Standalone and cumulative hybrids preserve exact REL/INT records, filesystem, console, milestones, BDOS chronology and warm boot. Measured cumulative results:
+- MINIMAL: guest 294445 -> 294362 (83 removed); host 92 -> 92; handler roots 1; REL `7339d230f13c2614f6b1acb632081959659d7292814c747f7853b6944e91f119`.
+- FIZZBUZ: guest 560189 -> 557928 (2261 removed); host 221 -> 215; handler roots 13; REL `68ec16931d4dae7a8f0831a29c9ae8b9ca139279f5104bb34e299644a8b2a203`.
+- PICTURE: guest 339852 -> 339572 (280 removed); host 79 -> 78; handler roots 1; REL `c02f738a7504384a236289633210d1bf4e7ea5391e51e091e373950eefacc4f1`.
+
+Pass69/70 are not silently reopened. Their common k23 predicate/handler prerequisites are now available, but the scoped gateway still needs an explicit native composition with its twelve-byte frame, handler software continuation and restore law. Other cross-source indices selecting256E/3FFD/6D47 remain independent. Recommend assessing that scoped gateway composition next, then reopening the blocked parents; rank382E as a separate bounded stack-argument policy after it. No widening to18B3.
+
+Implementation packet: 20990 bytes. Focused campaign and explicit regression timing are recorded separately. Final aggregate categories: build (all executable compilation), project (unit/runtime regressions), pass72 (new exhaustive contracts, canonical composition and cheap historical catalog assertion), diff-check (patch integrity), validation-runner-tests (catalog selection/progress compatibility). No chronological archived campaigns or ACTIVE core were added. V1 and single exact reconstruction run separately after annotation rendering; exact reconstruction94720 bytes.
+
+Pass67 remains the current certified FULL epoch. Pass72 FULL is **PENDING EXTERNAL EXECUTION**. Historical-full has103 selectable categories, preserving all98 certified Pass67 categories plus68–72; listing is not execution. No certification policy or old FULL receipt was changed.
+
+After publication, run:
+
+```sh
+python3 tools/annotated-assembly/run_host_compiler_regressions.py --profile historical-full --images /home/john/pli/cpm/pli80/DISK1 --output _build/host-compiler-pass-72/full-validation --workers 4
+```
+
+Protected `scripts/view-optimist.sh` and `local-icybox-full-0-verify.state` were untouched. No task-owned /tmp directory or _build artifact is committed.
+
+Final explicit regression receipt: profile legacy-categories, tier INCREMENTAL; 5 categories, 27 Python tests,39 Dune test stanzas,4 workers. Initially all passed; no reruns. Wall 459.688s; summed category time 459.965s. Focused proof time is separately recorded in focused-proof-timing.json.
+
+Pass57 retains its original catalog assertions at its published epoch through the existing durable frozen-catalog mechanism. The later7A17 extension is documented rather than weakening the old assertion. Local metadata wording distinguishes the software entry and scoped predicate counts from preserved older global evidence. Development corrections before the final aggregate: actual RAR branch polarity and a STA writer coordinate were corrected by independent CPU shadows. No pragmatic semantic shortcut was introduced; fidelity debt is the explicitly unsupported general predicate/handler arms and guest gateway composition.

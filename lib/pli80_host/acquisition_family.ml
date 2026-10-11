@@ -498,6 +498,72 @@ let run operation memory ~entry ~write ~compatibility ~adjust ~sp ~guard_field ~
   c(read !q.hl);hl(U.wrap(!q.hl+1));bc(read !q.hl lsl 8 lor(!q.bc land 255));a(read !q.de);add(!q.bc land 255);hl((!q.hl land 0xff00)lor !q.a);
   de(U.wrap(!q.de+1));a(read !q.de);let old= !q.a and v= !q.bc lsr 8 and cy=if !q.flags.carry then 1 else 0 in
   let sum=old+v+cy in a(B.wrap sum);q:={!q with R.flags=flags !q.a((old land 15)+(v land 15)+cy>15)(sum>255)};hl(!q.a lsl 8 lor(!q.hl land 255))
+ (* Pass72: bounded software handler; the nested gateway arm stays unsupported. *)
+ |0x04a9->
+  hl 0xabfa;put 0x04ac !q.hl(!q.bc land 255);pair 0xabfa;hl(!q.hl land 255);bc 0xaab0;dad !q.bc;
+  c(read !q.hl);bc(!q.bc land 255);hl 0xa6cf;dad !q.bc;a(read !q.hl)
+ |0x0992->
+  hl 0xac3b;put 0x0995 !q.hl(!q.bc land 255);hl 0xac3c;put 0x0999 !q.hl 1;
+  let rec walk left=need(left>0)"0992 bounded byte walk termination";
+   pair 0xac3b;c(!q.hl land 255);call 0x099f 0x04a9(fun()->pli2_output 0x04a9);
+   hl 0xac3c;add(read !q.hl);a(dec !q.a);put 0x09a7 !q.hl !q.a;c !q.a;a 0;cmp(!q.bc land 255);
+   if !q.flags.carry then(hl 0xac3b;let v=dec(read !q.hl)in put 0x09b2 !q.hl v;walk(left-1))
+   else a(read 0xac3b)in walk 256
+ |0x1dff->
+  need(read 0xad1c=23)"1DFF k23 scope";
+  let pointer=word 0xad1d in
+  need((pointer=0x57c7&&read pointer=1&&read(pointer+1)=5)||
+       (pointer=0x57c9&&read pointer=3&&read(pointer+1)=0x69)||
+       (pointer=0x3bf3&&read pointer=1&&read(pointer+1)=0xfb))"1DFF descriptor-family scope";
+  hl 0xad21;put 0x1e02 !q.hl(!q.bc land 255);pair 0xad1d;a(read !q.hl);put 0x1e07 0xad25 !q.a;
+  hl 0xad15;List.iteri(fun i site->if i>0 then hl(!q.hl+1);put site !q.hl 255)[0x1e0d;0x1e10;0x1e13;0x1e16;0x1e19];
+  hl 0xad22;put 0x1e1e !q.hl 0;hl(!q.hl-1);a(read !q.hl);put 0x1e22 0xad0b !q.a;
+  let rec scan left=need(left>0)"1DFF bounded descriptor loop";a(read 0xad25);cmp 0;
+   if !q.flags.zero then a 1 else(
+    hl 0xad25;let v=dec(read !q.hl)in put 0x1e30 !q.hl v;
+    pair 0xad22;hl(!q.hl land 255);bc 1;dad !q.bc;exchange();pair 0xad1d;dad !q.de;a(read !q.hl);put 0x1e40 0xad26 !q.a;
+    a(read 0xad21);a(dec !q.a);put 0x1e47 0xad21 !q.a;save 0x1e4a;
+    a(read 0xad22);a(inc !q.a);put 0x1e4f 0xad22 !q.a;c !q.a;bc(!q.bc land 255);hl 0xad0b;dad !q.bc;bc(pop());c(!q.bc lsr 8);put 0x1e5b !q.hl(!q.bc land 255);
+    a(read 0xad26);cmp 0xed;
+    if !q.flags.carry then(
+     pair 0xad21;c(!q.hl land 255);call 0x1e68 0x047d(fun()->pli2_output 0x047d);hl 0xad26;cmp(read !q.hl);
+     if !q.flags.zero then(need(read 0xad25=0)"1DFF literal continuation outside k23 scope";scan(left-1))else a 0
+    )else(
+     a(read 0xad26);cmp 0xed;need(not !q.flags.zero)"1DFF ED unsupported";
+     a(read 0xad26);cmp 0xee;need(not !q.flags.zero)"1DFF EE unsupported";
+     a(read 0xad26);cmp 0xf6;need(not !q.flags.carry) "1DFF nonFB token unsupported";
+     a(read 0xad26);cmp 0xfb;need(not !q.flags.carry) "1DFF nonFB token unsupported";
+     a(read 0xad26);sub 0xfb;put 0x1f40 0xad26 !q.a;c !q.a;bc(!q.bc land 255);hl 0xad15;dad !q.bc;a(read !q.hl);put 0x1f4b 0xad23 !q.a;cmp 255;
+     need !q.flags.zero "1DFF repeated-cache route outside scope";
+     pair 0xad26;hl(!q.hl land 255);bc 0xad15;dad !q.bc;a(read 0xad22);put 0x1fa4 !q.hl !q.a;
+     pair 0xad21;c(!q.hl land 255);call 0x1fa9 0x0992(fun()->pli2_output 0x0992);put 0x1fac 0xad21 !q.a;scan(left-1)))in scan 4
+ |0x3e36->
+  a(read 0xad0a);cmp 0;
+  if !q.flags.zero then(
+   pair 0xad0c;c(!q.hl land 255);call 0x3e42 0x047d(fun()->pli2_output 0x047d);cmp 10;
+   need !q.flags.zero "3E36 nested 1FB5 arm outside scope";
+   call 0x3e4a 0x3660(fun()->pli2_output 0x3660);rar();
+   if not !q.flags.carry then(
+    pair 0xad0c;c(!q.hl land 255);call 0x3e7b 0x052c(fun()->pli2_output 0x052c);exchange();c 4;
+    call 0x3e81 0x8072(fun()->pli2_output 0x8072))else(
+    pair 0xad0c;c(!q.hl land 255);call 0x3e55 0x04ff(fun()->pli2_output 0x04ff);cmp 0;
+    if !q.flags.zero then(e 7;c 0xa8;call 0x3e61 0x7b1b(fun()->pli2_output 0x7b1b))else(
+     pair 0xad0c;c(!q.hl land 255);call 0x3e6b 0x04ff(fun()->pli2_output 0x04ff);e !q.a;c 7;
+     call 0x3e71 0x7e05(fun()->pli2_output 0x7e05)))
+  )else(
+   a(read 0xad0a);cmp 1;need !q.flags.zero "3E36 other-selector arm outside scope";
+   a(read 0xad0c);put 0x3ec5 0xad58 !q.a;
+   call 0x3edd 0x3660(fun()->pli2_output 0x3660);rar();need(not !q.flags.carry)"3E36 7E75 arm outside scope";
+   pair 0xad58;c(!q.hl land 255);call 0x3ef2 0x7bcc(fun()->pli2_output 0x7bcc))
+ |0x7bcc->
+  hl 0xae14;put 0x7bcf !q.hl(!q.bc land 255);pair 0xae14;c(!q.hl land 255);
+  call 0x7bd4 0x052c(fun()->pli2_output 0x052c);bc !q.hl;call 0x7bd9 0x7bb2(fun()->pli2_output 0x7bb2)
+ |0x7bb2->
+  hl 0xae13;put 0x7bb5 !q.hl(!q.bc lsr 8);hl(!q.hl-1);put 0x7bb7 !q.hl(!q.bc land 255);
+  call 0x7bb8 0x7a17(fun()->pli2_output 0x7a17);call 0x7bbb 0x73ca(fun()->pli2_output 0x73ca);
+  c 0x2a;call 0x7bc0 0x7b02(fun()->pli2_output 0x7b02);pair 0xae12;bc !q.hl;
+  call 0x7bc8 0x785c(fun()->pli2_output 0x785c)
+ |0x73ca->c 4;call 0x73cc 0x73a7(fun()->pli2_output 0x73a7)
  |0x3d10->
   adjust ~site:0x5f10 ~delta:(-1);push 0x3d11 !q.hl;
   call 0x3d12 0x3bfb(fun()->pli2_output 0x3bfb);rar();need !q.flags.carry "3D10 unresolved 1FB5 gateway route";
@@ -763,13 +829,18 @@ let run operation memory ~entry ~write ~compatibility ~adjust ~sp ~guard_field ~
   if !q.flags.zero then(a(read 0xadca);rar();need(not !q.flags.carry)"7903 C1/E6 alternative";pair 0xae01;c(!q.hl land 255);call 0x792d 0x73a7(fun()->pli2_output 0x73a7));
   pair 0xae00;c(!q.hl land 255);pair 0xae01;exchange();call 0x7938 0x75ce(fun()->pli2_output 0x75ce)
  |0x79b6->e 4;c 0xc5;call 0x79ba 0x7903(fun()->pli2_output 0x7903)
+ |0x79ae->e 6;c 0xc5;call 0x79b2 0x7903(fun()->pli2_output 0x7903)
  |0x7a17->
   a(read 0xae04);cmp 0;
   if not !q.flags.zero then(
-   a(read 0xae04);cmp 1;need !q.flags.zero "7A17 AE04 other nonzero arm";
-   call 0x7a28 0x79b6(fun()->pli2_output 0x79b6);
-   a(read 0xae05);cmp 2;need(not !q.flags.zero)"7A17 AE05=2 alternative";
-   hl 0xae04;put 0x7a3b !q.hl 0;hl 0xae06;let v=dec(read !q.hl)in put 0x7a40 !q.hl v)
+   a(read 0xae04);cmp 1;
+   if !q.flags.zero then(
+    call 0x7a28 0x79b6(fun()->pli2_output 0x79b6);a(read 0xae05);cmp 2;
+    if !q.flags.zero then(hl 0xae05;put 0x7a36 !q.hl 1);
+    hl 0xae04;put 0x7a3b !q.hl 0;hl 0xae06;let v=dec(read !q.hl)in put 0x7a40 !q.hl v
+   )else(
+    call 0x7a44 0x79ae(fun()->pli2_output 0x79ae);call 0x7a47 0x79b6(fun()->pli2_output 0x79b6);
+    call 0x7a4a 0x79a2(fun()->pli2_output 0x79a2)))
  |0x7ac4->
   hl 0xae08;put 0x7ac7 !q.hl(!q.bc land 255);a(read 0xae08);cmp 7;
   if !q.flags.zero then call 0x7ad0 0x79e2 preparation79e2

@@ -146,6 +146,13 @@ def check_software_return(seed, images, originals):
         except (ValueError, KeyError) as error:
             require(False, f'{seed["id"]}: {error}')
         return
+    if proof.get('kind') == 'pass72_push_h_pchl':
+        from software_gateway_pass_72 import prove_gateway
+        try:
+            prove_gateway(seed, images, originals)
+        except (ValueError, KeyError) as error:
+            require(False, f'{seed["id"]}: {error}')
+        return
     call, writer, ret, relation = (proof[k] for k in ('call', 'writer', 'ret', 'relation'))
     for witness in (call, writer, ret, *proof.get('prefix', [])):
         origin = witness['origin']
@@ -215,7 +222,8 @@ def check_evidence(evidence, images, originals):
                     f'{seed["id"]}: caller bytes differ')
             if caller.get('transfer_kind') == 'PCHL':
                 proof = seed.get('software_return_sample') or {}
-                require(proof.get('kind') == 'pass67_push_h_pchl' and
+                require(((proof.get('kind') == 'pass67_push_h_pchl' and seed['id'] == 'PLI2.OVL+6EA5') or
+                         (proof.get('kind') == 'pass72_push_h_pchl' and seed['id'] == 'PLI2.OVL+3E36')) and
                         caller['image'] == 'PLI2.OVL' and offset == 0x20b3 and raw == b'\xe9',
                         f'{seed["id"]}: PCHL caller lacks canonical software proof')
             else:

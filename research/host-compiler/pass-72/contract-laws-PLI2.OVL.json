@@ -1,0 +1,92 @@
+{
+  "PLI2.OVL+04A9": {
+    "completeness": [
+      "stable",
+      "complete",
+      "complete"
+    ],
+    "contract": "Save C atABFA; independent paired ABFA read and zeroextension; BC=AAB0; DAD; fresh mapped byte ->C/B0; HL=A6CF; DAD; fresh table byte ->A. Exact DAD CY and preserved NZPA, other registers unchanged.",
+    "description": "Mapped A6CF byte acquisition",
+    "end": 1215
+  },
+  "PLI2.OVL+0992": {
+    "completeness": [
+      "stable",
+      "complete",
+      "complete"
+    ],
+    "contract": "Save C atAC3B; AC3C=1. Repeated fresh paired AC3B low ->canonical04A9. HL=AC3C; ADD fresh count; DCR A; publish count; C=A; A0 CMP C. Nonzero count DCR fresh AC3B and repeat, at most256 iterations in accepted scope; zero returns fresh AC3B in A. Byte wrapping, exact flags, ordered same-valued writes and child frames retained; nontermination fails staged scope.",
+    "description": "Bounded mapped-count backward walk",
+    "end": 2490
+  },
+  "PLI2.OVL+1DFF": {
+    "completeness": [
+      "stable",
+      "partial",
+      "partial"
+    ],
+    "contract": "AD1C=23, fresh descriptor pointer57C7/count1/token05,57C9/count3/token69 or3BF3/count1/tokenFB. Save input C toAD21, descriptor count toAD25; clear AD15..AD19 toFF; AD22=0; fresh AD21 ->AD0B. Fresh descriptor loop decrements AD25; independently paired AD22 plus1 and AD1D select token ->AD26. DCR fresh AD21, PUSH PSW, INR fresh AD22, zeroextended processed index, POP B transports cursor into positionsAD0B+index. Literal path canonical047D(actual cursor) CMP fresh token; mismatch A0 preserves CMP flags;05 match returnsA1 after fresh count CPI0;69 match is unsupported beyond the first token. FB follows exact ED/EE/F6/FB comparisons, normalizes slot to0, freshly reads AD15 ->AD23=FF, publishes processed position toAD15, invokes bounded0992 and publishes actual returned A toAD21. Next zero count returnsA1. Repeated-cache, ED..FA/FC..FF and other descriptors remain unsupported; no global native predicate root.",
+    "description": "Scoped k23 descriptor predicate",
+    "end": 8117
+  },
+  "PLI2.OVL+3E36": {
+    "completeness": [
+      "stable",
+      "partial",
+      "partial"
+    ],
+    "contract": "Software PCHL entry only from exact20AC/20AF/20B0/20B3 prefix, fresh AD1F=6036, continuation42B4. Fresh AD0A CPI0: zero reads AD0C low through canonical047D and requires actual A=10; otherwise unresolved nested1FB5 rejects. Actual3660 A.bit0 through RAR: clear reads fresh AD0C through052C, XCHG, C4 ->8072; set reads fresh AD0C through04FF, CPI0. Zero sends C=A8/E7 to7B1B; nonzero freshly acquires04FF again, E=actual A/C7 ->7E05. Nonzero AD0A is reread and CPI1; only1 supported: fresh AD0C ->AD58, actual3660/RAR must be clear, fresh paired AD58 low ->7BCC. Shared3EF5 RET consumes software PUSH continuation. Other-selector, nested-gateway and7E75 arms remain unsupported. Canonical child-domain guards inherited.",
+    "description": "Scoped mapped-state software handler",
+    "end": 16118
+  },
+  "PLI2.OVL+73CA": {
+    "completeness": [
+      "stable",
+      "complete",
+      "complete"
+    ],
+    "contract": "C=4; CALL canonical73A7, which clears indexed slots4/5; RET. Actual final registers/flags inherited, hardware CALL residue retained.",
+    "description": "Literal-four clear adapter",
+    "end": 29648
+  },
+  "PLI2.OVL+79AE": {
+    "completeness": [
+      "stable",
+      "complete",
+      "complete"
+    ],
+    "contract": "E=6; C=C5; CALL canonical7903; RET, actual child register/flag/state result retained.",
+    "description": "Literal C5 E6 adapter",
+    "end": 31158
+  },
+  "PLI2.OVL+7A17": {
+    "completeness": [
+      "stable",
+      "complete",
+      "complete"
+    ],
+    "contract": "Fresh AE04 CPI0, zero RET. Otherwise fresh AE04 CPI1. Equal: canonical79B6; fresh AE05 CPI2; equal publishes AE05=1; both publish AE04=0 then DCR fresh AE06 and return. Other nonzero: canonical79AE, canonical79B6, canonical79A2 in order. Existing zero/one contracts retained; new arms independently shadowed in Pass72. Canonical output scope and alias guards inherited.",
+    "description": "Extended pending-state preparation",
+    "end": 31310
+  },
+  "PLI2.OVL+7BB2": {
+    "completeness": [
+      "stable",
+      "complete",
+      "complete"
+    ],
+    "contract": "Save B at AE13 then C at AE12; canonical7A17; literal C4 adapter73CA clears4/5 through73A7; literal C2A ->canonical7B02; fresh paired AE12 ->BC ->canonical785C. Preserve scratch writes, canonical results and stack residue.",
+    "description": "Saved-word clear/tag/structure adapter",
+    "end": 31692
+  },
+  "PLI2.OVL+7BCC": {
+    "completeness": [
+      "stable",
+      "complete",
+      "complete"
+    ],
+    "contract": "Save C at AE14; fresh paired AE14, C=L ->canonical052C; BC=actual returned HL ->7BB2. RET, exact flags and CALL residue.",
+    "description": "Saved-selector mapped-word adapter",
+    "end": 31709
+  }
+}

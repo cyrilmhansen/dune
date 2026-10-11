@@ -257,3 +257,15 @@
 (executable
  (name gateway_fragment_proof)
  (libraries i8080))
+
+(executable
+ (name k23_handler_capture)
+ (libraries pli80 analysis runner unix))
+
+(executable
+ (name native_k23_handler)
+ (libraries pli80 analysis runner unix))
+
+(executable
+ (name k23_predicate_components)
+ (libraries pli80 analysis runner unix))

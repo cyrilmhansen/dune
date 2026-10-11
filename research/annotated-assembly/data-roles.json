@@ -3070,6 +3070,36 @@
       "width": 3,
       "role": "Synthetic-only saved B/C word and independently saved mapped selector for tag32 composition.",
       "scope": "Bounded Pass68 predicate handler and required descendants."
+    },
+    {
+      "id": "PLI2.OVL:handler_saved_selector",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "name": "handler_saved_selector",
+      "runtime_address": 44376,
+      "width": 2,
+      "role": "AD58 saved selector, AD59 independently read adjacent channel; only low becomes C.",
+      "scope": "Bounded Pass72 software handler and direct adapters."
+    },
+    {
+      "id": "PLI2.OVL:tag2A_saved_word",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "name": "tag2A_saved_word",
+      "runtime_address": 44562,
+      "width": 2,
+      "role": "B saved at AE13 then C at AE12, fresh word reread after preparation and tag emission.",
+      "scope": "Bounded Pass72 software handler and direct adapters."
+    },
+    {
+      "id": "PLI2.OVL:tag2A_mapped_selector",
+      "image": "PLI2.OVL",
+      "image_sha256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a",
+      "name": "tag2A_mapped_selector",
+      "runtime_address": 44564,
+      "width": 2,
+      "role": "C saved at AE14, independent paired AE14/AE15 acquisition; low forwarded to052C.",
+      "scope": "Bounded Pass72 software handler and direct adapters."
     }
   ]
 }

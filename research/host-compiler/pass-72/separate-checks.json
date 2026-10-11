@@ -1,0 +1,18 @@
+{
+  "exact_reconstruction": {
+    "passed": true,
+    "bytes": 94720,
+    "command": "python3 tools/annotated-assembly/verify.py --images /home/john/pli/cpm/pli80/DISK1 --write-progress"
+  },
+  "dynamic_progress": {
+    "passed": true,
+    "command": "python3 tools/annotated-assembly/minimal_dynamic_progress.py --output research/minimal-baseline/dynamic-progress.json"
+  },
+  "V1": {
+    "status": "passed",
+    "command": "python3 tools/annotated-assembly/test_decompilation_annotations.py -v",
+    "tests": 9,
+    "wall_seconds": 45.218
+  },
+  "metadata_notes": "Final coverage wording distinguishes software entry and scoped counts from earlier historical totals; final V1 and exact verifier passed. File-reader resource closure was checked by final report regeneration and focused assertions."
+}

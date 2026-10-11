@@ -2,6 +2,7 @@
 """Independent pending-selector ABI/state equations over full natural shadows."""
 import argparse,json,unittest
 from pathlib import Path
+from historical_catalog_epoch import frozen_catalog
 from run_pending_generation_pass_57 import prove,OUT,REPORT
 class Pending(unittest.TestCase):
  @classmethod
@@ -32,7 +33,7 @@ class Pending(unittest.TestCase):
   for name in ['single-hybrid-summary.json','cumulative-hybrid-summary.json']:
    q=json.loads((OUT/'proof'/name).read_text());self.assertTrue(q['all_passed']);self.assertEqual([p['result']['REL_sha256']for p in q['sources']],hashes)
  def test_catalog_scope_and_packet(self):
-  c={p['id']:p for p in json.loads(Path('research/annotated-assembly/procedures.json').read_text())['procedures']};self.assertEqual(c['PLI2.OVL+7AE4']['length'],30);self.assertEqual(c['PLI2.OVL+7A17']['completeness']['contract'],'partial');self.assertEqual(c['PLI2.OVL+7397']['completeness']['contract'],'complete');self.assertLess((REPORT/'implementation-packet.json').stat().st_size,28672)
+  c={p['id']:p for p in json.loads(Path('research/annotated-assembly/procedures.json').read_text())['procedures']};c=frozen_catalog(c,checkpoint='2c9bd0a2afa951080eaf57e2f73b797a1e0b1e13');self.assertEqual(c['PLI2.OVL+7AE4']['length'],30);self.assertEqual(c['PLI2.OVL+7A17']['completeness']['contract'],'partial');self.assertEqual(c['PLI2.OVL+7397']['completeness']['contract'],'complete');self.assertLess((REPORT/'implementation-packet.json').stat().st_size,28672)
  def test_semantic_extraction_is_documentation_only(self):
   s=json.loads((REPORT/'semantic-extraction.json').read_text());self.assertEqual(s['historical_root'],'PLI2.OVL+7AE4');self.assertEqual(set(s),{'historical_root','semantic_inputs','semantic_outputs','shared_historical_state','historical_mechanism','candidate_modern_operation','confidence','mir_relevance'})
 if __name__=='__main__':
