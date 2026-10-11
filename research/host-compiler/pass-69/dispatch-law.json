@@ -1,0 +1,69 @@
+{
+  "arithmetic": "HL=602B; DAD B twice; E=byte[HL]; INX H; D=byte[HL]; XCHG; PCHL",
+  "arms": [
+    {
+      "C": 0,
+      "child": "3B7A",
+      "entry": "3E05",
+      "selector": 0
+    },
+    {
+      "C": null,
+      "child": "3D10",
+      "entry": "3E0D",
+      "selector": 1
+    },
+    {
+      "C": 1,
+      "child": "3C27",
+      "entry": "3E13",
+      "selector": 2
+    },
+    {
+      "C": 0,
+      "child": "3C27",
+      "entry": "3E1B",
+      "selector": 3
+    },
+    {
+      "C": 1,
+      "child": "3B7A",
+      "entry": "3E23",
+      "selector": 4
+    }
+  ],
+  "continuation": "42B4",
+  "contract_status": "not closed; selectors2/4 require unresolved broad1FB5",
+  "entry_kind": "software PUSH-H/PCHL entry, not hardware CALL",
+  "extent": [
+    "3DE4",
+    "3E36"
+  ],
+  "gate": "actual canonical3660 returned A; RAR consumes old A.bit0 as CY; JNC bypasses optional37CB",
+  "gateway": [
+    "20AC LXI H,42B4",
+    "20AF PUSH H",
+    "20B0 LHLD AD1F",
+    "20B3 PCHL"
+  ],
+  "optional37CB": "STATIC UNOBSERVED within dispatcher; recursive helper, not promoted",
+  "selector_source": "fresh little-endian word AD0A/AD0B; low byte AD0A zeroextended in BC; AD0B discarded",
+  "shared_return": "3E35 RET reads original gateway PUSH word; finalSP=entrySP+2",
+  "table_bytes": "05600D6013601B602360",
+  "table_extent": [
+    "3E2B",
+    "3E35"
+  ],
+  "targets": [
+    24581,
+    24589,
+    24595,
+    24603,
+    24611
+  ],
+  "unobserved_selectors": [
+    0,
+    3
+  ],
+  "unsupported_selector_domain": ">=5; no native default installed"
+}

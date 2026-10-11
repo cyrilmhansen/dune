@@ -1,0 +1,6883 @@
+[
+  {
+    "children": [
+      {
+        "callsite": "PLI2.OVL+3DE4",
+        "input": {
+          "a": 0,
+          "b": 0,
+          "c": 5,
+          "d": 0,
+          "e": 3,
+          "flags": {
+            "auxiliary_carry": true,
+            "carry": false,
+            "parity": true,
+            "sign": false,
+            "zero": true
+          },
+          "h": 95,
+          "l": 228,
+          "pc": 22624,
+          "sp": 65478
+        },
+        "output": {
+          "a": 0,
+          "b": 0,
+          "c": 7,
+          "d": 0,
+          "e": 3,
+          "flags": {
+            "auxiliary_carry": true,
+            "carry": false,
+            "parity": true,
+            "sign": false,
+            "zero": true
+          },
+          "h": 169,
+          "l": 238,
+          "pc": 24551,
+          "sp": 65480
+        },
+        "return_site": "PLI2.OVL+3674",
+        "target": "PLI2.OVL+3660"
+      },
+      {
+        "callsite": "PLI2.OVL+3E0D",
+        "input": {
+          "a": 0,
+          "b": 0,
+          "c": 1,
+          "d": 96,
+          "e": 46,
+          "flags": {
+            "auxiliary_carry": true,
+            "carry": false,
+            "parity": true,
+            "sign": false,
+            "zero": true
+          },
+          "h": 96,
+          "l": 13,
+          "pc": 24336,
+          "sp": 65478
+        },
+        "output": {
+          "a": 0,
+          "b": 29,
+          "c": 10,
+          "d": 0,
+          "e": 0,
+          "flags": {
+            "auxiliary_carry": false,
+            "carry": false,
+            "parity": true,
+            "sign": true,
+            "zero": false
+          },
+          "h": 0,
+          "l": 1,
+          "pc": 24592,
+          "sp": 65480
+        },
+        "return_site": "PLI2.OVL+3DE3",
+        "target": "PLI2.OVL+3D10"
+      }
+    ],
+    "continuation": 17076,
+    "entry": {
+      "a": 0,
+      "auxiliary_carry": true,
+      "b": 0,
+      "c": 5,
+      "carry": false,
+      "d": 0,
+      "e": 3,
+      "h": 95,
+      "l": 228,
+      "parity": true,
+      "pc": 24548,
+      "sign": false,
+      "sp": 65480,
+      "zero": true
+    },
+    "gate": {
+      "after": {
+        "a": 0,
+        "b": 0,
+        "c": 7,
+        "d": 0,
+        "e": 3,
+        "flags": {
+          "auxiliary_carry": true,
+          "carry": false,
+          "parity": true,
+          "sign": false,
+          "zero": true
+        },
+        "h": 169,
+        "l": 238,
+        "pc": 24552,
+        "sp": 65480
+      },
+      "before": {
+        "a": 0,
+        "b": 0,
+        "c": 7,
+        "d": 0,
+        "e": 3,
+        "flags": {
+          "auxiliary_carry": true,
+          "carry": false,
+          "parity": true,
+          "sign": false,
+          "zero": true
+        },
+        "h": 169,
+        "l": 238,
+        "pc": 24551,
+        "sp": 65480
+      },
+      "bytes": "1F",
+      "call_return_address": null,
+      "control": {
+        "kind": "sequential"
+      },
+      "disassembly": "RAR",
+      "origin": {
+        "image": {
+          "drive": 0,
+          "identity": "0:0:PLI2.OVL",
+          "name": "PLI2.OVL",
+          "user": 0
+        },
+        "offset": 15847
+      },
+      "pc": 24551,
+      "pc_after": 24552,
+      "reads": [],
+      "runtime_pc": 24551,
+      "source": "memory",
+      "sp_after": 65480,
+      "sp_before": 65480,
+      "step_index": 738232,
+      "target_origin": null,
+      "writes": []
+    },
+    "gateway": [
+      {
+        "accesses": [],
+        "after": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 0,
+          "c": 5,
+          "carry": false,
+          "d": 0,
+          "e": 3,
+          "h": 66,
+          "l": 180,
+          "parity": true,
+          "pc": 17071,
+          "sign": false,
+          "sp": 65482,
+          "zero": true
+        },
+        "before": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 0,
+          "c": 5,
+          "carry": false,
+          "d": 0,
+          "e": 3,
+          "h": 87,
+          "l": 180,
+          "parity": true,
+          "pc": 17068,
+          "sign": false,
+          "sp": 65482,
+          "zero": true
+        },
+        "bytes": "21B442",
+        "image": "PLI2.OVL",
+        "instruction": "LXI H,42B4H",
+        "step": 738206
+      },
+      {
+        "accesses": [
+          {
+            "address": 65481,
+            "kind": "write",
+            "value": 66
+          },
+          {
+            "address": 65480,
+            "kind": "write",
+            "value": 180
+          }
+        ],
+        "after": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 0,
+          "c": 5,
+          "carry": false,
+          "d": 0,
+          "e": 3,
+          "h": 66,
+          "l": 180,
+          "parity": true,
+          "pc": 17072,
+          "sign": false,
+          "sp": 65480,
+          "zero": true
+        },
+        "before": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 0,
+          "c": 5,
+          "carry": false,
+          "d": 0,
+          "e": 3,
+          "h": 66,
+          "l": 180,
+          "parity": true,
+          "pc": 17071,
+          "sign": false,
+          "sp": 65482,
+          "zero": true
+        },
+        "bytes": "E5",
+        "image": "PLI2.OVL",
+        "instruction": "PUSH H",
+        "step": 738207
+      },
+      {
+        "accesses": [
+          {
+            "address": 44319,
+            "kind": "read",
+            "value": 228
+          },
+          {
+            "address": 44320,
+            "kind": "read",
+            "value": 95
+          }
+        ],
+        "after": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 0,
+          "c": 5,
+          "carry": false,
+          "d": 0,
+          "e": 3,
+          "h": 95,
+          "l": 228,
+          "parity": true,
+          "pc": 17075,
+          "sign": false,
+          "sp": 65480,
+          "zero": true
+        },
+        "before": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 0,
+          "c": 5,
+          "carry": false,
+          "d": 0,
+          "e": 3,
+          "h": 66,
+          "l": 180,
+          "parity": true,
+          "pc": 17072,
+          "sign": false,
+          "sp": 65480,
+          "zero": true
+        },
+        "bytes": "2A1FAD",
+        "image": "PLI2.OVL",
+        "instruction": "LHLD AD1FH",
+        "step": 738208
+      },
+      {
+        "accesses": [],
+        "after": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 0,
+          "c": 5,
+          "carry": false,
+          "d": 0,
+          "e": 3,
+          "h": 95,
+          "l": 228,
+          "parity": true,
+          "pc": 24548,
+          "sign": false,
+          "sp": 65480,
+          "zero": true
+        },
+        "before": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 0,
+          "c": 5,
+          "carry": false,
+          "d": 0,
+          "e": 3,
+          "h": 95,
+          "l": 228,
+          "parity": true,
+          "pc": 17075,
+          "sign": false,
+          "sp": 65480,
+          "zero": true
+        },
+        "bytes": "E9",
+        "image": "PLI2.OVL",
+        "instruction": "PCHL",
+        "step": 738209
+      }
+    ],
+    "gateway_calls": [],
+    "gateway_hardware_call": {
+      "accesses": [
+        {
+          "address": 65495,
+          "kind": "write",
+          "value": 67
+        },
+        {
+          "address": 65494,
+          "kind": "write",
+          "value": 76
+        }
+      ],
+      "after": {
+        "a": 4,
+        "auxiliary_carry": true,
+        "b": 0,
+        "c": 8,
+        "carry": false,
+        "d": 5,
+        "e": 1,
+        "h": 4,
+        "l": 8,
+        "parity": false,
+        "pc": 16821,
+        "sign": false,
+        "sp": 65494,
+        "zero": false
+      },
+      "before": {
+        "a": 4,
+        "auxiliary_carry": true,
+        "b": 0,
+        "c": 8,
+        "carry": false,
+        "d": 5,
+        "e": 1,
+        "h": 4,
+        "l": 8,
+        "parity": false,
+        "pc": 17225,
+        "sign": false,
+        "sp": 65496,
+        "zero": false
+      },
+      "bytes": "CDB541",
+      "image": "PLI2.OVL",
+      "instruction": "CALL 41B5H",
+      "step": 737824
+    },
+    "high_writer": {
+      "instruction": {
+        "accesses": [
+          {
+            "address": 65481,
+            "kind": "write",
+            "value": 66
+          },
+          {
+            "address": 65480,
+            "kind": "write",
+            "value": 180
+          }
+        ],
+        "after": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 0,
+          "c": 5,
+          "carry": false,
+          "d": 0,
+          "e": 3,
+          "h": 66,
+          "l": 180,
+          "parity": true,
+          "pc": 17072,
+          "sign": false,
+          "sp": 65480,
+          "zero": true
+        },
+        "before": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 0,
+          "c": 5,
+          "carry": false,
+          "d": 0,
+          "e": 3,
+          "h": 66,
+          "l": 180,
+          "parity": true,
+          "pc": 17071,
+          "sign": false,
+          "sp": 65482,
+          "zero": true
+        },
+        "bytes": "E5",
+        "image": "PLI2.OVL",
+        "instruction": "PUSH H",
+        "step": 738207
+      },
+      "value": 66
+    },
+    "id": "FIZZBUZ-1-witnesses",
+    "instruction_journal_sha256": "cbdab2bc68c3460bdbe63058194c956e4763122a3482f42493d4fde99489e14f",
+    "instructions": 3183,
+    "low_writer": {
+      "instruction": {
+        "accesses": [
+          {
+            "address": 65481,
+            "kind": "write",
+            "value": 66
+          },
+          {
+            "address": 65480,
+            "kind": "write",
+            "value": 180
+          }
+        ],
+        "after": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 0,
+          "c": 5,
+          "carry": false,
+          "d": 0,
+          "e": 3,
+          "h": 66,
+          "l": 180,
+          "parity": true,
+          "pc": 17072,
+          "sign": false,
+          "sp": 65480,
+          "zero": true
+        },
+        "before": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 0,
+          "c": 5,
+          "carry": false,
+          "d": 0,
+          "e": 3,
+          "h": 66,
+          "l": 180,
+          "parity": true,
+          "pc": 17071,
+          "sign": false,
+          "sp": 65482,
+          "zero": true
+        },
+        "bytes": "E5",
+        "image": "PLI2.OVL",
+        "instruction": "PUSH H",
+        "step": 738207
+      },
+      "value": 180
+    },
+    "ordered_writes_sha256": "8f5359b1aa1cb2a8d885ec1e6d8a29cf6355db0a0dd879e770c74911307aa20e",
+    "own_offsets": [
+      15844,
+      15847,
+      15848,
+      15861,
+      15864,
+      15865,
+      15867,
+      15870,
+      15871,
+      15872,
+      15873,
+      15874,
+      15875,
+      15876,
+      15885,
+      15888,
+      15925
+    ],
+    "ret": {
+      "after": {
+        "a": 0,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 0,
+        "flags": {
+          "auxiliary_carry": false,
+          "carry": false,
+          "parity": true,
+          "sign": true,
+          "zero": false
+        },
+        "h": 0,
+        "l": 1,
+        "pc": 17076,
+        "sp": 65482
+      },
+      "before": {
+        "a": 0,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 0,
+        "flags": {
+          "auxiliary_carry": false,
+          "carry": false,
+          "parity": true,
+          "sign": true,
+          "zero": false
+        },
+        "h": 0,
+        "l": 1,
+        "pc": 24629,
+        "sp": 65480
+      },
+      "bytes": "C9",
+      "call_return_address": null,
+      "control": {
+        "kind": "return",
+        "taken": true,
+        "target": 17076
+      },
+      "disassembly": "RET",
+      "origin": {
+        "image": {
+          "drive": 0,
+          "identity": "0:0:PLI2.OVL",
+          "name": "PLI2.OVL",
+          "user": 0
+        },
+        "offset": 15925
+      },
+      "pc": 24629,
+      "pc_after": 17076,
+      "reads": [
+        {
+          "address": 65480,
+          "value": 180
+        },
+        {
+          "address": 65481,
+          "value": 66
+        }
+      ],
+      "runtime_pc": 24629,
+      "source": "memory",
+      "sp_after": 65482,
+      "sp_before": 65480,
+      "step_index": 741392,
+      "target_origin": {
+        "image": {
+          "drive": 0,
+          "identity": "0:0:PLI2.OVL",
+          "name": "PLI2.OVL",
+          "user": 0
+        },
+        "offset": 8372
+      },
+      "writes": []
+    },
+    "selector": 1,
+    "source": "FIZZBUZ",
+    "stack_last_writers": {
+      "65457": {
+        "step": 741306,
+        "value": 70,
+        "writer": "PLI.COM+1157"
+      },
+      "65458": {
+        "step": 741306,
+        "value": 0,
+        "writer": "PLI.COM+1157"
+      },
+      "65459": {
+        "step": 741363,
+        "value": 72,
+        "writer": "PLI2.OVL+7545"
+      },
+      "65460": {
+        "step": 741363,
+        "value": 151,
+        "writer": "PLI2.OVL+7545"
+      },
+      "65461": {
+        "step": 741358,
+        "value": 86,
+        "writer": "PLI2.OVL+7553"
+      },
+      "65462": {
+        "step": 741358,
+        "value": 151,
+        "writer": "PLI2.OVL+7553"
+      },
+      "65463": {
+        "step": 741339,
+        "value": 116,
+        "writer": "PLI2.OVL+7671"
+      },
+      "65464": {
+        "step": 741339,
+        "value": 152,
+        "writer": "PLI2.OVL+7671"
+      },
+      "65465": {
+        "step": 740483,
+        "value": 85,
+        "writer": "PLI2.OVL+7852"
+      },
+      "65466": {
+        "step": 740483,
+        "value": 154,
+        "writer": "PLI2.OVL+7852"
+      },
+      "65467": {
+        "step": 740431,
+        "value": 112,
+        "writer": "PLI2.OVL+786D"
+      },
+      "65468": {
+        "step": 740431,
+        "value": 154,
+        "writer": "PLI2.OVL+786D"
+      },
+      "65469": {
+        "step": 740421,
+        "value": 33,
+        "writer": "PLI2.OVL+7C1E"
+      },
+      "65470": {
+        "step": 740421,
+        "value": 158,
+        "writer": "PLI2.OVL+7C1E"
+      },
+      "65471": {
+        "step": 739854,
+        "value": 50,
+        "writer": "PLI2.OVL+7C2F"
+      },
+      "65472": {
+        "step": 739854,
+        "value": 158,
+        "writer": "PLI2.OVL+7C2F"
+      },
+      "65473": {
+        "step": 739763,
+        "value": 152,
+        "writer": "PLI2.OVL+3D95"
+      },
+      "65474": {
+        "step": 739763,
+        "value": 95,
+        "writer": "PLI2.OVL+3D95"
+      },
+      "65475": {
+        "step": 738247,
+        "value": 13,
+        "writer": "PLI2.OVL+3D11"
+      },
+      "65476": {
+        "step": 738342,
+        "value": 1,
+        "writer": "PLI2.OVL+3D7B"
+      },
+      "65477": {
+        "step": 738344,
+        "value": 0,
+        "writer": "PLI2.OVL+3D7D"
+      },
+      "65478": {
+        "step": 738245,
+        "value": 16,
+        "writer": "PLI2.OVL+3E0D"
+      },
+      "65479": {
+        "step": 738245,
+        "value": 96,
+        "writer": "PLI2.OVL+3E0D"
+      }
+    }
+  },
+  {
+    "children": [
+      {
+        "callsite": "PLI2.OVL+3DE4",
+        "input": {
+          "a": 0,
+          "b": 0,
+          "c": 0,
+          "d": 0,
+          "e": 6,
+          "flags": {
+            "auxiliary_carry": true,
+            "carry": false,
+            "parity": true,
+            "sign": false,
+            "zero": true
+          },
+          "h": 95,
+          "l": 228,
+          "pc": 22624,
+          "sp": 65452
+        },
+        "output": {
+          "a": 0,
+          "b": 0,
+          "c": 1,
+          "d": 0,
+          "e": 6,
+          "flags": {
+            "auxiliary_carry": true,
+            "carry": false,
+            "parity": true,
+            "sign": false,
+            "zero": true
+          },
+          "h": 169,
+          "l": 232,
+          "pc": 24551,
+          "sp": 65454
+        },
+        "return_site": "PLI2.OVL+3674",
+        "target": "PLI2.OVL+3660"
+      },
+      {
+        "callsite": "PLI2.OVL+3E15",
+        "input": {
+          "a": 0,
+          "b": 0,
+          "c": 1,
+          "d": 96,
+          "e": 48,
+          "flags": {
+            "auxiliary_carry": true,
+            "carry": false,
+            "parity": true,
+            "sign": false,
+            "zero": true
+          },
+          "h": 96,
+          "l": 19,
+          "pc": 24103,
+          "sp": 65452
+        },
+        "output": {
+          "a": 0,
+          "b": 29,
+          "c": 10,
+          "d": 0,
+          "e": 0,
+          "flags": {
+            "auxiliary_carry": false,
+            "carry": false,
+            "parity": true,
+            "sign": true,
+            "zero": false
+          },
+          "h": 88,
+          "l": 1,
+          "pc": 24600,
+          "sp": 65454
+        },
+        "return_site": "PLI2.OVL+3D0F",
+        "target": "PLI2.OVL+3C27"
+      }
+    ],
+    "continuation": 17076,
+    "entry": {
+      "a": 0,
+      "auxiliary_carry": true,
+      "b": 0,
+      "c": 0,
+      "carry": false,
+      "d": 0,
+      "e": 6,
+      "h": 95,
+      "l": 228,
+      "parity": true,
+      "pc": 24548,
+      "sign": false,
+      "sp": 65454,
+      "zero": true
+    },
+    "gate": {
+      "after": {
+        "a": 0,
+        "b": 0,
+        "c": 1,
+        "d": 0,
+        "e": 6,
+        "flags": {
+          "auxiliary_carry": true,
+          "carry": false,
+          "parity": true,
+          "sign": false,
+          "zero": true
+        },
+        "h": 169,
+        "l": 232,
+        "pc": 24552,
+        "sp": 65454
+      },
+      "before": {
+        "a": 0,
+        "b": 0,
+        "c": 1,
+        "d": 0,
+        "e": 6,
+        "flags": {
+          "auxiliary_carry": true,
+          "carry": false,
+          "parity": true,
+          "sign": false,
+          "zero": true
+        },
+        "h": 169,
+        "l": 232,
+        "pc": 24551,
+        "sp": 65454
+      },
+      "bytes": "1F",
+      "call_return_address": null,
+      "control": {
+        "kind": "sequential"
+      },
+      "disassembly": "RAR",
+      "origin": {
+        "image": {
+          "drive": 0,
+          "identity": "0:0:PLI2.OVL",
+          "name": "PLI2.OVL",
+          "user": 0
+        },
+        "offset": 15847
+      },
+      "pc": 24551,
+      "pc_after": 24552,
+      "reads": [],
+      "runtime_pc": 24551,
+      "source": "memory",
+      "sp_after": 65454,
+      "sp_before": 65454,
+      "step_index": 1075527,
+      "target_origin": null,
+      "writes": []
+    },
+    "gateway": [
+      {
+        "accesses": [],
+        "after": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 0,
+          "c": 0,
+          "carry": false,
+          "d": 0,
+          "e": 6,
+          "h": 66,
+          "l": 180,
+          "parity": true,
+          "pc": 17071,
+          "sign": false,
+          "sp": 65456,
+          "zero": true
+        },
+        "before": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 0,
+          "c": 0,
+          "carry": false,
+          "d": 0,
+          "e": 6,
+          "h": 87,
+          "l": 187,
+          "parity": true,
+          "pc": 17068,
+          "sign": false,
+          "sp": 65456,
+          "zero": true
+        },
+        "bytes": "21B442",
+        "image": "PLI2.OVL",
+        "instruction": "LXI H,42B4H",
+        "step": 1075501
+      },
+      {
+        "accesses": [
+          {
+            "address": 65455,
+            "kind": "write",
+            "value": 66
+          },
+          {
+            "address": 65454,
+            "kind": "write",
+            "value": 180
+          }
+        ],
+        "after": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 0,
+          "c": 0,
+          "carry": false,
+          "d": 0,
+          "e": 6,
+          "h": 66,
+          "l": 180,
+          "parity": true,
+          "pc": 17072,
+          "sign": false,
+          "sp": 65454,
+          "zero": true
+        },
+        "before": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 0,
+          "c": 0,
+          "carry": false,
+          "d": 0,
+          "e": 6,
+          "h": 66,
+          "l": 180,
+          "parity": true,
+          "pc": 17071,
+          "sign": false,
+          "sp": 65456,
+          "zero": true
+        },
+        "bytes": "E5",
+        "image": "PLI2.OVL",
+        "instruction": "PUSH H",
+        "step": 1075502
+      },
+      {
+        "accesses": [
+          {
+            "address": 44319,
+            "kind": "read",
+            "value": 228
+          },
+          {
+            "address": 44320,
+            "kind": "read",
+            "value": 95
+          }
+        ],
+        "after": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 0,
+          "c": 0,
+          "carry": false,
+          "d": 0,
+          "e": 6,
+          "h": 95,
+          "l": 228,
+          "parity": true,
+          "pc": 17075,
+          "sign": false,
+          "sp": 65454,
+          "zero": true
+        },
+        "before": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 0,
+          "c": 0,
+          "carry": false,
+          "d": 0,
+          "e": 6,
+          "h": 66,
+          "l": 180,
+          "parity": true,
+          "pc": 17072,
+          "sign": false,
+          "sp": 65454,
+          "zero": true
+        },
+        "bytes": "2A1FAD",
+        "image": "PLI2.OVL",
+        "instruction": "LHLD AD1FH",
+        "step": 1075503
+      },
+      {
+        "accesses": [],
+        "after": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 0,
+          "c": 0,
+          "carry": false,
+          "d": 0,
+          "e": 6,
+          "h": 95,
+          "l": 228,
+          "parity": true,
+          "pc": 24548,
+          "sign": false,
+          "sp": 65454,
+          "zero": true
+        },
+        "before": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 0,
+          "c": 0,
+          "carry": false,
+          "d": 0,
+          "e": 6,
+          "h": 95,
+          "l": 228,
+          "parity": true,
+          "pc": 17075,
+          "sign": false,
+          "sp": 65454,
+          "zero": true
+        },
+        "bytes": "E9",
+        "image": "PLI2.OVL",
+        "instruction": "PCHL",
+        "step": 1075504
+      }
+    ],
+    "gateway_calls": [
+      {
+        "callsite": "PLI2.OVL+3CAE",
+        "input": {
+          "a": 0,
+          "b": 0,
+          "c": 96,
+          "d": 96,
+          "e": 48,
+          "flags": {
+            "auxiliary_carry": true,
+            "carry": false,
+            "parity": true,
+            "sign": false,
+            "zero": true
+          },
+          "h": 95,
+          "l": 96,
+          "pc": 16821,
+          "sp": 65448
+        },
+        "step": 1075572
+      }
+    ],
+    "gateway_hardware_call": {
+      "accesses": [
+        {
+          "address": 65469,
+          "kind": "write",
+          "value": 67
+        },
+        {
+          "address": 65468,
+          "kind": "write",
+          "value": 76
+        }
+      ],
+      "after": {
+        "a": 7,
+        "auxiliary_carry": true,
+        "b": 0,
+        "c": 101,
+        "carry": false,
+        "d": 23,
+        "e": 2,
+        "h": 7,
+        "l": 101,
+        "parity": false,
+        "pc": 16821,
+        "sign": false,
+        "sp": 65468,
+        "zero": false
+      },
+      "before": {
+        "a": 7,
+        "auxiliary_carry": true,
+        "b": 0,
+        "c": 101,
+        "carry": false,
+        "d": 23,
+        "e": 2,
+        "h": 7,
+        "l": 101,
+        "parity": false,
+        "pc": 17225,
+        "sign": false,
+        "sp": 65470,
+        "zero": false
+      },
+      "bytes": "CDB541",
+      "image": "PLI2.OVL",
+      "instruction": "CALL 41B5H",
+      "step": 1074647
+    },
+    "high_writer": {
+      "instruction": {
+        "accesses": [
+          {
+            "address": 65455,
+            "kind": "write",
+            "value": 66
+          },
+          {
+            "address": 65454,
+            "kind": "write",
+            "value": 180
+          }
+        ],
+        "after": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 0,
+          "c": 0,
+          "carry": false,
+          "d": 0,
+          "e": 6,
+          "h": 66,
+          "l": 180,
+          "parity": true,
+          "pc": 17072,
+          "sign": false,
+          "sp": 65454,
+          "zero": true
+        },
+        "before": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 0,
+          "c": 0,
+          "carry": false,
+          "d": 0,
+          "e": 6,
+          "h": 66,
+          "l": 180,
+          "parity": true,
+          "pc": 17071,
+          "sign": false,
+          "sp": 65456,
+          "zero": true
+        },
+        "bytes": "E5",
+        "image": "PLI2.OVL",
+        "instruction": "PUSH H",
+        "step": 1075502
+      },
+      "value": 66
+    },
+    "id": "FIZZBUZ-2-witnesses",
+    "instruction_journal_sha256": "7c8319ffd2818855793d59588a680816392abe69fec9f3459954b07fb6b08f45",
+    "instructions": 4063,
+    "low_writer": {
+      "instruction": {
+        "accesses": [
+          {
+            "address": 65455,
+            "kind": "write",
+            "value": 66
+          },
+          {
+            "address": 65454,
+            "kind": "write",
+            "value": 180
+          }
+        ],
+        "after": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 0,
+          "c": 0,
+          "carry": false,
+          "d": 0,
+          "e": 6,
+          "h": 66,
+          "l": 180,
+          "parity": true,
+          "pc": 17072,
+          "sign": false,
+          "sp": 65454,
+          "zero": true
+        },
+        "before": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 0,
+          "c": 0,
+          "carry": false,
+          "d": 0,
+          "e": 6,
+          "h": 66,
+          "l": 180,
+          "parity": true,
+          "pc": 17071,
+          "sign": false,
+          "sp": 65456,
+          "zero": true
+        },
+        "bytes": "E5",
+        "image": "PLI2.OVL",
+        "instruction": "PUSH H",
+        "step": 1075502
+      },
+      "value": 180
+    },
+    "ordered_writes_sha256": "49edb15ceb8fe3788b62cb20c6faf1dae3a35959793c40cf850bc65451690b30",
+    "own_offsets": [
+      15844,
+      15847,
+      15848,
+      15861,
+      15864,
+      15865,
+      15867,
+      15870,
+      15871,
+      15872,
+      15873,
+      15874,
+      15875,
+      15876,
+      15891,
+      15893,
+      15896,
+      15925
+    ],
+    "ret": {
+      "after": {
+        "a": 0,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 0,
+        "flags": {
+          "auxiliary_carry": false,
+          "carry": false,
+          "parity": true,
+          "sign": true,
+          "zero": false
+        },
+        "h": 88,
+        "l": 1,
+        "pc": 17076,
+        "sp": 65456
+      },
+      "before": {
+        "a": 0,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 0,
+        "flags": {
+          "auxiliary_carry": false,
+          "carry": false,
+          "parity": true,
+          "sign": true,
+          "zero": false
+        },
+        "h": 88,
+        "l": 1,
+        "pc": 24629,
+        "sp": 65454
+      },
+      "bytes": "C9",
+      "call_return_address": null,
+      "control": {
+        "kind": "return",
+        "taken": true,
+        "target": 17076
+      },
+      "disassembly": "RET",
+      "origin": {
+        "image": {
+          "drive": 0,
+          "identity": "0:0:PLI2.OVL",
+          "name": "PLI2.OVL",
+          "user": 0
+        },
+        "offset": 15925
+      },
+      "pc": 24629,
+      "pc_after": 17076,
+      "reads": [
+        {
+          "address": 65454,
+          "value": 180
+        },
+        {
+          "address": 65455,
+          "value": 66
+        }
+      ],
+      "runtime_pc": 24629,
+      "source": "memory",
+      "sp_after": 65456,
+      "sp_before": 65454,
+      "step_index": 1079567,
+      "target_origin": {
+        "image": {
+          "drive": 0,
+          "identity": "0:0:PLI2.OVL",
+          "name": "PLI2.OVL",
+          "user": 0
+        },
+        "offset": 8372
+      },
+      "writes": []
+    },
+    "selector": 2,
+    "source": "FIZZBUZ",
+    "stack_last_writers": {
+      "65416": {
+        "step": 1077311,
+        "value": 71,
+        "writer": "PLI.COM+1157"
+      },
+      "65417": {
+        "step": 1077311,
+        "value": 0,
+        "writer": "PLI.COM+1157"
+      },
+      "65418": {
+        "step": 1077368,
+        "value": 72,
+        "writer": "PLI2.OVL+7545"
+      },
+      "65419": {
+        "step": 1077368,
+        "value": 151,
+        "writer": "PLI2.OVL+7545"
+      },
+      "65420": {
+        "step": 1077363,
+        "value": 86,
+        "writer": "PLI2.OVL+7553"
+      },
+      "65421": {
+        "step": 1077363,
+        "value": 151,
+        "writer": "PLI2.OVL+7553"
+      },
+      "65422": {
+        "step": 1077344,
+        "value": 116,
+        "writer": "PLI2.OVL+7671"
+      },
+      "65423": {
+        "step": 1077344,
+        "value": 152,
+        "writer": "PLI2.OVL+7671"
+      },
+      "65424": {
+        "step": 1076488,
+        "value": 85,
+        "writer": "PLI2.OVL+7852"
+      },
+      "65425": {
+        "step": 1076488,
+        "value": 154,
+        "writer": "PLI2.OVL+7852"
+      },
+      "65426": {
+        "step": 1076436,
+        "value": 112,
+        "writer": "PLI2.OVL+786D"
+      },
+      "65427": {
+        "step": 1076436,
+        "value": 154,
+        "writer": "PLI2.OVL+786D"
+      },
+      "65428": {
+        "step": 1076426,
+        "value": 203,
+        "writer": "PLI2.OVL+7BC8"
+      },
+      "65429": {
+        "step": 1076426,
+        "value": 157,
+        "writer": "PLI2.OVL+7BC8"
+      },
+      "65430": {
+        "step": 1075939,
+        "value": 220,
+        "writer": "PLI2.OVL+7BD9"
+      },
+      "65431": {
+        "step": 1075939,
+        "value": 157,
+        "writer": "PLI2.OVL+7BD9"
+      },
+      "65432": {
+        "step": 1079487,
+        "value": 70,
+        "writer": "PLI.COM+1157"
+      },
+      "65433": {
+        "step": 1079487,
+        "value": 0,
+        "writer": "PLI.COM+1157"
+      },
+      "65434": {
+        "step": 1079539,
+        "value": 72,
+        "writer": "PLI2.OVL+7545"
+      },
+      "65435": {
+        "step": 1079539,
+        "value": 151,
+        "writer": "PLI2.OVL+7545"
+      },
+      "65436": {
+        "step": 1079534,
+        "value": 86,
+        "writer": "PLI2.OVL+7553"
+      },
+      "65437": {
+        "step": 1079534,
+        "value": 151,
+        "writer": "PLI2.OVL+7553"
+      },
+      "65438": {
+        "step": 1079515,
+        "value": 116,
+        "writer": "PLI2.OVL+7671"
+      },
+      "65439": {
+        "step": 1079515,
+        "value": 152,
+        "writer": "PLI2.OVL+7671"
+      },
+      "65440": {
+        "step": 1078664,
+        "value": 85,
+        "writer": "PLI2.OVL+7852"
+      },
+      "65441": {
+        "step": 1078664,
+        "value": 154,
+        "writer": "PLI2.OVL+7852"
+      },
+      "65442": {
+        "step": 1078612,
+        "value": 112,
+        "writer": "PLI2.OVL+786D"
+      },
+      "65443": {
+        "step": 1078612,
+        "value": 154,
+        "writer": "PLI2.OVL+786D"
+      },
+      "65444": {
+        "step": 1078602,
+        "value": 33,
+        "writer": "PLI2.OVL+7C1E"
+      },
+      "65445": {
+        "step": 1078602,
+        "value": 158,
+        "writer": "PLI2.OVL+7C1E"
+      },
+      "65446": {
+        "step": 1078153,
+        "value": 50,
+        "writer": "PLI2.OVL+7C2F"
+      },
+      "65447": {
+        "step": 1078153,
+        "value": 158,
+        "writer": "PLI2.OVL+7C2F"
+      },
+      "65448": {
+        "step": 1078062,
+        "value": 211,
+        "writer": "PLI2.OVL+3CD0"
+      },
+      "65449": {
+        "step": 1078062,
+        "value": 94,
+        "writer": "PLI2.OVL+3CD0"
+      },
+      "65450": {
+        "step": 1075544,
+        "value": 1,
+        "writer": "PLI2.OVL+3C29"
+      },
+      "65451": {
+        "step": 1075511,
+        "value": 88,
+        "writer": "PLI2.OVL+366E"
+      },
+      "65452": {
+        "step": 1075541,
+        "value": 24,
+        "writer": "PLI2.OVL+3E15"
+      },
+      "65453": {
+        "step": 1075541,
+        "value": 96,
+        "writer": "PLI2.OVL+3E15"
+      }
+    }
+  },
+  {
+    "children": [
+      {
+        "callsite": "PLI2.OVL+3DE4",
+        "input": {
+          "a": 0,
+          "b": 0,
+          "c": 5,
+          "d": 0,
+          "e": 3,
+          "flags": {
+            "auxiliary_carry": true,
+            "carry": false,
+            "parity": true,
+            "sign": false,
+            "zero": true
+          },
+          "h": 95,
+          "l": 228,
+          "pc": 22624,
+          "sp": 65478
+        },
+        "output": {
+          "a": 0,
+          "b": 0,
+          "c": 7,
+          "d": 0,
+          "e": 3,
+          "flags": {
+            "auxiliary_carry": true,
+            "carry": false,
+            "parity": true,
+            "sign": false,
+            "zero": true
+          },
+          "h": 169,
+          "l": 238,
+          "pc": 24551,
+          "sp": 65480
+        },
+        "return_site": "PLI2.OVL+3674",
+        "target": "PLI2.OVL+3660"
+      },
+      {
+        "callsite": "PLI2.OVL+3E0D",
+        "input": {
+          "a": 0,
+          "b": 0,
+          "c": 1,
+          "d": 96,
+          "e": 46,
+          "flags": {
+            "auxiliary_carry": true,
+            "carry": false,
+            "parity": true,
+            "sign": false,
+            "zero": true
+          },
+          "h": 96,
+          "l": 13,
+          "pc": 24336,
+          "sp": 65478
+        },
+        "output": {
+          "a": 0,
+          "b": 29,
+          "c": 10,
+          "d": 0,
+          "e": 0,
+          "flags": {
+            "auxiliary_carry": false,
+            "carry": false,
+            "parity": true,
+            "sign": true,
+            "zero": false
+          },
+          "h": 0,
+          "l": 7,
+          "pc": 24592,
+          "sp": 65480
+        },
+        "return_site": "PLI2.OVL+3DE3",
+        "target": "PLI2.OVL+3D10"
+      }
+    ],
+    "continuation": 17076,
+    "entry": {
+      "a": 0,
+      "auxiliary_carry": true,
+      "b": 0,
+      "c": 5,
+      "carry": false,
+      "d": 0,
+      "e": 3,
+      "h": 95,
+      "l": 228,
+      "parity": true,
+      "pc": 24548,
+      "sign": false,
+      "sp": 65480,
+      "zero": true
+    },
+    "gate": {
+      "after": {
+        "a": 0,
+        "b": 0,
+        "c": 7,
+        "d": 0,
+        "e": 3,
+        "flags": {
+          "auxiliary_carry": true,
+          "carry": false,
+          "parity": true,
+          "sign": false,
+          "zero": true
+        },
+        "h": 169,
+        "l": 238,
+        "pc": 24552,
+        "sp": 65480
+      },
+      "before": {
+        "a": 0,
+        "b": 0,
+        "c": 7,
+        "d": 0,
+        "e": 3,
+        "flags": {
+          "auxiliary_carry": true,
+          "carry": false,
+          "parity": true,
+          "sign": false,
+          "zero": true
+        },
+        "h": 169,
+        "l": 238,
+        "pc": 24551,
+        "sp": 65480
+      },
+      "bytes": "1F",
+      "call_return_address": null,
+      "control": {
+        "kind": "sequential"
+      },
+      "disassembly": "RAR",
+      "origin": {
+        "image": {
+          "drive": 0,
+          "identity": "0:0:PLI2.OVL",
+          "name": "PLI2.OVL",
+          "user": 0
+        },
+        "offset": 15847
+      },
+      "pc": 24551,
+      "pc_after": 24552,
+      "reads": [],
+      "runtime_pc": 24551,
+      "source": "memory",
+      "sp_after": 65480,
+      "sp_before": 65480,
+      "step_index": 420847,
+      "target_origin": null,
+      "writes": []
+    },
+    "gateway": [
+      {
+        "accesses": [],
+        "after": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 0,
+          "c": 5,
+          "carry": false,
+          "d": 0,
+          "e": 3,
+          "h": 66,
+          "l": 180,
+          "parity": true,
+          "pc": 17071,
+          "sign": false,
+          "sp": 65482,
+          "zero": true
+        },
+        "before": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 0,
+          "c": 5,
+          "carry": false,
+          "d": 0,
+          "e": 3,
+          "h": 87,
+          "l": 180,
+          "parity": true,
+          "pc": 17068,
+          "sign": false,
+          "sp": 65482,
+          "zero": true
+        },
+        "bytes": "21B442",
+        "image": "PLI2.OVL",
+        "instruction": "LXI H,42B4H",
+        "step": 420821
+      },
+      {
+        "accesses": [
+          {
+            "address": 65481,
+            "kind": "write",
+            "value": 66
+          },
+          {
+            "address": 65480,
+            "kind": "write",
+            "value": 180
+          }
+        ],
+        "after": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 0,
+          "c": 5,
+          "carry": false,
+          "d": 0,
+          "e": 3,
+          "h": 66,
+          "l": 180,
+          "parity": true,
+          "pc": 17072,
+          "sign": false,
+          "sp": 65480,
+          "zero": true
+        },
+        "before": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 0,
+          "c": 5,
+          "carry": false,
+          "d": 0,
+          "e": 3,
+          "h": 66,
+          "l": 180,
+          "parity": true,
+          "pc": 17071,
+          "sign": false,
+          "sp": 65482,
+          "zero": true
+        },
+        "bytes": "E5",
+        "image": "PLI2.OVL",
+        "instruction": "PUSH H",
+        "step": 420822
+      },
+      {
+        "accesses": [
+          {
+            "address": 44319,
+            "kind": "read",
+            "value": 228
+          },
+          {
+            "address": 44320,
+            "kind": "read",
+            "value": 95
+          }
+        ],
+        "after": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 0,
+          "c": 5,
+          "carry": false,
+          "d": 0,
+          "e": 3,
+          "h": 95,
+          "l": 228,
+          "parity": true,
+          "pc": 17075,
+          "sign": false,
+          "sp": 65480,
+          "zero": true
+        },
+        "before": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 0,
+          "c": 5,
+          "carry": false,
+          "d": 0,
+          "e": 3,
+          "h": 66,
+          "l": 180,
+          "parity": true,
+          "pc": 17072,
+          "sign": false,
+          "sp": 65480,
+          "zero": true
+        },
+        "bytes": "2A1FAD",
+        "image": "PLI2.OVL",
+        "instruction": "LHLD AD1FH",
+        "step": 420823
+      },
+      {
+        "accesses": [],
+        "after": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 0,
+          "c": 5,
+          "carry": false,
+          "d": 0,
+          "e": 3,
+          "h": 95,
+          "l": 228,
+          "parity": true,
+          "pc": 24548,
+          "sign": false,
+          "sp": 65480,
+          "zero": true
+        },
+        "before": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 0,
+          "c": 5,
+          "carry": false,
+          "d": 0,
+          "e": 3,
+          "h": 95,
+          "l": 228,
+          "parity": true,
+          "pc": 17075,
+          "sign": false,
+          "sp": 65480,
+          "zero": true
+        },
+        "bytes": "E9",
+        "image": "PLI2.OVL",
+        "instruction": "PCHL",
+        "step": 420824
+      }
+    ],
+    "gateway_calls": [],
+    "gateway_hardware_call": {
+      "accesses": [
+        {
+          "address": 65495,
+          "kind": "write",
+          "value": 67
+        },
+        {
+          "address": 65494,
+          "kind": "write",
+          "value": 76
+        }
+      ],
+      "after": {
+        "a": 4,
+        "auxiliary_carry": true,
+        "b": 0,
+        "c": 8,
+        "carry": false,
+        "d": 173,
+        "e": 21,
+        "h": 4,
+        "l": 8,
+        "parity": false,
+        "pc": 16821,
+        "sign": false,
+        "sp": 65494,
+        "zero": false
+      },
+      "before": {
+        "a": 4,
+        "auxiliary_carry": true,
+        "b": 0,
+        "c": 8,
+        "carry": false,
+        "d": 173,
+        "e": 21,
+        "h": 4,
+        "l": 8,
+        "parity": false,
+        "pc": 17225,
+        "sign": false,
+        "sp": 65496,
+        "zero": false
+      },
+      "bytes": "CDB541",
+      "image": "PLI2.OVL",
+      "instruction": "CALL 41B5H",
+      "step": 420439
+    },
+    "high_writer": {
+      "instruction": {
+        "accesses": [
+          {
+            "address": 65481,
+            "kind": "write",
+            "value": 66
+          },
+          {
+            "address": 65480,
+            "kind": "write",
+            "value": 180
+          }
+        ],
+        "after": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 0,
+          "c": 5,
+          "carry": false,
+          "d": 0,
+          "e": 3,
+          "h": 66,
+          "l": 180,
+          "parity": true,
+          "pc": 17072,
+          "sign": false,
+          "sp": 65480,
+          "zero": true
+        },
+        "before": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 0,
+          "c": 5,
+          "carry": false,
+          "d": 0,
+          "e": 3,
+          "h": 66,
+          "l": 180,
+          "parity": true,
+          "pc": 17071,
+          "sign": false,
+          "sp": 65482,
+          "zero": true
+        },
+        "bytes": "E5",
+        "image": "PLI2.OVL",
+        "instruction": "PUSH H",
+        "step": 420822
+      },
+      "value": 66
+    },
+    "id": "PICTURE-1-witnesses",
+    "instruction_journal_sha256": "fb6990966962f34a5c068602dbdeae874b628bbf6083c6781f95e199e922c559",
+    "instructions": 3183,
+    "low_writer": {
+      "instruction": {
+        "accesses": [
+          {
+            "address": 65481,
+            "kind": "write",
+            "value": 66
+          },
+          {
+            "address": 65480,
+            "kind": "write",
+            "value": 180
+          }
+        ],
+        "after": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 0,
+          "c": 5,
+          "carry": false,
+          "d": 0,
+          "e": 3,
+          "h": 66,
+          "l": 180,
+          "parity": true,
+          "pc": 17072,
+          "sign": false,
+          "sp": 65480,
+          "zero": true
+        },
+        "before": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 0,
+          "c": 5,
+          "carry": false,
+          "d": 0,
+          "e": 3,
+          "h": 66,
+          "l": 180,
+          "parity": true,
+          "pc": 17071,
+          "sign": false,
+          "sp": 65482,
+          "zero": true
+        },
+        "bytes": "E5",
+        "image": "PLI2.OVL",
+        "instruction": "PUSH H",
+        "step": 420822
+      },
+      "value": 180
+    },
+    "ordered_writes_sha256": "eb1c8eeab81916e0762bb7331a8efd4f0237871f04c2b9c6724280b489a624b6",
+    "own_offsets": [
+      15844,
+      15847,
+      15848,
+      15861,
+      15864,
+      15865,
+      15867,
+      15870,
+      15871,
+      15872,
+      15873,
+      15874,
+      15875,
+      15876,
+      15885,
+      15888,
+      15925
+    ],
+    "ret": {
+      "after": {
+        "a": 0,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 0,
+        "flags": {
+          "auxiliary_carry": false,
+          "carry": false,
+          "parity": true,
+          "sign": true,
+          "zero": false
+        },
+        "h": 0,
+        "l": 7,
+        "pc": 17076,
+        "sp": 65482
+      },
+      "before": {
+        "a": 0,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 0,
+        "flags": {
+          "auxiliary_carry": false,
+          "carry": false,
+          "parity": true,
+          "sign": true,
+          "zero": false
+        },
+        "h": 0,
+        "l": 7,
+        "pc": 24629,
+        "sp": 65480
+      },
+      "bytes": "C9",
+      "call_return_address": null,
+      "control": {
+        "kind": "return",
+        "taken": true,
+        "target": 17076
+      },
+      "disassembly": "RET",
+      "origin": {
+        "image": {
+          "drive": 0,
+          "identity": "0:0:PLI2.OVL",
+          "name": "PLI2.OVL",
+          "user": 0
+        },
+        "offset": 15925
+      },
+      "pc": 24629,
+      "pc_after": 17076,
+      "reads": [
+        {
+          "address": 65480,
+          "value": 180
+        },
+        {
+          "address": 65481,
+          "value": 66
+        }
+      ],
+      "runtime_pc": 24629,
+      "source": "memory",
+      "sp_after": 65482,
+      "sp_before": 65480,
+      "step_index": 424007,
+      "target_origin": {
+        "image": {
+          "drive": 0,
+          "identity": "0:0:PLI2.OVL",
+          "name": "PLI2.OVL",
+          "user": 0
+        },
+        "offset": 8372
+      },
+      "writes": []
+    },
+    "selector": 1,
+    "source": "PICTURE",
+    "stack_last_writers": {
+      "65457": {
+        "step": 423926,
+        "value": 70,
+        "writer": "PLI.COM+1157"
+      },
+      "65458": {
+        "step": 423926,
+        "value": 0,
+        "writer": "PLI.COM+1157"
+      },
+      "65459": {
+        "step": 423978,
+        "value": 72,
+        "writer": "PLI2.OVL+7545"
+      },
+      "65460": {
+        "step": 423978,
+        "value": 151,
+        "writer": "PLI2.OVL+7545"
+      },
+      "65461": {
+        "step": 423973,
+        "value": 86,
+        "writer": "PLI2.OVL+7553"
+      },
+      "65462": {
+        "step": 423973,
+        "value": 151,
+        "writer": "PLI2.OVL+7553"
+      },
+      "65463": {
+        "step": 423954,
+        "value": 116,
+        "writer": "PLI2.OVL+7671"
+      },
+      "65464": {
+        "step": 423954,
+        "value": 152,
+        "writer": "PLI2.OVL+7671"
+      },
+      "65465": {
+        "step": 423103,
+        "value": 85,
+        "writer": "PLI2.OVL+7852"
+      },
+      "65466": {
+        "step": 423103,
+        "value": 154,
+        "writer": "PLI2.OVL+7852"
+      },
+      "65467": {
+        "step": 423051,
+        "value": 112,
+        "writer": "PLI2.OVL+786D"
+      },
+      "65468": {
+        "step": 423051,
+        "value": 154,
+        "writer": "PLI2.OVL+786D"
+      },
+      "65469": {
+        "step": 423041,
+        "value": 33,
+        "writer": "PLI2.OVL+7C1E"
+      },
+      "65470": {
+        "step": 423041,
+        "value": 158,
+        "writer": "PLI2.OVL+7C1E"
+      },
+      "65471": {
+        "step": 422474,
+        "value": 50,
+        "writer": "PLI2.OVL+7C2F"
+      },
+      "65472": {
+        "step": 422474,
+        "value": 158,
+        "writer": "PLI2.OVL+7C2F"
+      },
+      "65473": {
+        "step": 422383,
+        "value": 152,
+        "writer": "PLI2.OVL+3D95"
+      },
+      "65474": {
+        "step": 422383,
+        "value": 95,
+        "writer": "PLI2.OVL+3D95"
+      },
+      "65475": {
+        "step": 420862,
+        "value": 13,
+        "writer": "PLI2.OVL+3D11"
+      },
+      "65476": {
+        "step": 420957,
+        "value": 7,
+        "writer": "PLI2.OVL+3D7B"
+      },
+      "65477": {
+        "step": 420959,
+        "value": 0,
+        "writer": "PLI2.OVL+3D7D"
+      },
+      "65478": {
+        "step": 420860,
+        "value": 16,
+        "writer": "PLI2.OVL+3E0D"
+      },
+      "65479": {
+        "step": 420860,
+        "value": 96,
+        "writer": "PLI2.OVL+3E0D"
+      }
+    }
+  },
+  {
+    "children": [
+      {
+        "callsite": "PLI2.OVL+3DE4",
+        "input": {
+          "a": 0,
+          "b": 10,
+          "c": 10,
+          "d": 0,
+          "e": 2,
+          "flags": {
+            "auxiliary_carry": true,
+            "carry": false,
+            "parity": true,
+            "sign": false,
+            "zero": true
+          },
+          "h": 95,
+          "l": 228,
+          "pc": 22624,
+          "sp": 65478
+        },
+        "output": {
+          "a": 0,
+          "b": 0,
+          "c": 11,
+          "d": 0,
+          "e": 2,
+          "flags": {
+            "auxiliary_carry": true,
+            "carry": false,
+            "parity": true,
+            "sign": false,
+            "zero": true
+          },
+          "h": 169,
+          "l": 242,
+          "pc": 24551,
+          "sp": 65480
+        },
+        "return_site": "PLI2.OVL+3674",
+        "target": "PLI2.OVL+3660"
+      },
+      {
+        "callsite": "PLI2.OVL+3E25",
+        "input": {
+          "a": 0,
+          "b": 0,
+          "c": 1,
+          "d": 96,
+          "e": 52,
+          "flags": {
+            "auxiliary_carry": true,
+            "carry": false,
+            "parity": true,
+            "sign": false,
+            "zero": true
+          },
+          "h": 96,
+          "l": 35,
+          "pc": 23930,
+          "sp": 65478
+        },
+        "output": {
+          "a": 0,
+          "b": 29,
+          "c": 10,
+          "d": 0,
+          "e": 0,
+          "flags": {
+            "auxiliary_carry": false,
+            "carry": false,
+            "parity": true,
+            "sign": true,
+            "zero": false
+          },
+          "h": 0,
+          "l": 0,
+          "pc": 24616,
+          "sp": 65480
+        },
+        "return_site": "PLI2.OVL+3BFA",
+        "target": "PLI2.OVL+3B7A"
+      }
+    ],
+    "continuation": 17076,
+    "entry": {
+      "a": 0,
+      "auxiliary_carry": true,
+      "b": 10,
+      "c": 10,
+      "carry": false,
+      "d": 0,
+      "e": 2,
+      "h": 95,
+      "l": 228,
+      "parity": true,
+      "pc": 24548,
+      "sign": false,
+      "sp": 65480,
+      "zero": true
+    },
+    "gate": {
+      "after": {
+        "a": 0,
+        "b": 0,
+        "c": 11,
+        "d": 0,
+        "e": 2,
+        "flags": {
+          "auxiliary_carry": true,
+          "carry": false,
+          "parity": true,
+          "sign": false,
+          "zero": true
+        },
+        "h": 169,
+        "l": 242,
+        "pc": 24552,
+        "sp": 65480
+      },
+      "before": {
+        "a": 0,
+        "b": 0,
+        "c": 11,
+        "d": 0,
+        "e": 2,
+        "flags": {
+          "auxiliary_carry": true,
+          "carry": false,
+          "parity": true,
+          "sign": false,
+          "zero": true
+        },
+        "h": 169,
+        "l": 242,
+        "pc": 24551,
+        "sp": 65480
+      },
+      "bytes": "1F",
+      "call_return_address": null,
+      "control": {
+        "kind": "sequential"
+      },
+      "disassembly": "RAR",
+      "origin": {
+        "image": {
+          "drive": 0,
+          "identity": "0:0:PLI2.OVL",
+          "name": "PLI2.OVL",
+          "user": 0
+        },
+        "offset": 15847
+      },
+      "pc": 24551,
+      "pc_after": 24552,
+      "reads": [],
+      "runtime_pc": 24551,
+      "source": "memory",
+      "sp_after": 65480,
+      "sp_before": 65480,
+      "step_index": 631985,
+      "target_origin": null,
+      "writes": []
+    },
+    "gateway": [
+      {
+        "accesses": [],
+        "after": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 10,
+          "c": 10,
+          "carry": false,
+          "d": 0,
+          "e": 2,
+          "h": 66,
+          "l": 180,
+          "parity": true,
+          "pc": 17071,
+          "sign": false,
+          "sp": 65482,
+          "zero": true
+        },
+        "before": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 10,
+          "c": 10,
+          "carry": false,
+          "d": 0,
+          "e": 2,
+          "h": 87,
+          "l": 197,
+          "parity": true,
+          "pc": 17068,
+          "sign": false,
+          "sp": 65482,
+          "zero": true
+        },
+        "bytes": "21B442",
+        "image": "PLI2.OVL",
+        "instruction": "LXI H,42B4H",
+        "step": 631959
+      },
+      {
+        "accesses": [
+          {
+            "address": 65481,
+            "kind": "write",
+            "value": 66
+          },
+          {
+            "address": 65480,
+            "kind": "write",
+            "value": 180
+          }
+        ],
+        "after": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 10,
+          "c": 10,
+          "carry": false,
+          "d": 0,
+          "e": 2,
+          "h": 66,
+          "l": 180,
+          "parity": true,
+          "pc": 17072,
+          "sign": false,
+          "sp": 65480,
+          "zero": true
+        },
+        "before": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 10,
+          "c": 10,
+          "carry": false,
+          "d": 0,
+          "e": 2,
+          "h": 66,
+          "l": 180,
+          "parity": true,
+          "pc": 17071,
+          "sign": false,
+          "sp": 65482,
+          "zero": true
+        },
+        "bytes": "E5",
+        "image": "PLI2.OVL",
+        "instruction": "PUSH H",
+        "step": 631960
+      },
+      {
+        "accesses": [
+          {
+            "address": 44319,
+            "kind": "read",
+            "value": 228
+          },
+          {
+            "address": 44320,
+            "kind": "read",
+            "value": 95
+          }
+        ],
+        "after": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 10,
+          "c": 10,
+          "carry": false,
+          "d": 0,
+          "e": 2,
+          "h": 95,
+          "l": 228,
+          "parity": true,
+          "pc": 17075,
+          "sign": false,
+          "sp": 65480,
+          "zero": true
+        },
+        "before": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 10,
+          "c": 10,
+          "carry": false,
+          "d": 0,
+          "e": 2,
+          "h": 66,
+          "l": 180,
+          "parity": true,
+          "pc": 17072,
+          "sign": false,
+          "sp": 65480,
+          "zero": true
+        },
+        "bytes": "2A1FAD",
+        "image": "PLI2.OVL",
+        "instruction": "LHLD AD1FH",
+        "step": 631961
+      },
+      {
+        "accesses": [],
+        "after": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 10,
+          "c": 10,
+          "carry": false,
+          "d": 0,
+          "e": 2,
+          "h": 95,
+          "l": 228,
+          "parity": true,
+          "pc": 24548,
+          "sign": false,
+          "sp": 65480,
+          "zero": true
+        },
+        "before": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 10,
+          "c": 10,
+          "carry": false,
+          "d": 0,
+          "e": 2,
+          "h": 95,
+          "l": 228,
+          "parity": true,
+          "pc": 17075,
+          "sign": false,
+          "sp": 65480,
+          "zero": true
+        },
+        "bytes": "E9",
+        "image": "PLI2.OVL",
+        "instruction": "PCHL",
+        "step": 631962
+      }
+    ],
+    "gateway_calls": [
+      {
+        "callsite": "PLI2.OVL+374B",
+        "input": {
+          "a": 0,
+          "b": 0,
+          "c": 10,
+          "d": 96,
+          "e": 52,
+          "flags": {
+            "auxiliary_carry": true,
+            "carry": false,
+            "parity": true,
+            "sign": false,
+            "zero": true
+          },
+          "h": 15,
+          "l": 10,
+          "pc": 16821,
+          "sp": 65473
+        },
+        "step": 632030
+      }
+    ],
+    "gateway_hardware_call": {
+      "accesses": [
+        {
+          "address": 65495,
+          "kind": "write",
+          "value": 67
+        },
+        {
+          "address": 65494,
+          "kind": "write",
+          "value": 76
+        }
+      ],
+      "after": {
+        "a": 5,
+        "auxiliary_carry": true,
+        "b": 0,
+        "c": 12,
+        "carry": false,
+        "d": 173,
+        "e": 21,
+        "h": 5,
+        "l": 12,
+        "parity": true,
+        "pc": 16821,
+        "sign": false,
+        "sp": 65494,
+        "zero": false
+      },
+      "before": {
+        "a": 5,
+        "auxiliary_carry": true,
+        "b": 0,
+        "c": 12,
+        "carry": false,
+        "d": 173,
+        "e": 21,
+        "h": 5,
+        "l": 12,
+        "parity": true,
+        "pc": 17225,
+        "sign": false,
+        "sp": 65496,
+        "zero": false
+      },
+      "bytes": "CDB541",
+      "image": "PLI2.OVL",
+      "instruction": "CALL 41B5H",
+      "step": 631113
+    },
+    "high_writer": {
+      "instruction": {
+        "accesses": [
+          {
+            "address": 65481,
+            "kind": "write",
+            "value": 66
+          },
+          {
+            "address": 65480,
+            "kind": "write",
+            "value": 180
+          }
+        ],
+        "after": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 10,
+          "c": 10,
+          "carry": false,
+          "d": 0,
+          "e": 2,
+          "h": 66,
+          "l": 180,
+          "parity": true,
+          "pc": 17072,
+          "sign": false,
+          "sp": 65480,
+          "zero": true
+        },
+        "before": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 10,
+          "c": 10,
+          "carry": false,
+          "d": 0,
+          "e": 2,
+          "h": 66,
+          "l": 180,
+          "parity": true,
+          "pc": 17071,
+          "sign": false,
+          "sp": 65482,
+          "zero": true
+        },
+        "bytes": "E5",
+        "image": "PLI2.OVL",
+        "instruction": "PUSH H",
+        "step": 631960
+      },
+      "value": 66
+    },
+    "id": "FACTOR-1-witnesses",
+    "instruction_journal_sha256": "33b4f56ae9f3133d3f797c10e08a15d7a03ae00c17a1e750c85e08eea68ec468",
+    "instructions": 5328,
+    "low_writer": {
+      "instruction": {
+        "accesses": [
+          {
+            "address": 65481,
+            "kind": "write",
+            "value": 66
+          },
+          {
+            "address": 65480,
+            "kind": "write",
+            "value": 180
+          }
+        ],
+        "after": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 10,
+          "c": 10,
+          "carry": false,
+          "d": 0,
+          "e": 2,
+          "h": 66,
+          "l": 180,
+          "parity": true,
+          "pc": 17072,
+          "sign": false,
+          "sp": 65480,
+          "zero": true
+        },
+        "before": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 10,
+          "c": 10,
+          "carry": false,
+          "d": 0,
+          "e": 2,
+          "h": 66,
+          "l": 180,
+          "parity": true,
+          "pc": 17071,
+          "sign": false,
+          "sp": 65482,
+          "zero": true
+        },
+        "bytes": "E5",
+        "image": "PLI2.OVL",
+        "instruction": "PUSH H",
+        "step": 631960
+      },
+      "value": 180
+    },
+    "ordered_writes_sha256": "e46fd2bc84e21ef28d65af17dbd36cc0b744ed141574706d939b43244bfacae1",
+    "own_offsets": [
+      15844,
+      15847,
+      15848,
+      15861,
+      15864,
+      15865,
+      15867,
+      15870,
+      15871,
+      15872,
+      15873,
+      15874,
+      15875,
+      15876,
+      15907,
+      15909,
+      15912,
+      15925
+    ],
+    "ret": {
+      "after": {
+        "a": 0,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 0,
+        "flags": {
+          "auxiliary_carry": false,
+          "carry": false,
+          "parity": true,
+          "sign": true,
+          "zero": false
+        },
+        "h": 0,
+        "l": 0,
+        "pc": 17076,
+        "sp": 65482
+      },
+      "before": {
+        "a": 0,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 0,
+        "flags": {
+          "auxiliary_carry": false,
+          "carry": false,
+          "parity": true,
+          "sign": true,
+          "zero": false
+        },
+        "h": 0,
+        "l": 0,
+        "pc": 24629,
+        "sp": 65480
+      },
+      "bytes": "C9",
+      "call_return_address": null,
+      "control": {
+        "kind": "return",
+        "taken": true,
+        "target": 17076
+      },
+      "disassembly": "RET",
+      "origin": {
+        "image": {
+          "drive": 0,
+          "identity": "0:0:PLI2.OVL",
+          "name": "PLI2.OVL",
+          "user": 0
+        },
+        "offset": 15925
+      },
+      "pc": 24629,
+      "pc_after": 17076,
+      "reads": [
+        {
+          "address": 65480,
+          "value": 180
+        },
+        {
+          "address": 65481,
+          "value": 66
+        }
+      ],
+      "runtime_pc": 24629,
+      "source": "memory",
+      "sp_after": 65482,
+      "sp_before": 65480,
+      "step_index": 637290,
+      "target_origin": {
+        "image": {
+          "drive": 0,
+          "identity": "0:0:PLI2.OVL",
+          "name": "PLI2.OVL",
+          "user": 0
+        },
+        "offset": 8372
+      },
+      "writes": []
+    },
+    "selector": 4,
+    "source": "FACTOR",
+    "stack_last_writers": {
+      "65437": {
+        "step": 634110,
+        "value": 70,
+        "writer": "PLI.COM+1157"
+      },
+      "65438": {
+        "step": 634110,
+        "value": 0,
+        "writer": "PLI.COM+1157"
+      },
+      "65439": {
+        "step": 634162,
+        "value": 72,
+        "writer": "PLI2.OVL+7545"
+      },
+      "65440": {
+        "step": 634162,
+        "value": 151,
+        "writer": "PLI2.OVL+7545"
+      },
+      "65441": {
+        "step": 634157,
+        "value": 86,
+        "writer": "PLI2.OVL+7553"
+      },
+      "65442": {
+        "step": 634157,
+        "value": 151,
+        "writer": "PLI2.OVL+7553"
+      },
+      "65443": {
+        "step": 635600,
+        "value": 72,
+        "writer": "PLI2.OVL+7545"
+      },
+      "65444": {
+        "step": 635600,
+        "value": 151,
+        "writer": "PLI2.OVL+7545"
+      },
+      "65445": {
+        "step": 635595,
+        "value": 86,
+        "writer": "PLI2.OVL+7553"
+      },
+      "65446": {
+        "step": 635595,
+        "value": 151,
+        "writer": "PLI2.OVL+7553"
+      },
+      "65447": {
+        "step": 635576,
+        "value": 24,
+        "writer": "PLI2.OVL+7615"
+      },
+      "65448": {
+        "step": 635576,
+        "value": 152,
+        "writer": "PLI2.OVL+7615"
+      },
+      "65449": {
+        "step": 634799,
+        "value": 47,
+        "writer": "PLI2.OVL+762C"
+      },
+      "65450": {
+        "step": 634799,
+        "value": 152,
+        "writer": "PLI2.OVL+762C"
+      },
+      "65451": {
+        "step": 635624,
+        "value": 48,
+        "writer": "PLI2.OVL+742D"
+      },
+      "65452": {
+        "step": 635624,
+        "value": 150,
+        "writer": "PLI2.OVL+742D"
+      },
+      "65453": {
+        "step": 635633,
+        "value": 10,
+        "writer": "PLI2.OVL+24F8"
+      },
+      "65454": {
+        "step": 635633,
+        "value": 0,
+        "writer": "PLI2.OVL+24F8"
+      },
+      "65455": {
+        "step": 632405,
+        "value": 110,
+        "writer": "PLI2.OVL+247B"
+      },
+      "65456": {
+        "step": 632405,
+        "value": 71,
+        "writer": "PLI2.OVL+247B"
+      },
+      "65457": {
+        "step": 635645,
+        "value": 120,
+        "writer": "PLI2.OVL+2575"
+      },
+      "65458": {
+        "step": 635645,
+        "value": 71,
+        "writer": "PLI2.OVL+2575"
+      },
+      "65459": {
+        "step": 637210,
+        "value": 70,
+        "writer": "PLI.COM+1157"
+      },
+      "65460": {
+        "step": 637210,
+        "value": 0,
+        "writer": "PLI.COM+1157"
+      },
+      "65461": {
+        "step": 637262,
+        "value": 72,
+        "writer": "PLI2.OVL+7545"
+      },
+      "65462": {
+        "step": 637262,
+        "value": 151,
+        "writer": "PLI2.OVL+7545"
+      },
+      "65463": {
+        "step": 637257,
+        "value": 86,
+        "writer": "PLI2.OVL+7553"
+      },
+      "65464": {
+        "step": 637257,
+        "value": 151,
+        "writer": "PLI2.OVL+7553"
+      },
+      "65465": {
+        "step": 637238,
+        "value": 116,
+        "writer": "PLI2.OVL+7671"
+      },
+      "65466": {
+        "step": 637238,
+        "value": 152,
+        "writer": "PLI2.OVL+7671"
+      },
+      "65467": {
+        "step": 636382,
+        "value": 85,
+        "writer": "PLI2.OVL+7852"
+      },
+      "65468": {
+        "step": 636382,
+        "value": 154,
+        "writer": "PLI2.OVL+7852"
+      },
+      "65469": {
+        "step": 636330,
+        "value": 112,
+        "writer": "PLI2.OVL+786D"
+      },
+      "65470": {
+        "step": 636330,
+        "value": 154,
+        "writer": "PLI2.OVL+786D"
+      },
+      "65471": {
+        "step": 636320,
+        "value": 33,
+        "writer": "PLI2.OVL+7C1E"
+      },
+      "65472": {
+        "step": 636320,
+        "value": 158,
+        "writer": "PLI2.OVL+7C1E"
+      },
+      "65473": {
+        "step": 635871,
+        "value": 50,
+        "writer": "PLI2.OVL+7C2F"
+      },
+      "65474": {
+        "step": 635871,
+        "value": 158,
+        "writer": "PLI2.OVL+7C2F"
+      },
+      "65475": {
+        "step": 635780,
+        "value": 214,
+        "writer": "PLI2.OVL+3BD3"
+      },
+      "65476": {
+        "step": 635780,
+        "value": 93,
+        "writer": "PLI2.OVL+3BD3"
+      },
+      "65477": {
+        "step": 632001,
+        "value": 1,
+        "writer": "PLI2.OVL+3B7B"
+      },
+      "65478": {
+        "step": 631999,
+        "value": 40,
+        "writer": "PLI2.OVL+3E25"
+      },
+      "65479": {
+        "step": 631999,
+        "value": 96,
+        "writer": "PLI2.OVL+3E25"
+      }
+    }
+  },
+  {
+    "children": [
+      {
+        "callsite": "PLI2.OVL+3DE4",
+        "input": {
+          "a": 0,
+          "b": 48,
+          "c": 48,
+          "d": 0,
+          "e": 2,
+          "flags": {
+            "auxiliary_carry": true,
+            "carry": false,
+            "parity": true,
+            "sign": false,
+            "zero": true
+          },
+          "h": 95,
+          "l": 228,
+          "pc": 22624,
+          "sp": 65450
+        },
+        "output": {
+          "a": 0,
+          "b": 0,
+          "c": 49,
+          "d": 0,
+          "e": 2,
+          "flags": {
+            "auxiliary_carry": true,
+            "carry": false,
+            "parity": true,
+            "sign": false,
+            "zero": true
+          },
+          "h": 170,
+          "l": 24,
+          "pc": 24551,
+          "sp": 65452
+        },
+        "return_site": "PLI2.OVL+3674",
+        "target": "PLI2.OVL+3660"
+      },
+      {
+        "callsite": "PLI2.OVL+3E25",
+        "input": {
+          "a": 0,
+          "b": 0,
+          "c": 1,
+          "d": 96,
+          "e": 52,
+          "flags": {
+            "auxiliary_carry": true,
+            "carry": false,
+            "parity": true,
+            "sign": false,
+            "zero": true
+          },
+          "h": 96,
+          "l": 35,
+          "pc": 23930,
+          "sp": 65450
+        },
+        "output": {
+          "a": 0,
+          "b": 0,
+          "c": 21,
+          "d": 0,
+          "e": 0,
+          "flags": {
+            "auxiliary_carry": false,
+            "carry": false,
+            "parity": true,
+            "sign": true,
+            "zero": false
+          },
+          "h": 0,
+          "l": 0,
+          "pc": 24616,
+          "sp": 65452
+        },
+        "return_site": "PLI2.OVL+3BFA",
+        "target": "PLI2.OVL+3B7A"
+      }
+    ],
+    "continuation": 17076,
+    "entry": {
+      "a": 0,
+      "auxiliary_carry": true,
+      "b": 48,
+      "c": 48,
+      "carry": false,
+      "d": 0,
+      "e": 2,
+      "h": 95,
+      "l": 228,
+      "parity": true,
+      "pc": 24548,
+      "sign": false,
+      "sp": 65452,
+      "zero": true
+    },
+    "gate": {
+      "after": {
+        "a": 0,
+        "b": 0,
+        "c": 49,
+        "d": 0,
+        "e": 2,
+        "flags": {
+          "auxiliary_carry": true,
+          "carry": false,
+          "parity": true,
+          "sign": false,
+          "zero": true
+        },
+        "h": 170,
+        "l": 24,
+        "pc": 24552,
+        "sp": 65452
+      },
+      "before": {
+        "a": 0,
+        "b": 0,
+        "c": 49,
+        "d": 0,
+        "e": 2,
+        "flags": {
+          "auxiliary_carry": true,
+          "carry": false,
+          "parity": true,
+          "sign": false,
+          "zero": true
+        },
+        "h": 170,
+        "l": 24,
+        "pc": 24551,
+        "sp": 65452
+      },
+      "bytes": "1F",
+      "call_return_address": null,
+      "control": {
+        "kind": "sequential"
+      },
+      "disassembly": "RAR",
+      "origin": {
+        "image": {
+          "drive": 0,
+          "identity": "0:0:PLI2.OVL",
+          "name": "PLI2.OVL",
+          "user": 0
+        },
+        "offset": 15847
+      },
+      "pc": 24551,
+      "pc_after": 24552,
+      "reads": [],
+      "runtime_pc": 24551,
+      "source": "memory",
+      "sp_after": 65452,
+      "sp_before": 65452,
+      "step_index": 772250,
+      "target_origin": null,
+      "writes": []
+    },
+    "gateway": [
+      {
+        "accesses": [],
+        "after": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 48,
+          "c": 48,
+          "carry": false,
+          "d": 0,
+          "e": 2,
+          "h": 66,
+          "l": 180,
+          "parity": true,
+          "pc": 17071,
+          "sign": false,
+          "sp": 65454,
+          "zero": true
+        },
+        "before": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 48,
+          "c": 48,
+          "carry": false,
+          "d": 0,
+          "e": 2,
+          "h": 87,
+          "l": 197,
+          "parity": true,
+          "pc": 17068,
+          "sign": false,
+          "sp": 65454,
+          "zero": true
+        },
+        "bytes": "21B442",
+        "image": "PLI2.OVL",
+        "instruction": "LXI H,42B4H",
+        "step": 772224
+      },
+      {
+        "accesses": [
+          {
+            "address": 65453,
+            "kind": "write",
+            "value": 66
+          },
+          {
+            "address": 65452,
+            "kind": "write",
+            "value": 180
+          }
+        ],
+        "after": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 48,
+          "c": 48,
+          "carry": false,
+          "d": 0,
+          "e": 2,
+          "h": 66,
+          "l": 180,
+          "parity": true,
+          "pc": 17072,
+          "sign": false,
+          "sp": 65452,
+          "zero": true
+        },
+        "before": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 48,
+          "c": 48,
+          "carry": false,
+          "d": 0,
+          "e": 2,
+          "h": 66,
+          "l": 180,
+          "parity": true,
+          "pc": 17071,
+          "sign": false,
+          "sp": 65454,
+          "zero": true
+        },
+        "bytes": "E5",
+        "image": "PLI2.OVL",
+        "instruction": "PUSH H",
+        "step": 772225
+      },
+      {
+        "accesses": [
+          {
+            "address": 44319,
+            "kind": "read",
+            "value": 228
+          },
+          {
+            "address": 44320,
+            "kind": "read",
+            "value": 95
+          }
+        ],
+        "after": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 48,
+          "c": 48,
+          "carry": false,
+          "d": 0,
+          "e": 2,
+          "h": 95,
+          "l": 228,
+          "parity": true,
+          "pc": 17075,
+          "sign": false,
+          "sp": 65452,
+          "zero": true
+        },
+        "before": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 48,
+          "c": 48,
+          "carry": false,
+          "d": 0,
+          "e": 2,
+          "h": 66,
+          "l": 180,
+          "parity": true,
+          "pc": 17072,
+          "sign": false,
+          "sp": 65452,
+          "zero": true
+        },
+        "bytes": "2A1FAD",
+        "image": "PLI2.OVL",
+        "instruction": "LHLD AD1FH",
+        "step": 772226
+      },
+      {
+        "accesses": [],
+        "after": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 48,
+          "c": 48,
+          "carry": false,
+          "d": 0,
+          "e": 2,
+          "h": 95,
+          "l": 228,
+          "parity": true,
+          "pc": 24548,
+          "sign": false,
+          "sp": 65452,
+          "zero": true
+        },
+        "before": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 48,
+          "c": 48,
+          "carry": false,
+          "d": 0,
+          "e": 2,
+          "h": 95,
+          "l": 228,
+          "parity": true,
+          "pc": 17075,
+          "sign": false,
+          "sp": 65452,
+          "zero": true
+        },
+        "bytes": "E9",
+        "image": "PLI2.OVL",
+        "instruction": "PCHL",
+        "step": 772227
+      }
+    ],
+    "gateway_calls": [
+      {
+        "callsite": "PLI2.OVL+374B",
+        "input": {
+          "a": 0,
+          "b": 0,
+          "c": 48,
+          "d": 96,
+          "e": 52,
+          "flags": {
+            "auxiliary_carry": true,
+            "carry": false,
+            "parity": true,
+            "sign": false,
+            "zero": true
+          },
+          "h": 47,
+          "l": 48,
+          "pc": 16821,
+          "sp": 65445
+        },
+        "step": 772295
+      },
+      {
+        "callsite": "PLI2.OVL+3EFD",
+        "input": {
+          "a": 1,
+          "b": 0,
+          "c": 45,
+          "d": 0,
+          "e": 3,
+          "flags": {
+            "auxiliary_carry": true,
+            "carry": false,
+            "parity": true,
+            "sign": false,
+            "zero": true
+          },
+          "h": 46,
+          "l": 45,
+          "pc": 16821,
+          "sp": 65426
+        },
+        "step": 772720
+      }
+    ],
+    "gateway_hardware_call": {
+      "accesses": [
+        {
+          "address": 65467,
+          "kind": "write",
+          "value": 67
+        },
+        {
+          "address": 65466,
+          "kind": "write",
+          "value": 76
+        }
+      ],
+      "after": {
+        "a": 7,
+        "auxiliary_carry": true,
+        "b": 0,
+        "c": 50,
+        "carry": false,
+        "d": 173,
+        "e": 21,
+        "h": 7,
+        "l": 50,
+        "parity": false,
+        "pc": 16821,
+        "sign": false,
+        "sp": 65466,
+        "zero": false
+      },
+      "before": {
+        "a": 7,
+        "auxiliary_carry": true,
+        "b": 0,
+        "c": 50,
+        "carry": false,
+        "d": 173,
+        "e": 21,
+        "h": 7,
+        "l": 50,
+        "parity": false,
+        "pc": 17225,
+        "sign": false,
+        "sp": 65468,
+        "zero": false
+      },
+      "bytes": "CDB541",
+      "image": "PLI2.OVL",
+      "instruction": "CALL 41B5H",
+      "step": 771111
+    },
+    "high_writer": {
+      "instruction": {
+        "accesses": [
+          {
+            "address": 65453,
+            "kind": "write",
+            "value": 66
+          },
+          {
+            "address": 65452,
+            "kind": "write",
+            "value": 180
+          }
+        ],
+        "after": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 48,
+          "c": 48,
+          "carry": false,
+          "d": 0,
+          "e": 2,
+          "h": 66,
+          "l": 180,
+          "parity": true,
+          "pc": 17072,
+          "sign": false,
+          "sp": 65452,
+          "zero": true
+        },
+        "before": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 48,
+          "c": 48,
+          "carry": false,
+          "d": 0,
+          "e": 2,
+          "h": 66,
+          "l": 180,
+          "parity": true,
+          "pc": 17071,
+          "sign": false,
+          "sp": 65454,
+          "zero": true
+        },
+        "bytes": "E5",
+        "image": "PLI2.OVL",
+        "instruction": "PUSH H",
+        "step": 772225
+      },
+      "value": 66
+    },
+    "id": "FACTOR-2-witnesses",
+    "instruction_journal_sha256": "fb16ab49637a2f7994c93fa3554c146b83a4eacdc8eafc176227519e604a53f0",
+    "instructions": 4715,
+    "low_writer": {
+      "instruction": {
+        "accesses": [
+          {
+            "address": 65453,
+            "kind": "write",
+            "value": 66
+          },
+          {
+            "address": 65452,
+            "kind": "write",
+            "value": 180
+          }
+        ],
+        "after": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 48,
+          "c": 48,
+          "carry": false,
+          "d": 0,
+          "e": 2,
+          "h": 66,
+          "l": 180,
+          "parity": true,
+          "pc": 17072,
+          "sign": false,
+          "sp": 65452,
+          "zero": true
+        },
+        "before": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 48,
+          "c": 48,
+          "carry": false,
+          "d": 0,
+          "e": 2,
+          "h": 66,
+          "l": 180,
+          "parity": true,
+          "pc": 17071,
+          "sign": false,
+          "sp": 65454,
+          "zero": true
+        },
+        "bytes": "E5",
+        "image": "PLI2.OVL",
+        "instruction": "PUSH H",
+        "step": 772225
+      },
+      "value": 180
+    },
+    "ordered_writes_sha256": "4b9df591dbc72e52f1b92b93a4166058a4651f2ebce0708294d82a5eb352d028",
+    "own_offsets": [
+      15844,
+      15847,
+      15848,
+      15861,
+      15864,
+      15865,
+      15867,
+      15870,
+      15871,
+      15872,
+      15873,
+      15874,
+      15875,
+      15876,
+      15907,
+      15909,
+      15912,
+      15925
+    ],
+    "ret": {
+      "after": {
+        "a": 0,
+        "b": 0,
+        "c": 21,
+        "d": 0,
+        "e": 0,
+        "flags": {
+          "auxiliary_carry": false,
+          "carry": false,
+          "parity": true,
+          "sign": true,
+          "zero": false
+        },
+        "h": 0,
+        "l": 0,
+        "pc": 17076,
+        "sp": 65454
+      },
+      "before": {
+        "a": 0,
+        "b": 0,
+        "c": 21,
+        "d": 0,
+        "e": 0,
+        "flags": {
+          "auxiliary_carry": false,
+          "carry": false,
+          "parity": true,
+          "sign": true,
+          "zero": false
+        },
+        "h": 0,
+        "l": 0,
+        "pc": 24629,
+        "sp": 65452
+      },
+      "bytes": "C9",
+      "call_return_address": null,
+      "control": {
+        "kind": "return",
+        "taken": true,
+        "target": 17076
+      },
+      "disassembly": "RET",
+      "origin": {
+        "image": {
+          "drive": 0,
+          "identity": "0:0:PLI2.OVL",
+          "name": "PLI2.OVL",
+          "user": 0
+        },
+        "offset": 15925
+      },
+      "pc": 24629,
+      "pc_after": 17076,
+      "reads": [
+        {
+          "address": 65452,
+          "value": 180
+        },
+        {
+          "address": 65453,
+          "value": 66
+        }
+      ],
+      "runtime_pc": 24629,
+      "source": "memory",
+      "sp_after": 65454,
+      "sp_before": 65452,
+      "step_index": 776942,
+      "target_origin": {
+        "image": {
+          "drive": 0,
+          "identity": "0:0:PLI2.OVL",
+          "name": "PLI2.OVL",
+          "user": 0
+        },
+        "offset": 8372
+      },
+      "writes": []
+    },
+    "selector": 4,
+    "source": "FACTOR",
+    "stack_last_writers": {
+      "65394": {
+        "step": 774464,
+        "value": 134,
+        "writer": "PLI.COM+1157"
+      },
+      "65395": {
+        "step": 774464,
+        "value": 136,
+        "writer": "PLI.COM+1157"
+      },
+      "65396": {
+        "step": 774516,
+        "value": 72,
+        "writer": "PLI2.OVL+7545"
+      },
+      "65397": {
+        "step": 774516,
+        "value": 151,
+        "writer": "PLI2.OVL+7545"
+      },
+      "65398": {
+        "step": 774511,
+        "value": 86,
+        "writer": "PLI2.OVL+7553"
+      },
+      "65399": {
+        "step": 774511,
+        "value": 151,
+        "writer": "PLI2.OVL+7553"
+      },
+      "65400": {
+        "step": 774492,
+        "value": 116,
+        "writer": "PLI2.OVL+7671"
+      },
+      "65401": {
+        "step": 774492,
+        "value": 152,
+        "writer": "PLI2.OVL+7671"
+      },
+      "65402": {
+        "step": 773641,
+        "value": 85,
+        "writer": "PLI2.OVL+7852"
+      },
+      "65403": {
+        "step": 773641,
+        "value": 154,
+        "writer": "PLI2.OVL+7852"
+      },
+      "65404": {
+        "step": 773589,
+        "value": 112,
+        "writer": "PLI2.OVL+786D"
+      },
+      "65405": {
+        "step": 773589,
+        "value": 154,
+        "writer": "PLI2.OVL+786D"
+      },
+      "65406": {
+        "step": 773579,
+        "value": 203,
+        "writer": "PLI2.OVL+7BC8"
+      },
+      "65407": {
+        "step": 773579,
+        "value": 157,
+        "writer": "PLI2.OVL+7BC8"
+      },
+      "65408": {
+        "step": 773087,
+        "value": 220,
+        "writer": "PLI2.OVL+7BD9"
+      },
+      "65409": {
+        "step": 773087,
+        "value": 157,
+        "writer": "PLI2.OVL+7BD9"
+      },
+      "65410": {
+        "step": 772996,
+        "value": 245,
+        "writer": "PLI2.OVL+3EF2"
+      },
+      "65411": {
+        "step": 772996,
+        "value": 96,
+        "writer": "PLI2.OVL+3EF2"
+      },
+      "65412": {
+        "step": 774545,
+        "value": 10,
+        "writer": "PLI2.OVL+20CA"
+      },
+      "65413": {
+        "step": 774545,
+        "value": 0,
+        "writer": "PLI2.OVL+20CA"
+      },
+      "65414": {
+        "step": 775171,
+        "value": 6,
+        "writer": "PLI.COM+1157"
+      },
+      "65415": {
+        "step": 775171,
+        "value": 10,
+        "writer": "PLI.COM+1157"
+      },
+      "65416": {
+        "step": 775203,
+        "value": 72,
+        "writer": "PLI2.OVL+7545"
+      },
+      "65417": {
+        "step": 775203,
+        "value": 151,
+        "writer": "PLI2.OVL+7545"
+      },
+      "65418": {
+        "step": 775198,
+        "value": 108,
+        "writer": "PLI2.OVL+7569"
+      },
+      "65419": {
+        "step": 775198,
+        "value": 151,
+        "writer": "PLI2.OVL+7569"
+      },
+      "65420": {
+        "step": 774810,
+        "value": 240,
+        "writer": "PLI2.OVL+75ED"
+      },
+      "65421": {
+        "step": 774810,
+        "value": 151,
+        "writer": "PLI2.OVL+75ED"
+      },
+      "65422": {
+        "step": 774780,
+        "value": 167,
+        "writer": "PLI2.OVL+7DA4"
+      },
+      "65423": {
+        "step": 776851,
+        "value": 198,
+        "writer": "PLI.COM+19C3"
+      },
+      "65424": {
+        "step": 776851,
+        "value": 26,
+        "writer": "PLI.COM+19C3"
+      },
+      "65425": {
+        "step": 776848,
+        "value": 228,
+        "writer": "PLI.COM+19BC"
+      },
+      "65426": {
+        "step": 776848,
+        "value": 28,
+        "writer": "PLI.COM+19BC"
+      },
+      "65427": {
+        "step": 776847,
+        "value": 21,
+        "writer": "PLI.COM+19BB"
+      },
+      "65428": {
+        "step": 776847,
+        "value": 28,
+        "writer": "PLI.COM+19BB"
+      },
+      "65429": {
+        "step": 776846,
+        "value": 55,
+        "writer": "PLI.COM+0334"
+      },
+      "65430": {
+        "step": 776846,
+        "value": 4,
+        "writer": "PLI.COM+0334"
+      },
+      "65431": {
+        "step": 776838,
+        "value": 144,
+        "writer": "PLI.COM+118D"
+      },
+      "65432": {
+        "step": 776838,
+        "value": 18,
+        "writer": "PLI.COM+118D"
+      },
+      "65433": {
+        "step": 776914,
+        "value": 72,
+        "writer": "PLI2.OVL+7545"
+      },
+      "65434": {
+        "step": 776914,
+        "value": 151,
+        "writer": "PLI2.OVL+7545"
+      },
+      "65435": {
+        "step": 776909,
+        "value": 86,
+        "writer": "PLI2.OVL+7553"
+      },
+      "65436": {
+        "step": 776909,
+        "value": 151,
+        "writer": "PLI2.OVL+7553"
+      },
+      "65437": {
+        "step": 776890,
+        "value": 116,
+        "writer": "PLI2.OVL+7671"
+      },
+      "65438": {
+        "step": 776890,
+        "value": 152,
+        "writer": "PLI2.OVL+7671"
+      },
+      "65439": {
+        "step": 775954,
+        "value": 85,
+        "writer": "PLI2.OVL+7852"
+      },
+      "65440": {
+        "step": 775954,
+        "value": 154,
+        "writer": "PLI2.OVL+7852"
+      },
+      "65441": {
+        "step": 775902,
+        "value": 112,
+        "writer": "PLI2.OVL+786D"
+      },
+      "65442": {
+        "step": 775902,
+        "value": 154,
+        "writer": "PLI2.OVL+786D"
+      },
+      "65443": {
+        "step": 775892,
+        "value": 33,
+        "writer": "PLI2.OVL+7C1E"
+      },
+      "65444": {
+        "step": 775892,
+        "value": 158,
+        "writer": "PLI2.OVL+7C1E"
+      },
+      "65445": {
+        "step": 775443,
+        "value": 50,
+        "writer": "PLI2.OVL+7C2F"
+      },
+      "65446": {
+        "step": 775443,
+        "value": 158,
+        "writer": "PLI2.OVL+7C2F"
+      },
+      "65447": {
+        "step": 775352,
+        "value": 214,
+        "writer": "PLI2.OVL+3BD3"
+      },
+      "65448": {
+        "step": 775352,
+        "value": 93,
+        "writer": "PLI2.OVL+3BD3"
+      },
+      "65449": {
+        "step": 772266,
+        "value": 1,
+        "writer": "PLI2.OVL+3B7B"
+      },
+      "65450": {
+        "step": 772264,
+        "value": 40,
+        "writer": "PLI2.OVL+3E25"
+      },
+      "65451": {
+        "step": 772264,
+        "value": 96,
+        "writer": "PLI2.OVL+3E25"
+      }
+    }
+  },
+  {
+    "children": [
+      {
+        "callsite": "PLI2.OVL+3DE4",
+        "input": {
+          "a": 0,
+          "b": 0,
+          "c": 85,
+          "d": 0,
+          "e": 3,
+          "flags": {
+            "auxiliary_carry": true,
+            "carry": false,
+            "parity": true,
+            "sign": false,
+            "zero": true
+          },
+          "h": 95,
+          "l": 228,
+          "pc": 22624,
+          "sp": 65452
+        },
+        "output": {
+          "a": 0,
+          "b": 0,
+          "c": 87,
+          "d": 0,
+          "e": 3,
+          "flags": {
+            "auxiliary_carry": true,
+            "carry": false,
+            "parity": true,
+            "sign": false,
+            "zero": true
+          },
+          "h": 170,
+          "l": 62,
+          "pc": 24551,
+          "sp": 65454
+        },
+        "return_site": "PLI2.OVL+3674",
+        "target": "PLI2.OVL+3660"
+      },
+      {
+        "callsite": "PLI2.OVL+3E0D",
+        "input": {
+          "a": 0,
+          "b": 0,
+          "c": 1,
+          "d": 96,
+          "e": 46,
+          "flags": {
+            "auxiliary_carry": true,
+            "carry": false,
+            "parity": true,
+            "sign": false,
+            "zero": true
+          },
+          "h": 96,
+          "l": 13,
+          "pc": 24336,
+          "sp": 65452
+        },
+        "output": {
+          "a": 0,
+          "b": 29,
+          "c": 10,
+          "d": 0,
+          "e": 0,
+          "flags": {
+            "auxiliary_carry": false,
+            "carry": false,
+            "parity": true,
+            "sign": true,
+            "zero": false
+          },
+          "h": 0,
+          "l": 1,
+          "pc": 24592,
+          "sp": 65454
+        },
+        "return_site": "PLI2.OVL+3DE3",
+        "target": "PLI2.OVL+3D10"
+      }
+    ],
+    "continuation": 17076,
+    "entry": {
+      "a": 0,
+      "auxiliary_carry": true,
+      "b": 0,
+      "c": 85,
+      "carry": false,
+      "d": 0,
+      "e": 3,
+      "h": 95,
+      "l": 228,
+      "parity": true,
+      "pc": 24548,
+      "sign": false,
+      "sp": 65454,
+      "zero": true
+    },
+    "gate": {
+      "after": {
+        "a": 0,
+        "b": 0,
+        "c": 87,
+        "d": 0,
+        "e": 3,
+        "flags": {
+          "auxiliary_carry": true,
+          "carry": false,
+          "parity": true,
+          "sign": false,
+          "zero": true
+        },
+        "h": 170,
+        "l": 62,
+        "pc": 24552,
+        "sp": 65454
+      },
+      "before": {
+        "a": 0,
+        "b": 0,
+        "c": 87,
+        "d": 0,
+        "e": 3,
+        "flags": {
+          "auxiliary_carry": true,
+          "carry": false,
+          "parity": true,
+          "sign": false,
+          "zero": true
+        },
+        "h": 170,
+        "l": 62,
+        "pc": 24551,
+        "sp": 65454
+      },
+      "bytes": "1F",
+      "call_return_address": null,
+      "control": {
+        "kind": "sequential"
+      },
+      "disassembly": "RAR",
+      "origin": {
+        "image": {
+          "drive": 0,
+          "identity": "0:0:PLI2.OVL",
+          "name": "PLI2.OVL",
+          "user": 0
+        },
+        "offset": 15847
+      },
+      "pc": 24551,
+      "pc_after": 24552,
+      "reads": [],
+      "runtime_pc": 24551,
+      "source": "memory",
+      "sp_after": 65454,
+      "sp_before": 65454,
+      "step_index": 2243015,
+      "target_origin": null,
+      "writes": []
+    },
+    "gateway": [
+      {
+        "accesses": [],
+        "after": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 0,
+          "c": 85,
+          "carry": false,
+          "d": 0,
+          "e": 3,
+          "h": 66,
+          "l": 180,
+          "parity": true,
+          "pc": 17071,
+          "sign": false,
+          "sp": 65456,
+          "zero": true
+        },
+        "before": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 0,
+          "c": 85,
+          "carry": false,
+          "d": 0,
+          "e": 3,
+          "h": 87,
+          "l": 180,
+          "parity": true,
+          "pc": 17068,
+          "sign": false,
+          "sp": 65456,
+          "zero": true
+        },
+        "bytes": "21B442",
+        "image": "PLI2.OVL",
+        "instruction": "LXI H,42B4H",
+        "step": 2242989
+      },
+      {
+        "accesses": [
+          {
+            "address": 65455,
+            "kind": "write",
+            "value": 66
+          },
+          {
+            "address": 65454,
+            "kind": "write",
+            "value": 180
+          }
+        ],
+        "after": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 0,
+          "c": 85,
+          "carry": false,
+          "d": 0,
+          "e": 3,
+          "h": 66,
+          "l": 180,
+          "parity": true,
+          "pc": 17072,
+          "sign": false,
+          "sp": 65454,
+          "zero": true
+        },
+        "before": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 0,
+          "c": 85,
+          "carry": false,
+          "d": 0,
+          "e": 3,
+          "h": 66,
+          "l": 180,
+          "parity": true,
+          "pc": 17071,
+          "sign": false,
+          "sp": 65456,
+          "zero": true
+        },
+        "bytes": "E5",
+        "image": "PLI2.OVL",
+        "instruction": "PUSH H",
+        "step": 2242990
+      },
+      {
+        "accesses": [
+          {
+            "address": 44319,
+            "kind": "read",
+            "value": 228
+          },
+          {
+            "address": 44320,
+            "kind": "read",
+            "value": 95
+          }
+        ],
+        "after": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 0,
+          "c": 85,
+          "carry": false,
+          "d": 0,
+          "e": 3,
+          "h": 95,
+          "l": 228,
+          "parity": true,
+          "pc": 17075,
+          "sign": false,
+          "sp": 65454,
+          "zero": true
+        },
+        "before": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 0,
+          "c": 85,
+          "carry": false,
+          "d": 0,
+          "e": 3,
+          "h": 66,
+          "l": 180,
+          "parity": true,
+          "pc": 17072,
+          "sign": false,
+          "sp": 65454,
+          "zero": true
+        },
+        "bytes": "2A1FAD",
+        "image": "PLI2.OVL",
+        "instruction": "LHLD AD1FH",
+        "step": 2242991
+      },
+      {
+        "accesses": [],
+        "after": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 0,
+          "c": 85,
+          "carry": false,
+          "d": 0,
+          "e": 3,
+          "h": 95,
+          "l": 228,
+          "parity": true,
+          "pc": 24548,
+          "sign": false,
+          "sp": 65454,
+          "zero": true
+        },
+        "before": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 0,
+          "c": 85,
+          "carry": false,
+          "d": 0,
+          "e": 3,
+          "h": 95,
+          "l": 228,
+          "parity": true,
+          "pc": 17075,
+          "sign": false,
+          "sp": 65454,
+          "zero": true
+        },
+        "bytes": "E9",
+        "image": "PLI2.OVL",
+        "instruction": "PCHL",
+        "step": 2242992
+      }
+    ],
+    "gateway_calls": [],
+    "gateway_hardware_call": {
+      "accesses": [
+        {
+          "address": 65469,
+          "kind": "write",
+          "value": 67
+        },
+        {
+          "address": 65468,
+          "kind": "write",
+          "value": 76
+        }
+      ],
+      "after": {
+        "a": 4,
+        "auxiliary_carry": true,
+        "b": 0,
+        "c": 88,
+        "carry": false,
+        "d": 10,
+        "e": 2,
+        "h": 4,
+        "l": 88,
+        "parity": false,
+        "pc": 16821,
+        "sign": false,
+        "sp": 65468,
+        "zero": false
+      },
+      "before": {
+        "a": 4,
+        "auxiliary_carry": true,
+        "b": 0,
+        "c": 88,
+        "carry": false,
+        "d": 10,
+        "e": 2,
+        "h": 4,
+        "l": 88,
+        "parity": false,
+        "pc": 17225,
+        "sign": false,
+        "sp": 65470,
+        "zero": false
+      },
+      "bytes": "CDB541",
+      "image": "PLI2.OVL",
+      "instruction": "CALL 41B5H",
+      "step": 2242607
+    },
+    "high_writer": {
+      "instruction": {
+        "accesses": [
+          {
+            "address": 65455,
+            "kind": "write",
+            "value": 66
+          },
+          {
+            "address": 65454,
+            "kind": "write",
+            "value": 180
+          }
+        ],
+        "after": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 0,
+          "c": 85,
+          "carry": false,
+          "d": 0,
+          "e": 3,
+          "h": 66,
+          "l": 180,
+          "parity": true,
+          "pc": 17072,
+          "sign": false,
+          "sp": 65454,
+          "zero": true
+        },
+        "before": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 0,
+          "c": 85,
+          "carry": false,
+          "d": 0,
+          "e": 3,
+          "h": 66,
+          "l": 180,
+          "parity": true,
+          "pc": 17071,
+          "sign": false,
+          "sp": 65456,
+          "zero": true
+        },
+        "bytes": "E5",
+        "image": "PLI2.OVL",
+        "instruction": "PUSH H",
+        "step": 2242990
+      },
+      "value": 66
+    },
+    "id": "OPTIMIST-1-witnesses",
+    "instruction_journal_sha256": "19a329d9e05ee15e5da8624e59af99acb2b9def54dbb2a970364c76525d02602",
+    "instructions": 3183,
+    "low_writer": {
+      "instruction": {
+        "accesses": [
+          {
+            "address": 65455,
+            "kind": "write",
+            "value": 66
+          },
+          {
+            "address": 65454,
+            "kind": "write",
+            "value": 180
+          }
+        ],
+        "after": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 0,
+          "c": 85,
+          "carry": false,
+          "d": 0,
+          "e": 3,
+          "h": 66,
+          "l": 180,
+          "parity": true,
+          "pc": 17072,
+          "sign": false,
+          "sp": 65454,
+          "zero": true
+        },
+        "before": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 0,
+          "c": 85,
+          "carry": false,
+          "d": 0,
+          "e": 3,
+          "h": 66,
+          "l": 180,
+          "parity": true,
+          "pc": 17071,
+          "sign": false,
+          "sp": 65456,
+          "zero": true
+        },
+        "bytes": "E5",
+        "image": "PLI2.OVL",
+        "instruction": "PUSH H",
+        "step": 2242990
+      },
+      "value": 180
+    },
+    "ordered_writes_sha256": "7e59a30b77d39d6a8f93591038ed39edf269181ad711a019e957160aadd1eea5",
+    "own_offsets": [
+      15844,
+      15847,
+      15848,
+      15861,
+      15864,
+      15865,
+      15867,
+      15870,
+      15871,
+      15872,
+      15873,
+      15874,
+      15875,
+      15876,
+      15885,
+      15888,
+      15925
+    ],
+    "ret": {
+      "after": {
+        "a": 0,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 0,
+        "flags": {
+          "auxiliary_carry": false,
+          "carry": false,
+          "parity": true,
+          "sign": true,
+          "zero": false
+        },
+        "h": 0,
+        "l": 1,
+        "pc": 17076,
+        "sp": 65456
+      },
+      "before": {
+        "a": 0,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 0,
+        "flags": {
+          "auxiliary_carry": false,
+          "carry": false,
+          "parity": true,
+          "sign": true,
+          "zero": false
+        },
+        "h": 0,
+        "l": 1,
+        "pc": 24629,
+        "sp": 65454
+      },
+      "bytes": "C9",
+      "call_return_address": null,
+      "control": {
+        "kind": "return",
+        "taken": true,
+        "target": 17076
+      },
+      "disassembly": "RET",
+      "origin": {
+        "image": {
+          "drive": 0,
+          "identity": "0:0:PLI2.OVL",
+          "name": "PLI2.OVL",
+          "user": 0
+        },
+        "offset": 15925
+      },
+      "pc": 24629,
+      "pc_after": 17076,
+      "reads": [
+        {
+          "address": 65454,
+          "value": 180
+        },
+        {
+          "address": 65455,
+          "value": 66
+        }
+      ],
+      "runtime_pc": 24629,
+      "source": "memory",
+      "sp_after": 65456,
+      "sp_before": 65454,
+      "step_index": 2246175,
+      "target_origin": {
+        "image": {
+          "drive": 0,
+          "identity": "0:0:PLI2.OVL",
+          "name": "PLI2.OVL",
+          "user": 0
+        },
+        "offset": 8372
+      },
+      "writes": []
+    },
+    "selector": 1,
+    "source": "OPTIMIST",
+    "stack_last_writers": {
+      "65431": {
+        "step": 2246089,
+        "value": 3,
+        "writer": "PLI.COM+1157"
+      },
+      "65432": {
+        "step": 2246089,
+        "value": 2,
+        "writer": "PLI.COM+1157"
+      },
+      "65433": {
+        "step": 2246146,
+        "value": 72,
+        "writer": "PLI2.OVL+7545"
+      },
+      "65434": {
+        "step": 2246146,
+        "value": 151,
+        "writer": "PLI2.OVL+7545"
+      },
+      "65435": {
+        "step": 2246141,
+        "value": 86,
+        "writer": "PLI2.OVL+7553"
+      },
+      "65436": {
+        "step": 2246141,
+        "value": 151,
+        "writer": "PLI2.OVL+7553"
+      },
+      "65437": {
+        "step": 2246122,
+        "value": 116,
+        "writer": "PLI2.OVL+7671"
+      },
+      "65438": {
+        "step": 2246122,
+        "value": 152,
+        "writer": "PLI2.OVL+7671"
+      },
+      "65439": {
+        "step": 2245266,
+        "value": 85,
+        "writer": "PLI2.OVL+7852"
+      },
+      "65440": {
+        "step": 2245266,
+        "value": 154,
+        "writer": "PLI2.OVL+7852"
+      },
+      "65441": {
+        "step": 2245214,
+        "value": 112,
+        "writer": "PLI2.OVL+786D"
+      },
+      "65442": {
+        "step": 2245214,
+        "value": 154,
+        "writer": "PLI2.OVL+786D"
+      },
+      "65443": {
+        "step": 2245204,
+        "value": 33,
+        "writer": "PLI2.OVL+7C1E"
+      },
+      "65444": {
+        "step": 2245204,
+        "value": 158,
+        "writer": "PLI2.OVL+7C1E"
+      },
+      "65445": {
+        "step": 2244637,
+        "value": 50,
+        "writer": "PLI2.OVL+7C2F"
+      },
+      "65446": {
+        "step": 2244637,
+        "value": 158,
+        "writer": "PLI2.OVL+7C2F"
+      },
+      "65447": {
+        "step": 2244546,
+        "value": 152,
+        "writer": "PLI2.OVL+3D95"
+      },
+      "65448": {
+        "step": 2244546,
+        "value": 95,
+        "writer": "PLI2.OVL+3D95"
+      },
+      "65449": {
+        "step": 2243030,
+        "value": 13,
+        "writer": "PLI2.OVL+3D11"
+      },
+      "65450": {
+        "step": 2243125,
+        "value": 1,
+        "writer": "PLI2.OVL+3D7B"
+      },
+      "65451": {
+        "step": 2243127,
+        "value": 0,
+        "writer": "PLI2.OVL+3D7D"
+      },
+      "65452": {
+        "step": 2243028,
+        "value": 16,
+        "writer": "PLI2.OVL+3E0D"
+      },
+      "65453": {
+        "step": 2243028,
+        "value": 96,
+        "writer": "PLI2.OVL+3E0D"
+      }
+    }
+  },
+  {
+    "children": [
+      {
+        "callsite": "PLI2.OVL+3DE4",
+        "input": {
+          "a": 0,
+          "b": 109,
+          "c": 109,
+          "d": 0,
+          "e": 2,
+          "flags": {
+            "auxiliary_carry": true,
+            "carry": false,
+            "parity": true,
+            "sign": false,
+            "zero": true
+          },
+          "h": 95,
+          "l": 228,
+          "pc": 22624,
+          "sp": 65426
+        },
+        "output": {
+          "a": 0,
+          "b": 0,
+          "c": 11,
+          "d": 0,
+          "e": 2,
+          "flags": {
+            "auxiliary_carry": true,
+            "carry": false,
+            "parity": true,
+            "sign": false,
+            "zero": true
+          },
+          "h": 169,
+          "l": 242,
+          "pc": 24551,
+          "sp": 65428
+        },
+        "return_site": "PLI2.OVL+3674",
+        "target": "PLI2.OVL+3660"
+      },
+      {
+        "callsite": "PLI2.OVL+3E25",
+        "input": {
+          "a": 0,
+          "b": 0,
+          "c": 1,
+          "d": 96,
+          "e": 52,
+          "flags": {
+            "auxiliary_carry": true,
+            "carry": false,
+            "parity": true,
+            "sign": false,
+            "zero": true
+          },
+          "h": 96,
+          "l": 35,
+          "pc": 23930,
+          "sp": 65426
+        },
+        "output": {
+          "a": 0,
+          "b": 29,
+          "c": 10,
+          "d": 0,
+          "e": 0,
+          "flags": {
+            "auxiliary_carry": false,
+            "carry": false,
+            "parity": true,
+            "sign": true,
+            "zero": false
+          },
+          "h": 0,
+          "l": 0,
+          "pc": 24616,
+          "sp": 65428
+        },
+        "return_site": "PLI2.OVL+3BFA",
+        "target": "PLI2.OVL+3B7A"
+      }
+    ],
+    "continuation": 17076,
+    "entry": {
+      "a": 0,
+      "auxiliary_carry": true,
+      "b": 109,
+      "c": 109,
+      "carry": false,
+      "d": 0,
+      "e": 2,
+      "h": 95,
+      "l": 228,
+      "parity": true,
+      "pc": 24548,
+      "sign": false,
+      "sp": 65428,
+      "zero": true
+    },
+    "gate": {
+      "after": {
+        "a": 0,
+        "b": 0,
+        "c": 11,
+        "d": 0,
+        "e": 2,
+        "flags": {
+          "auxiliary_carry": true,
+          "carry": false,
+          "parity": true,
+          "sign": false,
+          "zero": true
+        },
+        "h": 169,
+        "l": 242,
+        "pc": 24552,
+        "sp": 65428
+      },
+      "before": {
+        "a": 0,
+        "b": 0,
+        "c": 11,
+        "d": 0,
+        "e": 2,
+        "flags": {
+          "auxiliary_carry": true,
+          "carry": false,
+          "parity": true,
+          "sign": false,
+          "zero": true
+        },
+        "h": 169,
+        "l": 242,
+        "pc": 24551,
+        "sp": 65428
+      },
+      "bytes": "1F",
+      "call_return_address": null,
+      "control": {
+        "kind": "sequential"
+      },
+      "disassembly": "RAR",
+      "origin": {
+        "image": {
+          "drive": 0,
+          "identity": "0:0:PLI2.OVL",
+          "name": "PLI2.OVL",
+          "user": 0
+        },
+        "offset": 15847
+      },
+      "pc": 24551,
+      "pc_after": 24552,
+      "reads": [],
+      "runtime_pc": 24551,
+      "source": "memory",
+      "sp_after": 65428,
+      "sp_before": 65428,
+      "step_index": 2258092,
+      "target_origin": null,
+      "writes": []
+    },
+    "gateway": [
+      {
+        "accesses": [],
+        "after": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 109,
+          "c": 109,
+          "carry": false,
+          "d": 0,
+          "e": 2,
+          "h": 66,
+          "l": 180,
+          "parity": true,
+          "pc": 17071,
+          "sign": false,
+          "sp": 65430,
+          "zero": true
+        },
+        "before": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 109,
+          "c": 109,
+          "carry": false,
+          "d": 0,
+          "e": 2,
+          "h": 87,
+          "l": 197,
+          "parity": true,
+          "pc": 17068,
+          "sign": false,
+          "sp": 65430,
+          "zero": true
+        },
+        "bytes": "21B442",
+        "image": "PLI2.OVL",
+        "instruction": "LXI H,42B4H",
+        "step": 2258066
+      },
+      {
+        "accesses": [
+          {
+            "address": 65429,
+            "kind": "write",
+            "value": 66
+          },
+          {
+            "address": 65428,
+            "kind": "write",
+            "value": 180
+          }
+        ],
+        "after": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 109,
+          "c": 109,
+          "carry": false,
+          "d": 0,
+          "e": 2,
+          "h": 66,
+          "l": 180,
+          "parity": true,
+          "pc": 17072,
+          "sign": false,
+          "sp": 65428,
+          "zero": true
+        },
+        "before": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 109,
+          "c": 109,
+          "carry": false,
+          "d": 0,
+          "e": 2,
+          "h": 66,
+          "l": 180,
+          "parity": true,
+          "pc": 17071,
+          "sign": false,
+          "sp": 65430,
+          "zero": true
+        },
+        "bytes": "E5",
+        "image": "PLI2.OVL",
+        "instruction": "PUSH H",
+        "step": 2258067
+      },
+      {
+        "accesses": [
+          {
+            "address": 44319,
+            "kind": "read",
+            "value": 228
+          },
+          {
+            "address": 44320,
+            "kind": "read",
+            "value": 95
+          }
+        ],
+        "after": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 109,
+          "c": 109,
+          "carry": false,
+          "d": 0,
+          "e": 2,
+          "h": 95,
+          "l": 228,
+          "parity": true,
+          "pc": 17075,
+          "sign": false,
+          "sp": 65428,
+          "zero": true
+        },
+        "before": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 109,
+          "c": 109,
+          "carry": false,
+          "d": 0,
+          "e": 2,
+          "h": 66,
+          "l": 180,
+          "parity": true,
+          "pc": 17072,
+          "sign": false,
+          "sp": 65428,
+          "zero": true
+        },
+        "bytes": "2A1FAD",
+        "image": "PLI2.OVL",
+        "instruction": "LHLD AD1FH",
+        "step": 2258068
+      },
+      {
+        "accesses": [],
+        "after": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 109,
+          "c": 109,
+          "carry": false,
+          "d": 0,
+          "e": 2,
+          "h": 95,
+          "l": 228,
+          "parity": true,
+          "pc": 24548,
+          "sign": false,
+          "sp": 65428,
+          "zero": true
+        },
+        "before": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 109,
+          "c": 109,
+          "carry": false,
+          "d": 0,
+          "e": 2,
+          "h": 95,
+          "l": 228,
+          "parity": true,
+          "pc": 17075,
+          "sign": false,
+          "sp": 65428,
+          "zero": true
+        },
+        "bytes": "E9",
+        "image": "PLI2.OVL",
+        "instruction": "PCHL",
+        "step": 2258069
+      }
+    ],
+    "gateway_calls": [
+      {
+        "callsite": "PLI2.OVL+374B",
+        "input": {
+          "a": 0,
+          "b": 0,
+          "c": 109,
+          "d": 96,
+          "e": 52,
+          "flags": {
+            "auxiliary_carry": true,
+            "carry": false,
+            "parity": true,
+            "sign": false,
+            "zero": true
+          },
+          "h": 1,
+          "l": 109,
+          "pc": 16821,
+          "sp": 65421
+        },
+        "step": 2258137
+      },
+      {
+        "callsite": "PLI2.OVL+6691",
+        "input": {
+          "a": 127,
+          "b": 255,
+          "c": 107,
+          "d": 107,
+          "e": 107,
+          "flags": {
+            "auxiliary_carry": true,
+            "carry": false,
+            "parity": true,
+            "sign": true,
+            "zero": false
+          },
+          "h": 255,
+          "l": 120,
+          "pc": 16821,
+          "sp": 65397
+        },
+        "step": 2259530
+      },
+      {
+        "callsite": "PLI2.OVL+2329",
+        "input": {
+          "a": 0,
+          "b": 255,
+          "c": 101,
+          "d": 0,
+          "e": 2,
+          "flags": {
+            "auxiliary_carry": true,
+            "carry": false,
+            "parity": true,
+            "sign": false,
+            "zero": true
+          },
+          "h": 98,
+          "l": 101,
+          "pc": 16821,
+          "sp": 65380
+        },
+        "step": 2260105
+      },
+      {
+        "callsite": "PLI2.OVL+2333",
+        "input": {
+          "a": 1,
+          "b": 255,
+          "c": 106,
+          "d": 173,
+          "e": 21,
+          "flags": {
+            "auxiliary_carry": false,
+            "carry": false,
+            "parity": false,
+            "sign": false,
+            "zero": false
+          },
+          "h": 101,
+          "l": 106,
+          "pc": 16821,
+          "sp": 65380
+        },
+        "step": 2262356
+      },
+      {
+        "callsite": "PLI2.OVL+3756",
+        "input": {
+          "a": 7,
+          "b": 88,
+          "c": 103,
+          "d": 0,
+          "e": 9,
+          "flags": {
+            "auxiliary_carry": false,
+            "carry": true,
+            "parity": true,
+            "sign": true,
+            "zero": false
+          },
+          "h": 97,
+          "l": 103,
+          "pc": 16821,
+          "sp": 65357
+        },
+        "step": 2263023
+      }
+    ],
+    "gateway_hardware_call": {
+      "accesses": [
+        {
+          "address": 65443,
+          "kind": "write",
+          "value": 67
+        },
+        {
+          "address": 65442,
+          "kind": "write",
+          "value": 76
+        }
+      ],
+      "after": {
+        "a": 15,
+        "auxiliary_carry": true,
+        "b": 0,
+        "c": 111,
+        "carry": false,
+        "d": 173,
+        "e": 21,
+        "h": 15,
+        "l": 111,
+        "parity": true,
+        "pc": 16821,
+        "sign": false,
+        "sp": 65442,
+        "zero": false
+      },
+      "before": {
+        "a": 15,
+        "auxiliary_carry": true,
+        "b": 0,
+        "c": 111,
+        "carry": false,
+        "d": 173,
+        "e": 21,
+        "h": 15,
+        "l": 111,
+        "parity": true,
+        "pc": 17225,
+        "sign": false,
+        "sp": 65444,
+        "zero": false
+      },
+      "bytes": "CDB541",
+      "image": "PLI2.OVL",
+      "instruction": "CALL 41B5H",
+      "step": 2257220
+    },
+    "high_writer": {
+      "instruction": {
+        "accesses": [
+          {
+            "address": 65429,
+            "kind": "write",
+            "value": 66
+          },
+          {
+            "address": 65428,
+            "kind": "write",
+            "value": 180
+          }
+        ],
+        "after": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 109,
+          "c": 109,
+          "carry": false,
+          "d": 0,
+          "e": 2,
+          "h": 66,
+          "l": 180,
+          "parity": true,
+          "pc": 17072,
+          "sign": false,
+          "sp": 65428,
+          "zero": true
+        },
+        "before": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 109,
+          "c": 109,
+          "carry": false,
+          "d": 0,
+          "e": 2,
+          "h": 66,
+          "l": 180,
+          "parity": true,
+          "pc": 17071,
+          "sign": false,
+          "sp": 65430,
+          "zero": true
+        },
+        "bytes": "E5",
+        "image": "PLI2.OVL",
+        "instruction": "PUSH H",
+        "step": 2258067
+      },
+      "value": 66
+    },
+    "id": "OPTIMIST-2-witnesses",
+    "instruction_journal_sha256": "338c45ffd5dc8d146f65380e7089bf32573e79b034e829718ce48efae6ea069d",
+    "instructions": 22925,
+    "low_writer": {
+      "instruction": {
+        "accesses": [
+          {
+            "address": 65429,
+            "kind": "write",
+            "value": 66
+          },
+          {
+            "address": 65428,
+            "kind": "write",
+            "value": 180
+          }
+        ],
+        "after": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 109,
+          "c": 109,
+          "carry": false,
+          "d": 0,
+          "e": 2,
+          "h": 66,
+          "l": 180,
+          "parity": true,
+          "pc": 17072,
+          "sign": false,
+          "sp": 65428,
+          "zero": true
+        },
+        "before": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 109,
+          "c": 109,
+          "carry": false,
+          "d": 0,
+          "e": 2,
+          "h": 66,
+          "l": 180,
+          "parity": true,
+          "pc": 17071,
+          "sign": false,
+          "sp": 65430,
+          "zero": true
+        },
+        "bytes": "E5",
+        "image": "PLI2.OVL",
+        "instruction": "PUSH H",
+        "step": 2258067
+      },
+      "value": 180
+    },
+    "ordered_writes_sha256": "c6b6ceb8811398249f49b0cfa4d7ff7cbca5b79ef25523275b8d086841aaba58",
+    "own_offsets": [
+      15844,
+      15847,
+      15848,
+      15861,
+      15864,
+      15865,
+      15867,
+      15870,
+      15871,
+      15872,
+      15873,
+      15874,
+      15875,
+      15876,
+      15907,
+      15909,
+      15912,
+      15925
+    ],
+    "ret": {
+      "after": {
+        "a": 0,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 0,
+        "flags": {
+          "auxiliary_carry": false,
+          "carry": false,
+          "parity": true,
+          "sign": true,
+          "zero": false
+        },
+        "h": 0,
+        "l": 0,
+        "pc": 17076,
+        "sp": 65430
+      },
+      "before": {
+        "a": 0,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 0,
+        "flags": {
+          "auxiliary_carry": false,
+          "carry": false,
+          "parity": true,
+          "sign": true,
+          "zero": false
+        },
+        "h": 0,
+        "l": 0,
+        "pc": 24629,
+        "sp": 65428
+      },
+      "bytes": "C9",
+      "call_return_address": null,
+      "control": {
+        "kind": "return",
+        "taken": true,
+        "target": 17076
+      },
+      "disassembly": "RET",
+      "origin": {
+        "image": {
+          "drive": 0,
+          "identity": "0:0:PLI2.OVL",
+          "name": "PLI2.OVL",
+          "user": 0
+        },
+        "offset": 15925
+      },
+      "pc": 24629,
+      "pc_after": 17076,
+      "reads": [
+        {
+          "address": 65428,
+          "value": 180
+        },
+        {
+          "address": 65429,
+          "value": 66
+        }
+      ],
+      "runtime_pc": 24629,
+      "source": "memory",
+      "sp_after": 65430,
+      "sp_before": 65428,
+      "step_index": 2280994,
+      "target_origin": {
+        "image": {
+          "drive": 0,
+          "identity": "0:0:PLI2.OVL",
+          "name": "PLI2.OVL",
+          "user": 0
+        },
+        "offset": 8372
+      },
+      "writes": []
+    },
+    "selector": 4,
+    "source": "OPTIMIST",
+    "stack_last_writers": {
+      "65323": {
+        "step": 2263813,
+        "value": 70,
+        "writer": "PLI.COM+1157"
+      },
+      "65324": {
+        "step": 2263813,
+        "value": 0,
+        "writer": "PLI.COM+1157"
+      },
+      "65325": {
+        "step": 2265233,
+        "value": 3,
+        "writer": "PLI.COM+1157"
+      },
+      "65326": {
+        "step": 2265233,
+        "value": 2,
+        "writer": "PLI.COM+1157"
+      },
+      "65327": {
+        "step": 2265285,
+        "value": 72,
+        "writer": "PLI2.OVL+7545"
+      },
+      "65328": {
+        "step": 2265285,
+        "value": 151,
+        "writer": "PLI2.OVL+7545"
+      },
+      "65329": {
+        "step": 2265280,
+        "value": 86,
+        "writer": "PLI2.OVL+7553"
+      },
+      "65330": {
+        "step": 2265280,
+        "value": 151,
+        "writer": "PLI2.OVL+7553"
+      },
+      "65331": {
+        "step": 2265261,
+        "value": 116,
+        "writer": "PLI2.OVL+7671"
+      },
+      "65332": {
+        "step": 2265261,
+        "value": 152,
+        "writer": "PLI2.OVL+7671"
+      },
+      "65333": {
+        "step": 2264410,
+        "value": 85,
+        "writer": "PLI2.OVL+7852"
+      },
+      "65334": {
+        "step": 2264410,
+        "value": 154,
+        "writer": "PLI2.OVL+7852"
+      },
+      "65335": {
+        "step": 2264358,
+        "value": 112,
+        "writer": "PLI2.OVL+786D"
+      },
+      "65336": {
+        "step": 2264358,
+        "value": 154,
+        "writer": "PLI2.OVL+786D"
+      },
+      "65337": {
+        "step": 2264348,
+        "value": 203,
+        "writer": "PLI2.OVL+7BC8"
+      },
+      "65338": {
+        "step": 2264348,
+        "value": 157,
+        "writer": "PLI2.OVL+7BC8"
+      },
+      "65339": {
+        "step": 2263390,
+        "value": 220,
+        "writer": "PLI2.OVL+7BD9"
+      },
+      "65340": {
+        "step": 2263390,
+        "value": 157,
+        "writer": "PLI2.OVL+7BD9"
+      },
+      "65341": {
+        "step": 2263299,
+        "value": 245,
+        "writer": "PLI2.OVL+3EF2"
+      },
+      "65342": {
+        "step": 2263299,
+        "value": 96,
+        "writer": "PLI2.OVL+3EF2"
+      },
+      "65343": {
+        "step": 2265314,
+        "value": 10,
+        "writer": "PLI2.OVL+20CA"
+      },
+      "65344": {
+        "step": 2265314,
+        "value": 0,
+        "writer": "PLI2.OVL+20CA"
+      },
+      "65345": {
+        "step": 2263028,
+        "value": 103,
+        "writer": "PLI2.OVL+1FBB"
+      },
+      "65346": {
+        "step": 2263038,
+        "value": 106,
+        "writer": "PLI2.OVL+1FCA"
+      },
+      "65347": {
+        "step": 2269315,
+        "value": 130,
+        "writer": "PLI.COM+1157"
+      },
+      "65348": {
+        "step": 2269315,
+        "value": 128,
+        "writer": "PLI.COM+1157"
+      },
+      "65349": {
+        "step": 2271707,
+        "value": 6,
+        "writer": "PLI.COM+1157"
+      },
+      "65350": {
+        "step": 2271707,
+        "value": 78,
+        "writer": "PLI.COM+1157"
+      },
+      "65351": {
+        "step": 2271695,
+        "value": 184,
+        "writer": "PLI.COM+11B5"
+      },
+      "65352": {
+        "step": 2271695,
+        "value": 18,
+        "writer": "PLI.COM+11B5"
+      },
+      "65353": {
+        "step": 2271388,
+        "value": 165,
+        "writer": "PLI2.OVL+77A2"
+      },
+      "65354": {
+        "step": 2271388,
+        "value": 153,
+        "writer": "PLI2.OVL+77A2"
+      },
+      "65355": {
+        "step": 2267393,
+        "value": 71,
+        "writer": "PLI2.OVL+8244"
+      },
+      "65356": {
+        "step": 2267393,
+        "value": 164,
+        "writer": "PLI2.OVL+8244"
+      },
+      "65357": {
+        "step": 2266819,
+        "value": 87,
+        "writer": "PLI2.OVL+8254"
+      },
+      "65358": {
+        "step": 2266819,
+        "value": 164,
+        "writer": "PLI2.OVL+8254"
+      },
+      "65359": {
+        "step": 2266811,
+        "value": 19,
+        "writer": "PLI2.OVL+4310"
+      },
+      "65360": {
+        "step": 2271767,
+        "value": 113,
+        "writer": "PLI2.OVL+366E"
+      },
+      "65361": {
+        "step": 2271767,
+        "value": 88,
+        "writer": "PLI2.OVL+366E"
+      },
+      "65362": {
+        "step": 2271761,
+        "value": 96,
+        "writer": "PLI2.OVL+375D"
+      },
+      "65363": {
+        "step": 2271761,
+        "value": 89,
+        "writer": "PLI2.OVL+375D"
+      },
+      "65364": {
+        "step": 2271760,
+        "value": 57,
+        "writer": "PLI2.OVL+4336"
+      },
+      "65365": {
+        "step": 2271760,
+        "value": 101,
+        "writer": "PLI2.OVL+4336"
+      },
+      "65366": {
+        "step": 2272344,
+        "value": 70,
+        "writer": "PLI.COM+1157"
+      },
+      "65367": {
+        "step": 2272344,
+        "value": 0,
+        "writer": "PLI.COM+1157"
+      },
+      "65368": {
+        "step": 2272376,
+        "value": 72,
+        "writer": "PLI2.OVL+7545"
+      },
+      "65369": {
+        "step": 2272376,
+        "value": 151,
+        "writer": "PLI2.OVL+7545"
+      },
+      "65370": {
+        "step": 2272833,
+        "value": 6,
+        "writer": "PLI.COM+1157"
+      },
+      "65371": {
+        "step": 2272833,
+        "value": 68,
+        "writer": "PLI.COM+1157"
+      },
+      "65372": {
+        "step": 2272865,
+        "value": 72,
+        "writer": "PLI2.OVL+7545"
+      },
+      "65373": {
+        "step": 2272865,
+        "value": 151,
+        "writer": "PLI2.OVL+7545"
+      },
+      "65374": {
+        "step": 2272860,
+        "value": 108,
+        "writer": "PLI2.OVL+7569"
+      },
+      "65375": {
+        "step": 2272860,
+        "value": 151,
+        "writer": "PLI2.OVL+7569"
+      },
+      "65376": {
+        "step": 2272472,
+        "value": 240,
+        "writer": "PLI2.OVL+75ED"
+      },
+      "65377": {
+        "step": 2272472,
+        "value": 151,
+        "writer": "PLI2.OVL+75ED"
+      },
+      "65378": {
+        "step": 2272442,
+        "value": 207,
+        "writer": "PLI2.OVL+80CC"
+      },
+      "65379": {
+        "step": 2272442,
+        "value": 162,
+        "writer": "PLI2.OVL+80CC"
+      },
+      "65380": {
+        "step": 2272400,
+        "value": 72,
+        "writer": "PLI2.OVL+2345"
+      },
+      "65381": {
+        "step": 2274435,
+        "value": 71,
+        "writer": "PLI.COM+1157"
+      },
+      "65382": {
+        "step": 2274435,
+        "value": 0,
+        "writer": "PLI.COM+1157"
+      },
+      "65383": {
+        "step": 2274487,
+        "value": 72,
+        "writer": "PLI2.OVL+7545"
+      },
+      "65384": {
+        "step": 2274487,
+        "value": 151,
+        "writer": "PLI2.OVL+7545"
+      },
+      "65385": {
+        "step": 2274482,
+        "value": 86,
+        "writer": "PLI2.OVL+7553"
+      },
+      "65386": {
+        "step": 2274482,
+        "value": 151,
+        "writer": "PLI2.OVL+7553"
+      },
+      "65387": {
+        "step": 2274463,
+        "value": 116,
+        "writer": "PLI2.OVL+7671"
+      },
+      "65388": {
+        "step": 2274463,
+        "value": 152,
+        "writer": "PLI2.OVL+7671"
+      },
+      "65389": {
+        "step": 2273612,
+        "value": 85,
+        "writer": "PLI2.OVL+7852"
+      },
+      "65390": {
+        "step": 2273612,
+        "value": 154,
+        "writer": "PLI2.OVL+7852"
+      },
+      "65391": {
+        "step": 2273560,
+        "value": 112,
+        "writer": "PLI2.OVL+786D"
+      },
+      "65392": {
+        "step": 2273560,
+        "value": 154,
+        "writer": "PLI2.OVL+786D"
+      },
+      "65393": {
+        "step": 2276934,
+        "value": 134,
+        "writer": "PLI.COM+1157"
+      },
+      "65394": {
+        "step": 2276934,
+        "value": 132,
+        "writer": "PLI.COM+1157"
+      },
+      "65395": {
+        "step": 2279326,
+        "value": 2,
+        "writer": "PLI.COM+1157"
+      },
+      "65396": {
+        "step": 2279326,
+        "value": 44,
+        "writer": "PLI.COM+1157"
+      },
+      "65397": {
+        "step": 2279314,
+        "value": 184,
+        "writer": "PLI.COM+11B5"
+      },
+      "65398": {
+        "step": 2279314,
+        "value": 18,
+        "writer": "PLI.COM+11B5"
+      },
+      "65399": {
+        "step": 2279002,
+        "value": 165,
+        "writer": "PLI2.OVL+77A2"
+      },
+      "65400": {
+        "step": 2279002,
+        "value": 153,
+        "writer": "PLI2.OVL+77A2"
+      },
+      "65401": {
+        "step": 2275007,
+        "value": 71,
+        "writer": "PLI2.OVL+8244"
+      },
+      "65402": {
+        "step": 2275007,
+        "value": 164,
+        "writer": "PLI2.OVL+8244"
+      },
+      "65403": {
+        "step": 2274537,
+        "value": 87,
+        "writer": "PLI2.OVL+8254"
+      },
+      "65404": {
+        "step": 2274537,
+        "value": 164,
+        "writer": "PLI2.OVL+8254"
+      },
+      "65405": {
+        "step": 2274529,
+        "value": 89,
+        "writer": "PLI2.OVL+6D56"
+      },
+      "65406": {
+        "step": 2274529,
+        "value": 143,
+        "writer": "PLI2.OVL+6D56"
+      },
+      "65407": {
+        "step": 2280914,
+        "value": 130,
+        "writer": "PLI.COM+1157"
+      },
+      "65408": {
+        "step": 2280914,
+        "value": 140,
+        "writer": "PLI.COM+1157"
+      },
+      "65409": {
+        "step": 2280966,
+        "value": 72,
+        "writer": "PLI2.OVL+7545"
+      },
+      "65410": {
+        "step": 2280966,
+        "value": 151,
+        "writer": "PLI2.OVL+7545"
+      },
+      "65411": {
+        "step": 2280961,
+        "value": 86,
+        "writer": "PLI2.OVL+7553"
+      },
+      "65412": {
+        "step": 2280961,
+        "value": 151,
+        "writer": "PLI2.OVL+7553"
+      },
+      "65413": {
+        "step": 2280942,
+        "value": 116,
+        "writer": "PLI2.OVL+7671"
+      },
+      "65414": {
+        "step": 2280942,
+        "value": 152,
+        "writer": "PLI2.OVL+7671"
+      },
+      "65415": {
+        "step": 2280086,
+        "value": 85,
+        "writer": "PLI2.OVL+7852"
+      },
+      "65416": {
+        "step": 2280086,
+        "value": 154,
+        "writer": "PLI2.OVL+7852"
+      },
+      "65417": {
+        "step": 2280034,
+        "value": 112,
+        "writer": "PLI2.OVL+786D"
+      },
+      "65418": {
+        "step": 2280034,
+        "value": 154,
+        "writer": "PLI2.OVL+786D"
+      },
+      "65419": {
+        "step": 2280024,
+        "value": 33,
+        "writer": "PLI2.OVL+7C1E"
+      },
+      "65420": {
+        "step": 2280024,
+        "value": 158,
+        "writer": "PLI2.OVL+7C1E"
+      },
+      "65421": {
+        "step": 2279575,
+        "value": 50,
+        "writer": "PLI2.OVL+7C2F"
+      },
+      "65422": {
+        "step": 2279575,
+        "value": 158,
+        "writer": "PLI2.OVL+7C2F"
+      },
+      "65423": {
+        "step": 2279484,
+        "value": 214,
+        "writer": "PLI2.OVL+3BD3"
+      },
+      "65424": {
+        "step": 2279484,
+        "value": 93,
+        "writer": "PLI2.OVL+3BD3"
+      },
+      "65425": {
+        "step": 2258108,
+        "value": 1,
+        "writer": "PLI2.OVL+3B7B"
+      },
+      "65426": {
+        "step": 2258106,
+        "value": 40,
+        "writer": "PLI2.OVL+3E25"
+      },
+      "65427": {
+        "step": 2258106,
+        "value": 96,
+        "writer": "PLI2.OVL+3E25"
+      }
+    }
+  },
+  {
+    "children": [
+      {
+        "callsite": "PLI2.OVL+3DE4",
+        "input": {
+          "a": 0,
+          "b": 0,
+          "c": 0,
+          "d": 0,
+          "e": 6,
+          "flags": {
+            "auxiliary_carry": true,
+            "carry": false,
+            "parity": true,
+            "sign": false,
+            "zero": true
+          },
+          "h": 95,
+          "l": 228,
+          "pc": 22624,
+          "sp": 65426
+        },
+        "output": {
+          "a": 0,
+          "b": 0,
+          "c": 67,
+          "d": 0,
+          "e": 6,
+          "flags": {
+            "auxiliary_carry": true,
+            "carry": false,
+            "parity": true,
+            "sign": false,
+            "zero": true
+          },
+          "h": 170,
+          "l": 42,
+          "pc": 24551,
+          "sp": 65428
+        },
+        "return_site": "PLI2.OVL+3674",
+        "target": "PLI2.OVL+3660"
+      },
+      {
+        "callsite": "PLI2.OVL+3E15",
+        "input": {
+          "a": 0,
+          "b": 0,
+          "c": 1,
+          "d": 96,
+          "e": 48,
+          "flags": {
+            "auxiliary_carry": true,
+            "carry": false,
+            "parity": true,
+            "sign": false,
+            "zero": true
+          },
+          "h": 96,
+          "l": 19,
+          "pc": 24103,
+          "sp": 65426
+        },
+        "output": {
+          "a": 0,
+          "b": 29,
+          "c": 10,
+          "d": 0,
+          "e": 0,
+          "flags": {
+            "auxiliary_carry": false,
+            "carry": false,
+            "parity": true,
+            "sign": true,
+            "zero": false
+          },
+          "h": 88,
+          "l": 1,
+          "pc": 24600,
+          "sp": 65428
+        },
+        "return_site": "PLI2.OVL+3D0F",
+        "target": "PLI2.OVL+3C27"
+      }
+    ],
+    "continuation": 17076,
+    "entry": {
+      "a": 0,
+      "auxiliary_carry": true,
+      "b": 0,
+      "c": 0,
+      "carry": false,
+      "d": 0,
+      "e": 6,
+      "h": 95,
+      "l": 228,
+      "parity": true,
+      "pc": 24548,
+      "sign": false,
+      "sp": 65428,
+      "zero": true
+    },
+    "gate": {
+      "after": {
+        "a": 0,
+        "b": 0,
+        "c": 67,
+        "d": 0,
+        "e": 6,
+        "flags": {
+          "auxiliary_carry": true,
+          "carry": false,
+          "parity": true,
+          "sign": false,
+          "zero": true
+        },
+        "h": 170,
+        "l": 42,
+        "pc": 24552,
+        "sp": 65428
+      },
+      "before": {
+        "a": 0,
+        "b": 0,
+        "c": 67,
+        "d": 0,
+        "e": 6,
+        "flags": {
+          "auxiliary_carry": true,
+          "carry": false,
+          "parity": true,
+          "sign": false,
+          "zero": true
+        },
+        "h": 170,
+        "l": 42,
+        "pc": 24551,
+        "sp": 65428
+      },
+      "bytes": "1F",
+      "call_return_address": null,
+      "control": {
+        "kind": "sequential"
+      },
+      "disassembly": "RAR",
+      "origin": {
+        "image": {
+          "drive": 0,
+          "identity": "0:0:PLI2.OVL",
+          "name": "PLI2.OVL",
+          "user": 0
+        },
+        "offset": 15847
+      },
+      "pc": 24551,
+      "pc_after": 24552,
+      "reads": [],
+      "runtime_pc": 24551,
+      "source": "memory",
+      "sp_after": 65428,
+      "sp_before": 65428,
+      "step_index": 2392510,
+      "target_origin": null,
+      "writes": []
+    },
+    "gateway": [
+      {
+        "accesses": [],
+        "after": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 0,
+          "c": 0,
+          "carry": false,
+          "d": 0,
+          "e": 6,
+          "h": 66,
+          "l": 180,
+          "parity": true,
+          "pc": 17071,
+          "sign": false,
+          "sp": 65430,
+          "zero": true
+        },
+        "before": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 0,
+          "c": 0,
+          "carry": false,
+          "d": 0,
+          "e": 6,
+          "h": 87,
+          "l": 187,
+          "parity": true,
+          "pc": 17068,
+          "sign": false,
+          "sp": 65430,
+          "zero": true
+        },
+        "bytes": "21B442",
+        "image": "PLI2.OVL",
+        "instruction": "LXI H,42B4H",
+        "step": 2392484
+      },
+      {
+        "accesses": [
+          {
+            "address": 65429,
+            "kind": "write",
+            "value": 66
+          },
+          {
+            "address": 65428,
+            "kind": "write",
+            "value": 180
+          }
+        ],
+        "after": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 0,
+          "c": 0,
+          "carry": false,
+          "d": 0,
+          "e": 6,
+          "h": 66,
+          "l": 180,
+          "parity": true,
+          "pc": 17072,
+          "sign": false,
+          "sp": 65428,
+          "zero": true
+        },
+        "before": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 0,
+          "c": 0,
+          "carry": false,
+          "d": 0,
+          "e": 6,
+          "h": 66,
+          "l": 180,
+          "parity": true,
+          "pc": 17071,
+          "sign": false,
+          "sp": 65430,
+          "zero": true
+        },
+        "bytes": "E5",
+        "image": "PLI2.OVL",
+        "instruction": "PUSH H",
+        "step": 2392485
+      },
+      {
+        "accesses": [
+          {
+            "address": 44319,
+            "kind": "read",
+            "value": 228
+          },
+          {
+            "address": 44320,
+            "kind": "read",
+            "value": 95
+          }
+        ],
+        "after": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 0,
+          "c": 0,
+          "carry": false,
+          "d": 0,
+          "e": 6,
+          "h": 95,
+          "l": 228,
+          "parity": true,
+          "pc": 17075,
+          "sign": false,
+          "sp": 65428,
+          "zero": true
+        },
+        "before": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 0,
+          "c": 0,
+          "carry": false,
+          "d": 0,
+          "e": 6,
+          "h": 66,
+          "l": 180,
+          "parity": true,
+          "pc": 17072,
+          "sign": false,
+          "sp": 65428,
+          "zero": true
+        },
+        "bytes": "2A1FAD",
+        "image": "PLI2.OVL",
+        "instruction": "LHLD AD1FH",
+        "step": 2392486
+      },
+      {
+        "accesses": [],
+        "after": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 0,
+          "c": 0,
+          "carry": false,
+          "d": 0,
+          "e": 6,
+          "h": 95,
+          "l": 228,
+          "parity": true,
+          "pc": 24548,
+          "sign": false,
+          "sp": 65428,
+          "zero": true
+        },
+        "before": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 0,
+          "c": 0,
+          "carry": false,
+          "d": 0,
+          "e": 6,
+          "h": 95,
+          "l": 228,
+          "parity": true,
+          "pc": 17075,
+          "sign": false,
+          "sp": 65428,
+          "zero": true
+        },
+        "bytes": "E9",
+        "image": "PLI2.OVL",
+        "instruction": "PCHL",
+        "step": 2392487
+      }
+    ],
+    "gateway_calls": [
+      {
+        "callsite": "PLI2.OVL+3CAE",
+        "input": {
+          "a": 0,
+          "b": 0,
+          "c": 162,
+          "d": 96,
+          "e": 48,
+          "flags": {
+            "auxiliary_carry": true,
+            "carry": false,
+            "parity": true,
+            "sign": false,
+            "zero": true
+          },
+          "h": 161,
+          "l": 162,
+          "pc": 16821,
+          "sp": 65422
+        },
+        "step": 2392555
+      }
+    ],
+    "gateway_hardware_call": {
+      "accesses": [
+        {
+          "address": 65443,
+          "kind": "write",
+          "value": 67
+        },
+        {
+          "address": 65442,
+          "kind": "write",
+          "value": 76
+        }
+      ],
+      "after": {
+        "a": 7,
+        "auxiliary_carry": true,
+        "b": 0,
+        "c": 167,
+        "carry": false,
+        "d": 23,
+        "e": 2,
+        "h": 7,
+        "l": 167,
+        "parity": false,
+        "pc": 16821,
+        "sign": false,
+        "sp": 65442,
+        "zero": false
+      },
+      "before": {
+        "a": 7,
+        "auxiliary_carry": true,
+        "b": 0,
+        "c": 167,
+        "carry": false,
+        "d": 23,
+        "e": 2,
+        "h": 7,
+        "l": 167,
+        "parity": false,
+        "pc": 17225,
+        "sign": false,
+        "sp": 65444,
+        "zero": false
+      },
+      "bytes": "CDB541",
+      "image": "PLI2.OVL",
+      "instruction": "CALL 41B5H",
+      "step": 2391630
+    },
+    "high_writer": {
+      "instruction": {
+        "accesses": [
+          {
+            "address": 65429,
+            "kind": "write",
+            "value": 66
+          },
+          {
+            "address": 65428,
+            "kind": "write",
+            "value": 180
+          }
+        ],
+        "after": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 0,
+          "c": 0,
+          "carry": false,
+          "d": 0,
+          "e": 6,
+          "h": 66,
+          "l": 180,
+          "parity": true,
+          "pc": 17072,
+          "sign": false,
+          "sp": 65428,
+          "zero": true
+        },
+        "before": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 0,
+          "c": 0,
+          "carry": false,
+          "d": 0,
+          "e": 6,
+          "h": 66,
+          "l": 180,
+          "parity": true,
+          "pc": 17071,
+          "sign": false,
+          "sp": 65430,
+          "zero": true
+        },
+        "bytes": "E5",
+        "image": "PLI2.OVL",
+        "instruction": "PUSH H",
+        "step": 2392485
+      },
+      "value": 66
+    },
+    "id": "OPTIMIST-3-witnesses",
+    "instruction_journal_sha256": "5935fcd906789d8b4b95e80805bb9526deddb77fdb68a834147cc0cf7631608a",
+    "instructions": 4068,
+    "low_writer": {
+      "instruction": {
+        "accesses": [
+          {
+            "address": 65429,
+            "kind": "write",
+            "value": 66
+          },
+          {
+            "address": 65428,
+            "kind": "write",
+            "value": 180
+          }
+        ],
+        "after": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 0,
+          "c": 0,
+          "carry": false,
+          "d": 0,
+          "e": 6,
+          "h": 66,
+          "l": 180,
+          "parity": true,
+          "pc": 17072,
+          "sign": false,
+          "sp": 65428,
+          "zero": true
+        },
+        "before": {
+          "a": 0,
+          "auxiliary_carry": true,
+          "b": 0,
+          "c": 0,
+          "carry": false,
+          "d": 0,
+          "e": 6,
+          "h": 66,
+          "l": 180,
+          "parity": true,
+          "pc": 17071,
+          "sign": false,
+          "sp": 65430,
+          "zero": true
+        },
+        "bytes": "E5",
+        "image": "PLI2.OVL",
+        "instruction": "PUSH H",
+        "step": 2392485
+      },
+      "value": 180
+    },
+    "ordered_writes_sha256": "f022d7eb0afaa47786c320781d6a9e914aed4c2e49befd5aba3a319ddf607f6f",
+    "own_offsets": [
+      15844,
+      15847,
+      15848,
+      15861,
+      15864,
+      15865,
+      15867,
+      15870,
+      15871,
+      15872,
+      15873,
+      15874,
+      15875,
+      15876,
+      15891,
+      15893,
+      15896,
+      15925
+    ],
+    "ret": {
+      "after": {
+        "a": 0,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 0,
+        "flags": {
+          "auxiliary_carry": false,
+          "carry": false,
+          "parity": true,
+          "sign": true,
+          "zero": false
+        },
+        "h": 88,
+        "l": 1,
+        "pc": 17076,
+        "sp": 65430
+      },
+      "before": {
+        "a": 0,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 0,
+        "flags": {
+          "auxiliary_carry": false,
+          "carry": false,
+          "parity": true,
+          "sign": true,
+          "zero": false
+        },
+        "h": 88,
+        "l": 1,
+        "pc": 24629,
+        "sp": 65428
+      },
+      "bytes": "C9",
+      "call_return_address": null,
+      "control": {
+        "kind": "return",
+        "taken": true,
+        "target": 17076
+      },
+      "disassembly": "RET",
+      "origin": {
+        "image": {
+          "drive": 0,
+          "identity": "0:0:PLI2.OVL",
+          "name": "PLI2.OVL",
+          "user": 0
+        },
+        "offset": 15925
+      },
+      "pc": 24629,
+      "pc_after": 17076,
+      "reads": [
+        {
+          "address": 65428,
+          "value": 180
+        },
+        {
+          "address": 65429,
+          "value": 66
+        }
+      ],
+      "runtime_pc": 24629,
+      "source": "memory",
+      "sp_after": 65430,
+      "sp_before": 65428,
+      "step_index": 2396555,
+      "target_origin": {
+        "image": {
+          "drive": 0,
+          "identity": "0:0:PLI2.OVL",
+          "name": "PLI2.OVL",
+          "user": 0
+        },
+        "offset": 8372
+      },
+      "writes": []
+    },
+    "selector": 2,
+    "source": "OPTIMIST",
+    "stack_last_writers": {
+      "65390": {
+        "step": 2394294,
+        "value": 134,
+        "writer": "PLI.COM+1157"
+      },
+      "65391": {
+        "step": 2394294,
+        "value": 130,
+        "writer": "PLI.COM+1157"
+      },
+      "65392": {
+        "step": 2394346,
+        "value": 72,
+        "writer": "PLI2.OVL+7545"
+      },
+      "65393": {
+        "step": 2394346,
+        "value": 151,
+        "writer": "PLI2.OVL+7545"
+      },
+      "65394": {
+        "step": 2394341,
+        "value": 86,
+        "writer": "PLI2.OVL+7553"
+      },
+      "65395": {
+        "step": 2394341,
+        "value": 151,
+        "writer": "PLI2.OVL+7553"
+      },
+      "65396": {
+        "step": 2394322,
+        "value": 116,
+        "writer": "PLI2.OVL+7671"
+      },
+      "65397": {
+        "step": 2394322,
+        "value": 152,
+        "writer": "PLI2.OVL+7671"
+      },
+      "65398": {
+        "step": 2393471,
+        "value": 85,
+        "writer": "PLI2.OVL+7852"
+      },
+      "65399": {
+        "step": 2393471,
+        "value": 154,
+        "writer": "PLI2.OVL+7852"
+      },
+      "65400": {
+        "step": 2393419,
+        "value": 112,
+        "writer": "PLI2.OVL+786D"
+      },
+      "65401": {
+        "step": 2393419,
+        "value": 154,
+        "writer": "PLI2.OVL+786D"
+      },
+      "65402": {
+        "step": 2393409,
+        "value": 203,
+        "writer": "PLI2.OVL+7BC8"
+      },
+      "65403": {
+        "step": 2393409,
+        "value": 157,
+        "writer": "PLI2.OVL+7BC8"
+      },
+      "65404": {
+        "step": 2392922,
+        "value": 220,
+        "writer": "PLI2.OVL+7BD9"
+      },
+      "65405": {
+        "step": 2392922,
+        "value": 157,
+        "writer": "PLI2.OVL+7BD9"
+      },
+      "65406": {
+        "step": 2396475,
+        "value": 135,
+        "writer": "PLI.COM+1157"
+      },
+      "65407": {
+        "step": 2396475,
+        "value": 226,
+        "writer": "PLI.COM+1157"
+      },
+      "65408": {
+        "step": 2396527,
+        "value": 72,
+        "writer": "PLI2.OVL+7545"
+      },
+      "65409": {
+        "step": 2396527,
+        "value": 151,
+        "writer": "PLI2.OVL+7545"
+      },
+      "65410": {
+        "step": 2396522,
+        "value": 86,
+        "writer": "PLI2.OVL+7553"
+      },
+      "65411": {
+        "step": 2396522,
+        "value": 151,
+        "writer": "PLI2.OVL+7553"
+      },
+      "65412": {
+        "step": 2396503,
+        "value": 116,
+        "writer": "PLI2.OVL+7671"
+      },
+      "65413": {
+        "step": 2396503,
+        "value": 152,
+        "writer": "PLI2.OVL+7671"
+      },
+      "65414": {
+        "step": 2395652,
+        "value": 85,
+        "writer": "PLI2.OVL+7852"
+      },
+      "65415": {
+        "step": 2395652,
+        "value": 154,
+        "writer": "PLI2.OVL+7852"
+      },
+      "65416": {
+        "step": 2395600,
+        "value": 112,
+        "writer": "PLI2.OVL+786D"
+      },
+      "65417": {
+        "step": 2395600,
+        "value": 154,
+        "writer": "PLI2.OVL+786D"
+      },
+      "65418": {
+        "step": 2395590,
+        "value": 33,
+        "writer": "PLI2.OVL+7C1E"
+      },
+      "65419": {
+        "step": 2395590,
+        "value": 158,
+        "writer": "PLI2.OVL+7C1E"
+      },
+      "65420": {
+        "step": 2395141,
+        "value": 50,
+        "writer": "PLI2.OVL+7C2F"
+      },
+      "65421": {
+        "step": 2395141,
+        "value": 158,
+        "writer": "PLI2.OVL+7C2F"
+      },
+      "65422": {
+        "step": 2395050,
+        "value": 211,
+        "writer": "PLI2.OVL+3CD0"
+      },
+      "65423": {
+        "step": 2395050,
+        "value": 94,
+        "writer": "PLI2.OVL+3CD0"
+      },
+      "65424": {
+        "step": 2392527,
+        "value": 1,
+        "writer": "PLI2.OVL+3C29"
+      },
+      "65425": {
+        "step": 2392494,
+        "value": 88,
+        "writer": "PLI2.OVL+366E"
+      },
+      "65426": {
+        "step": 2392524,
+        "value": 24,
+        "writer": "PLI2.OVL+3E15"
+      },
+      "65427": {
+        "step": 2392524,
+        "value": 96,
+        "writer": "PLI2.OVL+3E15"
+      }
+    }
+  }
+]

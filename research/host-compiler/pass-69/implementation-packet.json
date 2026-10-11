@@ -1,0 +1,504 @@
+{
+  "CPU_frontend": {
+    "RAR_cases": 512,
+    "cases": 72,
+    "scope": "front-end instruction discriminants only; no arm-child patching or root shadows"
+  },
+  "baseline": "4558e0515d9c8f83b3bcb801084f6b8f4772a1df",
+  "blocker": {
+    "child_assessments": {
+      "PLI2.OVL+37CB": {
+        "status": "optional path unobserved; static recursive calls3812/3825 to37CB and call0992; no new contract"
+      },
+      "PLI2.OVL+3B7A": {
+        "extent": [
+          "3B7A",
+          "3BFB"
+        ],
+        "status": "RAW; natural selector4 executes3660/3747;3747 calls1FB5 at374B"
+      },
+      "PLI2.OVL+3C27": {
+        "extent": [
+          "3C27",
+          "3D10"
+        ],
+        "status": "RAW; natural selector2 executes1FB5 at3CAE"
+      }
+    },
+    "coordinate": "PLI2.OVL+1FB5",
+    "native_boundary_installed": false,
+    "natural_routes": [
+      {
+        "calls": [
+          {
+            "callsite": "PLI2.OVL+3CAE",
+            "input": {
+              "a": 0,
+              "b": 0,
+              "c": 96,
+              "d": 96,
+              "e": 48,
+              "flags": {
+                "auxiliary_carry": true,
+                "carry": false,
+                "parity": true,
+                "sign": false,
+                "zero": true
+              },
+              "h": 95,
+              "l": 96,
+              "pc": 16821,
+              "sp": 65448
+            },
+            "step": 1075572
+          }
+        ],
+        "selector": 2,
+        "source": "FIZZBUZ"
+      },
+      {
+        "calls": [
+          {
+            "callsite": "PLI2.OVL+374B",
+            "input": {
+              "a": 0,
+              "b": 0,
+              "c": 10,
+              "d": 96,
+              "e": 52,
+              "flags": {
+                "auxiliary_carry": true,
+                "carry": false,
+                "parity": true,
+                "sign": false,
+                "zero": true
+              },
+              "h": 15,
+              "l": 10,
+              "pc": 16821,
+              "sp": 65473
+            },
+            "step": 632030
+          }
+        ],
+        "selector": 4,
+        "source": "FACTOR"
+      },
+      {
+        "calls": [
+          {
+            "callsite": "PLI2.OVL+374B",
+            "input": {
+              "a": 0,
+              "b": 0,
+              "c": 48,
+              "d": 96,
+              "e": 52,
+              "flags": {
+                "auxiliary_carry": true,
+                "carry": false,
+                "parity": true,
+                "sign": false,
+                "zero": true
+              },
+              "h": 47,
+              "l": 48,
+              "pc": 16821,
+              "sp": 65445
+            },
+            "step": 772295
+          },
+          {
+            "callsite": "PLI2.OVL+3EFD",
+            "input": {
+              "a": 1,
+              "b": 0,
+              "c": 45,
+              "d": 0,
+              "e": 3,
+              "flags": {
+                "auxiliary_carry": true,
+                "carry": false,
+                "parity": true,
+                "sign": false,
+                "zero": true
+              },
+              "h": 46,
+              "l": 45,
+              "pc": 16821,
+              "sp": 65426
+            },
+            "step": 772720
+          }
+        ],
+        "selector": 4,
+        "source": "FACTOR"
+      },
+      {
+        "calls": [
+          {
+            "callsite": "PLI2.OVL+374B",
+            "input": {
+              "a": 0,
+              "b": 0,
+              "c": 109,
+              "d": 96,
+              "e": 52,
+              "flags": {
+                "auxiliary_carry": true,
+                "carry": false,
+                "parity": true,
+                "sign": false,
+                "zero": true
+              },
+              "h": 1,
+              "l": 109,
+              "pc": 16821,
+              "sp": 65421
+            },
+            "step": 2258137
+          },
+          {
+            "callsite": "PLI2.OVL+6691",
+            "input": {
+              "a": 127,
+              "b": 255,
+              "c": 107,
+              "d": 107,
+              "e": 107,
+              "flags": {
+                "auxiliary_carry": true,
+                "carry": false,
+                "parity": true,
+                "sign": true,
+                "zero": false
+              },
+              "h": 255,
+              "l": 120,
+              "pc": 16821,
+              "sp": 65397
+            },
+            "step": 2259530
+          },
+          {
+            "callsite": "PLI2.OVL+2329",
+            "input": {
+              "a": 0,
+              "b": 255,
+              "c": 101,
+              "d": 0,
+              "e": 2,
+              "flags": {
+                "auxiliary_carry": true,
+                "carry": false,
+                "parity": true,
+                "sign": false,
+                "zero": true
+              },
+              "h": 98,
+              "l": 101,
+              "pc": 16821,
+              "sp": 65380
+            },
+            "step": 2260105
+          },
+          {
+            "callsite": "PLI2.OVL+2333",
+            "input": {
+              "a": 1,
+              "b": 255,
+              "c": 106,
+              "d": 173,
+              "e": 21,
+              "flags": {
+                "auxiliary_carry": false,
+                "carry": false,
+                "parity": false,
+                "sign": false,
+                "zero": false
+              },
+              "h": 101,
+              "l": 106,
+              "pc": 16821,
+              "sp": 65380
+            },
+            "step": 2262356
+          },
+          {
+            "callsite": "PLI2.OVL+3756",
+            "input": {
+              "a": 7,
+              "b": 88,
+              "c": 103,
+              "d": 0,
+              "e": 9,
+              "flags": {
+                "auxiliary_carry": false,
+                "carry": true,
+                "parity": true,
+                "sign": true,
+                "zero": false
+              },
+              "h": 97,
+              "l": 103,
+              "pc": 16821,
+              "sp": 65357
+            },
+            "step": 2263023
+          }
+        ],
+        "selector": 4,
+        "source": "OPTIMIST"
+      },
+      {
+        "calls": [
+          {
+            "callsite": "PLI2.OVL+3CAE",
+            "input": {
+              "a": 0,
+              "b": 0,
+              "c": 162,
+              "d": 96,
+              "e": 48,
+              "flags": {
+                "auxiliary_carry": true,
+                "carry": false,
+                "parity": true,
+                "sign": false,
+                "zero": true
+              },
+              "h": 161,
+              "l": 162,
+              "pc": 16821,
+              "sp": 65422
+            },
+            "step": 2392555
+          }
+        ],
+        "selector": 2,
+        "source": "OPTIMIST"
+      }
+    ],
+    "reason": "broad gateway/dispatch-save-restore operation; expressly separate from local selector dispatcher"
+  },
+  "current_full": "Pass67",
+  "inventory": {
+    "FACTOR": {
+      "REL_sha256": "9a42e8341a013243036040c8db0e56939c699c7fbbfb20878f7ba5af8d6b470d",
+      "helper_callers": {
+        "PLI2.OVL+375D->PLI2.OVL+3660": 1,
+        "PLI2.OVL+3B7D->PLI2.OVL+3660": 2,
+        "PLI2.OVL+3DE4->PLI2.OVL+3660": 2,
+        "PLI2.OVL+3E25->PLI2.OVL+3B7A": 2,
+        "PLI2.OVL+3E4A->PLI2.OVL+3660": 1,
+        "PLI2.OVL+3EDD->PLI2.OVL+3660": 3,
+        "PLI2.OVL+3F00->PLI2.OVL+3660": 1,
+        "PLI2.OVL+4426->PLI2.OVL+3660": 1,
+        "PLI2.OVL+4454->PLI2.OVL+3660": 1
+      },
+      "helper_global_calls": {
+        "PLI2.OVL+18B3": 1,
+        "PLI2.OVL+1FB5": 33,
+        "PLI2.OVL+3660": 12,
+        "PLI2.OVL+37CB": 0,
+        "PLI2.OVL+397F": 0,
+        "PLI2.OVL+3B7A": 2,
+        "PLI2.OVL+3C27": 0,
+        "PLI2.OVL+3D10": 0
+      },
+      "roots": 2,
+      "selectors": {
+        "4": 2
+      }
+    },
+    "FIZZBUZ": {
+      "REL_sha256": "68ec16931d4dae7a8f0831a29c9ae8b9ca139279f5104bb34e299644a8b2a203",
+      "helper_callers": {
+        "PLI2.OVL+375D->PLI2.OVL+3660": 3,
+        "PLI2.OVL+3C2B->PLI2.OVL+3660": 1,
+        "PLI2.OVL+3D20->PLI2.OVL+3660": 1,
+        "PLI2.OVL+3DE4->PLI2.OVL+3660": 2,
+        "PLI2.OVL+3E15->PLI2.OVL+3C27": 1,
+        "PLI2.OVL+3E4A->PLI2.OVL+3660": 7,
+        "PLI2.OVL+3EDD->PLI2.OVL+3660": 6
+      },
+      "helper_global_calls": {
+        "PLI2.OVL+18B3": 1,
+        "PLI2.OVL+1FB5": 61,
+        "PLI2.OVL+3660": 20,
+        "PLI2.OVL+37CB": 0,
+        "PLI2.OVL+397F": 1,
+        "PLI2.OVL+3B7A": 0,
+        "PLI2.OVL+3C27": 1,
+        "PLI2.OVL+3D10": 1
+      },
+      "roots": 2,
+      "selectors": {
+        "1": 1,
+        "2": 1
+      }
+    },
+    "MINIMAL": {
+      "REL_sha256": "7339d230f13c2614f6b1acb632081959659d7292814c747f7853b6944e91f119",
+      "helper_callers": {
+        "PLI2.OVL+3E4A->PLI2.OVL+3660": 1
+      },
+      "helper_global_calls": {
+        "PLI2.OVL+18B3": 1,
+        "PLI2.OVL+1FB5": 11,
+        "PLI2.OVL+3660": 1,
+        "PLI2.OVL+37CB": 0,
+        "PLI2.OVL+397F": 0,
+        "PLI2.OVL+3B7A": 0,
+        "PLI2.OVL+3C27": 0,
+        "PLI2.OVL+3D10": 0
+      },
+      "roots": 0,
+      "selectors": {}
+    },
+    "OPTIMIST": {
+      "REL_sha256": "5fca1ffe38d11c30d20cfb99a23fe2baf002c569790bda83e09151cf36032b15",
+      "helper_callers": {
+        "PLI2.OVL+375D->PLI2.OVL+3660": 3,
+        "PLI2.OVL+3B7D->PLI2.OVL+3660": 1,
+        "PLI2.OVL+3C2B->PLI2.OVL+3660": 1,
+        "PLI2.OVL+3D20->PLI2.OVL+3660": 1,
+        "PLI2.OVL+3DE4->PLI2.OVL+3660": 3,
+        "PLI2.OVL+3E15->PLI2.OVL+3C27": 1,
+        "PLI2.OVL+3E25->PLI2.OVL+3B7A": 1,
+        "PLI2.OVL+3E4A->PLI2.OVL+3660": 2,
+        "PLI2.OVL+3EDD->PLI2.OVL+3660": 7,
+        "PLI2.OVL+3F00->PLI2.OVL+3660": 1,
+        "PLI2.OVL+3FC8->PLI2.OVL+3660": 1,
+        "PLI2.OVL+6C3F->PLI2.OVL+3660": 2
+      },
+      "helper_global_calls": {
+        "PLI2.OVL+18B3": 1,
+        "PLI2.OVL+1FB5": 120,
+        "PLI2.OVL+3660": 22,
+        "PLI2.OVL+37CB": 0,
+        "PLI2.OVL+397F": 1,
+        "PLI2.OVL+3B7A": 1,
+        "PLI2.OVL+3C27": 1,
+        "PLI2.OVL+3D10": 1
+      },
+      "roots": 3,
+      "selectors": {
+        "1": 1,
+        "2": 1,
+        "4": 1
+      }
+    },
+    "PICTURE": {
+      "REL_sha256": "c02f738a7504384a236289633210d1bf4e7ea5391e51e091e373950eefacc4f1",
+      "helper_callers": {
+        "PLI2.OVL+3D20->PLI2.OVL+3660": 1,
+        "PLI2.OVL+3DE4->PLI2.OVL+3660": 1,
+        "PLI2.OVL+3EDD->PLI2.OVL+3660": 1
+      },
+      "helper_global_calls": {
+        "PLI2.OVL+18B3": 1,
+        "PLI2.OVL+1FB5": 12,
+        "PLI2.OVL+3660": 3,
+        "PLI2.OVL+37CB": 0,
+        "PLI2.OVL+397F": 0,
+        "PLI2.OVL+3B7A": 0,
+        "PLI2.OVL+3C27": 0,
+        "PLI2.OVL+3D10": 1
+      },
+      "roots": 1,
+      "selectors": {
+        "1": 1
+      }
+    }
+  },
+  "journal_hashes": {
+    "FACTOR-1-witnesses": "33b4f56ae9f3133d3f797c10e08a15d7a03ae00c17a1e750c85e08eea68ec468",
+    "FACTOR-2-witnesses": "fb16ab49637a2f7994c93fa3554c146b83a4eacdc8eafc176227519e604a53f0",
+    "FIZZBUZ-1-witnesses": "cbdab2bc68c3460bdbe63058194c956e4763122a3482f42493d4fde99489e14f",
+    "FIZZBUZ-2-witnesses": "7c8319ffd2818855793d59588a680816392abe69fec9f3459954b07fb6b08f45",
+    "OPTIMIST-1-witnesses": "19a329d9e05ee15e5da8624e59af99acb2b9def54dbb2a970364c76525d02602",
+    "OPTIMIST-2-witnesses": "338c45ffd5dc8d146f65380e7089bf32573e79b034e829718ce48efae6ea069d",
+    "OPTIMIST-3-witnesses": "5935fcd906789d8b4b95e80805bb9526deddb77fdb68a834147cc0cf7631608a",
+    "PICTURE-1-witnesses": "fb6990966962f34a5c068602dbdeae874b628bbf6083c6781f95e199e922c559"
+  },
+  "law": {
+    "arithmetic": "HL=602B; DAD B twice; E=byte[HL]; INX H; D=byte[HL]; XCHG; PCHL",
+    "arms": [
+      {
+        "C": 0,
+        "child": "3B7A",
+        "entry": "3E05",
+        "selector": 0
+      },
+      {
+        "C": null,
+        "child": "3D10",
+        "entry": "3E0D",
+        "selector": 1
+      },
+      {
+        "C": 1,
+        "child": "3C27",
+        "entry": "3E13",
+        "selector": 2
+      },
+      {
+        "C": 0,
+        "child": "3C27",
+        "entry": "3E1B",
+        "selector": 3
+      },
+      {
+        "C": 1,
+        "child": "3B7A",
+        "entry": "3E23",
+        "selector": 4
+      }
+    ],
+    "continuation": "42B4",
+    "contract_status": "not closed; selectors2/4 require unresolved broad1FB5",
+    "entry_kind": "software PUSH-H/PCHL entry, not hardware CALL",
+    "extent": [
+      "3DE4",
+      "3E36"
+    ],
+    "gate": "actual canonical3660 returned A; RAR consumes old A.bit0 as CY; JNC bypasses optional37CB",
+    "gateway": [
+      "20AC LXI H,42B4",
+      "20AF PUSH H",
+      "20B0 LHLD AD1F",
+      "20B3 PCHL"
+    ],
+    "optional37CB": "STATIC UNOBSERVED within dispatcher; recursive helper, not promoted",
+    "selector_source": "fresh little-endian word AD0A/AD0B; low byte AD0A zeroextended in BC; AD0B discarded",
+    "shared_return": "3E35 RET reads original gateway PUSH word; finalSP=entrySP+2",
+    "table_bytes": "05600D6013601B602360",
+    "table_extent": [
+      "3E2B",
+      "3E35"
+    ],
+    "targets": [
+      24581,
+      24589,
+      24595,
+      24603,
+      24611
+    ],
+    "unobserved_selectors": [
+      0,
+      3
+    ],
+    "unsupported_selector_domain": ">=5; no native default installed"
+  },
+  "next_full": "approximately Pass72",
+  "oracle_queries": 0,
+  "outcome": "discovery milestone; blocked native closure atPLI2.OVL+1FB5",
+  "promotions": {
+    "DECODED -> UNDERSTOOD": 0,
+    "RAW -> UNDERSTOOD": 0,
+    "STRUCTURED -> UNDERSTOOD": 0
+  },
+  "runtime_changes": false,
+  "task": "RUNES_PLI2_BRANCH_OWNED_SELECTOR_DISPATCH_PASS_69"
+}

@@ -1,0 +1,276 @@
+{
+  "child_assessments": {
+    "PLI2.OVL+37CB": {
+      "status": "optional path unobserved; static recursive calls3812/3825 to37CB and call0992; no new contract"
+    },
+    "PLI2.OVL+3B7A": {
+      "extent": [
+        "3B7A",
+        "3BFB"
+      ],
+      "status": "RAW; natural selector4 executes3660/3747;3747 calls1FB5 at374B"
+    },
+    "PLI2.OVL+3C27": {
+      "extent": [
+        "3C27",
+        "3D10"
+      ],
+      "status": "RAW; natural selector2 executes1FB5 at3CAE"
+    }
+  },
+  "coordinate": "PLI2.OVL+1FB5",
+  "native_boundary_installed": false,
+  "natural_routes": [
+    {
+      "calls": [
+        {
+          "callsite": "PLI2.OVL+3CAE",
+          "input": {
+            "a": 0,
+            "b": 0,
+            "c": 96,
+            "d": 96,
+            "e": 48,
+            "flags": {
+              "auxiliary_carry": true,
+              "carry": false,
+              "parity": true,
+              "sign": false,
+              "zero": true
+            },
+            "h": 95,
+            "l": 96,
+            "pc": 16821,
+            "sp": 65448
+          },
+          "step": 1075572
+        }
+      ],
+      "selector": 2,
+      "source": "FIZZBUZ"
+    },
+    {
+      "calls": [
+        {
+          "callsite": "PLI2.OVL+374B",
+          "input": {
+            "a": 0,
+            "b": 0,
+            "c": 10,
+            "d": 96,
+            "e": 52,
+            "flags": {
+              "auxiliary_carry": true,
+              "carry": false,
+              "parity": true,
+              "sign": false,
+              "zero": true
+            },
+            "h": 15,
+            "l": 10,
+            "pc": 16821,
+            "sp": 65473
+          },
+          "step": 632030
+        }
+      ],
+      "selector": 4,
+      "source": "FACTOR"
+    },
+    {
+      "calls": [
+        {
+          "callsite": "PLI2.OVL+374B",
+          "input": {
+            "a": 0,
+            "b": 0,
+            "c": 48,
+            "d": 96,
+            "e": 52,
+            "flags": {
+              "auxiliary_carry": true,
+              "carry": false,
+              "parity": true,
+              "sign": false,
+              "zero": true
+            },
+            "h": 47,
+            "l": 48,
+            "pc": 16821,
+            "sp": 65445
+          },
+          "step": 772295
+        },
+        {
+          "callsite": "PLI2.OVL+3EFD",
+          "input": {
+            "a": 1,
+            "b": 0,
+            "c": 45,
+            "d": 0,
+            "e": 3,
+            "flags": {
+              "auxiliary_carry": true,
+              "carry": false,
+              "parity": true,
+              "sign": false,
+              "zero": true
+            },
+            "h": 46,
+            "l": 45,
+            "pc": 16821,
+            "sp": 65426
+          },
+          "step": 772720
+        }
+      ],
+      "selector": 4,
+      "source": "FACTOR"
+    },
+    {
+      "calls": [
+        {
+          "callsite": "PLI2.OVL+374B",
+          "input": {
+            "a": 0,
+            "b": 0,
+            "c": 109,
+            "d": 96,
+            "e": 52,
+            "flags": {
+              "auxiliary_carry": true,
+              "carry": false,
+              "parity": true,
+              "sign": false,
+              "zero": true
+            },
+            "h": 1,
+            "l": 109,
+            "pc": 16821,
+            "sp": 65421
+          },
+          "step": 2258137
+        },
+        {
+          "callsite": "PLI2.OVL+6691",
+          "input": {
+            "a": 127,
+            "b": 255,
+            "c": 107,
+            "d": 107,
+            "e": 107,
+            "flags": {
+              "auxiliary_carry": true,
+              "carry": false,
+              "parity": true,
+              "sign": true,
+              "zero": false
+            },
+            "h": 255,
+            "l": 120,
+            "pc": 16821,
+            "sp": 65397
+          },
+          "step": 2259530
+        },
+        {
+          "callsite": "PLI2.OVL+2329",
+          "input": {
+            "a": 0,
+            "b": 255,
+            "c": 101,
+            "d": 0,
+            "e": 2,
+            "flags": {
+              "auxiliary_carry": true,
+              "carry": false,
+              "parity": true,
+              "sign": false,
+              "zero": true
+            },
+            "h": 98,
+            "l": 101,
+            "pc": 16821,
+            "sp": 65380
+          },
+          "step": 2260105
+        },
+        {
+          "callsite": "PLI2.OVL+2333",
+          "input": {
+            "a": 1,
+            "b": 255,
+            "c": 106,
+            "d": 173,
+            "e": 21,
+            "flags": {
+              "auxiliary_carry": false,
+              "carry": false,
+              "parity": false,
+              "sign": false,
+              "zero": false
+            },
+            "h": 101,
+            "l": 106,
+            "pc": 16821,
+            "sp": 65380
+          },
+          "step": 2262356
+        },
+        {
+          "callsite": "PLI2.OVL+3756",
+          "input": {
+            "a": 7,
+            "b": 88,
+            "c": 103,
+            "d": 0,
+            "e": 9,
+            "flags": {
+              "auxiliary_carry": false,
+              "carry": true,
+              "parity": true,
+              "sign": true,
+              "zero": false
+            },
+            "h": 97,
+            "l": 103,
+            "pc": 16821,
+            "sp": 65357
+          },
+          "step": 2263023
+        }
+      ],
+      "selector": 4,
+      "source": "OPTIMIST"
+    },
+    {
+      "calls": [
+        {
+          "callsite": "PLI2.OVL+3CAE",
+          "input": {
+            "a": 0,
+            "b": 0,
+            "c": 162,
+            "d": 96,
+            "e": 48,
+            "flags": {
+              "auxiliary_carry": true,
+              "carry": false,
+              "parity": true,
+              "sign": false,
+              "zero": true
+            },
+            "h": 161,
+            "l": 162,
+            "pc": 16821,
+            "sp": 65422
+          },
+          "step": 2392555
+        }
+      ],
+      "selector": 2,
+      "source": "OPTIMIST"
+    }
+  ],
+  "reason": "broad gateway/dispatch-save-restore operation; expressly separate from local selector dispatcher"
+}

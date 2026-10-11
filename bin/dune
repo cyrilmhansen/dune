@@ -219,3 +219,15 @@
 (executable
  (name native_predicate_generation)
  (libraries pli80 analysis runner unix))
+
+(executable
+ (name selector_dispatch_capture)
+ (libraries pli80 analysis runner unix))
+
+(executable
+ (name selector_dispatch_frontend_proof)
+ (libraries pli80 analysis runner unix))
+
+(executable
+ (name selector_dispatch_components)
+ (libraries pli80 analysis runner unix))
