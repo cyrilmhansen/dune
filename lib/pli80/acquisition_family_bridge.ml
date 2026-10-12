@@ -299,3 +299,21 @@ let prepare ?(follow_spine=false) ?(recursive=(fun _ _->invalid_arg"unfinished r
  let journal=List.rev !journal in
  {result;program={effects=List.rev !effects;next_state=state;validate;on_commit=ignore};state;journal;
  logical_writes=List.filter_map(fun w->if w.kind="logical"then Some(w.address,w.value)else None)journal}
+
+(* Coarse state-defined eligibility. k23 claims must pass the entire existing
+   preparation; code/ABI/domain failures are errors, never guest fallback. *)
+let k23_applicability t previous ~origin:o (boundary:Runner.instruction_boundary)=
+ require(o=origin "PLI2.OVL" 0x1fb5)"k23 probe origin";
+ require(boundary.state.sp>=0xb200&&boundary.state.sp<=0xfffc)"k23 probe frame bounds";
+ ignore(verify_call t (Pli2_output 0x1fb5) previous ~entry:boundary.state);
+ let ram=boundary.copy_memory()in
+ require(Bytes.sub ram 0x41b5 310=Bytes.sub t.pli2 0x1fb5 310)"k23 probe gateway code";
+ require(Bytes.sub ram 0x267d 22=Bytes.sub t.pli2 0x047d 22)"k23 probe lookup code";
+ let memory=S.of_bytes ram in
+ let impossible _=invalid_arg"k23 lookup unexpectedly requires a child/frame"in
+ let q=F.run (F.Pli2_output 0x047d) memory ~entry:(A.logical boundary.state)
+  ~write:(fun ~site:_ ~address:_ ~value:_->())~compatibility:impossible
+  ~adjust:(fun ~site:_ ~delta:_->impossible())~sp:(fun()->boundary.state.sp)
+  ~guard_field:(fun _ _->impossible())~native:(fun ~site:_ ~target:_ _->impossible())
+  ~follow_spine:false ~software:(fun ~site:_ ~consumed:_->impossible())in
+ if q.returned.a=23 && Char.code(Bytes.get ram 0x202e)land 1=0 then Native_dispatch.Eligible else Inapplicable

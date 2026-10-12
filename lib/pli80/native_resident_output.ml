@@ -9,9 +9,9 @@ let record_summaries=Q.record_summaries
 let filesystem_hash=Q.filesystem_hash
 let require b m=if not b then failwith("resident output proof: "^m)
 let compatibility_writes=Q.compatibility_writes
-let output_operation offset=if offset>=0x2200 then B.Pli2_output offset else B.Output offset
-let image_name offset=if offset>=0x2200 then "PLI2.OVL" else "PLI.COM"
-let runtime_base offset=if offset>=0x2200 then 0x2200 else 0x100
+let output_operation offset=if offset=0x1fb5||offset>=0x2200 then B.Pli2_output offset else B.Output offset
+let image_name offset=if offset=0x1fb5||offset>=0x2200 then "PLI2.OVL" else "PLI.COM"
+let runtime_base offset=if offset=0x1fb5||offset>=0x2200 then 0x2200 else 0x100
 let prepare bridge offset ~call ~origin boundary=B.prepare bridge (output_operation offset) ~call ~origin boundary
 (* Synthetic discriminants execute historical instructions independently.
    Older cases reject BDOS; Pass64 supplies a concrete copied BDOS callback. *)
@@ -114,6 +114,7 @@ let shadow ?(offset=0x1272) ?(within=[]) ?(run_negatives=true) ?(pli2=false) inp
    let service=List.nth preview.services !service_index in incr service_index;
    require(state=service.resume_state&&boundary.copy_memory()=service.memory_after&&boundary.dma=service.dma_after)"historical ordered service resume boundary"|_->());
   if o=B.origin(image_name offset)offset&&(offset<>0x83b4|| !active=None)&&
+   (offset<>0x1fb5||B.k23_applicability bridge (Option.get !previous) ~origin:o boundary=Native_dispatch.Eligible)&&
    (if within<>[]then List.exists(fun(a,b)->a<step_index&&step_index<b)within
     else offset<>0x1140||(Option.get !previous).before.pc=0x13a1) then(
    require(!active=None)"nested output root";
@@ -662,6 +663,7 @@ let controller ?(offset=0x1272) ?(exclude_entry_steps=[]) v input=
   {Native_dispatch.input=c.input;output=c.output;entry_memory=s.entry_memory;post_memory=s.post_memory;
    logical_digest=Native_dispatch.write_digest c.prepared.logical_writes})selected in
  let t=Native_dispatch.create ~image:(image_name offset) ~entry_pc:(first+runtime_base offset) ~end_pc:(last+runtime_base offset) ~oracles ~records:v.records ~prepare in
+ let t=if offset=0x1fb5 then Native_dispatch.with_partial_scope t(fun previous origin boundary->B.k23_applicability bridge previous ~origin boundary)else t in
  Native_dispatch.with_host_program t(fun _ _->let p=Option.get !pending in pending:=None;p)
 let compare_external v (r:Experiment.result)=
  require(Cpm.Filesystem.equal r.filesystem v.historical.filesystem)"final filesystem";

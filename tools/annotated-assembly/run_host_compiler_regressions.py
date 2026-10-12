@@ -61,6 +61,7 @@ def commands(images,out):
  cmds['pass68']=['python3','tools/annotated-assembly/test_predicate_generation_pass_68.py','--images',images,'-q']
  cmds['pass72']=['python3','tools/annotated-assembly/test_k23_handler_pass_72.py','--images',images,'-q']
  cmds['pass73']=['python3','tools/annotated-assembly/test_k23_gateway_composition_pass_73.py','--images',images,'-q']
+ cmds['pass74']=['python3','tools/annotated-assembly/test_partial_k23_gateway_pass_74.py','--images',images,'-q']
  cmds['pass71']=['python3','tools/annotated-assembly/test_gateway_decomposition_pass_71.py','--images',images,'-q']
  cmds['pass70']=['python3','tools/annotated-assembly/test_indexed_policy_pass_70.py','--images',images,'-q']
  cmds['pass69']=['python3','tools/annotated-assembly/test_selector_dispatch_pass_69.py','--images',images,'-q']

@@ -1705,11 +1705,14 @@ PLI2_1FB4: RET ; PC = word[SP]; SP += 2; use the convention in procedure header 
 ;   contract. Original237-call inventory is retained.
 ; Unresolved: Both trace-set regions remain RAW / STATIC / UNOBSERVED. / Other
 ;   k/descriptor/handler domains and unsupported canonical child routes are excluded. /
-;   Generic proof dispatcher requires all invocations at an installed coordinate; k23
-;   covers28/237. No shared dispatcher redesign or native gateway installation.
+;   Pass74 partial installation is state-defined; arbitrary k23 child-domain/invariant
+;   failures propagate rather than falling back. General indices/handlers/trace
+;   semantics remain unsupported natively. Early shared-proof FULL certification
+;   pending.
 ; Contract: DEDUCED (partial; scope: Pass73 executable staged law for actual k23/57C6/count2/6036
 ;   with canonical predicate/handler domains, clear trace gates, full frame/alias guards.
-;   No native gateway installed; other state-defined scopes unsupported.) Scoped k23
+;   Pass74 installs an opt-in k23/trace-clear native boundary with concrete guest fallback
+;   for other indices/trace-set state; other state-defined scopes unsupported.) Scoped k23
 ;   composition: actual saved-C canonical047D result23; actual descriptor
 ;   pointer3C21+2*k=57C6, count2; handler pointer3DDD+2*k=6036. Twelve-byte ordered frame
 ;   retains C, AD0B..AD14 and AD0A with temporary PUSH/POP writes. Scan advances fresh
@@ -1730,7 +1733,9 @@ PLI2_1FB4: RET ; PC = word[SP]; SP += 2; use the convention in procedure header 
 ;   ../host-compiler/pass-71/fragment-proof.json;
 ;   ../host-compiler/pass-73/natural-inventory.json;
 ;   ../host-compiler/pass-73/component-shadows.json;
-;   ../host-compiler/pass-73/contract-laws-PLI2.OVL.json
+;   ../host-compiler/pass-73/contract-laws-PLI2.OVL.json;
+;   ../host-compiler/pass-74/README.md;
+;   ../host-compiler/pass-74/single-hybrid-summary.json
 ; Procedure pseudo (operational; byte/word arithmetic wraps):
 ;   Save exact twelve-byte mutable frame; actual047D result23 selects real descriptor/handler
 ;   tables; actual scoped1DFF results drive candidate/fallback; compose canonical3E36 through
