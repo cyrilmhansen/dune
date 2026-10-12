@@ -1,0 +1,29 @@
+{
+  "candidate_modern_operation": null,
+  "confidence": "Executable and CPU-shadowed for tail; full handler and gateway composition remain partial",
+  "historical_mechanism": [
+    "8080 STA/CPI/JNZ/LXI/MVI/LDA/JMP/RET sequence",
+    "no normal CALL ABI at +256E entry",
+    "gateway20AF PUSH H supplies software return 42B4"
+  ],
+  "historical_root": "PLI2.OVL+256E",
+  "mir_relevance": null,
+  "semantic_inputs": [
+    "actual A/flags and full RAM at +2578",
+    "software continuation word at current SP",
+    "immutable historical +2578..+259A bytes"
+  ],
+  "semantic_outputs": [
+    "AD07 gets actual A; zero arm overwrites AD07 with 10H",
+    "fresh AD07 reread; CPI 1 sets final flags",
+    "AD06 gets 01H if A=1 else 0FH",
+    "RET consumes current mutable stack word; PC and SP follow actual bytes"
+  ],
+  "shared_historical_state": [
+    "AD06",
+    "AD07",
+    "software stack word at SP/SP+1",
+    "earlier +247B child ADxx effects retained as concrete evidence"
+  ],
+  "supported_executable_sub_contract": "PLI2.OVL+2578..259B tail after canonical +059E returns"
+}

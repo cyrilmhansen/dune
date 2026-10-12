@@ -1,0 +1,137 @@
+{
+  "BDOS_record_events": 0,
+  "all_handler_writes_replayed_to_exact_exit_RAM": true,
+  "baseline": "2f40490236460fe07ca38be5ff19d7961d4c5677",
+  "direct_calls": [
+    [
+      "PLI2.OVL+256E",
+      "PLI2.OVL+247B"
+    ],
+    [
+      "PLI2.OVL+2575",
+      "PLI2.OVL+059E"
+    ]
+  ],
+  "distinct_247B_paths": [
+    [
+      [
+        "2480",
+        "267D",
+        1
+      ],
+      [
+        "248D",
+        "272C",
+        1
+      ],
+      [
+        "2492",
+        "38B3",
+        1
+      ],
+      [
+        "24A0",
+        "272C",
+        1
+      ],
+      [
+        "24A5",
+        "1B29",
+        1
+      ],
+      [
+        "24B2",
+        "9F31",
+        1
+      ],
+      [
+        "24B9",
+        "465D",
+        1
+      ],
+      [
+        "24D5",
+        "A5DC",
+        1
+      ],
+      [
+        "24E1",
+        "A3C0",
+        1
+      ],
+      [
+        "24F0",
+        "962A",
+        1
+      ]
+    ],
+    [
+      [
+        "2480",
+        "267D",
+        1
+      ],
+      [
+        "248D",
+        "272C",
+        1
+      ],
+      [
+        "2492",
+        "38B3",
+        1
+      ],
+      [
+        "24A0",
+        "272C",
+        1
+      ],
+      [
+        "24A5",
+        "1B29",
+        1
+      ],
+      [
+        "24B2",
+        "9F31",
+        1
+      ],
+      [
+        "24B9",
+        "465D",
+        1
+      ],
+      [
+        "24C6",
+        "A3AA",
+        1
+      ]
+    ]
+  ],
+  "evidence": [
+    "execution-boundary-proof.json",
+    "child-dependencies.json",
+    "semantic-extraction.json"
+  ],
+  "five_source_k123_sources": {
+    "FACTOR": 2
+  },
+  "full_trigger": false,
+  "handler_steps": [
+    3263,
+    3438
+  ],
+  "knowledge_promotions": 0,
+  "native_roots_installed": 0,
+  "next_dependency": "Faithful +247B child law on both observed state-dependent paths, then +256E/+1FB5 composition",
+  "observed_k123_cases": 2,
+  "oracle_queries": 0,
+  "outcome": "bounded executable +2578 tail; full +256E remains guest",
+  "software_continuation": "gateway +20AF PUSH H high/low 42B4; +20B3 PCHL; +259A RET consumes same word and resumes +20B4",
+  "tail_cpu_shadows": {
+    "full_RAM_and_ordered_access": true,
+    "natural": 2,
+    "synthetic": 48
+  },
+  "task": "RUNES_PLI2_K123_SOFTWARE_HANDLER_PASS_75"
+}

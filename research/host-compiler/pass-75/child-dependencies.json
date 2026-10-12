@@ -1,0 +1,126 @@
+{
+  "child_247B_direct_calls_by_case": [
+    [
+      [
+        "2480",
+        "267D",
+        1
+      ],
+      [
+        "248D",
+        "272C",
+        1
+      ],
+      [
+        "2492",
+        "38B3",
+        1
+      ],
+      [
+        "24A0",
+        "272C",
+        1
+      ],
+      [
+        "24A5",
+        "1B29",
+        1
+      ],
+      [
+        "24B2",
+        "9F31",
+        1
+      ],
+      [
+        "24B9",
+        "465D",
+        1
+      ],
+      [
+        "24D5",
+        "A5DC",
+        1
+      ],
+      [
+        "24E1",
+        "A3C0",
+        1
+      ],
+      [
+        "24F0",
+        "962A",
+        1
+      ]
+    ],
+    [
+      [
+        "2480",
+        "267D",
+        1
+      ],
+      [
+        "248D",
+        "272C",
+        1
+      ],
+      [
+        "2492",
+        "38B3",
+        1
+      ],
+      [
+        "24A0",
+        "272C",
+        1
+      ],
+      [
+        "24A5",
+        "1B29",
+        1
+      ],
+      [
+        "24B2",
+        "9F31",
+        1
+      ],
+      [
+        "24B9",
+        "465D",
+        1
+      ],
+      [
+        "24C6",
+        "A3AA",
+        1
+      ]
+    ]
+  ],
+  "direct_calls": [
+    [
+      "PLI2.OVL+256E",
+      "PLI2.OVL+247B"
+    ],
+    [
+      "PLI2.OVL+2575",
+      "PLI2.OVL+059E"
+    ]
+  ],
+  "handler": "PLI2.OVL+256E",
+  "native_roots_installed": 0,
+  "naturally_observed_cases": 2,
+  "observed_sources": {
+    "FACTOR": 2
+  },
+  "other_indices_out_of_scope": [
+    "k33/PLI2.OVL+3FFD",
+    "k216/PLI2.OVL+6D47"
+  ],
+  "proved": {
+    "PLI2.OVL+059E": "previously complete canonical mapped lookup; actual nested input/result retained in traces",
+    "PLI2.OVL+2578..259B": "faithful host tail operation with exact 8080 state, full RAM, ordered access, and software RET shadows"
+  },
+  "unresolved": {
+    "PLI2.OVL+247B": "large state-dependent child; distinct observed direct call paths and descendant effects, no faithful host contract",
+    "full_PLI2.OVL+256E": "requires +247B operation and composition before native gateway readiness"
+  }
+}

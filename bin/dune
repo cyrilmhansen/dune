@@ -275,5 +275,13 @@
  (libraries pli80 analysis runner unix))
 
 (executable
+ (name k123_handler_capture)
+ (libraries pli80 analysis runner unix))
+
+(executable
+ (name k123_tail_proof)
+ (libraries pli80_host i8080))
+
+(executable
  (name native_k23_gateway)
  (libraries pli80 analysis runner unix))
