@@ -1,0 +1,363 @@
+{
+  "FACTOR_REL_sha256": "9a42e8341a013243036040c8db0e56939c699c7fbbfb20878f7ba5af8d6b470d",
+  "Pass75_trace_digest_verified": true,
+  "baseline": "401018d88fdc2f073294798d2aeffe6aea58d945",
+  "canonical_052C_catalog_contract": "complete",
+  "capture": "_build/host-compiler-pass-75/capture",
+  "cases": [
+    {
+      "BDOS_record_events": 0,
+      "DMA": 7564,
+      "branch_entry": {
+        "AC": true,
+        "CY": false,
+        "P": true,
+        "S": false,
+        "Z": true,
+        "a": 0,
+        "b": 0,
+        "c": 3,
+        "d": 0,
+        "e": 189,
+        "h": 251,
+        "l": 192,
+        "pc": 18108,
+        "sp": 65455
+      },
+      "branch_reads": 2,
+      "branch_target": 42460,
+      "branch_writes": 2,
+      "caller": "PLI2.OVL+24B9",
+      "canonical_052C_return": {
+        "AC": false,
+        "CY": false,
+        "P": false,
+        "S": true,
+        "Z": false,
+        "a": 251,
+        "b": 189,
+        "c": 0,
+        "d": 0,
+        "e": 189,
+        "h": 251,
+        "l": 189,
+        "pc": 18024,
+        "sp": 65453
+      },
+      "case": 1,
+      "filesystem_sha256": "bb1cae738993912a973b27ae482a257c3624f78d3a0cb534c58ac9347977a88d",
+      "hardware_continuation": "PLI2.OVL+24BC",
+      "nested_CALL_count": 6,
+      "nested_calls": [
+        [
+          "2465",
+          "272C",
+          "PLI2.OVL",
+          "052C"
+        ],
+        [
+          "0534",
+          "26FF",
+          "PLI2.OVL",
+          "04FF"
+        ],
+        [
+          "053C",
+          "26E9",
+          "PLI2.OVL",
+          "04E9"
+        ],
+        [
+          "0542",
+          "2715",
+          "PLI2.OVL",
+          "0515"
+        ],
+        [
+          "0522",
+          "A5B4",
+          "PLI2.OVL",
+          "83B4"
+        ],
+        [
+          "0528",
+          "A598",
+          "PLI2.OVL",
+          "8398"
+        ]
+      ],
+      "next_child_RAM_sha256": "6004316a8517e00e5aa66be5ffd1cc33f171f08de971aaaab23ac396e2b2a9c5",
+      "next_child_state": {
+        "AC": true,
+        "CY": false,
+        "P": true,
+        "S": false,
+        "Z": true,
+        "a": 0,
+        "b": 0,
+        "c": 6,
+        "d": 0,
+        "e": 189,
+        "h": 251,
+        "l": 195,
+        "pc": 42460,
+        "sp": 65453
+      },
+      "proof": {
+        "all_passed": true,
+        "natural_composed": true,
+        "natural_tail": true,
+        "synthetic_composed": 16,
+        "synthetic_tail": 48
+      },
+      "root": "PLI2.OVL+245D",
+      "root_ADxx_writes": [
+        [
+          634190,
+          "PLI2.OVL",
+          "2460",
+          44338,
+          8
+        ]
+      ],
+      "root_entry": {
+        "AC": false,
+        "CY": false,
+        "P": true,
+        "S": true,
+        "Z": false,
+        "a": 0,
+        "b": 29,
+        "c": 8,
+        "d": 0,
+        "e": 0,
+        "h": 15,
+        "l": 8,
+        "pc": 18013,
+        "sp": 65453
+      },
+      "root_entry_RAM_sha256": "f5730b48c73af5bf7c8de383d503a320e7e3ededec501d68ae4b853206474945",
+      "root_entry_step": 634189,
+      "root_exit": {
+        "AC": true,
+        "CY": false,
+        "P": true,
+        "S": false,
+        "Z": true,
+        "a": 0,
+        "b": 0,
+        "c": 3,
+        "d": 0,
+        "e": 189,
+        "h": 251,
+        "l": 192,
+        "pc": 18108,
+        "sp": 65455
+      },
+      "root_exit_RAM_sha256": "79dbd9875dd02f115a16a58e707094f4742ec25da02bd7517710d9fe32fcb2dc",
+      "root_exit_step": 634286,
+      "root_reads": 36,
+      "root_steps": 98,
+      "root_write_sha256": "db17383d846cc79c78fbd233cfadd84e27d9302cd99144753612d107915ef230",
+      "root_writes": 22,
+      "tail_entry_RAM_sha256": "80976d5e90ded12904876f87bc3910b07a5b53aadd22edf081fce355f5050731",
+      "tail_exit": {
+        "AC": true,
+        "CY": false,
+        "P": true,
+        "S": false,
+        "Z": true,
+        "a": 0,
+        "b": 0,
+        "c": 3,
+        "d": 0,
+        "e": 189,
+        "h": 251,
+        "l": 192,
+        "pc": 18108,
+        "sp": 65455
+      },
+      "tail_reads": 5,
+      "tail_steps": 10,
+      "tail_writes": 2
+    },
+    {
+      "BDOS_record_events": 0,
+      "DMA": 7434,
+      "branch_entry": {
+        "AC": false,
+        "CY": true,
+        "P": true,
+        "S": true,
+        "Z": false,
+        "a": 255,
+        "b": 0,
+        "c": 3,
+        "d": 0,
+        "e": 189,
+        "h": 251,
+        "l": 192,
+        "pc": 18108,
+        "sp": 65412
+      },
+      "branch_reads": 2,
+      "branch_target": 41898,
+      "branch_writes": 2,
+      "caller": "PLI2.OVL+24B9",
+      "canonical_052C_return": {
+        "AC": false,
+        "CY": false,
+        "P": false,
+        "S": true,
+        "Z": false,
+        "a": 251,
+        "b": 189,
+        "c": 0,
+        "d": 0,
+        "e": 189,
+        "h": 251,
+        "l": 189,
+        "pc": 18024,
+        "sp": 65410
+      },
+      "case": 2,
+      "filesystem_sha256": "47ead39e95873c7329217f28154a23a0c2316bcce65cf920312a43f7b79a13d6",
+      "hardware_continuation": "PLI2.OVL+24BC",
+      "nested_CALL_count": 6,
+      "nested_calls": [
+        [
+          "2465",
+          "272C",
+          "PLI2.OVL",
+          "052C"
+        ],
+        [
+          "0534",
+          "26FF",
+          "PLI2.OVL",
+          "04FF"
+        ],
+        [
+          "053C",
+          "26E9",
+          "PLI2.OVL",
+          "04E9"
+        ],
+        [
+          "0542",
+          "2715",
+          "PLI2.OVL",
+          "0515"
+        ],
+        [
+          "0522",
+          "A5B4",
+          "PLI2.OVL",
+          "83B4"
+        ],
+        [
+          "0528",
+          "A598",
+          "PLI2.OVL",
+          "8398"
+        ]
+      ],
+      "next_child_RAM_sha256": "63201db423c313efb2984ea54d37a43bc8de32f3b013aaadd3a3ff6ef54e71f3",
+      "next_child_state": {
+        "AC": false,
+        "CY": true,
+        "P": true,
+        "S": true,
+        "Z": false,
+        "a": 255,
+        "b": 0,
+        "c": 9,
+        "d": 15,
+        "e": 54,
+        "h": 0,
+        "l": 189,
+        "pc": 41898,
+        "sp": 65410
+      },
+      "proof": {
+        "all_passed": true,
+        "natural_composed": true,
+        "natural_tail": true,
+        "synthetic_composed": 16,
+        "synthetic_tail": 48
+      },
+      "root": "PLI2.OVL+245D",
+      "root_ADxx_writes": [
+        [
+          784339,
+          "PLI2.OVL",
+          "2460",
+          44338,
+          54
+        ]
+      ],
+      "root_entry": {
+        "AC": false,
+        "CY": false,
+        "P": true,
+        "S": true,
+        "Z": false,
+        "a": 0,
+        "b": 29,
+        "c": 54,
+        "d": 0,
+        "e": 0,
+        "h": 15,
+        "l": 54,
+        "pc": 18013,
+        "sp": 65410
+      },
+      "root_entry_RAM_sha256": "47aba504e7fd69cb73d56955bc631d1ba057c2aca34330f455474946e18243a4",
+      "root_entry_step": 784338,
+      "root_exit": {
+        "AC": false,
+        "CY": true,
+        "P": true,
+        "S": true,
+        "Z": false,
+        "a": 255,
+        "b": 0,
+        "c": 3,
+        "d": 0,
+        "e": 189,
+        "h": 251,
+        "l": 192,
+        "pc": 18108,
+        "sp": 65412
+      },
+      "root_exit_RAM_sha256": "d3b707d3d20e1112dbbe44edbb94f65b103b1e9dcfaea89305df69e82cae3db6",
+      "root_exit_step": 784435,
+      "root_reads": 36,
+      "root_steps": 98,
+      "root_write_sha256": "c500ca3f71cb8f09f64da82447bcf172672cf3f4957eac583d66f491109c6ceb",
+      "root_writes": 22,
+      "tail_entry_RAM_sha256": "46e4fd3fb95a802eb6871c95a82e1263277bc8afff86ffdfc1e79d8c295f799a",
+      "tail_exit": {
+        "AC": false,
+        "CY": true,
+        "P": true,
+        "S": true,
+        "Z": false,
+        "a": 255,
+        "b": 0,
+        "c": 3,
+        "d": 0,
+        "e": 189,
+        "h": 251,
+        "l": 192,
+        "pc": 18108,
+        "sp": 65412
+      },
+      "tail_reads": 5,
+      "tail_steps": 10,
+      "tail_writes": 2
+    }
+  ],
+  "full_245D_host_shadow": false,
+  "source": "FACTOR"
+}

@@ -1,0 +1,20 @@
+{
+  "composition": "tail RET to +24BC then Pass76 state-defined branch through next CALL",
+  "effects": [
+    "SHLD AC9F, fresh LHLD AC9F",
+    "DAD B with BC=3",
+    "fresh pointed bit7 through ANA/SUI80/SUI1/SBB A",
+    "RET through current stack word"
+  ],
+  "full_245D": false,
+  "full_register_flags_RAM_ordered_access": true,
+  "inputs": [
+    "actual +052C return registers/flags/RAM",
+    "mutable hardware return word"
+  ],
+  "natural_composition_shadows": 2,
+  "natural_tail_shadows": 2,
+  "operation": "PLI2.OVL+2468..247A after canonical +052C",
+  "synthetic_composition_shadows": 32,
+  "synthetic_tail_shadows": 96
+}

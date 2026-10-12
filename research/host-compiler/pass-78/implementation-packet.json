@@ -1,0 +1,53 @@
+{
+  "FACTOR_REL_sha256": "9a42e8341a013243036040c8db0e56939c699c7fbbfb20878f7ba5af8d6b470d",
+  "baseline": "401018d88fdc2f073294798d2aeffe6aea58d945",
+  "branch_targets": [
+    "A5DC",
+    "A3AA"
+  ],
+  "evidence": [
+    "natural-shadow.json",
+    "child-law.json",
+    "unresolved-dependencies.json",
+    "semantic-extraction.json"
+  ],
+  "full_trigger": false,
+  "knowledge_promotions": 0,
+  "law": {
+    "composition": "tail RET to +24BC then Pass76 state-defined branch through next CALL",
+    "effects": [
+      "SHLD AC9F, fresh LHLD AC9F",
+      "DAD B with BC=3",
+      "fresh pointed bit7 through ANA/SUI80/SUI1/SBB A",
+      "RET through current stack word"
+    ],
+    "full_245D": false,
+    "full_register_flags_RAM_ordered_access": true,
+    "inputs": [
+      "actual +052C return registers/flags/RAM",
+      "mutable hardware return word"
+    ],
+    "natural_composition_shadows": 2,
+    "natural_tail_shadows": 2,
+    "operation": "PLI2.OVL+2468..247A after canonical +052C",
+    "synthetic_composition_shadows": 32,
+    "synthetic_tail_shadows": 96
+  },
+  "native_roots_installed": 0,
+  "next_dependency": "Independent full-window +245D composition; common +7D31",
+  "oracle_queries": 0,
+  "outcome": "post-052C +245D tail and Pass76 branch composition proved; full +245D remains guest",
+  "pass_number": 78,
+  "root_steps": [
+    98,
+    98
+  ],
+  "task": "RUNES_K123_EXTENDED_DEPENDENCY_CLOSURE_77_79",
+  "unresolved": {
+    "canonical_child": "PLI2.OVL+052C independently complete in catalog but not newly host-shadowed as part of full +245D here",
+    "full_245D": "partial: prefix and child composition require an independent full-window host shadow",
+    "full_247B": "unproved: common +7D31 and later branch descendants remain",
+    "native_roots_installed": 0,
+    "uncomposed_prefix": "PLI2.OVL+245D..2465 before canonical +052C"
+  }
+}
