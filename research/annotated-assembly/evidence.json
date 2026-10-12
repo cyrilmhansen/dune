@@ -19722,7 +19722,7 @@
       "description": "stack-local save/restore and table-driven PCHL gateway",
       "inputs_and_effects": "C saved at entry_SP-12; AD0B..AD14 (10 bytes) saved at entry_SP-11..-2, AD0A at entry_SP-1. Handler continuation is runtime 42B4H. All 11 MINIMAL calls restore those 11 bytes and return via +20EA on the original CALL slot; A=old AD0A, BC=entry_SP-1, DE=AD15H, HL=entry_SP. Other scratch AD1A..AD20 and handler effects are not restored.",
       "downstream_helpers_runtime": "PLI2.OVL+047D @267DH (11), PLI2.OVL+1DFF @3FFFH (2), PLI2.OVL+1DFF @3FFFH (11)",
-      "unresolved": "Pass71: both trace-set arms unobserved; 1DFF and47 selected handler semantics remain partial/unclosed except contained canonical6EA5.",
+      "unresolved": "Pass73 k23 subset is staged and fully shadowed; other predicate/handler/trace routes remain unsupported. No native root installed.",
       "instructions": [
         {
           "offset": 8117,
@@ -22038,13 +22038,34 @@
         "success_calls": 53,
         "native_root_installed": false
       },
-      "behavioral_contract": "Only bounded observed block[203E,2046): LXI H,AD1A; byte[AD1A]=0; INX H; byte[AD1B]=1, in order, same-valued writes retained, all flags preserved, other registers and RAM unchanged. Gateway predicate/handler semantics remain partial and this is not a procedure entry or executable native gateway.",
+      "behavioral_contract": "Scoped k23 composition: actual saved-C canonical047D result23; actual descriptor pointer3C21+2*k=57C6, count2; handler pointer3DDD+2*k=6036. Twelve-byte ordered frame retains C, AD0B..AD14 and AD0A with temporary PUSH/POP writes. Scan advances fresh AD1D, consumes canonical1DFF actual A/flags throughRAR, publishes0/1 on success and performs shared fresh record skip. Failed scans freshly select j=byte[1B4B+k]&7 and fallback pointer3C13+2*j+1; supported canonical predicate family is05/69-mismatch/FB-first-use. Exact PUSH42B4/freshAD1F/PCHL is represented by canonical3E36 and consumption of the pushed word, without a CALL frame. Both fresh202E trace gates require bit0 clear. Ordered restore and SPHL precede original hardwareRET. Final registers/flags derive from the DCR/DAD restore instructions. Other indices/descriptors/handlers/trace and unsupported canonical child domains reject staged state. No global native gateway root.",
       "behavioral_contract_ranges": [
+        [
+          8117,
+          8254
+        ],
         [
           8254,
           8262
+        ],
+        [
+          8262,
+          8338
+        ],
+        [
+          8364,
+          8379
+        ],
+        [
+          8392,
+          8427
         ]
-      ]
+      ],
+      "pass73_evidence": {
+        "report": "../host-compiler/pass-73/natural-inventory.json",
+        "scoped_roots": 28,
+        "native_root_installed": false
+      }
     },
     {
       "id": "PLI.COM+070C",

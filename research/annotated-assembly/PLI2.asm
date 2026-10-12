@@ -1699,38 +1699,45 @@ PLI2_1FB4: RET ; PC = word[SP]; SP += 2; use the convention in procedure header 
 ;   stack[S-11..S-2]=AD0B..AD14; stack[S-1]=AD0A; software word at S-14
 ; Direct callees: OBSERVED PLI2.OVL+047D @267DH; PLI2.OVL+1DFF @3FFFH; PLI2.OVL+1DFF @3FFFH
 ; Coverage: OBSERVED FACTOR: 33 CALLs; FIZZBUZ: 61 CALLs; MINIMAL: 11 CALLs; OPTIMIST: 120 CALLs;
-;   PICTURE: 12 CALLs; 271/310 bytes represented as instructions; Pass71: 237
-;   independently nested hardware windows and software handler returns; 53 candidate
-;   successes; both trace gates clear. Native gateway and opaque descriptor/handler
-;   contracts remain unclosed.
-; Unresolved: Trace-set paths 2092..20AC and20BB..20C8 remain RAW / STATIC / UNOBSERVED. / 1DFF
-;   remains a partial descriptor predicate without a canonical native contract; natural
-;   observed token/result signatures do not establish its arbitrary domain. / 47 natural
-;   handler targets; only6EA5 has a demonstrated scoped software-handler canonical
-;   contract here. No callback architecture or native gateway is installed.
-; Contract: DEDUCED (partial; scope: Observed gateway-own state and concrete continuation
-;   mechanics; only203E..2046 gains UNDERSTOOD status. Opaque predicates/handlers and
-;   trace-set branches are not closed.) Gateway-own observations: reserve twelve bytes;
-;   save C atS-12, AD0B..AD14 atS-11..S-2 and AD0A atS-1. Canonical047D consumes saved C;
-;   returned A selects descriptor/handler pointers. Candidate1DFF returned A.bit0 drives
-;   RAR; success publishes AD1A=0 then AD1B=1 with flags preserved, followed by shared
-;   descriptor skip. Fallback selects low3 bits of byte[1B4B+k], then publishes fallback
-;   pointer+1 and actual1DFF result. PUSH42B4/PCHL invokes selected opaque handler.
-;   Trace-clear own restore reads saved state, finalA=oldAD0A, BC=S-1, DE=AD15, HL=S, RET
-;   original CALL, SP=S+2. Full descriptor and handler semantics remain
-;   delegated/unclosed; no executable native parent contract.
+;   PICTURE: 12 CALLs; 271/310 bytes represented as instructions; Pass73: 28 full staged
+;   k23 shadows in five sources, all nested; 17 candidate successes and11 fallback routes.
+;   All271 gateway-own trace-clear bytes causally represented, with partial general
+;   contract. Original237-call inventory is retained.
+; Unresolved: Both trace-set regions remain RAW / STATIC / UNOBSERVED. / Other
+;   k/descriptor/handler domains and unsupported canonical child routes are excluded. /
+;   Generic proof dispatcher requires all invocations at an installed coordinate; k23
+;   covers28/237. No shared dispatcher redesign or native gateway installation.
+; Contract: DEDUCED (partial; scope: Pass73 executable staged law for actual k23/57C6/count2/6036
+;   with canonical predicate/handler domains, clear trace gates, full frame/alias guards.
+;   No native gateway installed; other state-defined scopes unsupported.) Scoped k23
+;   composition: actual saved-C canonical047D result23; actual descriptor
+;   pointer3C21+2*k=57C6, count2; handler pointer3DDD+2*k=6036. Twelve-byte ordered frame
+;   retains C, AD0B..AD14 and AD0A with temporary PUSH/POP writes. Scan advances fresh
+;   AD1D, consumes canonical1DFF actual A/flags throughRAR, publishes0/1 on success and
+;   performs shared fresh record skip. Failed scans freshly select j=byte[1B4B+k]&7 and
+;   fallback pointer3C13+2*j+1; supported canonical predicate family
+;   is05/69-mismatch/FB-first-use. Exact PUSH42B4/freshAD1F/PCHL is represented by
+;   canonical3E36 and consumption of the pushed word, without a CALL frame. Both fresh202E
+;   trace gates require bit0 clear. Ordered restore and SPHL precede original hardwareRET.
+;   Final registers/flags derive from the DCR/DAD restore instructions. Other
+;   indices/descriptors/handlers/trace and unsupported canonical child domains reject
+;   staged state. No global native gateway root.
 ; Hypothesis: HYPOTHESIS reentrant table/record gateway
 ; Completeness: bounds=stable; control_flow=partial; contract=partial
 ; Evidence: evidence.json#seeds/PLI2.OVL+1FB5;
 ;   ../minimal-baseline/pass-1/regions.json#PLI2.OVL+1FB5;
 ;   ../host-compiler/pass-71/natural-inventory.json; ../host-compiler/pass-71/frames.json;
-;   ../host-compiler/pass-71/fragment-proof.json
+;   ../host-compiler/pass-71/fragment-proof.json;
+;   ../host-compiler/pass-73/natural-inventory.json;
+;   ../host-compiler/pass-73/component-shadows.json;
+;   ../host-compiler/pass-73/contract-laws-PLI2.OVL.json
 ; Procedure pseudo (operational; byte/word arithmetic wraps):
-;   Save twelve-byte local state; canonical047D selects descriptor/handler tables; scan actual1DFF
-;   results, publishing success or selecting fallback; PUSH42B4/PCHL actual handler; trace-clear
-;   restore and original hardware RET. Unresolved child semantics remain explicit.
+;   Save exact twelve-byte mutable frame; actual047D result23 selects real descriptor/handler
+;   tables; actual scoped1DFF results drive candidate/fallback; compose canonical3E36 through
+;   PUSH42B4/PCHL/softwareRET; trace-clear restore then original hardwareRET. Reject all
+;   unsupported routes before live mutation.
 ; @end-procedure-v1 PLI2.OVL+1FB5
-; SECTION [1FB5,203E) STRUCTURED
+; SECTION [1FB5,203E) UNDERSTOOD
 ; @block-pseudo 1FB5
 ; pseudo:
 ; | S=entry SP; reserve 12-byte local frame and save C
@@ -1828,7 +1835,7 @@ PLI2_2040: EQU 04240H ; +2040 runtime=4240H coordinate-only label
 PLI2_2041: MVI M,00H ; byte[candidates_remaining (AD1AH)] = 00H; same-valued writes retained; flags preserved ; +2041 runtime=4241H OBSERVED
 PLI2_2043: INX H ; HL = (HL+1)&FFFF; flags preserved ; +2043 runtime=4243H OBSERVED
 PLI2_2044: MVI M,01H ; byte[candidate_success_byte (AD1BH)] = 01H; flags preserved ; +2044 runtime=4244H OBSERVED
-; SECTION [2046,2092) STRUCTURED
+; SECTION [2046,2092) UNDERSTOOD
 ; @block-pseudo 2046
 ; pseudo:
 ; | Both success and failure use the fresh descriptor record byte as the skip amount; loop back to remaining count.
@@ -1880,7 +1887,7 @@ PLI2_208F: JNC 42ACH ; if CY=0: PC -> PLI2.OVL+20AC; flags preserved ; +208F run
 ; SECTION [2092,20AC) RAW
 PLI2_2092: DB 021H,000H,000H,039H,07EH,021H,0ADH,0AAH,096H,02AH,01CH,0ADH,026H,000H ; +2092 runtime=4292H RAW
 PLI2_20A0: DB 0EBH,04FH,0CDH,084H,029H,02AH,00AH,0ADH,04DH,0CDH,038H,029H ; +20A0 runtime=42A0H RAW
-; SECTION [20AC,20BB) STRUCTURED
+; SECTION [20AC,20BB) UNDERSTOOD
 ; @block-pseudo 20AC
 ; pseudo:
 ; | push software continuation; PCHL current handler
@@ -1897,7 +1904,7 @@ PLI2_20B8: JNC 42C8H ; if CY=0: PC -> PLI2.OVL+20C8; flags preserved ; +20B8 run
 ; SECTION [20BB,20C8) RAW
 PLI2_20BB: DB 03AH,01DH,020H,01FH,0D2H ; +20BB runtime=42BBH RAW
 PLI2_20C0: DB 0C8H,042H,001H,0BCH,03FH,0CDH,0FFH,006H ; +20C0 runtime=42C0H RAW
-; SECTION [20C8,20EB) STRUCTURED
+; SECTION [20C8,20EB) UNDERSTOOD
 ; @block-pseudo 20C8
 ; pseudo:
 ; | restore 10 saved state bytes

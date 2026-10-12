@@ -1,0 +1,209 @@
+{
+  "baseline": "b453ca783051b1f969646791001781cf785e4bde",
+  "components": {
+    "all_passed": true,
+    "native_gateway_installed": false,
+    "sources": [
+      {
+        "components": [
+          {
+            "count": 4,
+            "offset": 1149
+          },
+          {
+            "count": 3,
+            "offset": 7679
+          },
+          {
+            "count": 1,
+            "offset": 2450
+          },
+          {
+            "count": 1,
+            "offset": 1193
+          },
+          {
+            "count": 1,
+            "offset": 15926
+          }
+        ],
+        "full_state_RAM_writes_stack_calls_services": true,
+        "rejected_other_gateway_roots": 10,
+        "roots": 1,
+        "source": "MINIMAL"
+      },
+      {
+        "components": [
+          {
+            "count": 40,
+            "offset": 1149
+          },
+          {
+            "count": 27,
+            "offset": 7679
+          },
+          {
+            "count": 7,
+            "offset": 2450
+          },
+          {
+            "count": 7,
+            "offset": 1193
+          },
+          {
+            "count": 13,
+            "offset": 15926
+          }
+        ],
+        "full_state_RAM_writes_stack_calls_services": true,
+        "rejected_other_gateway_roots": 48,
+        "roots": 13,
+        "source": "FIZZBUZ"
+      },
+      {
+        "components": [
+          {
+            "count": 2,
+            "offset": 1149
+          },
+          {
+            "count": 1,
+            "offset": 7679
+          },
+          {
+            "count": 0,
+            "offset": 2450
+          },
+          {
+            "count": 0,
+            "offset": 1193
+          },
+          {
+            "count": 1,
+            "offset": 15926
+          }
+        ],
+        "full_state_RAM_writes_stack_calls_services": true,
+        "rejected_other_gateway_roots": 11,
+        "roots": 1,
+        "source": "PICTURE"
+      },
+      {
+        "components": [
+          {
+            "count": 10,
+            "offset": 1149
+          },
+          {
+            "count": 6,
+            "offset": 7679
+          },
+          {
+            "count": 1,
+            "offset": 2450
+          },
+          {
+            "count": 1,
+            "offset": 1193
+          },
+          {
+            "count": 4,
+            "offset": 15926
+          }
+        ],
+        "full_state_RAM_writes_stack_calls_services": true,
+        "rejected_other_gateway_roots": 29,
+        "roots": 4,
+        "source": "FACTOR"
+      },
+      {
+        "components": [
+          {
+            "count": 22,
+            "offset": 1149
+          },
+          {
+            "count": 13,
+            "offset": 7679
+          },
+          {
+            "count": 2,
+            "offset": 2450
+          },
+          {
+            "count": 2,
+            "offset": 1193
+          },
+          {
+            "count": 9,
+            "offset": 15926
+          }
+        ],
+        "full_state_RAM_writes_stack_calls_services": true,
+        "rejected_other_gateway_roots": 111,
+        "roots": 9,
+        "source": "OPTIMIST"
+      }
+    ]
+  },
+  "counter_baseline": {
+    "FIZZBUZ": [
+      557928,
+      215
+    ],
+    "MINIMAL": [
+      294362,
+      92
+    ],
+    "PICTURE": [
+      339572,
+      78
+    ]
+  },
+  "counts": {
+    "FACTOR": 4,
+    "FIZZBUZ": 13,
+    "MINIMAL": 1,
+    "OPTIMIST": 9,
+    "PICTURE": 1
+  },
+  "extent": [
+    8117,
+    8427
+  ],
+  "full_epoch": "Pass72",
+  "full_trigger": false,
+  "historical_bytes": 94720,
+  "installation_boundary": {
+    "file": "lib/pli80/native_dispatch.ml",
+    "reason": "All invocations at an installed coordinate must match oracles, and guest execution anywhere inside its extent is rejected. k23 accepts only28/237 calls. No generic dispatch change made."
+  },
+  "law": "Scoped k23 composition: actual saved-C canonical047D result23; actual descriptor pointer3C21+2*k=57C6, count2; handler pointer3DDD+2*k=6036. Twelve-byte ordered frame retains C, AD0B..AD14 and AD0A with temporary PUSH/POP writes. Scan advances fresh AD1D, consumes canonical1DFF actual A/flags throughRAR, publishes0/1 on success and performs shared fresh record skip. Failed scans freshly select j=byte[1B4B+k]&7 and fallback pointer3C13+2*j+1; supported canonical predicate family is05/69-mismatch/FB-first-use. Exact PUSH42B4/freshAD1F/PCHL is represented by canonical3E36 and consumption of the pushed word, without a CALL frame. Both fresh202E trace gates require bit0 clear. Ordered restore and SPHL precede original hardwareRET. Final registers/flags derive from the DCR/DAD restore instructions. Other indices/descriptors/handlers/trace and unsupported canonical child domains reject staged state. No global native gateway root.",
+  "native_roots_added": 0,
+  "nested_roots": 28,
+  "oracle_queries": 0,
+  "outcome": "Complete scoped composition law; gateway remains guest",
+  "own_observed_bytes": 271,
+  "paths": {
+    "fallback": 11,
+    "success": 17
+  },
+  "savings": 0,
+  "software_continuation": 17076,
+  "synthetic_summary": {
+    "aggregate_sha256": "75d883683a9db3175ac4d1ec60f5c41f85371705a13776dbdd6a14a79323267a",
+    "all_passed": true,
+    "cases": 196,
+    "journals": "_build/host-compiler-pass-73/components.json",
+    "routes": [
+      "1FB5_k23_C30_class10_CYfalse_other_tablefalse",
+      "1FB5_k23_C30_class10_CYfalse_other_tabletrue",
+      "1FB5_k23_C30_class10_CYtrue_other_tablefalse",
+      "1FB5_k23_C30_class5_CYfalse_other_tablefalse",
+      "1FB5_k23_C30_class5_CYtrue_other_tablefalse",
+      "1FB5_k23_C45_class10_CYfalse_other_tablefalse",
+      "1FB5_k23_C45_class5_CYfalse_other_tablefalse"
+    ]
+  },
+  "unsupported_trace_bytes": 39
+}

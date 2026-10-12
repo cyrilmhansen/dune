@@ -1,0 +1,174 @@
+{
+  "all_passed": true,
+  "binary_hashes": {
+    "pli80-analyze": "085b6d37a708c9977e910d36c8d7fe6ef3f165fda85b6c22896a84b7d6816503",
+    "pli80-int-emitter-audit": "405709b2695738675a469a921eefdae3e8037a403b96822e6198d866a667afe7",
+    "pli80-native-7b7a": "d26a6288e7c2b7569c24c08f3c8994c87aa15f1e146abfdf77ead70e389871a8",
+    "pli80-native-7bbf": "7ce99f43b41a08bc368fd87a2bec7a906c40d5fc4762c533dc54a598f50be44e",
+    "pli80-native-7c1b": "382c09227b447dfcd9efbfc71fd62e287de3fe4433e928c32c481ddc45564fe2",
+    "pli80-native-acquisition-family": "a985461a01f80ab6a85253d21e2fd9bd8ebd8e7ac22d2dcd2defad74b95a3f43",
+    "pli80-native-acquisition-frame-hybrids": "9a3c2a771eb0a3d5c4f5857e73d74ab0e92a63b38bce287215633bc75b35afff",
+    "pli80-native-acquisition-parent": "5f8daacd7a9364461358ee48106c2ef6df4425d7aca1df3c5ad57a6f87ede814",
+    "pli80-native-attribute-auxiliary": "25efda30a44ffd41d7ea8fef62c932f6bf1b1e3d9c0547d19aacd51b790ceae7",
+    "pli80-native-attribute-gate": "014463d285b900d34fb7074b05c18f8163551485ac7fe48904a4f2fb2296086c",
+    "pli80-native-delimiter-driver-hybrids": "eaa7f26453e4f5f303cd36e8a551516d8b6a933b88f82f471b08efa1cf89b5f7",
+    "pli80-native-initialization-parent-hybrids": "71eefb1de61ba9e971dd08d1401602e2cb27be14f43a4bc4dce3ab91bef41b8e",
+    "pli80-native-input-processing": "f12b479b66525339d8387cc8e5e7a9a31f95ac39ffc7cabf85dddbe5b8698c2a",
+    "pli80-native-int-emitter": "3e9877b8f0d189862f25ee452602173962d6520ce775e3951697b1319e333609",
+    "pli80-native-mapped-publication": "0edc127b6de8eae3c972af77eedb100447a2809ecbf705a924066b976329b078",
+    "pli80-native-numeric-acquisition": "e245102117de90e91c9bf88671ee58191dc41c8bd18477f087a899419c8e0ed3",
+    "pli80-native-output-finalization-hybrids": "70172baab8cdb14c05af23fb859c4ea5caa67be589a07de30210713670f56b4c",
+    "pli80-native-publication-primitives": "abf91d74d46e1f4344ef1152eb8025d41ba6751a37d81be550b4fbcf2b9be10c",
+    "pli80-native-range-processing": "b036c5a246cd20c3f9bfae5335ed99293bd39010d10978775979fe64220a8764",
+    "pli80-native-range-publication": "8afed432261258c4cd01c29ac017f7a63c40dda92985cec6879206683bce3ae1",
+    "pli80-native-recursive-hybrids": "92c2485c1cacf35a2dee7972c282221584a5f6c0aee40b828f1f407cbd1aec7c",
+    "pli80-native-reentrant-acquisition": "a227c06fafd2cda3c253ff4e6f9bdd184fbf87bdc81539db25fd12f41338e579",
+    "pli80-native-reentrant-hybrids": "11051cd2c7a3c98696e417c64842babca951cabdc4ee997a9e73f6054ae57e30",
+    "pli80-native-selection-hybrids": "6226dcfcef4c67065abf8daf87505dce756887c243402473c7838585ed0d72d6",
+    "pli80-native-state-adaptation": "4e4cda8827477e89e6124930d42dbf50947431e72703ff2cb44dc9486d83dc38",
+    "pli80-native-word-emitters": "fbf958b10b33ef0169a803b97137964e5321e3b966439831ac75956fd574ed99",
+    "pli80-native-wrapper-hybrids": "f621726594001a5ff25b53408df892f4403d3237bd6dc50ee5a4bf65e0fb209a",
+    "pli80-run": "bfc546d9af6c5c89d7d9a9d40f66be5d5ab69fd5b298beede6043056501174f5"
+  },
+  "categories": {
+    "build": {
+      "command": [
+        "dune",
+        "build",
+        "@all",
+        "-j",
+        "4"
+      ],
+      "elapsed_seconds": 6.01,
+      "python_tests": 0,
+      "return_code": 0
+    },
+    "diff-check": {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "elapsed_seconds": 0.067,
+      "python_tests": 0,
+      "return_code": 0
+    },
+    "pass73": {
+      "command": [
+        "python3",
+        "tools/annotated-assembly/test_k23_gateway_composition_pass_73.py",
+        "--images",
+        "/home/john/pli/cpm/pli80/DISK1",
+        "-q"
+      ],
+      "elapsed_seconds": 44.119,
+      "python_tests": 9,
+      "return_code": 0
+    },
+    "project": {
+      "command": [
+        "dune",
+        "runtest",
+        "-j",
+        "4"
+      ],
+      "elapsed_seconds": 0.393,
+      "python_tests": 0,
+      "return_code": 0
+    },
+    "validation-runner-tests": {
+      "command": [
+        "python3",
+        "tools/annotated-assembly/test_validation_runner.py",
+        "-q"
+      ],
+      "elapsed_seconds": 0.234,
+      "python_tests": 17,
+      "return_code": 0
+    }
+  },
+  "category_count": 5,
+  "certificate_limit": "A certified commit is historical evidence, not an automatic certificate for arbitrary descendant code. No dependency-hash invalidation engine is implemented in Phase 1.",
+  "extra_categories": [],
+  "isolation": "Serial shared Dune build/tests; later categories read prebuilt binaries and immutable captures, with unique temporary outputs; PYTHONDONTWRITEBYTECODE=1; Dune-exec launcher rejects build commands",
+  "last_certified_full_epoch": {
+    "affected_historical_category_count": 1,
+    "category_count": 103,
+    "certification_artifact": "research/host-compiler/pass-72/validation-full.json",
+    "dune_stanzas": 39,
+    "epoch": 2,
+    "historical_bytes": 94720,
+    "implementation_commit": "620715600836a576689045824bdd9e47ad30340c",
+    "initial_all_passed": false,
+    "initial_sum_category_seconds": 13499.143,
+    "initial_wall_seconds": 3602.28,
+    "name": "Pass72",
+    "python_test_execution_counts": {
+      "initial": 783,
+      "targeted_rerun": 9
+    },
+    "receipt": "research/host-compiler/pass-72/validation-full.json",
+    "receipt_commit_provenance": "Certification artifact committed separately; actual certification SHA reported after push, without self-reference",
+    "rerun_category_count": 3,
+    "rerun_sum_category_seconds": 1.439,
+    "rerun_wall_seconds": 1.445,
+    "reruns": 1,
+    "status": "PASSED AFTER DOCUMENTED HARNESS-ONLY RERUN",
+    "sum_category_seconds": 13500.582,
+    "wall_seconds": 3603.725,
+    "workers": 4
+  },
+  "not_run_categories": [],
+  "profile": "legacy-categories",
+  "python_test_count": 26,
+  "safe_parallel_workers": 4,
+  "selected_categories": [
+    "build",
+    "diff-check",
+    "pass73",
+    "project",
+    "validation-runner-tests"
+  ],
+  "selected_category_count": 5,
+  "serial_categories": [
+    "build",
+    "project"
+  ],
+  "sum_category_seconds": 50.823,
+  "top_10_slowest": [
+    {
+      "category": "pass73",
+      "elapsed_seconds": 44.119
+    },
+    {
+      "category": "build",
+      "elapsed_seconds": 6.01
+    },
+    {
+      "category": "project",
+      "elapsed_seconds": 0.393
+    },
+    {
+      "category": "validation-runner-tests",
+      "elapsed_seconds": 0.234
+    },
+    {
+      "category": "diff-check",
+      "elapsed_seconds": 0.067
+    }
+  ],
+  "validation_tier": "INCREMENTAL",
+  "wall_seconds": 50.528,
+  "workers": 4,
+  "historical_bytes": 94720,
+  "dune_stanzas": 39,
+  "reruns": [],
+  "historical_full_executed": false,
+  "category_rationale": {
+    "build": "New proof executable and isolated scoped faithful case",
+    "project": "Existing runtime/unit regression after operation-specific bridge extension",
+    "pass73": "Whole-chain five-source shadows, 237-call scope audit and 196 CPU cases",
+    "diff-check": "Patch integrity",
+    "validation-runner-tests": "New category registration and certified selection preservation"
+  }
+}

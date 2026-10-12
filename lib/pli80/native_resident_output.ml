@@ -159,6 +159,27 @@ let shadow ?(offset=0x1272) ?(within=[]) ?(run_negatives=true) ?(pli2=false) inp
      ignore(synthetic_carrier_cpu ~checkpoint_range:(0x100,0xa600) ~label:(Printf.sprintf"3D10_structure_kind%d"kind)bd.state(bd.copy_memory())plan expected)
     )[8;9;0x1f]
    );
+   if pli2&&offset=0x1fb5 then(
+    List.iter(fun edits->rejects(fun()->prepare bridge offset ~call ~origin:o(altered edits)))
+     [[0x202e,1];[0x3c4f,0];[0x3e0b,0];[0x57c6,3];[0x57c8,6];[0x41b9,0];[0x42af,0];[0x60f5,0];[0x6036,0];[0x2155,0x4f;0x2156,0x3c]];
+    let byte a=Char.code(Bytes.get ram a)in
+    rejects(fun()->prepare bridge offset ~call ~origin:o(altered[0xa609+byte(0xaab0+state.c),24]));
+    let predicate_index=byte(0xaab0+((state.c-1)land 255))in
+    rejects(fun()->prepare bridge offset ~call ~origin:o(altered[0xa609+predicate_index,0x69]));
+    rejects(fun()->prepare bridge offset ~call ~origin:o(altered[0xa609+predicate_index,5;0xad08,1]));
+    List.iter(fun(cursor,klass,carry,alternative_table)->
+     let edits=[0xad0a,0x73;0xad08,0;0xad1a,0xa1;0xad1b,0xb2;0xad1c,0xc3;0xad1d,0xd4;0xad1e,0xe5;0xad1f,0x66;0xad20,0x77;
+      0xaab0+cursor,211;0xa609+211,23;0xa9e7+211,8;
+      0xaab0+cursor-1,210;0xa609+210,klass;0xa6cf+210,0;0xa7f8+210,0x80;0xa795+210,0xaf;
+      0xaf82,0x17;0xaf83,0x4c;0xaf86,3;0xaf87,0;0xadef,0;0xadf0,0;0x201d,0;0xae04,0;0x202b,0;0xadaa,0;0x1d8a,0;0x1d8b,0]in
+     let edits=if alternative_table then edits@[0x1b4b+23,(byte(0x1b4b+23)land 248)lor 2;0x3c17,0xf2;0x3c18,0x3b]else edits in
+     let bd=altered edits in let bd={bd with Runner.state={bd.state with c=cursor;carry}}in
+     let plan=prepare bridge offset ~call ~origin:o bd in
+     let expected=match bd.preview_host_program plan.program with Ok r->r.memory|Error e->failwith e in
+     ignore(synthetic_carrier_cpu ~checkpoint_range:(0x100,0xa600) ~label:(Printf.sprintf"1FB5_k23_C%d_class%d_CY%b_other_table%b"cursor klass carry alternative_table)bd.state(bd.copy_memory())plan expected)
+    )[30,5,false,false;30,5,true,false;45,5,false,false;30,10,false,false;30,10,true,false;45,10,false,false;30,10,false,true];
+    require(boundary.copy_memory()=ram&&boundary.dma=dma&&Cpm.Filesystem.equal(boundary.copy_filesystem())files)"k23 whole-chain staged preparation leaves live state unchanged"
+   );
    if pli2&&offset=0x1dff then(
     List.iter(fun edits->rejects(fun()->prepare bridge offset ~call ~origin:o(altered edits)))[[0xad1c,24];[0xad1d,0];[0xad1d,0xc7;0xad1e,0x57;0x57c8,6];[0xad1d,0xf3;0xad1e,0x3b;0x3bf4,0xfc];[0x2155,0x21;0x2156,0xad]];
     let forced=altered[0xad1d,0xc9;0xad1e,0x57;0xaab0+((state.c-1)land 255),200;0xa609+200,0x69]in

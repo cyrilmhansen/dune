@@ -499,6 +499,51 @@ let run operation memory ~entry ~write ~compatibility ~adjust ~sp ~guard_field ~
   de(U.wrap(!q.de+1));a(read !q.de);let old= !q.a and v= !q.bc lsr 8 and cy=if !q.flags.carry then 1 else 0 in
   let sum=old+v+cy in a(B.wrap sum);q:={!q with R.flags=flags !q.a((old land 15)+(v land 15)+cy>15)(sum>255)};hl(!q.a lsl 8 lor(!q.hl land 255))
  (* Pass72: bounded software handler; the nested gateway arm stays unsupported. *)
+ (* Pass73: complete scoped k23 gateway law, not a global native boundary. *)
+ |0x1fb5->
+  hl 0xfff5;dad(sp());adjust ~site:0x41b9 ~delta:(-11);
+  bc((!q.bc land 255)lsl 8 lor(!q.bc land 255));push 0x1fbb !q.bc;adjust ~site:0x41bc ~delta:1;
+  hl((!q.hl land 0xff00)lor 10);push 0x1fbf !q.hl;
+  hl 3;dad(sp());exchange();bc 0xad0b;hl(pop());
+  let rec save_frame()=a(read !q.bc);put 0x1fca !q.de !q.a;bc(U.wrap(!q.bc+1));de(U.wrap(!q.de+1));
+   let l=dec(!q.hl land 255)in hl((!q.hl land 0xff00)lor l);if not !q.flags.zero then save_frame()in save_frame();
+  a(read 0xad0a);hl 11;dad(sp());put 0x1fd8 !q.hl !q.a;
+  hl 0;dad(sp());c(read !q.hl);call 0x1fde 0x047d(fun()->pli2_output 0x047d);
+  put 0x1fe1 0xad1c !q.a;need(!q.a=23)"1FB5 supported k23 index";
+  c !q.a;bc(!q.bc land 255);hl 0x3c21;dad !q.bc;dad !q.bc;
+  e(read !q.hl);hl(U.wrap(!q.hl+1));de(read !q.hl lsl 8 lor(!q.de land 255));exchange();
+  need(!q.hl=0x57c6)"1FB5 descriptor table scope";store 0x1ff0 0xad1d !q.hl;
+  hl 0xad0a;put 0x1ff6 !q.hl 0;pair 0xad1d;a(read !q.hl);put 0x1ffc 0xad1a !q.a;
+  need(!q.a=2)"1FB5 two-candidate descriptor scope";
+  pair 0xad1c;hl(!q.hl land 255);bc 0x3ddd;dad !q.hl;dad !q.bc;
+  e(read !q.hl);hl(U.wrap(!q.hl+1));de(read !q.hl lsl 8 lor(!q.de land 255));exchange();
+  need(!q.hl=0x6036)"1FB5 selected handler table scope";store 0x200d 0xad1f !q.hl;
+  hl 0xad1b;put 0x2013 !q.hl 0;
+  let rec scan left=need(left>0)"1FB5 bounded candidate scan";a(read 0xad1a);cmp 0;
+   if not !q.flags.zero then(
+    a(read 0xad1a);a(dec !q.a);put 0x2021 0xad1a !q.a;
+    a(read 0xad0a);a(inc !q.a);put 0x2028 0xad0a !q.a;
+    pair 0xad1d;hl(U.wrap(!q.hl+1));store 0x202f 0xad1d !q.hl;
+    hl 0;dad(sp());c(read !q.hl);call 0x2037 0x1dff(fun()->pli2_output 0x1dff);rar();
+    if !q.flags.carry then(hl 0xad1a;put 0x2041 !q.hl 0;hl(U.wrap(!q.hl+1));put 0x2044 !q.hl 1);
+    pair 0xad1d;e(read !q.hl);de(!q.de land 255);pair 0xad1d;dad !q.de;store 0x2050 0xad1d !q.hl;scan(left-1))in scan 3;
+  a(read 0xad1b);a(!q.a lxor 255);rar();
+  if !q.flags.carry then(
+   hl 0xad0a;put 0x2061 !q.hl 0;pair 0xad1c;hl(!q.hl land 255);bc 0x1b4b;dad !q.bc;
+   a 7;ani(read !q.hl);c !q.a;bc(!q.bc land 255);hl 0x3c13;dad !q.bc;dad !q.bc;
+   c(read !q.hl);hl(U.wrap(!q.hl+1));bc(read !q.hl lsl 8 lor(!q.bc land 255));bc(U.wrap(!q.bc+1));hl !q.bc;
+   need(!q.hl=0x3bf3)"1FB5 fallback pointer domain";store 0x207d 0xad1d !q.hl;
+   hl 0;dad(sp());c(read !q.hl);call 0x2085 0x1dff(fun()->pli2_output 0x1dff);put 0x2088 0xad1b !q.a);
+  a(read 0x202e);rar();need(not !q.flags.carry)"1FB5 pre-handler trace unsupported";
+  hl 0x42b4;push 0x20af !q.hl;pair 0xad1f;need(!q.hl=0x6036)"1FB5 fresh selected handler";
+  need(word(sp())=0x42b4)"1FB5 software continuation";
+  pli2_output 0x3e36;need(word(sp())=0x42b4)"1FB5 handler preserves software word";
+  compatibility H.Pop;
+  a(read 0x202e);rar();need(not !q.flags.carry)"1FB5 post-handler trace unsupported";
+  hl((!q.hl land 0xff00)lor 10);push 0x20ca !q.hl;hl 3;dad(sp());bc !q.hl;de 0xad0b;hl(pop());
+  let rec restore_frame()=a(read !q.bc);put 0x20d6 !q.de !q.a;bc(U.wrap(!q.bc+1));de(U.wrap(!q.de+1));
+   let l=dec(!q.hl land 255)in hl((!q.hl land 0xff00)lor l);if not !q.flags.zero then restore_frame()in restore_frame();
+  hl 11;dad(sp());a(read !q.hl);put 0x20e2 0xad0a !q.a;hl 12;dad(sp());adjust ~site:0x42e9 ~delta:12
  |0x04a9->
   hl 0xabfa;put 0x04ac !q.hl(!q.bc land 255);pair 0xabfa;hl(!q.hl land 255);bc 0xaab0;dad !q.bc;
   c(read !q.hl);bc(!q.bc land 255);hl 0xa6cf;dad !q.bc;a(read !q.hl)
