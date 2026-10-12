@@ -1,0 +1,15 @@
+{
+  "carrier": "write B to ACEF, then C to ACEE; reread both before SHLD AC9F",
+  "complete_247B": false,
+  "complete_leaf": true,
+  "entry": "hardware CALL from PLI2.OVL+2492; mutable return word at SP",
+  "extent": "actual +16B3..+16CB leaf RET",
+  "flags": "ANA AC and DAD carry computed; final SBB flags exact",
+  "full_register_flags_RAM_ordered_access": true,
+  "mask": "A=7 ANA fresh [HL]; SUI 0; SUI 1; SBB A using immediate prior borrow",
+  "natural_shadows": 2,
+  "pointer": "fresh carrier word plus 3 modulo 65536, DAD carry exact",
+  "return_law": "RET reads current SP/SP+1, including aliases",
+  "root": "PLI2.OVL+16B3",
+  "synthetic_shadows": 96
+}

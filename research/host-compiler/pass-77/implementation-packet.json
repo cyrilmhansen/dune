@@ -1,0 +1,41 @@
+{
+  "FACTOR_REL_sha256": "9a42e8341a013243036040c8db0e56939c699c7fbbfb20878f7ba5af8d6b470d",
+  "baseline": "009a2408b394547b11ab2021b575c06c1a5a2322",
+  "entry_steps": [
+    632514,
+    782663
+  ],
+  "evidence": [
+    "natural-shadow.json",
+    "child-law.json",
+    "unresolved-dependencies.json",
+    "semantic-extraction.json"
+  ],
+  "exit_steps": [
+    632527,
+    782676
+  ],
+  "full_trigger": false,
+  "knowledge_promotions": 0,
+  "law": {
+    "carrier": "write B to ACEF, then C to ACEE; reread both before SHLD AC9F",
+    "complete_247B": false,
+    "complete_leaf": true,
+    "entry": "hardware CALL from PLI2.OVL+2492; mutable return word at SP",
+    "extent": "actual +16B3..+16CB leaf RET",
+    "flags": "ANA AC and DAD carry computed; final SBB flags exact",
+    "full_register_flags_RAM_ordered_access": true,
+    "mask": "A=7 ANA fresh [HL]; SUI 0; SUI 1; SBB A using immediate prior borrow",
+    "natural_shadows": 2,
+    "pointer": "fresh carrier word plus 3 modulo 65536, DAD carry exact",
+    "return_law": "RET reads current SP/SP+1, including aliases",
+    "root": "PLI2.OVL+16B3",
+    "synthetic_shadows": 96
+  },
+  "native_roots_installed": 0,
+  "next_dependency": "+245D, then +7D31",
+  "oracle_queries": 0,
+  "outcome": "complete +16B3 leaf; +247B remains guest",
+  "pass_number": 77,
+  "task": "RUNES_K123_EXTENDED_DEPENDENCY_CLOSURE_77_79"
+}
