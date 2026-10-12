@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "milestone": "Pass79",
+  "certification_status": "PENDING EXTERNAL MANUAL FULL",
+  "reason": "The recorded five-semantic-pass periodic policy is due at approximately Pass79, measured from certified Pass74 epoch 3.",
+  "last_certified_full": {
+    "name": "Pass74",
+    "epoch": 3,
+    "implementation_commit": "878544acb368b5635c4fa242a03508103eaf30aa",
+    "certificate": "research/host-compiler/pass-74/validation-full.json"
+  },
+  "candidate_scope": {
+    "starting_semantic_baseline": "009a2408b394547b11ab2021b575c06c1a5a2322",
+    "published_intermediate_commits": [
+      "401018d88fdc2f073294798d2aeffe6aea58d945",
+      "f6f440384050fddd9ed4414fca7e889b0b564a6b"
+    ],
+    "pass79_commit": "Report actual published SHA after push; avoid self-referential artifact",
+    "native_roots_installed": 0,
+    "knowledge_promotions": 0,
+    "shared_runtime_semantics_changed": false
+  },
+  "read_only_historical_full_selection": {
+    "category_count": 110,
+    "workers": 4,
+    "profile": "historical-full",
+    "includes": ["pass75", "pass76", "pass77", "pass78", "pass79"]
+  },
+  "manual_command": "python3 tools/annotated-assembly/run_host_compiler_regressions.py --profile historical-full --images /home/john/pli/cpm/pli80/DISK1 --output _build/host-compiler-pass-79/full-validation --workers 4",
+  "receipt": null,
+  "full_executed_in_campaign": false,
+  "certification_claim": false,
+  "required_review": "Inspect actual FULL receipt, investigate any failures, preserve original evidence, and certify only after all selected categories have documented successful execution and runtime/reconstruction identity checks."
+}

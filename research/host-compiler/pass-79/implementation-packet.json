@@ -1,0 +1,98 @@
+{
+  "FACTOR_REL_sha256": "9a42e8341a013243036040c8db0e56939c699c7fbbfb20878f7ba5af8d6b470d",
+  "FULL_certification_status": "PENDING EXTERNAL MANUAL FULL",
+  "baseline": "f6f440384050fddd9ed4414fca7e889b0b564a6b",
+  "evidence": [
+    "natural-shadow.json",
+    "child-law.json",
+    "unresolved-dependencies.json",
+    "semantic-extraction.json",
+    "full-checkpoint-handoff.json"
+  ],
+  "front_law": {
+    "branch": "fresh AE2D CPI 4; non4 skips +7A17; C4 requires fresh AE04=0",
+    "complete_7D05": false,
+    "complete_7D31": false,
+    "descendant_73A7_executed": false,
+    "full_register_flags_RAM_ordered_access": true,
+    "natural_shadows": 2,
+    "operation": "PLI2.OVL+7D05 front through CALL +73A7",
+    "scope": "root scratch AE2D..AE2F, C=4 gate, scoped +7A17 early return, fresh paired reread and CALL frame",
+    "synthetic_shadows": 42,
+    "unsupported": "C4 and fresh AE04 nonzero rejects before claiming +7A17 later arm"
+  },
+  "knowledge_promotions": 0,
+  "native_roots_installed": 0,
+  "oracle_queries": 0,
+  "ordinary_FULL_due": true,
+  "outcome": "bounded +7D05 front; +7D31 and +247B remain guest",
+  "pass_number": 79,
+  "root_hardware_CALLs": [
+    59,
+    59
+  ],
+  "root_steps": [
+    1550,
+    1550
+  ],
+  "task": "RUNES_K123_EXTENDED_DEPENDENCY_CLOSURE_77_79",
+  "unresolved": {
+    "catalog_completeness": {
+      "052C": {
+        "bounds": "stable",
+        "contract": "complete",
+        "control_flow": "complete"
+      },
+      "7397": {
+        "bounds": "stable",
+        "contract": "complete",
+        "control_flow": "complete"
+      },
+      "73A7": {
+        "bounds": "provisional",
+        "contract": "partial",
+        "control_flow": "partial"
+      },
+      "75CE": {
+        "bounds": "stable",
+        "contract": "partial",
+        "control_flow": "complete"
+      },
+      "77CC": {
+        "bounds": "stable",
+        "contract": "partial",
+        "control_flow": "partial"
+      },
+      "785C": {
+        "bounds": "stable",
+        "contract": "partial",
+        "control_flow": "partial"
+      },
+      "7A17": {
+        "bounds": "stable",
+        "contract": "complete",
+        "control_flow": "complete"
+      }
+    },
+    "child_7D05_direct": [
+      "PLI2.OVL+7A17",
+      "PLI2.OVL+73A7",
+      "PLI2.OVL+75CE",
+      "PLI2.OVL+785C"
+    ],
+    "deeper_partial": "PLI2.OVL+77CC under +785C",
+    "direct_children": [
+      "PLI2.OVL+052C",
+      "PLI2.OVL+7D05"
+    ],
+    "first_uncomposed": "PLI2.OVL+73A7 after proved +7D05 front",
+    "full_247B": false,
+    "full_7D31": false,
+    "later_uncomposed": [
+      "PLI2.OVL+75CE",
+      "PLI2.OVL+785C"
+    ],
+    "native_roots_installed": 0,
+    "root": "PLI2.OVL+7D31"
+  }
+}

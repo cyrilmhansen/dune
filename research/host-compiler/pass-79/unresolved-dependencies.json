@@ -1,0 +1,59 @@
+{
+  "catalog_completeness": {
+    "052C": {
+      "bounds": "stable",
+      "contract": "complete",
+      "control_flow": "complete"
+    },
+    "7397": {
+      "bounds": "stable",
+      "contract": "complete",
+      "control_flow": "complete"
+    },
+    "73A7": {
+      "bounds": "provisional",
+      "contract": "partial",
+      "control_flow": "partial"
+    },
+    "75CE": {
+      "bounds": "stable",
+      "contract": "partial",
+      "control_flow": "complete"
+    },
+    "77CC": {
+      "bounds": "stable",
+      "contract": "partial",
+      "control_flow": "partial"
+    },
+    "785C": {
+      "bounds": "stable",
+      "contract": "partial",
+      "control_flow": "partial"
+    },
+    "7A17": {
+      "bounds": "stable",
+      "contract": "complete",
+      "control_flow": "complete"
+    }
+  },
+  "child_7D05_direct": [
+    "PLI2.OVL+7A17",
+    "PLI2.OVL+73A7",
+    "PLI2.OVL+75CE",
+    "PLI2.OVL+785C"
+  ],
+  "deeper_partial": "PLI2.OVL+77CC under +785C",
+  "direct_children": [
+    "PLI2.OVL+052C",
+    "PLI2.OVL+7D05"
+  ],
+  "first_uncomposed": "PLI2.OVL+73A7 after proved +7D05 front",
+  "full_247B": false,
+  "full_7D31": false,
+  "later_uncomposed": [
+    "PLI2.OVL+75CE",
+    "PLI2.OVL+785C"
+  ],
+  "native_roots_installed": 0,
+  "root": "PLI2.OVL+7D31"
+}

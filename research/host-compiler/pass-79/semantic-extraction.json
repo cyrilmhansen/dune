@@ -1,0 +1,19 @@
+{
+  "executable_sub_contract": "PLI2.OVL+7D05 front to +73A7 CALL",
+  "full_7D31_contract": false,
+  "historical_root": "PLI2.OVL+7D31",
+  "natural_domain": "C4, AE04 zero in both FACTOR cases",
+  "no_case_or_source_dispatch": true,
+  "state_inputs": [
+    "C,D,E and flags",
+    "fresh AE04",
+    "mutable AE2D..AE2F and stack bytes"
+  ],
+  "state_outputs": [
+    "ordered AE2F,AE2E,AE2D writes",
+    "CPI 4 and optional scoped +7A17 CPI 0 flags",
+    "fresh paired AE2D/AE2E read to HL and C",
+    "actual +73A7 hardware frame, PC/SP"
+  ],
+  "synthetic_non4": "skip +7A17; no OBSERVED promotion"
+}
