@@ -5,8 +5,38 @@
   "last_certified_full": "Pass72",
   "profile": "historical-full",
   "selected_category_count": 105,
-  "semantic_commit": "PENDING_UNTIL_COMMIT",
-  "status": "pending_external_execution",
+  "semantic_commit": "878544acb368b5635c4fa242a03508103eaf30aa",
+  "status": "certified_after_documented_harness_only_rerun",
   "trigger": "Material shared proof interpretation extension: opt-in oracle sequencing and guest-frame ownership. Strict defaults remain unchanged; this does not waive early FULL.",
-  "workers": 4
+  "workers": 4,
+  "certified_full": "Pass74",
+  "certified_epoch": 3,
+  "certification_artifact": "research/host-compiler/pass-74/validation-full.json",
+  "initial_receipt": "research/host-compiler/pass-74/validation-full-initial.json",
+  "rerun_receipt": "research/host-compiler/pass-74/validation-full-rerun.json",
+  "initial_receipt_sha256": "2eeeb540dc03a7329a5738025fd9b909961e3d900a75c76525e33032203a3491",
+  "rerun_receipt_sha256": "b6ed76ab92b62e01dfe699fa9e26e3f4a4615f1580b1c0661187540f0712fd27",
+  "initial_all_passed": false,
+  "initial_passed_categories": 102,
+  "initial_failed_categories": [
+    "pass68",
+    "pass72",
+    "pass73"
+  ],
+  "initial_python_test_executions": 798,
+  "initial_wall_seconds": 4029.341,
+  "initial_sum_category_seconds": 15210.273,
+  "rerun_command": "python3 tools/annotated-assembly/run_host_compiler_regressions.py --categories pass68,pass72,pass73 --images /home/john/pli/cpm/pli80/DISK1 --output _build/host-compiler-pass-74/full-validation-rerun --workers 4",
+  "rerun_selected_categories": [
+    "build",
+    "pass68",
+    "pass72",
+    "pass73",
+    "project"
+  ],
+  "rerun_passed_categories": 5,
+  "rerun_python_test_executions": 32,
+  "rerun_wall_seconds": 489.074,
+  "rerun_sum_category_seconds": 1008.815,
+  "original_full_rerun": false
 }

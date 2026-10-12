@@ -75,16 +75,36 @@ class K23(unittest.TestCase):
   self.assertEqual([r['result']['actual_guest_instructions']for r in q],[294362,557928,339572])
   self.assertEqual([r['result']['host_transitions']for r in q],[92,215,78])
  def test_partial_catalog_and_no_bulk_promotion(self):
-  cat={p['id']:p for p in driver.load('research/annotated-assembly/procedures.json')['procedures']}
+  semantic='620715600836a576689045824bdd9e47ad30340c'
+  def at_commit(ref,path):return json.loads(subprocess.check_output(['git','show',f'{ref}:{path}']))
+  path='research/annotated-assembly/procedures.json'
+  cat={p['id']:p for p in at_commit(semantic,path)['procedures']}
   for o,e in driver.BOUNDS.items():self.assertEqual(cat[f'PLI2.OVL+{o:04X}']['length'],e-o)
   for o in [0x1dff,0x3e36]:self.assertEqual(cat[f'PLI2.OVL+{o:04X}']['completeness']['contract'],'partial')
-  baseline=json.loads(subprocess.check_output(['git','show',driver.BASE+':research/annotated-assembly/procedures.json']))
-  old={p['id']:p for p in baseline['procedures']};self.assertEqual(cat['PLI2.OVL+047D'],old['PLI2.OVL+047D'])
-  current=driver.load('research/annotated-assembly/manifest.json');oldmanifest=json.loads(subprocess.check_output(['git','show',driver.BASE+':research/annotated-assembly/manifest.json']))
+  old={p['id']:p for p in at_commit(driver.BASE,path)['procedures']}
+  self.assertEqual(cat['PLI2.OVL+047D'],old['PLI2.OVL+047D'])
+  path='research/annotated-assembly/manifest.json'
+  oldmanifest=at_commit(driver.BASE,path);provedmanifest=at_commit(semantic,path)
+  current=driver.load(path)
   def statuses(m):return {a:s['status']for i in m['images']if i['name']=='PLI2.OVL'for s in i['sections']for a in range(s['start_offset'],s['end_offset'])}
-  before,after=statuses(oldmanifest),statuses(current)
-  allowed={a for q in driver.load(driver.REPORT/'cfg.json')if q['evidence']!='STATIC UNOBSERVED unsupported'for a in range(q['offset'],q['offset']+len(bytes.fromhex(q['bytes'])))}
-  self.assertTrue({a for a in before if before[a]!='UNDERSTOOD'and after[a]=='UNDERSTOOD'}<=allowed)
+  before,proved,now=statuses(oldmanifest),statuses(provedmanifest),statuses(current)
+  cfg=driver.load(driver.REPORT/'cfg.json')
+  allowed={a for q in cfg if q['evidence']!='STATIC UNOBSERVED unsupported'for a in range(q['offset'],q['offset']+len(bytes.fromhex(q['bytes'])))}
+  unsupported={a for q in cfg if q['evidence']=='STATIC UNOBSERVED unsupported'for a in range(q['offset'],q['offset']+len(bytes.fromhex(q['bytes'])))}
+  promoted={a for a in before if before[a]!='UNDERSTOOD'and proved[a]=='UNDERSTOOD'}
+  accounting=driver.load(driver.REPORT/'knowledge-accounting.json')['transitions']
+  self.assertEqual(len(promoted),393)
+  self.assertEqual(accounting,{'RAW -> UNDERSTOOD':190,'STRUCTURED -> UNDERSTOOD':203,'DECODED -> UNDERSTOOD':0})
+  self.assertEqual({(before[a],proved[a])for a in before if before[a]!=proved[a]},{('RAW','UNDERSTOOD'),('STRUCTURED','UNDERSTOOD')})
+  self.assertEqual({a for a in before if before[a]!=proved[a]},promoted)
+  self.assertTrue(promoted<=allowed);self.assertFalse(promoted&unsupported)
+  self.assertTrue(all(now[a]=='UNDERSTOOD'for a in promoted))
+  pass73=statuses(at_commit('4f496a99c1fc7a4bb8bcb2b670a6c425193647b3',path))
+  pass73_promoted={a for a in proved if proved[a]!='UNDERSTOOD'and pass73[a]=='UNDERSTOOD'}
+  observed={a for q in driver.load('research/host-compiler/pass-73/cfg.json')if q['evidence']=='OBSERVED'for a in range(q['offset'],q['offset']+len(bytes.fromhex(q['bytes'])))}
+  self.assertEqual(len(pass73_promoted),263);self.assertTrue(pass73_promoted<=observed)
+  self.assertFalse(pass73_promoted&promoted)
+  self.assertTrue(all(now[a]=='UNDERSTOOD'for a in pass73_promoted))
  def test_exact_software_witness_and_corruption(self):
   proof=driver.load(driver.OUT/'software-return-sample.json');seed=dict(id='PLI2.OVL+3E36',image='PLI2.OVL',start_offset=0x3e36,end_offset=0x3ef6,software_return_sample=proof)
   images={'PLI2.OVL':dict(runtime_base=0x2200)};originals={'PLI2.OVL':(IMAGES/'PLI2.OVL').read_bytes()}

@@ -1,31 +1,33 @@
 {
   "schema_version": 1,
   "current_full_epoch": {
-    "name": "Pass72",
-    "epoch": 2,
-    "implementation_commit": "620715600836a576689045824bdd9e47ad30340c",
-    "certification_artifact": "research/host-compiler/pass-72/validation-full.json",
-    "receipt": "research/host-compiler/pass-72/validation-full.json",
+    "name": "Pass74",
+    "epoch": 3,
+    "implementation_commit": "878544acb368b5635c4fa242a03508103eaf30aa",
+    "certification_artifact": "research/host-compiler/pass-74/validation-full.json",
+    "receipt": "research/host-compiler/pass-74/validation-full.json",
+    "initial_receipt": "research/host-compiler/pass-74/validation-full-initial.json",
+    "targeted_rerun_receipt": "research/host-compiler/pass-74/validation-full-rerun.json",
     "status": "PASSED AFTER DOCUMENTED HARNESS-ONLY RERUN",
     "initial_all_passed": false,
-    "category_count": 103,
+    "category_count": 105,
     "python_test_execution_counts": {
-      "initial": 783,
-      "targeted_rerun": 9
+      "initial": 798,
+      "targeted_rerun": 32
     },
-    "dune_stanzas": 39,
-    "wall_seconds": 3603.725,
-    "sum_category_seconds": 13500.582,
-    "initial_wall_seconds": 3602.28,
-    "initial_sum_category_seconds": 13499.143,
-    "rerun_wall_seconds": 1.445,
-    "rerun_sum_category_seconds": 1.439,
+    "dune_stanzas": 40,
+    "wall_seconds": 4518.415,
+    "sum_category_seconds": 16219.088,
+    "initial_wall_seconds": 4029.341,
+    "initial_sum_category_seconds": 15210.273,
+    "rerun_wall_seconds": 489.074,
+    "rerun_sum_category_seconds": 1008.815,
     "workers": 4,
     "reruns": 1,
-    "rerun_category_count": 3,
-    "affected_historical_category_count": 1,
+    "rerun_category_count": 5,
+    "affected_historical_category_count": 3,
     "historical_bytes": 94720,
-    "receipt_commit_provenance": "Certification artifact committed separately; actual certification SHA reported after push, without self-reference"
+    "receipt_commit_provenance": "Certification artifact committed separately from published Pass74 semantic implementation; certification commit SHA reported after push, without self-reference"
   },
   "historical_proof": "Preserve all exhaustive shadows, synthetic discriminants, journals, historical tests and prior receipts. Age alone never justifies deleting proof.",
   "profiles": {
@@ -81,11 +83,11 @@
   ],
   "periodic_policy": {
     "epoch_zero": "Pass62",
-    "next_ordinary_full_no_later_than_approximately": "Pass77",
+    "next_ordinary_full_no_later_than_approximately": "Pass79",
     "semantic_pass_interval": 5,
     "earlier_if_substantive_trigger": true,
     "hard_coded_semantic_restriction": false,
-    "epoch_base": "Pass72"
+    "epoch_base": "Pass74"
   },
   "certificate_limit": "A certified commit is historical evidence, not an automatic certificate for arbitrary descendant code. No dependency-hash invalidation engine is implemented in Phase 1.",
   "previous_full_epochs": [
@@ -131,6 +133,33 @@
       "affected_historical_category_count": 11,
       "historical_bytes": 94720,
       "receipt_commit_provenance": "Artifact committed by the separate Pass67 certification commit; actual SHA reported after push, without a self-referential hash"
+    },
+    {
+      "name": "Pass72",
+      "epoch": 2,
+      "implementation_commit": "620715600836a576689045824bdd9e47ad30340c",
+      "certification_artifact": "research/host-compiler/pass-72/validation-full.json",
+      "receipt": "research/host-compiler/pass-72/validation-full.json",
+      "status": "PASSED AFTER DOCUMENTED HARNESS-ONLY RERUN",
+      "initial_all_passed": false,
+      "category_count": 103,
+      "python_test_execution_counts": {
+        "initial": 783,
+        "targeted_rerun": 9
+      },
+      "dune_stanzas": 39,
+      "wall_seconds": 3603.725,
+      "sum_category_seconds": 13500.582,
+      "initial_wall_seconds": 3602.28,
+      "initial_sum_category_seconds": 13499.143,
+      "rerun_wall_seconds": 1.445,
+      "rerun_sum_category_seconds": 1.439,
+      "workers": 4,
+      "reruns": 1,
+      "rerun_category_count": 3,
+      "affected_historical_category_count": 1,
+      "historical_bytes": 94720,
+      "receipt_commit_provenance": "Certification artifact committed separately; actual certification SHA reported after push, without self-reference"
     }
   ]
 }

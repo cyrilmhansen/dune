@@ -22,12 +22,26 @@ class Mixed(unittest.TestCase):
    for c in r['entries'][0]['members']:
     self.assertEqual(c['output']['sp'],c['input']['sp']+2);self.assertFalse(any(w[0]in[c['input']['sp'],c['input']['sp']+1]for w in c['journal']))
  def test_no_knowledge_or_faithful_law_change(self):
-  for file in ['lib/pli80_host/acquisition_family.ml','research/annotated-assembly/manifest.json','research/host-compiler/validation-policy.json','research/host-compiler/pass-72/validation-full.json']:
-   self.assertEqual(Path(file).read_bytes(),subprocess.check_output(['git','show',d.BASE+':'+file]))
+  semantic='878544acb368b5635c4fa242a03508103eaf30aa'
+  for file in ['lib/pli80_host/acquisition_family.ml','research/annotated-assembly/manifest.json','research/host-compiler/pass-72/validation-full.json']:
+   original=subprocess.check_output(['git','show',d.BASE+':'+file])
+   self.assertEqual(subprocess.check_output(['git','show',semantic+':'+file]),original)
+  certificate='research/host-compiler/pass-72/validation-full.json'
+  self.assertEqual(Path(certificate).read_bytes(),subprocess.check_output(['git','show',semantic+':'+certificate]))
+  policy_file='research/host-compiler/validation-policy.json'
+  baseline=json.loads(subprocess.check_output(['git','show',d.BASE+':'+policy_file]))
+  published=json.loads(subprocess.check_output(['git','show',semantic+':'+policy_file]))
+  self.assertEqual(published,baseline)
+  live=d.load(policy_file);epochs=[*live['previous_full_epochs'],live['current_full_epoch']]
+  self.assertEqual(next(e for e in epochs if e['name']=='Pass72'),baseline['current_full_epoch'])
   m=d.load('research/annotated-assembly/manifest.json');self.assertEqual(sum(i['length']for i in m['images']),94720)
  def test_full_selection_trigger_handoff(self):
   import run_host_compiler_regressions as r
   _,names,_=r.select_categories(r.commands(IMAGES,d.OUT/'listing'),d.load(r.POLICY),profile='historical-full')
-  self.assertEqual(len(names),105);self.assertTrue(set(d.load('research/host-compiler/pass-72/validation-full.json')['selected_categories'])<=set(names))
+  archived=d.load('research/host-compiler/pass-74/historical-full-selection-proof.json')
+  selected=archived['selected_categories'];self.assertEqual(archived['selected_category_count'],105)
+  self.assertEqual(len(selected),105);self.assertEqual(len(selected),len(set(selected)))
+  self.assertTrue(set(d.load('research/host-compiler/pass-72/validation-full.json')['selected_categories'])<=set(selected))
+  self.assertEqual(len(names),len(set(names)));self.assertTrue(set(selected)<=set(names))
 if __name__=='__main__':
  p=argparse.ArgumentParser();p.add_argument('--images',required=True);a,rest=p.parse_known_args();IMAGES=a.images;unittest.main(argv=[__file__]+rest)

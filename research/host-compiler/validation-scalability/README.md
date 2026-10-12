@@ -2,7 +2,7 @@
 
 Baseline: `b192213594cd499953cedf42f08fdad3c833e52d` (Finalize Pass62 full checkpoint documentation).
 
-Historical proof, active regression and FULL epochs are separate concepts. Every historical test and receipt is preserved. ACTIVE/INCREMENTAL regression does not certify every archived historical proof. Pass72 is now the current certified FULL epoch, after a documented harness-only rerun; Pass67 and Pass62 remain its preserved historical predecessors. Ancestry alone does not certify arbitrary future code. See [Pass72 certification](../pass-72/validation-full.json).
+Historical proof, active regression and FULL epochs are separate concepts. Every historical test and receipt is preserved. ACTIVE/INCREMENTAL regression does not certify every archived historical proof. Pass74 is now certified FULL epoch3 after a documented harness-only rerun; Pass72, Pass67 and Pass62 remain preserved historical predecessors. The original Pass74 FULL ran all105 categories, passed102 and failed three historical assertions. Its original receipt and the successful five-category targeted rerun receipt remain separate in the [Pass74 composite certificate](../pass-74/validation-full.json). Ancestry alone does not certify arbitrary future code.
 
 ## Commands
 
@@ -69,7 +69,7 @@ Receipts preserve existing fields and add profile, validation tier, selected/ext
 
 Pass62 epoch 0 recorded 643 distinct Python tests, 39 Dune stanzas, four workers, 2932.110 wall seconds, 10788.750 summed category seconds, zero reruns and 94720 exact historical bytes. Implementation, receipt and documentation commit identities are recorded in `../validation-policy.json`.
 
-A new FULL epoch is required for changes to CPU, CP/M/BDOS, Runner, shared journals, common native transactions, interpretation-affecting capture/proof schemas or material reconstruction mechanisms; modifications to known certificate dependencies without narrower proof; major refactor/release milestones; or periodic certification. Pass72 has completed scheduled certification. Plan the next ordinary epoch no later than approximately Pass77, earlier if a trigger fires. This is policy, not a hard-coded semantic constraint. Phase 1 implements no automatic dependency-hash certificate system.
+A new FULL epoch is required for changes to CPU, CP/M/BDOS, Runner, shared journals, common native transactions, interpretation-affecting capture/proof schemas or material reconstruction mechanisms; modifications to known certificate dependencies without narrower proof; major refactor/release milestones; or periodic certification. Pass74 completed an early FULL triggered by a shared proof interpretation extension. The five-semantic-pass interval is now based on Pass74; plan the next ordinary epoch no later than approximately Pass79, earlier if a substantive trigger fires. The interval and four-worker ceiling are unchanged. This is policy, not a hard-coded semantic constraint. Phase 1 implements no automatic dependency-hash certificate system.
 
 ## Original Pass63 handoff (historical)
 

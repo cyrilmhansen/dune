@@ -58,22 +58,32 @@ class Gateway(unittest.TestCase):
   self.assertEqual(sum(c['count']for r in q['sources']for c in r['components']if c['offset']==0x3e36),28)
  def test_goldens_and_certified_epoch_preserved(self):
   for name,sha in zip(d.g.SOURCES[:3],d.g.GOLDENS):self.assertEqual(d.load(d.OUT/'capture'/f'{name}-summary.json')['REL_sha256'],sha)
-  policy=d.load('research/host-compiler/validation-policy.json');self.assertEqual(policy['current_full_epoch']['name'],'Pass72')
-  original=subprocess.check_output(['git','show',d.BASE+':research/host-compiler/validation-policy.json']);self.assertEqual(Path('research/host-compiler/validation-policy.json').read_bytes(),original)
+  path='research/host-compiler/validation-policy.json'
+  historical=json.loads(subprocess.check_output(['git','show','4f496a99c1fc7a4bb8bcb2b670a6c425193647b3:'+path]))
+  original=json.loads(subprocess.check_output(['git','show',d.BASE+':'+path]));self.assertEqual(historical,original)
+  policy=d.load(path);epochs=[*policy['previous_full_epochs'],policy['current_full_epoch']]
+  self.assertEqual(next(e for e in epochs if e['name']=='Pass72'),historical['current_full_epoch'])
  def test_only_gateway_catalog_and_scoped_bytes_change(self):
   old=json.loads(subprocess.check_output(['git','show',d.BASE+':research/annotated-assembly/procedures.json']))
-  current=d.load('research/annotated-assembly/procedures.json');old={p['id']:p for p in old['procedures']};new={p['id']:p for p in current['procedures']}
+  published=json.loads(subprocess.check_output(['git','show','4f496a99c1fc7a4bb8bcb2b670a6c425193647b3:research/annotated-assembly/procedures.json']))
+  old={p['id']:p for p in old['procedures']};new={p['id']:p for p in published['procedures']}
   self.assertEqual({k for k in old if old[k]!=new[k]},{'PLI2.OVL+1FB5'})
   p=new['PLI2.OVL+1FB5'];self.assertEqual(p['completeness']['contract'],'partial');self.assertEqual(p['observed_paths']['represented_bytes'],271)
   def mapping(m):return {a:s['status']for i in m['images']if i['name']=='PLI2.OVL'for s in i['sections']for a in range(s['start_offset'],s['end_offset'])}
-  before=mapping(json.loads(subprocess.check_output(['git','show',d.BASE+':research/annotated-assembly/manifest.json'])));after=mapping(d.load('research/annotated-assembly/manifest.json'))
+  before=mapping(json.loads(subprocess.check_output(['git','show',d.BASE+':research/annotated-assembly/manifest.json'])));after=mapping(json.loads(subprocess.check_output(['git','show','4f496a99c1fc7a4bb8bcb2b670a6c425193647b3:research/annotated-assembly/manifest.json'])))
   changed={a for a in before if before[a]!=after[a]};self.assertEqual(len(changed),263)
   represented={a for q in d.load(d.REPORT/'cfg.json')if q['evidence']=='OBSERVED'for a in range(q['offset'],q['offset']+len(bytes.fromhex(q['bytes'])))}
   self.assertTrue(changed<=represented);self.assertTrue(all(before[a]=='STRUCTURED'and after[a]=='UNDERSTOOD'for a in changed))
+  current=mapping(d.load('research/annotated-assembly/manifest.json'))
+  self.assertTrue(all(current[a]=='UNDERSTOOD'for a in changed))
  def test_historical_full_list_preservation_and_packet(self):
   import run_host_compiler_regressions as r
   available=r.commands(IMAGES,d.OUT/'list-test');policy=d.load(r.POLICY);_,names,_=r.select_categories(available,policy,profile='historical-full')
-  self.assertEqual(len(names),104);self.assertTrue(set(d.load('research/host-compiler/pass-72/validation-full.json')['selected_categories'])<=set(names))
+  archived=d.load('research/host-compiler/pass-73/historical-full-selection-proof.json')
+  selected=archived['selected_categories'];self.assertEqual(archived['categories'],104)
+  self.assertEqual(len(selected),104);self.assertEqual(len(selected),len(set(selected)))
+  self.assertTrue(set(d.load('research/host-compiler/pass-72/validation-full.json')['selected_categories'])<=set(selected))
+  self.assertEqual(len(names),len(set(names)));self.assertTrue(set(selected)<=set(names))
   self.assertLess((d.REPORT/'implementation-packet.json').stat().st_size,28672)
 if __name__=='__main__':
  p=argparse.ArgumentParser();p.add_argument('--images',required=True);a,rest=p.parse_known_args();IMAGES=a.images

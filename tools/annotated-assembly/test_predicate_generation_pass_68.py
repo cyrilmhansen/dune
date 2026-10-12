@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Instruction-owned stack/predicate proofs and independent native/CPU shadows."""
-import argparse,json,os,unittest
+import argparse,json,os,subprocess,unittest
 from pathlib import Path
 from run_predicate_generation_pass_68 import OUT,REPORT,BOUNDS,prove,discovery
 from check_selector02_pass_40 import children_any
@@ -77,6 +77,18 @@ class PredicateGeneration(unittest.TestCase):
   post=load(OUT/'proof/cumulative-hybrid-summary.json')['sources'];self.assertEqual([s['pre_guest_instructions']for s in post],[294445,560647,340310]);self.assertEqual([sum(s['pre_transition_vector'])for s in post],[92,223,81]);self.assertLess(post[1]['result']['host_transitions'],223);self.assertTrue(load(OUT/'proof/single-hybrid-summary.json')['all_passed'])
  def test_knowledge_scope_and_FULL_epoch_preservation(self):
   cfg=load(REPORT/'cfg.json');by={w['offset']:w for w in cfg if w['owner']=='PLI2.OVL+3D10'};self.assertEqual(by[0x3d1d]['evidence'],'STATIC UNOBSERVED unsupported');self.assertNotIn(0x3de4,by)
-  policy=load('research/host-compiler/validation-policy.json');self.assertEqual(policy['current_full_epoch']['name'],'Pass67')
+  policy=load('research/host-compiler/validation-policy.json')
+  historical=json.loads(subprocess.check_output(['git','show','878544acb368b5635c4fa242a03508103eaf30aa:research/host-compiler/validation-policy.json']))
+  epochs=[*policy['previous_full_epochs'],policy['current_full_epoch']]
+  names=[e['name']for e in epochs];numbers=[e['epoch']for e in epochs]
+  self.assertEqual(len(names),len(set(names)));self.assertEqual(numbers,list(range(len(numbers))))
+  self.assertEqual(policy['current_full_epoch']['epoch'],max(numbers))
+  for old in [*historical['previous_full_epochs'],historical['current_full_epoch']]:
+   self.assertEqual(next(e for e in epochs if e['name']==old['name']),old)
+  pass67=next(e for e in epochs if e['name']=='Pass67')
+  self.assertEqual(pass67['epoch'],1)
+  receipt=Path(pass67['certification_artifact']);self.assertTrue(receipt.is_file())
+  certificate=load(receipt);self.assertTrue(certificate['certification_complete']);self.assertTrue(certificate['all_passed'])
+  self.assertEqual(certificate['semantic_implementation_commit'],pass67['implementation_commit'])
 if __name__=='__main__':
  p=argparse.ArgumentParser(add_help=False);p.add_argument('--images',default='/home/john/pli/cpm/pli80/DISK1');a,rest=p.parse_known_args();IMAGES=a.images;unittest.main(argv=[__file__]+rest)
