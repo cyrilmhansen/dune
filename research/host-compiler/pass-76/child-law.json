@@ -1,0 +1,12 @@
+{
+  "carry_clear": "fresh AC9F word + 6 via DAD B; A=0; CALL A5DC",
+  "carry_set": "fresh AD0D word to DE via XCHG; C=9; CALL A3AA",
+  "condition": "RAR sets CY to incoming A.bit0; JNC tests that carry",
+  "full_register_flags_RAM_ordered_access": true,
+  "natural_CPU_shadows": 2,
+  "no_descendant_effects_claimed": true,
+  "old_carry": "rotated into A.bit7, not used for branch choice",
+  "operation": "PLI2.OVL+24BC through child CALL",
+  "scope": "stop before first instruction of +A3AA or +A5DC",
+  "synthetic_CPU_shadows": 96
+}

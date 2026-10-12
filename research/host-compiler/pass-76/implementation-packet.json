@@ -1,0 +1,51 @@
+{
+  "FACTOR_REL_sha256": "9a42e8341a013243036040c8db0e56939c699c7fbbfb20878f7ba5af8d6b470d",
+  "baseline": "142087da112a04927bc0ea39f6148b734ce630b7",
+  "branch_targets": [
+    "A5DC",
+    "A3AA"
+  ],
+  "child_law": {
+    "carry_clear": "fresh AC9F word + 6 via DAD B; A=0; CALL A5DC",
+    "carry_set": "fresh AD0D word to DE via XCHG; C=9; CALL A3AA",
+    "condition": "RAR sets CY to incoming A.bit0; JNC tests that carry",
+    "full_register_flags_RAM_ordered_access": true,
+    "natural_CPU_shadows": 2,
+    "no_descendant_effects_claimed": true,
+    "old_carry": "rotated into A.bit7, not used for branch choice",
+    "operation": "PLI2.OVL+24BC through child CALL",
+    "scope": "stop before first instruction of +A3AA or +A5DC",
+    "synthetic_CPU_shadows": 96
+  },
+  "evidence": [
+    "natural-shadow.json",
+    "child-law.json",
+    "unresolved-dependencies.json",
+    "semantic-extraction.json"
+  ],
+  "full_trigger": false,
+  "knowledge_promotions": 0,
+  "native_roots_installed": 0,
+  "next_dependency": "Faithful +16B3, then +7D31 and branch descendants",
+  "oracle_queries": 0,
+  "outcome": "bounded branch adapter; full +247B remains guest",
+  "root_steps": [
+    3238,
+    3413
+  ],
+  "root_writes": [
+    768,
+    808
+  ],
+  "task": "RUNES_PLI2_K123_CHILD_247B_PASS_76",
+  "unresolved": {
+    "carry_clear": "PLI2.OVL+83DC then +81C0 and +742A remain guest",
+    "carry_set": "PLI2.OVL+81AA remains guest",
+    "common_later": "PLI2.OVL+245D via +24B9: 98 instructions and six nested CALLs",
+    "common_major_descendant": "PLI2.OVL+7D31 via +24B2: 1550 instructions and 59 nested CALLs in each observed case",
+    "first_unclosed_direct_child": "PLI2.OVL+16B3 via +2492",
+    "full_247B": "unproved",
+    "full_256E": "unproved",
+    "native_roots_installed": 0
+  }
+}

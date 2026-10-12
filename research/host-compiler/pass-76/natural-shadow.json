@@ -1,0 +1,874 @@
+{
+  "FACTOR_REL_sha256": "9a42e8341a013243036040c8db0e56939c699c7fbbfb20878f7ba5af8d6b470d",
+  "Pass75_trace_digest_verified": true,
+  "baseline": "142087da112a04927bc0ea39f6148b734ce630b7",
+  "capture": "_build/host-compiler-pass-75/capture",
+  "cases": [
+    {
+      "DMA": 7564,
+      "branch_entry": {
+        "AC": true,
+        "CY": false,
+        "P": true,
+        "S": false,
+        "Z": true,
+        "a": 0,
+        "b": 0,
+        "c": 3,
+        "d": 0,
+        "e": 189,
+        "h": 251,
+        "l": 192,
+        "pc": 18108,
+        "sp": 65455
+      },
+      "branch_entry_RAM_sha256": "79dbd9875dd02f115a16a58e707094f4742ec25da02bd7517710d9fe32fcb2dc",
+      "branch_entry_step": 634287,
+      "branch_instruction_steps": 7,
+      "branch_next_child": 42460,
+      "branch_next_child_RAM_sha256": "6004316a8517e00e5aa66be5ffd1cc33f171f08de971aaaab23ac396e2b2a9c5",
+      "branch_next_child_state": {
+        "AC": true,
+        "CY": false,
+        "P": true,
+        "S": false,
+        "Z": true,
+        "a": 0,
+        "b": 0,
+        "c": 6,
+        "d": 0,
+        "e": 189,
+        "h": 251,
+        "l": 195,
+        "pc": 42460,
+        "sp": 65453
+      },
+      "branch_proof": {
+        "all_passed": true,
+        "natural_passed": true,
+        "scope": "+24BC branch through actual child CALL only",
+        "synthetic_cases": 48
+      },
+      "branch_reads": 2,
+      "branch_writes": 2,
+      "case": 1,
+      "direct_children": [
+        [
+          "2480",
+          "267D",
+          "PLI2.OVL",
+          "047D"
+        ],
+        [
+          "248D",
+          "272C",
+          "PLI2.OVL",
+          "052C"
+        ],
+        [
+          "2492",
+          "38B3",
+          "PLI2.OVL",
+          "16B3"
+        ],
+        [
+          "24A0",
+          "272C",
+          "PLI2.OVL",
+          "052C"
+        ],
+        [
+          "24A5",
+          "1B29",
+          "PLI.COM",
+          "1A29"
+        ],
+        [
+          "24B2",
+          "9F31",
+          "PLI2.OVL",
+          "7D31"
+        ],
+        [
+          "24B9",
+          "465D",
+          "PLI2.OVL",
+          "245D"
+        ],
+        [
+          "24D5",
+          "A5DC",
+          "PLI2.OVL",
+          "83DC"
+        ],
+        [
+          "24E1",
+          "A3C0",
+          "PLI2.OVL",
+          "81C0"
+        ],
+        [
+          "24F0",
+          "962A",
+          "PLI2.OVL",
+          "742A"
+        ]
+      ],
+      "filesystem_sha256": "bb1cae738993912a973b27ae482a257c3624f78d3a0cb534c58ac9347977a88d",
+      "hardware_frame_last_writer": "PLI2.OVL+256E CALL",
+      "root_ADxx_writes": [
+        [
+          632748,
+          "PLI2.OVL",
+          "73AA",
+          44483,
+          4
+        ],
+        [
+          632756,
+          "PLI2.OVL",
+          "739A",
+          44482,
+          4
+        ],
+        [
+          632761,
+          "PLI2.OVL",
+          "73A4",
+          44463,
+          0
+        ],
+        [
+          632768,
+          "PLI2.OVL",
+          "739A",
+          44482,
+          5
+        ],
+        [
+          632773,
+          "PLI2.OVL",
+          "73A4",
+          44464,
+          0
+        ],
+        [
+          632781,
+          "PLI2.OVL",
+          "75D1",
+          44503,
+          4
+        ],
+        [
+          632783,
+          "PLI2.OVL",
+          "75D3",
+          44502,
+          1
+        ],
+        [
+          632788,
+          "PLI2.OVL",
+          "7472",
+          44492,
+          1
+        ],
+        [
+          632797,
+          "PLI2.OVL",
+          "74CA",
+          44495,
+          4
+        ],
+        [
+          632811,
+          "PLI2.OVL",
+          "755A",
+          44498,
+          33
+        ],
+        [
+          633222,
+          "PLI2.OVL",
+          "785F",
+          44538,
+          251
+        ],
+        [
+          633224,
+          "PLI2.OVL",
+          "7861",
+          44537,
+          125
+        ],
+        [
+          633226,
+          "PLI2.OVL",
+          "7865",
+          44539,
+          0
+        ],
+        [
+          633226,
+          "PLI2.OVL",
+          "7865",
+          44540,
+          0
+        ],
+        [
+          633232,
+          "PLI2.OVL",
+          "77CF",
+          44532,
+          251
+        ],
+        [
+          633234,
+          "PLI2.OVL",
+          "77D1",
+          44531,
+          125
+        ],
+        [
+          633240,
+          "PLI2.OVL",
+          "77DB",
+          44533,
+          48
+        ],
+        [
+          633245,
+          "PLI2.OVL",
+          "77E6",
+          44534,
+          76
+        ],
+        [
+          633262,
+          "PLI2.OVL",
+          "77F6",
+          44535,
+          4
+        ],
+        [
+          633262,
+          "PLI2.OVL",
+          "77F6",
+          44536,
+          0
+        ],
+        [
+          633284,
+          "PLI2.OVL",
+          "7661",
+          44513,
+          0
+        ],
+        [
+          633286,
+          "PLI2.OVL",
+          "7663",
+          44512,
+          4
+        ],
+        [
+          634178,
+          "PLI2.OVL",
+          "7858",
+          44527,
+          0
+        ],
+        [
+          634178,
+          "PLI2.OVL",
+          "7858",
+          44528,
+          0
+        ],
+        [
+          634190,
+          "PLI2.OVL",
+          "2460",
+          44338,
+          8
+        ],
+        [
+          634336,
+          "PLI2.OVL",
+          "7570",
+          44500,
+          9
+        ],
+        [
+          634338,
+          "PLI2.OVL",
+          "7572",
+          44499,
+          196
+        ],
+        [
+          634359,
+          "PLI2.OVL",
+          "7472",
+          44492,
+          205
+        ],
+        [
+          634370,
+          "PLI2.OVL",
+          "755A",
+          44498,
+          205
+        ],
+        [
+          634781,
+          "PLI2.OVL",
+          "761C",
+          44507,
+          0
+        ],
+        [
+          634783,
+          "PLI2.OVL",
+          "761E",
+          44506,
+          0
+        ],
+        [
+          634789,
+          "PLI2.OVL",
+          "7513",
+          44497,
+          0
+        ],
+        [
+          634791,
+          "PLI2.OVL",
+          "7515",
+          44496,
+          0
+        ],
+        [
+          634801,
+          "PLI2.OVL",
+          "75F4",
+          44505,
+          0
+        ],
+        [
+          634803,
+          "PLI2.OVL",
+          "75F6",
+          44504,
+          0
+        ],
+        [
+          635626,
+          "PLI2.OVL",
+          "7426",
+          44454,
+          255
+        ],
+        [
+          635626,
+          "PLI2.OVL",
+          "7426",
+          44455,
+          255
+        ]
+      ],
+      "root_entry": {
+        "AC": true,
+        "CY": false,
+        "P": true,
+        "S": false,
+        "Z": true,
+        "a": 0,
+        "b": 0,
+        "c": 0,
+        "d": 0,
+        "e": 2,
+        "h": 71,
+        "l": 110,
+        "pc": 18043,
+        "sp": 65457
+      },
+      "root_entry_RAM_sha256": "568b24d57dacf6a15f89734be8025f09ad8a68bba8a266489a49d1384a3e0210",
+      "root_entry_step": 632405,
+      "root_exit": {
+        "AC": false,
+        "CY": false,
+        "P": true,
+        "S": true,
+        "Z": false,
+        "a": 0,
+        "b": 0,
+        "c": 10,
+        "d": 0,
+        "e": 0,
+        "h": 71,
+        "l": 110,
+        "pc": 18289,
+        "sp": 65459
+      },
+      "root_exit_RAM_sha256": "43164d185faf8c39f9d62364bf7643cfa68cff60e2a4fa431ae8f6705ed2b7ba",
+      "root_exit_step": 635642,
+      "root_hardware_CALL_count": 133,
+      "root_instruction_steps": 3238,
+      "root_ordered_reads": 1185,
+      "root_ordered_write_sha256": "fcbd55c0b55e346c35f3c6a4f3bec8dd95a9901231c0a358138de9787bb499d2",
+      "root_ordered_writes": 768,
+      "service_events": 0
+    },
+    {
+      "DMA": 7434,
+      "branch_entry": {
+        "AC": false,
+        "CY": true,
+        "P": true,
+        "S": true,
+        "Z": false,
+        "a": 255,
+        "b": 0,
+        "c": 3,
+        "d": 0,
+        "e": 189,
+        "h": 251,
+        "l": 192,
+        "pc": 18108,
+        "sp": 65412
+      },
+      "branch_entry_RAM_sha256": "d3b707d3d20e1112dbbe44edbb94f65b103b1e9dcfaea89305df69e82cae3db6",
+      "branch_entry_step": 784436,
+      "branch_instruction_steps": 6,
+      "branch_next_child": 41898,
+      "branch_next_child_RAM_sha256": "63201db423c313efb2984ea54d37a43bc8de32f3b013aaadd3a3ff6ef54e71f3",
+      "branch_next_child_state": {
+        "AC": false,
+        "CY": true,
+        "P": true,
+        "S": true,
+        "Z": false,
+        "a": 255,
+        "b": 0,
+        "c": 9,
+        "d": 15,
+        "e": 54,
+        "h": 0,
+        "l": 189,
+        "pc": 41898,
+        "sp": 65410
+      },
+      "branch_proof": {
+        "all_passed": true,
+        "natural_passed": true,
+        "scope": "+24BC branch through actual child CALL only",
+        "synthetic_cases": 48
+      },
+      "branch_reads": 2,
+      "branch_writes": 2,
+      "case": 2,
+      "direct_children": [
+        [
+          "2480",
+          "267D",
+          "PLI2.OVL",
+          "047D"
+        ],
+        [
+          "248D",
+          "272C",
+          "PLI2.OVL",
+          "052C"
+        ],
+        [
+          "2492",
+          "38B3",
+          "PLI2.OVL",
+          "16B3"
+        ],
+        [
+          "24A0",
+          "272C",
+          "PLI2.OVL",
+          "052C"
+        ],
+        [
+          "24A5",
+          "1B29",
+          "PLI.COM",
+          "1A29"
+        ],
+        [
+          "24B2",
+          "9F31",
+          "PLI2.OVL",
+          "7D31"
+        ],
+        [
+          "24B9",
+          "465D",
+          "PLI2.OVL",
+          "245D"
+        ],
+        [
+          "24C6",
+          "A3AA",
+          "PLI2.OVL",
+          "81AA"
+        ]
+      ],
+      "filesystem_sha256": "47ead39e95873c7329217f28154a23a0c2316bcce65cf920312a43f7b79a13d6",
+      "hardware_frame_last_writer": "PLI2.OVL+256E CALL",
+      "root_ADxx_writes": [
+        [
+          782897,
+          "PLI2.OVL",
+          "73AA",
+          44483,
+          4
+        ],
+        [
+          782905,
+          "PLI2.OVL",
+          "739A",
+          44482,
+          4
+        ],
+        [
+          782910,
+          "PLI2.OVL",
+          "73A4",
+          44463,
+          0
+        ],
+        [
+          782917,
+          "PLI2.OVL",
+          "739A",
+          44482,
+          5
+        ],
+        [
+          782922,
+          "PLI2.OVL",
+          "73A4",
+          44464,
+          0
+        ],
+        [
+          782930,
+          "PLI2.OVL",
+          "75D1",
+          44503,
+          4
+        ],
+        [
+          782932,
+          "PLI2.OVL",
+          "75D3",
+          44502,
+          1
+        ],
+        [
+          782937,
+          "PLI2.OVL",
+          "7472",
+          44492,
+          1
+        ],
+        [
+          782946,
+          "PLI2.OVL",
+          "74CA",
+          44495,
+          4
+        ],
+        [
+          782960,
+          "PLI2.OVL",
+          "755A",
+          44498,
+          33
+        ],
+        [
+          783371,
+          "PLI2.OVL",
+          "785F",
+          44538,
+          251
+        ],
+        [
+          783373,
+          "PLI2.OVL",
+          "7861",
+          44537,
+          70
+        ],
+        [
+          783375,
+          "PLI2.OVL",
+          "7865",
+          44539,
+          0
+        ],
+        [
+          783375,
+          "PLI2.OVL",
+          "7865",
+          44540,
+          0
+        ],
+        [
+          783381,
+          "PLI2.OVL",
+          "77CF",
+          44532,
+          251
+        ],
+        [
+          783383,
+          "PLI2.OVL",
+          "77D1",
+          44531,
+          70
+        ],
+        [
+          783389,
+          "PLI2.OVL",
+          "77DB",
+          44533,
+          48
+        ],
+        [
+          783394,
+          "PLI2.OVL",
+          "77E6",
+          44534,
+          76
+        ],
+        [
+          783411,
+          "PLI2.OVL",
+          "77F6",
+          44535,
+          10
+        ],
+        [
+          783411,
+          "PLI2.OVL",
+          "77F6",
+          44536,
+          0
+        ],
+        [
+          783433,
+          "PLI2.OVL",
+          "7661",
+          44513,
+          0
+        ],
+        [
+          783435,
+          "PLI2.OVL",
+          "7663",
+          44512,
+          10
+        ],
+        [
+          784327,
+          "PLI2.OVL",
+          "7858",
+          44527,
+          0
+        ],
+        [
+          784327,
+          "PLI2.OVL",
+          "7858",
+          44528,
+          0
+        ],
+        [
+          784339,
+          "PLI2.OVL",
+          "2460",
+          44338,
+          54
+        ],
+        [
+          784562,
+          "PLI2.OVL",
+          "7570",
+          44500,
+          9
+        ],
+        [
+          784564,
+          "PLI2.OVL",
+          "7572",
+          44499,
+          196
+        ],
+        [
+          784585,
+          "PLI2.OVL",
+          "7472",
+          44492,
+          205
+        ],
+        [
+          784596,
+          "PLI2.OVL",
+          "755A",
+          44498,
+          205
+        ],
+        [
+          785007,
+          "PLI2.OVL",
+          "785F",
+          44538,
+          251
+        ],
+        [
+          785009,
+          "PLI2.OVL",
+          "7861",
+          44537,
+          189
+        ],
+        [
+          785011,
+          "PLI2.OVL",
+          "7865",
+          44539,
+          0
+        ],
+        [
+          785011,
+          "PLI2.OVL",
+          "7865",
+          44540,
+          0
+        ],
+        [
+          785017,
+          "PLI2.OVL",
+          "77CF",
+          44532,
+          251
+        ],
+        [
+          785019,
+          "PLI2.OVL",
+          "77D1",
+          44531,
+          189
+        ],
+        [
+          785025,
+          "PLI2.OVL",
+          "77DB",
+          44533,
+          65
+        ],
+        [
+          785030,
+          "PLI2.OVL",
+          "77E6",
+          44534,
+          136
+        ],
+        [
+          785047,
+          "PLI2.OVL",
+          "77F6",
+          44535,
+          46
+        ],
+        [
+          785047,
+          "PLI2.OVL",
+          "77F6",
+          44536,
+          0
+        ],
+        [
+          785065,
+          "PLI2.OVL",
+          "7633",
+          44509,
+          0
+        ],
+        [
+          785067,
+          "PLI2.OVL",
+          "7635",
+          44508,
+          46
+        ],
+        [
+          785955,
+          "PLI2.OVL",
+          "7858",
+          44527,
+          0
+        ],
+        [
+          785955,
+          "PLI2.OVL",
+          "7858",
+          44528,
+          0
+        ]
+      ],
+      "root_entry": {
+        "AC": true,
+        "CY": false,
+        "P": true,
+        "S": false,
+        "Z": true,
+        "a": 0,
+        "b": 0,
+        "c": 0,
+        "d": 0,
+        "e": 2,
+        "h": 71,
+        "l": 110,
+        "pc": 18043,
+        "sp": 65414
+      },
+      "root_entry_RAM_sha256": "1ce0d79bfaa810395077c962f14f3e0d25c7cd2b00f69e277c2033492dc94a63",
+      "root_entry_step": 782554,
+      "root_exit": {
+        "AC": false,
+        "CY": false,
+        "P": true,
+        "S": true,
+        "Z": false,
+        "a": 0,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 0,
+        "h": 71,
+        "l": 110,
+        "pc": 18289,
+        "sp": 65416
+      },
+      "root_exit_RAM_sha256": "0234fa5bd5abf68b6a7da0cc19aa43096021ad6e323d3f646c056fb902f43d85",
+      "root_exit_step": 785966,
+      "root_hardware_CALL_count": 140,
+      "root_instruction_steps": 3413,
+      "root_ordered_reads": 1247,
+      "root_ordered_write_sha256": "e68a1039c14cce11adc842f2781dfce9dbc36d98176332427077115a1a5e3867",
+      "root_ordered_writes": 808,
+      "service_events": 0
+    }
+  ],
+  "complete_child_host_shadow": false,
+  "gateway_software_return": "PLI2.OVL+20B4",
+  "hardware_child_return": "PLI2.OVL+2571",
+  "source": "FACTOR"
+}
