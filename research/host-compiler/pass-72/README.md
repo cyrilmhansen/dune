@@ -33,9 +33,9 @@ Pass69/70 are not silently reopened. Their common k23 predicate/handler prerequi
 
 Implementation packet: 20990 bytes. Focused campaign and explicit regression timing are recorded separately. Final aggregate categories: build (all executable compilation), project (unit/runtime regressions), pass72 (new exhaustive contracts, canonical composition and cheap historical catalog assertion), diff-check (patch integrity), validation-runner-tests (catalog selection/progress compatibility). No chronological archived campaigns or ACTIVE core were added. V1 and single exact reconstruction run separately after annotation rendering; exact reconstruction94720 bytes.
 
-Pass67 remains the current certified FULL epoch. Pass72 FULL is **PENDING EXTERNAL EXECUTION**. Historical-full has103 selectable categories, preserving all98 certified Pass67 categories plus68–72; listing is not execution. No certification policy or old FULL receipt was changed.
+At semantic publication, Pass67 remained the certified FULL epoch and Pass72 FULL was pending external execution. Pass72 is now certified after the documented harness-only rerun below. Historical-full has103 selectable categories, preserving all98 certified Pass67 categories plus68–72; listing is not execution. The semantic commit left certification policy and old FULL receipts unchanged. This separate certification updates only the current epoch and preserves all predecessors.
 
-After publication, run:
+Original manual FULL handoff command (the actual execution used the older Pass67 output directory):
 
 ```sh
 python3 tools/annotated-assembly/run_host_compiler_regressions.py --profile historical-full --images /home/john/pli/cpm/pli80/DISK1 --output _build/host-compiler-pass-72/full-validation --workers 4
@@ -46,3 +46,15 @@ Protected `scripts/view-optimist.sh` and `local-icybox-full-0-verify.state` were
 Final explicit regression receipt: profile legacy-categories, tier INCREMENTAL; 5 categories, 27 Python tests,39 Dune test stanzas,4 workers. Initially all passed; no reruns. Wall 459.688s; summed category time 459.965s. Focused proof time is separately recorded in focused-proof-timing.json.
 
 Pass57 retains its original catalog assertions at its published epoch through the existing durable frozen-catalog mechanism. The later7A17 extension is documented rather than weakening the old assertion. Local metadata wording distinguishes the software entry and scoped predicate counts from preserved older global evidence. Development corrections before the final aggregate: actual RAR branch polarity and a STA writer coordinate were corrected by independent CPU shadows. No pragmatic semantic shortcut was introduced; fidelity debt is the explicitly unsupported general predicate/handler arms and guest gateway composition.
+
+## Completed external FULL certification
+
+Semantic implementation: `620715600836a576689045824bdd9e47ad30340c`. Status: **PASSED AFTER DOCUMENTED HARNESS-ONLY RERUN**. The initial FULL was not initially green: 103 selected categories, 102 passed and one failed; 783 Python test executions, four workers, 3602.280 seconds wall and 13499.143 summed category seconds. Its actual output location was `_build/host-compiler-pass-67/full-validation`, despite selecting the complete Pass72 category set.
+
+The sole failure was `minimal-pass-2::test_unprocessed_paths_stay_raw_and_neighbor_keeps_distinct_identity`. Its obsolete RAW assertion at `PLI2.OVL+1E75 [1E75,1E78)` conflicted with Pass72's independently OBSERVED scoped k23 proof of `JMP 41AFH` (`C3 AF 41`). The bytes and SHA256 are unchanged. Only that coordinate was removed from the RAW list, with an explanatory comment; all other eleven RAW assertions and all neighbor, stack, flag and evidence checks remain. No faithful OCaml, native boundary, runtime semantics, annotations, reconstruction mechanism or knowledge classification changed.
+
+The complete targeted rerun selected build, project and minimal-pass-2: **3/3 passed, all nine Pass2 tests passed**, four workers, 1.445 seconds wall and 1.439 summed category seconds. Initial and rerun Python execution counts remain separate; their sum is not labeled a distinct-test count. All 28 recorded runtime binary hashes match between receipts and the current binaries. The original successful roundtrip category and unchanged image identities establish exact reconstruction of **94720 bytes**.
+
+[Initial FULL receipt](validation-full-initial.json) and [targeted rerun receipt](validation-full-rerun.json) are byte-for-byte copies, with SHA256 digests retained in the [composite certificate](validation-full.json). That certificate combines the 102 original successes and the complete successful rerun of the sole failed category, covering all 103 historical categories. The original initial receipt remains failed. No historical FULL was rerun in this certification task.
+
+**Pass72 is now current FULL epoch 2.** Pass67 is its preserved preceding epoch, and Pass62 remains epoch 0. The next ordinary FULL is approximately Pass77, or earlier if a substantive trigger fires. The handoff retains its original pending state and command alongside the actual execution location and both receipts. The protected user files remain untouched.

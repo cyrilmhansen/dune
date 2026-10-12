@@ -182,8 +182,10 @@ class MinimalPassTwoTests(unittest.TestCase):
     def test_unprocessed_paths_stay_raw_and_neighbor_keeps_distinct_identity(self):
         # Pass64 independently proved PLI.COM+05F8 [05F8,05FF);
         # only its obsolete RAW expectation is removed. All other checks remain.
+        # Pass72 independently proved the scoped k23 path at PLI2.OVL+1E75;
+        # remove only that obsolete RAW expectation.
         points = {
-            "PLI2.OVL": [0x1E75, 0x1E80, 0x1EA4, 0x1F53],
+            "PLI2.OVL": [0x1E80, 0x1EA4, 0x1F53],
             "PLI.COM": [0xD09, 0xD3F, 0xDA2, 0xDC7, 0xE13, 0xE41, 0x5B9],
             "PLI1.OVL": [0x43B8],
         }

@@ -95,10 +95,10 @@ class K23(unittest.TestCase):
  def test_historical_assertion_preserved_at_its_epoch(self):
   from test_pending_generation_pass_57 import Pending
   Pending('test_catalog_scope_and_packet').test_catalog_scope_and_packet()
- def test_full_selection_pending_and_packet(self):
+ def test_full_selection_certified_and_packet(self):
   q=driver.load(driver.OUT/'historical-full-selection.json');cert=driver.load('research/host-compiler/pass-67/validation-full-initial.json')
   self.assertEqual(len(q['selected_categories']),103);self.assertTrue(set(cert['selected_categories'])<=set(q['selected_categories']))
-  handoff=driver.load(driver.REPORT/'full-checkpoint-handoff.json');self.assertEqual(handoff['status'],'pending_external_execution');self.assertEqual(handoff['last_certified_full'],'Pass67')
+  handoff=driver.load(driver.REPORT/'full-checkpoint-handoff.json');self.assertEqual(handoff['status'],'certified_after_harness_only_rerun');self.assertEqual(handoff['last_certified_full'],'Pass72');self.assertFalse(handoff['initial_all_passed'])
   self.assertLess((driver.REPORT/'implementation-packet.json').stat().st_size,28672)
   self.assertEqual(set(driver.load(driver.REPORT/'semantic-extraction.json')),{'historical_root','semantic_inputs','semantic_outputs','shared_historical_state','historical_mechanism','candidate_modern_operation','confidence','mir_relevance'})
 if __name__=='__main__':
