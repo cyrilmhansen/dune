@@ -70,6 +70,7 @@ def commands(images,out):
  cmds['pass80']=['python3','tools/annotated-assembly/test_k123_child_pass_80.py','--images',images,'-q']
  cmds['pass81']=['python3','tools/annotated-assembly/test_k123_child_pass_81.py','--images',images,'-q']
  cmds['pass82']=['python3','tools/annotated-assembly/test_k123_child_pass_82.py','--images',images,'-q']
+ cmds['pass83']=['python3','tools/annotated-assembly/test_k123_parent_pass_83.py','--images',images,'-q']
  cmds['pass71']=['python3','tools/annotated-assembly/test_gateway_decomposition_pass_71.py','--images',images,'-q']
  cmds['pass70']=['python3','tools/annotated-assembly/test_indexed_policy_pass_70.py','--images',images,'-q']
  cmds['pass69']=['python3','tools/annotated-assembly/test_selector_dispatch_pass_69.py','--images',images,'-q']

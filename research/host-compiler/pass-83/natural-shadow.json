@@ -1,0 +1,190 @@
+{
+  "FACTOR_REL_sha256": "9a42e8341a013243036040c8db0e56939c699c7fbbfb20878f7ba5af8d6b470d",
+  "baseline": "6c1d20870589bb50aa0396eb59546199ed55d065",
+  "capture": "_build/host-compiler-pass-83/capture",
+  "capture_integrity_verified": true,
+  "cases": [
+    {
+      "BDOS_events": 0,
+      "DMA": 7564,
+      "case": 1,
+      "children": [
+        {
+          "entry": {
+            "AC": false,
+            "CY": false,
+            "P": true,
+            "S": true,
+            "Z": false,
+            "a": 135,
+            "b": 125,
+            "c": 9,
+            "d": 8,
+            "e": 9,
+            "h": 0,
+            "l": 9,
+            "pc": 10028,
+            "sp": 65451
+          },
+          "site": "7D3B"
+        },
+        {
+          "entry": {
+            "AC": false,
+            "CY": false,
+            "P": false,
+            "S": true,
+            "Z": false,
+            "a": 251,
+            "b": 125,
+            "c": 4,
+            "d": 251,
+            "e": 125,
+            "h": 9,
+            "l": 4,
+            "pc": 40709,
+            "sp": 65451
+          },
+          "site": "7D43"
+        }
+      ],
+      "entry": {
+        "AC": false,
+        "CY": false,
+        "P": true,
+        "S": true,
+        "Z": false,
+        "a": 135,
+        "b": 125,
+        "c": 4,
+        "d": 8,
+        "e": 9,
+        "h": 0,
+        "l": 0,
+        "pc": 40753,
+        "sp": 65453
+      },
+      "entry_RAM_sha256": "d3f9f90e450fa4cdaf68bff3ec6a597f791e85ed3be9a5971a024c00b1de58e0",
+      "filesystem_sha256": "bb1cae738993912a973b27ae482a257c3624f78d3a0cb534c58ac9347977a88d",
+      "fresh_CPU_accesses_match_capture": true,
+      "instructions": 1550,
+      "ordered_access_sha256": "031880abc7011483be974d284fef511d4a74d8bc9fd3e1751b2924a792474c2b",
+      "proof": {
+        "all_passed": true,
+        "natural_passed": true,
+        "synthetic_cases": 4
+      },
+      "reads": 568,
+      "return_RAM_sha256": "db7f0dfde0dacc6fcdfc77f3d8887677bce02d2abcca5881a37e8673710f4a74",
+      "returned": {
+        "AC": false,
+        "CY": false,
+        "P": true,
+        "S": true,
+        "Z": false,
+        "a": 0,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 0,
+        "h": 0,
+        "l": 0,
+        "pc": 18101,
+        "sp": 65455
+      },
+      "writes": 368
+    },
+    {
+      "BDOS_events": 0,
+      "DMA": 7434,
+      "case": 2,
+      "children": [
+        {
+          "entry": {
+            "AC": false,
+            "CY": false,
+            "P": true,
+            "S": true,
+            "Z": false,
+            "a": 190,
+            "b": 70,
+            "c": 55,
+            "d": 54,
+            "e": 55,
+            "h": 4,
+            "l": 55,
+            "pc": 10028,
+            "sp": 65408
+          },
+          "site": "7D3B"
+        },
+        {
+          "entry": {
+            "AC": false,
+            "CY": false,
+            "P": false,
+            "S": true,
+            "Z": false,
+            "a": 251,
+            "b": 70,
+            "c": 4,
+            "d": 251,
+            "e": 70,
+            "h": 55,
+            "l": 4,
+            "pc": 40709,
+            "sp": 65408
+          },
+          "site": "7D43"
+        }
+      ],
+      "entry": {
+        "AC": false,
+        "CY": false,
+        "P": true,
+        "S": true,
+        "Z": false,
+        "a": 190,
+        "b": 70,
+        "c": 4,
+        "d": 54,
+        "e": 55,
+        "h": 0,
+        "l": 0,
+        "pc": 40753,
+        "sp": 65410
+      },
+      "entry_RAM_sha256": "be3e2f6f62c7d9d59d5f877ecee69c0c4a5ce9edcbea0527a575786f8e26c9f9",
+      "filesystem_sha256": "47ead39e95873c7329217f28154a23a0c2316bcce65cf920312a43f7b79a13d6",
+      "fresh_CPU_accesses_match_capture": true,
+      "instructions": 1550,
+      "ordered_access_sha256": "2137987fd7d4ce071ce96f0e5cd3da3f6bdea5187bde817c664be561768d4512",
+      "proof": {
+        "all_passed": true,
+        "natural_passed": true,
+        "synthetic_cases": 4
+      },
+      "reads": 568,
+      "return_RAM_sha256": "47c5551e6a2c58d480d26be31fc91df75c48c317150cee031ddcbf617974edc4",
+      "returned": {
+        "AC": false,
+        "CY": false,
+        "P": true,
+        "S": true,
+        "Z": false,
+        "a": 0,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 0,
+        "h": 0,
+        "l": 0,
+        "pc": 18101,
+        "sp": 65412
+      },
+      "writes": 368
+    }
+  ],
+  "complete_natural_7D31": true,
+  "native_roots_installed": 0
+}
