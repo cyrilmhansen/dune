@@ -307,5 +307,13 @@
  (libraries pli80_host i8080))
 
 (executable
+ (name k123_785c_proof)
+ (libraries pli80_host i8080))
+
+(executable
+ (name k123_7d05_complete_proof)
+ (libraries pli80_host i8080))
+
+(executable
  (name native_k23_gateway)
  (libraries pli80 analysis runner unix))
