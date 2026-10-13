@@ -1,0 +1,333 @@
+{
+  "FACTOR_REL_sha256": "9a42e8341a013243036040c8db0e56939c699c7fbbfb20878f7ba5af8d6b470d",
+  "baseline": "c0bf5f5e30aa00c8500131f8366b45a776da310f",
+  "canonical_children": [
+    "PLI2.OVL+73A7",
+    "PLI2.OVL+7397"
+  ],
+  "capture": "_build/host-compiler-pass-80/capture",
+  "capture_digests_match_Pass75": true,
+  "cases": [
+    {
+      "DMA": 7564,
+      "actual_index": 4,
+      "case": 1,
+      "entry": {
+        "AC": false,
+        "CY": false,
+        "P": false,
+        "S": true,
+        "Z": false,
+        "a": 251,
+        "b": 125,
+        "c": 4,
+        "d": 251,
+        "e": 125,
+        "h": 9,
+        "l": 4,
+        "pc": 40709,
+        "sp": 65451
+      },
+      "entry_RAM_sha256": "e3746cd9dc42b15a5850966e536e7d87023f8db0151aaebc7ae1b2b7fa7fae61",
+      "filesystem_sha256": "bb1cae738993912a973b27ae482a257c3624f78d3a0cb534c58ac9347977a88d",
+      "hardware_calls": [
+        {
+          "continuation": 40728,
+          "site": "7D15",
+          "sp": 65449,
+          "target": "9C17"
+        },
+        {
+          "continuation": 40735,
+          "site": "7D1C",
+          "sp": 65449,
+          "target": "95A7"
+        },
+        {
+          "continuation": 38331,
+          "site": "73B8",
+          "sp": 65447,
+          "target": "9597"
+        },
+        {
+          "continuation": 38339,
+          "site": "73C0",
+          "sp": 65447,
+          "target": "9597"
+        }
+      ],
+      "inherited_201D": 0,
+      "inherited_2029": 0,
+      "instructions": 46,
+      "ordered_read_sites": [
+        [
+          32013,
+          44589
+        ],
+        [
+          31255,
+          44548
+        ],
+        [
+          31263,
+          65449
+        ],
+        [
+          31263,
+          65450
+        ],
+        [
+          32024,
+          44589
+        ],
+        [
+          32024,
+          44590
+        ],
+        [
+          29611,
+          44483
+        ],
+        [
+          29620,
+          44483
+        ],
+        [
+          29620,
+          44484
+        ],
+        [
+          29595,
+          44482
+        ],
+        [
+          29595,
+          44483
+        ],
+        [
+          29606,
+          65447
+        ],
+        [
+          29606,
+          65448
+        ],
+        [
+          29627,
+          44483
+        ],
+        [
+          29595,
+          44482
+        ],
+        [
+          29595,
+          44483
+        ],
+        [
+          29606,
+          65447
+        ],
+        [
+          29606,
+          65448
+        ],
+        [
+          29635,
+          65449
+        ],
+        [
+          29635,
+          65450
+        ]
+      ],
+      "ordered_reads": 20,
+      "ordered_writes": 16,
+      "proof": {
+        "all_passed": true,
+        "natural_passed": true,
+        "synthetic_cases": 5
+      },
+      "return_RAM_sha256": "a4f63110dc6fcc40597cec2bb5240cb6542063c93053c29c3d4ea3decc52679b",
+      "return_state": {
+        "AC": false,
+        "CY": false,
+        "P": true,
+        "S": false,
+        "Z": false,
+        "a": 5,
+        "b": 173,
+        "c": 171,
+        "d": 251,
+        "e": 125,
+        "h": 173,
+        "l": 176,
+        "pc": 40735,
+        "sp": 65451
+      },
+      "service_events": 0
+    },
+    {
+      "DMA": 7434,
+      "actual_index": 4,
+      "case": 2,
+      "entry": {
+        "AC": false,
+        "CY": false,
+        "P": false,
+        "S": true,
+        "Z": false,
+        "a": 251,
+        "b": 70,
+        "c": 4,
+        "d": 251,
+        "e": 70,
+        "h": 55,
+        "l": 4,
+        "pc": 40709,
+        "sp": 65408
+      },
+      "entry_RAM_sha256": "2e2e080c46f6594824fd7588c7873527e101d29e46ed2cdbb7fb2400322b3e86",
+      "filesystem_sha256": "47ead39e95873c7329217f28154a23a0c2316bcce65cf920312a43f7b79a13d6",
+      "hardware_calls": [
+        {
+          "continuation": 40728,
+          "site": "7D15",
+          "sp": 65406,
+          "target": "9C17"
+        },
+        {
+          "continuation": 40735,
+          "site": "7D1C",
+          "sp": 65406,
+          "target": "95A7"
+        },
+        {
+          "continuation": 38331,
+          "site": "73B8",
+          "sp": 65404,
+          "target": "9597"
+        },
+        {
+          "continuation": 38339,
+          "site": "73C0",
+          "sp": 65404,
+          "target": "9597"
+        }
+      ],
+      "inherited_201D": 0,
+      "inherited_2029": 0,
+      "instructions": 46,
+      "ordered_read_sites": [
+        [
+          32013,
+          44589
+        ],
+        [
+          31255,
+          44548
+        ],
+        [
+          31263,
+          65406
+        ],
+        [
+          31263,
+          65407
+        ],
+        [
+          32024,
+          44589
+        ],
+        [
+          32024,
+          44590
+        ],
+        [
+          29611,
+          44483
+        ],
+        [
+          29620,
+          44483
+        ],
+        [
+          29620,
+          44484
+        ],
+        [
+          29595,
+          44482
+        ],
+        [
+          29595,
+          44483
+        ],
+        [
+          29606,
+          65404
+        ],
+        [
+          29606,
+          65405
+        ],
+        [
+          29627,
+          44483
+        ],
+        [
+          29595,
+          44482
+        ],
+        [
+          29595,
+          44483
+        ],
+        [
+          29606,
+          65404
+        ],
+        [
+          29606,
+          65405
+        ],
+        [
+          29635,
+          65406
+        ],
+        [
+          29635,
+          65407
+        ]
+      ],
+      "ordered_reads": 20,
+      "ordered_writes": 16,
+      "proof": {
+        "all_passed": true,
+        "natural_passed": true,
+        "synthetic_cases": 5
+      },
+      "return_RAM_sha256": "e6463a542d8de796b7cfd76f4b05a8f7d2ebe9be2148a703ef2dc66e8e904ca4",
+      "return_state": {
+        "AC": false,
+        "CY": false,
+        "P": true,
+        "S": false,
+        "Z": false,
+        "a": 5,
+        "b": 173,
+        "c": 171,
+        "d": 251,
+        "e": 70,
+        "h": 173,
+        "l": 176,
+        "pc": 40735,
+        "sp": 65408
+      },
+      "service_events": 0
+    }
+  ],
+  "full_7D05": false,
+  "native_roots_installed": 0,
+  "operation": "PLI2.OVL+7D05 front through +73A7 return"
+}

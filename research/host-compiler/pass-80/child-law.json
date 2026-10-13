@@ -1,0 +1,27 @@
+{
+  "complete_73A7_natural": true,
+  "complete_7D05": false,
+  "natural_index": 4,
+  "operation": "+7D05 front plus canonical +73A7 non-6 and two +7397 clears",
+  "required": [
+    "immutable +73A7/+7397 code",
+    "index<6",
+    "safe high stack",
+    "201D and 2029 clear",
+    "nonzero output position",
+    "fresh ADC2/ADC3 reads and indexed ADAB writes"
+  ],
+  "synthetic_indices": [
+    0,
+    1,
+    2,
+    3,
+    5
+  ],
+  "unsupported": [
+    "index6 early RET",
+    "index7 second +7397 out of scope",
+    "+7A17 AE04 nonzero",
+    "later +75CE/+785C"
+  ]
+}
