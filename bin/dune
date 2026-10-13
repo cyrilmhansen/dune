@@ -333,3 +333,11 @@
 (executable
  (name k123_completion_proof)
  (libraries pli80_host i8080))
+
+(executable
+ (name k123_gateway_capture)
+ (libraries pli80 pli80_host analysis runner))
+
+(executable
+ (name k123_gateway_proof)
+ (libraries pli80_host i8080))

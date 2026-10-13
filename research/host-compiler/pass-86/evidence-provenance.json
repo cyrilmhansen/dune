@@ -1,0 +1,26 @@
+{
+  "FULL": "Pass74epoch3 retained; externalPass79failures untouched; no FULL run/schedule/wait",
+  "baseline": "192333cf574b333ed8cefbca34dd9ebeea77e2b1",
+  "captures": "isolated ignored_build/host-compiler-pass-86/capture; complete capture files SHA256-verified before reuse; no prior shared capture overwritten",
+  "golden": "9a42e8341a013243036040c8db0e56939c699c7fbbfb20878f7ba5af8d6b470d",
+  "original_capture_integrity": "Full natural handler subwindows match immutable Pass75 trace digests; entry/exit full gateway RAM hashes match published Pass71 frames.",
+  "protected_baseline_SHA256": {
+    "lib/pli80/acquisition_family_bridge.ml": "431efaf6b9071278074587b2efe5a6781e47725ea06b9dabd96c1bc8b2399e58",
+    "lib/pli80/native_dispatch.ml": "5789a495768f59bea25b441f9ecef02e43f768ae9d9d4d51069581dbb6157ed4",
+    "lib/pli80/native_resident_output.ml": "69d078270333b3418dabf293f390c7e8e94a565926df3fde851b6043c45fdbf7",
+    "lib/pli80_host/k123_handler_complete.ml": "7f23cc76549d04aab34b263bee46ba2618d31c845e119ee383619f543e46d8a3",
+    "research/annotated-assembly/manifest.json": "40bab1d91e2c275874b72ed04c68be8064cdf9d01786903e2cb505bd4e47e4f2",
+    "research/host-compiler/validation-policy.json": "dd944253434121720845bc85c6fd9d35cd19ebb9c6bbeb4036bee5b6cec337e5"
+  },
+  "protected_sources": "Task-time inspection verifies current protected sources match the exact baseline. Permanent historical tests verify archived baseline Git objects and hashes, allowing later legitimate runtime installs, promotions and certifications.",
+  "receipts": {
+    "validation-k23-supplement.json": "f0300c19ee8ef9c2a091246e139b6bd50cd0a7781fe992b73e2bdf41d57015ad",
+    "validation.json": "a1af1d727c746dfaca804d927407e928760bfb8fc854ee57cd3b38bae333942a"
+  },
+  "reconstruction": {
+    "all_section_image_hashes_and_exact_bytes": true,
+    "bytes": 94720,
+    "knowledge_manifest_unchanged": true,
+    "verifier": "python3 tools/annotated-assembly/verify.py --images /home/john/pli/cpm/pli80/DISK1"
+  }
+}

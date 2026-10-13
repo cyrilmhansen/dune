@@ -1,0 +1,492 @@
+{
+  "FACTOR_REL_sha256": "9a42e8341a013243036040c8db0e56939c699c7fbbfb20878f7ba5af8d6b470d",
+  "baseline": "192333cf574b333ed8cefbca34dd9ebeea77e2b1",
+  "capture_integrity_verified": true,
+  "cases": [
+    {
+      "CALL_chronology_sha256": "9749de159da9a339d9411d16a0901a91ef85b71fdd5060fae24d7b0ce6659f9e",
+      "canonical_index": 123,
+      "case": 1,
+      "descriptor": 17239,
+      "entry": {
+        "DMA": 7564,
+        "RAM_sha256": "475cafe93e2dd0e706b70ac4ddd17157c56f6801e26b810ab88701f5e04b5f06",
+        "boundary": "entry",
+        "call_site": 22859,
+        "case": 1,
+        "filesystem_sha256": "bb1cae738993912a973b27ae482a257c3624f78d3a0cb534c58ac9347977a88d",
+        "state": {
+          "AC": true,
+          "CY": false,
+          "P": true,
+          "S": false,
+          "Z": true,
+          "a": 0,
+          "b": 0,
+          "c": 10,
+          "d": 96,
+          "e": 52,
+          "h": 15,
+          "l": 10,
+          "pc": 16821,
+          "sp": 65473
+        },
+        "step": 632031
+      },
+      "fallback_pointer": 15350,
+      "gateway_direct_CALLs": [
+        {
+          "offset": 8158,
+          "sp": 65459,
+          "target": 9853
+        },
+        {
+          "offset": 8325,
+          "sp": 65459,
+          "target": 16383
+        }
+      ],
+      "handler": 18286,
+      "hardware_CALLs": 141,
+      "independent_CPU_accesses_match_capture": true,
+      "instructions": 3715,
+      "ordered_access_sha256": "33a0fb08624f4b8c6237580900e86d0117605a0b316ba76dcbcda1ea1e8ecc53",
+      "predicate_tokens": [
+        251,
+        252
+      ],
+      "proof": {
+        "all_passed": true,
+        "gateway_ordered_reads_match_CPU": true,
+        "input_unchanged": true,
+        "natural_passed": true,
+        "preparation_error_propagates": true,
+        "rejections": [
+          "unsupported canonical index",
+          "invalid descriptor",
+          "invalid handler",
+          "gateway code",
+          "software PUSH code",
+          "software PCHL code",
+          "predicate code",
+          "handler code",
+          "corrupted hardware continuation",
+          "trace gate",
+          "unsupported predicate token",
+          "unsupported descriptor scan",
+          "scratch pointer alias",
+          "stack pointer alias",
+          "code/table alias",
+          "output error domain",
+          "output bit boundary",
+          "output record boundary",
+          "unsupported handler zero difference",
+          "output boundary",
+          "stack/scratch alias"
+        ],
+        "synthetic_cases": 2
+      },
+      "reads": 1329,
+      "returned": {
+        "DMA": 7564,
+        "RAM_sha256": "32607026db96ae542b5518d5b3e8d85403d7c1c6b89a8f9dba24db47de2eee8b",
+        "boundary": "exit",
+        "case": 1,
+        "filesystem_sha256": "bb1cae738993912a973b27ae482a257c3624f78d3a0cb534c58ac9347977a88d",
+        "service_events": 0,
+        "state": {
+          "AC": true,
+          "CY": false,
+          "P": true,
+          "S": false,
+          "Z": true,
+          "a": 4,
+          "b": 255,
+          "c": 192,
+          "d": 173,
+          "e": 21,
+          "h": 255,
+          "l": 193,
+          "pc": 22862,
+          "sp": 65475
+        },
+        "step": 635745
+      },
+      "software_RET": {
+        "accesses": [
+          {
+            "address": 65459,
+            "kind": "read",
+            "value": 180
+          },
+          {
+            "address": 65460,
+            "kind": "read",
+            "value": 66
+          }
+        ],
+        "after": {
+          "AC": true,
+          "CY": false,
+          "P": false,
+          "S": false,
+          "Z": false,
+          "a": 15,
+          "b": 0,
+          "c": 10,
+          "d": 0,
+          "e": 0,
+          "h": 173,
+          "l": 6,
+          "pc": 17076,
+          "sp": 65461
+        },
+        "before": {
+          "AC": true,
+          "CY": false,
+          "P": false,
+          "S": false,
+          "Z": false,
+          "a": 15,
+          "b": 0,
+          "c": 10,
+          "d": 0,
+          "e": 0,
+          "h": 173,
+          "l": 6,
+          "pc": 18330,
+          "sp": 65459
+        },
+        "bytes": "C9",
+        "case": 1,
+        "decoded": "RET",
+        "image": "PLI2.OVL",
+        "kind": "return",
+        "offset": 9626,
+        "step": 635666,
+        "taken": true,
+        "target": 17076
+      },
+      "software_push": {
+        "accesses": [
+          {
+            "address": 65460,
+            "kind": "write",
+            "value": 66
+          },
+          {
+            "address": 65459,
+            "kind": "write",
+            "value": 180
+          }
+        ],
+        "after": {
+          "AC": true,
+          "CY": false,
+          "P": true,
+          "S": false,
+          "Z": true,
+          "a": 0,
+          "b": 0,
+          "c": 0,
+          "d": 0,
+          "e": 2,
+          "h": 66,
+          "l": 180,
+          "pc": 17072,
+          "sp": 65459
+        },
+        "before": {
+          "AC": true,
+          "CY": false,
+          "P": true,
+          "S": false,
+          "Z": true,
+          "a": 0,
+          "b": 0,
+          "c": 0,
+          "d": 0,
+          "e": 2,
+          "h": 66,
+          "l": 180,
+          "pc": 17071,
+          "sp": 65461
+        },
+        "bytes": "E5",
+        "case": 1,
+        "decoded": "PUSH H",
+        "image": "PLI2.OVL",
+        "kind": "sequential",
+        "offset": 8367,
+        "step": 632401,
+        "taken": true,
+        "target": 17072
+      },
+      "trace_sha256": "2d652387643373aa6751e0284ba94f6c76df05ad8057a9119b7d45529077c7a7",
+      "writes": 869
+    },
+    {
+      "CALL_chronology_sha256": "045ec50661083ca104a93923c6b799a9531c3432ef99bfa2a6a11abfcbda5f84",
+      "canonical_index": 123,
+      "case": 2,
+      "descriptor": 17239,
+      "entry": {
+        "DMA": 7434,
+        "RAM_sha256": "68d5305f35954f3294d2331bf99575ccbcbcc654a650b145e0a1fac091092741",
+        "boundary": "entry",
+        "call_site": 22859,
+        "case": 2,
+        "filesystem_sha256": "47ead39e95873c7329217f28154a23a0c2316bcce65cf920312a43f7b79a13d6",
+        "state": {
+          "AC": false,
+          "CY": true,
+          "P": true,
+          "S": true,
+          "Z": false,
+          "a": 0,
+          "b": 0,
+          "c": 56,
+          "d": 0,
+          "e": 2,
+          "h": 15,
+          "l": 56,
+          "pc": 16821,
+          "sp": 65430
+        },
+        "step": 782180
+      },
+      "fallback_pointer": 15350,
+      "gateway_direct_CALLs": [
+        {
+          "offset": 8158,
+          "sp": 65416,
+          "target": 9853
+        },
+        {
+          "offset": 8325,
+          "sp": 65416,
+          "target": 16383
+        }
+      ],
+      "handler": 18286,
+      "hardware_CALLs": 148,
+      "independent_CPU_accesses_match_capture": true,
+      "instructions": 3890,
+      "ordered_access_sha256": "79cdf9a358b6bfa7ea8a2799eec55b589ad65189f7c36a88cf244d29e2fc1a17",
+      "predicate_tokens": [
+        251,
+        252
+      ],
+      "proof": {
+        "all_passed": true,
+        "gateway_ordered_reads_match_CPU": true,
+        "input_unchanged": true,
+        "natural_passed": true,
+        "preparation_error_propagates": true,
+        "rejections": [
+          "unsupported canonical index",
+          "invalid descriptor",
+          "invalid handler",
+          "gateway code",
+          "software PUSH code",
+          "software PCHL code",
+          "predicate code",
+          "handler code",
+          "corrupted hardware continuation",
+          "trace gate",
+          "unsupported predicate token",
+          "unsupported descriptor scan",
+          "scratch pointer alias",
+          "stack pointer alias",
+          "code/table alias",
+          "output error domain",
+          "output bit boundary",
+          "output record boundary",
+          "unsupported handler zero difference",
+          "output boundary",
+          "stack/scratch alias"
+        ],
+        "synthetic_cases": 2
+      },
+      "reads": 1391,
+      "returned": {
+        "DMA": 7434,
+        "RAM_sha256": "3fe55ac8db769e34de76fe7a5920d03adfd3093fee5daf335eab41ee4217e754",
+        "boundary": "exit",
+        "case": 2,
+        "filesystem_sha256": "47ead39e95873c7329217f28154a23a0c2316bcce65cf920312a43f7b79a13d6",
+        "service_events": 0,
+        "state": {
+          "AC": true,
+          "CY": false,
+          "P": true,
+          "S": false,
+          "Z": true,
+          "a": 0,
+          "b": 255,
+          "c": 149,
+          "d": 173,
+          "e": 21,
+          "h": 255,
+          "l": 150,
+          "pc": 22862,
+          "sp": 65432
+        },
+        "step": 786069
+      },
+      "software_RET": {
+        "accesses": [
+          {
+            "address": 65416,
+            "kind": "read",
+            "value": 180
+          },
+          {
+            "address": 65417,
+            "kind": "read",
+            "value": 66
+          }
+        ],
+        "after": {
+          "AC": true,
+          "CY": false,
+          "P": false,
+          "S": false,
+          "Z": false,
+          "a": 15,
+          "b": 0,
+          "c": 57,
+          "d": 0,
+          "e": 0,
+          "h": 173,
+          "l": 6,
+          "pc": 17076,
+          "sp": 65418
+        },
+        "before": {
+          "AC": true,
+          "CY": false,
+          "P": false,
+          "S": false,
+          "Z": false,
+          "a": 15,
+          "b": 0,
+          "c": 57,
+          "d": 0,
+          "e": 0,
+          "h": 173,
+          "l": 6,
+          "pc": 18330,
+          "sp": 65416
+        },
+        "bytes": "C9",
+        "case": 2,
+        "decoded": "RET",
+        "image": "PLI2.OVL",
+        "kind": "return",
+        "offset": 9626,
+        "step": 785990,
+        "taken": true,
+        "target": 17076
+      },
+      "software_push": {
+        "accesses": [
+          {
+            "address": 65417,
+            "kind": "write",
+            "value": 66
+          },
+          {
+            "address": 65416,
+            "kind": "write",
+            "value": 180
+          }
+        ],
+        "after": {
+          "AC": true,
+          "CY": false,
+          "P": true,
+          "S": false,
+          "Z": true,
+          "a": 0,
+          "b": 0,
+          "c": 0,
+          "d": 0,
+          "e": 2,
+          "h": 66,
+          "l": 180,
+          "pc": 17072,
+          "sp": 65416
+        },
+        "before": {
+          "AC": true,
+          "CY": false,
+          "P": true,
+          "S": false,
+          "Z": true,
+          "a": 0,
+          "b": 0,
+          "c": 0,
+          "d": 0,
+          "e": 2,
+          "h": 66,
+          "l": 180,
+          "pc": 17071,
+          "sp": 65418
+        },
+        "bytes": "E5",
+        "case": 2,
+        "decoded": "PUSH H",
+        "image": "PLI2.OVL",
+        "kind": "sequential",
+        "offset": 8367,
+        "step": 782550,
+        "taken": true,
+        "target": 17072
+      },
+      "trace_sha256": "26776fcc0d9b81d9c0ba48262ee13997a425b6c8c750ff77b92b1fd5f0eb03ab",
+      "writes": 909
+    }
+  ],
+  "inventory_sha256": "098c94b848c7d73e97ccf1dd176d67b4af8366b040d458e3607384283ce78e0e",
+  "knowledge_promotions": 0,
+  "mixed_inventory": [
+    {
+      "declined": 27,
+      "k123": 2,
+      "k23": 4,
+      "roots": 33,
+      "source": "FACTOR"
+    },
+    {
+      "declined": 48,
+      "k123": 0,
+      "k23": 13,
+      "roots": 61,
+      "source": "FIZZBUZ"
+    },
+    {
+      "declined": 10,
+      "k123": 0,
+      "k23": 1,
+      "roots": 11,
+      "source": "MINIMAL"
+    },
+    {
+      "declined": 111,
+      "k123": 0,
+      "k23": 9,
+      "roots": 120,
+      "source": "OPTIMIST"
+    },
+    {
+      "declined": 11,
+      "k123": 0,
+      "k23": 1,
+      "roots": 12,
+      "source": "PICTURE"
+    }
+  ],
+  "native_roots_installed": 0,
+  "oracle_queries": 0
+}

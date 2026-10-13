@@ -10,12 +10,13 @@ module H=Acquisition_parent
 module K=Classifier
 type operation=Pli2_output of int|Output of int|Adapter of int|Context|Field|Attribute|Spine|Resident|Pair_gate|Selected_transform|Table_adapter|Wrapper|Repeat|Copy05|Traversal|Construction|Record_output|Index_one|Parent|Reader of Reader_construction.operation|Recursive of Recursive_parent.operation
 type result={returned:R.returned;field:int option}
-let run operation memory ~entry ~write ~compatibility ~adjust ~sp ~guard_field ~native ~follow_spine ~software =
+let run ?(read_access=(fun _ _->())) ?k123_handler operation memory ~entry ~write ~compatibility ~adjust ~sp ~guard_field ~native ~follow_spine ~software =
  B.check entry.R.a;List.iter U.check[entry.bc;entry.de;entry.hl;sp()];
  let q=ref entry and acquired_field=ref None in
  let console_entry_sp=sp()in
  let need condition text=if not condition then invalid_arg("Acquisition_family: "^text)in
- let read=S.read memory and word=S.word memory in
+ let read address=let value=S.read memory address in read_access address value;value in
+ let word address=let lo=read address in let hi=read(U.wrap(address+1))in lo lor(hi lsl 8)in
  let put site address value=S.write memory address value;write ~site:(site+0x2200) ~address ~value in
  let store site address value=put site address(value land 255);put site(U.wrap(address+1))(value lsr 8)in
  let a value=q:={!q with R.a=value}and bc value=q:={!q with R.bc=value}and de value=q:={!q with R.de=value}and hl value=q:={!q with R.hl=value}in
@@ -509,15 +510,17 @@ let run operation memory ~entry ~write ~compatibility ~adjust ~sp ~guard_field ~
    let l=dec(!q.hl land 255)in hl((!q.hl land 0xff00)lor l);if not !q.flags.zero then save_frame()in save_frame();
   a(read 0xad0a);hl 11;dad(sp());put 0x1fd8 !q.hl !q.a;
   hl 0;dad(sp());c(read !q.hl);call 0x1fde 0x047d(fun()->pli2_output 0x047d);
-  put 0x1fe1 0xad1c !q.a;need(!q.a=23)"1FB5 supported k23 index";
+  put 0x1fe1 0xad1c !q.a;
+  let k123= !q.a=123 && Option.is_some k123_handler in
+  need(!q.a=23 || k123)"1FB5 supported scoped index";
   c !q.a;bc(!q.bc land 255);hl 0x3c21;dad !q.bc;dad !q.bc;
   e(read !q.hl);hl(U.wrap(!q.hl+1));de(read !q.hl lsl 8 lor(!q.de land 255));exchange();
-  need(!q.hl=0x57c6)"1FB5 descriptor table scope";store 0x1ff0 0xad1d !q.hl;
+  need(!q.hl=(if k123 then 0x4357 else 0x57c6))"1FB5 descriptor table scope";store 0x1ff0 0xad1d !q.hl;
   hl 0xad0a;put 0x1ff6 !q.hl 0;pair 0xad1d;a(read !q.hl);put 0x1ffc 0xad1a !q.a;
-  need(!q.a=2)"1FB5 two-candidate descriptor scope";
+  need(!q.a=(if k123 then 0 else 2))"1FB5 candidate descriptor scope";
   pair 0xad1c;hl(!q.hl land 255);bc 0x3ddd;dad !q.hl;dad !q.bc;
   e(read !q.hl);hl(U.wrap(!q.hl+1));de(read !q.hl lsl 8 lor(!q.de land 255));exchange();
-  need(!q.hl=0x6036)"1FB5 selected handler table scope";store 0x200d 0xad1f !q.hl;
+  need(!q.hl=(if k123 then 0x476e else 0x6036))"1FB5 selected handler table scope";store 0x200d 0xad1f !q.hl;
   hl 0xad1b;put 0x2013 !q.hl 0;
   let rec scan left=need(left>0)"1FB5 bounded candidate scan";a(read 0xad1a);cmp 0;
    if not !q.flags.zero then(
@@ -532,13 +535,14 @@ let run operation memory ~entry ~write ~compatibility ~adjust ~sp ~guard_field ~
    hl 0xad0a;put 0x2061 !q.hl 0;pair 0xad1c;hl(!q.hl land 255);bc 0x1b4b;dad !q.bc;
    a 7;ani(read !q.hl);c !q.a;bc(!q.bc land 255);hl 0x3c13;dad !q.bc;dad !q.bc;
    c(read !q.hl);hl(U.wrap(!q.hl+1));bc(read !q.hl lsl 8 lor(!q.bc land 255));bc(U.wrap(!q.bc+1));hl !q.bc;
-   need(!q.hl=0x3bf3)"1FB5 fallback pointer domain";store 0x207d 0xad1d !q.hl;
+   need(!q.hl=(if k123 then 0x3bf6 else 0x3bf3))"1FB5 fallback pointer domain";store 0x207d 0xad1d !q.hl;
    hl 0;dad(sp());c(read !q.hl);call 0x2085 0x1dff(fun()->pli2_output 0x1dff);put 0x2088 0xad1b !q.a);
   a(read 0x202e);rar();need(not !q.flags.carry)"1FB5 pre-handler trace unsupported";
-  hl 0x42b4;push 0x20af !q.hl;pair 0xad1f;need(!q.hl=0x6036)"1FB5 fresh selected handler";
-  need(word(sp())=0x42b4)"1FB5 software continuation";
-  pli2_output 0x3e36;need(word(sp())=0x42b4)"1FB5 handler preserves software word";
-  compatibility H.Pop;
+  hl 0x42b4;push 0x20af !q.hl;pair 0xad1f;need(!q.hl=(if k123 then 0x476e else 0x6036))"1FB5 fresh selected handler";
+  need(S.word memory(sp())=0x42b4)"1FB5 software continuation";
+  if k123 then q:=(Option.get k123_handler) !q else(
+   pli2_output 0x3e36;need(S.word memory(sp())=0x42b4)"1FB5 handler preserves software word";
+   compatibility H.Pop);
   a(read 0x202e);rar();need(not !q.flags.carry)"1FB5 post-handler trace unsupported";
   hl((!q.hl land 0xff00)lor 10);push 0x20ca !q.hl;hl 3;dad(sp());bc !q.hl;de 0xad0b;hl(pop());
   let rec restore_frame()=a(read !q.bc);put 0x20d6 !q.de !q.a;bc(U.wrap(!q.bc+1));de(U.wrap(!q.de+1));
@@ -555,11 +559,13 @@ let run operation memory ~entry ~write ~compatibility ~adjust ~sp ~guard_field ~
    if !q.flags.carry then(hl 0xac3b;let v=dec(read !q.hl)in put 0x09b2 !q.hl v;walk(left-1))
    else a(read 0xac3b)in walk 256
  |0x1dff->
-  need(read 0xad1c=23)"1DFF k23 scope";
-  let pointer=word 0xad1d in
-  need((pointer=0x57c7&&read pointer=1&&read(pointer+1)=5)||
-       (pointer=0x57c9&&read pointer=3&&read(pointer+1)=0x69)||
-       (pointer=0x3bf3&&read pointer=1&&read(pointer+1)=0xfb))"1DFF descriptor-family scope";
+  let k123=S.read memory 0xad1c=123 && Option.is_some k123_handler in
+  need(S.read memory 0xad1c=23 || k123)"1DFF scoped index";
+  let pointer=S.word memory 0xad1d in
+  need((pointer=0x57c7&&S.read memory pointer=1&&S.read memory(pointer+1)=5)||
+       (pointer=0x57c9&&S.read memory pointer=3&&S.read memory(pointer+1)=0x69)||
+       (pointer=0x3bf3&&S.read memory pointer=1&&S.read memory(pointer+1)=0xfb)||
+       (k123&&pointer=0x3bf6&&S.read memory pointer=2&&S.read memory(pointer+1)=0xfb&&S.read memory(pointer+2)=0xfc))"1DFF descriptor-family scope";
   hl 0xad21;put 0x1e02 !q.hl(!q.bc land 255);pair 0xad1d;a(read !q.hl);put 0x1e07 0xad25 !q.a;
   hl 0xad15;List.iteri(fun i site->if i>0 then hl(!q.hl+1);put site !q.hl 255)[0x1e0d;0x1e10;0x1e13;0x1e16;0x1e19];
   hl 0xad22;put 0x1e1e !q.hl 0;hl(!q.hl-1);a(read !q.hl);put 0x1e22 0xad0b !q.a;
