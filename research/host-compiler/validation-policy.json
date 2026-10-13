@@ -32,7 +32,7 @@
   "historical_proof": "Preserve all exhaustive shadows, synthetic discriminants, journals, historical tests and prior receipts. Age alone never justifies deleting proof.",
   "profiles": {
     "historical-full": {
-      "purpose": "Exhaustive historical aggregate for a new certification epoch. Plain invocation remains exhaustive.",
+      "purpose": "Exhaustive historical aggregate for an explicitly selected certification milestone or user request only; never scheduled or run in the main semantic-development workflow.",
       "validation_tier": "FULL"
     },
     "active": {
@@ -69,7 +69,13 @@
       ]
     }
   },
-  "full_epoch_triggers": [
+  "full_execution_policy": {
+    "initiation": "Only an explicit certification milestone selected by a maintainer or a user request. No periodic cadence or automatic FULL scheduling.",
+    "development": "Keep existing ACTIVE/INCREMENTAL and scoped regression unchanged. The semantic agent starts no FULL on its critical path and never waits for detached FULL completion.",
+    "isolation": "Run FULL asynchronously in a separate detached Git worktree, checked out at the exact immutable candidate commit SHA, with its own _build and receipts. Never share a worktree or build output with the development agent or another FULL run.",
+    "certification": "Review the complete FULL receipt and any separately documented targeted reruns. Certify only the exact tested semantic commit SHA; ancestry does not certify subsequent commits."
+  },
+  "certification_review_conditions": [
     "CPU8080 semantics change",
     "CP/M or BDOS semantics change",
     "Runner execution semantics change",
@@ -78,17 +84,8 @@
     "Shared proof/capture schema changes that can alter interpretation",
     "Material change to exact reconstruction mechanism",
     "Known historical certificate dependency modified without narrower proof",
-    "Before a major refactor or release milestone",
-    "Scheduled periodic certification due"
+    "Before a major refactor or release milestone"
   ],
-  "periodic_policy": {
-    "epoch_zero": "Pass62",
-    "next_ordinary_full_no_later_than_approximately": "Pass79",
-    "semantic_pass_interval": 5,
-    "earlier_if_substantive_trigger": true,
-    "hard_coded_semantic_restriction": false,
-    "epoch_base": "Pass74"
-  },
   "certificate_limit": "A certified commit is historical evidence, not an automatic certificate for arbitrary descendant code. No dependency-hash invalidation engine is implemented in Phase 1.",
   "previous_full_epochs": [
     {

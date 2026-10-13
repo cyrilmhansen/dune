@@ -13,8 +13,8 @@ From the repository root:
 python3 tools/annotated-assembly/run_host_compiler_regressions.py --profile active --images /home/john/pli/cpm/pli80/DISK1 --output _build/validation-active --workers 4
 python3 tools/annotated-assembly/run_host_compiler_regressions.py --profile active --extra-categories pass53,pass62 --images /home/john/pli/cpm/pli80/DISK1 --output _build/validation-targeted --workers 4
 
-# Exhaustive certification, when due (not executed for this infrastructure task).
-python3 tools/annotated-assembly/run_host_compiler_regressions.py --profile historical-full --images /home/john/pli/cpm/pli80/DISK1 --output _build/validation-full --workers 4
+# FULL requires an explicit certification decision or user request. Run it only
+# from a detached, SHA-pinned worktree as described below; never inline here.
 
 # Selection only, without executing tests or requiring image/output paths.
 python3 tools/annotated-assembly/run_host_compiler_regressions.py --profile historical-full --list-categories
@@ -22,6 +22,37 @@ python3 tools/annotated-assembly/run_host_compiler_regressions.py --profile acti
 ```
 
 Plain invocation retains exhaustive behavior. Existing `--categories` retains its legacy subset selection with mandatory build/project stages. It cannot be combined with a profile; active additions use `--extra-categories`. Unknown names fail before execution; duplicates are harmless.
+
+## Explicit FULL certification in a detached worktree
+
+FULL is **not periodic** and is never a blocking validation step for the semantic-development agent. A maintainer explicitly selects a certification milestone (or a user requests FULL), resolves the candidate to an immutable commit SHA, and launches a separate job. Routine ACTIVE/INCREMENTAL and explicit scoped categories remain unchanged. Substantive shared changes can prompt an explicit certification decision but cannot automatically start FULL.
+
+From the main repository worktree, using Bash:
+
+```bash
+# Choose the candidate explicitly; resolve it to a SHA before work resumes.
+FULL_SHA="$(git rev-parse --verify HEAD^{commit})"
+FULL_WT="$HOME/runes-full-${FULL_SHA:0:12}"
+git worktree add --detach "$FULL_WT" "$FULL_SHA"
+test "$(git -C "$FULL_WT" rev-parse HEAD)" = "$FULL_SHA"
+mkdir -p "$FULL_WT/_build/certification"
+
+# Launch asynchronously. Do not wait; resume semantic work in the main worktree.
+(
+  cd "$FULL_WT" || exit 1
+  nohup python3 tools/annotated-assembly/run_host_compiler_regressions.py \
+    --profile historical-full \
+    --images /home/john/pli/cpm/pli80/DISK1 \
+    --output _build/certification/full-validation \
+    --workers 4 \
+    > _build/certification/console.log 2>&1 < /dev/null &
+  echo "Detached FULL PID: $!; candidate SHA: $FULL_SHA"
+)
+```
+
+Use a **new dedicated worktree and its own `_build` for every FULL run**. Do not reuse a build/cache/capture directory from the development checkout or another FULL job. The image directory is an input; keep it immutable during the run. Detached worktree isolation prevents interference *between* the development workflow and FULL, but not races between categories *inside the same FULL* when old test drivers share paths. Such failures must be repaired or rerun with documented evidence separately; never silently mark failed categories as passed.
+
+After the detached job finishes, the certifier independently reviews its original receipt, category coverage, exact reconstruction, applicable executable identities and any documented targeted reruns. Retain original failed receipts unchanged. A separate certification commit may advance `current_full_epoch` **only for the exact tested commit SHA**; it does not certify newer semantic commits. The semantic agent must keep progressing without polling for or waiting on the FULL job. No additional orchestration or monitoring service is required.
 
 ## Active core
 
@@ -69,9 +100,11 @@ Receipts preserve existing fields and add profile, validation tier, selected/ext
 
 Pass62 epoch 0 recorded 643 distinct Python tests, 39 Dune stanzas, four workers, 2932.110 wall seconds, 10788.750 summed category seconds, zero reruns and 94720 exact historical bytes. Implementation, receipt and documentation commit identities are recorded in `../validation-policy.json`.
 
-A new FULL epoch is required for changes to CPU, CP/M/BDOS, Runner, shared journals, common native transactions, interpretation-affecting capture/proof schemas or material reconstruction mechanisms; modifications to known certificate dependencies without narrower proof; major refactor/release milestones; or periodic certification. Pass74 completed an early FULL triggered by a shared proof interpretation extension. The five-semantic-pass interval is now based on Pass74; plan the next ordinary epoch no later than approximately Pass79, earlier if a substantive trigger fires. The interval and four-worker ceiling are unchanged. This is policy, not a hard-coded semantic constraint. Phase 1 implements no automatic dependency-hash certificate system.
+The earlier five-semantic-pass cadence was removed. FULL now occurs **only** at an explicitly authorized certification milestone or on user request, always in a detached SHA-pinned worktree. CPU, CP/M/BDOS, Runner, shared journal/native transaction, proof/capture-interpretation, exact-reconstruction and known-certificate-dependency changes are reasons to consider an explicit certification decision, **not automatic launch conditions**. Pass74 remains the last certified FULL epoch until another candidate has a reviewed, passing certificate. The four-worker runner ceiling is unchanged. No dependency-hash invalidation system is implemented.
 
 ## Original Pass63 handoff (historical)
+
+The following paragraph describes the original Pass63-era instructions, including superseded FULL triggers; it is retained as history, not as current scheduling policy.
 
 Assess +829C only in the future semantic pass. Preserve exhaustive Pass63-local shadows/discriminants, run the active core with explicitly selected direct historical dependencies, run standalone/cumulative hybrids, and verify exact goldens/reconstruction. Select dependencies from actual Pass63 evidence. Do not run historical-full unless a trigger fires or periodic certification is due. This infrastructure task performs no new archaeology.
 

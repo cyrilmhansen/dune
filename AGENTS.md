@@ -312,6 +312,10 @@ Do not perform opportunistic large refactors unrelated to the current task.
 
 Avoid speculative abstractions unless an imminent requirement justifies them.
 
+### Host-compiler FULL certification
+
+Keep routine ACTIVE/INCREMENTAL and scoped validation on the semantic-development path. Do **not** automatically schedule exhaustive `historical-full` every N passes or on a shared-code trigger. FULL runs only for an explicitly selected certification milestone or user request. Launch it asynchronously in a separate detached Git worktree pinned to the candidate's immutable commit SHA, with its own isolated `_build` and receipts; continue semantic work in the main worktree without waiting. Only the exact tested commit may be certified after evidence review; subsequent commits inherit no certificate. Follow [validation scalability and detached-FULL procedure](research/host-compiler/validation-scalability/README.md). Never remove or weaken archived categories or tests.
+
 ### Annotated assembly and decompilation
 
 Before promoting or materially updating an annotated-assembly ProcedureHypothesis,
