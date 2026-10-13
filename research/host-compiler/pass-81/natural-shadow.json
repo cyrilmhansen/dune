@@ -1,0 +1,240 @@
+{
+  "FACTOR_REL_sha256": "9a42e8341a013243036040c8db0e56939c699c7fbbfb20878f7ba5af8d6b470d",
+  "baseline": "f2cef443f244b732600aa47da8ae7a46978db000",
+  "canonical_reused": [
+    "+73A7",
+    "+7397",
+    "+75CE",
+    "+746F",
+    "+74C7",
+    "+7557",
+    "+1140",
+    "+119E",
+    "+753C"
+  ],
+  "capture": "_build/host-compiler-pass-81/capture",
+  "capture_digests_match_Pass75": true,
+  "cases": [
+    {
+      "BDOS_events": 0,
+      "DMA": 7564,
+      "case": 1,
+      "composed_steps": 487,
+      "emit_entry": {
+        "AC": false,
+        "CY": false,
+        "P": true,
+        "S": false,
+        "Z": false,
+        "a": 5,
+        "b": 173,
+        "c": 1,
+        "d": 125,
+        "e": 4,
+        "h": 251,
+        "l": 125,
+        "pc": 38862,
+        "sp": 65449
+      },
+      "emit_steps": 437,
+      "entry": {
+        "AC": false,
+        "CY": false,
+        "P": false,
+        "S": true,
+        "Z": false,
+        "a": 251,
+        "b": 125,
+        "c": 4,
+        "d": 251,
+        "e": 125,
+        "h": 9,
+        "l": 4,
+        "pc": 40709,
+        "sp": 65451
+      },
+      "entry_RAM_sha256": "e3746cd9dc42b15a5850966e536e7d87023f8db0151aaebc7ae1b2b7fa7fae61",
+      "field_reads": [
+        [
+          30164,
+          44502,
+          1
+        ],
+        [
+          30164,
+          44503,
+          4
+        ],
+        [
+          30171,
+          44503,
+          4
+        ],
+        [
+          30171,
+          44504,
+          0
+        ],
+        [
+          30178,
+          44503,
+          4
+        ],
+        [
+          30187,
+          44502,
+          1
+        ]
+      ],
+      "filesystem_sha256": "bb1cae738993912a973b27ae482a257c3624f78d3a0cb534c58ac9347977a88d",
+      "ordered_reads": 182,
+      "ordered_writes": 119,
+      "output_after": {
+        "bit": 7,
+        "buffer_sha256": "372268b7c1a0e502bf97d2d0d18b39879e766235bd3784795d80753efd0b24ed",
+        "position": 7,
+        "record": 68
+      },
+      "output_before": {
+        "bit": 6,
+        "buffer_sha256": "9d3ca3046a4f677e0c846a1492c9aca87894745f09266ca59e5ec0b9e235b59c",
+        "position": 6,
+        "record": 67
+      },
+      "proof": {
+        "all_passed": true,
+        "natural_passed": true,
+        "synthetic_cases": 4
+      },
+      "return_RAM_sha256": "bd43e4a24bb88ac1054f834d3745a823325372c3cb37633dd870cd68a0d30e96",
+      "return_state": {
+        "AC": false,
+        "CY": false,
+        "P": true,
+        "S": true,
+        "Z": false,
+        "a": 255,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 0,
+        "h": 255,
+        "l": 249,
+        "pc": 40744,
+        "sp": 65451
+      }
+    },
+    {
+      "BDOS_events": 0,
+      "DMA": 7434,
+      "case": 2,
+      "composed_steps": 487,
+      "emit_entry": {
+        "AC": false,
+        "CY": false,
+        "P": true,
+        "S": false,
+        "Z": false,
+        "a": 5,
+        "b": 173,
+        "c": 1,
+        "d": 70,
+        "e": 4,
+        "h": 251,
+        "l": 70,
+        "pc": 38862,
+        "sp": 65406
+      },
+      "emit_steps": 437,
+      "entry": {
+        "AC": false,
+        "CY": false,
+        "P": false,
+        "S": true,
+        "Z": false,
+        "a": 251,
+        "b": 70,
+        "c": 4,
+        "d": 251,
+        "e": 70,
+        "h": 55,
+        "l": 4,
+        "pc": 40709,
+        "sp": 65408
+      },
+      "entry_RAM_sha256": "2e2e080c46f6594824fd7588c7873527e101d29e46ed2cdbb7fb2400322b3e86",
+      "field_reads": [
+        [
+          30164,
+          44502,
+          1
+        ],
+        [
+          30164,
+          44503,
+          4
+        ],
+        [
+          30171,
+          44503,
+          4
+        ],
+        [
+          30171,
+          44504,
+          0
+        ],
+        [
+          30178,
+          44503,
+          4
+        ],
+        [
+          30187,
+          44502,
+          1
+        ]
+      ],
+      "filesystem_sha256": "47ead39e95873c7329217f28154a23a0c2316bcce65cf920312a43f7b79a13d6",
+      "ordered_reads": 182,
+      "ordered_writes": 119,
+      "output_after": {
+        "bit": 6,
+        "buffer_sha256": "0f3b61707a1afb2c8c4d49ac8bd017e86dff85e2c0e07b97058b0951ad63e7a8",
+        "position": 96,
+        "record": 9
+      },
+      "output_before": {
+        "bit": 5,
+        "buffer_sha256": "fe21970e1f5c25e066c45c121bfd59507c036ebb4b4f4a5be003021d1c000cdd",
+        "position": 95,
+        "record": 8
+      },
+      "proof": {
+        "all_passed": true,
+        "natural_passed": true,
+        "synthetic_cases": 4
+      },
+      "return_RAM_sha256": "ab58411adfa1aef072a70439cbdc457a71b33383b131511117bb8fc9781e4d26",
+      "return_state": {
+        "AC": false,
+        "CY": false,
+        "P": true,
+        "S": true,
+        "Z": false,
+        "a": 255,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 0,
+        "h": 255,
+        "l": 160,
+        "pc": 40744,
+        "sp": 65408
+      }
+    }
+  ],
+  "full_7D05": false,
+  "native_roots_installed": 0,
+  "operation": "PLI2.OVL+7D05 front through +75CE return"
+}

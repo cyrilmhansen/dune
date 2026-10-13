@@ -303,5 +303,9 @@
  (libraries pli80_host i8080))
 
 (executable
+ (name k123_7d05_emit_proof)
+ (libraries pli80_host i8080))
+
+(executable
  (name native_k23_gateway)
  (libraries pli80 analysis runner unix))
