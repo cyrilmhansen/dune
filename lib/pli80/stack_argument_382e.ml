@@ -12,7 +12,7 @@ let negation (q:R.returned)=
  let f=R.comparison hi 0 in
  {q with R.a=hi;hl=hi lsl 8 lor lo;
   flags={f with auxiliary_carry=0>=(high land 15)+borrow;carry=0<high+borrow}}
-let prepare ?(observe_read=(fun _ _ _->())) bridge ~call_site (boundary:Runner.instruction_boundary)=
+let prepare ?(allow_single_forward=false) ?(observe_read=(fun _ _ _->())) bridge ~call_site (boundary:Runner.instruction_boundary)=
  let entry=boundary.state in
  let need c s=if not c then invalid_arg("382E: "^s)in
  need(entry.pc=0x5a2e&&entry.sp>=0xb220&&entry.sp<=0xfffa)"entry/frame";
@@ -30,7 +30,7 @@ let prepare ?(observe_read=(fun _ _ _->())) bridge ~call_site (boundary:Runner.i
  let read=S.read memory and word=S.word memory in
  let a v=q:={!q with R.a=v}and hl v=q:={!q with R.hl=v}and de v=q:={!q with R.de=v}in
  let c v=q:={!q with R.bc=(!q.bc land 0xff00)lor v}in
- 
+
  let push site v=put"compatibility"site(!sp-1)(v lsr 8);put"compatibility"site(!sp-2)(v land 255);sp:= !sp-2 in
  let read_at site address=let v=read address in observe_read site address v;v in
  let word_at site address=let lo=read_at site address in let hi=read_at site(address+1)in lo lor(hi lsl 8)in
@@ -65,7 +65,19 @@ let prepare ?(observe_read=(fun _ _ _->())) bridge ~call_site (boundary:Runner.i
   put"logical"0x5a4d 0xad51(!q.hl land 255);put"logical"0x5a4d 0xad52(!q.hl lsr 8);
   a(read_at 0x5a50 0xad50);a(!q.a lxor 255);put"logical"0x5a54 0xad50 !q.a);
  a(read_at 0x5a57 0xad53);de 0xad51;canonical 0x5a5d(B.Resident_reader Pli80_host.Resident_reader.Memory_zero);
- need(not !q.flags.carry)"unobserved bounded-loop arm";
+ if !q.flags.carry then(
+  need allow_single_forward "unobserved bounded-loop arm";
+  hl(word_at 0x5a63 0xad51);let old= !q.hl in hl !q.de;de old;hl 0xad54;
+  put"logical"0x5a6a !q.hl(!q.de land 255);
+  a 0;hl 0xad54;let counter=read_at 0x5a70 !q.hl in q:={!q with R.flags=R.comparison !q.a counter};
+  need(counter=1)"single forward counter domain";
+  hl 0xad54;let old=read_at 0x5a77 !q.hl in let value=(old-1)land 255 in
+  let f=R.comparison value 0 in q:={!q with R.flags={f with carry= !q.flags.carry;auxiliary_carry=old land 15<>0}};
+  put"logical"0x5a77 !q.hl value;
+  a(read_at 0x5a78 0xad50);rar();need !q.flags.carry "unobserved backward7D85 route";
+  c 4;canonical 0x5a81(B.Pli2_output 0x7d47);
+  a 0;hl 0xad54;let remaining=read_at 0x5a70 !q.hl in q:={!q with R.flags=R.comparison !q.a remaining};
+  need(remaining=0)"forward child counter alias")else(
  a(read_at 0x5a92 0xad50);rar();
  if not !q.flags.carry then(hl(word_at 0x5a99 0xad51);call 0x5a9c 0xa58d(fun()->q:=negation !q);
   put"logical"0x5a9f 0xad51(!q.hl land 255);put"logical"0x5a9f 0xad52(!q.hl lsr 8));
@@ -76,7 +88,7 @@ let prepare ?(observe_read=(fun _ _ _->())) bridge ~call_site (boundary:Runner.i
   canonical 0xa2b6(B.Pli2_output 0x73ca);
   a(read_at 0xa2b9 0xae47);q:={!q with R.flags=R.comparison !q.a 6};need(not !q.flags.zero)"unobserved index6 publication";
   hl(word_at 0xa2c6 0xae47);let old= !q.hl in hl !q.de;de old;c 9;
-  canonical 0xa2cc(B.Pli2_output 0x75ce));
+  canonical 0xa2cc(B.Pli2_output 0x75ce)));
  let pc=pop 0x5ab0 in need(pc=call_site+3&& !sp=entry.sp+4)"relocated RET/argument consumption";
  let state=A.machine entry !q !sp pc in
  let expected=preview state in

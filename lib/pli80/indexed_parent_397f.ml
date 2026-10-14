@@ -27,7 +27,7 @@ let prepare ?(observe_read=(fun _ _ _->())) bridge ~call_site (boundary:Runner.i
  let read=S.read memory and word=S.word memory in
  let a v=q:={!q with R.a=v}and hl v=q:={!q with R.hl=v}and de v=q:={!q with R.de=v}in
  let c v=q:={!q with R.bc=(!q.bc land 0xff00)lor v}in
- 
+
  let push site v=put"compatibility"site(!sp-1)(v lsr 8);put"compatibility"site(!sp-2)(v land 255);sp:= !sp-2 in
  let read_at site address=let v=read address in observe_read site address v;v in
  let word_at site address=let lo=read_at site address in let hi=read_at site(address+1)in lo lor(hi lsl 8)in
