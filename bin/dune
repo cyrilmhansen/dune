@@ -365,3 +365,15 @@
 (executable
  (name k33_handler_proof)
  (libraries pli80 analysis runner unix))
+
+(executable
+ (name scanned_predicate_proof)
+ (libraries pli80 analysis runner unix))
+
+(executable
+ (name k33_gateway_transaction_proof)
+ (libraries pli80 analysis runner unix))
+
+(executable
+ (name extended_software_selector_proof)
+ (libraries pli80 analysis runner unix))

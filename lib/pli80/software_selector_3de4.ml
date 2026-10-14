@@ -7,7 +7,7 @@ module S=Pli80_host.State
 exception Outside_scope of string
 let rotate (q:R.returned)=
  let v=q.a in {q with R.a=(v lsr 1)lor(if q.flags.carry then 128 else 0);flags={q.flags with carry=v land 1<>0}}
-let prepare ?(observe_read=(fun _ _ _->())) bridge (boundary:Runner.instruction_boundary)=
+let prepare ?k33_gateway ?(observe_read=(fun _ _ _->())) bridge (boundary:Runner.instruction_boundary)=
  let entry=boundary.state in
  let need c s=if not c then invalid_arg("3DE4: "^s)in
  need(entry.pc=0x5fe4&&entry.sp>=0xb220&&entry.sp<=0xfffa)"entry/frame";
@@ -67,6 +67,7 @@ let prepare ?(observe_read=(fun _ _ _->())) bridge (boundary:Runner.instruction_
    let index=mapped.returned.a in
    let call=B.internal_call bridge(B.Pli2_output 0x1fb5)site in
    if index=23 then B.prepare bridge(B.Pli2_output 0x1fb5)~call ~origin:(B.origin "PLI2.OVL"0x1fb5)view
+   else if index=33&&Option.is_some k33_gateway then (Option.get k33_gateway)~call_site:site view
    else(
     let r=A.logical view.state in
     let entry:Pli80_host.K123_child_7d05_front.state={pc=view.state.pc;sp=view.state.sp;a=r.a;bc=r.bc;de=r.de;hl=r.hl;flags=r.flags}in
