@@ -1,0 +1,58 @@
+{
+  "handler": "PLI2.OVL+2352..+2361",
+  "software_entry": "PUSH42B4/PCHL; RET2361 consumes20AF word",
+  "calls": [
+    {
+      "site": "2356",
+      "target": "PLI2.OVL+052C"
+    },
+    {
+      "site": "235E",
+      "target": "PLI2.OVL+2269"
+    }
+  ],
+  "2269": {
+    "private_frame": "EntryT: PUSH DE ->T-2; duplicated C PUSHBC/INXSP ->T-3; low C atT-3, saved DE atT-2/T-1; nestedCALLwords below. INXSP/POPH restores savedDE intoHL;RET22A1 consumes original4561 word.",
+    "21CD": "AD2B write/fresh pair ->21AE; actual carry-set ->052C ->SHLD AC9F ->16F8 MVI A,0/RET. Other21CD route excluded.",
+    "branch": "RAR of actual returned A; supported carry-clear +228B, not21ED",
+    "77BF": "Ordered B/C stores ADF2/ADF1, fresh LHLD ADF1, SHLD ADEF; flags unchanged, not an oracle constant",
+    "7D31": "Same instruction law asPass83; canonical052C, actual7D05 selector4, canonical7A17 including its existing nonzero domain,73A7/7397,75CE,785C/77CC. Guards inherited unchanged."
+  },
+  "old_wrapper_applicability": "Old K123_child_7d05_front intentionally rejects AE04 nonzero; new local direct composition reuses existing canonical7A17 instead of relaxing or changing old wrapper. All three natural states independently shadowed.",
+  "excluded": [
+    "21CD early-return",
+    "2269->21ED",
+    "non4 generation selector",
+    "all inherited unsupported output/flush/error/alias states"
+  ],
+  "direct_read_sites": [
+    "4552",
+    "455A",
+    "4471",
+    "43D1",
+    "43DF",
+    "43B2",
+    "43C6",
+    "43C9",
+    "43CC",
+    "43EC",
+    "38FA",
+    "448F",
+    "4491",
+    "99C5",
+    "99CB",
+    "4499",
+    "44A0",
+    "44A1",
+    "4561",
+    "9F37",
+    "9F3F",
+    "9F0D",
+    "9F18",
+    "9F1F",
+    "9F28",
+    "9F30",
+    "9F46"
+  ],
+  "canonical_reads": "Delegated to unchanged existing child laws; aggregate state and complete ordered write journal independently shadowed including every child."
+}
