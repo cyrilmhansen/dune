@@ -1,0 +1,44 @@
+{
+  "baseline": "4679aeb0921bf370ef0bfee3446aaa742e3a04a2",
+  "children": [
+    "resident1A40 Memory_zero",
+    "canonical8072",
+    "canonical73CA",
+    "canonical75CE"
+  ],
+  "domain": "hardware CALL with distinct caller argument, high stack, verified own code; no-borrow Memory_zero route; inherited canonical output/index/alias/service guards; adapter non-6 route",
+  "knowledge_promotions": 0,
+  "law": [
+    "save E and BC at AD51..53",
+    "POP D continuation; POP BC argument; publish low C at AD50; PUSH D relocates return word",
+    "RLC once and RAR choose signed transform; compute 16-bit negation by SUB/SBB",
+    "resident 1A40 fresh memory subtraction; reject carry loop",
+    "fresh AD50 RAR chooses second negation",
+    "8072 computed carrier emission; 80B2 uses fresh AE47/AE48,73CA,75CE",
+    "RET consumes relocated word; exit SP=entry SP+4"
+  ],
+  "native_roots": 0,
+  "natural_services": "Both requested 382E windows have zero BDOS services; OPTIMIST record event is outside this child.",
+  "new_laws": [
+    "8386 16-bit negation with high-SBB final flags",
+    "83A3 one-iteration RLC/DCR/RET",
+    "80B2 non-6 adapter",
+    "382E scoped stack-argument composition"
+  ],
+  "oracle_queries": 0,
+  "protected_SHA256": {
+    "lib/pli80/acquisition_family_bridge.ml": "1884f1d819575a1160795d13c47eaacd8214db36620346ca453c378d3bf6bb20",
+    "lib/pli80/native_dispatch.ml": "5789a495768f59bea25b441f9ecef02e43f768ae9d9d4d51069581dbb6157ed4",
+    "lib/pli80/native_resident_output.ml": "389f8637887b3228efac6cfe5794d2b286b59cc5fb3c18108fce8be94d78b30b",
+    "lib/pli80_host/k123_gateway_transaction.ml": "d716200b647db6629d983d192f5250ae30cad3a0cd86b28d8920046fe6c27cc7",
+    "research/annotated-assembly/manifest.json": "40bab1d91e2c275874b72ed04c68be8064cdf9d01786903e2cb505bd4e47e4f2"
+  },
+  "read_evidence": "Direct owned read-site/value chronology including fresh scratch and both continuation reads matched to concrete CPU; child guards/algorithms inherited unchanged. Full aggregate host read instrumentation is not exposed by the existing bridge; no new framework added.",
+  "root": "PLI2.OVL+382E / 5A2E",
+  "synthetics": "64 negation values/PSW discriminants independently executed by Cpu8080; no natural promotion",
+  "unsupported": [
+    "3863..388F carry loop",
+    "index6 publication in80B2",
+    "canonical output/error/alias rejection domains"
+  ]
+}
