@@ -1,0 +1,83 @@
+{
+  "task": "RUNES_FAITHFUL_MIR_BOUNDARY_106",
+  "baseline": "e064fb04149e974bd7380cf6f1e4344797aefb61",
+  "MIR": "upstream vnmakarov/mir, not an independent OCaml IR",
+  "upstream_revision": "a8ab7c31cd5f9b23b77d84c60b3d83e62d9d304c",
+  "operation": "PLI2.OVL+793C non-6 two-channel transfer prefix; stops before +797E",
+  "inputs": "16 owned bytes: A[0..7], B[0..7]; source in 0..7 excluding 6; destination in 0..7",
+  "outputs": "16 channel-state bytes; 2 ordered logical publication values; MIR status zero",
+  "backend": "actual MIR_scan_string / MIR_interp_arr / MIR_gen at JIT optimization level 0",
+  "natural_cases": 10,
+  "CPU_synthetic_cases": 56,
+  "MIR_synthetic_inputs_per_engine": 112,
+  "FFI_rejection_checks": 12,
+  "historical_projection": "full 64 KiB prefix RAM and eight ordered writes; preserved hardware continuation; not a complete CPU-state replacement",
+  "MIR_projection": "channel state plus logical publications; no physical machine write-order guarantee",
+  "machine_effects_outside_boundary": [
+    "registers/flags",
+    "scratch writes/reads",
+    "pointer carriers and stack residue",
+    "hardware CALL/RET ABI",
+    "later emission and services"
+  ],
+  "hypotheses_not_asserted": [
+    "PL/I source-language assignment",
+    "type or register-allocation meaning of channels"
+  ],
+  "no_custom_IR": true,
+  "no_active_runtime_change": true,
+  "native_roots_added": 0,
+  "knowledge_promotions": 0,
+  "FULL_run": false,
+  "last_certified_FULL": {
+    "name": "Pass74",
+    "epoch": 3
+  },
+  "next_step": "Independently lower source-6 clear-A variant before specifying explicit state/effects for emission",
+  "artifacts": {
+    "research/host-compiler/pass-106/README.md": {
+      "bytes": 10492,
+      "SHA256": "226055d8f3f139741db8622c8a7b719bef5f0ca09996e2ac5fe7ac180ed5127b"
+    },
+    "research/host-compiler/pass-106/historical-shadow.json": {
+      "bytes": 4733,
+      "SHA256": "d8c3df99992f751d00def8f0a1d9407d6b006bc4f788bf0c54c16f50102a6e2f"
+    },
+    "research/host-compiler/pass-106/mir-results.json": {
+      "bytes": 185,
+      "SHA256": "348be985d9bbd4a9d5631c86ce05b37ecdb4574bb54151956aff66d8078054e1"
+    },
+    "research/host-compiler/pass-106/upstream.json": {
+      "bytes": 826,
+      "SHA256": "c7fe7d725d405027e075c2a93f45f115f74542594d0382e3ade6e6f450b22bf4"
+    },
+    "research/host-compiler/pass-106/validation.json": {
+      "bytes": 6695,
+      "SHA256": "07a5c5f24254b383a2c9067f9856387cb565df1929d6ffc92c6e38bcd21a00a8"
+    },
+    "research/host-compiler/pass-106/reconstruction.json": {
+      "bytes": 994,
+      "SHA256": "f31785e5d08ef820cd2360941ddf55e5bfda0ec9cb1f05657ff2ca0ef1e8bc98"
+    },
+    "tools/mir/pass106/bridge.c": {
+      "bytes": 2155,
+      "SHA256": "21846935258741dafa457c65d795cd310837638657901a8fa153c1997aedd683"
+    },
+    "tools/mir/pass106/demo.ml": {
+      "bytes": 2938,
+      "SHA256": "6a89c8e826e54e063eaa81036132f6587be32209aa0243332013643c7825bb7d"
+    },
+    "tools/mir/pass106/transfer.mir": {
+      "bytes": 413,
+      "SHA256": "c1acf00886cfe9595eae50521c6c11e79f662dea56486181c2ad1bf5e412fb20"
+    },
+    "bin/mir_carrier_evidence.ml": {
+      "bytes": 6150,
+      "SHA256": "94e1910c300944891cd54629c3ec908b53633966bf12ebd64a35cdc9f7994f28"
+    },
+    "tools/annotated-assembly/test_mir_pass_106.py": {
+      "bytes": 5261,
+      "SHA256": "e663df31fbaa0f8c1bdcc5f59455bd908dd334d93f32000815e7296d188586ac"
+    }
+  }
+}

@@ -1,0 +1,14 @@
+runes_carriers: module
+transfer: func i64, p:bank, i64:source, i64:destination, p:publications
+  local i64:first, i64:second
+  mov first, u8:(bank, source)
+  mov u8:(bank, destination), first
+  mov u8:(publications), first
+  add source, source, 8
+  add destination, destination, 8
+  mov second, u8:(bank, source)
+  mov u8:(bank, destination), second
+  mov u8:1(publications), second
+  ret 0
+  endfunc
+  endmodule

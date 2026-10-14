@@ -433,3 +433,7 @@
 (executable
  (name native_gateway_staging)
  (libraries pli80 analysis runner unix))
+
+(executable
+ (name mir_carrier_evidence)
+ (libraries pli80 analysis runner unix))
