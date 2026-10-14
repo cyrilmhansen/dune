@@ -1,7 +1,10 @@
 runes_carriers: module
 transfer: func i64, p:bank, i64:source, i64:destination, p:publications
   local i64:first, i64:second
+  mov first, 0
+  beq publish_a, source, 6
   mov first, u8:(bank, source)
+publish_a:
   mov u8:(bank, destination), first
   mov u8:(publications), first
   add source, source, 8

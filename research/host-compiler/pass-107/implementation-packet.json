@@ -1,0 +1,134 @@
+{
+  "task": "RUNES_MIR_SOURCE6_BRANCH_107",
+  "baseline": "fadcbaff761792a498632a6f4940145c46b98f73",
+  "backend": {
+    "repository": "https://github.com/vnmakarov/mir",
+    "revision": "a8ab7c31cd5f9b23b77d84c60b3d83e62d9d304c",
+    "license": "MIT"
+  },
+  "scope": {
+    "source": [
+      0,
+      7
+    ],
+    "destination": [
+      0,
+      7
+    ],
+    "state": "two disjoint unsigned byte channels of length 8",
+    "source6": "A[destination]=0; B[destination]=B[6]",
+    "other_source": "A[destination]=A[source]; B[destination]=B[source]",
+    "logical_publications": [
+      "A",
+      "B"
+    ]
+  },
+  "MIR_change": "One beq in existing fixed transfer function; same synchronous OCaml/C ownership and context lifetime",
+  "CPU_boundary": {
+    "image": "PLI2.OVL",
+    "offsets": [
+      "793C",
+      "797E"
+    ],
+    "runtime": [
+      "9B3C",
+      "9B7E"
+    ],
+    "source6_instructions": 24,
+    "source6_physical_writes": 6,
+    "source6_pointer_PUSH_POP_pairs": 1,
+    "non6_instructions": 29,
+    "non6_physical_writes": 8,
+    "non6_pointer_PUSH_POP_pairs": 2
+  },
+  "classification": {
+    "existing_natural": "OBSERVED: 10 non-6 FIZZBUZ cases, identical to archived Pass106",
+    "source6": "DEDUCED / STATIC / UNOBSERVED; no natural source6 observations"
+  },
+  "validation_per_proof": {
+    "CPU_non6_synthetic_cases": 56,
+    "CPU_source6_synthetic_cases": 24,
+    "MIR_engines": [
+      "MIR_interp_arr",
+      "MIR_gen"
+    ],
+    "MIR_per_engine": {
+      "natural_CPU_vectors": 10,
+      "source6_synthetic_CPU_vectors": 24,
+      "direct_synthetic_inputs": 136,
+      "invalid_inputs": 6
+    },
+    "synthetic_domains_overlap": true,
+    "source6_patterns": [
+      "distinct",
+      "same-valued",
+      "zero"
+    ],
+    "all_CPU_prefixes_full_64KiB_RAM_and_ordered_writes": true
+  },
+  "excluded": [
+    "emission",
+    "+7AE4 preparation",
+    "historical registers and flags in MIR result",
+    "hardware continuation in MIR ABI",
+    "scratch and stack residue in MIR result",
+    "arbitrary aliases",
+    "speculative PL/I semantics"
+  ],
+  "native_roots_added": 0,
+  "knowledge_promotions": 0,
+  "active_runtime_changed": false,
+  "FULL_executed_or_scheduled": false,
+  "last_certified_FULL": {
+    "name": "Pass74",
+    "epoch": 3
+  },
+  "reconstruction_bytes": 94720,
+  "goldens": "FIZZBUZ fresh guest result unchanged; other four historical goldens unchanged, no fresh five-source claim",
+  "artifacts": {
+    "research/host-compiler/pass-107/README.md": {
+      "bytes": 7230,
+      "SHA256": "2cf45ea553cd10001636206e81e789b0f6402b8001224fc154543970190eed6c"
+    },
+    "research/host-compiler/pass-107/historical-shadow.json": {
+      "bytes": 24185,
+      "SHA256": "9936ef0c3e13a997bdef18c9bc0cf4db0fdedddc4d10490ac6a97077a8e2df4a"
+    },
+    "research/host-compiler/pass-107/mir-results.json": {
+      "bytes": 222,
+      "SHA256": "39df6c614a700958609eae872d47024cfe03784b987bbcc2d09e96d1a974832c"
+    },
+    "research/host-compiler/pass-107/reconstruction.json": {
+      "bytes": 994,
+      "SHA256": "f31785e5d08ef820cd2360941ddf55e5bfda0ec9cb1f05657ff2ca0ef1e8bc98"
+    },
+    "research/host-compiler/pass-107/upstream.json": {
+      "bytes": 826,
+      "SHA256": "c214c94bc06c5d4cdb5cbdb5b451e25247870095e1f6722048768de3dbb52c62"
+    },
+    "research/host-compiler/pass-107/validation.json": {
+      "bytes": 7137,
+      "SHA256": "f1a9d568eab21927e9c82144cd30cde577a56ba9091d22e258ca4746766c4791"
+    },
+    "tools/mir/pass106/transfer.mir": {
+      "bytes": 466,
+      "SHA256": "8429b3d10485a6c287c7518ce45c39903e41b46a5225bd3222507d16c32d0f2c"
+    },
+    "tools/mir/pass106/demo.ml": {
+      "bytes": 3216,
+      "SHA256": "9e7f857a23e4cac70ee010fe5b881759fa704b9787b716c5ddd7e3ccf2e5e898"
+    },
+    "tools/mir/pass106/bridge.c": {
+      "bytes": 2158,
+      "SHA256": "48062915d39a19099e5fd028096ac9634f985b2f2d8a77b1415af6cc1ef255aa"
+    },
+    "bin/mir_carrier_evidence.ml": {
+      "bytes": 7565,
+      "SHA256": "e3ee4e73eb76001c0e251b85ab33cb25c9d17102345c0fd7a955c13e5c1f067b"
+    },
+    "tools/annotated-assembly/test_mir_pass_106.py": {
+      "bytes": 7316,
+      "SHA256": "3ee3ad52edaded2a67dd31951ab0212ce7672c2db2577a8b11620fa1f75a68c0"
+    }
+  }
+}

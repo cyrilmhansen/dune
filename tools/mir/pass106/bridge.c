@@ -15,11 +15,11 @@ CAMLprim value runes_mir_transfer(value input, value source, value destination, 
   CAMLparam4(input, source, destination, jit);
   CAMLlocal1(output);
   intnat src = Long_val(source), dst = Long_val(destination);
-  if (caml_string_length(input) != 16 || src < 0 || src >= 8 || src == 6 || dst < 0 || dst >= 8)
+  if (caml_string_length(input) != 16 || src < 0 || src >= 8 || dst < 0 || dst >= 8)
     caml_invalid_argument("Pass106: bank width or unsupported index");
   /* No OCaml heap pointer crosses into MIR. Context and generated code have
      one synchronous call lifetime. No callbacks, exports or external symbols. */
-  uint8_t bank[16], publications[2];
+  uint8_t bank[16], publications[2] = {0xa5, 0x5a};
   memcpy(bank, Bytes_val(input), sizeof bank);
   MIR_context_t ctx = MIR_init();
   MIR_scan_string(ctx, transfer_text);
