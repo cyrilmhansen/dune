@@ -1,0 +1,15 @@
+# Pass100 — complete scoped k27 copied gateway
+
+Baseline `39f073a7e838b128d1a5533aafb23ac3b07e4a3f`. All three natural OPTIMIST k27 gateway transactions are independently executable on copied state. No native root installation.
+
+Canonical+047D derives27 from current registers and evolving historical tables. Actual descriptor/handler reads select434E/count0 and44EA. Genuine caller code and original hardware words correspond to+6691,+6879,+6C3C. These are historical witnesses and frame guards, not source/ordinal dispatch keys. Zero candidates leave AD1B0; real CMA/RAR selects fallback. Fresh index-table reads derivej2, pointer-table bytes yield3BF5, and historical increment supplies count record3BF6=02 FB FC. First-use cache initialization, cursor positions and+0992/+04A9 walks execute from actual state, not recorded predicate results.
+
+The established proof-only frame law is reused through a narrow k27 handler option. The explicit callback binds the independently proved Pass99 software operation and avoids a module cycle; it introduces no general dispatcher or transaction interpretation. Existing k33/k105/k84 defaults remain unchanged. Original save-frame, temporary PUSH/POP and same-valued writes remain ordered. PUSH42B4/PCHL enters44EA without an invented CALL ABI. Private AD08 and nested k105/k84 continuations survive. RET2351 consumes the software word; only savedAD0A..14 are restored. Persistent AD1x/cache/child scratch and stack residue remain computed. RET20EA consumes the original hardware word exactly once.
+
+Three independent concrete8080 windows:13,435/13,906/13,895 instructions;3,062/3,174/3,175 writes;103 owned gateway/predicate reads each. All registers/flags, PC/SP, full64KiB RAM, ordered writes/writer sites, hardware/software ownership, DMA/filesystem and service chronology match. All entry/exit RAM hashes equal immutable Pass71 frames. Inherited handler/canonical read laws remain unchanged. The immutable Pass69 OPTIMIST journal was digest-verified before inspection.
+
+Twelve focused scope negatives per root cover code, CALL word, descriptor/handler/count, fallback table/token, trace/output, cache/scratch aliases, stack collision and unrelated index. They decline without live mutation or oracle access. Corrupt late79D7 code propagates as a proof error; same-boundary positive recovery succeeds. Unsupported handler branches and inherited pointer/output/error/alias domains remain excluded.
+
+Focused validation includes directly affected Pass93/98/99:8/8 categories,31 Python executions,fourworkers,25.415s wall/45.582s summed. Actual receipt and digests preserved. All five REL/INT goldens match; fresh existing reconstruction verifier confirms94,720 exact bytes and image/section hashes. No annotations, knowledge promotions, native roots or oracle queries. No FULL; Pass74 remains certified epoch3. Installed k23/k123 and historical evidence remain unchanged.
+
+Next: complete the selected+667A tail after k27, then actual+6726 and+6792 hardware returns. k216 and dispatcher eighth window are not yet claimed.

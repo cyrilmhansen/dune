@@ -6,17 +6,17 @@ module R=Pli80_host.Recursive_mapped
 module S=Pli80_host.State
 exception Outside_scope of string
 let scope c s=if not c then raise(Outside_scope s)
-let predicate ?(k84_candidate=false) ?(k105_fallback=false) ?(observe_read=(fun _ _ _->())) bridge ~call_site (boundary:Runner.instruction_boundary)=
+let predicate ?(k27_fallback=false) ?(k84_candidate=false) ?(k105_fallback=false) ?(observe_read=(fun _ _ _->())) bridge ~call_site (boundary:Runner.instruction_boundary)=
  let entry=boundary.state in
  let need c s=if not c then invalid_arg("scanned predicate: "^s)in
  scope(entry.pc=0x3fff&&entry.sp>=0xb220&&entry.sp<=0xfffc)"predicate entry/frame";
  let memory=S.of_bytes(boundary.copy_memory())in
  let index=S.read memory 0xad1c and pointer=S.word memory 0xad1d in
- scope(not(k105_fallback&&k84_candidate))"incompatible predicate scopes";
+ scope((if k105_fallback then 1 else 0)+(if k84_candidate then 1 else 0)+(if k27_fallback then 1 else 0)<=1)"incompatible predicate scopes";
  let records=if k84_candidate then(
   scope(index=84&&call_site=0x4237)"k84 candidate ownership";[0x5807]
- )else if k105_fallback then(
-  scope(index=105&&call_site=0x4285)"k105 fallback ownership";
+  )else if k105_fallback||k27_fallback then(
+  scope(index=(if k27_fallback then 27 else 105)&&call_site=0x4285)"k105 fallback ownership";
   let table=0x1b4b+index in
   scope(S.read memory table=Char.code(Bytes.get bridge.B.com(table-0x100)))"k105 fallback index table";
   let j=S.read memory table land 7 in let slot=0x3c13+2*j in
@@ -25,7 +25,7 @@ let predicate ?(k84_candidate=false) ?(k105_fallback=false) ?(observe_read=(fun 
   scope(record=0x3bf6)"k105 fallback record domain";[record]
  )else match index with 33->[0x57d7]|216->[0x8719;0x871e;0x8723;0x8728]|_->raise(Outside_scope "predicate index")in
  scope(List.mem pointer records)"predicate record pointer";
- let count=S.read memory pointer in scope(count=(if k105_fallback then 2 else if index=33||k84_candidate then 3 else 4))"predicate record count";
+ let count=S.read memory pointer in scope(count=(if k105_fallback||k27_fallback then 2 else if index=33||k84_candidate then 3 else 4))"predicate record count";
  for i=0 to count do scope(S.read memory(pointer+i)=Char.code(Bytes.get bridge.B.pli2(pointer+i-0x2200)))"predicate immutable record"done;
  for o=0x1dff to 0x1fb4 do scope(S.read memory(o+0x2200)=Char.code(Bytes.get bridge.pli2 o))"predicate code"done;
  scope(S.read memory call_site=0xcd&&S.word memory(call_site+1)=0x3fff&&S.word memory entry.sp=call_site+3)"predicate CALL word";
@@ -105,9 +105,10 @@ let predicate ?(k84_candidate=false) ?(k105_fallback=false) ?(observe_read=(fun 
 
 (* Copied k33 candidate-success and opt-in k105 zero-candidate transactions.
    Both reuse the established frame law; installed operations are untouched. *)
-let gateway ?(k84_selected=false) ?(k105_fallback=false) ?(observe_read=(fun _ _ _->())) bridge ~call_site (boundary:Runner.instruction_boundary)=
+let gateway ?k27_handler ?(k84_selected=false) ?(k105_fallback=false) ?(observe_read=(fun _ _ _->())) bridge ~call_site (boundary:Runner.instruction_boundary)=
+ let k27=Option.is_some k27_handler in
  let entry=boundary.state in
- scope(not(k105_fallback&&k84_selected))"incompatible gateway scopes";
+ scope((if k27 then 1 else 0)+(if k105_fallback then 1 else 0)+(if k84_selected then 1 else 0)<=1)"incompatible gateway scopes";
  let need c s=if not c then invalid_arg((if k105_fallback then "k105 gateway: "else "k33 gateway: ")^s)in
  scope(entry.pc=0x41b5&&entry.sp>=0xb220&&entry.sp<=0xfffc)"gateway entry/frame";
  let memory=S.of_bytes(boundary.copy_memory())in
@@ -115,10 +116,10 @@ let gateway ?(k84_selected=false) ?(k105_fallback=false) ?(observe_read=(fun _ _
  scope(call_site>=0x2200&&call_site+3<0xaa00&&S.read memory call_site=0xcd&&S.word memory(call_site+1)=0x41b5&&S.word memory entry.sp=call_site+3)"gateway CALL ancestry";
  for i=0 to 2 do scope(S.read memory(call_site+i)=Char.code(Bytes.get bridge.pli2(call_site-0x2200+i)))"gateway caller image"done;
  scope(S.read memory 0x202e land 1=0)"gateway trace";
- if k105_fallback||k84_selected then scope(S.read memory 0x201d land 1=0&&S.read memory 0x2029 land 1=0&&S.read memory 0x1d8a<=120&&S.read memory 0x1d8b<8&&S.word memory 0x1c2c>0&&S.word memory 0x1c2c<0xfffe)"k105 bounded output";
+ if k27||k105_fallback||k84_selected then scope(S.read memory 0x201d land 1=0&&S.read memory 0x2029 land 1=0&&S.read memory 0x1d8a<=120&&S.read memory 0x1d8b<8&&S.word memory 0x1c2c>0&&S.word memory 0x1c2c<0xfffe)"k105 bounded output";
 
  let sentinel=S.word memory 0x2155 in
- scope(not(sentinel>=entry.sp-32&&sentinel<entry.sp+2)&&not(sentinel>=0xad0a&&sentinel<0xad27)&&not(sentinel>=0x41b5&&sentinel<0x42eb)&&not(sentinel>=(if k105_fallback then 0x434f else if k84_selected then 0x5806 else 0x57d6)&&sentinel<(if k105_fallback then 0x4350 else if k84_selected then 0x580b else 0x57db)))"gateway sentinel alias";
+ scope(not(sentinel>=entry.sp-32&&sentinel<entry.sp+2)&&not(sentinel>=0xad0a&&sentinel<0xad27)&&not(sentinel>=0x41b5&&sentinel<0x42eb)&&not(sentinel>=(if k27 then 0x434e else if k105_fallback then 0x434f else if k84_selected then 0x5806 else 0x57d6)&&sentinel<(if k27 then 0x434f else if k105_fallback then 0x4350 else if k84_selected then 0x580b else 0x57db)))"gateway sentinel alias";
  let q=ref(A.logical entry) and sp=ref entry.sp and effects=ref[]and journal=ref[]in
  let put kind writer address value=
   S.write memory address value;effects:=Runner.Memory_write(address,value)::!effects;
@@ -169,14 +170,14 @@ let gateway ?(k84_selected=false) ?(k105_fallback=false) ?(observe_read=(fun _ _
   let l=dec(!q.hl land 255)in hl((!q.hl land 0xff00)lor l);if not !q.flags.zero then save()in save();
  a(read_at 0x41d1 0xad0a);hl 11;dad !sp;put"logical"0x41d8 !q.hl !q.a;
  hl 0;dad !sp;c(read_at 0x41dd !q.hl);canonical 0x41de(B.Pli2_output 0x047d);put"logical"0x41e1 0xad1c !q.a;
- scope(!q.a=(if k105_fallback then 105 else if k84_selected then 84 else 33))"gateway canonical index";
+ scope(!q.a=(if k27 then 27 else if k105_fallback then 105 else if k84_selected then 84 else 33))"gateway canonical index";
  c !q.a;q:={!q with R.bc= !q.bc land 255};hl 0x3c21;dad !q.bc;dad !q.bc;
  de((!q.de land 0xff00)lor read_at 0x41ec !q.hl);hl(!q.hl+1);de((read_at 0x41ee !q.hl)lsl 8 lor(!q.de land 255));
- let old= !q.hl in hl !q.de;de old;scope(!q.hl=(if k105_fallback then 0x434f else if k84_selected then 0x5806 else 0x57d6))"gateway descriptor";store 0x41f0 0xad1d !q.hl;
- hl 0xad0a;put"logical"0x41f6 !q.hl 0;pair 0x41f8 0xad1d;a(read_at 0x41fb !q.hl);put"logical"0x41fc 0xad1a !q.a;scope(!q.a=(if k105_fallback then 0 else if k84_selected then 1 else 3))"gateway descriptor count";
+ let old= !q.hl in hl !q.de;de old;scope(!q.hl=(if k27 then 0x434e else if k105_fallback then 0x434f else if k84_selected then 0x5806 else 0x57d6))"gateway descriptor";store 0x41f0 0xad1d !q.hl;
+ hl 0xad0a;put"logical"0x41f6 !q.hl 0;pair 0x41f8 0xad1d;a(read_at 0x41fb !q.hl);put"logical"0x41fc 0xad1a !q.a;scope(!q.a=(if k27||k105_fallback then 0 else if k84_selected then 1 else 3))"gateway descriptor count";
  pair 0x41ff 0xad1c;hl(!q.hl land 255);q:={!q with R.bc=0x3ddd};dad !q.hl;dad !q.bc;
  de((!q.de land 0xff00)lor read_at 0x4209 !q.hl);hl(!q.hl+1);de((read_at 0x420b !q.hl)lsl 8 lor(!q.de land 255));
- let old= !q.hl in hl !q.de;de old;scope(!q.hl=(if k105_fallback then 0x4552 else if k84_selected then 0x6516 else 0x61fd))"gateway handler";store 0x420d 0xad1f !q.hl;hl 0xad1b;put"logical"0x4213 !q.hl 0;
+ let old= !q.hl in hl !q.de;de old;scope(!q.hl=(if k27 then 0x44ea else if k105_fallback then 0x4552 else if k84_selected then 0x6516 else 0x61fd))"gateway handler";store 0x420d 0xad1f !q.hl;hl 0xad1b;put"logical"0x4213 !q.hl 0;
  let rec scan budget=need(budget>0)"candidate termination";a(read_at 0x4215 0xad1a);q:={!q with R.flags=R.comparison !q.a 0};
   if not !q.flags.zero then(
    a(read_at 0x421d 0xad1a);a(dec !q.a);put"logical"0x4221 0xad1a !q.a;
@@ -187,7 +188,7 @@ let gateway ?(k84_selected=false) ?(k105_fallback=false) ?(observe_read=(fun _ _
    if !q.flags.carry then(hl 0xad1a;put"logical"0x4241 !q.hl 0;hl(!q.hl+1);put"logical"0x4244 !q.hl 1);
    pair 0x4246 0xad1d;de((!q.de land 0xff00)lor read_at 0x4249 !q.hl);de(!q.de land 255);pair 0x424c 0xad1d;dad !q.de;store 0x4250 0xad1d !q.hl;scan(budget-1))in scan 4;
  a(read_at 0x4256 0xad1b);a(!q.a lxor 255);rar();
- if k105_fallback then(
+ if k27||k105_fallback then(
   scope !q.flags.carry "k105 requires actual fallback";
   hl 0xad0a;put"logical"0x4261 !q.hl 0;pair 0x4263 0xad1c;hl(!q.hl land 255);q:={!q with R.bc=0x1b4b};dad !q.bc;
   a 7;let old= !q.a and v=read_at 0x426e !q.hl in let value=old land v in
@@ -196,12 +197,12 @@ let gateway ?(k84_selected=false) ?(k105_fallback=false) ?(observe_read=(fun _ _
   c(read_at 0x4277 !q.hl);hl(!q.hl+1);q:={!q with R.bc=read_at 0x4279 !q.hl lsl 8 lor(!q.bc land 255)};
   q:={!q with R.bc=(!q.bc+1)land 65535};hl !q.bc;scope(!q.hl=0x3bf6)"k105 fallback record";store 0x427d 0xad1d !q.hl;
   hl 0;dad !sp;c(read_at 0x4284 !q.hl);
-  staged 0x4285 0x3fff(predicate ~k105_fallback:true ~observe_read bridge ~call_site:0x4285);
+  staged 0x4285 0x3fff(predicate ~k27_fallback:k27 ~k105_fallback:(not k27) ~observe_read bridge ~call_site:0x4285);
   put"logical"0x4288 0xad1b !q.a
  )else scope(not !q.flags.carry) "unproved k33 fallback route";
  a(read_at 0x428b 0x202e);rar();scope(not !q.flags.carry)"gateway pre-handler trace";
- hl 0x42b4;push 0x42af !q.hl;pair 0x42b0 0xad1f;scope(!q.hl=(if k105_fallback then 0x4552 else if k84_selected then 0x6516 else 0x61fd))"fresh handler pointer";
- if k105_fallback then software 0x4552(K105_handler.prepare bridge)else if k84_selected then software 0x6516(K84_handler.prepare bridge)else software 0x61fd(K33_handler.prepare bridge);
+ hl 0x42b4;push 0x42af !q.hl;pair 0x42b0 0xad1f;scope(!q.hl=(if k27 then 0x44ea else if k105_fallback then 0x4552 else if k84_selected then 0x6516 else 0x61fd))"fresh handler pointer";
+ if k27 then software 0x44ea(Option.get k27_handler)else if k105_fallback then software 0x4552(K105_handler.prepare bridge)else if k84_selected then software 0x6516(K84_handler.prepare bridge)else software 0x61fd(K33_handler.prepare bridge);
  need(!sp=entry.sp-12)"handler software RET";
  a(read_at 0x42b4 0x202e);rar();scope(not !q.flags.carry)"gateway post-handler trace";
  hl((!q.hl land 0xff00)lor 10);push 0x42ca !q.hl;hl 3;dad !sp;q:={!q with R.bc= !q.hl};de 0xad0b;hl(pop 0x42d4);
@@ -257,3 +258,8 @@ let eligible84 bridge ~call_site boundary=
   "selected k84: unproved +3731 error branch";
   "selected k84: unproved +375D diagnostic branch";
   "selected k84: own frame/code/table alias"]->false
+
+(* Explicit proof-only k27 handler parameter avoids a module dependency cycle;
+   it is bound by K27_gateway_transaction to the independently proved operation. *)
+let gateway27 ?observe_read bridge ~handler ~call_site boundary=
+ gateway ~k27_handler:handler ?observe_read bridge ~call_site boundary
