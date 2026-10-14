@@ -5,14 +5,18 @@ module B=Acquisition_family_bridge
 module A=Acquisition_parent_bridge
 module R=Pli80_host.Recursive_mapped
 module S=Pli80_host.State
-let prepare ?(predicate=false) ?(observe_read=(fun _ _ _->())) bridge (boundary:Runner.instruction_boundary)=
+let prepare ?(at_667a=false) ?(predicate=false) ?(observe_read=(fun _ _ _->())) bridge (boundary:Runner.instruction_boundary)=
  let entry=boundary.state in
  let need c s=if not c then invalid_arg("k216 nested front: "^s)in
- need(entry.pc=(if predicate then 0x43ae else 0x8926)&&entry.sp>=0xb240&&entry.sp<=0xfff0)"entry/frame";
+ need(not(predicate&&at_667a))"incompatible entry modes";
+ need(entry.pc=(if predicate then 0x43ae else if at_667a then 0x887a else 0x8926)&&entry.sp>=0xb240&&entry.sp<=0xfff0)"entry/frame";
  let memory=S.of_bytes(boundary.copy_memory())in
  List.iter(fun(a,b)->for off=a to b-1 do need(S.read memory(off+0x2200)=Char.code(Bytes.get bridge.B.pli2 off))"code"done)
   (if predicate then [0x21ae,0x21cd]else[0x6726,0x6732;0x667a,0x6694;0x21ae,0x21cd]);
- if not predicate then need(S.word memory entry.sp=0x89e1&&S.word memory(entry.sp+2)=0x8f4a&&S.word memory(entry.sp+4)=0x42b4)"hardware/software ancestry";
+ if not predicate then(
+  let off=if at_667a then 2 else 0 in
+  if at_667a then need(S.word memory entry.sp=0x8931)"667A hardware continuation";
+  need(S.word memory(entry.sp+off)=0x89e1&&S.word memory(entry.sp+off+2)=0x8f4a&&S.word memory(entry.sp+off+4)=0x42b4)"hardware/software ancestry");
  let q=ref(A.logical entry) and sp=ref entry.sp and effects=ref[]and journal=ref[]in
  let put kind writer address value=
   S.write memory address value;effects:=Runner.Memory_write(address,value)::!effects;
@@ -61,9 +65,10 @@ let prepare ?(predicate=false) ?(observe_read=(fun _ _ _->())) bridge (boundary:
   q:={!q with R.a=value;flags={(R.comparison value 0)with carry=false;auxiliary_carry=(old lor v)land 8<>0}}
  in
  let pc=if predicate then(predicate_body();pop 0x43cc)else(
+  if not at_667a then(
   hl(word_at 0x8926 0xad0f);c(!q.hl land 255);hl(word_at 0x892a 0xad0d);
   let old= !q.hl in hl !q.de;de old;
-  push 0x892e 0x8931;
+  push 0x892e 0x8931);
   de((!q.de land 255)*257);push 0x887b !q.de;sp:= !sp+1;
   q:={!q with R.bc=(!q.bc land 255)*257};push 0x887e !q.bc;sp:= !sp+1;
   hl 0;dad !sp;c(read_at 0x8884 !q.hl);

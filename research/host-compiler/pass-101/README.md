@@ -1,0 +1,15 @@
+# Pass101 — selected +667A/+6726/+6792 hierarchy
+
+Baseline: published Pass100. The mandatory OPTIMIST k216 child hierarchy is now executable through its real hardware returns. No full k216 software-handler or gateway claim yet.
+
+An explicit+667A entry option reuses the Pass94 prefix without reconstructing a caller's pre-state. Default Pass94 behavior is unchanged and revalidated. The exact8931/89E1/8F4A/42B4 ancestry guards retain hardware/software ownership. Other three natural+667A states have different ancestry and are explicitly excluded without mutation; they do not become claimed scope merely because they share a CALL site.
+
+After the real+6691 k27 gateway returns8894, the operation freshly addresses its local stack byte, supplies E and literalC2, and executes the actual+669B CALL into the existing complete+7D31 law. That prior operation's canonical lookup, indexed clear, emission, pointer, output and alias guards apply to this actual current state. No old FACTOR inputs or child exits are reused as results. All effects are instruction-derived. The two private bytes are consumed by POP H; RET669F consumes8931. The parent RET6731 consumes89E1. The selected+6792 composition reuses the unchanged Pass91 front, the newly computed+6726 result and immutable JMP67E1→6820/RET, which consumes8F4A. The outer software42B4 word survives. Persistent AD1F is not required to retain a stale outer handler value after nested gateways.
+
+Three separate independent CPU windows cover the one mandatory natural state: child15,029 instructions/3,444 writes/117 owned reads; parent15,035/3,446/123; selected root15,049/3,448/129. Every register/flag, PC/SP, all64KiB RAM, complete ordered writes, available writer sites, frame residue, DMA/filesystem and service chronology match. Canonical+7D31 and delegated k27-handler reads inherit their established laws; unavailable inherited writer metadata remains-1. All aggregate RAM and writes remain checked. Software entry RAM independently matches the earlier Pass91 front witness.
+
+Code and original-continuation negatives reject without live mutation. Existing arithmetic/predicate discriminants remain covered by the affected Pass94 selection; no synthetic case creates new OBSERVED coverage. No CPU or guest callback implements a host effect.
+
+Focused validation:pass101/pass94 plus mandatorybuild/project,diff-check,validation-runner-tests;6/6 categories,23 Python executions,fourworkers,19.803s wall/27.059s summed. Actual receipt and digests retained. All five REL/INT goldens remain exact. Reconstruction-bearing sources remain identical to Pass100's independently verified94,720 bytes. No annotations, knowledge promotions, native roots or oracle queries. No FULL; Pass74 remains certified epoch3 and installed k23/k123 remains unchanged.
+
+Next: call this selected+6792 operation from the actual+6D47 software entry, feed its computed return directly into the unchanged Pass91+6D4A suffix, then prove the complete k216 gateway and eighth dispatcher window.
