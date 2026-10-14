@@ -317,3 +317,45 @@ let k23_applicability t previous ~origin:o (boundary:Runner.instruction_boundary
   ~guard_field:(fun _ _->impossible())~native:(fun ~site:_ ~target:_ _->impossible())
   ~follow_spine:false ~software:(fun ~site:_ ~consumed:_->impossible())in
  if q.returned.a=23 && Char.code(Bytes.get ram 0x202e)land 1=0 then Native_dispatch.Eligible else Inapplicable
+
+(* Pass87 extends only the existing gateway bridge. K23 eligibility/preparation
+   above remain unchanged; a proof failure is never caught as another route. *)
+type gateway_route = K23 | K123 | Guest
+let gateway_route t previous ~origin:o (boundary:Runner.instruction_boundary)=
+ match k23_applicability t previous ~origin:o boundary with
+ |Native_dispatch.Eligible->K23
+ |Inapplicable->
+  let call=verify_call t(Pli2_output 0x1fb5)previous ~entry:boundary.state in
+  let q=A.logical boundary.state in
+  let entry:Pli80_host.K123_child_7d05_front.state={pc=boundary.state.pc;sp=boundary.state.sp;
+    a=q.a;bc=q.bc;de=q.de;hl=q.hl;flags=q.flags} in
+  if Pli80_host.K123_gateway_transaction.eligible(S.of_bytes(boundary.copy_memory()))
+   ~pli2:t.pli2 ~pli_com:t.com ~call_site:call.site ~entry then K123 else Guest
+
+let prepare_k123 t ~call ~origin:o (boundary:Runner.instruction_boundary)=
+ require(o=origin "PLI2.OVL" 0x1fb5&&call=internal_call t(Pli2_output 0x1fb5)call.site)"k123 entry/image/CALL";
+ let original=boundary.copy_memory() and files=boundary.copy_filesystem() and dma=boundary.dma in
+ let q=A.logical boundary.state in
+ let entry:Pli80_host.K123_child_7d05_front.state={pc=boundary.state.pc;sp=boundary.state.sp;
+  a=q.a;bc=q.bc;de=q.de;hl=q.hl;flags=q.flags}in
+ let writes=ref[]in
+ let memory,returned=Pli80_host.K123_gateway_transaction.prepare(S.of_bytes original)
+  ~pli2:t.pli2 ~pli_com:t.com ~call_site:call.site ~entry
+  ~observe:(function Pli80_host.K123_child_7d05_front.Write(a,v)->writes:=(a,v)::!writes|Read _->())in
+ let r:R.returned={a=returned.a;bc=returned.bc;de=returned.de;hl=returned.hl;flags=returned.flags}in
+ let state=A.machine boundary.state r returned.sp returned.pc in
+ let ordered=List.rev !writes in
+ (* Pass86 emits the complete ordered stream, including compatibility writes.
+    There is no reconstruction from a final diff and no invented writer/Depth
+    provenance: -1 explicitly marks unavailable host-site metadata. *)
+ let journal=List.map(fun(address,value)->{address;value;writer=(-1);depth=(-1);
+  kind=(if address>=entry.sp-512&&address<entry.sp then "compatibility"else "logical")})ordered in
+ let logical_writes=List.filter_map(fun(w:write)->if w.kind="logical"then Some(w.address,w.value)else None)journal in
+ let validate (result:Runner.host_program_result)=
+  if result.memory<>S.copy memory||result.dma<>dma||result.services<>[]||
+   not(Cpm.Filesystem.equal result.filesystem files)then Error"k123 ordered transaction mismatch"else Ok()in
+ let program:Runner.host_program={effects=List.map(fun(a,v)->Runner.Memory_write(a,v))ordered;
+  next_state=state;validate;on_commit=ignore}in
+ ignore(match boundary.preview_host_program program with Ok p->p|Error e->invalid_arg e);
+ require(boundary.copy_memory()=original&&boundary.dma=dma&&Cpm.Filesystem.equal(boundary.copy_filesystem())files)"k123 staged live state";
+ {result={F.returned=r;field=None};program;state;journal;logical_writes}

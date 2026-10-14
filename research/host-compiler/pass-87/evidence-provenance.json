@@ -1,0 +1,25 @@
+{
+  "FULL": "Not run/scheduled/awaited; Pass74epoch3 remains current, previous epochs and external Pass79 failures unchanged.",
+  "baseline": "36c5d4fbdb2b91cd5704f17c9cf693d88b49fb92",
+  "bridge": "Baseline bridge file, including exact k23 applicability/preparation, is an unchanged byte prefix; only scoped gateway helpers appended.",
+  "final_focused_proof": {
+    "command": "python3 tools/annotated-assembly/test_native_gateway_pass_87.py --images /home/john/pli/cpm/pli80/DISK1 -q",
+    "reason": "Final register-vector publication and gateway-only proof guard after aggregate; no change to k23 or Pass86 algorithms.",
+    "seconds": 13.626,
+    "status": "PASSED",
+    "tests": 3
+  },
+  "images": "Separately supplied DISK1; existing reconstruction verifier passed all exact bytes/section/image hashes and mappings for94720bytes.",
+  "knowledge_promotions": 0,
+  "natural_captures": "Fresh isolated in-process concrete captures; two k123 entry/exit hashes match published Pass86, all28 k23 states/RAM/journals match published Pass74; no shared Pass75\u201379 captures reused or modified.",
+  "oracle_queries": 0,
+  "protected_baseline_SHA256": {
+    "lib/pli80/native_dispatch.ml": "5789a495768f59bea25b441f9ecef02e43f768ae9d9d4d51069581dbb6157ed4",
+    "lib/pli80/native_dispatch.mli": "8fc2c3dc25f5905048a75b7b219a142fc1fe4a41e272bd40632729209d7d6c53",
+    "lib/pli80_host/k123_gateway_transaction.ml": "d716200b647db6629d983d192f5250ae30cad3a0cd86b28d8920046fe6c27cc7",
+    "research/annotated-assembly/manifest.json": "40bab1d91e2c275874b72ed04c68be8064cdf9d01786903e2cb505bd4e47e4f2",
+    "research/host-compiler/validation-policy.json": "dd944253434121720845bc85c6fd9d35cd19ebb9c6bbeb4036bee5b6cec337e5",
+    "test/native_dispatch_partial.ml": "6cac330095fee4cd6d280962d3937477f77d797bc3dd34dcbdbc4680ca3ccac2"
+  },
+  "validation_receipt_SHA256": "bcd2a2f34613b3fba88b31e7345a0bbce60e285523718c40db6f70f07f61ed00"
+}

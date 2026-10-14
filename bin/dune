@@ -341,3 +341,7 @@
 (executable
  (name k123_gateway_proof)
  (libraries pli80_host i8080))
+
+(executable
+ (name native_k123_gateway)
+ (libraries pli80 analysis runner unix))

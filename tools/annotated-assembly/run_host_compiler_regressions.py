@@ -72,6 +72,7 @@ def commands(images,out):
  cmds['pass82']=['python3','tools/annotated-assembly/test_k123_child_pass_82.py','--images',images,'-q']
  cmds['pass83']=['python3','tools/annotated-assembly/test_k123_parent_pass_83.py','--images',images,'-q']
  cmds['pass84']=['python3','tools/annotated-assembly/test_k123_parent_pass_84.py','--images',images,'-q']
+ cmds['pass87']=['python3','tools/annotated-assembly/test_native_gateway_pass_87.py','--images',images,'-q']
  cmds['pass86']=['python3','tools/annotated-assembly/test_k123_gateway_pass_86.py','--images',images,'-q']
  cmds['pass85']=['python3','tools/annotated-assembly/test_k123_completion_pass_85.py','--images',images,'-q']
  cmds['pass71']=['python3','tools/annotated-assembly/test_gateway_decomposition_pass_71.py','--images',images,'-q']

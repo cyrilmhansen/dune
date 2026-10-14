@@ -1,0 +1,963 @@
+{
+  "Pass86_natural_RAM_hashes_preserved": true,
+  "all_passed": true,
+  "baseline": "36c5d4fbdb2b91cd5704f17c9cf693d88b49fb92",
+  "final_CPU_proof": "Exact live root post-state checks and deterministic identical intervening guest execution/suffix establish equality by induction; final full RAM is also directly compared.",
+  "installation": "combined mode of the existing controller at41B5; legacy mode preserved",
+  "knowledge_promotions": 0,
+  "measured_seconds": 12.439,
+  "new_controller_coordinates": 0,
+  "one_controller": true,
+  "oracle": "one chronological accepted-root stream; state/ancestry choose before oracle inspection",
+  "previous_k23_exactly_preserved": true,
+  "register_vector": [
+    "PC",
+    "SP",
+    "A",
+    "BC",
+    "DE",
+    "HL",
+    "PSW"
+  ],
+  "services": "Root services compared in exact call/resume/RAM/DMA/event order; complete INT/REL record stream and file-event chronology compared; guest plus actual native BDOS counts equal reference.",
+  "sources": [
+    {
+      "REL_sha256": "7339d230f13c2614f6b1acb632081959659d7292814c747f7853b6944e91f119",
+      "combined_guest": 440293,
+      "combined_host": 1,
+      "controller_failures": [],
+      "declined": 10,
+      "errors": [],
+      "final_RAM_sha256": "26f472c71e46d9018a8f26aa676c7ecdabd7b4fcbaefa04d3284a78c8faaae67",
+      "full_equivalence": true,
+      "guest_reference": 441855,
+      "host_BDOS_services": 0,
+      "k123": 0,
+      "k23": 1,
+      "k23_guest": 440293,
+      "k23_host": 1,
+      "rejections": [],
+      "roots": [
+        {
+          "entry_step": 359789,
+          "input": [
+            16821,
+            65478,
+            0,
+            10,
+            1,
+            2570,
+            86
+          ],
+          "input_sha256": "7b0ece516f6cb0320b3088f292277c00d3d0bbfb2495fb406347929974c043eb",
+          "legacy_journal_sha256": "f8736b54b39251a04c1e69d3a01d2d9820c39d2ee508cdb751aaf373d1d69571",
+          "output": [
+            37373,
+            65480,
+            0,
+            65477,
+            44309,
+            65478,
+            86
+          ],
+          "post_sha256": "b4169af52c1c5e90ad86fcf29e8cb5be256bace59c0e07a28f4ec3d68c4554c1",
+          "return_step": 361350,
+          "route": "k23",
+          "writes_sha256": "782759fcf74d7e07c0cbdfd6fadcff2b0dff8b03970556c8c1fd52b24ea5ad0a"
+        }
+      ],
+      "single_oracle_order_verified": true,
+      "source": "MINIMAL"
+    },
+    {
+      "REL_sha256": "68ec16931d4dae7a8f0831a29c9ae8b9ca139279f5104bb34e299644a8b2a203",
+      "combined_guest": 1123194,
+      "combined_host": 13,
+      "controller_failures": [],
+      "declined": 48,
+      "errors": [],
+      "final_RAM_sha256": "8a092ee402e45b2bf025630828a792831f5c41df75f5e7e21de240c65ab81b89",
+      "full_equivalence": true,
+      "guest_reference": 1145517,
+      "host_BDOS_services": 0,
+      "k123": 0,
+      "k23": 13,
+      "k23_guest": 1123194,
+      "k23_host": 13,
+      "rejections": [],
+      "roots": [
+        {
+          "entry_step": 745357,
+          "input": [
+            16821,
+            65454,
+            0,
+            13,
+            23899,
+            2829,
+            86
+          ],
+          "input_sha256": "515140f754ede894b3a4a7d6e0e4eab119c53fcf78ca1f00880272240305a25c",
+          "legacy_journal_sha256": "27594e608f7baaa5f8f34c39b3af217afa81e1a0107fb0d3eb392ba154a8422d",
+          "output": [
+            22851,
+            65456,
+            15,
+            65453,
+            44309,
+            65454,
+            86
+          ],
+          "post_sha256": "6d3b24b8c4ff9ff1092b6eabc51ee285ecbc613c40e68321ff5c8f5a6bece985",
+          "return_step": 747250,
+          "route": "k23",
+          "writes_sha256": "8b64c9e8a9152457031ab07e81f7ed375b552263ea50c2cfea67dc9ef46cc0db"
+        },
+        {
+          "entry_step": 754296,
+          "input": [
+            16821,
+            65410,
+            0,
+            22546,
+            2,
+            5394,
+            86
+          ],
+          "input_sha256": "6bf9264658718fdfb3291a73b2493f15ff55996b1991e5077a90af07fbe3966d",
+          "legacy_journal_sha256": "0d3a8404e44ffcc6b92d39b0fa3194a29d6db9fa8b1264a69d78771e6916bfdd",
+          "output": [
+            22862,
+            65412,
+            0,
+            65409,
+            44309,
+            65410,
+            86
+          ],
+          "post_sha256": "2929ad8485266fa86f15c50d553c0084cb7227d09776d5ebeabf0f760ba5667d",
+          "return_step": 756194,
+          "route": "k23",
+          "writes_sha256": "e0a07927e0a1a018f886a1e9b01552e20ffc22f16f4cae43d74c9af2b0983066"
+        },
+        {
+          "entry_step": 756232,
+          "input": [
+            16821,
+            65410,
+            1,
+            20,
+            44309,
+            4628,
+            2
+          ],
+          "input_sha256": "72d267cb300315266a5c7485a945df7059082f7d120d3fc1561dfe2603c7ea10",
+          "legacy_journal_sha256": "cc0362e7d8344d16fa8e287e9cd2c77b077fb831d5350e452fb25af58c3d18c8",
+          "output": [
+            22851,
+            65412,
+            0,
+            65409,
+            44309,
+            65410,
+            86
+          ],
+          "post_sha256": "3005def60771b3b5444bc1998be0a16671b44f86885904cfb8e28f4ae9757d4f",
+          "return_step": 757793,
+          "route": "k23",
+          "writes_sha256": "4f476156a60a357aeba24e8e97164ff4ade939883301099af6029418bc55ddaf"
+        },
+        {
+          "entry_step": 777848,
+          "input": [
+            16821,
+            65428,
+            0,
+            32,
+            1,
+            3872,
+            86
+          ],
+          "input_sha256": "a0a2704e31a94d8f65a8b1058bca6b3d61f2a449a0b685f0f55058453f5f99d0",
+          "legacy_journal_sha256": "18dde7ad223a62795f21188bba3a337ada9c75cd7ac9fc75dab8f8bf12e5ce27",
+          "output": [
+            37373,
+            65430,
+            0,
+            65427,
+            44309,
+            65428,
+            86
+          ],
+          "post_sha256": "b631891a045b5d7f7c01f8e0193401b5a17d46a3f651d87ea55d5cc74bb32b25",
+          "return_step": 779409,
+          "route": "k23",
+          "writes_sha256": "0fd6d79b794c151a3e269dc640e7fe1399f9bcdbbed370368dcdd4177844ff8b"
+        },
+        {
+          "entry_step": 844914,
+          "input": [
+            16821,
+            65386,
+            0,
+            22568,
+            2,
+            11048,
+            86
+          ],
+          "input_sha256": "00cbfdb28cdcabf965bd47f62a71a468f95dc624f3e07bcaaadd5d0dcd028cf9",
+          "legacy_journal_sha256": "874cdcd0f147bb517a54b55b05fc4f74d356dc0751e468c747f4f6feb3af8a06",
+          "output": [
+            22862,
+            65388,
+            0,
+            65385,
+            44309,
+            65386,
+            86
+          ],
+          "post_sha256": "6c43d223875d83c39120f35c7ccdc3d56e2e000c65922d2c4e9a50c9ca094ec0",
+          "return_step": 846807,
+          "route": "k23",
+          "writes_sha256": "e43eb5893e7cc506e98086ed4c7aa29d75e3d3d6c6a7d865c9f590826bc64b71"
+        },
+        {
+          "entry_step": 846845,
+          "input": [
+            16821,
+            65386,
+            1,
+            42,
+            44309,
+            10282,
+            2
+          ],
+          "input_sha256": "24e968d56ea2e3e78c0e0bdeaf17612b5afeb0594534ef063efee0f7150b065f",
+          "legacy_journal_sha256": "bf65d0d1928766728a7210abc066c14ffa7ef0bac3d2f171e4fd67c175dec876",
+          "output": [
+            22851,
+            65388,
+            0,
+            65385,
+            44309,
+            65386,
+            86
+          ],
+          "post_sha256": "1ab62565642f202a40b85cc1734b03e4919f2c3c2871fc978c8b89408a29f375",
+          "return_step": 848411,
+          "route": "k23",
+          "writes_sha256": "c3501a67d6360e564a06a74644eae89b10c6e209812aa708c0e9c031745fbd95"
+        },
+        {
+          "entry_step": 868466,
+          "input": [
+            16821,
+            65404,
+            0,
+            54,
+            1,
+            3894,
+            86
+          ],
+          "input_sha256": "27a239a2b01f12d35ea600497c385130609e8dd0b21965a1e5e1ad28573e9d4f",
+          "legacy_journal_sha256": "0d6d089834f3896ce7391fec39e15c2d9199fb5f137cc2b573d1931454bab73a",
+          "output": [
+            37373,
+            65406,
+            0,
+            65403,
+            44309,
+            65404,
+            86
+          ],
+          "post_sha256": "9d2961aa72bebca64b91a3c49e8a44aa60cabe0c79f41357a61ed4160bf74d47",
+          "return_step": 870027,
+          "route": "k23",
+          "writes_sha256": "8d074ac7db6f207ced97ac03e995c61e2149effeddb414d47cf071422fbc2886"
+        },
+        {
+          "entry_step": 935452,
+          "input": [
+            16821,
+            65362,
+            0,
+            22590,
+            2,
+            16702,
+            86
+          ],
+          "input_sha256": "cf83b0e81ed62fd5725fb0d9b4c55e3f67a298d2e6a06d38413149c713f44e46",
+          "legacy_journal_sha256": "3be9c9fd10c25f2b55946a318aecd453e6f9fa6e62464a18ba308f5b1e211d95",
+          "output": [
+            22862,
+            65364,
+            0,
+            65361,
+            44309,
+            65362,
+            86
+          ],
+          "post_sha256": "ce08c0dddd1c7f3afee7ec2c334f361fc0a5e4fbd3b560d5a38fd8fca9bf339c",
+          "return_step": 937345,
+          "route": "k23",
+          "writes_sha256": "e3dc63f2430d9c90cad59b49426c50d46df46319a53eb20d053fdeb5bcdbe1a9"
+        },
+        {
+          "entry_step": 937383,
+          "input": [
+            16821,
+            65362,
+            1,
+            64,
+            44309,
+            15936,
+            2
+          ],
+          "input_sha256": "1a9c137f47ecc097560ee439334b88a87901867e7670c410189f8874157fc859",
+          "legacy_journal_sha256": "6182fe917a22a25e16c3ea48daa81a277dc37593942e986f60e69c1a40da56d0",
+          "output": [
+            22851,
+            65364,
+            0,
+            65361,
+            44309,
+            65362,
+            86
+          ],
+          "post_sha256": "ebac40871ec257c22f2d24969ce61b0ad64f62e82c3f5f326aefc93b9528c9cd",
+          "return_step": 938944,
+          "route": "k23",
+          "writes_sha256": "ace9a284fe629829d1bde06d650ec42a0054a77c386299da5fe589c871a253f6"
+        },
+        {
+          "entry_step": 958999,
+          "input": [
+            16821,
+            65380,
+            0,
+            76,
+            1,
+            3916,
+            86
+          ],
+          "input_sha256": "bba8412ae16217fab6b78c02b9bcfa2e98c16aef917fc27195f402ae92fdf67b",
+          "legacy_journal_sha256": "c00cb74647e69dfe622e5db406fc7e5a247f847aab03564b037f25e7cdbfc9ca",
+          "output": [
+            37373,
+            65382,
+            0,
+            65379,
+            44309,
+            65380,
+            86
+          ],
+          "post_sha256": "e0a66cda05d6b2dcd6d5cefb217387fb03270fd3303445a4ee4182e901129acc",
+          "return_step": 960565,
+          "route": "k23",
+          "writes_sha256": "1d11b44050691407d6d4a11ce7ce00a8dc09fbdc3d445f767fa09953d20ec674"
+        },
+        {
+          "entry_step": 1019324,
+          "input": [
+            16821,
+            65380,
+            0,
+            88,
+            1,
+            3928,
+            86
+          ],
+          "input_sha256": "a900a1de1442056673d2fc01fa76307d7f0c6134e6aca9b518f654f0fdb4bc16",
+          "legacy_journal_sha256": "760b939531c959aea933f9c6c5342937971d68e40d786c07877294c6825596a5",
+          "output": [
+            37373,
+            65382,
+            0,
+            65379,
+            44309,
+            65380,
+            86
+          ],
+          "post_sha256": "ea84478356d0783c2fe17701854f1db6b274409d59ad04b662d56f9ee284e87a",
+          "return_step": 1020885,
+          "route": "k23",
+          "writes_sha256": "4ddc8ed6c82efc9bdef7f2ee5bc72c915837def5322a956c809ecb39d5dd0e2a"
+        },
+        {
+          "entry_step": 1031489,
+          "input": [
+            16821,
+            65364,
+            0,
+            91,
+            1,
+            3931,
+            86
+          ],
+          "input_sha256": "9e0ed091fd7c036ad91bef2b30245e242b013ab19db746fdf8d3f0016a1f6bbf",
+          "legacy_journal_sha256": "c57fd9db22a9f5f4d11428c0c728a829c1c01a2576360e647aea515ad5ad881b",
+          "output": [
+            21973,
+            65366,
+            0,
+            65363,
+            44309,
+            65364,
+            86
+          ],
+          "post_sha256": "51bb4b1a9e146646a17c99ce2121ad432b100ffa163d21b5bbf607a755c6a0dd",
+          "return_step": 1033387,
+          "route": "k23",
+          "writes_sha256": "f9ed33dbf5a9d5b51797933efa3b573d02ba9885d2d4cde1742e48c797ba5d84"
+        },
+        {
+          "entry_step": 1075573,
+          "input": [
+            16821,
+            65448,
+            0,
+            96,
+            24624,
+            24416,
+            86
+          ],
+          "input_sha256": "4e836dafe86b5fbe32ef33d88f5b767c0f8b661627629a21059c0615e461e424",
+          "legacy_journal_sha256": "483c67e6493c935263e7987875b0f48997324ab1b5578fbd9ac14b73f706f6d8",
+          "output": [
+            24241,
+            65450,
+            2,
+            65447,
+            44309,
+            65448,
+            86
+          ],
+          "post_sha256": "425574b33e381976a6ac8f37bd02e9d4dad75d8b23bd0c31d164456a0d2a6abc",
+          "return_step": 1077471,
+          "route": "k23",
+          "writes_sha256": "273e1cf1a7aeba64340853202535eecb4481947908b8e15179e06fde802c1c5e"
+        }
+      ],
+      "single_oracle_order_verified": true,
+      "source": "FIZZBUZ"
+    },
+    {
+      "REL_sha256": "c02f738a7504384a236289633210d1bf4e7ea5391e51e091e373950eefacc4f1",
+      "combined_guest": 516314,
+      "combined_host": 1,
+      "controller_failures": [],
+      "declined": 11,
+      "errors": [],
+      "final_RAM_sha256": "f1430583ccc388b0e7e65b59c65f4590793fdb148cad64ae00c030e603bcab64",
+      "full_equivalence": true,
+      "guest_reference": 518213,
+      "host_BDOS_services": 0,
+      "k123": 0,
+      "k23": 1,
+      "k23_guest": 516314,
+      "k23_host": 1,
+      "rejections": [],
+      "roots": [
+        {
+          "entry_step": 449874,
+          "input": [
+            16821,
+            65462,
+            0,
+            18,
+            1,
+            18,
+            86
+          ],
+          "input_sha256": "af83d1a673742495305b71414fee337764a786bc89e1142413ef267dab60cf61",
+          "legacy_journal_sha256": "ece59bc48ec0edcf15054a50fea45071bd525792b0995124e37f4832cd3ce52b",
+          "output": [
+            21973,
+            65464,
+            0,
+            65461,
+            44309,
+            65462,
+            86
+          ],
+          "post_sha256": "73c7c6634f572cb87c1cdb8e751fce2b66f016e954ae5c79362aa4513604c5b9",
+          "return_step": 451772,
+          "route": "k23",
+          "writes_sha256": "2517e5aae29c0d1b24e96a959e54308ad62fdc4e27f712038d36ca73abc24668"
+        }
+      ],
+      "single_oracle_order_verified": true,
+      "source": "PICTURE"
+    },
+    {
+      "REL_sha256": "9a42e8341a013243036040c8db0e56939c699c7fbbfb20878f7ba5af8d6b470d",
+      "combined_guest": 823075,
+      "combined_host": 6,
+      "controller_failures": [
+        "missing eligible oracle",
+        "wrong expected input",
+        "wrong expected post-state",
+        "omitted k123 oracle",
+        "wrong k123 post-state",
+        "eligible k123 preparation journal failure",
+        "eligible preparation journal failure"
+      ],
+      "declined": 27,
+      "errors": [
+        "invalid gateway code",
+        "stack scratch ABI",
+        "unexpected predicate proof"
+      ],
+      "final_RAM_sha256": "f2b1327c7811923d936a39004c2086b0906abf7ffb1a33e3b12a56f15b17d231",
+      "full_equivalence": true,
+      "guest_reference": 838415,
+      "host_BDOS_services": 0,
+      "k123": 2,
+      "k23": 4,
+      "k23_guest": 830680,
+      "k23_host": 4,
+      "rejections": [
+        "unsupported index",
+        "k123 descriptor",
+        "k123 handler",
+        "predicate token",
+        "trace gate",
+        "output error",
+        "output bit",
+        "output record",
+        "scratch pointer alias",
+        "invalid CALL word"
+      ],
+      "roots": [
+        {
+          "entry_step": 632031,
+          "input": [
+            16821,
+            65473,
+            0,
+            10,
+            24628,
+            3850,
+            86
+          ],
+          "input_sha256": "475cafe93e2dd0e706b70ac4ddd17157c56f6801e26b810ab88701f5e04b5f06",
+          "legacy_journal_sha256": "9ccc76ed8ad1d2a1af34ab043b81398e823cedf4b9ee78a633f01e13fef8cf48",
+          "output": [
+            22862,
+            65475,
+            4,
+            65472,
+            44309,
+            65473,
+            86
+          ],
+          "post_sha256": "32607026db96ae542b5518d5b3e8d85403d7c1c6b89a8f9dba24db47de2eee8b",
+          "return_step": 635745,
+          "route": "k123",
+          "writes_sha256": "f6c8ae31e94dd6046ab3d5446e359ff305ce73bb63242a50495cf1635b880235"
+        },
+        {
+          "entry_step": 646762,
+          "input": [
+            16821,
+            65478,
+            0,
+            19,
+            1,
+            19,
+            86
+          ],
+          "input_sha256": "747a1a8eece38d8475b209681748eb1d2e8768ab13af3da0365501682a0bc0e4",
+          "legacy_journal_sha256": "941950064b9bd3c847045558639fe5b64adcf2ed9c22b81e98dd1680e4ea0c9d",
+          "output": [
+            37373,
+            65480,
+            0,
+            65477,
+            44309,
+            65478,
+            86
+          ],
+          "post_sha256": "f8b090d010d12cae9b8831f947efb4c37a1b50a9500593c1cec4bab43ef9b888",
+          "return_step": 648328,
+          "route": "k23",
+          "writes_sha256": "55796246d1d60cae47e16c02b12d74b7b8eb71ebdf2ea0e6beba4f3e1bd613c4"
+        },
+        {
+          "entry_step": 658927,
+          "input": [
+            16821,
+            65462,
+            0,
+            22,
+            1,
+            22,
+            86
+          ],
+          "input_sha256": "a2f7e40252a96ec01dbf3ab4274ec0ec3b3310cc92f87733da9253fdc89a74bd",
+          "legacy_journal_sha256": "84a55c5f636516974c4d5744d0305f5fa0ae7723e8dcb18de8e6eb8a3e4f663a",
+          "output": [
+            21973,
+            65464,
+            0,
+            65461,
+            44309,
+            65462,
+            86
+          ],
+          "post_sha256": "5a8ed78272c6f1205eec4e675954d53cd00a673562d030a6f832f06859cc52a7",
+          "return_step": 660825,
+          "route": "k23",
+          "writes_sha256": "44640a703c3f85bc58913f3a843d5237bc5c4deaa42264280040a637edcc4163"
+        },
+        {
+          "entry_step": 772721,
+          "input": [
+            16821,
+            65426,
+            1,
+            45,
+            3,
+            11821,
+            86
+          ],
+          "input_sha256": "f58abb08df3c9e27a25568b53544f827813506b2e5983ffbcfdcc033f0088a18",
+          "legacy_journal_sha256": "2ccd3282aa40d0c86101a4945041081565c59123a777904ea7e1e50186ea2345",
+          "output": [
+            24832,
+            65428,
+            1,
+            65425,
+            44309,
+            65426,
+            86
+          ],
+          "post_sha256": "6fc5e89ffceb3a9cb8fd055145d7a5f95b51666762bb4833b63bed160fcaf073",
+          "return_step": 774619,
+          "route": "k23",
+          "writes_sha256": "e2cbca85ac1649621d681308c77613a4c412b3d8aa5644e0746dbd307e8235bd"
+        },
+        {
+          "entry_step": 782180,
+          "input": [
+            16821,
+            65430,
+            0,
+            56,
+            2,
+            3896,
+            135
+          ],
+          "input_sha256": "68d5305f35954f3294d2331bf99575ccbcbcc654a650b145e0a1fac091092741",
+          "legacy_journal_sha256": "7534a4bbe77272bd57d5371e2f9a2be25557cfdff19f320bf893fbace62cb44c",
+          "output": [
+            22862,
+            65432,
+            0,
+            65429,
+            44309,
+            65430,
+            86
+          ],
+          "post_sha256": "3fe55ac8db769e34de76fe7a5920d03adfd3093fee5daf335eab41ee4217e754",
+          "return_step": 786069,
+          "route": "k123",
+          "writes_sha256": "2435ae4809440d2630d1069a8f0374afbbdbe1ba21b58a70892957c5b5176d7c"
+        },
+        {
+          "entry_step": 786107,
+          "input": [
+            16821,
+            65430,
+            1,
+            58,
+            44309,
+            14394,
+            2
+          ],
+          "input_sha256": "1b1ae2b365a448edb1cecff35b219b50673eef1d43d47329f3aa62cff0877257",
+          "legacy_journal_sha256": "a4fa096989cf251085fa9bb3a919f08c1719547e9d0c724b65508cd92563346d",
+          "output": [
+            22851,
+            65432,
+            0,
+            65429,
+            44309,
+            65430,
+            86
+          ],
+          "post_sha256": "c9c8180d3e4012925bdf1ccd06ee22bdc3ce7754ca9012f7d8f0e8a9a61c45ee",
+          "return_step": 788476,
+          "route": "k23",
+          "writes_sha256": "0b67cdec3e0c4d222a9f5f4cb39b2e81128280440fe08e5dde2a8d159cef15b1"
+        }
+      ],
+      "single_oracle_order_verified": true,
+      "source": "FACTOR"
+    },
+    {
+      "REL_sha256": "5fca1ffe38d11c30d20cfb99a23fe2baf002c569790bda83e09151cf36032b15",
+      "combined_guest": 2516110,
+      "combined_host": 9,
+      "controller_failures": [],
+      "declined": 111,
+      "errors": [],
+      "final_RAM_sha256": "73258b284351a4b2116c95da5ce26c502329a4e305d248ba49186098e71bd3fa",
+      "full_equivalence": true,
+      "guest_reference": 2535509,
+      "host_BDOS_services": 2,
+      "k123": 0,
+      "k23": 9,
+      "k23_guest": 2516110,
+      "k23_host": 9,
+      "rejections": [],
+      "roots": [
+        {
+          "entry_step": 1716609,
+          "input": [
+            16821,
+            65452,
+            0,
+            15,
+            1,
+            1551,
+            86
+          ],
+          "input_sha256": "223832b3ddf15a250b7cd8b3ea57317e7d75265bd8a68c62ab6a9fcc4b01f78d",
+          "legacy_journal_sha256": "2d88081dddb0f8e15440f9f05b805c2d477a027a82e213244c48c7d090d00965",
+          "output": [
+            37373,
+            65454,
+            0,
+            65451,
+            44309,
+            65452,
+            86
+          ],
+          "post_sha256": "cb82038a5c93ca465409ad723daf392bc9971feb565cece9b41862bd2377dd21",
+          "return_step": 1718170,
+          "route": "k23",
+          "writes_sha256": "026161772483e5b286783a4c82482d463298384eb311548b73afbb9152a9bfd8"
+        },
+        {
+          "entry_step": 2250140,
+          "input": [
+            16821,
+            65428,
+            0,
+            93,
+            23899,
+            23389,
+            86
+          ],
+          "input_sha256": "c651ee9c2bb20f54977b4b3cf6140ae390469769ea1534ac4e7023221b2c9827",
+          "legacy_journal_sha256": "9c671d8183271e840688e6bcfc5f3ccdc3c8303d99ea4f9626e7e16435138873",
+          "output": [
+            22851,
+            65430,
+            15,
+            65427,
+            44309,
+            65428,
+            86
+          ],
+          "post_sha256": "a76afc9a088549c385f62d09e5a925c10abf216bc629c7cdf8f9b59a43832a91",
+          "return_step": 2252113,
+          "route": "k23",
+          "writes_sha256": "81bdc2c24ae4851347874b5c74fd8b90d7ad9b671fc580733a4018dda2599c39"
+        },
+        {
+          "entry_step": 2263024,
+          "input": [
+            16821,
+            65357,
+            7,
+            22631,
+            9,
+            24935,
+            135
+          ],
+          "input_sha256": "a82aa784cbbb9331d2f5692c497f2aa9295acbcb5d46aba10ea9324ee20758f5",
+          "legacy_journal_sha256": "6fe5cdbaf7c44d3e2626eed148fcfd14b7e995f5d7f23805dd3e4f74c99e7e30",
+          "output": [
+            22873,
+            65359,
+            1,
+            65356,
+            44309,
+            65357,
+            86
+          ],
+          "post_sha256": "d31c2b75a658ff27323eec939674e9b6c037c41c3f3f71cb431c9df20b794572",
+          "return_step": 2265388,
+          "route": "k23",
+          "writes_sha256": "ba01522c636385190ddf2528357142385a05fadaa81b8f90353635c1a9a40efb"
+        },
+        {
+          "entry_step": 2300679,
+          "input": [
+            16821,
+            65280,
+            7,
+            22653,
+            9,
+            65149,
+            135
+          ],
+          "input_sha256": "593aadf6765f9d4c1ebc7c6183ecfd8e160a7b409ede21807a91fcbd4dc18093",
+          "legacy_journal_sha256": "23b130c83eb050348ba4eacf93da15edc47b19bd191343cea740f86fa9845320",
+          "output": [
+            22873,
+            65282,
+            1,
+            65279,
+            44309,
+            65280,
+            86
+          ],
+          "post_sha256": "da9f044f9b5ad8048ae5de41ccd2397f9c981a07bed34931f09e725fdbd7397c",
+          "return_step": 2303048,
+          "route": "k23",
+          "writes_sha256": "1ae48340222498b1c09a20c1ccbdd5939ffbcc8ddd09976b29a560402b55b180"
+        },
+        {
+          "entry_step": 2312752,
+          "input": [
+            16821,
+            65334,
+            235,
+            7557,
+            0,
+            33925,
+            18
+          ],
+          "input_sha256": "e3938c61799817b43a2cf34baeda035c5415a840a67ca4017cc7bf39cc101970",
+          "legacy_journal_sha256": "9f709f4733f113761ff37759f47b788ca62f30588c70dc5d7df7df9aa2567c91",
+          "output": [
+            22851,
+            65336,
+            2,
+            65333,
+            44309,
+            65334,
+            86
+          ],
+          "post_sha256": "3bf6ab7173686aea09946f3e19d54112262c8f09d835b490546b780ad1a68265",
+          "return_step": 2314763,
+          "route": "k23",
+          "writes_sha256": "04624105db134c40ac60498695dedf0c741a4305ffe5c8d90102c5f45f1c772c"
+        },
+        {
+          "entry_step": 2331350,
+          "input": [
+            16821,
+            65314,
+            7,
+            22669,
+            11,
+            65165,
+            135
+          ],
+          "input_sha256": "b28127eac5c316a7ec36c6b92c917dfa70068ae2544700ce1d6b2c6c9bdfeca2",
+          "legacy_journal_sha256": "e579b82c174e625e35957733b7b2f1bd067907713246903cbec4591e94a9f0de",
+          "output": [
+            22873,
+            65316,
+            1,
+            65313,
+            44309,
+            65314,
+            86
+          ],
+          "post_sha256": "83ec8afe4c0cf4b527ddaa5a70a40519424436e4d91d6f668fb03826b3655071",
+          "return_step": 2334179,
+          "route": "k23",
+          "writes_sha256": "4c887bf0099157bc8e77061c8e72e8543ec66ea0d1a1b9671118722debe2d21c"
+        },
+        {
+          "entry_step": 2349625,
+          "input": [
+            16821,
+            65333,
+            1,
+            151,
+            3,
+            37783,
+            86
+          ],
+          "input_sha256": "183f88ff2740150785e92e584d6604f25ba96e9dda68185ab961c686bb889f8c",
+          "legacy_journal_sha256": "cc2070e02eec7d71f1367ff41450d1d2a37fa50af5ed7d5c389942455102cb57",
+          "output": [
+            24832,
+            65335,
+            1,
+            65332,
+            44309,
+            65333,
+            86
+          ],
+          "post_sha256": "52246a3741c759af3a4d4fde2fe190c586de35900105c1d54ca3e3959895a9f1",
+          "return_step": 2352454,
+          "route": "k23",
+          "writes_sha256": "1721628e83700769c0508b378415861d6bd4c5bf67f30bfedad32b1e8a73dc17"
+        },
+        {
+          "entry_step": 2392556,
+          "input": [
+            16821,
+            65422,
+            0,
+            162,
+            24624,
+            41378,
+            86
+          ],
+          "input_sha256": "25f1b016e1a4dc54def0c89343e64526138d961d49eeb2e9db44d500eed29bac",
+          "legacy_journal_sha256": "23be55dec516cc4d76f05053d8703d2859fbc9e14abbf9f834addc7e4a8ecf57",
+          "output": [
+            24241,
+            65424,
+            2,
+            65421,
+            44309,
+            65422,
+            86
+          ],
+          "post_sha256": "8325045ec54f874c13b421630439acb0ffd2d66571ae8a5bbdcf5a9896fc2a01",
+          "return_step": 2394449,
+          "route": "k23",
+          "writes_sha256": "bf6c6e6d0056510a7b371d6f4acddc29622838419ad3a97a71ee14a31d50e3fd"
+        },
+        {
+          "entry_step": 2476961,
+          "input": [
+            16821,
+            65452,
+            0,
+            186,
+            1,
+            1722,
+            86
+          ],
+          "input_sha256": "89cdc5534dfc4ae12db1e0fcbe446d2f19617dade545d3f5986e619063e5b3dc",
+          "legacy_journal_sha256": "b56adab775aad23768d369c47d553ac3f4eaf0591e380545e0b10a94a893e4ee",
+          "output": [
+            37373,
+            65454,
+            0,
+            65451,
+            44309,
+            65452,
+            86
+          ],
+          "post_sha256": "fb88f05cc8bbfae01228e1d820324bf9db8ec09c64b186738132a380efaf42a0",
+          "return_step": 2478522,
+          "route": "k23",
+          "writes_sha256": "2c3a2bf54fce53912118f17dd599487c64339ae193489381721cd3c86d231b9c"
+        }
+      ],
+      "single_oracle_order_verified": true,
+      "source": "OPTIMIST"
+    }
+  ]
+}

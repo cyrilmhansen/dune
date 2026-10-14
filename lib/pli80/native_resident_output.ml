@@ -62,12 +62,16 @@ let synthetic_carrier_cpu ?bdos ?(checkpoint_range=(0x9fc3,0xa0d6)) ~label (entr
  require(List.rev !writes=List.map(fun(w:B.write)->w.address,w.value,w.writer)plan.journal)"synthetic ordered writes and stack writer chronology";
  carrier_synthetic_proofs:=Printf.sprintf"{\"route\":%S,\"C\":%d,\"E\":%d,\"full_RAM_sha256\":%S,\"checkpoints\":[%s],\"all_passed\":true}"label entry.c entry.e(Experiment.sha256_hex expected)(String.concat","(List.rev !states))::!carrier_synthetic_proofs;
  List.rev !checkpoints
-let shadow ?(offset=0x1272) ?(within=[]) ?(run_negatives=true) ?(pli2=false) input=
+let shadow ?(observe_gateway=(fun _ _->())) ?(k123=false) ?(offset=0x1272) ?(within=[]) ?(run_negatives=true) ?(pli2=false) input=
+ require(not k123||offset=0x1fb5)"combined mode only gateway";
  let output_operation offset=if pli2 then B.Pli2_output offset else output_operation offset in
  let image_name offset=if pli2 then "PLI2.OVL" else image_name offset in
- let prepare bridge offset ~call ~origin boundary=B.prepare bridge (output_operation offset) ~call ~origin boundary in
  let bridge=B.create_with_images ~pli_com:input.Experiment.pli_com ~pli0:input.pli0_ovl ~pli1:input.pli1_ovl ~pli2:input.pli2_ovl in
  let previous=ref None and origin=ref Analysis.Execution_map.Unknown and active=ref None in
+ let prepare bridge offset ~call ~origin boundary=
+  if k123&&offset=0x1fb5&&B.gateway_route bridge(Option.get !previous) ~origin boundary=B.K123
+  then B.prepare_k123 bridge ~call ~origin boundary
+  else B.prepare bridge (output_operation offset) ~call ~origin boundary in
  let cases=ref[]and snapshots=ref[]and records=ref[]and root_records=ref[]and service_index=ref 0 in
  let on_bdos_record ~step_index:_=function Cpm.Bdos.Write_record q->records:=(q.file.name,q.logical_record,Bytes.copy q.data)::!records;(if !active<>None then root_records:=(q.file.name,q.logical_record,Bytes.copy q.data)::!root_records)|_->()in
  let on_guest_step ~step_index ~before ~after step=
@@ -76,7 +80,7 @@ let shadow ?(offset=0x1272) ?(within=[]) ?(run_negatives=true) ?(pli2=false) inp
    let writes=List.filter_map(function I8080.Step.Write w->Some(Printf.sprintf"[%d,%d]"w.address w.value)|_->None)(I8080.Step.memory_accesses step)in
    generation_gateway_witnesses:=Printf.sprintf"{\"source\":%S,\"pc\":%d,\"SP_before\":%d,\"SP_after\":%d,\"HL_before\":%d,\"PC_after\":%d,\"writes\":[%s]}"input.module_name before.pc before.sp after.sp(before.h*256+before.l)after.pc(String.concat","writes)::!generation_gateway_witnesses
   );
-  match !active with None->()|Some(_,_,_,_,_,_,_,_,writes,latest,calls)->
+  match !active with None->()|Some(_,_,_,_,_,_,(prepared:B.prepared),_,writes,latest,calls)->
    if List.mem offset[0x3e36;0x7bcc;0x7bb2;0x73ca;0x3d10;0x3bfb;0x3660;0x3790;0x7c22;0x7cb4;0x7c0e;0x7ca0;0x7b02;0x78e9;0x7897;0x785c;0x77cc;0x8342;0x83dc;0x6ea5;0x8072;0x7ed6;0x7d47;0x7d85;0x8398;0x83b4;0x83d2]then(
     let lo,hi=B.bounds(output_operation offset)in let off=before.pc-0x2200 in
     if off>=lo&&off<hi then(
@@ -86,10 +90,11 @@ let shadow ?(offset=0x1272) ?(within=[]) ?(run_negatives=true) ?(pli2=false) inp
     ));
    (match I8080.Step.control_flow step with I8080.Step.Call{taken=true;_}->calls:=before.Runner.pc::!calls|_->());
    List.iter(function I8080.Step.Write w->Hashtbl.replace latest w.address(before.pc,w.value);
-    if before.pc<>0x1abb&&before.pc<>0x1abc&&before.pc<>0x1ac3&&
-     not(List.mem(Char.code(Bytes.get(I8080.Step.fetched_bytes step)0))[0xcd;0xc5;0xd5;0xe5;0xf5])then writes:=(w.address,w.value)::!writes|_->())(I8080.Step.memory_accesses step)in
+    if (k123&&offset=0x1fb5&&(List.exists(fun(w:B.write)->w.writer=(-1))prepared.journal)) || (before.pc<>0x1abb&&before.pc<>0x1abc&&before.pc<>0x1ac3&&
+     not(List.mem(Char.code(Bytes.get(I8080.Step.fetched_bytes step)0))[0xcd;0xc5;0xd5;0xe5;0xf5]))then writes:=(w.address,w.value)::!writes|_->())(I8080.Step.memory_accesses step)in
  let on_before_instruction ~origin:o ~step_index (boundary:Runner.instruction_boundary)=
   origin:=o;let state=boundary.state in
+  if k123&&offset=0x1fb5&&o=B.origin "PLI2.OVL" 0x1fb5 then observe_gateway(B.gateway_route bridge(Option.get !previous) ~origin:o boundary)boundary;
   (match !active with
    |Some(entry_step,call,(entry:Runner.state_snapshot),ram,files,dma,(p:B.prepared),(preview:Runner.host_program_result),writes,latest,calls)when state.pc=call.B.resume&&state.sp=entry.sp+2->
     let prev=Option.get !previous in
@@ -100,21 +105,23 @@ let shadow ?(offset=0x1272) ?(within=[]) ?(run_negatives=true) ?(pli2=false) inp
     require(!service_index=List.length preview.services)"service count/order";
     let planned_records=List.concat_map(fun(s:Runner.host_service)->List.filter_map(function Cpm.Bdos.Write_record q->Some(q.file.name,q.logical_record,q.data)|_->None)s.events)preview.services in
     require(planned_records=List.rev !root_records)"record chronology and bytes";
-    require(List.rev !writes=p.logical_writes)"ordered logical writes";
+    let complete_stream=k123&&offset=0x1fb5&&List.exists(fun(w:B.write)->w.writer=(-1))p.journal in
+    require(List.rev !writes=(if complete_stream then List.map(fun(w:B.write)->w.address,w.value)p.journal else p.logical_writes))"ordered logical/compatibility writes";
     let final=Hashtbl.create 128 in List.iter(fun(w:B.write)->Hashtbl.replace final w.address(w.writer,w.value))p.journal;
-    Hashtbl.iter(fun address value->require(Hashtbl.find_opt latest address=Some value)(Printf.sprintf"last writer %04X"address))final;
+    Hashtbl.iter(fun address value->require((if complete_stream then Option.map snd(Hashtbl.find_opt latest address)=Some(snd value)else Hashtbl.find_opt latest address=Some value))(Printf.sprintf"last writer %04X"address))final;
     require(Hashtbl.length final=Hashtbl.length latest)"omitted writer";
+    if not complete_stream then(
     let planned_calls=List.filter_map(fun(w:B.write)->if w.kind="compatibility"&&w.address mod 2=(entry.sp+(if offset=0x3d10 then 1 else 0))mod 2&&Char.code(Bytes.get (if w.writer>=0x2200 then input.pli2_ovl else input.pli_com)(w.writer-(if w.writer>=0x2200 then 0x2200 else 0x100)))=0xcd then Some w.writer else None)p.journal in
-    require(List.rev !calls=planned_calls)"child CALL chronology";
+    require(List.rev !calls=planned_calls)"child CALL chronology");
     require(not(Hashtbl.mem latest entry.sp)&&not(Hashtbl.mem latest(entry.sp+1)))"original continuation lifetime";
-    cases:={Q.caller=call.coordinate;entry_step;return_step=step_index-1;input=entry;output=state;route=(if offset=0x1272 then"pending_REL_padding_and_close"else if offset=0x119e then"counted_bits"else if offset=0x1140 then"append_bit"else match List.assoc_opt offset[0x04e9,"mapped_high_byte";0x04ff,"mapped_low_byte";0x0515,"saved_byte_word_composition";0x052c,"mapped_word_acquisition";0x8350,"DE_and_HL_word_mask";0x8357,"A_masked_pointed_word";0x6ea5,"mapped_word_paired_generation_handler";0x8072,"relation_attempt_or_paired_publication_emission";0x7ed6,"gated_paired_relation_policy";0x82dd,"representation_termination_and_console_words";0x124b,"byte_alignment_and_7bit_trailer";0x05ff,"line_and_dollar_string";0x0466,"hex_word";0x829c,"structure_pointer_payload_emission";0x7338,"paired_carrier_publication";0x7423,"FFFF_word_publication";0x742a,"reset_publish_read_position";0x79a2,"three_gate_bytes_zero";0x8258,"saved_word_position_emission";0x82b5,"reset_state_fixed_field_emission";0x7e05,"gated_indexed_carrier_generation";0x7dc3,"indexed_carrier_increment";0x7de4,"indexed_carrier_decrement";0x79e2,"fresh_AE05_zero_gate";0x7a17,"fresh_AE04_zero_gate";0x73d0,"bit_gated_indexed_clear";0x8225,"saved_tag_pointer_generation";0x8248,"fixed_C4_pointer_adapter";0x7701,"pointer_trim_and_byte_generation";0x7557,"zero_prefixed_byte";0x756d,"normalized_combined_field";0x75a7,"clear_gate_zero_prefixed_byte";0x75ce,"shifted_field_byte";0x75f1,"two_zero_prefixed_word_bytes";0x7619,"word_carrier_and_byte_pair";0x746f,"clear_gate_byte_carrier";0x74c7,"clear_gate_second_byte_carrier";0x7510,"clear_gate_word_carrier"]with Some route->route|None->"tagged_cached_word");entry_memory_sha256=Experiment.sha256_hex ram;post_memory_sha256=Experiment.sha256_hex preview.memory;stack_cells=List.length(compatibility_writes p);logical_writes=List.length p.logical_writes;prepared=p;services=preview.services;entry_dma=dma;post_dma=preview.dma}::!cases;
+    cases:={Q.caller=call.coordinate;entry_step;return_step=step_index-1;input=entry;output=state;route=(if complete_stream then "k123"else if k123&&offset=0x1fb5 then "k23"else if offset=0x1272 then"pending_REL_padding_and_close"else if offset=0x119e then"counted_bits"else if offset=0x1140 then"append_bit"else match List.assoc_opt offset[0x04e9,"mapped_high_byte";0x04ff,"mapped_low_byte";0x0515,"saved_byte_word_composition";0x052c,"mapped_word_acquisition";0x8350,"DE_and_HL_word_mask";0x8357,"A_masked_pointed_word";0x6ea5,"mapped_word_paired_generation_handler";0x8072,"relation_attempt_or_paired_publication_emission";0x7ed6,"gated_paired_relation_policy";0x82dd,"representation_termination_and_console_words";0x124b,"byte_alignment_and_7bit_trailer";0x05ff,"line_and_dollar_string";0x0466,"hex_word";0x829c,"structure_pointer_payload_emission";0x7338,"paired_carrier_publication";0x7423,"FFFF_word_publication";0x742a,"reset_publish_read_position";0x79a2,"three_gate_bytes_zero";0x8258,"saved_word_position_emission";0x82b5,"reset_state_fixed_field_emission";0x7e05,"gated_indexed_carrier_generation";0x7dc3,"indexed_carrier_increment";0x7de4,"indexed_carrier_decrement";0x79e2,"fresh_AE05_zero_gate";0x7a17,"fresh_AE04_zero_gate";0x73d0,"bit_gated_indexed_clear";0x8225,"saved_tag_pointer_generation";0x8248,"fixed_C4_pointer_adapter";0x7701,"pointer_trim_and_byte_generation";0x7557,"zero_prefixed_byte";0x756d,"normalized_combined_field";0x75a7,"clear_gate_zero_prefixed_byte";0x75ce,"shifted_field_byte";0x75f1,"two_zero_prefixed_word_bytes";0x7619,"word_carrier_and_byte_pair";0x746f,"clear_gate_byte_carrier";0x74c7,"clear_gate_second_byte_carrier";0x7510,"clear_gate_word_carrier"]with Some route->route|None->"tagged_cached_word");entry_memory_sha256=Experiment.sha256_hex ram;post_memory_sha256=Experiment.sha256_hex preview.memory;stack_cells=List.length(compatibility_writes p);logical_writes=List.length p.logical_writes;prepared=p;services=preview.services;entry_dma=dma;post_dma=preview.dma}::!cases;
     snapshots:=(entry_step,{Q.entry_memory=ram;post_memory=preview.memory;entry_files=files;post_files=boundary.copy_filesystem()})::!snapshots;active:=None
    |_->());
   (match !active with Some(_,_,_,_,_,_,_,(preview:Runner.host_program_result),_,_,_)when state.pc=5->
    let service=List.nth preview.services !service_index in incr service_index;
    require(state=service.resume_state&&boundary.copy_memory()=service.memory_after&&boundary.dma=service.dma_after)"historical ordered service resume boundary"|_->());
   if o=B.origin(image_name offset)offset&&(offset<>0x83b4|| !active=None)&&
-   (offset<>0x1fb5||B.k23_applicability bridge (Option.get !previous) ~origin:o boundary=Native_dispatch.Eligible)&&
+   (offset<>0x1fb5||(if k123 then B.gateway_route bridge(Option.get !previous) ~origin:o boundary<>B.Guest else B.k23_applicability bridge (Option.get !previous) ~origin:o boundary=Native_dispatch.Eligible))&&
    (if within<>[]then List.exists(fun(a,b)->a<step_index&&step_index<b)within
     else offset<>0x1140||(Option.get !previous).before.pc=0x13a1) then(
    require(!active=None)"nested output root";
@@ -635,7 +642,8 @@ let shadow ?(offset=0x1272) ?(within=[]) ?(run_negatives=true) ?(pli2=false) inp
  match Experiment.run ~analysis:Experiment.Execution ~on_guest_step ~on_before_instruction ~on_bdos_record input with
  |Error _->failwith"historical output experiment"|Ok historical->require(!active=None)"missing output return";Ok{Q.cases=List.rev !cases;pending=[];historical;snapshots= !snapshots;records=List.rev !records;input_digest=Experiment.sha256_hex(Marshal.to_bytes input[])}
 
-let controller ?(offset=0x1272) ?(exclude_entry_steps=[]) v input=
+let controller ?(observe_gateway=(fun _ _->())) ?(k123=false) ?(offset=0x1272) ?(exclude_entry_steps=[]) v input=
+ require(not k123||offset=0x1fb5)"combined mode only gateway";
  require(v.pending=[])"cannot enable an unfinished logical proof";
  let first,last=B.bounds(output_operation offset) in
  require(v.input_digest=Experiment.sha256_hex(Marshal.to_bytes input[]))"source/input proof mismatch";
@@ -643,13 +651,18 @@ let controller ?(offset=0x1272) ?(exclude_entry_steps=[]) v input=
  require(List.length exclusions=List.length exclude_entry_steps&&List.for_all(fun n->List.exists(fun c->c.entry_step=n)(cases v))exclusions)"invalid exclusions";
  let selected=List.filter(fun c->not(List.mem c.entry_step exclusions))(cases v) in
  let bridge=B.create_with_images ~pli_com:input.Experiment.pli_com ~pli0:input.pli0_ovl ~pli1:input.pli1_ovl ~pli2:input.pli2_ovl in
- let remaining=ref selected and pending=ref None in
+ let remaining=ref selected and pending=ref None and gateway_choice=ref None in
  let prepare previous origin (boundary:Runner.instruction_boundary)=
   let c=match !remaining with q::_->q|[]->failwith"Additional acquisition parent root"in
   let s=List.assoc c.entry_step v.snapshots in
   require(boundary.dma=c.entry_dma&&Cpm.Filesystem.equal(boundary.copy_filesystem())s.entry_files)"entry service_result state proof";
   let call=B.verify_call bridge (output_operation offset) previous ~entry:boundary.state in
-  let p=prepare bridge offset ~call ~origin boundary in
+  let p=if k123&&offset=0x1fb5 then(
+   let route,state,ram=Option.get !gateway_choice in
+   require(state=boundary.state&&ram=boundary.copy_memory())"gateway selected snapshot changed";
+   match route with B.K23->prepare bridge offset ~call ~origin boundary
+   |K123->B.prepare_k123 bridge ~call ~origin boundary
+   |Guest->failwith"declined gateway prepared")else prepare bridge offset ~call ~origin boundary in
   require(p.journal=c.prepared.journal)"ordered compatibility/last-writer proof mismatch";
   let validate(r:Runner.host_program_result)=
    match p.program.validate r with Error _ as e->e|Ok()->
@@ -657,14 +670,21 @@ let controller ?(offset=0x1272) ?(exclude_entry_steps=[]) v input=
     ||not(Cpm.Filesystem.equal r.filesystem s.post_files)then Error"root service_result/post-state proof mismatch"else Ok()in
   let program={p.program with validate}in
   let preview=match boundary.preview_host_program program with Ok q->q|Error e->failwith e in
-  pending:=Some program;remaining:=List.tl !remaining;
+  pending:=Some program;if not k123 then remaining:=List.tl !remaining;
   {Native_dispatch.state=p.state;memory=preview.memory;logical_writes=p.logical_writes;compatibility_writes=compatibility_writes p}in
  let oracles=List.map(fun c->let s=List.assoc c.entry_step v.snapshots in
   {Native_dispatch.input=c.input;output=c.output;entry_memory=s.entry_memory;post_memory=s.post_memory;
    logical_digest=Native_dispatch.write_digest c.prepared.logical_writes})selected in
  let t=Native_dispatch.create ~image:(image_name offset) ~entry_pc:(first+runtime_base offset) ~end_pc:(last+runtime_base offset) ~oracles ~records:v.records ~prepare in
- let t=if offset=0x1fb5 then Native_dispatch.with_partial_scope t(fun previous origin boundary->B.k23_applicability bridge previous ~origin boundary)else t in
- Native_dispatch.with_host_program t(fun _ _->let p=Option.get !pending in pending:=None;p)
+ let t=if offset=0x1fb5 then Native_dispatch.with_partial_scope t(fun previous origin boundary->
+  if not k123 then B.k23_applicability bridge previous ~origin boundary else(
+   gateway_choice:=None;
+   let route=B.gateway_route bridge previous ~origin boundary in
+   observe_gateway route boundary;
+   match route with B.Guest->Native_dispatch.Inapplicable|K23|K123->
+    gateway_choice:=Some(route,boundary.Runner.state,boundary.copy_memory());Native_dispatch.Eligible))else t in
+ Native_dispatch.with_host_program t(fun _ _->let p=Option.get !pending in pending:=None;
+  if k123 then remaining:=List.tl !remaining;p)
 let compare_external v (r:Experiment.result)=
  require(Cpm.Filesystem.equal r.filesystem v.historical.filesystem)"final filesystem";
  let event(e:Experiment.file_event)=e.operation,e.file,e.succeeded,e.logical_record,e.byte_range in
