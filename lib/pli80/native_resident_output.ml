@@ -64,25 +64,27 @@ let synthetic_carrier_cpu ?bdos ?(checkpoint_range=(0x9fc3,0xa0d6)) ~label (entr
  List.rev !checkpoints
 (* Optional installed domains reuse their complete copied transactions. Selection
    precedes oracle inspection; the original two-domain probe stays unchanged. *)
-let gateway_after_existing ~k33 bridge previous ~origin boundary = function
+let gateway_after_existing ~k33 ~k216 bridge previous ~origin:_ boundary = function
  | B.K23 -> "k23" | B.K123 -> "k123"
  | B.Guest ->
   if not k33 then "guest" else
   let call=B.verify_call bridge (B.Pli2_output 0x1fb5) previous ~entry:boundary.Runner.state in
-  if Scanned_gateway_dependencies.eligible33 bridge ~call_site:call.site boundary then "k33" else "guest"
+  if Scanned_gateway_dependencies.eligible33 bridge ~call_site:call.site boundary then "k33"
+  else if k216 && K216_gateway_transaction.eligible bridge ~call_site:call.site boundary then "k216" else "guest"
 
-let gateway_selection ?(k33=false) bridge previous ~origin boundary =
- gateway_after_existing ~k33 bridge previous ~origin boundary (B.gateway_route bridge previous ~origin boundary)
+let gateway_selection ?(k216=false) ?(k33=false) bridge previous ~origin boundary =
+ gateway_after_existing ~k33 ~k216 bridge previous ~origin boundary (B.gateway_route bridge previous ~origin boundary)
 
 let prepare_selection route bridge ~call ~origin boundary =
  match route with
  | "k23" -> B.prepare bridge (B.Pli2_output 0x1fb5) ~call ~origin boundary
  | "k123" -> B.prepare_k123 bridge ~call ~origin boundary
  | "k33" -> Scanned_gateway_dependencies.gateway33 bridge ~call_site:call.B.site boundary
+ | "k216" -> K216_gateway_transaction.prepare bridge ~call_site:call.B.site boundary
  | _ -> failwith "declined gateway prepared"
 
-let shadow ?(k33=false) ?(observe_selection=(fun _ _->())) ?(observe_gateway=(fun _ _->())) ?(k123=false) ?(offset=0x1272) ?(within=[]) ?(run_negatives=true) ?(pli2=false) input=
- require((not k33||k123)&&(not k123||offset=0x1fb5))"combined mode only gateway";
+let shadow ?(k216=false) ?(k33=false) ?(observe_selection=(fun _ _->())) ?(observe_gateway=(fun _ _->())) ?(k123=false) ?(offset=0x1272) ?(within=[]) ?(run_negatives=true) ?(pli2=false) input=
+ require((not k216||k33)&&(not k33||k123)&&(not k123||offset=0x1fb5))"combined mode only gateway";
  let output_operation offset=if pli2 then B.Pli2_output offset else output_operation offset in
  let image_name offset=if pli2 then "PLI2.OVL" else image_name offset in
  let bridge=B.create_with_images ~pli_com:input.Experiment.pli_com ~pli0:input.pli0_ovl ~pli1:input.pli1_ovl ~pli2:input.pli2_ovl in
@@ -146,11 +148,11 @@ let shadow ?(k33=false) ?(observe_selection=(fun _ _->())) ?(observe_gateway=(fu
    let service=List.nth preview.services !service_index in incr service_index;
    require(state=service.resume_state&&boundary.copy_memory()=service.memory_after&&boundary.dma=service.dma_after)"historical ordered service resume boundary"|_->());
   if o=B.origin(image_name offset)offset&&(not k33 || !active=None)&&(offset<>0x83b4|| !active=None)&&
-   (offset<>0x1fb5||(if k123 then (if k33 then gateway_selection ~k33 bridge(Option.get !previous) ~origin:o boundary<>"guest" else B.gateway_route bridge(Option.get !previous) ~origin:o boundary<>B.Guest) else B.k23_applicability bridge (Option.get !previous) ~origin:o boundary=Native_dispatch.Eligible))&&
+   (offset<>0x1fb5||(if k123 then (if k33 then gateway_selection ~k33 ~k216 bridge(Option.get !previous) ~origin:o boundary<>"guest" else B.gateway_route bridge(Option.get !previous) ~origin:o boundary<>B.Guest) else B.k23_applicability bridge (Option.get !previous) ~origin:o boundary=Native_dispatch.Eligible))&&
    (if within<>[]then List.exists(fun(a,b)->a<step_index&&step_index<b)within
     else offset<>0x1140||(Option.get !previous).before.pc=0x13a1) then(
    require(!active=None)"nested output root";
-   if k33 then (active_route:=gateway_selection ~k33 bridge(Option.get !previous) ~origin:o boundary;
+   if k33 then (active_route:=gateway_selection ~k33 ~k216 bridge(Option.get !previous) ~origin:o boundary;
     observe_selection !active_route boundary);
    let call=B.verify_call bridge (output_operation offset)(Option.get !previous)~entry:state in
    let ram=boundary.copy_memory()and files=boundary.copy_filesystem()and dma=boundary.dma in
@@ -669,8 +671,8 @@ let shadow ?(k33=false) ?(observe_selection=(fun _ _->())) ?(observe_gateway=(fu
  match Experiment.run ~analysis:Experiment.Execution ~on_guest_step ~on_before_instruction ~on_bdos_record input with
  |Error _->failwith"historical output experiment"|Ok historical->require(!active=None)"missing output return";Ok{Q.cases=List.rev !cases;pending=[];historical;snapshots= !snapshots;records=List.rev !records;input_digest=Experiment.sha256_hex(Marshal.to_bytes input[])}
 
-let controller ?(k33=false) ?(observe_selection=(fun _ _->())) ?(observe_gateway=(fun _ _->())) ?(k123=false) ?(offset=0x1272) ?(exclude_entry_steps=[]) v input=
- require((not k33||k123)&&(not k123||offset=0x1fb5))"combined mode only gateway";
+let controller ?(k216=false) ?(k33=false) ?(observe_selection=(fun _ _->())) ?(observe_gateway=(fun _ _->())) ?(k123=false) ?(offset=0x1272) ?(exclude_entry_steps=[]) v input=
+ require((not k216||k33)&&(not k33||k123)&&(not k123||offset=0x1fb5))"combined mode only gateway";
  require(v.pending=[])"cannot enable an unfinished logical proof";
  let first,last=B.bounds(output_operation offset) in
  require(v.input_digest=Experiment.sha256_hex(Marshal.to_bytes input[]))"source/input proof mismatch";
@@ -706,7 +708,7 @@ let controller ?(k33=false) ?(observe_selection=(fun _ _->())) ?(observe_gateway
    gateway_choice:=None;
    let old_route=B.gateway_route bridge previous ~origin boundary in
    observe_gateway old_route boundary;
-   let route=gateway_after_existing ~k33 bridge previous ~origin boundary old_route in
+   let route=gateway_after_existing ~k33 ~k216 bridge previous ~origin boundary old_route in
    observe_selection route boundary;
    match route with "guest"->Native_dispatch.Inapplicable|_->
     gateway_choice:=Some(route,boundary.Runner.state,boundary.copy_memory());Native_dispatch.Eligible))else t in

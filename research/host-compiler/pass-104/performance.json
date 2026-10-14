@@ -1,0 +1,150 @@
+{
+  "method": "One sequential run per mode, identical executable/input/Execution analysis, no concurrent task validation. Acquisition excluded from runtime; ordered concrete/Pass87/Pass103/four-domain runs. Single-run samples, no statistical speedup claim.",
+  "raw_capture": "_build/host-compiler-pass-104/performance.json",
+  "raw_SHA256": "9d9d3739330874e063d161c96aec370d3b7de910447967c72ffa8b8e6e59abbf",
+  "sources": [
+    {
+      "source": "MINIMAL",
+      "concrete_guest": 441855,
+      "pass87_guest": 440293,
+      "installed_guest": 440293,
+      "pass87_host": 1,
+      "installed_host": 1,
+      "k23": 1,
+      "k123": 0,
+      "k33": 0,
+      "k216": 0,
+      "declined": 10,
+      "concrete_seconds": 0.33022,
+      "pass87_seconds": 0.242653,
+      "installed_seconds": 0.280701,
+      "pass103": {
+        "guest": 440293,
+        "host": 1,
+        "declined": 10,
+        "seconds": 0.268513
+      },
+      "oracle_acquisition_seconds": 0.307532,
+      "pass87_acquisition_seconds": 0.288531,
+      "new_root_staging": []
+    },
+    {
+      "source": "FIZZBUZ",
+      "concrete_guest": 1145517,
+      "pass87_guest": 1123194,
+      "installed_guest": 1123194,
+      "pass87_host": 13,
+      "installed_host": 13,
+      "k23": 13,
+      "k123": 0,
+      "k33": 0,
+      "k216": 0,
+      "declined": 48,
+      "concrete_seconds": 0.58517,
+      "pass87_seconds": 0.62177,
+      "installed_seconds": 0.775019,
+      "pass103": {
+        "guest": 1123194,
+        "host": 13,
+        "declined": 48,
+        "seconds": 0.705629
+      },
+      "oracle_acquisition_seconds": 0.847581,
+      "pass87_acquisition_seconds": 0.997732,
+      "new_root_staging": []
+    },
+    {
+      "source": "PICTURE",
+      "concrete_guest": 518213,
+      "pass87_guest": 516314,
+      "installed_guest": 516314,
+      "pass87_host": 1,
+      "installed_host": 1,
+      "k23": 1,
+      "k123": 0,
+      "k33": 0,
+      "k216": 0,
+      "declined": 11,
+      "concrete_seconds": 0.284264,
+      "pass87_seconds": 0.280942,
+      "installed_seconds": 0.314462,
+      "pass103": {
+        "guest": 516314,
+        "host": 1,
+        "declined": 11,
+        "seconds": 0.290472
+      },
+      "oracle_acquisition_seconds": 0.32908,
+      "pass87_acquisition_seconds": 0.312362,
+      "new_root_staging": []
+    },
+    {
+      "source": "FACTOR",
+      "concrete_guest": 838415,
+      "pass87_guest": 823075,
+      "installed_guest": 821952,
+      "pass87_host": 6,
+      "installed_host": 6,
+      "k23": 3,
+      "k123": 2,
+      "k33": 1,
+      "k216": 0,
+      "declined": 26,
+      "concrete_seconds": 0.432216,
+      "pass87_seconds": 0.471957,
+      "installed_seconds": 0.586655,
+      "pass103": {
+        "guest": 821952,
+        "host": 6,
+        "declined": 26,
+        "seconds": 0.556375
+      },
+      "oracle_acquisition_seconds": 0.649649,
+      "pass87_acquisition_seconds": 0.501879,
+      "new_root_staging": [
+        {
+          "route": "k33",
+          "eligibility_seconds": 0.014867,
+          "prepare_seconds": 0.013526
+        }
+      ]
+    },
+    {
+      "source": "OPTIMIST",
+      "concrete_guest": 2535509,
+      "pass87_guest": 2516110,
+      "installed_guest": 2496035,
+      "pass87_host": 9,
+      "installed_host": 9,
+      "k23": 7,
+      "k123": 0,
+      "k33": 1,
+      "k216": 1,
+      "declined": 106,
+      "concrete_seconds": 1.303998,
+      "pass87_seconds": 1.414421,
+      "installed_seconds": 1.971495,
+      "pass103": {
+        "guest": 2514982,
+        "host": 9,
+        "declined": 110,
+        "seconds": 1.638158
+      },
+      "oracle_acquisition_seconds": 2.139358,
+      "pass87_acquisition_seconds": 1.497339,
+      "new_root_staging": [
+        {
+          "route": "k216",
+          "eligibility_seconds": 0.05951,
+          "prepare_seconds": 0.085703
+        },
+        {
+          "route": "k33",
+          "eligibility_seconds": 0.015462,
+          "prepare_seconds": 0.014953
+        }
+      ]
+    }
+  ],
+  "all_root_and_final_identities_equal_validation": true
+}
