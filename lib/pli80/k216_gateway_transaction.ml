@@ -2,10 +2,10 @@
 module G=Scanned_gateway_dependencies
 let prepare ?observe_read bridge ~call_site boundary=
  G.gateway216 ?observe_read bridge ~handler:(K216_complete.handler bridge) ~call_site boundary
-let eligible bridge ~call_site boundary=
+let assess bridge ~call_site boundary=
  match prepare bridge ~call_site boundary with
- |_->true
- |exception G.Outside_scope _->false
+ |prepared->Some prepared
+ |exception G.Outside_scope _->None
  |exception Invalid_argument text when List.mem text[
   "k216 complete: entry/frame";"k216 complete: software continuation";
   "k216 nested front: hardware/software ancestry";
@@ -27,4 +27,7 @@ let eligible bridge ~call_site boundary=
   "k123 +75CE: unsupported output state";
   "k123 +73A7: inherited output scope";
   "k123 +785C: pointer, output or alias scope";
-  "k123 +77CC: active pointer/stack alias"]->false
+  "k123 +77CC: active pointer/stack alias"]->None
+
+let eligible bridge ~call_site boundary=
+ Option.is_some(assess bridge ~call_site boundary)

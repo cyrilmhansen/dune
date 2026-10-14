@@ -1,0 +1,28 @@
+{
+  "baseline": "42b37ef23023f92622c28ac05e2a61b867eae8b4",
+  "change": "Return the already computed prepared operation from existing scoped assessment; bind to complete invocation context; reuse it for k33/k216 only.",
+  "scope": "Single existing41B5 controller; k23/k123 operations, k33/k216 guards and exception lists unchanged. No native domain or oracle ordering changes.",
+  "binding": [
+    "CPU/registers/flags/PC/SP",
+    "all64KiB entryRAM",
+    "filesystem snapshot",
+    "DMA",
+    "original previous CALL/Step/SP/words",
+    "canonical image origin"
+  ],
+  "lifetime": "A new applicability attempt clears the previous choice; successful host-program handoff clears it. Changed context rejects before use. Original commit/oracle/ordered-program validation remains mandatory.",
+  "rejection": "Full original probes retained. An early canonical-index rejection would hide before-index canonical code/alias proof errors; this is independently discriminated on naturally declined entries.",
+  "baseline_control": "reuse_staging:false follows the original selector, snapshot guard and fresh preparation path. k23/k123 use that original path even with optimization enabled. The literal pre-edit Pass104 executable is also repeated three times, with original observer overhead explicitly separated.",
+  "measurement": "Repeated alternating sequential native runs with identical input/binary/Execution analysis. Acquisition and controller/oracle construction separated; detailed chronology comparison and phase samples outside runtime timing.",
+  "limitations": "Rejected-domain preparation, nested canonical copies/previews, oracle checks and mandatory validation remain. No historical instruction semantics optimized.",
+  "knowledge_promotions": 0,
+  "controller_coordinates": 1,
+  "FULL": "not executed/scheduled/awaited; Pass74 epoch3 unchanged",
+  "evidence": [
+    "comparison.json",
+    "performance.json",
+    "exact-baseline.json",
+    "validation.json",
+    "reconstruction.json"
+  ]
+}

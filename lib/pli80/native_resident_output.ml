@@ -83,6 +83,38 @@ let prepare_selection route bridge ~call ~origin boundary =
  | "k216" -> K216_gateway_transaction.prepare bridge ~call_site:call.B.site boundary
  | _ -> failwith "declined gateway prepared"
 
+(* A single invocation owns this staged value. No oracle participates in selection.
+   Keep the prior selector above as an exact control for incremental measurements. *)
+type gateway_preparation = {
+ route : string; previous : Native_dispatch.previous;
+ origin : Analysis.Execution_map.origin; entry : Runner.state_snapshot;
+ memory : bytes; filesystem : Cpm.Filesystem.t; dma : int;
+ staged : B.prepared option;
+}
+let bind_gateway route staged previous origin (boundary:Runner.instruction_boundary) =
+ {route;staged;previous;origin;entry=boundary.state;memory=boundary.copy_memory();
+  filesystem=boundary.copy_filesystem();dma=boundary.dma}
+let stage_gateway_after_existing ~k33 ~k216 bridge previous ~origin boundary old_route =
+ (* Capture before the copied computation, including before any selection observer. *)
+ let binding=bind_gateway "guest" None previous origin boundary in
+ let route,staged=match old_route with
+ | B.K23 -> "k23",None | B.K123 -> "k123",None
+ | B.Guest when not k33 -> "guest",None
+ | B.Guest ->
+  let call=B.verify_call bridge (B.Pli2_output 0x1fb5) previous ~entry:boundary.Runner.state in
+  match Scanned_gateway_dependencies.assess33 bridge ~call_site:call.site boundary with
+  |Some p->"k33",Some p
+  |None->if not k216 then "guest",None else
+   match K216_gateway_transaction.assess bridge ~call_site:call.site boundary with
+   |Some p->"k216",Some p|None->"guest",None in
+ {binding with route;staged}
+let prepare_gateway binding bridge previous ~origin (boundary:Runner.instruction_boundary)=
+ require(binding.entry=boundary.state && binding.memory=boundary.copy_memory() &&
+  binding.dma=boundary.dma && Cpm.Filesystem.equal binding.filesystem(boundary.copy_filesystem()) &&
+  binding.previous=previous && binding.origin=origin)"gateway selected context changed";
+ let call=B.verify_call bridge (B.Pli2_output 0x1fb5) previous ~entry:boundary.state in
+ match binding.staged with Some p->p|None->prepare_selection binding.route bridge ~call ~origin boundary
+
 let shadow ?(k216=false) ?(k33=false) ?(observe_selection=(fun _ _->())) ?(observe_gateway=(fun _ _->())) ?(k123=false) ?(offset=0x1272) ?(within=[]) ?(run_negatives=true) ?(pli2=false) input=
  require((not k216||k33)&&(not k33||k123)&&(not k123||offset=0x1fb5))"combined mode only gateway";
  let output_operation offset=if pli2 then B.Pli2_output offset else output_operation offset in
@@ -671,7 +703,7 @@ let shadow ?(k216=false) ?(k33=false) ?(observe_selection=(fun _ _->())) ?(obser
  match Experiment.run ~analysis:Experiment.Execution ~on_guest_step ~on_before_instruction ~on_bdos_record input with
  |Error _->failwith"historical output experiment"|Ok historical->require(!active=None)"missing output return";Ok{Q.cases=List.rev !cases;pending=[];historical;snapshots= !snapshots;records=List.rev !records;input_digest=Experiment.sha256_hex(Marshal.to_bytes input[])}
 
-let controller ?(k216=false) ?(k33=false) ?(observe_selection=(fun _ _->())) ?(observe_gateway=(fun _ _->())) ?(k123=false) ?(offset=0x1272) ?(exclude_entry_steps=[]) v input=
+let controller ?(reuse_staging=true) ?(k216=false) ?(k33=false) ?(observe_selection=(fun _ _->())) ?(observe_gateway=(fun _ _->())) ?(k123=false) ?(offset=0x1272) ?(exclude_entry_steps=[]) v input=
  require((not k216||k33)&&(not k33||k123)&&(not k123||offset=0x1fb5))"combined mode only gateway";
  require(v.pending=[])"cannot enable an unfinished logical proof";
  let first,last=B.bounds(output_operation offset) in
@@ -687,9 +719,11 @@ let controller ?(k216=false) ?(k33=false) ?(observe_selection=(fun _ _->())) ?(o
   require(boundary.dma=c.entry_dma&&Cpm.Filesystem.equal(boundary.copy_filesystem())s.entry_files)"entry service_result state proof";
   let call=B.verify_call bridge (output_operation offset) previous ~entry:boundary.state in
   let p=if k123&&offset=0x1fb5 then(
-   let route,state,ram=Option.get !gateway_choice in
-   require(state=boundary.state&&ram=boundary.copy_memory())"gateway selected snapshot changed";
-   prepare_selection route bridge ~call ~origin boundary)else prepare bridge offset ~call ~origin boundary in
+   match Option.get !gateway_choice with
+   |`Staged binding->prepare_gateway binding bridge previous ~origin boundary
+   |`Legacy(route,state,ram)->
+    require(state=boundary.state&&ram=boundary.copy_memory())"gateway selected snapshot changed";
+    prepare_selection route bridge ~call ~origin boundary)else prepare bridge offset ~call ~origin boundary in
   require(p.journal=c.prepared.journal)"ordered compatibility/last-writer proof mismatch";
   let validate(r:Runner.host_program_result)=
    match p.program.validate r with Error _ as e->e|Ok()->
@@ -708,11 +742,17 @@ let controller ?(k216=false) ?(k33=false) ?(observe_selection=(fun _ _->())) ?(o
    gateway_choice:=None;
    let old_route=B.gateway_route bridge previous ~origin boundary in
    observe_gateway old_route boundary;
-   let route=gateway_after_existing ~k33 ~k216 bridge previous ~origin boundary old_route in
-   observe_selection route boundary;
-   match route with "guest"->Native_dispatch.Inapplicable|_->
-    gateway_choice:=Some(route,boundary.Runner.state,boundary.copy_memory());Native_dispatch.Eligible))else t in
- Native_dispatch.with_host_program t(fun _ _->let p=Option.get !pending in pending:=None;
+   if reuse_staging && k33 && old_route=B.Guest then(
+    let binding=stage_gateway_after_existing ~k33 ~k216 bridge previous ~origin boundary old_route in
+    observe_selection binding.route boundary;
+    match binding.route with "guest"->Native_dispatch.Inapplicable|_->
+     gateway_choice:=Some(`Staged binding);Native_dispatch.Eligible
+   )else(
+    let route=gateway_after_existing ~k33 ~k216 bridge previous ~origin boundary old_route in
+    observe_selection route boundary;
+    match route with "guest"->Native_dispatch.Inapplicable|_->
+     gateway_choice:=Some(`Legacy(route,boundary.Runner.state,boundary.copy_memory()));Native_dispatch.Eligible)))else t in
+ Native_dispatch.with_host_program t(fun _ _->let p=Option.get !pending in pending:=None;gateway_choice:=None;
   if k123 then remaining:=List.tl !remaining;p)
 let compare_external v (r:Experiment.result)=
  require(Cpm.Filesystem.equal r.filesystem v.historical.filesystem)"final filesystem";

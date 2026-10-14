@@ -225,15 +225,18 @@ let gateway84 ?observe_read bridge ~call_site boundary=
  gateway ~k84_selected:true ?observe_read bridge ~call_site boundary
 
 (* Only named scope restrictions decline; unexpected child/proof errors propagate. *)
-let eligible33 bridge ~call_site boundary=
+let assess33 bridge ~call_site boundary=
  match gateway33 bridge ~call_site boundary with
- |_->true
- |exception Outside_scope _->false
+ |prepared->Some prepared
+ |exception Outside_scope _->None
  |exception Invalid_argument text when List.mem text[
   "k33 handler: unsupported zero selector";"k33 handler: unsupported selector2/other";
   "k33 handler: unproved3EF6 high predicate/38B1";"k33 handler: unproved3731/36E0 route";
   "382E: single forward counter domain";"382E: unobserved forward7D47 route";
-  "382E: unobserved backward7D85 route";"382E: unobserved index6 publication"]->false
+  "382E: unobserved backward7D85 route";"382E: unobserved index6 publication"]->None
+
+let eligible33 bridge ~call_site boundary=
+ Option.is_some(assess33 bridge ~call_site boundary)
 
 (* New scope probe; unexpected canonical/code/continuation failures propagate. *)
 let eligible105 bridge ~call_site boundary=
