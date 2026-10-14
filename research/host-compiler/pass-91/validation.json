@@ -1,0 +1,165 @@
+{
+  "profile": "legacy-categories",
+  "validation_tier": "INCREMENTAL",
+  "selected_categories": [
+    "build",
+    "diff-check",
+    "pass91",
+    "project",
+    "validation-runner-tests"
+  ],
+  "extra_categories": [],
+  "selected_category_count": 5,
+  "workers": 4,
+  "last_certified_full_epoch": {
+    "name": "Pass74",
+    "epoch": 3,
+    "implementation_commit": "878544acb368b5635c4fa242a03508103eaf30aa",
+    "certification_artifact": "research/host-compiler/pass-74/validation-full.json",
+    "receipt": "research/host-compiler/pass-74/validation-full.json",
+    "initial_receipt": "research/host-compiler/pass-74/validation-full-initial.json",
+    "targeted_rerun_receipt": "research/host-compiler/pass-74/validation-full-rerun.json",
+    "status": "PASSED AFTER DOCUMENTED HARNESS-ONLY RERUN",
+    "initial_all_passed": false,
+    "category_count": 105,
+    "python_test_execution_counts": {
+      "initial": 798,
+      "targeted_rerun": 32
+    },
+    "dune_stanzas": 40,
+    "wall_seconds": 4518.415,
+    "sum_category_seconds": 16219.088,
+    "initial_wall_seconds": 4029.341,
+    "initial_sum_category_seconds": 15210.273,
+    "rerun_wall_seconds": 489.074,
+    "rerun_sum_category_seconds": 1008.815,
+    "workers": 4,
+    "reruns": 1,
+    "rerun_category_count": 5,
+    "affected_historical_category_count": 3,
+    "historical_bytes": 94720,
+    "receipt_commit_provenance": "Certification artifact committed separately from published Pass74 semantic implementation; certification commit SHA reported after push, without self-reference"
+  },
+  "certificate_limit": "A certified commit is historical evidence, not an automatic certificate for arbitrary descendant code. No dependency-hash invalidation engine is implemented in Phase 1.",
+  "all_passed": true,
+  "wall_seconds": 11.81,
+  "sum_category_seconds": 12.015,
+  "safe_parallel_workers": 4,
+  "serial_categories": [
+    "build",
+    "project"
+  ],
+  "category_count": 5,
+  "python_test_count": 20,
+  "categories": {
+    "build": {
+      "return_code": 0,
+      "elapsed_seconds": 7.147,
+      "command": [
+        "dune",
+        "build",
+        "@all",
+        "-j",
+        "4"
+      ],
+      "python_tests": 0
+    },
+    "project": {
+      "return_code": 0,
+      "elapsed_seconds": 1.499,
+      "command": [
+        "dune",
+        "runtest",
+        "-j",
+        "4"
+      ],
+      "python_tests": 0
+    },
+    "diff-check": {
+      "return_code": 0,
+      "elapsed_seconds": 0.004,
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "python_tests": 0
+    },
+    "validation-runner-tests": {
+      "return_code": 0,
+      "elapsed_seconds": 0.205,
+      "command": [
+        "python3",
+        "tools/annotated-assembly/test_validation_runner.py",
+        "-q"
+      ],
+      "python_tests": 17
+    },
+    "pass91": {
+      "return_code": 0,
+      "elapsed_seconds": 3.16,
+      "command": [
+        "python3",
+        "tools/annotated-assembly/test_k216_handler_pass_91.py",
+        "--images",
+        "/home/john/pli/cpm/pli80/DISK1",
+        "-q"
+      ],
+      "python_tests": 3
+    }
+  },
+  "not_run_categories": [],
+  "top_10_slowest": [
+    {
+      "category": "build",
+      "elapsed_seconds": 7.147
+    },
+    {
+      "category": "pass91",
+      "elapsed_seconds": 3.16
+    },
+    {
+      "category": "project",
+      "elapsed_seconds": 1.499
+    },
+    {
+      "category": "validation-runner-tests",
+      "elapsed_seconds": 0.205
+    },
+    {
+      "category": "diff-check",
+      "elapsed_seconds": 0.004
+    }
+  ],
+  "isolation": "Serial shared Dune build/tests; later categories read prebuilt binaries and immutable captures, with unique temporary outputs; PYTHONDONTWRITEBYTECODE=1; Dune-exec launcher rejects build commands",
+  "binary_hashes": {
+    "pli80-run": "92ff6cbd9073710a47bfd58fd9bba91dfb480a401efba68ad9de13eb6556db71",
+    "pli80-analyze": "cc297f0356426e715fd8982b4c04bdae222c0cade5da02f8d04f1ae04a740342",
+    "pli80-native-7bbf": "fe93223b72d64d14fe98ff1dd5dd4bf1cd3e34c0f989d9f6e203e926e7605849",
+    "pli80-native-7b7a": "3881d05ffc4d44d81877f29f2024448b4d438240ac2329025b4ba87580621918",
+    "pli80-native-7c1b": "0915ef9cee961e308cfed9c28e5299f450331e9f483fe3ef553b675abe0949bd",
+    "pli80-native-mapped-publication": "f369f9d6d44be517592fa2c38810c28cd4b862a303b2933801feb6104f710a7e",
+    "pli80-native-attribute-auxiliary": "d9ef913205f29f6aae5051fc7af0be4ac6aacd7d35508bbfc4ab0344cd3a60aa",
+    "pli80-int-emitter-audit": "dee46d9ad7b5c554d98c1cac19d2424b3a67acd2426820bb1837358bb28d2e49",
+    "pli80-native-int-emitter": "852f49b5cf356df0210308073981c5530b482f508bed1f1088f34e9a26fc1738",
+    "pli80-native-word-emitters": "59edd1a92b0557f9c59a2c4b14fca404e6b69579b44727d8b17d15d437598cd0",
+    "pli80-native-range-processing": "d8ff9731d46b741e4672a1ecf48f18e8928c0c0956b8e6852ed87125e6aabce6",
+    "pli80-native-publication-primitives": "971b1b5ce9166500fabb60bfb923ceb32cef86b81d80ef323df30913eb9a34b5",
+    "pli80-native-range-publication": "9aae0cc82aa7ce79ca23426e1bcc3f9806ddce15a1d33dd2cec79ddf299ffbe8",
+    "pli80-native-input-processing": "81bc3dfe12fc254bec417d3772050dda1ff62fb5f0c474ba1afc94a4e30e600f",
+    "pli80-native-attribute-gate": "4cf06d9e64b932127ff72eb3df2c845beab908799c55bfc5235e38d3f539ff60",
+    "pli80-native-state-adaptation": "625a249c8210985e49cc6055cdb19904d53c7767bc77f31dfb02f7671fd1b2d0",
+    "pli80-native-acquisition-parent": "2579e44296782e6bc5acd00a529184557301cb70f582d82f19b0d4ece11aef2a",
+    "pli80-native-reentrant-acquisition": "2421298f8c06f7ba4ce7578dbdc366c630dd7535964884f04cafee5fdc8bb5de",
+    "pli80-native-acquisition-family": "f6c85cad876333c50343712b38302e61a2014ac91a65af0f5f89804523787815",
+    "pli80-native-numeric-acquisition": "e8b121bf972c90c04859e6a298ac0efa3348bfb2232baf3ccc889280662b854f",
+    "pli80-native-reentrant-hybrids": "a47eac512a65d6d9c37e7799d474b64a4b0ee8ad57ad24a7867b71ba24018bef",
+    "pli80-native-wrapper-hybrids": "00cfd02489254bb296a7e12e88442b03daec65ecad25d452619169f772f90f6b",
+    "pli80-native-selection-hybrids": "dd554783dbdf777b5876ae1cf28a774221a46910fcb76c96375fb54dd34de29e",
+    "pli80-native-recursive-hybrids": "e9f20c39532ed547373335c6ae6eeb6517d326f9a33ceac8f75d6a0e1cdabdfa",
+    "pli80-native-acquisition-frame-hybrids": "fc802603d34f157df0f833764003d815debfd03dce50fa815da5e43f073850e1",
+    "pli80-native-initialization-parent-hybrids": "13f22db597ad09a5e3cb47a1702e21f1526a061932c4cede1335ff735515b852",
+    "pli80-native-delimiter-driver-hybrids": "33cc1543ff13ec5a50e048555c503a20c23655c5d1ff6bb4d9b7eb629cbe014b",
+    "pli80-native-output-finalization-hybrids": "85f135921d77367543d95b08971b2a9b73984336576e8c945d82bc83fc7591e2"
+  }
+}

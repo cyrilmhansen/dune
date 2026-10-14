@@ -1,0 +1,110 @@
+{
+  "capture_SHA256": "338c45ffd5dc8d146f65380e7089bf32573e79b034e829718ce48efae6ea069d",
+  "continuation": "Real20AF PUSH42B4/PCHL; nested hardware children consume their own words; tail RET consumes original software word",
+  "direct_calls": [
+    {
+      "site": 36679,
+      "state": {
+        "a": 0,
+        "b": 0,
+        "c": 0,
+        "d": 0,
+        "e": 4,
+        "flags": {
+          "auxiliary_carry": true,
+          "carry": false,
+          "parity": true,
+          "sign": false,
+          "zero": true
+        },
+        "h": 143,
+        "l": 71,
+        "pc": 36679,
+        "sp": 65407
+      },
+      "target": 35218
+    },
+    {
+      "site": 36682,
+      "state": {
+        "a": 0,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 0,
+        "flags": {
+          "auxiliary_carry": false,
+          "carry": false,
+          "parity": true,
+          "sign": true,
+          "zero": false
+        },
+        "h": 107,
+        "l": 97,
+        "pc": 36682,
+        "sp": 65407
+      },
+      "target": 35361
+    },
+    {
+      "site": 36694,
+      "state": {
+        "a": 20,
+        "b": 135,
+        "c": 217,
+        "d": 0,
+        "e": 0,
+        "flags": {
+          "auxiliary_carry": false,
+          "carry": false,
+          "parity": true,
+          "sign": false,
+          "zero": false
+        },
+        "h": 135,
+        "l": 217,
+        "pc": 36694,
+        "sp": 65407
+      },
+      "target": 42056
+    }
+  ],
+  "entry": {
+    "a": 0,
+    "b": 0,
+    "c": 0,
+    "d": 0,
+    "e": 4,
+    "flags": {
+      "auxiliary_carry": true,
+      "carry": false,
+      "parity": true,
+      "sign": false,
+      "zero": true
+    },
+    "h": 143,
+    "l": 71,
+    "pc": 36679,
+    "sp": 65407
+  },
+  "exit": {
+    "a": 4,
+    "b": 29,
+    "c": 10,
+    "d": 0,
+    "e": 8,
+    "flags": {
+      "auxiliary_carry": false,
+      "carry": true,
+      "parity": true,
+      "sign": true,
+      "zero": false
+    },
+    "h": 173,
+    "l": 236,
+    "pc": 17076,
+    "sp": 65409
+  },
+  "instructions": 19905,
+  "software_RET": 36697
+}
