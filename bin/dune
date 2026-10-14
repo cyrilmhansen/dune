@@ -389,3 +389,7 @@
 (executable
  (name k105_handler_proof)
  (libraries pli80 analysis runner unix))
+
+(executable
+ (name k105_fallback_predicate_proof)
+ (libraries pli80 analysis runner unix))

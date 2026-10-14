@@ -6,15 +6,23 @@ module R=Pli80_host.Recursive_mapped
 module S=Pli80_host.State
 exception Outside_scope of string
 let scope c s=if not c then raise(Outside_scope s)
-let predicate ?(observe_read=(fun _ _ _->())) bridge ~call_site (boundary:Runner.instruction_boundary)=
+let predicate ?(k105_fallback=false) ?(observe_read=(fun _ _ _->())) bridge ~call_site (boundary:Runner.instruction_boundary)=
  let entry=boundary.state in
  let need c s=if not c then invalid_arg("scanned predicate: "^s)in
  scope(entry.pc=0x3fff&&entry.sp>=0xb220&&entry.sp<=0xfffc)"predicate entry/frame";
  let memory=S.of_bytes(boundary.copy_memory())in
  let index=S.read memory 0xad1c and pointer=S.word memory 0xad1d in
- let records=match index with 33->[0x57d7]|216->[0x8719;0x871e;0x8723;0x8728]|_->raise(Outside_scope "predicate index")in
+ let records=if k105_fallback then(
+  scope(index=105&&call_site=0x4285)"k105 fallback ownership";
+  let table=0x1b4b+index in
+  scope(S.read memory table=Char.code(Bytes.get bridge.B.com(table-0x100)))"k105 fallback index table";
+  let j=S.read memory table land 7 in let slot=0x3c13+2*j in
+  for address=slot to slot+1 do scope(S.read memory address=Char.code(Bytes.get bridge.B.pli2(address-0x2200)))"k105 fallback pointer table"done;
+  let record=(S.word memory slot+1)land 65535 in
+  scope(record=0x3bf6)"k105 fallback record domain";[record]
+ )else match index with 33->[0x57d7]|216->[0x8719;0x871e;0x8723;0x8728]|_->raise(Outside_scope "predicate index")in
  scope(List.mem pointer records)"predicate record pointer";
- let count=S.read memory pointer in scope(count=(if index=33 then 3 else 4))"predicate record count";
+ let count=S.read memory pointer in scope(count=(if k105_fallback then 2 else if index=33 then 3 else 4))"predicate record count";
  for i=0 to count do scope(S.read memory(pointer+i)=Char.code(Bytes.get bridge.B.pli2(pointer+i-0x2200)))"predicate immutable record"done;
  for o=0x1dff to 0x1fb4 do scope(S.read memory(o+0x2200)=Char.code(Bytes.get bridge.pli2 o))"predicate code"done;
  scope(S.read memory call_site=0xcd&&S.word memory(call_site+1)=0x3fff&&S.word memory entry.sp=call_site+3)"predicate CALL word";

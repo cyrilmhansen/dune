@@ -1,0 +1,73 @@
+{
+  "domain": "Only opt-in k105 fallback; existing default k33/k216 scope unchanged",
+  "parent_derivation": [
+    {
+      "index": 105,
+      "entry_RAM_sha256": "9a906152774c2e031889854160dc11e36ef6a7f8e42c5ce7e4618a9ce9bee161",
+      "input_vector": [
+        16821,
+        65380,
+        0,
+        65381,
+        2,
+        25189,
+        86
+      ],
+      "descriptor": 17231,
+      "handler": 17746,
+      "count": 0,
+      "fallback_index": 2,
+      "fallback_table_word": 15349,
+      "fallback_record": 15350
+    },
+    {
+      "index": 105,
+      "entry_RAM_sha256": "8d656457198090cb3b10190c22857e3c4d6ca578c691c9720ba5caa977f6346c",
+      "input_vector": [
+        16821,
+        65303,
+        0,
+        65403,
+        2,
+        33659,
+        86
+      ],
+      "descriptor": 17231,
+      "handler": 17746,
+      "count": 0,
+      "fallback_index": 2,
+      "fallback_table_word": 15349,
+      "fallback_record": 15350
+    },
+    {
+      "index": 105,
+      "entry_RAM_sha256": "2804f0c4203e23a964f869a23c89a6f5d8e13f58ddc4e770b5d273f5885b1052",
+      "input_vector": [
+        16821,
+        65337,
+        0,
+        65419,
+        2,
+        37515,
+        86
+      ],
+      "descriptor": 17231,
+      "handler": 17746,
+      "count": 0,
+      "fallback_index": 2,
+      "fallback_table_word": 15349,
+      "fallback_record": 15350
+    }
+  ],
+  "record": "currentbyte[1B4B+k]&7 -> fresh little-endianword[3C13+2*j] -> increment ->3BF6; bytes02FBFC",
+  "cache": "fiveFF initializations; each token freshly computes slot0/1 and position; canonical0992/04A9 derives cursor; repeated-cache branch excluded",
+  "ownership": "actual2085 CALL4285 writes4288;1DFF hardwareRET41B4 consumes that word; gateway frame and original452C unchanged",
+  "exclusions": [
+    "other k105 predicate records",
+    "candidate scan",
+    "ED/EE and other token families",
+    "repeated-cache path",
+    "alias/code/table/callword corruption"
+  ],
+  "preserved_defaults": "Existing Pass93 predicates, complete k33 transactions and seven dispatcher windows revalidated."
+}
