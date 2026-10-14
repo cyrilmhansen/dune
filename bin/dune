@@ -397,3 +397,11 @@
 (executable
  (name k105_gateway_transaction_proof)
  (libraries pli80 analysis runner unix))
+
+(executable
+ (name k27_k84_composition_proof)
+ (libraries pli80 analysis runner unix))
+
+(executable
+ (name k84_gateway_transaction_proof)
+ (libraries pli80 analysis runner unix))
