@@ -1,0 +1,299 @@
+{
+  "journal_digest": "338c45ffd5dc8d146f65380e7089bf32573e79b034e829718ce48efae6ea069d",
+  "windows": [
+    {
+      "entry": {
+        "a": 0,
+        "b": 0,
+        "c": 0,
+        "d": 0,
+        "e": 4,
+        "h": 143,
+        "l": 71,
+        "sp": 65405,
+        "pc": 35218,
+        "flags": {
+          "sign": false,
+          "zero": true,
+          "auxiliary_carry": true,
+          "parity": true,
+          "carry": false
+        }
+      },
+      "exit": {
+        "a": 0,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 0,
+        "h": 107,
+        "l": 97,
+        "sp": 65407,
+        "pc": 36682,
+        "flags": {
+          "sign": true,
+          "zero": false,
+          "auxiliary_carry": false,
+          "parity": true,
+          "carry": false
+        }
+      },
+      "instructions": 15049,
+      "caller": 36679,
+      "call_word_writes": [
+        {
+          "address": 65406,
+          "old_value": null,
+          "new_value": 143
+        },
+        {
+          "address": 65405,
+          "old_value": null,
+          "new_value": 74
+        }
+      ],
+      "ret_reads": [
+        {
+          "address": 65405,
+          "value": 74
+        },
+        {
+          "address": 65406,
+          "value": 143
+        }
+      ],
+      "direct_calls": [
+        {
+          "site": 35294,
+          "target": 35110
+        },
+        {
+          "site": 35118,
+          "target": 34938
+        }
+      ]
+    },
+    {
+      "entry": {
+        "a": 0,
+        "b": 0,
+        "c": 4,
+        "d": 138,
+        "e": 23,
+        "h": 137,
+        "l": 222,
+        "sp": 65403,
+        "pc": 35110,
+        "flags": {
+          "sign": false,
+          "zero": true,
+          "auxiliary_carry": true,
+          "parity": true,
+          "carry": false
+        }
+      },
+      "exit": {
+        "a": 0,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 0,
+        "h": 107,
+        "l": 97,
+        "sp": 65405,
+        "pc": 35297,
+        "flags": {
+          "sign": true,
+          "zero": false,
+          "auxiliary_carry": false,
+          "parity": true,
+          "carry": false
+        }
+      },
+      "instructions": 15035,
+      "caller": 35294,
+      "call_word_writes": [
+        {
+          "address": 65404,
+          "old_value": null,
+          "new_value": 137
+        },
+        {
+          "address": 65403,
+          "old_value": null,
+          "new_value": 225
+        }
+      ],
+      "ret_reads": [
+        {
+          "address": 65403,
+          "value": 225
+        },
+        {
+          "address": 65404,
+          "value": 137
+        }
+      ],
+      "direct_calls": [
+        {
+          "site": 35118,
+          "target": 34938
+        }
+      ]
+    },
+    {
+      "entry": {
+        "a": 0,
+        "b": 0,
+        "c": 97,
+        "d": 98,
+        "e": 107,
+        "h": 138,
+        "l": 23,
+        "sp": 65401,
+        "pc": 34938,
+        "flags": {
+          "sign": false,
+          "zero": true,
+          "auxiliary_carry": true,
+          "parity": true,
+          "carry": false
+        }
+      },
+      "exit": {
+        "a": 0,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 0,
+        "h": 107,
+        "l": 97,
+        "sp": 65403,
+        "pc": 35121,
+        "flags": {
+          "sign": true,
+          "zero": false,
+          "auxiliary_carry": false,
+          "parity": true,
+          "carry": false
+        }
+      },
+      "instructions": 15029,
+      "caller": 35118,
+      "call_word_writes": [
+        {
+          "address": 65402,
+          "old_value": null,
+          "new_value": 137
+        },
+        {
+          "address": 65401,
+          "old_value": null,
+          "new_value": 49
+        }
+      ],
+      "ret_reads": [
+        {
+          "address": 65401,
+          "value": 49
+        },
+        {
+          "address": 65402,
+          "value": 137
+        }
+      ],
+      "direct_calls": [
+        {
+          "site": 34949,
+          "target": 17326
+        },
+        {
+          "site": 34961,
+          "target": 16821
+        },
+        {
+          "site": 34971,
+          "target": 40753
+        }
+      ]
+    },
+    {
+      "entry": {
+        "a": 255,
+        "b": 247,
+        "c": 99,
+        "d": 255,
+        "e": 247,
+        "h": 98,
+        "l": 99,
+        "sp": 65364,
+        "pc": 17513,
+        "flags": {
+          "sign": true,
+          "zero": false,
+          "auxiliary_carry": false,
+          "parity": true,
+          "carry": false
+        }
+      },
+      "exit": {
+        "a": 0,
+        "b": 29,
+        "c": 10,
+        "d": 0,
+        "e": 0,
+        "h": 255,
+        "l": 247,
+        "sp": 65366,
+        "pc": 17761,
+        "flags": {
+          "sign": true,
+          "zero": false,
+          "auxiliary_carry": false,
+          "parity": true,
+          "carry": false
+        }
+      },
+      "instructions": 1699,
+      "caller": 17758,
+      "call_word_writes": [
+        {
+          "address": 65365,
+          "old_value": null,
+          "new_value": 69
+        },
+        {
+          "address": 65364,
+          "old_value": null,
+          "new_value": 97
+        }
+      ],
+      "ret_reads": [
+        {
+          "address": 65364,
+          "value": 97
+        },
+        {
+          "address": 65365,
+          "value": 69
+        }
+      ],
+      "direct_calls": [
+        {
+          "site": 17522,
+          "target": 17357
+        },
+        {
+          "site": 17554,
+          "target": 39359
+        },
+        {
+          "site": 17564,
+          "target": 40753
+        }
+      ]
+    }
+  ],
+  "ownership": "6726 CALL667A consumes8931 later; private D/B slots each one byte; nested6691 hardwareCALL untouched until its transaction; no conventional software-handlerCALL invented",
+  "first_unproved": "6691 -> gateway k27;2269 is later inside k105, not the first direct667A child"
+}
