@@ -1,0 +1,118 @@
+{
+  "task": "RUNES_TYPED_LITERAL_SEMANTICS_109",
+  "baseline": "a7157adba19e3e3caeb608c0dcc9077b6baf0a31",
+  "outcome": "PARTIAL: source-correlated value and consumer chain proved; complete typed literal contract not established",
+  "source": {
+    "file": "examples/pli80/FIZZBUZ.PLI",
+    "line": 4,
+    "column": 18,
+    "repository_byte_span": [
+      88,
+      90
+    ],
+    "normalized_byte_span": [
+      91,
+      93
+    ],
+    "spelling": "15",
+    "context": "mod(i,15)"
+  },
+  "original_acquisition": {
+    "archive": "research/host-compiler/pass-44/numeric-acquisition-cases.json",
+    "entry_step": 390902,
+    "return_step": 391183,
+    "accumulator": 6,
+    "selector": 2,
+    "width": 2
+  },
+  "value": {
+    "positive_integer": 15,
+    "field": "A948/A949",
+    "width_bytes": 2,
+    "encoding": "little-endian",
+    "independent_equation": "0 -> 1 -> 15 from the actual consumed ASCII bytes"
+  },
+  "ownership": "Selected prefix compares equal against retained digits originating in the earlier loop-bound source occurrence; last writers and actual reads prove the link",
+  "constructor_proof": {
+    "instructions": 430,
+    "ordered_writes": 71,
+    "full_RAM_and_registers_flags_equal": true,
+    "CPU_replay_uses_same_engine": true,
+    "SP_delta": 10,
+    "original_continuation": "4B88"
+  },
+  "consumer_boundary": "Value reaches A863/A864, A63F/A640 and mapped AB49/AB4A through concrete fresh reads and original operations",
+  "metadata": {
+    "observed_literal_before": [
+      2,
+      2,
+      0
+    ],
+    "observed_literal_after": [
+      21,
+      15,
+      0
+    ],
+    "complete_encoding_unproved": true
+  },
+  "typing_unknowns": [
+    "Complete intrinsic/effective literal attribute encoding",
+    "Source-declaration-to-context-attribute ownership",
+    "Version-specific exceptional domains beyond the selected successful case"
+  ],
+  "next_step": "Trace i fixed declaration to context attributes and decode the copied tuple before a typed OCaml contract or MIR lowering",
+  "MIR_operations_added": 0,
+  "native_roots_added": 0,
+  "knowledge_promotions": 0,
+  "runtime_changes": false,
+  "FULL_run": false,
+  "reconstruction_bytes": 94720,
+  "validation": {
+    "selected_categories": [
+      "build",
+      "diff-check",
+      "pass108",
+      "pass109",
+      "project",
+      "validation-runner-tests"
+    ],
+    "all_passed": true,
+    "Python_test_executions": 26,
+    "wall_seconds": 3.63,
+    "sum_category_seconds": 3.889
+  },
+  "ignored_capture": {
+    "directory": "_build/host-compiler-pass-109/capture",
+    "events_SHA256": "4e253960fb28b838bbb9c707394dad70c545e352e1f687e711afab225ad50a1e"
+  },
+  "artifacts": {
+    "research/host-compiler/pass-109/README.md": {
+      "bytes": 10851,
+      "SHA256": "8bc9abe61fa17a461b6b2703fc4898806f1faf6d2e6788e099643fe264e3e5d6"
+    },
+    "research/host-compiler/pass-109/language-evidence.json": {
+      "bytes": 1989,
+      "SHA256": "d399cd09b25ec2ce76e0338b282f108c6c14fb03d91a0cd9b92e820f0cb06996"
+    },
+    "research/host-compiler/pass-109/source-value-chain.json": {
+      "bytes": 8224,
+      "SHA256": "ffe62729d384183c2f71efe0a65c4ec12798feeac0f288a6a117a1f72df7ff51"
+    },
+    "research/host-compiler/pass-109/validation.json": {
+      "bytes": 7082,
+      "SHA256": "d9795a6c8b184b217af8fbae228cdc6215ae2b01116b6dd9a6ef5bc79f85d362"
+    },
+    "bin/typed_literal_capture.ml": {
+      "bytes": 6296,
+      "SHA256": "b1d2dedaeaeb6144c0900a7b6578bfcf9e418894052902a623c792d9f7ee56cd"
+    },
+    "tools/annotated-assembly/check_typed_literal_pass_109.py": {
+      "bytes": 16734,
+      "SHA256": "e17ef4a0e0f38dfc6d13ee51c05892484924d4bd394e80086d9369925d695636"
+    },
+    "tools/annotated-assembly/test_typed_literal_pass_109.py": {
+      "bytes": 3791,
+      "SHA256": "1165c41f2bd77b1aa293696351235f1639d7ee8947814061b403c575dd39397c"
+    }
+  }
+}

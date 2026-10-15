@@ -1,0 +1,58 @@
+{
+  "title": "PL/I-80 Language Manual",
+  "publisher": "Digital Research",
+  "edition": "Second printing, December 1980",
+  "url": "https://www.bitsavers.org/pdf/digitalResearch/pl1/PL1-80_Language_Manual_Dec80.pdf",
+  "download_SHA256": "85e09fc830a3520d2e5e24d051cdf74593b393b1851ee982196555e6435b848a",
+  "edition_limit": "Contemporary primary documentation; exact applicability to every v1.4 implementation detail is not established by the title page.",
+  "rules": [
+    {
+      "section": "3.1.1",
+      "printed_pages": [
+        14,
+        15
+      ],
+      "PDF_zero_based_pages": [
+        20,
+        21
+      ],
+      "paraphrase": "FIXED alone declares a binary integer with precision 15. Binary storage uses signed two’s complement; precision at most 7 uses one byte, otherwise two. Decimal integer spellings become binary in a requiring context. Out-of-range binary assignment has undefined results."
+    },
+    {
+      "section": "3.1.2",
+      "printed_pages": [
+        15
+      ],
+      "PDF_zero_based_pages": [
+        21
+      ],
+      "paraphrase": "Outside a binary context, decimal constants default to fixed decimal. Their spelling determines precision and scale; declared decimal variables have separate defaults."
+    },
+    {
+      "section": "7.2.1",
+      "printed_pages": [
+        39
+      ],
+      "PDF_zero_based_pages": [
+        45
+      ],
+      "paraphrase": "Combining fixed binary and fixed decimal selects fixed binary as common arithmetic type."
+    },
+    {
+      "section": "12.1.7",
+      "printed_pages": [
+        76
+      ],
+      "PDF_zero_based_pages": [
+        82
+      ],
+      "paraphrase": "MOD returns the common arithmetic type of its arguments. Its documented zero-divisor branch returns the first argument."
+    }
+  ],
+  "not_inferred": [
+    "Selector02 as a language type",
+    "Acquisition width2 as final precision",
+    "Raw metadata byte0 as a proved scale tag",
+    "Full typed-literal contract from buffer width"
+  ]
+}

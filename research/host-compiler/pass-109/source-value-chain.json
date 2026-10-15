@@ -1,0 +1,403 @@
+{
+  "all_passed": true,
+  "identity": {
+    "source_sha256": "0afe923d4a0f994e1cb6dc77003722fac27fef824ff6f80a8e4b60c410de91a5",
+    "REL_sha256": "68ec16931d4dae7a8f0831a29c9ae8b9ca139279f5104bb34e299644a8b2a203",
+    "checkpoints": 263,
+    "PLI_COM_SHA256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+    "PLI1_SHA256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564"
+  },
+  "source": {
+    "normalized_byte_span": [
+      91,
+      93
+    ],
+    "line": 4,
+    "column": 18,
+    "line_text": "        if mod(i,15) = 0 then",
+    "origins": [
+      {
+        "source_offset": 91,
+        "value": 49,
+        "file_read_step": 322807,
+        "source_memory": 64601,
+        "source_load_step": 380123,
+        "line_buffer_address": 7839,
+        "line_buffer_write_step": 380215,
+        "copy_steps": [
+          380123,
+          380125,
+          380149,
+          380151,
+          380156,
+          380158,
+          380198,
+          380199,
+          380202,
+          380214,
+          380215
+        ]
+      },
+      {
+        "source_offset": 92,
+        "value": 53,
+        "file_read_step": 322807,
+        "source_memory": 64602,
+        "source_load_step": 380251,
+        "line_buffer_address": 7840,
+        "line_buffer_write_step": 380343,
+        "copy_steps": [
+          380251,
+          380253,
+          380277,
+          380279,
+          380284,
+          380286,
+          380326,
+          380327,
+          380330,
+          380342,
+          380343
+        ]
+      }
+    ],
+    "repository_byte_span": [
+      88,
+      90
+    ]
+  },
+  "acquisition": {
+    "entry_step": 390902,
+    "return_step": 391183,
+    "prefix_writes": [
+      {
+        "address": 8390,
+        "value": 49,
+        "writer_step": 390976,
+        "source_buffer_read_step": 388595,
+        "context_writes": [
+          388597,
+          388612
+        ]
+      },
+      {
+        "address": 8391,
+        "value": 53,
+        "writer_step": 391087,
+        "source_buffer_read_step": 391005,
+        "context_writes": [
+          391007,
+          391022
+        ]
+      }
+    ],
+    "accumulator": 6,
+    "width": 2,
+    "selector": 2
+  },
+  "retained_record": {
+    "address": 64424,
+    "digits_pointer": 64434,
+    "original_digit_writers": [
+      {
+        "address": 64434,
+        "writer_step": 365031,
+        "original_prefix_writer": 364308,
+        "source_origin": {
+          "source_offset": 69,
+          "value": 49,
+          "file_read_step": 322807,
+          "source_memory": 64579,
+          "source_load_step": 351667,
+          "line_buffer_address": 7838,
+          "line_buffer_write_step": 351759,
+          "copy_steps": [
+            351667,
+            351669,
+            351693,
+            351695,
+            351700,
+            351702,
+            351742,
+            351743,
+            351746,
+            351758,
+            351759
+          ]
+        }
+      },
+      {
+        "address": 64435,
+        "writer_step": 365009,
+        "original_prefix_writer": 364419,
+        "source_origin": {
+          "source_offset": 70,
+          "value": 53,
+          "file_read_step": 322807,
+          "source_memory": 64580,
+          "source_load_step": 351795,
+          "line_buffer_address": 7839,
+          "line_buffer_write_step": 351887,
+          "copy_steps": [
+            351795,
+            351797,
+            351821,
+            351823,
+            351828,
+            351830,
+            351870,
+            351871,
+            351874,
+            351886,
+            351887
+          ]
+        }
+      }
+    ],
+    "selected_prefix_comparisons": [
+      {
+        "prefix_read_step": 391573,
+        "record_compare_step": 391574,
+        "record_address": 64434
+      },
+      {
+        "prefix_read_step": 391547,
+        "record_compare_step": 391548,
+        "record_address": 64435
+      }
+    ]
+  },
+  "constructor": {
+    "entry_step": 393908,
+    "return_step": 394337,
+    "caller_resume_step": 394338,
+    "entry_SP": 65402,
+    "exit_SP": 65412,
+    "instructions": 430,
+    "ordered_writes": 71,
+    "entry_RAM_sha256": "fd412a7c60ea428b21e5242688165dd601df660e7174243c9f8f764a3efc532b",
+    "post_RAM_sha256": "41c79a4bc60ef2ae54f2e29b69581c83265987d89420137ff79f753417eb1c6e",
+    "input_ram": "checkpoint-144.ram",
+    "post_ram": "checkpoint-148.ram",
+    "fresh_zero_step": 394006,
+    "fold": [
+      {
+        "digit_read_step": 394113,
+        "payload_address": 64434,
+        "byte": 49,
+        "result": 1,
+        "write_step": 394129
+      },
+      {
+        "digit_read_step": 394235,
+        "payload_address": 64435,
+        "byte": 53,
+        "result": 15,
+        "write_step": 394251
+      }
+    ],
+    "value_field": {
+      "address": 43336,
+      "width_bytes": 2,
+      "encoding": "little-endian integer",
+      "value": 15
+    }
+  },
+  "consumers_and_publications": [
+    {
+      "step": 394394,
+      "offset": 10996,
+      "instruction": "SHLD A863H",
+      "writes": [
+        [
+          43107,
+          15
+        ],
+        [
+          43108,
+          0
+        ]
+      ]
+    },
+    {
+      "step": 394439,
+      "offset": 11025,
+      "instruction": "MOV M,E",
+      "writes": [
+        [
+          43107,
+          15
+        ]
+      ]
+    },
+    {
+      "step": 394441,
+      "offset": 11027,
+      "instruction": "MOV M,D",
+      "writes": [
+        [
+          43108,
+          0
+        ]
+      ]
+    },
+    {
+      "step": 394452,
+      "offset": 11150,
+      "instruction": "MOV M,E",
+      "writes": [
+        [
+          42559,
+          15
+        ]
+      ]
+    },
+    {
+      "step": 394454,
+      "offset": 11152,
+      "instruction": "MOV M,D",
+      "writes": [
+        [
+          42560,
+          0
+        ]
+      ]
+    },
+    {
+      "step": 394565,
+      "offset": 31503,
+      "instruction": "MOV M,E",
+      "writes": [
+        [
+          43849,
+          15
+        ]
+      ]
+    },
+    {
+      "step": 394567,
+      "offset": 31505,
+      "instruction": "MOV M,D",
+      "writes": [
+        [
+          43850,
+          0
+        ]
+      ]
+    },
+    {
+      "step": 394590,
+      "offset": 31532,
+      "instruction": "MOV M,A",
+      "writes": [
+        [
+          44147,
+          21
+        ]
+      ]
+    },
+    {
+      "step": 394613,
+      "offset": 31559,
+      "instruction": "MOV M,A",
+      "writes": [
+        [
+          44296,
+          15
+        ]
+      ]
+    },
+    {
+      "step": 394636,
+      "offset": 31586,
+      "instruction": "MOV M,A",
+      "writes": [
+        [
+          44445,
+          0
+        ]
+      ]
+    }
+  ],
+  "consumer_last_writer_edges": [
+    {
+      "read_step": 394392,
+      "address": 43336,
+      "writer_step": 394251
+    },
+    {
+      "read_step": 394392,
+      "address": 43337,
+      "writer_step": 394251
+    },
+    {
+      "read_step": 394398,
+      "address": 43337,
+      "writer_step": 394251
+    },
+    {
+      "read_step": 394429,
+      "address": 43107,
+      "writer_step": 394394
+    },
+    {
+      "read_step": 394433,
+      "address": 43108,
+      "writer_step": 394394
+    },
+    {
+      "read_step": 394449,
+      "address": 43107,
+      "writer_step": 394439
+    },
+    {
+      "read_step": 394449,
+      "address": 43108,
+      "writer_step": 394441
+    },
+    {
+      "read_step": 394543,
+      "address": 43107,
+      "writer_step": 394439
+    },
+    {
+      "read_step": 394543,
+      "address": 43108,
+      "writer_step": 394441
+    },
+    {
+      "read_step": 394562,
+      "address": 44607,
+      "writer_step": 394549
+    },
+    {
+      "read_step": 394562,
+      "address": 44608,
+      "writer_step": 394547
+    }
+  ],
+  "attributes": {
+    "literal_slots_before": [
+      2,
+      2,
+      0
+    ],
+    "literal_slots_after": [
+      21,
+      15,
+      0
+    ],
+    "context_slots": [
+      21,
+      15,
+      0
+    ],
+    "published_mapped_slots": [
+      21,
+      15,
+      0
+    ],
+    "status": "Observed raw metadata; language meaning of the complete encoding not independently decoded"
+  },
+  "typed_contract_status": "NOT COMPLETE: contextual language evidence and observed metadata are kept separate; exact literal attribute decoding remains unproved"
+}
