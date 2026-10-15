@@ -1,0 +1,93 @@
+{
+  "source": "examples/pli80/ARITH.PLI",
+  "source_SHA256": "c06365382706e4165b3769d2c27d532d5984bc585229556571925c4a1e5e69a9",
+  "declarations": {
+    "a": {
+      "line": 2,
+      "text": "dcl a fixed;"
+    },
+    "b": {
+      "line": 3,
+      "text": "dcl b fixed;"
+    },
+    "c": {
+      "line": 4,
+      "text": "dcl c fixed;"
+    }
+  },
+  "selected_lines": {
+    "5": "a = 17;",
+    "6": "b = 25;",
+    "7": "c = a * 2 + b;",
+    "8": "if c > 50 then c = c - 1;"
+  },
+  "constants": [
+    {
+      "line": 5,
+      "columns_inclusive": [
+        9,
+        10
+      ],
+      "spelling": "17",
+      "value": 17,
+      "role": "initial a"
+    },
+    {
+      "line": 6,
+      "columns_inclusive": [
+        9,
+        10
+      ],
+      "spelling": "25",
+      "value": 25,
+      "role": "initial b"
+    },
+    {
+      "line": 7,
+      "columns_inclusive": [
+        13,
+        13
+      ],
+      "spelling": "2",
+      "value": 2,
+      "role": "multiplication operand"
+    },
+    {
+      "line": 8,
+      "columns_inclusive": [
+        12,
+        13
+      ],
+      "spelling": "50",
+      "value": 50,
+      "role": "signed comparison threshold"
+    },
+    {
+      "line": 8,
+      "columns_inclusive": [
+        28,
+        28
+      ],
+      "spelling": "1",
+      "value": 1,
+      "role": "conditional decrement"
+    }
+  ],
+  "selection": "Manually reviewed exact source, not automatic parse/lowering or instruction-level declaration provenance for ARITH.",
+  "function_boundary": "a,b supplied after initialization; returns c after selected assignment/IF; PUT and main procedure are outside.",
+  "historical_compilation": {
+    "archived_summary": "_build/discriminator-pass-15/screen/ARITH/run-summary.json",
+    "archived_summary_SHA256": "ac9c0cbcf426642282c4702a7948331490cf0e40cd568fb6cc6d7bae012ffe91",
+    "termination": "warm_boot",
+    "steps": 678165,
+    "pass1_success": true,
+    "pass2_success": true,
+    "end_compilation": true,
+    "REL": {
+      "name": "ARITH.REL",
+      "size": 256,
+      "sha256": "ca98a3a7e1900d65f2b8bf73b8ccdd9e0e49ce7f15768607348740b1b7a8e553"
+    }
+  },
+  "limit": "Archived source-to-REL evidence only; no new historical compilation or linked program execution."
+}

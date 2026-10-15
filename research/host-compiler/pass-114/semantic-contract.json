@@ -1,0 +1,64 @@
+{
+  "baseline": "468d266b0659180aa3c3d965c902055efd583d78",
+  "selected_operation": "c=a*2+b; if c>50 then c=c-1;",
+  "declared_a_b_c": "SIGNED FIXED BINARY(15)",
+  "domain": {
+    "a_b": [
+      -32768,
+      32767
+    ],
+    "product_2a": [
+      -32768,
+      32767
+    ],
+    "sum_2a_plus_b": [
+      -32768,
+      32767
+    ],
+    "equivalent_a_interval": [
+      -16384,
+      16383
+    ],
+    "additional_guard": "-32768 <= 2*a+b <= 32767; all guards mandatory",
+    "final": "sum if sum<=50 else sum-1; always in [-32768,32767] on admitted domain"
+  },
+  "intermediate_precision": {
+    "product": "min(15,p+r+1)=15 because a has p=15 and the binary integer constant has positive precision",
+    "sum": "min(15,max(p,r)+1)=15 with product and b precision15",
+    "difference": "min(15,max(p,r)+1)=15 with c precision15",
+    "assignment": "Exact integral in-range precision15 result assigned to precision15 c; no loss on admitted domain",
+    "literal_limit": "No exact compiler metadata precision encoding for constants 2/50/1 is inferred or required to show capped result15."
+  },
+  "host": "MIR i64/C int64_t safely contains guards and admitted computations; not PL/I precision or overflow semantics",
+  "primary_documentation": {
+    "title": "Digital Research PL/I-80 Language Manual",
+    "edition": "Second printing December 1980",
+    "url": "https://www.bitsavers.org/pdf/digitalResearch/pl1/PL1-80_Language_Manual_Dec80.pdf",
+    "PDF_SHA256": "85e09fc830a3520d2e5e24d051cdf74593b393b1851ee982196555e6435b848a",
+    "rules": {
+      "3.1.1 (printed14-15, PDF zero20-21)": "Default FIXED is signed binary15, two-byte storage, full signed range -32768..32767; out-of-range assignments undefined; integer constants are binary in binary-requiring contexts.",
+      "7 / 7.1.3 (printed36-37, PDF zero42-43)": "Assignment sets variable from expression; multiplication binds before addition.",
+      "7.1.4 (printed37, PDF zero43)": "Arithmetic comparison follows normal algebraic ordering after common-type conversion; Boolean result.",
+      "7.2.1 (printed39, PDF zero45)": "Fixed binary sum/difference min(15,max(p,r)+1); product min(15,p+r+1); insufficient binary precision loses most significant bits.",
+      "8.2 (printed47-48, PDF zero53-54)": "True condition executes THEN; false without ELSE continues."
+    },
+    "edition_limit": "Contemporary documentary rules, not automatic v1.4 runtime equivalence."
+  },
+  "MIR": "Single reviewed function: mul, add, signed ble, conditional sub, ret; no C arithmetic result helper.",
+  "guard_versus_implementation": "OCaml/C compute ranges only for admission. MIR independently computes the returned value. Both validate before MIR context creation.",
+  "reference": "Independent test-side doubling as a+a, explicit intermediate checks, Int.compare decision and pred decrement; no MIR call.",
+  "unsupported": [
+    "out-of-range inputs or intermediates",
+    "precision truncation/overflow/undefined assignment",
+    "other scales/decimal/floating or mixed-type conversions",
+    "source parsing/typechecking/code generation frontend",
+    "PUT/INT/REL serialization",
+    "historical linked-runtime equivalence"
+  ],
+  "classification": {
+    "DOCUMENTED": "Type/precision, precedence, comparison, assignment/IF and insufficient-precision rules.",
+    "OBSERVED": "Exact repository source and archived compiler completion/REL; real interpreter/JIT differential outputs.",
+    "DEDUCED": "Manually selected safe semantic composition and result58 for inputs17/25, on documentary type rules.",
+    "UNPROVED": "Historical runtime execution; general numeric conversions/exception behavior; ARITH compiler metadata causality."
+  }
+}

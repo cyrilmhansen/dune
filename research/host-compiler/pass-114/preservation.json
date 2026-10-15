@@ -1,0 +1,65 @@
+{
+  "baseline": "468d266b0659180aa3c3d965c902055efd583d78",
+  "unchanged_git_objects": {
+    "lib": "45b2cb7eb6ced4aadd655f4479a8cb68b5ddb708",
+    "bin": "df5107067d7aea852176d7cd17e83e527bb2c99b",
+    "examples": "8a28aa4c245bd652c10728a315ac6ae15110e0d7",
+    "research/annotated-assembly": "7e5da0bca9c4636804dce7f7e744b3bdaad5303e",
+    "tools/mir/pass106": "0504a92420fa35ca0b52ba94aefac2470c9aa84f",
+    "tools/mir/pass112": "eeb5d99d1f2dfe820ed3bdbb4641061fe2d4ba7c",
+    "tools/mir/pass113": "898c739b5498173cefafd237f2227bebdbcda4d3",
+    "research/host-compiler/validation-policy.json": "4818188539251b0eb9cc05ac3180b91a29d20a71",
+    "research/host-compiler/pass-62": "f75ef796f59402c274771402e7dc226e2b6e6038",
+    "research/host-compiler/pass-67": "8c4f553aebfc654109f7822a23fcc88495ad8262",
+    "research/host-compiler/pass-72": "25053ad5047873386b6a46e85b541e1c061291f5",
+    "research/host-compiler/pass-74": "5fa81dfd0e69dcc8d0ada9ce90b12ff88f92e4f8",
+    "research/host-compiler/pass-79": "d4b4c1a54f988c4be898f9275de8386d3e5dd909",
+    "research/host-compiler/pass-104": "09ce3408b6fb3a8a928111abe1091c74fdd90985",
+    "research/host-compiler/pass-105": "3482bed16640ca43546bbf3e57564f74511d74be",
+    "research/host-compiler/pass-106": "4d879d1f5548caf12acfee8592efacdbc0d22a92",
+    "research/host-compiler/pass-107": "5b0f3f23baa6d409863bc446119685c43286f0f0",
+    "research/host-compiler/pass-109": "ce20d5396c9429c3d788f7c3ec4bf3c6b3e9e8fc",
+    "research/host-compiler/pass-110": "96a73734acdbd2b52a30da54fca6b4c3e207ac7a",
+    "research/host-compiler/pass-111": "a6015523f3b401f0c3fc0d09a301acee17b1bec2",
+    "research/host-compiler/pass-112": "eb72ad614b3bf7fe8ee5ffe1a406658c60adb36a",
+    "research/host-compiler/pass-113": "7884344b1d404823ef5ce62dd9f2db15c165641f"
+  },
+  "historical_bytes": 94720,
+  "images": {
+    "PLI.COM": {
+      "bytes": 8064,
+      "SHA256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80"
+    },
+    "PLI0.OVL": {
+      "bytes": 18048,
+      "SHA256": "e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff"
+    },
+    "PLI1.OVL": {
+      "bytes": 34816,
+      "SHA256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564"
+    },
+    "PLI2.OVL": {
+      "bytes": 33792,
+      "SHA256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a"
+    }
+  },
+  "reconstruction": "Unchanged annotated assembly plus fresh full-image hashes against preserved exact reconstruction evidence; no regeneration.",
+  "goldens": {
+    "ARITH": {
+      "path": "_build/discriminator-pass-15/screen/ARITH/ARITH.REL",
+      "bytes": 256,
+      "SHA256": "ca98a3a7e1900d65f2b8bf73b8ccdd9e0e49ce7f15768607348740b1b7a8e553"
+    },
+    "FIZZBUZ": {
+      "path": "_build/evidence-packet-cross-run/fizzbuz-capture/FIZZBUZ.REL",
+      "bytes": 768,
+      "SHA256": "68ec16931d4dae7a8f0831a29c9ae8b9ca139279f5104bb34e299644a8b2a203"
+    }
+  },
+  "golden_scope": "Fresh hashes of archived ARITH/FIZZBUZ output; no newly compiled/linked historical runtime claimed.",
+  "new_native_roots": 0,
+  "knowledge_promotions": 0,
+  "FULL_run": false,
+  "historical_LINK_resumed": false,
+  "last_certified_FULL": "Pass74 epoch3"
+}

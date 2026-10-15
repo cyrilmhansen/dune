@@ -1,0 +1,11 @@
+runes_arithmetic: module
+arith: func i64, i64:a, i64:b
+  local i64:product, i64:result
+  mul product, a, 2
+  add result, product, b
+  ble done, result, 50
+  sub result, result, 1
+done:
+  ret result
+  endfunc
+  endmodule

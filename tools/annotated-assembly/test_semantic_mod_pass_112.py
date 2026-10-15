@@ -32,6 +32,7 @@ class SemanticMod(unittest.TestCase):
         mir_name=getattr(cls,'mir_name','mod_positive.mir')
         bridge=getattr(cls,'bridge_source',SRC/'bridge.c')
         flags=getattr(cls,'bridge_flags',[])
+        module=getattr(cls,'ocaml_module','fixed_binary_mod')
         OUT.mkdir(parents=True,exist_ok=True)
         upstream=(OUT/'upstream').resolve()
         if not upstream.exists():
@@ -46,13 +47,13 @@ class SemanticMod(unittest.TestCase):
         run(['make','-j2','libmir.a'],cwd=upstream)
         build=(OUT/'ffi').resolve();build.mkdir(exist_ok=True)
         (build/'mod_text.h').write_text('static const char mod_text[] = '+json.dumps((SRC/mir_name).read_text())+';\n')
-        for name in ['fixed_binary_mod.mli','fixed_binary_mod.ml','reference.ml','demo.ml']:
+        for name in [module+'.mli',module+'.ml','reference.ml','demo.ml']:
             shutil.copyfile(SRC/name,build/name)
         run(['ocamlopt','-ccopt','-I'+str(upstream),'-ccopt','-I'+str(build),
              *flags,'-c',bridge.resolve(),'-o',build/'bridge.o'],cwd=build)
-        run(['ocamlopt','-c','fixed_binary_mod.mli'],cwd=build)
-        run(['ocamlopt','-c','fixed_binary_mod.ml'],cwd=build)
-        run(['ocamlopt','-o','demo','fixed_binary_mod.cmx','reference.ml','demo.ml','bridge.o',
+        run(['ocamlopt','-c',module+'.mli'],cwd=build)
+        run(['ocamlopt','-c',module+'.ml'],cwd=build)
+        run(['ocamlopt','-o','demo',module+'.cmx','reference.ml','demo.ml','bridge.o',
              '-cclib',upstream/'libmir.a','-cclib','-lm','-cclib','-ldl','-cclib','-lpthread'],cwd=build)
         cls.q=json.loads(output([build/'demo']))
         (OUT/'mir-results.json').write_text(json.dumps(cls.q,indent=2)+'\n')
