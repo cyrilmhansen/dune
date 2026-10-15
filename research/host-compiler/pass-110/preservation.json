@@ -1,0 +1,76 @@
+{
+  "baseline": "977f0f795f9f422ececb82979ae383b0a8f87398",
+  "unchanged_git_objects": {
+    "lib": "45b2cb7eb6ced4aadd655f4479a8cb68b5ddb708",
+    "examples": "8a28aa4c245bd652c10728a315ac6ae15110e0d7",
+    "research/annotated-assembly": "7e5da0bca9c4636804dce7f7e744b3bdaad5303e",
+    "research/host-compiler/pass-74": "5fa81dfd0e69dcc8d0ada9ce90b12ff88f92e4f8",
+    "research/host-compiler/pass-79": "d4b4c1a54f988c4be898f9275de8386d3e5dd909",
+    "research/host-compiler/pass-105": "3482bed16640ca43546bbf3e57564f74511d74be",
+    "research/host-compiler/pass-106": "4d879d1f5548caf12acfee8592efacdbc0d22a92",
+    "research/host-compiler/pass-107": "5b0f3f23baa6d409863bc446119685c43286f0f0",
+    "research/host-compiler/pass-109": "ce20d5396c9429c3d788f7c3ec4bf3c6b3e9e8fc",
+    "research/host-compiler/validation-policy.json": "4818188539251b0eb9cc05ac3180b91a29d20a71"
+  },
+  "reconstruction": {
+    "bytes": 94720,
+    "unchanged_annotated_assembly_tree": "7e5da0bca9c4636804dce7f7e744b3bdaad5303e",
+    "images": {
+      "PLI.COM": {
+        "bytes": 8064,
+        "SHA256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80"
+      },
+      "PLI0.OVL": {
+        "bytes": 18048,
+        "SHA256": "e78818eca27d051d604b42c6b3202b30e5db6c46df6cf4b498fca601a86d7bff"
+      },
+      "PLI1.OVL": {
+        "bytes": 34816,
+        "SHA256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564"
+      },
+      "PLI2.OVL": {
+        "bytes": 33792,
+        "SHA256": "80b0eba656a0730c0e6e8ccac8882271323daa4020429da7163dc5536e7f454a"
+      }
+    },
+    "verified_receipt": "research/host-compiler/pass-103/reconstruction.txt",
+    "receipt_SHA256": "eec7eb18cf4e3197cb75210b2a56373c35cab76445686e1a381042242cc5bf01",
+    "annotations_changed": false
+  },
+  "preserved_goldens_from_pass104": [
+    {
+      "source": "MINIMAL",
+      "REL_sha256": "7339d230f13c2614f6b1acb632081959659d7292814c747f7853b6944e91f119",
+      "INT_sha256": null
+    },
+    {
+      "source": "FIZZBUZ",
+      "REL_sha256": "68ec16931d4dae7a8f0831a29c9ae8b9ca139279f5104bb34e299644a8b2a203",
+      "INT_sha256": null
+    },
+    {
+      "source": "PICTURE",
+      "REL_sha256": "c02f738a7504384a236289633210d1bf4e7ea5391e51e091e373950eefacc4f1",
+      "INT_sha256": null
+    },
+    {
+      "source": "FACTOR",
+      "REL_sha256": "9a42e8341a013243036040c8db0e56939c699c7fbbfb20878f7ba5af8d6b470d",
+      "INT_sha256": null
+    },
+    {
+      "source": "OPTIMIST",
+      "REL_sha256": "5fca1ffe38d11c30d20cfb99a23fe2baf002c569790bda83e09151cf36032b15",
+      "INT_sha256": null
+    }
+  ],
+  "fresh_program": "FIZZBUZ",
+  "fresh_REL_sha256": "68ec16931d4dae7a8f0831a29c9ae8b9ca139279f5104bb34e299644a8b2a203",
+  "limit": "No fresh five-source campaign; preserved published goldens plus unchanged runtime, fixtures, annotations and exact original image hashes.",
+  "old_capture_verified_before_reuse_SHA256": "4e253960fb28b838bbb9c707394dad70c545e352e1f687e711afab225ad50a1e",
+  "old_capture_verified_after_regression_SHA256": "4e253960fb28b838bbb9c707394dad70c545e352e1f687e711afab225ad50a1e",
+  "native_roots_installed": 0,
+  "knowledge_promotions": 0,
+  "FULL_run": false,
+  "last_certified_FULL": "Pass74 epoch3"
+}

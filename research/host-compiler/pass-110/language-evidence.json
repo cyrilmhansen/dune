@@ -1,0 +1,62 @@
+{
+  "title": "Digital Research PL/I-80 Language Manual",
+  "edition": "Second printing, December 1980",
+  "url": "https://www.bitsavers.org/pdf/digitalResearch/pl1/PL1-80_Language_Manual_Dec80.pdf",
+  "download_SHA256": "85e09fc830a3520d2e5e24d051cdf74593b393b1851ee982196555e6435b848a",
+  "verification": "Fresh primary PDF download, identity matches Pass109; pdftotext inspection of the specified sections.",
+  "rules": [
+    {
+      "section": "3.1.1",
+      "printed_pages": [
+        14,
+        15
+      ],
+      "PDF_zero_based_pages": [
+        20,
+        21
+      ],
+      "documented": "FIXED alone means signed fixed binary precision15; two-byte storage. Decimal integer spellings are binary in requiring contexts. Out-of-range assignment is undefined.",
+      "execution": "FIXED prefix/table selection, qualifier completion and explicit middle-attribute default15 are causally linked to this declaration; general encoding remains partial."
+    },
+    {
+      "section": "3.1.2",
+      "printed_pages": [
+        15
+      ],
+      "PDF_zero_based_pages": [
+        21
+      ],
+      "documented": "Outside a binary context, decimal constants have form-dependent decimal precision and scale.",
+      "execution_limit": "Observed literal tuples differ between one- and two-digit spellings; this does not fully decode every intrinsic literal field."
+    },
+    {
+      "section": "7.2.1",
+      "printed_pages": [
+        39
+      ],
+      "PDF_zero_based_pages": [
+        45
+      ],
+      "documented": "Mixed fixed binary/decimal arithmetic uses binary as the common type.",
+      "execution": "Resolved declaration fields contribute to the common conversion context; tag vocabulary remains partial."
+    },
+    {
+      "section": "12.1.7",
+      "printed_pages": [
+        76
+      ],
+      "PDF_zero_based_pages": [
+        82
+      ],
+      "documented": "MOD returns the common arithmetic type; its zero-divisor case returns its first argument.",
+      "execution_limit": "MOD-specific result publication and exceptional implementation paths are not established here."
+    }
+  ],
+  "edition_limit": "Contemporary primary documentation; complete point-release equivalence to compiler v1.4 is not established.",
+  "unproved": [
+    "General tag/qualifier bit encoding",
+    "General zero-channel meaning",
+    "Operation-specific MOD result attribute/consumer ownership"
+  ],
+  "decision": "Partial contract only; no typed OCaml frontend implementation or MIR lowering."
+}

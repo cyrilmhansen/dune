@@ -1,0 +1,66 @@
+{
+  "task": "RUNES_DECLARATION_TYPE_PROVENANCE_110",
+  "baseline": "977f0f795f9f422ececb82979ae383b0a8f87398",
+  "status": "DECLARATION ATTRIBUTE PROVENANCE PARTIALLY RECOVERED",
+  "source": "FIZZBUZ: dcl i fixed; -> mod(i,15), plus source-correlated mod(i,3) and mod(i,5) discriminants",
+  "proved": [
+    "Source-byte ownership of declaration identifier and FIXED qualifier",
+    "Keyword comparison/table selection and declaration defaulting",
+    "Four retained record fields (including name) across three copies with no intervening writers",
+    "Resolved identifier -> retained attributes -> mapped publications -> common conversion context",
+    "Natural literal-width discrimination and bounded min/max calculations",
+    "Four separate CPU-window replays: complete CPU/flags, 64 KiB RAM and ordered reads/writes"
+  ],
+  "proof_limit": "The same CPU engine performs original execution and separate window replay. No independent CPU-engine claim.",
+  "remaining": [
+    "General tag/qualifier and zero-channel encoding",
+    "Operation-specific MOD result attribute publication and consumer",
+    "Complete typed frontend contract before upstream MIR lowering"
+  ],
+  "validation_command": "python3 tools/annotated-assembly/run_host_compiler_regressions.py --categories pass110,pass109,diff-check,validation-runner-tests --images /home/john/pli/cpm/pli80/DISK1 --output _build/host-compiler-pass-110/validation --workers 4",
+  "capture_directory": "_build/host-compiler-pass-110/capture",
+  "capture_SHA256": "ca4de96a24f4b6602a0d2569a774d89b4d231d5137f483f9b1bc354df48f81e6",
+  "preserved_Pass109_capture_SHA256": "4e253960fb28b838bbb9c707394dad70c545e352e1f687e711afab225ad50a1e",
+  "native_roots_installed": 0,
+  "knowledge_promotions": 0,
+  "MIR_changes": false,
+  "FULL_run": false,
+  "files": {
+    "research/host-compiler/pass-110/README.md": {
+      "bytes": 13013,
+      "SHA256": "38bbda7300f21e87e8468d5a7e606a9d9c447b7aebefda7670409082bf4db122"
+    },
+    "research/host-compiler/pass-110/declaration-provenance.json": {
+      "bytes": 27762,
+      "SHA256": "c188805d1d6c804afe1086d32f2d45fd1dc9e45e1ba86ec7c6f2ec20596412db"
+    },
+    "research/host-compiler/pass-110/language-evidence.json": {
+      "bytes": 2489,
+      "SHA256": "fddbd3d58c2e1ae6589b6cf77cace5010c3fd5c738fad7906a1a4d024609dc55"
+    },
+    "research/host-compiler/pass-110/preservation.json": {
+      "bytes": 3220,
+      "SHA256": "7a172788374d2c04c1b24910ab1d9ec4653a1047efe7018dccf5ecc6cc837a8a"
+    },
+    "research/host-compiler/pass-110/validation.json": {
+      "bytes": 7081,
+      "SHA256": "a31a8ec7703e15533516a38bd2f8d07721b0dad5eed487ae05e1fc6db662e056"
+    },
+    "bin/typed_literal_capture.ml": {
+      "bytes": 7210,
+      "SHA256": "fc80d17a064522073d23d432fa7a96017e41ec715ee77866133c4e0c10417b03"
+    },
+    "tools/annotated-assembly/check_declaration_pass_110.py": {
+      "bytes": 18485,
+      "SHA256": "6cd9ce5ced674523a711b3b990129ec6aa53fed9e278fcf90d78720c987552d4"
+    },
+    "tools/annotated-assembly/test_declaration_pass_110.py": {
+      "bytes": 4476,
+      "SHA256": "89602bfe241b706a425aa03d71c1ac183fd854fedc8a2f593687058c1db97fce"
+    },
+    "tools/annotated-assembly/run_host_compiler_regressions.py": {
+      "bytes": 23529,
+      "SHA256": "b1a8b72f5b834b0ffc8bae0c76f6d562a269112f1a038d04a7ea94f9328eda08"
+    }
+  }
+}
