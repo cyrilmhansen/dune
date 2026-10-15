@@ -1,0 +1,41 @@
+{
+  "title": "Digital Research PL/I-80 Language Manual",
+  "edition": "Second printing December 1980",
+  "url": "https://www.bitsavers.org/pdf/digitalResearch/pl1/PL1-80_Language_Manual_Dec80.pdf",
+  "PDF_SHA256": "85e09fc830a3520d2e5e24d051cdf74593b393b1851ee982196555e6435b848a",
+  "verification": "Direct inspection of verified original local PDF/text; no assumption of point-release-wide v1.4 runtime equivalence.",
+  "rules": [
+    {
+      "section": "3.1.2",
+      "printed_page": 15,
+      "PDF_zero_based_page": 21,
+      "DOCUMENTED": "Decimal(p,q) has p total digits, q fractional digits and sign. Defaults(7,0), constant form determines attributes. Larger scale assigned to smaller scale truncates; excessive integer digits cause FIXED OVERFLOW. Manual describes packed BCD."
+    },
+    {
+      "section": "7.2.1",
+      "printed_page": 39,
+      "PDF_zero_based_page": 45,
+      "DOCUMENTED": "For fixed-decimal multiplication result precision=min(15,p+r+1), scale=q+s. Insufficient decimal precision loses fractional digits."
+    }
+  ],
+  "selected_documentary_deductions": {
+    "declarations": "x,y,z FIXED DECIMAL(7,2)",
+    "literal_12.50": {
+      "value": "12.50",
+      "precision": 4,
+      "scale": 2
+    },
+    "literal_2.25": {
+      "value": "2.25",
+      "precision": 3,
+      "scale": 2
+    },
+    "multiplication": {
+      "precision": 15,
+      "scale": 4,
+      "mathematical_value": "28.1250"
+    },
+    "positive_assignment_to_7_2": "Documentary fractional truncation gives expected28.12, not rounding28.13; no integer overflow for this mathematical value."
+  },
+  "execution_limit": "Literal intrinsic typing chain, numeric payload layout and multiplication-to-assignment implementation remain unproved. These documentary expectations are not linked-runtime observations."
+}

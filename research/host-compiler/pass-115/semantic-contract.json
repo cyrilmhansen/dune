@@ -1,0 +1,43 @@
+{
+  "status": "PARTIAL",
+  "baseline": "64d356d7db363e2d3df4ae79537f286a8377c52a",
+  "source": "examples/pli80/FIXEDDEC.PLI",
+  "declaration": "dcl x fixed decimal(7,2);",
+  "language_type": {
+    "form": "FIXED DECIMAL",
+    "precision_decimal_digits": 7,
+    "scale_decimal_digits": 2,
+    "sign": "Documented decimal type includes sign; no implementation sign field decoded"
+  },
+  "OBSERVED": {
+    "source_chain": "Actual source record -> resident source scratches -> line buffer -> normalization -> prefix; per-byte last writers checked.",
+    "keyword_tokens": {
+      "DCL": 135,
+      "FIXED": 162,
+      "DECIMAL": 136
+    },
+    "qualifier_bits": "14h OR 12h = 16h, selected historical table entries",
+    "explicit_parameters": "Separate one-digit decimal conversions7 and2, parameter slots6883/6884 and687E/687F, record publication and completion",
+    "declaration_record": "6FE9: name X at+10, qualifier16h at+2, explicit7 at+4, explicit2 at+5",
+    "retention": "6FE9 -> FBDD -> 6BB4 -> FBDD, separately checked name and fields",
+    "direct_consumers": "Retained x field+4 read375682 -> A62B=7; field+5 read375687 -> A62E=2",
+    "arithmetic_channels": "Later selected instructions read7/7 and produce15 via sum+1; read2/2 and produce4 via sum. This checks channel algebra, not a complete source-operator-to-result-to-assignment ownership chain.",
+    "literal_boundary": "Both source spellings acquired, including decimal point; actual point comparison changes lexical class2 to3. No intrinsic typed literal/value record is inferred.",
+    "natural_discriminants": "Separately source-owned y,z records have same explicit tuple16h/07h/02h and identical bounded completion paths."
+  },
+  "DEDUCED": {
+    "bounded_encoding": "For these explicit declarations, record+4 retains precision parameter7 and record+5 retains scale parameter2. Arithmetic channel laws independently corroborate their different roles.",
+    "encoding_limit": "No universal tag16h enum, binary zero-channel interpretation, sign/qualifier vocabulary or arbitrary precision/scale domain is established."
+  },
+  "DOCUMENTED": "language-evidence.json states type/literal/product/assignment rules independently of execution correlations.",
+  "UNPROVED": [
+    "Fresh/retained decimal literal construction ownership and internal numeric payload",
+    "Causal literal-to-destination conversion and assignment publication",
+    "Complete source-correlated multiplication dispatch and result owner",
+    "Destination z scale-reduction mechanism",
+    "Historical runtime result or decimal payload/sign/storage layout",
+    "Exceptional conversions, arbitrary declarations and runtime arithmetic"
+  ],
+  "MIR_readiness": "Not ready for decimal lowering: first prove literal representation/conversion and complete product-to-destination scale provenance; independently establish runtime rounding/overflow obligations before selecting a scaled-integer representation.",
+  "runtime_and_compiler_scope": "Read-only historical compilation and copied CPU-window proof. No historical host operation or MIR decimal engine."
+}
