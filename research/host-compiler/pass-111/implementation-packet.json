@@ -1,0 +1,63 @@
+{
+  "task": "RUNES_MOD_RESULT_TYPE_PROVENANCE_111",
+  "baseline": "ddab50a11d9a44fd351e32af3a40f006db0ac94a",
+  "status": "MOD RESULT-TYPE CONTRACT ESTABLISHED",
+  "scope": "Selected FIZZBUZ mod(i,15) typing and equality consumption, with mod(i,3)/mod(i,5) natural discriminants",
+  "result_owner": "Current expression mapped carrier; retained common tag and independently recomputed numeric attributes; no separate result symbol record established",
+  "CPU_windows": 6,
+  "CPU_engine_limit": "Same CPU engine for original concrete execution and copied-state replay; not independent CPU engines",
+  "compiler_arithmetic_limit": "Compiling MOD is observed; runtime MOD values and exceptional arithmetic are not executed by this proof",
+  "capture_directory": "_build/host-compiler-pass-111/capture",
+  "capture_SHA256": "d1b2d7c0ff5026d3b60f9333f615173e9a51a2111855b5cef77b164117e14f36",
+  "incremental_validation_command": "python3 tools/annotated-assembly/run_host_compiler_regressions.py --categories pass111,pass110,pass109,diff-check,validation-runner-tests --images /home/john/pli/cpm/pli80/DISK1 --output _build/host-compiler-pass-111/validation --workers 4",
+  "native_roots_installed": 0,
+  "knowledge_promotions": 0,
+  "FULL_run": false,
+  "next_step": "Independently establish the selected runtime integer MOD/conversion law before arithmetic lowering to upstream MIR",
+  "files": {
+    "research/host-compiler/pass-111/README.md": {
+      "bytes": 13655,
+      "SHA256": "a66a0c374a5856a078666bd974d1b6772c42b358e9839d717c27c8f3765f970d"
+    },
+    "research/host-compiler/pass-111/language-evidence.json": {
+      "bytes": 1992,
+      "SHA256": "5e67a00ac9a5462c11d0caf421af8202ae370931f21b81fcfb7b17f4ea06a8d9"
+    },
+    "research/host-compiler/pass-111/owned-edges.json": {
+      "bytes": 8557,
+      "SHA256": "e0c9f106e8ca15f9516f34d41b1157a9c92b6224669e22081410ebbd9ebaa305"
+    },
+    "research/host-compiler/pass-111/preservation.json": {
+      "bytes": 2787,
+      "SHA256": "6b6d23c1bca5a4a3b75d9423d6a8018a042e5c6cf25eb1122382dc56afc7399f"
+    },
+    "research/host-compiler/pass-111/result-provenance.json": {
+      "bytes": 18270,
+      "SHA256": "a7a71bb199c6e4afcf773f62c21a28a2094ed2d129ee1113bb61f4932d4547f9"
+    },
+    "research/host-compiler/pass-111/semantic-contract.json": {
+      "bytes": 2518,
+      "SHA256": "ca0d3204eec93a3ac1538ca0080cfc79a1036ced71ac4a52653368618e05f005"
+    },
+    "research/host-compiler/pass-111/validation.json": {
+      "bytes": 7461,
+      "SHA256": "000a97b7538c25be8ed07f7061d436e1505192c4ee00db4f3dc508d2bb9d1ca3"
+    },
+    "bin/typed_literal_capture.ml": {
+      "bytes": 7541,
+      "SHA256": "9c6bbfdab3bbbdd957aab5624fac6bdf77f73b5f07c9a77d288bc51ca547c35e"
+    },
+    "tools/annotated-assembly/check_mod_result_pass_111.py": {
+      "bytes": 25670,
+      "SHA256": "66c79e8a8787d6c0c5d257873b16bc015799818a851ca3429486200cd15766dd"
+    },
+    "tools/annotated-assembly/test_mod_result_pass_111.py": {
+      "bytes": 5724,
+      "SHA256": "ec85458aba305d9b00adae3fb9c65ea59749fef2fb38209f2985c79e50de13dd"
+    },
+    "tools/annotated-assembly/run_host_compiler_regressions.py": {
+      "bytes": 23636,
+      "SHA256": "62f2cb99c954bb455351156436c044b6b522aae36df5c879d495c55ac46b447f"
+    }
+  }
+}

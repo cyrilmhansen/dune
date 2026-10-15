@@ -72,6 +72,7 @@ def commands(images,out):
  cmds['pass82']=['python3','tools/annotated-assembly/test_k123_child_pass_82.py','--images',images,'-q']
  cmds['pass83']=['python3','tools/annotated-assembly/test_k123_parent_pass_83.py','--images',images,'-q']
  cmds['pass84']=['python3','tools/annotated-assembly/test_k123_parent_pass_84.py','--images',images,'-q']
+ cmds['pass111']=['python3','tools/annotated-assembly/test_mod_result_pass_111.py','--images',images,'-q']
  cmds['pass110']=['python3','tools/annotated-assembly/test_declaration_pass_110.py','--images',images,'-q']
  cmds['pass109']=['python3','tools/annotated-assembly/test_typed_literal_pass_109.py','--images',images,'-q']
  cmds['pass108']=['python3','tools/annotated-assembly/test_mir_boundary_pass_108.py','--images',images,'-q']

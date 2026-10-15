@@ -1,0 +1,63 @@
+{
+  "title": "Digital Research PL/I-80 Language Manual",
+  "edition": "Second printing, December 1980",
+  "url": "https://www.bitsavers.org/pdf/digitalResearch/pl1/PL1-80_Language_Manual_Dec80.pdf",
+  "PDF_SHA256": "85e09fc830a3520d2e5e24d051cdf74593b393b1851ee982196555e6435b848a",
+  "verification": "Direct inspection of the preserved primary PDF/text after identity verification; browser PDF fetch unavailable.",
+  "rules": [
+    {
+      "section": "3.1.1",
+      "printed_pages": [
+        14,
+        15
+      ],
+      "PDF_zero_based_pages": [
+        20,
+        21
+      ],
+      "documented": "FIXED alone declares signed binary integer precision15; decimal integers acquire binary typing in requiring contexts."
+    },
+    {
+      "section": "3.1.2",
+      "printed_pages": [
+        15
+      ],
+      "PDF_zero_based_pages": [
+        21
+      ],
+      "documented": "Outside binary contexts, decimal constant precision/scale follows its form."
+    },
+    {
+      "section": "7.2.1",
+      "printed_pages": [
+        39
+      ],
+      "PDF_zero_based_pages": [
+        45
+      ],
+      "documented": "Mixed fixed binary/decimal arithmetic selects binary as common type."
+    },
+    {
+      "section": "12.1.7",
+      "printed_pages": [
+        76
+      ],
+      "PDF_zero_based_pages": [
+        82
+      ],
+      "documented": "MOD has the common arithmetic result type; the manual specifies floor-based arithmetic and a zero-divisor branch."
+    },
+    {
+      "section": "7.1.4",
+      "printed_pages": [
+        37
+      ],
+      "PDF_zero_based_pages": [
+        43
+      ],
+      "documented": "Relational operands of different forms are converted to a common type before comparison."
+    }
+  ],
+  "edition_limit": "Contemporary primary language rules, not blanket equivalence to every v1.4 implementation detail.",
+  "deduction_limit": "Selected result typing is corroborated by compiler ownership/publication/consumer evidence; runtime arithmetic is not executed here."
+}

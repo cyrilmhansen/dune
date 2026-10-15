@@ -1,0 +1,631 @@
+{
+  "all_passed": true,
+  "identity": {
+    "source_sha256": "0afe923d4a0f994e1cb6dc77003722fac27fef824ff6f80a8e4b60c410de91a5",
+    "REL_sha256": "68ec16931d4dae7a8f0831a29c9ae8b9ca139279f5104bb34e299644a8b2a203",
+    "checkpoints": 290,
+    "PLI_COM_SHA256": "c6d9c7b697b8909e7ff7326f25bf870d0e9f52b6444fe517c2484742a23bcd80",
+    "PLI1_SHA256": "1ed6d00f423ffb55ab4ea9a49c33a72617b7ccc5ead5ecdcb5bbf1733214e564"
+  },
+  "capture_SHA256": "d1b2d7c0ff5026d3b60f9333f615173e9a51a2111855b5cef77b164117e14f36",
+  "cases": [
+    {
+      "literal": "15",
+      "source_MOD": [
+        {
+          "prefix_write_step": 383773,
+          "normalized": 77,
+          "source_offset": 85,
+          "byte": 109,
+          "record_read_step": 322807,
+          "raw_read_step": 379355,
+          "line_write_step": 379447
+        },
+        {
+          "prefix_write_step": 383857,
+          "normalized": 79,
+          "source_offset": 86,
+          "byte": 111,
+          "record_read_step": 322807,
+          "raw_read_step": 379483,
+          "line_write_step": 379575
+        },
+        {
+          "prefix_write_step": 383941,
+          "normalized": 68,
+          "source_offset": 87,
+          "byte": 100,
+          "record_read_step": 322807,
+          "raw_read_step": 379611,
+          "line_write_step": 379703
+        }
+      ],
+      "source_equality": {
+        "prefix_write_step": 395615,
+        "normalized": 61,
+        "source_offset": 95,
+        "byte": 61,
+        "record_read_step": 322807,
+        "raw_read_step": 380635,
+        "line_write_step": 380727
+      },
+      "source_zero": {
+        "prefix_write_step": 396405,
+        "normalized": 48,
+        "source_offset": 97,
+        "byte": 48,
+        "record_read_step": 322807,
+        "raw_read_step": 380891,
+        "line_write_step": 380983
+      },
+      "zero_spelling_event": 396942,
+      "zero_record_byte": 64423,
+      "zero_spelling_route": "new spelling record copy",
+      "zero_spelling_record_writer": 396942,
+      "lookup_name_compare": 385903,
+      "resolved_builtin_record": 64463,
+      "record_field": 42604,
+      "dispatch_call": 387502,
+      "root_entry": 387503,
+      "descriptor_selector": 20,
+      "PCHL_step": 387591,
+      "table_target": 30139,
+      "operation_emission_call": 395075,
+      "operation_marker": 209,
+      "common_context_entry": 393452,
+      "common_context_exit": 393793,
+      "operand_attribute_reads": [
+        [
+          {
+            "read_step": 393241,
+            "address": 44148,
+            "destination": 42538,
+            "value": 2
+          },
+          {
+            "read_step": 393257,
+            "address": 44297,
+            "destination": 42541,
+            "value": 2
+          },
+          {
+            "read_step": 393273,
+            "address": 44446,
+            "destination": 42544,
+            "value": 0
+          }
+        ],
+        [
+          {
+            "read_step": 393393,
+            "address": 44151,
+            "destination": 42537,
+            "value": 21
+          },
+          {
+            "read_step": 393409,
+            "address": 44300,
+            "destination": 42540,
+            "value": 15
+          },
+          {
+            "read_step": 393425,
+            "address": 44449,
+            "destination": 42543,
+            "value": 0
+          }
+        ]
+      ],
+      "operand_words_before_conversion": [
+        64424,
+        64424
+      ],
+      "word_channel_limit": "Compiler carrier words are not inferred to be runtime i or runtime MOD values",
+      "converted_operand_copy_steps": [
+        394348,
+        394354,
+        394360
+      ],
+      "finalization_law": "middle=(converted_right_middle-right_zero+max(left_zero,right_zero)) mod256; tag retained",
+      "result_position": 4,
+      "result_carrier": 2,
+      "result_tuple": [
+        21,
+        15,
+        0
+      ],
+      "publications": [
+        {
+          "address": 44149,
+          "value": 21,
+          "first_publication_step": 395414,
+          "final_publication_step": 395898,
+          "map_writer": 395108
+        },
+        {
+          "address": 44298,
+          "value": 15,
+          "first_publication_step": 395437,
+          "final_publication_step": 395921,
+          "map_writer": 395108
+        },
+        {
+          "address": 44447,
+          "value": 0,
+          "first_publication_step": 395460,
+          "final_publication_step": 395944,
+          "map_writer": 395108
+        }
+      ],
+      "root_return": 395969,
+      "consumer_entry": 400417,
+      "consumer_exit": 402221,
+      "consumer_kind": "source-correlated equality operand preparation",
+      "saved_relation_slot": 65471,
+      "saved_relation_index": 2,
+      "consumer_reads": [
+        {
+          "step": 400585,
+          "address": 44149,
+          "destination": 42537,
+          "result_writer": 395898
+        },
+        {
+          "step": 400601,
+          "address": 44298,
+          "destination": 42540,
+          "result_writer": 395921
+        },
+        {
+          "step": 400617,
+          "address": 44447,
+          "destination": 42543,
+          "result_writer": 395944
+        }
+      ],
+      "equality_common_call": 400763,
+      "finalizer_replay": {
+        "entry_step": 395769,
+        "exit_step": 395950,
+        "image": "PLI1.OVL",
+        "offset": 20266,
+        "instructions": 181,
+        "reads": 89,
+        "writes": 43,
+        "continuation": 30147,
+        "entry_RAM_SHA256": "a31cc7c73c961e130dfc39d8da5ac7768f5adf296ecae8d7721e29fc18b7eb3a",
+        "exit_RAM_SHA256": "b9879657680461cb226536e2f8d57a4775d0ca2414e3d8c79207f2eefb475f7b",
+        "full_CPU_RAM_accesses_equal": true
+      },
+      "consumer_replay": {
+        "entry_step": 400417,
+        "exit_step": 402221,
+        "image": "PLI1.OVL",
+        "offset": 13406,
+        "instructions": 1804,
+        "reads": 719,
+        "writes": 371,
+        "continuation": 34730,
+        "entry_RAM_SHA256": "f70595d075e4fd855d4be0a374724ff8556ab37bfa7750122394effa2fa3af5c",
+        "exit_RAM_SHA256": "c6c0d757e2840d3d38cd664bbe654fdace4eeff552378d2709a4b9115cb13715",
+        "full_CPU_RAM_accesses_equal": true
+      },
+      "last_writer_edge_count": 115
+    },
+    {
+      "literal": "3",
+      "source_MOD": [
+        {
+          "prefix_write_step": 453693,
+          "normalized": 77,
+          "source_offset": 161,
+          "byte": 109,
+          "record_read_step": 322907,
+          "raw_read_step": 448286,
+          "line_write_step": 448378
+        },
+        {
+          "prefix_write_step": 453777,
+          "normalized": 79,
+          "source_offset": 162,
+          "byte": 111,
+          "record_read_step": 322907,
+          "raw_read_step": 448414,
+          "line_write_step": 448506
+        },
+        {
+          "prefix_write_step": 453861,
+          "normalized": 68,
+          "source_offset": 163,
+          "byte": 100,
+          "record_read_step": 322907,
+          "raw_read_step": 448542,
+          "line_write_step": 448634
+        }
+      ],
+      "source_equality": {
+        "prefix_write_step": 465355,
+        "normalized": 61,
+        "source_offset": 170,
+        "byte": 61,
+        "record_read_step": 322907,
+        "raw_read_step": 449438,
+        "line_write_step": 449530
+      },
+      "source_zero": {
+        "prefix_write_step": 466145,
+        "normalized": 48,
+        "source_offset": 172,
+        "byte": 48,
+        "record_read_step": 322907,
+        "raw_read_step": 449694,
+        "line_write_step": 449786
+      },
+      "zero_spelling_event": 466588,
+      "zero_record_byte": 64423,
+      "zero_spelling_route": "retained spelling comparison",
+      "zero_spelling_record_writer": 396942,
+      "lookup_name_compare": 455823,
+      "resolved_builtin_record": 64463,
+      "record_field": 42604,
+      "dispatch_call": 457422,
+      "root_entry": 457423,
+      "descriptor_selector": 20,
+      "PCHL_step": 457511,
+      "table_target": 30139,
+      "operation_emission_call": 464815,
+      "operation_marker": 209,
+      "common_context_entry": 463314,
+      "common_context_exit": 463655,
+      "operand_attribute_reads": [
+        [
+          {
+            "read_step": 463103,
+            "address": 44147,
+            "destination": 42538,
+            "value": 2
+          },
+          {
+            "read_step": 463119,
+            "address": 44296,
+            "destination": 42541,
+            "value": 1
+          },
+          {
+            "read_step": 463135,
+            "address": 44445,
+            "destination": 42544,
+            "value": 0
+          }
+        ],
+        [
+          {
+            "read_step": 463255,
+            "address": 44154,
+            "destination": 42537,
+            "value": 21
+          },
+          {
+            "read_step": 463271,
+            "address": 44303,
+            "destination": 42540,
+            "value": 15
+          },
+          {
+            "read_step": 463287,
+            "address": 44452,
+            "destination": 42543,
+            "value": 0
+          }
+        ]
+      ],
+      "operand_words_before_conversion": [
+        64395,
+        64366
+      ],
+      "word_channel_limit": "Compiler carrier words are not inferred to be runtime i or runtime MOD values",
+      "converted_operand_copy_steps": [
+        464088,
+        464094,
+        464100
+      ],
+      "finalization_law": "middle=(converted_right_middle-right_zero+max(left_zero,right_zero)) mod256; tag retained",
+      "result_position": 4,
+      "result_carrier": 1,
+      "result_tuple": [
+        21,
+        15,
+        0
+      ],
+      "publications": [
+        {
+          "address": 44148,
+          "value": 21,
+          "first_publication_step": 465154,
+          "final_publication_step": 465638,
+          "map_writer": 464848
+        },
+        {
+          "address": 44297,
+          "value": 15,
+          "first_publication_step": 465177,
+          "final_publication_step": 465661,
+          "map_writer": 464848
+        },
+        {
+          "address": 44446,
+          "value": 0,
+          "first_publication_step": 465200,
+          "final_publication_step": 465684,
+          "map_writer": 464848
+        }
+      ],
+      "root_return": 465709,
+      "consumer_entry": 470063,
+      "consumer_exit": 471867,
+      "consumer_kind": "source-correlated equality operand preparation",
+      "saved_relation_slot": 65467,
+      "saved_relation_index": 2,
+      "consumer_reads": [
+        {
+          "step": 470231,
+          "address": 44148,
+          "destination": 42537,
+          "result_writer": 465638
+        },
+        {
+          "step": 470247,
+          "address": 44297,
+          "destination": 42540,
+          "result_writer": 465661
+        },
+        {
+          "step": 470263,
+          "address": 44446,
+          "destination": 42543,
+          "result_writer": 465684
+        }
+      ],
+      "equality_common_call": 470409,
+      "finalizer_replay": {
+        "entry_step": 465509,
+        "exit_step": 465690,
+        "image": "PLI1.OVL",
+        "offset": 20266,
+        "instructions": 181,
+        "reads": 89,
+        "writes": 43,
+        "continuation": 30147,
+        "entry_RAM_SHA256": "9424394ccc3db7c102a28ddda27d7982639ec18c9f4d166f422a85f731418a97",
+        "exit_RAM_SHA256": "c6cd2f8de5077bd3734ade114e4b159a18c33688366fba9bbac302b996d8c488",
+        "full_CPU_RAM_accesses_equal": true
+      },
+      "consumer_replay": {
+        "entry_step": 470063,
+        "exit_step": 471867,
+        "image": "PLI1.OVL",
+        "offset": 13406,
+        "instructions": 1804,
+        "reads": 719,
+        "writes": 371,
+        "continuation": 34730,
+        "entry_RAM_SHA256": "81d053298f638517557f9406c4c7d712cafa767a35c35e042119a71de8d977fc",
+        "exit_RAM_SHA256": "29db83ce8df9e08b357543531d642236b1704dbb12edfba17bcdb88842f2452f",
+        "full_CPU_RAM_accesses_equal": true
+      },
+      "last_writer_edge_count": 115
+    },
+    {
+      "literal": "5",
+      "source_MOD": [
+        {
+          "prefix_write_step": 520491,
+          "normalized": 77,
+          "source_offset": 232,
+          "byte": 109,
+          "record_read_step": 322907,
+          "raw_read_step": 515084,
+          "line_write_step": 515176
+        },
+        {
+          "prefix_write_step": 520575,
+          "normalized": 79,
+          "source_offset": 233,
+          "byte": 111,
+          "record_read_step": 322907,
+          "raw_read_step": 515212,
+          "line_write_step": 515304
+        },
+        {
+          "prefix_write_step": 520659,
+          "normalized": 68,
+          "source_offset": 234,
+          "byte": 100,
+          "record_read_step": 322907,
+          "raw_read_step": 515340,
+          "line_write_step": 515432
+        }
+      ],
+      "source_equality": {
+        "prefix_write_step": 532153,
+        "normalized": 61,
+        "source_offset": 241,
+        "byte": 61,
+        "record_read_step": 322907,
+        "raw_read_step": 516236,
+        "line_write_step": 516328
+      },
+      "source_zero": {
+        "prefix_write_step": 532943,
+        "normalized": 48,
+        "source_offset": 243,
+        "byte": 48,
+        "record_read_step": 322907,
+        "raw_read_step": 516492,
+        "line_write_step": 516584
+      },
+      "zero_spelling_event": 533386,
+      "zero_record_byte": 64423,
+      "zero_spelling_route": "retained spelling comparison",
+      "zero_spelling_record_writer": 396942,
+      "lookup_name_compare": 522621,
+      "resolved_builtin_record": 64463,
+      "record_field": 42604,
+      "dispatch_call": 524220,
+      "root_entry": 524221,
+      "descriptor_selector": 20,
+      "PCHL_step": 524309,
+      "table_target": 30139,
+      "operation_emission_call": 531613,
+      "operation_marker": 209,
+      "common_context_entry": 530112,
+      "common_context_exit": 530453,
+      "operand_attribute_reads": [
+        [
+          {
+            "read_step": 529901,
+            "address": 44152,
+            "destination": 42538,
+            "value": 2
+          },
+          {
+            "read_step": 529917,
+            "address": 44301,
+            "destination": 42541,
+            "value": 1
+          },
+          {
+            "read_step": 529933,
+            "address": 44450,
+            "destination": 42544,
+            "value": 0
+          }
+        ],
+        [
+          {
+            "read_step": 530053,
+            "address": 44151,
+            "destination": 42537,
+            "value": 21
+          },
+          {
+            "read_step": 530069,
+            "address": 44300,
+            "destination": 42540,
+            "value": 15
+          },
+          {
+            "read_step": 530085,
+            "address": 44449,
+            "destination": 42543,
+            "value": 0
+          }
+        ]
+      ],
+      "operand_words_before_conversion": [
+        64352,
+        64327
+      ],
+      "word_channel_limit": "Compiler carrier words are not inferred to be runtime i or runtime MOD values",
+      "converted_operand_copy_steps": [
+        530886,
+        530892,
+        530898
+      ],
+      "finalization_law": "middle=(converted_right_middle-right_zero+max(left_zero,right_zero)) mod256; tag retained",
+      "result_position": 4,
+      "result_carrier": 0,
+      "result_tuple": [
+        21,
+        15,
+        0
+      ],
+      "publications": [
+        {
+          "address": 44147,
+          "value": 21,
+          "first_publication_step": 531952,
+          "final_publication_step": 532436,
+          "map_writer": 531646
+        },
+        {
+          "address": 44296,
+          "value": 15,
+          "first_publication_step": 531975,
+          "final_publication_step": 532459,
+          "map_writer": 531646
+        },
+        {
+          "address": 44445,
+          "value": 0,
+          "first_publication_step": 531998,
+          "final_publication_step": 532482,
+          "map_writer": 531646
+        }
+      ],
+      "root_return": 532507,
+      "consumer_entry": 536861,
+      "consumer_exit": 538665,
+      "consumer_kind": "source-correlated equality operand preparation",
+      "saved_relation_slot": 65463,
+      "saved_relation_index": 2,
+      "consumer_reads": [
+        {
+          "step": 537029,
+          "address": 44147,
+          "destination": 42537,
+          "result_writer": 532436
+        },
+        {
+          "step": 537045,
+          "address": 44296,
+          "destination": 42540,
+          "result_writer": 532459
+        },
+        {
+          "step": 537061,
+          "address": 44445,
+          "destination": 42543,
+          "result_writer": 532482
+        }
+      ],
+      "equality_common_call": 537207,
+      "finalizer_replay": {
+        "entry_step": 532307,
+        "exit_step": 532488,
+        "image": "PLI1.OVL",
+        "offset": 20266,
+        "instructions": 181,
+        "reads": 89,
+        "writes": 43,
+        "continuation": 30147,
+        "entry_RAM_SHA256": "66fffa66eeef57de756e49a2ff7221f3b928e264598cc4910cd2d5b59d0b3c11",
+        "exit_RAM_SHA256": "fa82fb437964aae4a4dd2689b3925b03f5f290c7eb1c165ddc142e3583c3d118",
+        "full_CPU_RAM_accesses_equal": true
+      },
+      "consumer_replay": {
+        "entry_step": 536861,
+        "exit_step": 538665,
+        "image": "PLI1.OVL",
+        "offset": 13406,
+        "instructions": 1804,
+        "reads": 719,
+        "writes": 371,
+        "continuation": 34730,
+        "entry_RAM_SHA256": "bef873884c4d70e53b5d3e72d48aef973ec1177135344e64f88593c0a4445f72",
+        "exit_RAM_SHA256": "13e04c75b95ba6bd0b99e4294125de96a352f920cbe7b8d9389586a4648e2660",
+        "full_CPU_RAM_accesses_equal": true
+      },
+      "last_writer_edge_count": 115
+    }
+  ],
+  "status": "SELECTED MOD RESULT ATTRIBUTES AND EQUALITY CONSUMER ESTABLISHED",
+  "representation": "Mapped expression carrier with retained tag and recomputed numeric attributes; no separate result symbol record established",
+  "runtime_limit": "Compiling MOD is observed; no runtime MOD value is computed by this proof",
+  "CPU_limit": "Original execution and copied window replays use the same CPU engine",
+  "last_writer_edges": {
+    "file": "owned-edges.json",
+    "count": 345,
+    "SHA256": "e0c9f106e8ca15f9516f34d41b1157a9c92b6224669e22081410ebbd9ebaa305"
+  }
+}

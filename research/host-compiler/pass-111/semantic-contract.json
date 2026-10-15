@@ -1,0 +1,52 @@
+{
+  "kind": "Bounded descriptive typing contract; not an executable IR or runtime evaluator",
+  "source": {
+    "file": "examples/pli80/FIZZBUZ.PLI",
+    "declaration": "dcl i fixed;",
+    "expression": "mod(i,15)",
+    "consumer": "mod(i,15) = 0"
+  },
+  "declared_identifier": {
+    "name": "i",
+    "type": "signed fixed binary integer",
+    "precision_binary_digits": 15,
+    "basis": "Documented default declaration rule plus observed declaration and retained-attribute provenance in Pass110"
+  },
+  "literal": {
+    "spelling": "15",
+    "value": 15,
+    "sign": "positive",
+    "lexical_form": "two-digit decimal integer",
+    "basis": "Pass109 source/constructor/consumer proof and independent positional equation",
+    "intrinsic_limit": "No universal interpretation of preconversion metadata or standalone literal type is required"
+  },
+  "effective_operands": {
+    "type": "fixed binary integer",
+    "precision_binary_digits": 15,
+    "basis": "Documented binary context/conversion rules and observed common-context-to-converted-operand provenance"
+  },
+  "result": {
+    "type": "signed fixed binary integer",
+    "precision_binary_digits": 15,
+    "integral": true,
+    "runtime_value": "Not evaluated or proved by this compiler observation",
+    "basis": "Documented MOD common arithmetic result rule, observed retained result tag, recomputed attributes and result publications"
+  },
+  "historical_owner": "Current expression mapped carrier after MOD-specific result finalization; source-correlated equality reads its final publications",
+  "consumer": {
+    "operation": "equality operand conversion",
+    "other_operand": "source decimal integer zero",
+    "basis": "Actual source equality lookup, saved operator selection, result attribute reads and common-context construction"
+  },
+  "supported_scope": "Typing of the selected successful FIZZBUZ expression, corroborated by the natural mod(i,3) and mod(i,5) expressions",
+  "not_claimed": [
+    "Universal tag or zero-channel decoding",
+    "Evaluation of runtime MOD values",
+    "Negative/zero-divisor/overflow/error execution behavior",
+    "Arbitrary operand types or precision combinations",
+    "General compiler carrier-word decoding",
+    "INT/REL semantic decoding or MIR lowering"
+  ],
+  "evidence": "result-provenance.json; Pass109 source-value-chain.json; Pass110 declaration-provenance.json",
+  "next_step": "Independent executable law for selected runtime integer MOD and its conversions before lowering arithmetic to upstream MIR"
+}

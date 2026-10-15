@@ -27,7 +27,7 @@ let replay ?(record_reads=false) ?(stack_delta=10) ~out ~path (q:Runner.state_sn
  if record_reads then(let c=open_out(Filename.concat out(path^"-accesses.json"))in
  output_string c("["^String.concat","(List.map(function I8080.Step.Read w->Printf.sprintf"[\"R\",%d,%d]"w.address w.value|Write w->Printf.sprintf"[\"W\",%d,%d]"w.address w.value)(List.rev !journal))^"]\n");close_out c)
 let ()=
- let images=ref""and out=ref""and declaration=ref false in Arg.parse["--declaration",Arg.Set declaration,"capture declaration-to-expression instructions";"--images",Arg.Set_string images,"images";"--output",Arg.Set_string out,"isolated directory"]ignore"Read-only typed literal capture";
+ let images=ref""and out=ref""and declaration=ref false and mod_result=ref false in Arg.parse["--mod-result",Arg.Set mod_result,"capture MOD result and comparison windows";"--declaration",Arg.Set declaration,"capture declaration-to-expression instructions";"--images",Arg.Set_string images,"images";"--output",Arg.Set_string out,"isolated directory"]ignore"Read-only typed literal capture";
  let image n=read(Filename.concat !images n)in
  let source=E.prepare_source ~normalize:true(read"examples/pli80/FIZZBUZ.PLI")in
  let c=open_out(Filename.concat !out"events.jsonl")in
@@ -37,11 +37,12 @@ let ()=
  let on_before_instruction ~origin ~step_index(b:Runner.instruction_boundary)=
   let image,off=name origin in current:=Some(image,off,b);
   if image="PLI.COM"&&off=0x1376&&b.read_memory 0x20c1=0x31 then active:=max !active 8000;
-  if (!declaration&&((image="PLI0.OVL"&&List.mem off[0x0ae4;0x142d])||(image="PLI1.OVL"&&List.mem off[0x30c1;0x330a])))||(image="PLI.COM"&&List.mem off[0x1376;0x154b])||(image="PLI1.OVL"&&List.mem off[0x6708;0x6726;0x6c4e;0x6c9f;0x2988;0x2b14;0x2c52])then(
+  if (!mod_result&&image="PLI1.OVL"&&List.mem off[0x4f2a;0x53c3;0x345e;0x65aa])||(!declaration&&((image="PLI0.OVL"&&List.mem off[0x0ae4;0x142d])||(image="PLI1.OVL"&&List.mem off[0x30c1;0x330a])))||(image="PLI.COM"&&List.mem off[0x1376;0x154b])||(image="PLI1.OVL"&&List.mem off[0x6708;0x6726;0x6c4e;0x6c9f;0x2988;0x2b14;0x2c52])then(
    incr counter;let path=Printf.sprintf"checkpoint-%d.ram" !counter in
    ramfile(Filename.concat !out path)(b.copy_memory());
    if image="PLI1.OVL"&&off=0x6708&&b.state.e=2 then replay ~out:!out ~path b.state(b.copy_memory());
    if !declaration&&((image="PLI0.OVL"&&off=0x0ae4)||(image="PLI1.OVL"&&off=0x30c1))then replay ~record_reads:true ~stack_delta:2 ~out:!out ~path b.state(b.copy_memory());
+   if !mod_result&&image="PLI1.OVL"&&List.mem off[0x4f2a;0x345e]then replay ~record_reads:true ~stack_delta:2 ~out:!out ~path b.state(b.copy_memory());
    Printf.fprintf c"{\"kind\":\"checkpoint\",\"step\":%d,\"image\":%S,\"offset\":%d,\"state\":%s,\"ram\":%S,\"RAM_sha256\":%S}\n"step_index image off(state b.state)path(E.sha256_hex(b.copy_memory())))in
  let on_guest_step ~step_index ~before ~after step=
   let image,off,_=Option.get !current in
