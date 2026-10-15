@@ -1,0 +1,74 @@
+{
+  "baseline": "6495d609fa046ee51ecc34525da3bfd89b463809",
+  "operation": "MOD(a,b)",
+  "input_and_result_type": "SIGNED FIXED BINARY(15)",
+  "documented_full_signed_range": [
+    -32768,
+    32767
+  ],
+  "documented_storage_bytes": 2,
+  "admitted_numerator_range": [
+    0,
+    32767
+  ],
+  "admitted_divisors": [
+    3,
+    5,
+    15
+  ],
+  "documented_general_law": "If b=0 return a; otherwise a-abs(b)*floor(a/abs(b))",
+  "implemented_subset_law": "a-b*floor(a/b)",
+  "result_range": "0 <= result < b",
+  "host_representation": "MIR i64 / C int64_t; wider than the language precision",
+  "unsupported": [
+    "negative operands",
+    "zero divisor (documented branch deliberately not implemented)",
+    "other positive divisors",
+    "out-of-range values",
+    "fractional/scaled or decimal/floating operands",
+    "general conversions",
+    "overflow/error semantics",
+    "historical runtime equivalence"
+  ],
+  "documentation": {
+    "title": "Digital Research PL/I-80 Language Manual",
+    "edition": "Second printing, December 1980",
+    "url": "https://www.bitsavers.org/pdf/digitalResearch/pl1/PL1-80_Language_Manual_Dec80.pdf",
+    "PDF_SHA256": "85e09fc830a3520d2e5e24d051cdf74593b393b1851ee982196555e6435b848a",
+    "sections": {
+      "3.1.1": {
+        "printed_pages": [
+          14,
+          15
+        ],
+        "PDF_zero_based_pages": [
+          20,
+          21
+        ],
+        "rules": "FIXED alone is signed FIXED BINARY(15), two-complement range -32768..32767; precision is not storage width. Storage one byte for p<=7, otherwise two."
+      },
+      "12.1.7": {
+        "printed_pages": [
+          76
+        ],
+        "PDF_zero_based_pages": [
+          82
+        ],
+        "rules": "MOD uses floor-based mathematical law, the specified zero-divisor branch, and common arithmetic result type."
+      }
+    },
+    "limitation": "Contemporary primary documentation; not blanket proof of linked compiler v1.4 runtime behavior."
+  },
+  "confidence": {
+    "DOCUMENTED": "Arithmetic law, type/range/storage and result-type rule.",
+    "DEDUCED": "MIR signed remainder equals documented MOD for admitted nonnegative/positive operands; no intermediate overflows in i64.",
+    "OBSERVED": "Real upstream interpreter and x86_64 JIT agreement with independent repeated-subtraction reference on published cases.",
+    "UNPROVED": "Actual linked PL/I-80 v1.4 runtime MOD behavior; all excluded arithmetic domains."
+  },
+  "typing_provenance": "Pass111 semantic-contract.json; compiler result ownership is separate from runtime evaluation",
+  "reference": "OCaml repeated subtraction derives quotient and remainder; ascending multiples separately checks equality predicates.",
+  "lowering": "One real MIR mod instruction followed by ret, with no imported arithmetic helper.",
+  "ownership": "Scalar semantic inputs only. Fresh synchronous MIR context per call; no persistent state, buffers or callbacks.",
+  "guard": "Abstract OCaml constructors and C pre-context guard; unsupported calls reject before MIR arithmetic.",
+  "integration": "Experimental tools only; ordinary Dune builds and active compiler/native paths have no MIR dependency."
+}

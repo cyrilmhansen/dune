@@ -1,0 +1,58 @@
+{
+  "historical_runtime_MOD_observed": false,
+  "method": "Existing Runner.run_file and memory-backed CPM filesystem, command tail FIZZBUZ; fixed instruction caps; no linker/runtime changes.",
+  "source": "runtime-probe.ml (final cap); initial run used the same source with cap 500000",
+  "artifacts": {
+    "LINK.COM": {
+      "bytes": 15744,
+      "SHA256": "977938c3706b2c2a75db33e012d8a85c871bd651ddb458295a9dbd8a0b929bbb"
+    },
+    "PLILIB.IRL": {
+      "bytes": 71808,
+      "SHA256": "c0d63ac67766e9d01ec37625289aac47347ec4f13e0b86757bca73287f133d2d"
+    }
+  },
+  "REL": {
+    "path": "_build/evidence-packet-cross-run/fizzbuz-capture/FIZZBUZ.REL",
+    "SHA256": "68ec16931d4dae7a8f0831a29c9ae8b9ca139279f5104bb34e299644a8b2a203"
+  },
+  "runs": [
+    {
+      "instruction_cap": 500000,
+      "status": "bounded_step_limit",
+      "last_step_index": 499999,
+      "partial_in_memory_COM_bytes": 0,
+      "console_OCaml_escaped": "\"LINK 1.31\\n\\r\"",
+      "BDOS_call_counts": {
+        "2": 11,
+        "11": 7,
+        "12": 1,
+        "15": 4,
+        "20": 31,
+        "26": 38
+      },
+      "raw_receipt_SHA256": "50d1af3fcbcba8f89586d926eb5268bdf82a50ba1cf09838bb4b6dd1d42dbcba"
+    },
+    {
+      "instruction_cap": 10000000,
+      "status": "bounded_step_limit",
+      "last_step_index": 9999999,
+      "partial_in_memory_COM_bytes": 4096,
+      "console_OCaml_escaped": "\"LINK 1.31\\n\\r\\r\\nPLILIB   RQST   FIZZBU   0100   /SYSIN/  1B75   /SYSPRI/ 1B9C   \\r\\n\\r\\nABSOLUTE     0000\\r\\nCODE SIZE    1A11 (0100-1B10)\\r\\nDATA SIZE    01F4 (1BF7-1DEA)\\r\\nCOMMON SIZE  00E6 (1B11-1BF6)\\r\\nUSE FACTOR     45\\r\\n\"",
+      "BDOS_call_counts": {
+        "2": 212,
+        "11": 50,
+        "12": 1,
+        "15": 6,
+        "19": 1,
+        "20": 185,
+        "21": 32,
+        "22": 1,
+        "26": 267
+      },
+      "raw_receipt_SHA256": "4cf559dd0c11fd1cba3a4dc9da7d3f12c61985685c234afb20b643332a215cda"
+    }
+  ],
+  "outcome": "Final probe reached cap after link map and partial COM writes; linker did not return. Partial COM not exported or executed.",
+  "limitation": "No valid runtime oracle established; not proof that linking cannot work or diagnosis of unsupported BDOS. No new linker/runtime subsystem attempted."
+}
