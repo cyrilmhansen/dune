@@ -9,11 +9,22 @@
 #include "mir-gen.h"
 #include "mod_text.h"
 
-CAMLprim value runes_mir_mod_positive(value numerator, value divisor, value jit) {
+/* Pass113 reuses this exact lifecycle with a signed-domain build. Defaults
+   retain Pass112's public symbol and rejection domain. */
+#ifdef RUNES_SIGNED_MOD
+#define RUNES_MOD_MIN -32768
+#define RUNES_MOD_ENTRY runes_mir_mod_signed
+#define RUNES_MOD_LABEL "Pass113"
+#else
+#define RUNES_MOD_MIN 0
+#define RUNES_MOD_ENTRY runes_mir_mod_positive
+#define RUNES_MOD_LABEL "Pass112"
+#endif
+CAMLprim value RUNES_MOD_ENTRY(value numerator, value divisor, value jit) {
   CAMLparam3(numerator, divisor, jit);
   intnat a = Long_val(numerator), b = Long_val(divisor);
-  if (a < 0 || a > 32767 || (b != 3 && b != 5 && b != 15))
-    caml_invalid_argument("Pass112: unsupported FIXED BINARY(15) MOD domain");
+  if (a < RUNES_MOD_MIN || a > 32767 || (b != 3 && b != 5 && b != 15))
+    caml_invalid_argument(RUNES_MOD_LABEL ": unsupported FIXED BINARY(15) MOD domain");
   /* Only semantic integer values cross the boundary. No OCaml heap pointer,
      historical scratch/stack state, callbacks or imported arithmetic helper. */
   MIR_context_t ctx = MIR_init();
@@ -39,6 +50,6 @@ CAMLprim value runes_mir_mod_positive(value numerator, value divisor, value jit)
   }
   MIR_finish(ctx);
   if (answer < 0 || answer >= b)
-    caml_failwith("Pass112: MIR result violates the supported semantic range");
+    caml_failwith(RUNES_MOD_LABEL ": MIR result violates the supported semantic range");
   CAMLreturn(Val_long((intnat) answer));
 }

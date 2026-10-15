@@ -25,6 +25,13 @@ def output(args):
 class SemanticMod(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
+        # Pass113 reuses this narrow build recipe with a separate source/output
+        # directory and signed-domain C defines; Pass112 defaults stay intact.
+        OUT=getattr(cls,'proof_output',globals()['OUT'])
+        SRC=getattr(cls,'proof_source',globals()['SRC'])
+        mir_name=getattr(cls,'mir_name','mod_positive.mir')
+        bridge=getattr(cls,'bridge_source',SRC/'bridge.c')
+        flags=getattr(cls,'bridge_flags',[])
         OUT.mkdir(parents=True,exist_ok=True)
         upstream=(OUT/'upstream').resolve()
         if not upstream.exists():
@@ -38,11 +45,11 @@ class SemanticMod(unittest.TestCase):
             raise RuntimeError('Modified pinned MIR sources')
         run(['make','-j2','libmir.a'],cwd=upstream)
         build=(OUT/'ffi').resolve();build.mkdir(exist_ok=True)
-        (build/'mod_text.h').write_text('static const char mod_text[] = '+json.dumps((SRC/'mod_positive.mir').read_text())+';\n')
+        (build/'mod_text.h').write_text('static const char mod_text[] = '+json.dumps((SRC/mir_name).read_text())+';\n')
         for name in ['fixed_binary_mod.mli','fixed_binary_mod.ml','reference.ml','demo.ml']:
             shutil.copyfile(SRC/name,build/name)
         run(['ocamlopt','-ccopt','-I'+str(upstream),'-ccopt','-I'+str(build),
-             '-c',(SRC/'bridge.c').resolve(),'-o',build/'bridge.o'],cwd=build)
+             *flags,'-c',bridge.resolve(),'-o',build/'bridge.o'],cwd=build)
         run(['ocamlopt','-c','fixed_binary_mod.mli'],cwd=build)
         run(['ocamlopt','-c','fixed_binary_mod.ml'],cwd=build)
         run(['ocamlopt','-o','demo','fixed_binary_mod.cmx','reference.ml','demo.ml','bridge.o',
@@ -52,7 +59,7 @@ class SemanticMod(unittest.TestCase):
         cls.upstream={'repository':'https://github.com/vnmakarov/mir','revision':PIN,'license':'MIT',
             'host':platform.platform(),'machine':platform.machine(),'OCaml':output(['ocamlopt','-version']),
             'C_compiler':output(['cc','--version']).splitlines()[0],
-            'MIR_source_SHA256':hashlib.sha256((SRC/'mod_positive.mir').read_bytes()).hexdigest(),
+            'MIR_source_SHA256':hashlib.sha256((SRC/mir_name).read_bytes()).hexdigest(),
             'library_SHA256':hashlib.sha256((upstream/'libmir.a').read_bytes()).hexdigest(),
             'upstream_file_SHA256':{name:hashlib.sha256((upstream/name).read_bytes()).hexdigest()
                                    for name in ['mir.h','mir-gen.h','MIR.md','mir-interp.c','mir-gen-x86_64.c','LICENSE']}}

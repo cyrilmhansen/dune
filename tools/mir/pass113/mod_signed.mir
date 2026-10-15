@@ -1,0 +1,10 @@
+runes_fixed_binary: module
+mod_signed: func i64, i64:a, i64:b
+  local i64:result
+  mod result, a, b
+  bge done, result, 0
+  add result, result, b
+done:
+  ret result
+  endfunc
+  endmodule

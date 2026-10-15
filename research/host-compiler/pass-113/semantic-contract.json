@@ -1,0 +1,77 @@
+{
+  "baseline": "af04987ed6afb4cc7b5d33107279144e474543d9",
+  "operation": "MOD(a,b)",
+  "operand_and_result_type": "SIGNED FIXED BINARY(15)",
+  "numerator_range": [
+    -32768,
+    32767
+  ],
+  "divisors": [
+    3,
+    5,
+    15
+  ],
+  "documented_storage_bytes": 2,
+  "host_representation": "MIR signed i64 / C int64_t; not a change to PL/I precision",
+  "law": "a-b*floor(a/b)",
+  "result_invariant": "0<=result<b",
+  "MIR_lowering": [
+    "mod result, a, b",
+    "bge done, result, 0",
+    "add result, result, b",
+    "done: ret result"
+  ],
+  "proof": "Signed remainder r has -(b-1)<=r<=b-1. Nonnegative r is already floor modulo; negative r corresponds to truncation quotient one above floor, so adding b gives a-b*floor(a/b). All i64 arithmetic is far from overflow.",
+  "reference": "For a<0 descend q and multiple together from zero until q*b<=a; for a>=0 use repeated subtraction. Then compute a-b*q and check q*b<=a<(q+1)*b. No signed remainder/correction in reference.",
+  "documentation": {
+    "title": "Digital Research PL/I-80 Language Manual",
+    "edition": "Second printing, December 1980",
+    "url": "https://www.bitsavers.org/pdf/digitalResearch/pl1/PL1-80_Language_Manual_Dec80.pdf",
+    "PDF_SHA256": "85e09fc830a3520d2e5e24d051cdf74593b393b1851ee982196555e6435b848a",
+    "sections": {
+      "3.1.1": {
+        "printed_pages": [
+          14,
+          15
+        ],
+        "PDF_zero_based_pages": [
+          20,
+          21
+        ],
+        "rules": "FIXED alone is signed FIXED BINARY(15), two-complement range -32768..32767; precision is not storage width. Storage one byte for p<=7, otherwise two."
+      },
+      "12.1.7": {
+        "printed_pages": [
+          76
+        ],
+        "PDF_zero_based_pages": [
+          82
+        ],
+        "rules": "MOD uses floor-based mathematical law, the specified zero-divisor branch, and common arithmetic result type."
+      }
+    },
+    "limitation": "Contemporary primary documentation; not blanket proof of linked compiler v1.4 runtime behavior."
+  },
+  "upstream_pin": "a8ab7c31cd5f9b23b77d84c60b3d83e62d9d304c",
+  "MIR_syntax_evidence": {
+    "MIR.md": "Integer comparison and branch: label first, BGE signed64; textual example bge fin, iter, N.",
+    "mir-interp.c": "MIR_MOD uses signed IOP3 (%), MIR_BGE uses BICMP (>=).",
+    "scope": "Actual interpreter/JIT tests on Linux x86_64 only; no new target claims."
+  },
+  "reused": "Pass112 C lifecycle, synchronous ownership and pinned build recipe; default positive symbol and domain remain intact.",
+  "guards": "Signed OCaml constructor and independent C guard reject unsupported numerator or divisor before MIR_init. Test-only raw FFI bypass exercises C guard.",
+  "unsupported": [
+    "zero divisor despite documented special branch",
+    "negative or other positive divisors",
+    "out-of-range integers",
+    "mixed numeric types and conversions",
+    "general overflow and exceptional arithmetic",
+    "historical runtime equivalence"
+  ],
+  "confidence": {
+    "DOCUMENTED": "Floor law and FIXED BINARY(15) signed range; inherited contemporary primary manual.",
+    "DEDUCED": "Signed-remainder correction implements the law across admitted domain without i64 overflow.",
+    "OBSERVED": "Interpreter/JIT comparisons and rejection/recovery results in mir-results.json.",
+    "UNPROVED": "Linked PL/I-80 v1.4 runtime equivalence; no LINK probe resumed."
+  }
+}
