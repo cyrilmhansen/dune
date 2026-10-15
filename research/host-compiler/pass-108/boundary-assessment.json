@@ -1,0 +1,99 @@
+{
+  "baseline": "9cc23a96e1fc222749383bfa94efb1f6cf6f759e",
+  "status": "SEMANTIC LOWERING NOT ESTABLISHED",
+  "architecture": "Recovered PL/I semantics in OCaml -> existing upstream MIR -> host native execution",
+  "backend_revision": "a8ab7c31cd5f9b23b77d84c60b3d83e62d9d304c",
+  "published_new_MIR_operations": 0,
+  "numeric_acquisition_witnesses": [
+    {
+      "initial_context": 49,
+      "prefix": [
+        49,
+        53
+      ],
+      "width": 2,
+      "accumulator": 6,
+      "following_context": 41,
+      "selector": 2
+    },
+    {
+      "initial_context": 51,
+      "prefix": [
+        51
+      ],
+      "width": 1,
+      "accumulator": 3,
+      "following_context": 41,
+      "selector": 2
+    },
+    {
+      "initial_context": 53,
+      "prefix": [
+        53
+      ],
+      "width": 1,
+      "accumulator": 5,
+      "following_context": 41,
+      "selector": 2
+    }
+  ],
+  "numeric_field_law": "sum(prefix byte values) mod 16, at the proved append-prefix scope; not positional decimal conversion",
+  "positional_decimal_counterexample": {
+    "spelling": "15",
+    "accumulator": 6,
+    "ordinary_decimal_digit_value": 15
+  },
+  "historical_PLI2_entry_cut": {
+    "artifact": "research/host-compiler/pass-16/candidate-boundaries.json",
+    "key": "664916",
+    "read_before_write_bytes": 731,
+    "interpretation": "historical observed suffix dependencies, not a semantic decoder interface"
+  },
+  "candidates": [
+    {
+      "operation": "PLI.COM+0EF6",
+      "established": "INT buffer append and scoped record-service behavior",
+      "gap": "Serialization gives no PL/I operation, type, value or control-flow mapping",
+      "decision": "Do not publish a new MIR append as a compiler boundary"
+    },
+    {
+      "operation": "PLI1.OVL+7A79",
+      "established": "Position-to-index-to-word lookup with fresh shared-memory reads",
+      "gap": "No independently established source-language meaning or record ownership from the numeric word alone",
+      "decision": "Historical state operation; not a semantic INT decoder"
+    },
+    {
+      "operation": "PLI.COM+15DA",
+      "established": "Byte classifier for ASCII 30h..39h in current source-acquisition context",
+      "gap": "A lexical helper does not establish a typed language operation or its MIR lowering",
+      "decision": "Potential frontend primitive; no new MIR function justified here"
+    },
+    {
+      "operation": "Resident +1376 numeric route / PLI1 +6708 E02",
+      "established": "Bounded digit-prefix acquisition, and separate bounded decimal construction machinery",
+      "gap": "No self-contained source literal -> typed value contract including precision, signedness, scale, overflow and unsupported paths",
+      "decision": "Investigate one source-correlated typed literal before lowering"
+    }
+  ],
+  "next_experiment": {
+    "source_witness": "FIZZBUZ numeric prefix 15 followed by 29h, from the archived Pass44 case",
+    "required_proof": [
+      "Track this actual prefix through +6708 E02 under proved preconditions",
+      "Identify exact value and attribute writes and their downstream consumption",
+      "Establish source-level type/precision and overflow rules independently",
+      "Only then lower the established semantic result using upstream MIR types/instructions"
+    ],
+    "not_authorized_by_this_report": "No guessed default precision, token code meanings, constant payload schema or general INT decoder"
+  },
+  "evidence": {
+    "research/host-compiler/pass-16/README.md": "2d1eca88ed256e155b4bf9edaf121ab6bf53df7f9ec3ade94d1604cd5e9e8688",
+    "research/host-compiler/pass-16/candidate-boundaries.json": "37881c33658c4ecb16e2c0f66445fc2af8256a12e9ebde45f1d5b77f4cb3c754",
+    "research/host-compiler/pass-22/README.md": "9f77264a302a15baef13985fa457938fa6ad48d439738b67f119fe2b1f7769bc",
+    "research/host-compiler/pass-24/README.md": "b804d2abb171d9d444daed018264cb4ca94c528b23cd9629292a7321dd8e237e",
+    "research/host-compiler/pass-44/numeric-contract.md": "9fb2c3a21d3a62fd9700cac02e0e73bd3c27940bd6501d64f2298734957963cf",
+    "research/host-compiler/pass-44/numeric-acquisition-cases.json": "2d7fff436f69c3f600a16b1148d04e3edd925ec85016e5caaa674f61f1a55f64",
+    "research/host-compiler/pass-102/README.md": "4c296daeea93b5fd516ea1c7e76f26ede77f6360f3ceb05e91afc42286f3b867",
+    "research/host-compiler/pass-106/README.md": "226055d8f3f139741db8622c8a7b719bef5f0ca09996e2ac5fe7ac180ed5127b",
+    "research/host-compiler/pass-107/README.md": "2cf45ea553cd10001636206e81e789b0f6402b8001224fc154543970190eed6c"
+  }
+}

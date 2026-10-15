@@ -1,0 +1,55 @@
+{
+  "task": "RUNES_MIR_BYTE_EMISSION_108",
+  "baseline": "9cc23a96e1fc222749383bfa94efb1f6cf6f759e",
+  "superseding_instruction": "Architecture clarification: MIR is the backend for recovered PL/I semantics, not mandatory INT/REL serialization",
+  "outcome": "ARCHITECTURAL ASSESSMENT; SEMANTIC LOWERING NOT ESTABLISHED",
+  "published_new_MIR_functions": 0,
+  "published_new_semantic_contracts": 0,
+  "concrete_finding": "Natural acquired prefix 15 has low-nibble accumulation 6; that field is not its positional decimal value",
+  "evidence_gap": [
+    "No source-correlated typed-literal lowering contract in the reviewed candidates",
+    "No complete semantic INT decoder or file-only closure established by the inspected evidence"
+  ],
+  "scope_limit": "Bounded review, not a claim about all existing or possible recovered semantics",
+  "prototype": "Uncommitted byte-append prototype set aside under ignored _build; not part of published implementation or validation category",
+  "next_step": "Verify one actual prefix-to-construction-to-consumer link, then independently establish the value and type/precision rules",
+  "validation": {
+    "categories": [
+      "build",
+      "diff-check",
+      "pass106",
+      "pass107",
+      "pass108",
+      "project",
+      "validation-runner-tests"
+    ],
+    "all_passed": true,
+    "Python_test_executions": 29,
+    "wall_seconds": 3.502,
+    "sum_category_seconds": 4.881
+  },
+  "reconstruction_bytes": 94720,
+  "goldens": "All existing goldens preserved; no published five-source reproduction claim",
+  "native_roots_installed": 0,
+  "knowledge_promotions": 0,
+  "runtime_changes": false,
+  "FULL_run": false,
+  "artifacts": {
+    "research/host-compiler/pass-108/README.md": {
+      "bytes": 9570,
+      "SHA256": "77a4e510976c8525fa23c75577b6ce8a852a953a7f2f52e04b3e2955b56b2a8c"
+    },
+    "research/host-compiler/pass-108/boundary-assessment.json": {
+      "bytes": 4550,
+      "SHA256": "7fd7781edf06da07fa3e2d0a4da5872f7f9409aae49959b2214c56dcf29a7665"
+    },
+    "research/host-compiler/pass-108/validation.json": {
+      "bytes": 7511,
+      "SHA256": "ee26e86036ca41cb26b3811b8d42e01be869a8546db6bf8542ada76cd7b6fc93"
+    },
+    "tools/annotated-assembly/test_mir_boundary_pass_108.py": {
+      "bytes": 3013,
+      "SHA256": "7cace7ecd2e011d6595ad7f6b5b64fed9e2e75c47a0a781ce9e6fd2141f24c16"
+    }
+  }
+}
